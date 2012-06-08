@@ -623,7 +623,7 @@ if (gpx && fileheaderok) {
 	in.putExtra("sendcounter",sendcounter);
 	sendBroadcast(in);	
 		Log.d(this.getClass().getName(), "Попали в проверку курса для трека");
-	if (location.getAccuracy()<hdop_gpx &&(location.distanceTo(prevlocation_gpx)>distance_gpx || location.getTime()>(prevlocation_gpx.getTime()+period_gpx) || (location.getSpeed()>=speedbearing_gpx && Math.abs(brng_gpx-prevbrng_gpx)>=bearing_gpx)))
+	if ((int)location.getAccuracy()<hdop_gpx &&(location.distanceTo(prevlocation_gpx)>distance_gpx || location.getTime()>(prevlocation_gpx.getTime()+period_gpx) || (location.getSpeed()>=speedbearing_gpx && Math.abs(brng_gpx-prevbrng_gpx)>=bearing_gpx)))
 	{
 		prevlocation_gpx.setLatitude(location.getLatitude());
 		prevlocation_gpx.setLongitude(location.getLongitude());
@@ -633,16 +633,20 @@ if (gpx && fileheaderok) {
 	}
 	}
 	else {Log.d(this.getClass().getName(), "Пишем трек без курса");
-		if (location.getAccuracy()<hdop_gpx&&(location.distanceTo(prevlocation_gpx)>distance_gpx || location.getTime()>(prevlocation_gpx.getTime()+period_gpx) ))writegpx(location);prevlocation_gpx.setLatitude(location.getLatitude());
+		if ((int)location.getAccuracy()<hdop_gpx&&(location.distanceTo(prevlocation_gpx)>distance_gpx || location.getTime()>(prevlocation_gpx.getTime()+period_gpx) ))
+		{	writegpx(location);
+		prevlocation_gpx.setLatitude(location.getLatitude());
 		prevlocation_gpx.setLongitude(location.getLongitude());
-		prevlocation_gpx.setTime(location.getTime());}
+		prevlocation_gpx.setTime(location.getTime());
+		}
+		}
 	
 }
 		if (!hash.equals("") && live)
 		{
 		if(usecourse){
 			Log.d(this.getClass().getName(), "Попали в проверку курса для отправки");
-			
+			 Log.d(this.getClass().getName(), "Accuracey"+location.getAccuracy()+"hdop"+hdop);
 			double lon1=location.getLongitude();
 			double lon2=prevlocation.getLongitude();
 			
@@ -659,7 +663,7 @@ if (gpx && fileheaderok) {
 			sendBroadcast(in);	
 		
 		if (
-				location.getAccuracy()<hdop &&
+				(int)location.getAccuracy()<hdop &&
 				(location.distanceTo(prevlocation)>distance || location.getTime()>(prevlocation.getTime()+period) || (location.getSpeed()>=speedbearing && Math.abs(brng-prevbrng)>=bearing))) 
 		{	
 	
@@ -675,13 +679,15 @@ if (gpx && fileheaderok) {
 		
 		}
 		 else {Log.d(this.getClass().getName(), "Отправляем без курса");
-			 if (location.getAccuracy()<hdop&&
-						(location.distanceTo(prevlocation)>distance || location.getTime()>(prevlocation.getTime()+period)))
-
+			 if ((int)location.getAccuracy()<hdop&&(location.distanceTo(prevlocation)>distance || location.getTime()>(prevlocation.getTime()+period)))
+			 {	 Log.d(this.getClass().getName(), "Accuracey"+location.getAccuracy()+"hdop"+hdop);
 					prevlocation.setLatitude(location.getLatitude());
 					prevlocation.setLongitude(location.getLongitude());
 					prevlocation.setTime(location.getTime());
-				 sendlocation (location);}
+				 sendlocation (location);
+			 }
+				 
+		 }
 		
 		}	
 		LocwakeLock.release();	
