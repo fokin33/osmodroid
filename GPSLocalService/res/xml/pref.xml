@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="Основные" >
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="live"
+        android:title="Передавать положение" />
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="gpx"
+        android:title="Сохранять трек" />
+    <CheckBoxPreference
+        android:key="usewake"
+        android:summary="Увеличит расход батарейки"
+        android:title="Не спать постоянно" />
+    <CheckBoxPreference
+        android:key="usecourse"
+        android:summary="Может больше тратить батарею"
+        android:title="Использовать изменение курса" />
+    <CheckBoxPreference
+        android:key="usebuffer"
+        android:summary="Увеличит траффик"
+        android:title="Передавать неотправленное" />
+
+    <PreferenceScreen android:title="Идентификация" >
+        <EditTextPreference
+            android:key="hash"
+            android:title="Ваш хэш" >
+        </EditTextPreference>
+        <EditTextPreference
+            android:key="n"
+            android:title="Контрольное число" >
+        </EditTextPreference>
+    </PreferenceScreen>
+    <PreferenceScreen android:title="Параметры передачи" >
+        <EditTextPreference
+            android:digits="0123456789"
+            android:inputType="number"
+            android:key="period"
+            android:numeric="integer"
+            android:summary="Миллисекунды"
+            android:title="Период опроса GPS" >
+        </EditTextPreference>
+        <EditTextPreference
+            android:digits="0123456789"
+            android:inputType="number"
+            android:key="distance"
+            android:numeric="integer"
+            android:summary="Метры"
+            android:title="Дистанция опроса GPS" >
+        </EditTextPreference>
+        <EditTextPreference
+            android:digits="0123456789"
+            android:inputType="number"
+            android:key="speedbearing"
+            android:numeric="integer"
+            android:summary="Метров в секунду"
+            android:title="Скорость учета курса" />
+        <EditTextPreference
+            android:digits="0123456789"
+            android:inputType="number"
+            android:key="bearing"
+            android:numeric="integer"
+            android:summary="Градусы"
+            android:title="Отклонение курса" />
+        <EditTextPreference
+            android:digits="0123456789"
+            android:inputType="number"
+            android:key="hdop"
+            android:numeric="integer"
+            android:summary="Метры"
+            android:title="Допустимая точность" />
+    </PreferenceScreen>
+    <PreferenceScreen android:title="Параметры записи" >
+        <EditTextPreference
+            android:digits="0123456789"
+            android:inputType="number"
+            android:key="period_gpx"
+            android:numeric="integer"
+            android:summary="Миллисекунды"
+            android:title="Период опроса GPS" >
+        </EditTextPreference>
+        <EditTextPreference
+            android:digits="0123456789"
+            android:inputType="number"
+            android:key="distance_gpx"
+            android:numeric="integer"
+            android:summary="Метры"
+            android:title="Дистанция опроса GPS" >
+        </EditTextPreference>
+        <EditTextPreference
+            android:digits="0123456789"
+            android:inputType="number"
+            android:key="speedbearing_gpx"
+            android:numeric="integer"
+            android:summary="Метров в секунду"
+            android:title="Скорость учета курса" />
+        <EditTextPreference
+            android:digits="0123456789"
+            android:inputType="number"
+            android:key="bearing_gpx"
+            android:numeric="integer"
+            android:summary="Градусы"
+            android:title="Отклонение курса" />
+        <EditTextPreference
+            android:digits="0123456789"
+            android:inputType="number"
+            android:key="hdop_gpx"
+            android:numeric="integer"
+            android:summary="Метры"
+            android:title="Допустимая точность" />
+    </PreferenceScreen>
+    <PreferenceScreen android:title="Оповещение" >
+        <CheckBoxPreference
+            android:key="vibrate"
+            android:title="Вибрировать при потере интернета и GPS" />
+
+        <EditTextPreference
+            android:digits="0123456789"
+            android:inputType="number"
+            android:key="vibratetime"
+            android:numeric="integer"
+            android:summary="Миллисекунды"
+            android:title="Период вибрации" />
+
+        <CheckBoxPreference
+            android:key="playsound"
+            android:title="Издавать звуки при потере интернета и GPS" />
+
+        <EditTextPreference
+            android:digits="0123456789"
+            android:inputType="number"
+            android:key="notifyperiod"
+            android:numeric="integer"
+            android:summary="Миллисекунды"
+            android:title="Период определения недоступности GPS" />
+
+        <CheckBoxPreference
+            android:key="sendsound"
+            android:title="Звук при отправке" />
+    </PreferenceScreen>
+
+</PreferenceScreen>

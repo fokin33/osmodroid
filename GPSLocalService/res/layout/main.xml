@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" android:alwaysDrawnWithCache="false" android:descendantFocusability="blocksDescendants">
+
+ <TextView
+        android:id="@+id/serviceStatus"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/serviceStatus" />
+
+ <TextView
+     android:id="@+id/URL"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:text="Адрес:" />
+
+ <Button
+     android:id="@+id/copyButton"
+     android:layout_width="fill_parent"
+     android:layout_height="wrap_content"
+     android:text="Скопировать" />
+
+<Button
+    android:id="@+id/startButton"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:clickable="false"
+    android:text="Старт" />
+
+<Button
+    android:id="@+id/exitButton"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:text="Стоп" />
+
+<TextView
+    android:id="@+id/Location"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:text="Положение:" />
+
+<TextView
+    android:id="@+id/Send"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Отправка:"
+     />
+</LinearLayout>

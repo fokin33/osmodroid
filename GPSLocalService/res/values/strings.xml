@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OsMoDroid</string>
+<string name="startButton">Старт</string>
+<string name="exitButton">Стоп</string>
+<string name="serviceStatus">Статус:</string>
+<string name="location">"Положение: "</string>
+<string name="send">Отправка:</string>
+<string name="adres">Адрес:</string>
+<string name="settings">Настройки</string>
+<string name="period">Период опроса GPS</string>
+<string name="succes">Успешно</string>
+<string name="error">Ошибка:</string>
+<string name="Sputniki">Спутники:</string>
+<string name="GlonasFindString">" Глонасс пойман!"</string>
+<string name="NoConnection">Нет соединения</string>
+<string name="Unknow">Неизвестная</string>
+<string name="NotDefined">Не определено</string>
+<string name="Sended">"Отправка: "</string>
+<string name="Adres">"Адрес: "</string>
+<string name="RepeatAuth">Повторная авторизация</string>
+<string name="Settings">Настройки</string>
+<string name="EqualsParameters">Приравнять параметры</string>
+<string name="AgreeRepeatAuth">Подтвердите повторный запрос авторизации</string>
+<string name="ChangeAdresMonitor">Изменится адрес мониторинга!</string>
+<string name="yes">Да</string>
+<string name="No">Нет</string>
+<string name="AgreeParameterEqual">Подтвердите приравнивание параметров</string>
+<string name="TrackRecordParameterChanges">Параметры записи трека изменятся</string>
+<string name="Running">Запущен</string>
+<string name="NotRunning">Не запущен</string>
+<string name="Status">"Статус: "</string>
+<string name="Sendcount">" Отправок:"</string>
+<string name="ErrorRecieve">Ошибка при получении</string>
+<string name="AuthWait">Запрос авторизации, Подождите пожалуйста...</string>
+<string name="CheckInternet">Не удалось авторизоватся. Проверьте работу интернета</string>
+<string name="Working">Работаю! :-)</string>
+<string name="CanNotWriteHeader">Файло не смогло записать заголовок</string>
+<string name="CanNotWriteEnd">Файло не смогло записать окончание</string>
+<string name="SendCourseChange">Смена курса передачи:</string>
+<string name="TrackCourseChange">Смена курса трека:</string>
+<string name="ServerError">Ошибка сервера</string>
+<string name="buffer">" Буфер:"</string>
+</resources>
