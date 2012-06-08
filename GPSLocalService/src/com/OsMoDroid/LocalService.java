@@ -41,7 +41,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 //import android.os.Handler;
 import android.os.Binder;
-import android.os.Debug;
+//import android.os.Debug;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -75,7 +75,7 @@ import android.media.MediaPlayer;
 public class LocalService extends Service implements LocationListener,GpsStatus.Listener {
 	private static final int OSMODROID_ID = 1;
 	//MediaPlayer mp;
-	BufferedReader bufferedReader;
+	//BufferedReader bufferedReader;
 	MediaPlayer gpson;
 	MediaPlayer gpsoff;
 	MediaPlayer ineton;
@@ -162,7 +162,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 //BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(instream),8192);
 	public class LocalBinder extends Binder {
 		LocalService getService() {
-    	//Log.d(getClass().getSimpleName(), "getservice() localservice");
+    	Log.d(getClass().getSimpleName(), "getservice() localservice");
     	 return LocalService.this;
     }
 }
@@ -170,7 +170,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 
 	@Override
 	 public IBinder onBind(Intent intent) {
-		//Log.d(getClass().getSimpleName(), "onbind() localservice");
+		Log.d(getClass().getSimpleName(), "onbind() localservice");
 			return mBinder;
 			
     }
@@ -178,13 +178,13 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 
 	
 		public String getPosition()  {
-			//Log.d(getClass().getSimpleName(), "position() localservice");
+			Log.d(getClass().getSimpleName(), "position() localservice");
 			if (position == null)return getString(R.string.NotDefined);
 			else return position;
 		}
 
 		public  String getSendResult()  {
-			//Log.d(getClass().getSimpleName(), "sendresult() localservice");
+			Log.d(getClass().getSimpleName(), "sendresult() localservice");
 		//		if (sendresult == null) return "";
 			//else 
 		
@@ -245,11 +245,11 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 				if(vibrate)vibrator.vibrate(vibratetime);
 				
 				if(playsound &&!gpson.isPlaying())gpson.start();
-				//Log.d(getClass().getSimpleName(), "Звук он");
+				Log.d(getClass().getSimpleName(), "Звук он");
 			} else {gpsbeepedon=false;}
 			if ( System.currentTimeMillis()>lastgpsofftime+notifyperiod &&gpsbeepedoff)
 			{
-				//Log.d(getClass().getSimpleName(), "Звук офф");
+				Log.d(getClass().getSimpleName(), "Звук офф");
 				if(vibrate)vibrator.vibrate(vibratetime);
 				
 				if(playsound &&!gpsoff.isPlaying())gpsoff.start();
@@ -310,7 +310,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 		sendpalyer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		//sendpalyer.setVolume(leftVolume, rightVolume)
 		sendcounter=0;
-		//Log.d(getClass().getSimpleName(), "oncreate() localservice");
+		Log.d(getClass().getSimpleName(), "oncreate() localservice");
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 	if (usewake){
@@ -376,7 +376,7 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				//Log.d(getClass().getSimpleName(), Boolean.toString(crtfile));
+				Log.d(getClass().getSimpleName(), Boolean.toString(crtfile));
 			}
 			try {
 				// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd'T'HH:mm:ssZ");
@@ -406,7 +406,7 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 		super.onDestroy();
 		if(receiver!= null){unregisterReceiver(receiver);}
 		if(checkreceiver!= null){unregisterReceiver(checkreceiver);}
-		//Log.d(getClass().getSimpleName(), "omdestroy() localservice");
+		Log.d(getClass().getSimpleName(), "omdestroy() localservice");
 		if (gpx&&fileheaderok) {
 		try {
 		 FileWriter trackwr = new FileWriter(fileName, true);
@@ -425,7 +425,7 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 		}
 		
 		if (send != null ) {
-			//Log.d(this.getClass().getName(), "Отменяем поток передачи.");
+			Log.d(this.getClass().getName(), "Отменяем поток передачи.");
 			send.cancel(true);
 	} 
 		gpson.stop();
@@ -496,7 +496,7 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 		ReadPref();
 				
 if (usecourse)	{
-	//Log.d(this.getClass().getName(), "Запускаем провайдера 0 0");
+	Log.d(this.getClass().getName(), "Запускаем провайдера 0 0");
 		myManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 		prevlocation= myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
@@ -505,7 +505,7 @@ if (usecourse)	{
 		myManager.addGpsStatusListener(this);
 		}
 else	{
-	//Log.d(this.getClass().getName(), "Запускаем провайдера по настройкам");
+	Log.d(this.getClass().getName(), "Запускаем провайдера по настройкам");
 	myManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 	prevlocation= myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
@@ -514,12 +514,12 @@ else	{
 	int gpsdistance;
 	if (period>=period_gpx&&gpx){gpsperiod=period_gpx;}else {gpsperiod=period;};
 	if (distance>=distance_gpx&&gpx){gpsdistance=distance_gpx;}else {gpsdistance=distance;};
-	//Log.d(this.getClass().getName(), "период"+gpsperiod+"meters"+gpsdistance);
+	Log.d(this.getClass().getName(), "период"+gpsperiod+"meters"+gpsdistance);
 	myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsperiod, 0, this);
 	myManager.addGpsStatusListener(this);	
 }
 		setstarted(true);
-		//Log.d(getClass().getSimpleName(), "onstart() localservice");
+		Log.d(getClass().getSimpleName(), "onstart() localservice");
 	
 	}
 	
@@ -527,7 +527,7 @@ else	{
 	
 	
 	private void setstarted(boolean started){
-		//Log.d(getClass().getSimpleName(), "setstarted() localservice");
+		Log.d(getClass().getSimpleName(), "setstarted() localservice");
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 		SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean("started", started);
@@ -538,7 +538,7 @@ else	{
 		
 		private  String tmp;   
 		protected void onPostExecute(String result) {
-			//Log.d(this.getClass().getName(), "Отправка завершилась.");	
+			Log.d(this.getClass().getName(), "Отправка завершилась.");	
 //			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 			if(usebuffer&&tmp.equals("false")){
 				sended=false;
@@ -568,9 +568,9 @@ else	{
 			try {
 				 SendwakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "SendWakeLock");
 				SendwakeLock.acquire();
-				//Log.d(this.getClass().getName(), "Начинаем отправку.");
+				Log.d(this.getClass().getName(), "Начинаем отправку.");
 				tmp=getPage(arg0[0], arg0[1]);
-				//Log.d(this.getClass().getName(), "Отправка окончена.");
+				Log.d(this.getClass().getName(), "Отправка окончена.");
 			} catch (IOException e) {
 				internetnotify(false);
 			//	e.printStackTrace();
@@ -587,7 +587,7 @@ else	{
 		 LocwakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LocWakeLock");
 		LocwakeLock.acquire();
 		
-		//Log.d(this.getClass().getName(), "Позиция получена.");
+		Log.d(this.getClass().getName(), "Позиция получена.");
 		
 		//mp.release();
 		if (prevlocation_gpx==null)prevlocation_gpx=location;
@@ -622,7 +622,7 @@ if (gpx && fileheaderok) {
 	in.putExtra("position",position+"\n"+Sattelite);
 	in.putExtra("sendcounter",sendcounter);
 	sendBroadcast(in);	
-		//Log.d(this.getClass().getName(), "Попали в проверку курса для трека");
+		Log.d(this.getClass().getName(), "Попали в проверку курса для трека");
 	if (location.getAccuracy()<hdop_gpx &&(location.distanceTo(prevlocation_gpx)>distance_gpx || location.getTime()>(prevlocation_gpx.getTime()+period_gpx) || (location.getSpeed()>=speedbearing_gpx && Math.abs(brng_gpx-prevbrng_gpx)>=bearing_gpx)))
 	{
 		prevlocation_gpx.setLatitude(location.getLatitude());
@@ -632,7 +632,7 @@ if (gpx && fileheaderok) {
 		writegpx(location);
 	}
 	}
-	else {//Log.d(this.getClass().getName(), "Пишем трек без курса");
+	else {Log.d(this.getClass().getName(), "Пишем трек без курса");
 		if (location.getAccuracy()<hdop_gpx&&(location.distanceTo(prevlocation_gpx)>distance_gpx || location.getTime()>(prevlocation_gpx.getTime()+period_gpx) ))writegpx(location);prevlocation_gpx.setLatitude(location.getLatitude());
 		prevlocation_gpx.setLongitude(location.getLongitude());
 		prevlocation_gpx.setTime(location.getTime());}
@@ -641,7 +641,7 @@ if (gpx && fileheaderok) {
 		if (!hash.equals("") && live)
 		{
 		if(usecourse){
-			//Log.d(this.getClass().getName(), "Попали в проверку курса для отправки");
+			Log.d(this.getClass().getName(), "Попали в проверку курса для отправки");
 			
 			double lon1=location.getLongitude();
 			double lon2=prevlocation.getLongitude();
@@ -674,7 +674,7 @@ if (gpx && fileheaderok) {
 		}
 		
 		}
-		 else {//Log.d(this.getClass().getName(), "Отправляем без курса");
+		 else {Log.d(this.getClass().getName(), "Отправляем без курса");
 			 if (location.getAccuracy()<hdop&&
 						(location.distanceTo(prevlocation)>distance || location.getTime()>(prevlocation.getTime()+period)))
 
@@ -718,8 +718,9 @@ if (gpx && fileheaderok) {
 
     if(usebuffer){   
     	OutputStream os = con.getOutputStream();
+    	
     	os.write( buf.getBytes()); 
-        
+    	Log.d(this.getClass().getName(),"Отправленный буфер"+ buf);
         os.flush();
         os.close();}
    	   			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -748,7 +749,7 @@ if (gpx && fileheaderok) {
         if(usebuffer){   
            	OutputStream os = con.getOutputStream();
         	os.write( buf.getBytes()); 
-            
+        	Log.d(this.getClass().getName(),"Отправленный буфер"+ buf);
             os.flush();
             os.close();}
     	   			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -768,10 +769,10 @@ if (gpx && fileheaderok) {
 
 	private String inputStreamToString(InputStream in) throws IOException {
 		Log.d(this.getClass().getName(), "void input");
-
-		bufferedReader = new BufferedReader(new InputStreamReader(in),8192);
+		
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in),8192);
 //	     stringBuilder = new StringBuilder();
-	      
+		stringBuilder.setLength(0);
 	   
 	    int c = 0;
 	    int i=0;
@@ -799,7 +800,7 @@ private void internetnotify(boolean internet){
 			inetoff.start();
 			
 }
-	//Log.d(this.getClass().getName(), "Интернет пропал");
+	Log.d(this.getClass().getName(), "Интернет пропал");
 	
 		beepedoff=true;
 		beepedon=false;
@@ -809,7 +810,7 @@ private void internetnotify(boolean internet){
 
 			if(!beepedon){
 				//long[] pattern = {0,50, 0, 30, 0, 50};
-				//Log.d(this.getClass().getName(), "Интернет появился");
+				Log.d(this.getClass().getName(), "Интернет появился");
 				//vibrator.vibrate(pattern, 2);
 				if(vibrate)vibrator.vibrate(vibratetime);
 				if (playsound &&!ineton.isPlaying()){
@@ -825,7 +826,7 @@ private void internetnotify(boolean internet){
 
 private String decodesendresult(String str){
 	
-
+	Log.d(this.getClass().getName(), "Ответ сервера"+str);
 	int s=-1;
 	int l=-1;
 	
@@ -838,7 +839,7 @@ private String decodesendresult(String str){
 		if (result.has("l")){ l =result.optInt("l");}
 		
 		if (s==0 ) {int code=result.optInt("code");str=getString(R.string.error)+code+" "+ result.optString("error");
-		//sended=false;
+		sended=true;
 		}
 		if (s==1|| s==2) {
 			if (l!=-1){str=getString(R.string.succes)+getString(R.string.buffer)+ l;}
@@ -910,20 +911,20 @@ else
 	URLadr="http://t.esya.ru/?"+  df6.format( location.getLatitude()) +":"+ df6.format( location.getLongitude())+":"+ df1.format(location.getAccuracy())
 	+":"+df1.format( location.getAltitude())+":"+df1.format( location.getSpeed())+":"+hash+":"+n;
 //URLadr=URLadr.replace(",", ".");
-//Log.d(this.getClass().getName(), URLadr);
+Log.d(this.getClass().getName(), URLadr);
 //lat:lon:altitude:speed:time
  
 if (usebuffer){
-	//Log.d(this.getClass().getName(),"Входим"+ sendbuffer);
+	Log.d(this.getClass().getName(),"Входим"+ sendbuffer);
 	cursendforbuffer = "log[]="+df6.format( location.getLatitude()) +":"+ df6.format( location.getLongitude())
 +":"+df1.format( location.getAltitude())+":"+df1.format( location.getSpeed())+":"+location.getTime()/1000;	
 //cursendforbuffer=cursendforbuffer.replace(",", ".");
 	}
-//Log.d(this.getClass().getName(),"Входим2"+ sendbuffer);
+Log.d(this.getClass().getName(),"Входим2"+ sendbuffer);
 //if (prevcursendforbuffer.equals(""))prevcursendforbuffer=cursendforbuffer;
- //Log.d(this.getClass().getName(), "sendbuffer "+sendbuffer);
- //Log.d(this.getClass().getName(), "cursendbuffer "+cursendforbuffer);
- //Log.d(this.getClass().getName(), "lastsendforbuffer "+lastsendforbuffer);
+ Log.d(this.getClass().getName(), "sendbuffer "+sendbuffer);
+ Log.d(this.getClass().getName(), "cursendbuffer "+cursendforbuffer);
+ Log.d(this.getClass().getName(), "lastsendforbuffer "+lastsendforbuffer);
 if (send == null ||
 	send.getStatus().equals(AsyncTask.Status.FINISHED)) {
 //	 Log.d(this.getClass().getName(), sendbuffer);
@@ -931,30 +932,30 @@ if (send == null ||
 	//	Log.d(this.getClass().getName(),"Ластсендфорбуфер "+ lastsendforbuffer);
 	if (sended )
 	{
-		//Log.d(this.getClass().getName(),"До обрезки"+ sendbuffer);
-	//Log.d(this.getClass().getName(),"Что отрезаем"+ lastsendforbuffer);
+		Log.d(this.getClass().getName(),"До обрезки"+ sendbuffer);
+	Log.d(this.getClass().getName(),"Что отрезаем"+ lastsendforbuffer);
 	//sendbuffer=t.replace(t.indexOf(lastsendforbuffer), t.lastIndexOf(lastsendforbuffer), "").toString();
   if (sendbuffer.length()>1)
     sendbuffer=sendbuffer.substring(lastsendforbuffer.length());
 	   //sendbuffer=sendbuffer.replace(lastsendforbuffer, " ");
    sendbuffer=sendbuffer.trim();
-		//Log.d(this.getClass().getName(),"результат обрезки"+ sendbuffer);
+		Log.d(this.getClass().getName(),"результат обрезки"+ sendbuffer);
 		} else {if (sendbuffer.equals("")){
 						sendbuffer=sendbuffer+prevcursendforbuffer;
 			//			Log.d(this.getClass().getName(),"Назначение 1"+ sendbuffer);				
 		} else{sendbuffer=sendbuffer+"&"+prevcursendforbuffer;
-		//Log.d(this.getClass().getName(),"Назначение 2"+ sendbuffer);
+		Log.d(this.getClass().getName(),"Назначение 2"+ sendbuffer);
 		}}
 	//if (sendbuffer.equals("")){sendbuffer=sendbuffer+cursendforbuffer;} else{sendbuffer=sendbuffer+"&"+cursendforbuffer;}
-	//Log.d(this.getClass().getName(),"Не обрезали "+ sendbuffer);
+	Log.d(this.getClass().getName(),"Не обрезали "+ sendbuffer);
 	lastsendforbuffer=sendbuffer;
 prevcursendforbuffer=cursendforbuffer;
-//Log.d(this.getClass().getName(),"Не обрезали2 "+ sendbuffer);
+Log.d(this.getClass().getName(),"Не обрезали2 "+ sendbuffer);
 	}
 	
-	//Log.d(this.getClass().getName(), sendbuffer);
+	Log.d(this.getClass().getName(), sendbuffer);
 send = new SendCoor();	
-//Log.d(this.getClass().getName(), "sendbuffer отправляемый "+sendbuffer);
+Log.d(this.getClass().getName(), "sendbuffer отправляемый "+sendbuffer);
 if(usebuffer)
 send.execute(URLadr,sendbuffer);
 else send.execute(URLadr," ");
@@ -966,7 +967,7 @@ else send.execute(URLadr," ");
 	if (sendbuffer.equals("")){sendbuffer=sendbuffer+cursendforbuffer;} else{sendbuffer=sendbuffer+"&"+cursendforbuffer;}
 	}
 }
-//Log.d(this.getClass().getName(), "void sendlocation end");
+Log.d(this.getClass().getName(), "void sendlocation end");
 }
 //private void notifygps(boolean gps){
 //	if (!gps){
@@ -979,7 +980,7 @@ else send.execute(URLadr," ");
 //			mp.start();
 //			Toast.makeText(LocalService.this, "гпс поява", Toast.LENGTH_SHORT).show();
 //}
-//	//Log.d(this.getClass().getName(), "gps propal");
+//	Log.d(this.getClass().getName(), "gps propal");
 //		
 //		gpsbeepedoff=true;
 //		gpsbeepedon=false;
@@ -989,7 +990,7 @@ else send.execute(URLadr," ");
 //
 //			if(!gpsbeepedon){
 //				//long[] pattern = {0,50, 0, 30, 0, 50};
-//				//Log.d(this.getClass().getName(), "Интернет появился");
+//				Log.d(this.getClass().getName(), "Интернет появился");
 //				//vibrator.vibrate(pattern, 2);
 //				if(vibrate)vibrator.vibrate(vibratetime);
 //				if (playsound){mp = MediaPlayer.create(this, R.raw.gpson);
