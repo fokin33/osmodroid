@@ -83,6 +83,7 @@ public class GPSLocalServiceClient extends Activity  {
 	private int hdop;
 	private int period;
 	private int distance;
+	
 	private String hash;
 	private int n;
 	private String submiturl;
