@@ -62,6 +62,7 @@ import android.widget.Toast;
 
 
 public class GPSLocalServiceClient extends Activity  {
+	private JSONObject commandJSON;
 	private int speedbearing_gpx;
 	private int bearing_gpx;
 	private long notifyperiod=30000;
@@ -323,6 +324,7 @@ invokeService();
 		MenuItem auth = menu.add(0,1,0,R.string.RepeatAuth);
 		MenuItem mi = menu.add(0, 2, 0, R.string.Settings);
 		MenuItem mi3 = menu.add(0, 3, 0, R.string.EqualsParameters);
+		MenuItem mi4 = menu.add(0, 4, 0, "Получить линк");
 		
 		mi.setIntent(new Intent(this, PrefActivity.class));
 		
@@ -377,10 +379,11 @@ invokeService();
 			    } });
 		    alertdialog1.show();
 		
-	
-	
-
 	}
+	if (item.getItemId()==4) {
+		RequestCommandTask Rq = new RequestCommandTask();
+	}
+	
 	return super.onOptionsItemSelected(item);
 	} 
 	
@@ -679,21 +682,25 @@ dialog.dismiss();
 	     	        dialog.show();
 	    }
 
-		
-		protected void onPostExecute(Void params) {
+		@Override
+		protected void onPostExecute(JSONObject resultJSON) {
 		//	Log.d(this.getClass().getName(), "Задание окончило выполнятся.");
 dialog.dismiss();
-			if (!Err) {
+			if (resultJSON==null) {
 				Toast.makeText(GPSLocalServiceClient.this,
 						getString(R.string.CheckInternet),
 						5).show();
 					} else {
-				WritePref();
-				ReadPref();
-				findViewById(R.id.startButton).setEnabled(true);
-				TextView t2 = (TextView) findViewById(R.id.URL);
-				t2.setText(getString(R.string.Adres) + viewurl);
-				Linkify.addLinks(t2, Linkify.ALL);
+						commandJSON=resultJSON;
+						Toast.makeText(GPSLocalServiceClient.this,
+								resultJSON.toString(),
+								5).show();
+						//WritePref();
+				//ReadPref();
+				//findViewById(R.id.startButton).setEnabled(true);
+				//TextView t2 = (TextView) findViewById(R.id.URL);
+				//t2.setText(getString(R.string.Adres) + viewurl);
+				//Linkify.addLinks(t2, Linkify.ALL);
 						}
 		}
 
