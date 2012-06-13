@@ -718,9 +718,9 @@ if (gpx && fileheaderok) {
             Proxy proxy = new Proxy (Proxy.Type.HTTP ,new InetSocketAddress( android.net.Proxy.getDefaultHost(), portOfProxy )  );
             HttpURLConnection con = (HttpURLConnection) new URL(adr).openConnection(proxy);
             con.setReadTimeout(5000);
-      	    con.setConnectTimeout(5000);
+      	    con.setConnectTimeout(15000);
       	  if(usebuffer){ 
-      		 con.setReadTimeout(sendbuffer.length()/4);
+      		 con.setReadTimeout(5000+ sendbuffer.length()/1024);
       		  con.setRequestMethod("POST");
 			 con.setDoOutput(true);
          con.setDoInput(true);}
@@ -747,9 +747,10 @@ if (gpx && fileheaderok) {
          else {
        	  HttpURLConnection con = (HttpURLConnection) new URL(adr).openConnection();
              con.setReadTimeout(5000);
-       	    con.setConnectTimeout(5000);
+       	    con.setConnectTimeout(15000);
        	 if(usebuffer){
-       	    con.setRequestMethod("POST");
+       		 con.setReadTimeout(5000+ sendbuffer.length()/1024);
+       		 con.setRequestMethod("POST");
 			 con.setDoOutput(true);
          con.setDoInput(true);
        	 }
