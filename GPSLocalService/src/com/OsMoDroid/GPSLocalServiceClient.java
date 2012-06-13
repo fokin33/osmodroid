@@ -5,10 +5,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 //import java.text.SimpleDateFormat;
 //import java.util.Date;
 //import java.util.Timer;
@@ -43,6 +47,7 @@ import android.preference.PreferenceManager;
 import android.text.ClipboardManager;
 
 import android.text.util.Linkify;
+import android.util.Log;
 //import android.util.Log;
 //import android.util.Log;
 import android.view.Menu;
@@ -518,33 +523,46 @@ invokeService();
 
 	
 	
-	private String getPage(String adr) throws IOException {
+	private String getPage(String adr,boolean dopost, String post) throws IOException {
 	//	Log.d(getClass().getSimpleName(), "getpage() gpsclient");
+		 HttpURLConnection con;
 		int portOfProxy = android.net.Proxy.getDefaultPort();
 		if (portOfProxy > 0) {
 			Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(
 					android.net.Proxy.getDefaultHost(), portOfProxy));
-			HttpURLConnection con = (HttpURLConnection) new URL(adr)
-					.openConnection(proxy);
+			 con = (HttpURLConnection) new URL(adr)
+					.openConnection(proxy);}
+		 else {
+				 con = (HttpURLConnection) new URL(adr)
+						.openConnection();}
 			con.setReadTimeout(10000);
 			con.setConnectTimeout(30000);
+			if (dopost){
+				con.setRequestMethod("POST");
+				 con.setDoOutput(true);
+		         con.setDoInput(true);
+		     	OutputStream os = con.getOutputStream();
+	        	os.write( post.getBytes()); 
+	        	Log.d(this.getClass().getName(),"Что POSTим"+ post);
+	            os.flush();
+	            os.close();
+			}
+			
 			con.connect();
 			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				return inputStreamToString(con.getInputStream());
 			} else {
 				return getString(R.string.ErrorRecieve);
-			}
-		} else {
-			HttpURLConnection con = (HttpURLConnection) new URL(adr)
-					.openConnection();
-			con.setReadTimeout(10000);
-			con.setConnectTimeout(30000);
-			con.connect();
-			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				return inputStreamToString(con.getInputStream());
-			} else {
-				return getString(R.string.ErrorRecieve);
-			}
+//			}
+//		}
+//			con.setReadTimeout(10000);
+//			con.setConnectTimeout(30000);
+//			con.connect();
+//			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+//				return inputStreamToString(con.getInputStream());
+//			} else {
+//				return getString(R.string.ErrorRecieve);
+//			}
 		}
 
 	}
@@ -562,6 +580,30 @@ invokeService();
 		bufferedReader.close();
 		return stringBuilder.toString();
 	}
+	
+	private static String convertToHex(byte[] data) { 
+	    StringBuffer buf = new StringBuffer();
+	    for (int i = 0; i < data.length; i++) { 
+	        int halfbyte = (data[i] >>> 4) & 0x0F;
+	        int two_halfs = 0;
+	        do { 
+	            if ((0 <= halfbyte) && (halfbyte <= 9)) 
+	                buf.append((char) ('0' + halfbyte));
+	            else 
+	                buf.append((char) ('a' + (halfbyte - 10)));
+	            halfbyte = data[i] & 0x0F;
+	        } while(two_halfs++ < 1);
+	    } 
+	    return buf.toString();
+	} 
+	
+	public static String SHA1(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException  { 
+	    MessageDigest md = MessageDigest.getInstance("SHA-1");
+	    byte[] sha1hash = new byte[40];
+	    md.update(text.getBytes("iso-8859-1"), 0, text.length());
+	    sha1hash = md.digest();
+	    return convertToHex(sha1hash);
+	} 
 
 	private class RequestAuthTask extends AsyncTask<Void, Void, Void> {
 		private String authtext;
@@ -596,7 +638,7 @@ dialog.dismiss();
 		protected Void doInBackground(Void... params) {
 			try {
 			//	Log.d(this.getClass().getName(), "Начинаем запрос авторизации.");
-				authtext = getPage("http://auth.t.esya.ru/?who=OsMoDroid");
+				authtext = getPage("http://auth.t.esya.ru/?who=OsMoDroid",false,"");
 				JSONObject auth = new JSONObject(authtext);
 				hash = auth.getString("hash");
 				n = auth.getInt("n");
@@ -624,4 +666,64 @@ dialog.dismiss();
 			return null;
 		}
 	}
+	
+	private class RequestCommandTask extends AsyncTask<String, Void, JSONObject> {
+		private String Commandtext;
+		private Boolean Err = true;
+		ProgressDialog dialog = ProgressDialog.show(GPSLocalServiceClient.this, "", "Выполнение команды, Подождите пожалуйста...", true);
+//Dialog dial = Dialog.
+
+		protected void onPreExecute(){
+	        //dialog.dismiss();
+	     	        dialog.show();
+	    }
+
+		
+		protected void onPostExecute(Void params) {
+		//	Log.d(this.getClass().getName(), "Задание окончило выполнятся.");
+dialog.dismiss();
+			if (!Err) {
+				Toast.makeText(GPSLocalServiceClient.this,
+						getString(R.string.CheckInternet),
+						5).show();
+					} else {
+				WritePref();
+				ReadPref();
+				findViewById(R.id.startButton).setEnabled(true);
+				TextView t2 = (TextView) findViewById(R.id.URL);
+				t2.setText(getString(R.string.Adres) + viewurl);
+				Linkify.addLinks(t2, Linkify.ALL);
+						}
+		}
+
+		@Override
+		protected JSONObject doInBackground(String... params) {
+			JSONObject resJSON = null;
+			try {
+			//	Log.d(this.getClass().getName(), "Начинаем запрос авторизации.");
+				Commandtext = getPage(params[0],Boolean.parseBoolean(params[1]),params[2]);
+				
+				resJSON = new JSONObject(Commandtext);
+				//return  new JSONObject(Commandtext);
+				
+		//		Log.d(this.getClass().getName(), "Авторизация закончилась.");
+			
+			} catch (IOException e) {
+		
+				e.printStackTrace();
+				//Log.d(this.getClass().getName(), "Косяк2.");
+			//	Err = true;
+				// finish();
+
+			} catch (JSONException e) {
+						e.printStackTrace();
+			//			Log.d(this.getClass().getName(), "Косяк3.");
+				//Err = true;
+		
+			}
+			return resJSON;
+		}
+	}
+	
+	
 }

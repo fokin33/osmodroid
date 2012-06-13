@@ -41,4 +41,5 @@
 <string name="TrackCourseChange">Смена курса трека:</string>
 <string name="ServerError">Ошибка сервера</string>
 <string name="buffer">" Буфер:"</string>
+<string name="request">Запрос авторизации, Подождите пожалуйста...</string>
 </resources>
