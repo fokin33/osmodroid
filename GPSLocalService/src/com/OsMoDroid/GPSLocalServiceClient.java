@@ -45,6 +45,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 
 import android.text.ClipboardManager;
+import android.text.TextUtils.StringSplitter;
 
 import android.text.util.Linkify;
 import android.util.Log;
@@ -324,7 +325,8 @@ invokeService();
 		MenuItem auth = menu.add(0,1,0,R.string.RepeatAuth);
 		MenuItem mi = menu.add(0, 2, 0, R.string.Settings);
 		MenuItem mi3 = menu.add(0, 3, 0, R.string.EqualsParameters);
-		MenuItem mi4 = menu.add(0, 4, 0, "Получить линк");
+		MenuItem mi4 = menu.add(0, 4, 0, "Получить key");
+		MenuItem mi5 = menu.add(0, 5, 0, "Получить device");
 		
 		mi.setIntent(new Intent(this, PrefActivity.class));
 		
@@ -381,8 +383,17 @@ invokeService();
 		
 	}
 	if (item.getItemId()==4) {
+	String[] params={"http://auth.api.esya.ru","true","login=ToX&password=6564263872812680&key=G94y"};
 		RequestCommandTask Rq = new RequestCommandTask();
+		Rq.execute(params);
 	}
+	if (item.getItemId()==5) {
+		String[] params={"http://api.esya.ru/?system=om&key="+commandJSON.optString("key")+"&action=device&signature="+SHA1("system:om;action:device;key:"+commandJSON.optString("key")+";"+"--"+"JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6").substring(0, 24),"false",""};
+		//+commandJSON.optString("key")+
+		Log.d(getClass().getSimpleName(), params[0]);
+		RequestCommandTask Rq = new RequestCommandTask();
+			Rq.execute(params);
+		}
 	
 	return super.onOptionsItemSelected(item);
 	} 
@@ -529,7 +540,8 @@ invokeService();
 	
 	private String getPage(String adr,boolean dopost, String post) throws IOException {
 	//	Log.d(getClass().getSimpleName(), "getpage() gpsclient");
-		 HttpURLConnection con;
+		Log.d(getClass().getSimpleName(), adr);
+		HttpURLConnection con;
 		int portOfProxy = android.net.Proxy.getDefaultPort();
 		if (portOfProxy > 0) {
 			Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(
@@ -554,19 +566,15 @@ invokeService();
 			
 			con.connect();
 			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				return inputStreamToString(con.getInputStream());
+		//	String str=inputStreamToString(con.getInputStream());	
+			return inputStreamToString(con.getInputStream());
 			} else {
+				Log.d(this.getClass().getName(), Integer.toString( con.getResponseCode()));
+			//String str=inputStreamToString(con.getInputStream());
+			//	Log.d(this.getClass().getName(),str);
+			//	return str;
 				return getString(R.string.ErrorRecieve);
-//			}
-//		}
-//			con.setReadTimeout(10000);
-//			con.setConnectTimeout(30000);
-//			con.connect();
-//			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-//				return inputStreamToString(con.getInputStream());
-//			} else {
-//				return getString(R.string.ErrorRecieve);
-//			}
+
 		}
 
 	}
@@ -585,6 +593,17 @@ invokeService();
 		return stringBuilder.toString();
 	}
 	
+	public static String bytesToHex(byte[] b) {
+	      char hexDigit[] = {'0', '1', '2', '3', '4', '5', '6', '7',
+	                         '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+	      StringBuffer buf = new StringBuffer();
+	      for (int j=0; j<b.length; j++) {
+	         buf.append(hexDigit[(b[j] >> 4) & 0x0f]);
+	         buf.append(hexDigit[b[j] & 0x0f]);
+	      }
+	      return buf.toString();
+	   }
+	
 	private static String convertToHex(byte[] data) { 
 	    StringBuffer buf = new StringBuffer();
 	    for (int i = 0; i < data.length; i++) { 
@@ -601,12 +620,21 @@ invokeService();
 	    return buf.toString();
 	} 
 	
-	public static String SHA1(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException  { 
-	    MessageDigest md = MessageDigest.getInstance("SHA-1");
+	public  String SHA1(String text) { 
+		Log.d(this.getClass().getName(), text);
+		MessageDigest md;
 	    byte[] sha1hash = new byte[40];
-	    md.update(text.getBytes("iso-8859-1"), 0, text.length());
+		try {
+			md = MessageDigest.getInstance("SHA-1");
+		
+	 
+	    md.update(text.getBytes());//, 0, text.length());
 	    sha1hash = md.digest();
-	    return convertToHex(sha1hash);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();}
+		
+	    return bytesToHex(sha1hash);
 	} 
 
 	private class RequestAuthTask extends AsyncTask<Void, Void, Void> {
@@ -684,7 +712,7 @@ dialog.dismiss();
 
 		@Override
 		protected void onPostExecute(JSONObject resultJSON) {
-		//	Log.d(this.getClass().getName(), "Задание окончило выполнятся.");
+		
 dialog.dismiss();
 			if (resultJSON==null) {
 				Toast.makeText(GPSLocalServiceClient.this,
@@ -710,7 +738,7 @@ dialog.dismiss();
 			try {
 			//	Log.d(this.getClass().getName(), "Начинаем запрос авторизации.");
 				Commandtext = getPage(params[0],Boolean.parseBoolean(params[1]),params[2]);
-				
+				Log.d(this.getClass().getName(), Commandtext);
 				resJSON = new JSONObject(Commandtext);
 				//return  new JSONObject(Commandtext);
 				
