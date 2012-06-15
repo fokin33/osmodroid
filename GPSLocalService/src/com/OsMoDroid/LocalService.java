@@ -147,7 +147,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	StringBuilder stringBuilder= new StringBuilder();
 	PendingIntent pi;
 	private Object[] mStartForegroundArgs = new Object[2];
-	
+	private String pass;
 
 	final private static DecimalFormat df6 = new DecimalFormat("########.######");
 	final private static DecimalFormat df1 = new DecimalFormat("########.#");
@@ -487,6 +487,7 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 			usewake = settings.getBoolean("usewake", false);
 			notifyperiod = Integer.parseInt(settings.getString("notifyperiod", "30000").equals("") ? "30000" :settings.getString("notifyperiod","30000"));
 			sendsound = settings.getBoolean("sendsound", false);
+			//pass = settings.getString("pass", "");
 		}
 	
 	

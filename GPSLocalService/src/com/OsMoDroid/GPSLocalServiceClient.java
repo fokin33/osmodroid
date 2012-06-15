@@ -51,6 +51,7 @@ import android.text.util.Linkify;
 import android.util.Log;
 //import android.util.Log;
 //import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,12 +59,15 @@ import android.view.View.OnClickListener;
 
 import android.widget.Button;
 
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class GPSLocalServiceClient extends Activity  {
-	private JSONObject commandJSON;
+	private String key="";
+	private String login="";
+	//private JSONObject commandJSON;
 	private int speedbearing_gpx;
 	private int bearing_gpx;
 	private long notifyperiod=30000;
@@ -85,7 +89,7 @@ public class GPSLocalServiceClient extends Activity  {
 	private int hdop;
 	private int period;
 	private int distance;
-	
+	private String pass="";
 	private String hash;
 	private int n;
 	private String submiturl;
@@ -325,8 +329,8 @@ invokeService();
 		MenuItem auth = menu.add(0,1,0,R.string.RepeatAuth);
 		MenuItem mi = menu.add(0, 2, 0, R.string.Settings);
 		MenuItem mi3 = menu.add(0, 3, 0, R.string.EqualsParameters);
-		MenuItem mi4 = menu.add(0, 4, 0, "Получить key");
-		MenuItem mi5 = menu.add(0, 5, 0, "Получить device");
+		MenuItem mi4 = menu.add(0, 4, 0, R.string.getkey);
+		MenuItem mi5 = menu.add(0, 5, 0, R.string.getadres);
 		
 		mi.setIntent(new Intent(this, PrefActivity.class));
 		
@@ -382,17 +386,61 @@ invokeService();
 		    alertdialog1.show();
 		
 	}
-	if (item.getItemId()==4) {
-	String[] params={"http://auth.api.esya.ru","true","login=ToX&password=6564263872812680&key=G94y"};
-		RequestCommandTask Rq = new RequestCommandTask();
-		Rq.execute(params);
+	if (item.getItemId()==4  ) {
+		
+//         final View textEntryView = factory.inflate(R.layout.dialog, null);
+         final EditText input = new EditText(this);
+  
+
+         AlertDialog alertdialog3 = new AlertDialog.Builder(GPSLocalServiceClient.this)
+             .setTitle("Код приложения")
+             .setView(input)
+             .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                 public void onClick(DialogInterface dialog, int whichButton) {
+//pass=textEntryView.
+                	pass=input.getText().toString();
+                	 /* User clicked OK so do some stuff */
+                	 if( !(pass.equals(""))){
+                			String[] params={"http://auth.api.esya.ru","true","login="+login+"&password="+pass +"&key=G94y"};
+                			RequestCommandTask Rq = new RequestCommandTask();
+                			Rq.execute(params);}
+                			else {
+                				Toast.makeText(GPSLocalServiceClient.this,
+                						R.string.noappcode,
+                						5).show();
+                		}
+                 }
+             })
+             .setNegativeButton(R.string.No, new DialogInterface.OnClickListener() {
+                 public void onClick(DialogInterface dialog, int whichButton) {
+
+                     /* User clicked cancel so do some stuff */
+                 }
+             })
+             .create();
+
+         alertdialog3.show();
+		
+		
+		//6564263872812680
+		
+	
+		
 	}
-	if (item.getItemId()==5) {
-		String[] params={"http://api.esya.ru/?system=om&key="+commandJSON.optString("key")+"&action=device&signature="+SHA1("system:om;action:device;key:"+commandJSON.optString("key")+";"+"--"+"JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6").substring(0, 24),"false",""};
+	if (item.getItemId()==5  ) {
+		if ( !(key.equals(""))){
+		String[] params={"http://api.esya.ru/?system=om&action=get_device_link&hash="+hash+"&n="+n+"&key="+key+"&signature="+SHA1("system:om;action:get_device_link;hash:"+hash+";n:"+n+";key:"+key+";"+"--"+"JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6").substring(1, 25),"false",""};
+		//String[] params={"http://api.esya.ru/?system=om&action=device&key="+commandJSON.optString("key")+"&signature="+SHA1("system:om;action:device;key:"+commandJSON.optString("key")+";"+"--"+"JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6").substring(1, 25),"false",""};
 		//+commandJSON.optString("key")+
 		Log.d(getClass().getSimpleName(), params[0]);
 		RequestCommandTask Rq = new RequestCommandTask();
-			Rq.execute(params);
+			Rq.execute(params);}
+		 else {
+				Toast.makeText(GPSLocalServiceClient.this,
+						R.string.nokey,
+						5).show();
+		}
+			
 		}
 	
 	return super.onOptionsItemSelected(item);
@@ -430,6 +478,8 @@ invokeService();
 		editor.putBoolean("usebuffer", usebuffer);
 		editor.putBoolean("sendsound", sendsound);
 		editor.putString("notifyperiod", Long.toString(notifyperiod));
+		//editor.putString("pass", pass);
+		editor.putString("login", login);
 		editor.commit();
 
 	}
@@ -474,7 +524,8 @@ invokeService();
 		usewake = settings.getBoolean("usewake", false);
 		notifyperiod = Integer.parseInt(settings.getString("notifyperiod", "30000").equals("") ? "30000" :settings.getString("notifyperiod","30000"));
 		sendsound = settings.getBoolean("sendsound", false);
-	
+		//pass = settings.getString("pass", "");
+	login=settings.getString("login", "");
 	}
 
 	private void bindService() {
@@ -595,7 +646,7 @@ invokeService();
 	
 	public static String bytesToHex(byte[] b) {
 	      char hexDigit[] = {'0', '1', '2', '3', '4', '5', '6', '7',
-	                         '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+	                         '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 	      StringBuffer buf = new StringBuffer();
 	      for (int j=0; j<b.length; j++) {
 	         buf.append(hexDigit[(b[j] >> 4) & 0x0f]);
@@ -604,21 +655,7 @@ invokeService();
 	      return buf.toString();
 	   }
 	
-	private static String convertToHex(byte[] data) { 
-	    StringBuffer buf = new StringBuffer();
-	    for (int i = 0; i < data.length; i++) { 
-	        int halfbyte = (data[i] >>> 4) & 0x0F;
-	        int two_halfs = 0;
-	        do { 
-	            if ((0 <= halfbyte) && (halfbyte <= 9)) 
-	                buf.append((char) ('0' + halfbyte));
-	            else 
-	                buf.append((char) ('a' + (halfbyte - 10)));
-	            halfbyte = data[i] & 0x0F;
-	        } while(two_halfs++ < 1);
-	    } 
-	    return buf.toString();
-	} 
+	
 	
 	public  String SHA1(String text) { 
 		Log.d(this.getClass().getName(), text);
@@ -628,8 +665,8 @@ invokeService();
 			md = MessageDigest.getInstance("SHA-1");
 		
 	 
-	    md.update(text.getBytes());//, 0, text.length());
-	    sha1hash = md.digest();
+	    //md.update(text.getBytes());//, 0, text.length());
+	    sha1hash = md.digest(text.getBytes());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();}
@@ -719,7 +756,18 @@ dialog.dismiss();
 						getString(R.string.CheckInternet),
 						5).show();
 					} else {
-						commandJSON=resultJSON;
+						//commandJSON=resultJSON;
+					
+						if (!(resultJSON.optString("key")==null))
+						{key=resultJSON.optString("key");}
+						if (!(resultJSON.optString("url")==null))
+						{viewurl=resultJSON.optString("url");
+						TextView t2 = (TextView) findViewById(R.id.URL);
+						t2.setText(getString(R.string.Adres) + viewurl);
+						Linkify.addLinks(t2, Linkify.ALL);
+						}
+						WritePref();
+						
 						Toast.makeText(GPSLocalServiceClient.this,
 								resultJSON.toString(),
 								5).show();
