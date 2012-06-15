@@ -634,7 +634,7 @@ invokeService();
 			// TODO Auto-generated catch block
 			e.printStackTrace();}
 		
-	    return bytesToHex(sha1hash);
+	    return convertToHex(sha1hash);
 	} 
 
 	private class RequestAuthTask extends AsyncTask<Void, Void, Void> {
