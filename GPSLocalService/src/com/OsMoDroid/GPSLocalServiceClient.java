@@ -480,6 +480,7 @@ invokeService();
 		editor.putString("notifyperiod", Long.toString(notifyperiod));
 		//editor.putString("pass", pass);
 		editor.putString("login", login);
+		editor.putString("key", key);
 		editor.commit();
 
 	}
@@ -524,7 +525,7 @@ invokeService();
 		usewake = settings.getBoolean("usewake", false);
 		notifyperiod = Integer.parseInt(settings.getString("notifyperiod", "30000").equals("") ? "30000" :settings.getString("notifyperiod","30000"));
 		sendsound = settings.getBoolean("sendsound", false);
-		//pass = settings.getString("pass", "");
+		key = settings.getString("key", "");
 	login=settings.getString("login", "");
 	}
 
