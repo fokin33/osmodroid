@@ -6,19 +6,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URL;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-//import java.text.SimpleDateFormat;
-//import java.util.Date;
-//import java.util.Timer;
-//import java.util.TimerTask;
-
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -45,13 +37,8 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 
 import android.text.ClipboardManager;
-import android.text.TextUtils.StringSplitter;
-
 import android.text.util.Linkify;
 import android.util.Log;
-//import android.util.Log;
-//import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -192,6 +179,7 @@ invokeService();
 		Button start = (Button) findViewById(R.id.startButton);
 		Button exit = (Button) findViewById(R.id.exitButton);
 		Button copy = (Button) findViewById(R.id.copyButton);
+		Button send = (Button) findViewById(R.id.SendButton);
 		start.setEnabled(false);
 		exit.setEnabled(false);
 		exit.setOnClickListener(new OnClickListener() {
@@ -222,6 +210,16 @@ invokeService();
 			//clipboard.setPrimaryClip(clip);
 			}
 		});
+		send.setOnClickListener(new OnClickListener() {
+			public void onClick(View v){
+				 //Intent sendIntent = new Intent(android.content.Intent.ACTION_SEND);
+				 Intent sendIntent = new Intent(Intent.ACTION_SEND);
+				sendIntent.setType("text/plain");
+				 sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, viewurl);
+				 startActivity(Intent.createChooser(sendIntent,"Email"));
+
+				}
+			});
 		
 		start.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -422,7 +420,7 @@ invokeService();
          alertdialog3.show();
 		
 		
-		//6564263872812680
+		//6564 2638 7281 2680
 		
 	
 		
@@ -760,9 +758,9 @@ dialog.dismiss();
 					} else {
 						//commandJSON=resultJSON;
 					
-						if (!(resultJSON.optString("key")==null))
+						if (!(resultJSON.optString("key").equals("")))
 						{key=resultJSON.optString("key");}
-						if (!(resultJSON.optString("url")==null))
+						if (!(resultJSON.optString("url").equals("")))
 						{viewurl=resultJSON.optString("url");
 						TextView t2 = (TextView) findViewById(R.id.URL);
 						t2.setText(getString(R.string.Adres) + viewurl);

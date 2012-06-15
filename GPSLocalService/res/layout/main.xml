@@ -22,6 +22,12 @@
      android:layout_height="wrap_content"
      android:text="Скопировать" />
 
+ <Button
+     android:id="@+id/SendButton"
+     android:layout_width="fill_parent"
+     android:layout_height="wrap_content"
+     android:text="Отправить" />
+
 <Button
     android:id="@+id/startButton"
     android:layout_width="fill_parent"

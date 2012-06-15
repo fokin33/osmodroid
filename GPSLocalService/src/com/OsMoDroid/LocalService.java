@@ -1,6 +1,5 @@
 package com.OsMoDroid;
 
-import android.net.Uri;
 import android.os.Vibrator;
 import java.io.BufferedReader;
 import java.io.File;
