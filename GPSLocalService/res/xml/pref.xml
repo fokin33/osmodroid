@@ -32,6 +32,7 @@
             android:key="n"
             android:title="Контрольное число" >
         </EditTextPreference>
+        <EditTextPreference android:key="login" android:title="Логин на сайт"/>
     </PreferenceScreen>
     <PreferenceScreen android:title="Параметры передачи" >
         <EditTextPreference

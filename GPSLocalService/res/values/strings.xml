@@ -42,4 +42,8 @@
 <string name="ServerError">Ошибка сервера</string>
 <string name="buffer">" Буфер:"</string>
 <string name="request">Запрос авторизации, Подождите пожалуйста...</string>
+<string name="noappcode">Не указан код приложения</string>
+<string name="nokey">Вы не получили ключ</string>
+<string name="getkey">Получить ключ</string>
+<string name="getadres">Получить адрес</string>
 </resources>
