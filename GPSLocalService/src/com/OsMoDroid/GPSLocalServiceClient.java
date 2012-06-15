@@ -480,6 +480,7 @@ invokeService();
 		editor.putString("notifyperiod", Long.toString(notifyperiod));
 		//editor.putString("pass", pass);
 		editor.putString("login", login);
+		editor.putString("key", key);
 		editor.commit();
 
 	}
@@ -526,6 +527,7 @@ invokeService();
 		sendsound = settings.getBoolean("sendsound", false);
 		//pass = settings.getString("pass", "");
 	login=settings.getString("login", "");
+	key=settings.getString("key", "");
 	}
 
 	private void bindService() {
@@ -767,7 +769,7 @@ dialog.dismiss();
 						Linkify.addLinks(t2, Linkify.ALL);
 						}
 						WritePref();
-						
+						ReadPref();
 						Toast.makeText(GPSLocalServiceClient.this,
 								resultJSON.toString(),
 								5).show();
