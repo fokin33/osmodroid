@@ -329,6 +329,7 @@ invokeService();
 		MenuItem mi3 = menu.add(0, 3, 0, R.string.EqualsParameters);
 		MenuItem mi4 = menu.add(0, 4, 0, R.string.getkey);
 		MenuItem mi5 = menu.add(0, 5, 0, R.string.getadres);
+		MenuItem mi6 = menu.add(0, 6, 0, "Получить device");
 		
 		mi.setIntent(new Intent(this, PrefActivity.class));
 		
@@ -440,6 +441,23 @@ invokeService();
 		}
 			
 		}
+	
+	if (item.getItemId()==6  ) {
+		if ( !(key.equals(""))){
+		String[] params={"http://api.esya.ru/?system=om&action=device"+"&key="+key+"&signature="+SHA1("system:om;action:device;key:"+key+";"+"--"+"JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6").substring(1, 25),"false",""};
+		//String[] params={"http://api.esya.ru/?system=om&action=device&key="+commandJSON.optString("key")+"&signature="+SHA1("system:om;action:device;key:"+commandJSON.optString("key")+";"+"--"+"JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6").substring(1, 25),"false",""};
+		//+commandJSON.optString("key")+
+		Log.d(getClass().getSimpleName(), params[0]);
+		RequestCommandTask Rq = new RequestCommandTask();
+			Rq.execute(params);}
+		 else {
+				Toast.makeText(GPSLocalServiceClient.this,
+						R.string.nokey,
+						5).show();
+		}
+			
+		}
+	
 	
 	return super.onOptionsItemSelected(item);
 	} 
