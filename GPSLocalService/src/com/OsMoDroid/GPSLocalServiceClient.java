@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
@@ -40,11 +41,15 @@ import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.View.OnClickListener;
 
 import android.widget.Button;
 
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -89,6 +94,10 @@ public class GPSLocalServiceClient extends Activity {
 	private int sendcounter;
 	private boolean usebuffer = false;
 	private boolean usewake = false;
+	MenuItem mi4;
+	MenuItem mi5;
+	MenuItem mi6;
+	MenuItem mi7;
 
 	private ServiceConnection conn = new ServiceConnection() {
 
@@ -174,8 +183,7 @@ public class GPSLocalServiceClient extends Activity {
 			strVersionName = packageInfo.packageName + " "
 					+ packageInfo.versionName;
 		} catch (NameNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		setContentView(R.layout.main);
 		setTitle(strVersionName);
@@ -294,6 +302,20 @@ public class GPSLocalServiceClient extends Activity {
 		// Log.d(getClass().getSimpleName(), "onResume() gpsclient");
 		ReadPref();
 		WritePref();
+		
+		OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+			  public void onSharedPreferenceChanged(SharedPreferences prefs, String keychanged) {
+			    if (keychanged.equals("hash")) {device=null;}
+			    if (keychanged.equals("login")) {key="";}
+			  }
+			};
+
+			SharedPreferences settings = PreferenceManager
+					.getDefaultSharedPreferences(this);
+			settings.registerOnSharedPreferenceChangeListener(listener);
+
+		
+		
 		started = checkStarted();
 		updateServiceStatus();
 		if (started) {
@@ -334,18 +356,34 @@ public class GPSLocalServiceClient extends Activity {
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuItem auth = menu.add(0, 1, 0, R.string.RepeatAuth);
+		SubMenu menu1 = menu.addSubMenu(Menu.NONE, 11, 4,"Команды");
+		SubMenu menu2 = menu.addSubMenu(Menu.NONE, 12, 4,"Дополнительно");
+		
+		MenuItem auth = menu2.add(0, 1, 0, R.string.RepeatAuth);
 		MenuItem mi = menu.add(0, 2, 0, R.string.Settings);
-		MenuItem mi3 = menu.add(0, 3, 0, R.string.EqualsParameters);
-		MenuItem mi4 = menu.add(0, 4, 0, R.string.getkey);
-		MenuItem mi5 = menu.add(0, 5, 0, R.string.getadres);
-		MenuItem mi6 = menu.add(0, 6, 0, "Получить device");
-		MenuItem mi7 = menu.add(0, 7, 0, "Войти в канал");
+		MenuItem mi3 = menu2.add(0, 3, 0, R.string.EqualsParameters);
+		 mi4 = menu1.add(0, 4, 0, R.string.getkey);
+		 mi5 = menu1.add(0, 5, 0, R.string.getadres);
+		 mi6 = menu1.add(0, 6, 0, R.string.getdevice);
+		 mi7 = menu1.add(0, 7, 0, R.string.enterchanel);
 		mi.setIntent(new Intent(this, PrefActivity.class));
-
+		
 		// Log.d(getClass().getSimpleName(), "onCreateOptionsmenu() gpsclient");
 		return super.onCreateOptionsMenu(menu);
 	}
+	@Override
+	public boolean onPrepareOptionsMenu (Menu menu){
+
+		
+		if (login.equals("")){ mi4.setEnabled(false);} else {mi4.setEnabled(true);}
+		if (key.equals("")){ mi6.setEnabled(false); mi5.setEnabled(false);} else { mi6.setEnabled(true); mi5.setEnabled(true);}
+		if (device==null){ mi7.setEnabled(false);}
+		else {
+			mi7.setEnabled(true);
+			mi7.isEnabled();
+			}
+		
+		return super.onPrepareOptionsMenu(menu);}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -411,12 +449,26 @@ public class GPSLocalServiceClient extends Activity {
 
 			// final View textEntryView = factory.inflate(R.layout.dialog,
 			// null);
-			final EditText input = new EditText(this);
+			LinearLayout layout = new LinearLayout(this);
+			layout.setOrientation(LinearLayout.VERTICAL);
 
+			final TextView txv3 = new TextView(this);
+			txv3.setText("Одноразовый пароль:");
+			layout.addView(txv3);
+			
+			final EditText input = new EditText(this);
+			//input2.setText("Ваше имя");
+			layout.addView(input);
+		//	final EditText input = new EditText(this);
+			final TextView txv4 = new TextView(this);
+			txv4.setText("Одноразовый пароль можно получить по адресу http://esya.ru/app.html?act=add после регистрации");
+			Linkify.addLinks(txv4, Linkify.ALL);
+			layout.addView(txv4);
+			
 			AlertDialog alertdialog3 = new AlertDialog.Builder(
 					GPSLocalServiceClient.this)
-					.setTitle("Код приложения")
-					.setView(input)
+					.setTitle("Подключение приложения")
+					.setView(layout)
 					.setPositiveButton(R.string.yes,
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
@@ -519,21 +571,57 @@ public class GPSLocalServiceClient extends Activity {
 
 		}
 		if (item.getItemId() == 7) {
-			LinearLayout layout = new LinearLayout(this);
-			layout.setOrientation(layout.VERTICAL);
-
+			if (!(device==null)) { 
 			
-			final EditText input = new EditText(this);
-			input.setText("Код канала");
-			layout.addView(input);
+			LinearLayout layout = new LinearLayout(this);
+			layout.setOrientation(LinearLayout.VERTICAL);
 
-			final EditText input1 = new EditText(this);
-			input1.setText("Ключ канала");
-			layout.addView(input1);
+			final TextView txv3 = new TextView(this);
+			txv3.setText("Ваше имя:");
+			layout.addView(txv3);
 			
 			final EditText input2 = new EditText(this);
-			input2.setText("Ваше имя");
+			//input2.setText("Ваше имя");
 			layout.addView(input2);
+			
+final TextView txv1 = new TextView(this);
+txv1.setText("Код канала:");
+layout.addView(txv1);
+			final EditText input = new EditText(this);
+			//input.setText("Код канала");
+			layout.addView(input);
+
+			final CheckBox chb1 = new CheckBox(this);
+			chb1.setText("Приватный канал");
+			
+			layout.addView(chb1);
+			
+			final TextView txv2 = new TextView(this);
+			txv2.setText("Ключ канала:");
+			//txv2.setEnabled(false);
+			layout.addView(txv2);
+			
+			
+			
+			final EditText input1 = new EditText(this);
+			//input1.setText("Ключ канала");
+			input1.setEnabled(false);
+			layout.addView(input1);
+			
+			chb1.setOnCheckedChangeListener(new OnCheckedChangeListener()
+			{
+			   
+
+				public void onCheckedChanged(CompoundButton buttonView,
+						boolean isChecked) {
+				input1.setEnabled(true);
+					
+				}
+			});
+			
+			
+			
+			
 			
 			AlertDialog alertdialog4 = new AlertDialog.Builder(
 					GPSLocalServiceClient.this)
@@ -550,17 +638,18 @@ public class GPSLocalServiceClient extends Activity {
 									String canalname = input2.getText().toString();
 
 									/* User clicked OK so do some stuff */
-									if (!(canalid.equals(""))) {
+									if ( !(canalid.equals("")) && !(canalname.equals("")) && ( chb1.isChecked()&&(!(canalkey.equals(""))) || !chb1.isChecked() )  )
+									{
 										String[] params = {
 												"http://api.esya.ru/?system=om&action=channel_enter"+"&code="+canalid
-												+"&key="+canalkey
+												+"&pass="+canalkey
 												+"&device="+device
 												+"&name="+canalname
 														+ "&key="
 														+ key
 														+ "&signature="
 														+ SHA1(
-																"system:om;action:channel_enter;code:"+canalid+";key:"+canalkey+";device:"+device+";name:"+canalname+ ";key:"
+																"system:om;action:channel_enter;code:"+canalid+";pass:"+canalkey+";device:"+device+";name:"+canalname+ ";key:"
 																		+ key
 																		+ ";"
 																		+ "--"
@@ -574,7 +663,7 @@ public class GPSLocalServiceClient extends Activity {
 									} else {
 										Toast.makeText(
 												GPSLocalServiceClient.this,
-												R.string.noappcode, 5).show();
+												"Указаны не все данные", 5).show();
 									}
 								}
 							})
@@ -591,11 +680,14 @@ public class GPSLocalServiceClient extends Activity {
 
 			// 6564 2638 7281 2680
 
-		}
+		}else {Toast.makeText(
+				GPSLocalServiceClient.this,
+				"Предварительно запросите устройство", 5).show();}
 		
-		
+		} 
 		
 		return super.onOptionsItemSelected(item);
+		
 	}
 
 	private void WritePref() {
@@ -910,6 +1002,9 @@ public class GPSLocalServiceClient extends Activity {
 
 	private class RequestCommandTask extends AsyncTask<String, Void, String> {
 		private String Commandtext;
+		private String adevice;
+		private String akey;
+		private String aviewurl;
 		// private Boolean Err = true;
 		ProgressDialog dialog = ProgressDialog.show(GPSLocalServiceClient.this,
 				"", "Выполнение команды, Подождите пожалуйста...", true);
@@ -930,6 +1025,9 @@ public class GPSLocalServiceClient extends Activity {
 						getString(R.string.CheckInternet), 5).show();
 			} else {
 				// commandJSON=resultJSON;
+if (!(adevice==null)){device=adevice;}
+if (!(akey==null)){key=akey;}
+if (!(aviewurl==null)){viewurl=aviewurl;}
 
 				TextView t2 = (TextView) findViewById(R.id.URL);
 				t2.setText(getString(R.string.Adres) + viewurl);
@@ -979,8 +1077,8 @@ public class GPSLocalServiceClient extends Activity {
 				// commandJSON=resultJSON;
 				if (params[3].equals("auth")) {
 					if (!(resJSON.optString("key").equals(""))) {
-						key = resJSON.optString("key");
-						returnstr = "Key найден";
+						akey = resJSON.optString("key");
+						returnstr = "Ключ получен";
 					} else {
 						returnstr = "Key узнать неудалось";
 					}
@@ -988,7 +1086,7 @@ public class GPSLocalServiceClient extends Activity {
 
 				if (params[3].equals("get_device_link")) {
 					if (!(resJSON.optString("url").equals(""))) {
-						viewurl = resJSON.optString("url");
+						aviewurl = resJSON.optString("url");
 						returnstr = "URL найден";
 					} else {
 						returnstr = "URL узнать не удалось";
@@ -1003,16 +1101,16 @@ public class GPSLocalServiceClient extends Activity {
 								if (resJSON.optJSONArray("devices")
 										.getJSONObject(i).getString("hash")
 										.equals(hash)) {
-									device = resJSON.optJSONArray("devices")
+									adevice = resJSON.optJSONArray("devices")
 											.getJSONObject(i).getString("u");
-									Log.d(this.getClass().getName(), device);
+									Log.d(this.getClass().getName(), adevice);
 								}
 							} catch (JSONException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
-						if (device == null) {
+						if (adevice == null) {
 							returnstr = "Устройство узнать не удалось";
 						} else {
 							returnstr = "Устройство найдено";
@@ -1022,16 +1120,15 @@ public class GPSLocalServiceClient extends Activity {
 
 				}
 
-				if (params[3].equals("chanel_enter")) {
+				if (params[3].equals("channel_enter")) {
 					if (!(resJSON.optString("state").equals(""))) {
-						returnstr = resJSON.optString("state");
+						returnstr = resJSON.optString("state")+" "+ resJSON.optString("error_description");
 						
 					} else {
 						returnstr = "Результат входа в канал не получен";
 					}
 				}
-				WritePref();
-				ReadPref();
+				
 				// Toast.makeText(GPSLocalServiceClient.this,resJSON.toString(),5).show();
 
 			}

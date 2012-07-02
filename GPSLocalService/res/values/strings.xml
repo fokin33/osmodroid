@@ -46,4 +46,6 @@
 <string name="nokey">Вы не получили ключ</string>
 <string name="getkey">Получить ключ</string>
 <string name="getadres">Получить адрес</string>
+<string name="getdevice">Получить устройство</string>
+<string name="enterchanel">Войти в канал</string>
 </resources>
