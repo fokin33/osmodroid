@@ -72,7 +72,7 @@
             android:numeric="integer"
             android:summary="Метры"
             android:title="Допустимая точность" />
-    </PreferenceScreen>
+    <EditTextPreference android:key="speed" android:title="Минимальная скорость отправки" android:summary="Метров в секунду" android:digits="0123456789" android:inputType="number" /></PreferenceScreen>
     <PreferenceScreen android:title="Параметры записи" >
         <EditTextPreference
             android:digits="0123456789"
@@ -111,6 +111,7 @@
             android:numeric="integer"
             android:summary="Метры"
             android:title="Допустимая точность" />
+        
     </PreferenceScreen>
     <PreferenceScreen android:title="Оповещение" >
         <CheckBoxPreference

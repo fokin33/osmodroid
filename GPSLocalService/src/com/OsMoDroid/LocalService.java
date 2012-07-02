@@ -95,6 +95,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	private double prevbrng_gpx;
 	private float speedbearing ;
 	private float bearing ;
+	private int speed;
 	private boolean beepedon=false;
 	private boolean beepedoff=false;
 	private boolean gpsbeepedon=false;
@@ -460,7 +461,8 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 		//	Log.d(getClass().getSimpleName(), "readpref() gpsclient");
 			SharedPreferences settings = PreferenceManager
 					.getDefaultSharedPreferences(this);
-
+			speed =  Integer.parseInt(settings.getString("speed", "3").equals(
+					"") ? "3" : settings.getString("speed", "3"));
 			period = Integer.parseInt(settings.getString("period", "10000").equals("") ? "10000" : settings.getString("period", "10000") );
 			distance = Integer.parseInt(settings.getString("distance", "50").equals("") ? "50" :settings.getString("distance","50"));
 			hash = settings.getString("hash", "");
@@ -664,7 +666,7 @@ if (gpx && fileheaderok) {
 			sendBroadcast(in);	
 		
 		if (
-				(int)location.getAccuracy()<hdop &&
+				(int)location.getAccuracy()<hdop &&(int)location.getSpeed()>=speed &&
 				(location.distanceTo(prevlocation)>distance || location.getTime()>(prevlocation.getTime()+period) || (location.getSpeed()>=speedbearing && Math.abs(brng-prevbrng)>=bearing))) 
 		{	
 	
@@ -681,7 +683,7 @@ if (gpx && fileheaderok) {
 		}
 		 else {
 			 //Log.d(this.getClass().getName(), "Отправляем без курса");
-			 if ((int)location.getAccuracy()<hdop&&(location.distanceTo(prevlocation)>distance || location.getTime()>(prevlocation.getTime()+period)))
+			 if ((int)location.getAccuracy()<hdop &&(int)location.getSpeed()>=speed &&(location.distanceTo(prevlocation)>distance || location.getTime()>(prevlocation.getTime()+period)))
 			 {	 
 				 //Log.d(this.getClass().getName(), "Accuracey"+location.getAccuracy()+"hdop"+hdop);
 					prevlocation.setLatitude(location.getLatitude());

@@ -59,6 +59,7 @@ public class GPSLocalServiceClient extends Activity {
 	private String key = "";
 	private String login = "";
 	// private JSONObject commandJSON;
+	private int speed;
 	private int speedbearing_gpx;
 	private int bearing_gpx;
 	private long notifyperiod = 30000;
@@ -87,6 +88,7 @@ public class GPSLocalServiceClient extends Activity {
 	private String viewurl;
 	private String pdaviewurl;
 	private String device;
+	private String devicename;
 	private String position;
 	private String sendresult;
 	// private Timer timer;
@@ -115,6 +117,32 @@ public class GPSLocalServiceClient extends Activity {
 			// Log.d(getClass().getSimpleName(), "onservicedisconnected");
 		}
 	};
+	
+	public static String unescape (String s)
+	{
+	    while (true)
+	    {
+	        int n=s.indexOf("&#");
+	        if (n<0) break;
+	        int m=s.indexOf(";",n+2);
+	        if (m<0) break;
+	        try
+	        {
+	            s=s.substring(0,n)+(char)(Integer.parseInt(s.substring(n+2,m)))+
+	                s.substring(m+1);
+	        }
+	        catch (Exception e)
+	        {
+	            return s;
+	        }
+	    }
+	    s=s.replace("&quot;","\"");
+	    s=s.replace("&lt;","<");
+	    s=s.replace("&gt;",">");
+	    s=s.replace("&amp;","&");
+	    return s;
+	}
+
 
 	// @Override
 	// protected void onPause(){
@@ -303,10 +331,13 @@ public class GPSLocalServiceClient extends Activity {
 		ReadPref();
 		WritePref();
 		
+		started = checkStarted();
+		updateServiceStatus();
 		OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 			  public void onSharedPreferenceChanged(SharedPreferences prefs, String keychanged) {
 			    if (keychanged.equals("hash")) {device=null;}
 			    if (keychanged.equals("login")) {key="";}
+			    if (started){bindService();}
 			  }
 			};
 
@@ -315,9 +346,7 @@ public class GPSLocalServiceClient extends Activity {
 			settings.registerOnSharedPreferenceChangeListener(listener);
 
 		
-		
-		started = checkStarted();
-		updateServiceStatus();
+	
 		if (started) {
 			Button start = (Button) findViewById(R.id.startButton);
 			Button stop = (Button) findViewById(R.id.exitButton);
@@ -695,6 +724,7 @@ layout.addView(txv1);
 		SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		SharedPreferences.Editor editor = settings.edit();
+		editor.putString("speed", Integer.toString(speed));
 		editor.putString("period", Integer.toString(period));
 		editor.putString("distance", Integer.toString(distance));
 		editor.putString("hash", hash);
@@ -740,6 +770,8 @@ layout.addView(txv1);
 		SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(this);
 
+		speed =  Integer.parseInt(settings.getString("speed", "3").equals(
+				"") ? "3" : settings.getString("speed", "3"));
 		period = Integer.parseInt(settings.getString("period", "10000").equals(
 				"") ? "10000" : settings.getString("period", "10000"));
 		distance = Integer.parseInt(settings.getString("distance", "50")
@@ -1005,6 +1037,7 @@ layout.addView(txv1);
 		private String adevice;
 		private String akey;
 		private String aviewurl;
+		private String adevicename;
 		// private Boolean Err = true;
 		ProgressDialog dialog = ProgressDialog.show(GPSLocalServiceClient.this,
 				"", "Выполнение команды, Подождите пожалуйста...", true);
@@ -1026,11 +1059,12 @@ layout.addView(txv1);
 			} else {
 				// commandJSON=resultJSON;
 if (!(adevice==null)){device=adevice;}
+if (!(adevicename==null)){devicename=adevicename;}
 if (!(akey==null)){key=akey;}
 if (!(aviewurl==null)){viewurl=aviewurl;}
 
 				TextView t2 = (TextView) findViewById(R.id.URL);
-				t2.setText(getString(R.string.Adres) + viewurl);
+				t2.setText("Имя: "+unescape(adevicename)+". " +getString(R.string.Adres) + viewurl);
 				Linkify.addLinks(t2, Linkify.ALL);
 
 				WritePref();
@@ -1103,6 +1137,8 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 										.equals(hash)) {
 									adevice = resJSON.optJSONArray("devices")
 											.getJSONObject(i).getString("u");
+									adevicename=resJSON.optJSONArray("devices")
+											.getJSONObject(i).getString("name");
 									Log.d(this.getClass().getName(), adevice);
 								}
 							} catch (JSONException e) {
