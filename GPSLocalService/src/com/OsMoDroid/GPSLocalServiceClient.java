@@ -88,7 +88,7 @@ public class GPSLocalServiceClient extends Activity {
 	private String viewurl;
 	private String pdaviewurl;
 	private String device;
-	private String devicename;
+	private String devicename="";
 	private String position;
 	private String sendresult;
 	// private Timer timer;
@@ -1064,7 +1064,7 @@ if (!(akey==null)){key=akey;}
 if (!(aviewurl==null)){viewurl=aviewurl;}
 
 				TextView t2 = (TextView) findViewById(R.id.URL);
-				t2.setText("Èìÿ: "+unescape(adevicename)+". " +getString(R.string.Adres) + viewurl);
+				t2.setText("Èìÿ: "+unescape(devicename)+". " +getString(R.string.Adres) + viewurl);
 				Linkify.addLinks(t2, Linkify.ALL);
 
 				WritePref();
