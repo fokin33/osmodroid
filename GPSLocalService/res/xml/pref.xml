@@ -55,8 +55,8 @@
             android:digits="0123456789"
             android:inputType="number"
             android:key="speedbearing"
-            android:numeric="integer"
-            android:summary="Метров в секунду"
+            
+            android:summary="километров в час"
             android:title="Скорость учета курса" />
         <EditTextPreference
             android:digits="0123456789"
@@ -72,7 +72,7 @@
             android:numeric="integer"
             android:summary="Метры"
             android:title="Допустимая точность" />
-    <EditTextPreference android:key="speed" android:title="Минимальная скорость отправки" android:summary="Метров в секунду" android:digits="0123456789" android:inputType="number" /></PreferenceScreen>
+    <EditTextPreference android:key="speed" android:title="Минимальная скорость отправки" android:summary="километров в час" android:digits="0123456789" android:inputType="number" /></PreferenceScreen>
     <PreferenceScreen android:title="Параметры записи" >
         <EditTextPreference
             android:digits="0123456789"
@@ -94,8 +94,8 @@
             android:digits="0123456789"
             android:inputType="number"
             android:key="speedbearing_gpx"
-            android:numeric="integer"
-            android:summary="Метров в секунду"
+          
+            android:summary="километров в час"
             android:title="Скорость учета курса" />
         <EditTextPreference
             android:digits="0123456789"

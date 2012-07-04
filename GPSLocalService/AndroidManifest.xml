@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.OsMoDroid"
-    android:versionCode="19"
+    android:versionCode="20"
     android:versionName="1.0.0.16" >
 
     <uses-sdk android:minSdkVersion="4"  />
@@ -27,6 +27,7 @@
         </activity>
         <activity android:name="PrefActivity"></activity>
         <service android:name="LocalService"></service>
+        <activity android:name="SimLinks"></activity>
 
         
     </application>

@@ -557,7 +557,7 @@ else	{
 			 {		 sendresult=getString(R.string.NoConnection);
 			 internetnotify(true); 
 		}
-			in.putExtra("position",position+"\n"+Sattelite);
+			in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:");
 			in.putExtra("sendresult",sendresult);
 			in.putExtra("sendcounter",sendcounter);
 			sendBroadcast(in);	
@@ -594,14 +594,14 @@ else	{
 		//mp.release();
 		if (prevlocation_gpx==null)prevlocation_gpx=location;
 		if (prevlocation==null)prevlocation=location;	
-		position = ( "Ш:" + df6.format(location.getLatitude())+ " Д:"+  df6.format( location.getLongitude())+" С:" +df1.format(location.getSpeed()));
+		position = ( "Ш:" + df6.format(location.getLatitude())+ " Д:"+  df6.format( location.getLongitude())+" С:" +df1.format(location.getSpeed()*3.6));
 		//position = ( "Ш:" + String.format("%.6f", location.getLatitude())+ " Д:"+  String.format("%.6f", location.getLongitude())+" С:" +String.format("%.1f", location.getSpeed()));
 //if (location.getTime()>lastfix+3000)notifygps(false);
 //if (location.getTime()<lastfix+3000)notifygps(true);
 
 
 
-in.putExtra("position",position+"\n"+Sattelite);
+in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+location.getAccuracy());
 in.putExtra("sendcounter",sendcounter);
 sendBroadcast(in);	
 
@@ -621,11 +621,11 @@ if (gpx && fileheaderok) {
 	Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
 	brng_gpx = Math.toDegrees(Math.atan2(y, x)); //.toDeg();	
 	position=position+"\n"+getString(R.string.TrackCourseChange)+df1.format( Math.abs(brng_gpx-prevbrng_gpx));
-	in.putExtra("position",position+"\n"+Sattelite);
+	in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+location.getAccuracy());
 	in.putExtra("sendcounter",sendcounter);
 	sendBroadcast(in);	
 		//Log.d(this.getClass().getName(), "Попали в проверку курса для трека");
-	if ((int)location.getAccuracy()<hdop_gpx &&(location.distanceTo(prevlocation_gpx)>distance_gpx || location.getTime()>(prevlocation_gpx.getTime()+period_gpx) || (location.getSpeed()>=speedbearing_gpx && Math.abs(brng_gpx-prevbrng_gpx)>=bearing_gpx)))
+	if ((int)location.getAccuracy()<hdop_gpx &&(location.distanceTo(prevlocation_gpx)>distance_gpx || location.getTime()>(prevlocation_gpx.getTime()+period_gpx) || (location.getSpeed()>=speedbearing_gpx*3.6 && Math.abs(brng_gpx-prevbrng_gpx)>=bearing_gpx)))
 	{
 		prevlocation_gpx.setLatitude(location.getLatitude());
 		prevlocation_gpx.setLongitude(location.getLongitude());
@@ -661,13 +661,13 @@ if (gpx && fileheaderok) {
 			Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
 			brng = Math.toDegrees(Math.atan2(y, x)); //.toDeg();	
 			position=position+"\n"+getString(R.string.SendCourseChange)+df1.format( Math.abs(brng-prevbrng));
-			in.putExtra("position",position+"\n"+Sattelite);
+			in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+location.getAccuracy());
 			in.putExtra("sendcounter",sendcounter);
 			sendBroadcast(in);	
 		
 		if (
-				(int)location.getAccuracy()<hdop &&(int)location.getSpeed()>=speed &&
-				(location.distanceTo(prevlocation)>distance || location.getTime()>(prevlocation.getTime()+period) || (location.getSpeed()>=speedbearing && Math.abs(brng-prevbrng)>=bearing))) 
+				(int)location.getAccuracy()<hdop &&(int)location.getSpeed()>=speed*3.6 &&
+				(location.distanceTo(prevlocation)>distance || location.getTime()>(prevlocation.getTime()+period) || (location.getSpeed()>=speedbearing*3.6 && Math.abs(brng-prevbrng)>=bearing))) 
 		{	
 	
 			
@@ -683,7 +683,7 @@ if (gpx && fileheaderok) {
 		}
 		 else {
 			 //Log.d(this.getClass().getName(), "Отправляем без курса");
-			 if ((int)location.getAccuracy()<hdop &&(int)location.getSpeed()>=speed &&(location.distanceTo(prevlocation)>distance || location.getTime()>(prevlocation.getTime()+period)))
+			 if ((int)location.getAccuracy()<hdop &&(int)location.getSpeed()>=speed*3.6 &&(location.distanceTo(prevlocation)>distance || location.getTime()>(prevlocation.getTime()+period)))
 			 {	 
 				 //Log.d(this.getClass().getName(), "Accuracey"+location.getAccuracy()+"hdop"+hdop);
 					prevlocation.setLatitude(location.getLatitude());

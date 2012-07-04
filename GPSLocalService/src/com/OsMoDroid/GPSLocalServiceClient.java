@@ -100,6 +100,7 @@ public class GPSLocalServiceClient extends Activity {
 	MenuItem mi5;
 	MenuItem mi6;
 	MenuItem mi7;
+	MenuItem mi8;
 
 	private ServiceConnection conn = new ServiceConnection() {
 
@@ -395,7 +396,9 @@ public class GPSLocalServiceClient extends Activity {
 		 mi5 = menu1.add(0, 5, 0, R.string.getadres);
 		 mi6 = menu1.add(0, 6, 0, R.string.getdevice);
 		 mi7 = menu1.add(0, 7, 0, R.string.enterchanel);
+		 mi8 = menu1.add(0, 8, 0, "Символические ссылки");
 		mi.setIntent(new Intent(this, PrefActivity.class));
+		mi8.setIntent(new Intent(this, SimLinks.class));
 		
 		// Log.d(getClass().getSimpleName(), "onCreateOptionsmenu() gpsclient");
 		return super.onCreateOptionsMenu(menu);
@@ -1162,6 +1165,15 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 						
 					} else {
 						returnstr = "Результат входа в канал не получен";
+					}
+				}
+				
+				if (params[3].equals("get_device_links")) {
+					if (!(resJSON.optString("state").equals(""))) {
+						returnstr = resJSON.optJSONArray("links")+" "+ resJSON.optString("error_description");
+						
+					} else {
+						returnstr = "Ссылки не считаны";
 					}
 				}
 				
