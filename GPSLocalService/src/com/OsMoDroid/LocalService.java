@@ -314,7 +314,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 	if (usewake){
-		wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakeLock");
+		wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyWakeLock");
 		wakeLock.acquire();
 	}
 		in = new Intent("OsMoDroid");
@@ -625,7 +625,7 @@ if (gpx && fileheaderok) {
 	in.putExtra("sendcounter",sendcounter);
 	sendBroadcast(in);	
 		//Log.d(this.getClass().getName(), "Попали в проверку курса для трека");
-	if ((int)location.getAccuracy()<hdop_gpx &&(location.distanceTo(prevlocation_gpx)>distance_gpx || location.getTime()>(prevlocation_gpx.getTime()+period_gpx) || (location.getSpeed()>=speedbearing_gpx*3.6 && Math.abs(brng_gpx-prevbrng_gpx)>=bearing_gpx)))
+	if ((int)location.getAccuracy()<hdop_gpx &&(location.distanceTo(prevlocation_gpx)>distance_gpx || location.getTime()>(prevlocation_gpx.getTime()+period_gpx) || (location.getSpeed()>=speedbearing_gpx/3.6 && Math.abs(brng_gpx-prevbrng_gpx)>=bearing_gpx)))
 	{
 		prevlocation_gpx.setLatitude(location.getLatitude());
 		prevlocation_gpx.setLongitude(location.getLongitude());
@@ -666,8 +666,8 @@ if (gpx && fileheaderok) {
 			sendBroadcast(in);	
 		
 		if (
-				(int)location.getAccuracy()<hdop &&(int)location.getSpeed()>=speed*3.6 &&
-				(location.distanceTo(prevlocation)>distance || location.getTime()>(prevlocation.getTime()+period) || (location.getSpeed()>=speedbearing*3.6 && Math.abs(brng-prevbrng)>=bearing))) 
+				(int)location.getAccuracy()<hdop && location.getSpeed()>=speed/3.6 &&
+				(location.distanceTo(prevlocation)>distance || location.getTime()>(prevlocation.getTime()+period) || (location.getSpeed()>=(speedbearing/3.6) && Math.abs(brng-prevbrng)>=bearing))) 
 		{	
 	
 			
@@ -683,7 +683,7 @@ if (gpx && fileheaderok) {
 		}
 		 else {
 			 //Log.d(this.getClass().getName(), "Отправляем без курса");
-			 if ((int)location.getAccuracy()<hdop &&(int)location.getSpeed()>=speed*3.6 &&(location.distanceTo(prevlocation)>distance || location.getTime()>(prevlocation.getTime()+period)))
+			 if ((int)location.getAccuracy()<hdop &&location.getSpeed()>=speed/3.6 &&(location.distanceTo(prevlocation)>distance || location.getTime()>(prevlocation.getTime()+period)))
 			 {	 
 				 //Log.d(this.getClass().getName(), "Accuracey"+location.getAccuracy()+"hdop"+hdop);
 					prevlocation.setLatitude(location.getLatitude());

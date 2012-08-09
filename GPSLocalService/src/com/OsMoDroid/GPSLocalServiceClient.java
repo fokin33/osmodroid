@@ -56,8 +56,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class GPSLocalServiceClient extends Activity {
-	private String key = "";
-	private String login = "";
+	public static String key = "";
+	public String login = "";
 	// private JSONObject commandJSON;
 	private int speed;
 	private int speedbearing_gpx;
@@ -886,7 +886,7 @@ layout.addView(txv1);
 		super.onDestroy();
 	}
 
-	private String getPage(String adr, boolean dopost, String post)
+	public String getPage(String adr, boolean dopost, String post)
 			throws IOException {
 		// Log.d(getClass().getSimpleName(), "getpage() gpsclient");
 		Log.d(getClass().getSimpleName(), adr);
@@ -928,7 +928,7 @@ layout.addView(txv1);
 
 	}
 
-	private String inputStreamToString(InputStream in) throws IOException {
+	public String inputStreamToString(InputStream in) throws IOException {
 		BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(in));
 		StringBuilder stringBuilder = new StringBuilder();
@@ -953,8 +953,8 @@ layout.addView(txv1);
 		return buf.toString();
 	}
 
-	public String SHA1(String text) {
-		Log.d(this.getClass().getName(), text);
+	public static String SHA1(String text) {
+		//Log.d(this.getClass().getName(), text);
 		MessageDigest md;
 		byte[] sha1hash = new byte[40];
 		try {
@@ -1035,7 +1035,7 @@ layout.addView(txv1);
 		}
 	}
 
-	private class RequestCommandTask extends AsyncTask<String, Void, String> {
+	public class RequestCommandTask extends AsyncTask<String, Void, String> {
 		private String Commandtext;
 		private String adevice;
 		private String akey;
