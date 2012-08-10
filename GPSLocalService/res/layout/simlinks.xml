@@ -8,12 +8,16 @@
       android:id="@+id/refreshsimlinksbutton"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
-      android:text="Button" />
+      android:text="@string/SimLinkButtonText" />
     
     <ListView
         android:id="@+id/listView1"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        >
+
+        <!-- Preview: listitem=@android:layout/simple_list_item_1 -->
+
     </ListView>
 
   

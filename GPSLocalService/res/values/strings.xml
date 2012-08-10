@@ -48,4 +48,5 @@
 <string name="getadres">Получить адрес</string>
 <string name="getdevice">Получить устройство</string>
 <string name="enterchanel">Войти в канал</string>
+<string name="SimLinkButtonText">Запросить ссылки</string>
 </resources>

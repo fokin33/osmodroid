@@ -12,12 +12,15 @@ import com.OsMoDroid.GPSLocalServiceClient.RequestCommandTask;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -40,12 +43,43 @@ public class SimLinks extends Activity implements ResultsListener{
 	    final SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(this);
 	    
-	    ListView lv1 = (ListView) findViewById(R.id.listView1);
+	    final ListView lv1 = (ListView) findViewById(R.id.listView1);
 	        list = new ArrayList<String>();
 	        list.clear();
 	       adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, list);
 	       lv1.setAdapter(adapter);
-	   	   
+	     
+	       lv1.setOnItemClickListener(
+	    	        new OnItemClickListener()
+	    	        {
+
+						public void onItemClick(AdapterView<?> arg0, View arg1,
+								int arg2, long arg3) {
+							// TODO Auto-generated method stub
+							
+							
+							Intent sendIntent = new Intent(Intent.ACTION_SEND);
+							sendIntent.setType("text/plain");
+							sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, adapter.getItem(arg2));
+							startActivity(Intent.createChooser(sendIntent, "Email"));
+						}
+
+//	    	            @Override
+//	    	            public void onItemClick(AdapterView<?> arg0, View view,
+//	    	                    int position, long id) {
+//	    	                // TODO Auto-generated method stub
+//	    	                Object o = list1.getItemAtPosition(position);
+//	    	                String pen = o.toString();
+//	    	             //   Toast.makeText(getApplicationContext(), "You have chosen the pen: " + " " + pen, Toast.LENGTH_LONG).show();
+//
+//	    	            }   
+	    	        }       
+	    	);
+
+	       
+
+	       
+	       
 	    Button refsimlinkbutton = (Button) findViewById(R.id.refreshsimlinksbutton);
 	    refsimlinkbutton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -90,6 +124,7 @@ public class SimLinks extends Activity implements ResultsListener{
 
 	public void onResultsSucceeded(JSONObject result) {
 		JSONObject a = null; 
+		list.clear();
 		try {
 			  a =	result.getJSONObject("links");
 			  Log.d(getClass().getSimpleName(), a.toString());
