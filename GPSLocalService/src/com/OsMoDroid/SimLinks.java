@@ -2,6 +2,7 @@ package com.OsMoDroid;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -88,33 +89,28 @@ public class SimLinks extends Activity implements ResultsListener{
 	
 
 	public void onResultsSucceeded(JSONObject result) {
-		JSONArray a = null; 
+		JSONObject a = null; 
 		try {
-			  a =	result.getJSONArray("links");
+			  a =	result.getJSONObject("links");
 			  Log.d(getClass().getSimpleName(), a.toString());
+			 
+			   Iterator i = a.keys();
+			  while (i.hasNext())
+          	{
+          		String keyname = (String)i.next();
+list.add(a.getString(keyname));
+Log.d(getClass().getSimpleName(), list.toString());
+          	}
+			  
 			  
 			} catch (JSONException e) {
 				
 				 Log.d(getClass().getSimpleName(), "Не нашли links или другой эксепшн");
 				e.printStackTrace();
 			}
-		 for (int i = 0; i < result.length(); i++) {
-            
-				// TODO Auto-generated catch block
-			
-			
-             try {
-            	 Log.d(getClass().getSimpleName(), a.getJSONObject(i).toString());
-            	 list.add(a.getJSONObject(i).getString("value").toString());
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-             catch (Exception e)
-             {				e.printStackTrace();}
-             
-         }
-		
+	
+         
+		 Log.d(getClass().getSimpleName(),list.toString());
 		// TODO Auto-generated method stub
 		adapter.notifyDataSetChanged();
 	}
