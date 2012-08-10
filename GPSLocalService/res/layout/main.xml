@@ -20,13 +20,13 @@
      android:id="@+id/copyButton"
      android:layout_width="fill_parent"
      android:layout_height="wrap_content"
-     android:text="Скопировать" />
+     android:text="Скопировать адрес" />
 
  <Button
      android:id="@+id/SendButton"
      android:layout_width="fill_parent"
      android:layout_height="wrap_content"
-     android:text="Отправить" />
+     android:text="Отослать адрес" />
 
 <Button
     android:id="@+id/startButton"

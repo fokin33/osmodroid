@@ -11,6 +11,7 @@ import java.net.Proxy;
 import java.net.URL;
 import java.security.MessageDigest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,23 +31,40 @@ public class netutil {
 	
 	
 	
-	public class MyAsyncTask extends AsyncTask<Void, Void, String> {
+	public static class MyAsyncTask extends AsyncTask<String, Void, JSONObject> {
 
 	    ResultsListener listener;
 
-	    public void setOnResultsListener(ResultsListener listener) {
-	        this.listener = listener;
+	    MyAsyncTask(ResultsListener listener)
+	    { this.listener = listener;}
+	    
+	//    public void setOnResultsListener(ResultsListener listener) {
+	  //      this.listener = listener;
+	   // }
+
+	    @Override
+	    protected JSONObject doInBackground(String... params) {
+	    	JSONObject resJSON = null;
+	    	String Commandtext;
+			try {
+				Commandtext = getPage(params[0],
+						Boolean.parseBoolean(params[1]), params[2]);
+			
+			Log.d(this.getClass().getName(), Commandtext);
+			resJSON = new JSONObject(Commandtext);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			
+	    } catch (JSONException e) {
+			e.printStackTrace();}
+			
+	        return resJSON;
+
 	    }
 
 	    @Override
-	    protected String doInBackground(Void... voids) {
-	        String someString = "foo bar";
-	        return someString.subSequence(3, 5).toString();
-
-	    }
-
-	    @Override
-	    protected void onPostExecute(String result) {
+	    protected void onPostExecute(JSONObject result) {
 	       listener.onResultsSucceeded(result);
 
 	    }
@@ -59,10 +77,10 @@ public class netutil {
 	
 	
 
-	public String getPage(String adr, boolean dopost, String post)
+	public static String getPage(String adr, boolean dopost, String post)
 			throws IOException {
 		// Log.d(getClass().getSimpleName(), "getpage() gpsclient");
-		Log.d(getClass().getSimpleName(), adr);
+	//	Log.d(getClass().getSimpleName(), adr);
 		HttpURLConnection con;
 		int portOfProxy = android.net.Proxy.getDefaultPort();
 		if (portOfProxy > 0) {
@@ -80,7 +98,7 @@ public class netutil {
 			con.setDoInput(true);
 			OutputStream os = con.getOutputStream();
 			os.write(post.getBytes());
-			Log.d(this.getClass().getName(), "×òî POSTèì" + post);
+//			Log.d(this.getClass().getName(), "×òî POSTèì" + post);
 			os.flush();
 			os.close();
 		}
@@ -90,8 +108,8 @@ public class netutil {
 			// String str=inputStreamToString(con.getInputStream());
 			return inputStreamToString(con.getInputStream());
 		} else {
-			Log.d(this.getClass().getName(),
-					Integer.toString(con.getResponseCode()));
+	//		Log.d(this.getClass().getName(),
+		//			Integer.toString(con.getResponseCode()));
 			// String str=inputStreamToString(con.getInputStream());
 			// Log.d(this.getClass().getName(),str);
 			// return str;
@@ -102,7 +120,7 @@ public class netutil {
 
 	}
 
-	public String inputStreamToString(InputStream in) throws IOException {
+	public static String inputStreamToString(InputStream in) throws IOException {
 		BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(in));
 		StringBuilder stringBuilder = new StringBuilder();

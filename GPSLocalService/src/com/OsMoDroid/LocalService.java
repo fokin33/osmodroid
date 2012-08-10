@@ -244,7 +244,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 			{
 				if(vibrate)vibrator.vibrate(vibratetime);
 				
-				if(playsound &&!gpson.isPlaying())gpson.start();
+				if(playsound&&gpson!=null &&!gpson.isPlaying())gpson.start();
 				//Log.d(getClass().getSimpleName(), "Звук он");
 			} else {gpsbeepedon=false;}
 			if ( System.currentTimeMillis()>lastgpsofftime+notifyperiod &&gpsbeepedoff)
@@ -252,7 +252,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 				//Log.d(getClass().getSimpleName(), "Звук офф");
 				if(vibrate)vibrator.vibrate(vibratetime);
 				
-				if(playsound &&!gpsoff.isPlaying())gpsoff.start();
+				if(playsound &&gpsoff!=null&& !gpsoff.isPlaying())gpsoff.start();
 			} else {gpsbeepedoff=false;}
 				
 				
@@ -298,16 +298,25 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 			
 		registerReceiver( receiver, new IntentFilter( "android.location.GPS_FIX_CHANGE"));
 		registerReceiver( checkreceiver, new IntentFilter( "CHECK_GPS"));
+		//try {
 		gpson = MediaPlayer.create(this, R.raw.gpson);
 		gpsoff = MediaPlayer.create(this, R.raw.gpsoff);
 		ineton = MediaPlayer.create(this, R.raw.ineton);
 		inetoff = MediaPlayer.create(this, R.raw.inetoff);
 		sendpalyer=MediaPlayer.create(this, R.raw.sendsound);
-		gpson.setAudioStreamType(AudioManager.STREAM_MUSIC);
-		gpsoff.setAudioStreamType(AudioManager.STREAM_MUSIC);
-		ineton.setAudioStreamType(AudioManager.STREAM_MUSIC);
-		inetoff.setAudioStreamType(AudioManager.STREAM_MUSIC);
-		sendpalyer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+		
+	//  } catch (Exception e) {
+	     
+		  
+		  // Should not happen.
+	        
+	//    }
+		
+		if (gpson!=null){ gpson.setAudioStreamType(AudioManager.STREAM_MUSIC);}
+		if (gpsoff!=null){ gpsoff.setAudioStreamType(AudioManager.STREAM_MUSIC);}
+		if (ineton!=null){ ineton.setAudioStreamType(AudioManager.STREAM_MUSIC);}
+		if (inetoff!=null){inetoff.setAudioStreamType(AudioManager.STREAM_MUSIC);}
+		if (sendpalyer!=null){ sendpalyer.setAudioStreamType(AudioManager.STREAM_MUSIC);}
 		//sendpalyer.setVolume(leftVolume, rightVolume)
 		sendcounter=0;
 		//Log.d(getClass().getSimpleName(), "oncreate() localservice");
@@ -326,7 +335,11 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 
 		Notification notification = new Notification(icon, tickerText, when);
 	
-		Intent notificationIntent = new Intent(this, LocalService.class);
+		Intent notificationIntent = new Intent(this, GPSLocalServiceClient.class);
+		notificationIntent.setAction(Intent.ACTION_MAIN);
+
+		notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+		//notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); 
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
 		notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "", contentIntent);
@@ -551,7 +564,7 @@ else	{
 			 sendresult= decodesendresult(result);
 			 if (sended){
 				 sendcounter=sendcounter+1;
-				 if(sendsound && !sendpalyer.isPlaying())sendpalyer.start();
+				 if(sendsound &&sendpalyer!=null&& !sendpalyer.isPlaying())sendpalyer.start();
 			 
 			 sendresult= time +" "+sendresult;} else
 			 {		 sendresult=getString(R.string.NoConnection);
@@ -809,7 +822,7 @@ private void internetnotify(boolean internet){
 	//long[] pattern = {0,50, 0, 30, 0, 50};
 		//vibrator.vibrate(pattern, 2);
 			if (vibrate)vibrator.vibrate(vibratetime);
-			if (playsound && !inetoff.isPlaying()){
+			if (playsound &&inetoff!=null&& !inetoff.isPlaying()){
 			
 			inetoff.start();
 			
@@ -827,7 +840,7 @@ private void internetnotify(boolean internet){
 				//Log.d(this.getClass().getName(), "Интернет появился");
 				//vibrator.vibrate(pattern, 2);
 				if(vibrate)vibrator.vibrate(vibratetime);
-				if (playsound &&!ineton.isPlaying()){
+				if (playsound &&ineton!=null&&!ineton.isPlaying()){
 				
 				ineton.start();
 				}
