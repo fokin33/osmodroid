@@ -101,7 +101,7 @@ public class GPSLocalServiceClient extends Activity {
 	MenuItem mi6;
 	MenuItem mi7;
 	MenuItem mi8;
-
+	String version="Unknown";
 	private ServiceConnection conn = new ServiceConnection() {
 
 		public void onServiceConnected(ComponentName className, IBinder service) {
@@ -211,6 +211,7 @@ public class GPSLocalServiceClient extends Activity {
 					getPackageName(), 0);
 			strVersionName = packageInfo.packageName + " "
 					+ packageInfo.versionName;
+			version=packageInfo.versionName;
 		} catch (NameNotFoundException e) {
 			//e.printStackTrace();
 		}
@@ -1004,8 +1005,10 @@ layout.addView(txv1);
 			try {
 				// Log.d(this.getClass().getName(),
 				// "Начинаем запрос авторизации.");
-				authtext = getPage("http://auth.t.esya.ru/?who=OsMoDroid",
+				//authtext = getPage("http://auth.t.esya.ru/?who=OsMoDroid",false, "");
+				authtext = getPage("http://auth.t.esya.ru/?act=new&who=OsMoDroid&ver="+version,
 						false, "");
+				
 				JSONObject auth = new JSONObject(authtext);
 				hash = auth.getString("hash");
 				n = auth.getInt("n");
