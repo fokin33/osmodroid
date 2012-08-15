@@ -141,6 +141,7 @@
         <CheckBoxPreference
             android:key="sendsound"
             android:title="Звук при отправке" />
+        <CheckBoxPreference android:key="usetts" android:title="Проговаривать скорость"/>
     </PreferenceScreen>
 
 </PreferenceScreen>

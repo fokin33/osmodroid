@@ -164,12 +164,19 @@ public class GPSLocalServiceClient extends Activity {
 	@Override
 	protected void onStop() {
 
-		// Log.d(getClass().getSimpleName(), "onstop() gpsclient");
+		Log.d(getClass().getSimpleName(), "onstop() gpsclient");
 		// if (timer != null) {
 		// timer.cancel();
 		// }
 		if (mBound) {
-			unbindService(conn);
+			
+			try {
+				unbindService(conn);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				Log.d(getClass().getSimpleName(), "Исключение при отсоединении от сервиса");
+				e.printStackTrace();
+			}
 		}
 
 		super.onStop();
@@ -337,8 +344,13 @@ public class GPSLocalServiceClient extends Activity {
 		updateServiceStatus();
 		OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 			  public void onSharedPreferenceChanged(SharedPreferences prefs, String keychanged) {
-			    if (keychanged.equals("hash")) {device=null;}
-			    if (keychanged.equals("login")) {key="";}
+			    if (keychanged.equals("hash")) {
+			    	Log.d(getClass().getSimpleName(), "Сменился хэщ");
+			    	device=null;}
+			    if (keychanged.equals("login")) {
+			    	
+			    	Log.d(getClass().getSimpleName(), "Сменился login");
+			    	key="";}
 			    if (started){bindService();}
 			  }
 			};

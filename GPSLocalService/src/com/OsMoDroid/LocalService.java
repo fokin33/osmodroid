@@ -21,6 +21,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Locale;
 //import java.util.Locale;
 
 import org.json.JSONException;
@@ -46,6 +47,8 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
 //import android.preference.PreferenceManager;
 //import android.util.Log;
 
@@ -69,9 +72,12 @@ import android.media.MediaPlayer;
 //import org.apache.http.impl.client.DefaultHttpClient;
 //import org.apache.http.util.EntityUtils;
 //import android.media.Ringtone;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
+import android.util.Log;
 
 
-public class LocalService extends Service implements LocationListener,GpsStatus.Listener {
+public class LocalService extends Service implements LocationListener,GpsStatus.Listener, TextToSpeech.OnInitListener {
 	private static final int OSMODROID_ID = 1;
 	//MediaPlayer mp;
 	//BufferedReader bufferedReader;
@@ -148,16 +154,24 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	PendingIntent pi;
 	private Object[] mStartForegroundArgs = new Object[2];
 	private String pass;
+	private String lastsay="a";
 
 	final private static DecimalFormat df6 = new DecimalFormat("########.######");
 	final private static DecimalFormat df1 = new DecimalFormat("########.#");
+	final private static DecimalFormat df0 = new DecimalFormat("########");
 	 final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd'T'HH:mm:ssZ");
 	 final private static SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
 	 final private static SimpleDateFormat sdf3 = new SimpleDateFormat("HH:mm:ss");
 	 final private static  DecimalFormatSymbols dot= new DecimalFormatSymbols();
 	 //System.out.println(df2.format(1234.56));
-	
-	
+	 private static final String enginePackageName = "com.svox.pico"; 
+	    
+	    private static final String SAMPLE_TEXT = "Synthesizes speech from text for immediate playback or to create a sound file."; 
+	    TextToSpeech tts;
+	    private int _langTTSavailable = -1;
+	    
+	    SharedPreferences settings;
+	    
 //private InputStream instream;
 //BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(instream),8192);
 	public class LocalBinder extends Binder {
@@ -211,6 +225,11 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	public void onCreate() {
 		 //Debug.startMethodTracing("startsbuf");
 		super.onCreate();
+		 settings = PreferenceManager.getDefaultSharedPreferences(this);
+		tts = new TextToSpeech(this,
+		        (OnInitListener) this  // TextToSpeech.OnInitListener
+		        );
+		
 		//Locale. .setDefault(Locale.US);
 	   // DecimalFormat df = new DecimalFormat("%.6f");
 		//DecimalFormatSymbols dot= new DecimalFormatSymbols();
@@ -226,6 +245,8 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 		ReadPref();
 		String alarm = Context.ALARM_SERVICE;
 		 am = ( AlarmManager ) getSystemService( alarm );
+		
+		
 		 
 		Intent intent = new Intent( "CHECK_GPS" );
  pi = PendingIntent.getBroadcast( this, 0, intent, 0 );
@@ -414,9 +435,19 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 		
 	}
 	
+	
+
+
+
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+	
+		if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+		
 		if(receiver!= null){unregisterReceiver(receiver);}
 		if(checkreceiver!= null){unregisterReceiver(checkreceiver);}
 		//Log.d(getClass().getSimpleName(), "omdestroy() localservice");
@@ -472,8 +503,7 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 	
 	private void ReadPref() {
 		//	Log.d(getClass().getSimpleName(), "readpref() gpsclient");
-			SharedPreferences settings = PreferenceManager
-					.getDefaultSharedPreferences(this);
+			
 			speed =  Integer.parseInt(settings.getString("speed", "3").equals(
 					"") ? "3" : settings.getString("speed", "3"));
 			period = Integer.parseInt(settings.getString("period", "10000").equals("") ? "10000" : settings.getString("period", "10000") );
@@ -598,7 +628,8 @@ else	{
 	}
 	
 	public void onLocationChanged(Location location) {
-
+		
+		
 		 LocwakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LocWakeLock");
 		LocwakeLock.acquire();
 		
@@ -607,6 +638,15 @@ else	{
 		//mp.release();
 		if (prevlocation_gpx==null)prevlocation_gpx=location;
 		if (prevlocation==null)prevlocation=location;	
+		Log.d(this.getClass().getName(), df0.format(location.getSpeed()*3.6).toString());
+		Log.d(this.getClass().getName(), df0.format(prevlocation.getSpeed()*3.6).toString());
+		if (settings.getBoolean("usetts", false)&&tts!=null && !tts.isSpeaking() && !(df0.format(location.getSpeed()*3.6).toString()).equals(lastsay))
+		{
+			Log.d(this.getClass().getName(), df0.format(location.getSpeed()*3.6).toString());
+			Log.d(this.getClass().getName(), df0.format(prevlocation.getSpeed()*3.6).toString());
+			tts.speak(df0.format(location.getSpeed()*3.6) , TextToSpeech.QUEUE_ADD, null);
+			lastsay=df0.format(location.getSpeed()*3.6).toString();	
+		}
 		position = ( "Ш:" + df6.format(location.getLatitude())+ " Д:"+  df6.format( location.getLongitude())+" С:" +df1.format(location.getSpeed()*3.6));
 		//position = ( "Ш:" + String.format("%.6f", location.getLatitude())+ " Д:"+  String.format("%.6f", location.getLongitude())+" С:" +String.format("%.1f", location.getSpeed()));
 //if (location.getTime()>lastfix+3000)notifygps(false);
@@ -1080,6 +1120,30 @@ public void onGpsStatusChanged(int event) {
 	//in.putExtra("sendcounter",sendcounter);
 	//sendBroadcast(in);
 	};		
+}
+
+
+
+public void onInit(int status) {
+	// TODO Auto-generated method stub
+	  if (status == TextToSpeech.SUCCESS) {
+          // Set preferred language to US english.
+           _langTTSavailable = tts.setLanguage(Locale.US); // Locale.FRANCE etc.
+          if (_langTTSavailable == TextToSpeech.LANG_MISSING_DATA ||
+          	_langTTSavailable == TextToSpeech.LANG_NOT_SUPPORTED) {
+        	  Log.d(this.getClass().getName(), "Нету языка");
+        	  
+           } else if ( _langTTSavailable >= 0 && settings.getBoolean("usetts", false)) {
+        	   Log.d(this.getClass().getName(), "Произносим");
+        	   tts.speak("Ryabotayem!", TextToSpeech.QUEUE_ADD, null);
+			 
+			
+          }
+      } else {
+    	  Log.d(this.getClass().getName(), "Инициализация файлед");
+    	  
+    	  // Initialization failed.
+      }
 }
 
 }	
