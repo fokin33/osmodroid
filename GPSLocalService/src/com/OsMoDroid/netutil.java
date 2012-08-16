@@ -31,7 +31,7 @@ public class netutil {
 	
 	
 	
-	public static class MyAsyncTask extends AsyncTask<String, Void, JSONObject> {
+	public static class MyAsyncTask extends AsyncTask<String, Void, APIComResult> {
 
 	    ResultsListener listener;
 
@@ -43,15 +43,17 @@ public class netutil {
 	   // }
 
 	    @Override
-	    protected JSONObject doInBackground(String... params) {
+	    protected APIComResult doInBackground(String... params) {
 	    	JSONObject resJSON = null;
 	    	String Commandtext;
+	    	APIComResult resAPI = new APIComResult();
 			try {
 				Commandtext = getPage(params[0],
 						Boolean.parseBoolean(params[1]), params[2]);
 			
 			Log.d(this.getClass().getName(), Commandtext);
 			resJSON = new JSONObject(Commandtext);
+			resAPI.Jo= resJSON;
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -59,12 +61,14 @@ public class netutil {
 	    } catch (JSONException e) {
 			e.printStackTrace();}
 			
-	        return resJSON;
+			resAPI.Command=params[3];
+			
+	        return resAPI;
 
 	    }
 
 	    @Override
-	    protected void onPostExecute(JSONObject result) {
+	    protected void onPostExecute(APIComResult result) {
 	       listener.onResultsSucceeded(result);
 
 	    }

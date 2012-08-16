@@ -102,6 +102,7 @@ public class GPSLocalServiceClient extends Activity {
 	MenuItem mi7;
 	MenuItem mi8;
 	String version="Unknown";
+	SharedPreferences settings;
 	private ServiceConnection conn = new ServiceConnection() {
 
 		public void onServiceConnected(ComponentName className, IBinder service) {
@@ -212,6 +213,9 @@ public class GPSLocalServiceClient extends Activity {
 		// }
 		//
 		// requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+		 settings = PreferenceManager
+				.getDefaultSharedPreferences(this);
+		
 		String strVersionName = getString(R.string.Unknow);
 		try {
 			PackageInfo packageInfo = getPackageManager().getPackageInfo(
@@ -346,7 +350,11 @@ public class GPSLocalServiceClient extends Activity {
 			  public void onSharedPreferenceChanged(SharedPreferences prefs, String keychanged) {
 			    if (keychanged.equals("hash")) {
 			    	Log.d(getClass().getSimpleName(), "Сменился хэщ");
-			    	device=null;}
+			    	device=null;
+			    	SharedPreferences.Editor editor = settings.edit();
+			    editor.remove("device");
+			    editor.commit();
+			    }
 			    if (keychanged.equals("login")) {
 			    	
 			    	Log.d(getClass().getSimpleName(), "Сменился login");
@@ -355,8 +363,7 @@ public class GPSLocalServiceClient extends Activity {
 			  }
 			};
 
-			SharedPreferences settings = PreferenceManager
-					.getDefaultSharedPreferences(this);
+		
 			settings.registerOnSharedPreferenceChangeListener(listener);
 
 		
@@ -393,7 +400,8 @@ public class GPSLocalServiceClient extends Activity {
 			requestAuthTask.execute();
 		}
 		TextView t2 = (TextView) findViewById(R.id.URL);
-		t2.setText(getString(R.string.Adres) + viewurl);
+		t2.setText("Имя: "+settings.getString("devicename", "")+". " +getString(R.string.Adres) + viewurl);
+		//t2.setText(getString(R.string.Adres) + viewurl);
 		Linkify.addLinks(t2, Linkify.ALL);
 
 	}
@@ -737,8 +745,7 @@ layout.addView(txv1);
 
 	private void WritePref() {
 		// Log.d(getClass().getSimpleName(), "onWrightPref() gpsclient");
-		SharedPreferences settings = PreferenceManager
-				.getDefaultSharedPreferences(this);
+		
 		SharedPreferences.Editor editor = settings.edit();
 		editor.putString("speed", Integer.toString(speed));
 		editor.putString("period", Integer.toString(period));
@@ -774,8 +781,7 @@ layout.addView(txv1);
 	}
 
 	private boolean checkStarted() {
-		SharedPreferences settings = PreferenceManager
-				.getDefaultSharedPreferences(this);
+		
 		// Log.d(getClass().getSimpleName(), "oncheckstartedy() gpsclient");
 		return settings.getBoolean("started", false);
 
@@ -783,8 +789,7 @@ layout.addView(txv1);
 
 	private void ReadPref() {
 		// Log.d(getClass().getSimpleName(), "readpref() gpsclient");
-		SharedPreferences settings = PreferenceManager
-				.getDefaultSharedPreferences(this);
+		
 
 		speed =  Integer.parseInt(settings.getString("speed", "3").equals(
 				"") ? "3" : settings.getString("speed", "3"));
@@ -1076,13 +1081,21 @@ layout.addView(txv1);
 						getString(R.string.CheckInternet), 5).show();
 			} else {
 				// commandJSON=resultJSON;
-if (!(adevice==null)){device=adevice;}
-if (!(adevicename==null)){devicename=adevicename;}
+if (!(adevice==null)){device=adevice;
+SharedPreferences.Editor editor = settings.edit();
+editor.putString("device", adevice);
+editor.commit();}
+if (!(adevicename==null)){devicename=unescape(adevicename);
+SharedPreferences.Editor editor = settings.edit();
+editor.putString("devicename", unescape(adevicename));
+editor.commit();
+
+}
 if (!(akey==null)){key=akey;}
 if (!(aviewurl==null)){viewurl=aviewurl;}
 
 				TextView t2 = (TextView) findViewById(R.id.URL);
-				t2.setText("Имя: "+unescape(devicename)+". " +getString(R.string.Adres) + viewurl);
+				t2.setText("Имя: "+devicename+". " +getString(R.string.Adres) + viewurl);
 				Linkify.addLinks(t2, Linkify.ALL);
 
 				WritePref();
@@ -1167,6 +1180,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 						if (adevice == null) {
 							returnstr = "Устройство узнать не удалось";
 						} else {
+							
 							returnstr = "Устройство найдено";
 						}
 

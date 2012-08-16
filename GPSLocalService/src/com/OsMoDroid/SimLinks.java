@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -81,6 +82,7 @@ public class SimLinks extends Activity implements ResultsListener{
 	       
 	       
 	    Button refsimlinkbutton = (Button) findViewById(R.id.refreshsimlinksbutton);
+	    Button addsimlinkbutton = (Button) findViewById(R.id.addsimlinksbutton);
 	    refsimlinkbutton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				
@@ -98,23 +100,42 @@ public class SimLinks extends Activity implements ResultsListener{
 												+ "--"
 												+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
 										.substring(1, 25), "false", "",
-						"device" };
+						"get_device_links" };
 				new netutil.MyAsyncTask(SimLinks.this).execute(params) ;
-				 
-				//String[]
-				// params={"http://api.esya.ru/?system=om&action=device&key="+commandJSON.optString("key")+"&signature="+SHA1("system:om;action:device;key:"+commandJSON.optString("key")+";"+"--"+"JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6").substring(1,
-				// 25),"false",""};
-				// +commandJSON.optString("key")+
+			 
+			
 				Log.d(getClass().getSimpleName(), params[0]);
-			//	RequestCommandTask Rq = new GPSLocalServiceClient.RequestCommandTask();
-			//	Rq.execute(params);
-				
-				
-				//simlinksarray= new String[] {"df"};
-			//	list.add("a");
-				//adapter.notifyDataSetChanged();
+			
 
 			}});
+	    
+	    addsimlinkbutton.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				//--
+				//[19:27:37.138] GET http://api.esya.ru/?system=om&key=H83_fdDGd34i85gDsd4f&action=add_link&url=zxccvb&item=764&type=0&on=2012-08-16%2019:27:00&off=2012-08-17%2000:00:00&format=jsonp&callback=jQuery17107581103815227868_1345130731429&_=1345130857118 [HTTP/1.1 200 OK 122мс]
+				String[] params = {
+						"http://api.esya.ru/?system=om&action=add_link&url=" +System.currentTimeMillis() +"&item="+settings.getString("device", "")
+						
+								+ "&key="
+								+ GPSLocalServiceClient.key
+								+ "&signature="
+								+ GPSLocalServiceClient.SHA1(
+										"system:om;action:add_link;url:"+System.currentTimeMillis()+";item:"+settings.getString("device", "") +";key:"
+												+ GPSLocalServiceClient.key
+												+ ";"
+												+ "--"
+												+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
+										.substring(1, 25), "false", "",
+						"add_link" };
+				new netutil.MyAsyncTask(SimLinks.this).execute(params) ;
+			 
+			
+				Log.d(getClass().getSimpleName(), params[0]);
+			
+
+			}});
+	    
+	    
 	   
 	    
 	    // TODO Auto-generated method stub
@@ -122,11 +143,13 @@ public class SimLinks extends Activity implements ResultsListener{
 
 	
 
-	public void onResultsSucceeded(JSONObject result) {
+	public void onResultsSucceeded(APIComResult result) {
 		JSONObject a = null; 
+		
+		if (result.Command.equals("get_device_links")) {
 		list.clear();
 		try {
-			  a =	result.getJSONObject("links");
+			  a =	result.Jo.getJSONObject("links");
 			  Log.d(getClass().getSimpleName(), a.toString());
 			 
 			   Iterator i = a.keys();
@@ -148,6 +171,15 @@ Log.d(getClass().getSimpleName(), list.toString());
 		 Log.d(getClass().getSimpleName(),list.toString());
 		// TODO Auto-generated method stub
 		adapter.notifyDataSetChanged();
+		}
+		
+		if (result.Command.equals("add_link")) 
+		{
+			 Log.d(getClass().getSimpleName(),"Добавляли линк");
+			}
+		
+		
 	}
+	
 
 }

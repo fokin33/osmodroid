@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 import android.os.AsyncTask;
 
-public class CommandAsyncTask extends AsyncTask<Void, Void, JSONObject> {
+public class CommandAsyncTask extends AsyncTask<Void, Void, APIComResult> {
 	ResultsListener listener;
 	
 	public void setOnResultsListener(ResultsListener listener) {
@@ -13,14 +13,14 @@ public class CommandAsyncTask extends AsyncTask<Void, Void, JSONObject> {
 	
 	
 	@Override
-	protected JSONObject doInBackground(Void... voids) {
+	protected APIComResult doInBackground(Void... voids) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	
 	@Override
-    protected void onPostExecute(JSONObject result) {
+    protected void onPostExecute(APIComResult result) {
        listener.onResultsSucceeded(result);
 
     }
