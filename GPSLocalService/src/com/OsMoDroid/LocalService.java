@@ -417,7 +417,7 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 				 String time = sdf1.format(new Date(System.currentTimeMillis()));
 			 FileWriter trackwr = new FileWriter(fileName);
 			 trackwr.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-             trackwr.write("<gpx xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.0\" xmlns=\"http://www.topografix.com/GPX/1/0\" creator=\"OcMoMobile\" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd\">");
+             trackwr.write("<gpx xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.0\" xmlns=\"http://www.topografix.com/GPX/1/0\" creator=\"OcMoDroid\" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd\">");
              trackwr.write("<time>" +time + "</time>");
              trackwr.write("<trk>");
              trackwr.write("<name>" + time + "</name>");
@@ -939,7 +939,7 @@ private void writegpx(Location location){
 	 String strgpstime = sdf1.format(date);
 	if ((gpxbuffer).length()<5000)gpxbuffer = gpxbuffer +  "<trkpt lat=\"" + df6.format( location.getLatitude())+"\""
 			+ " lon=\"" + df6.format( location.getLongitude())
-			+ "\"><ele>" +df6.format( location.getAltitude()) 
+			+ "\"><ele>" +df1.format( location.getAltitude()) 
 			+ "</ele><time>" + strgpstime
 			+ "</time><speed>" + df1.format( location.getSpeed())
 			+ "</speed>" +"<hdop>"+df1.format( location.getAccuracy()/4)+"</hdop>"  +"</trkpt>";

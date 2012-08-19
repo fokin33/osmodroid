@@ -351,8 +351,11 @@ public class GPSLocalServiceClient extends Activity {
 			    if (keychanged.equals("hash")) {
 			    	Log.d(getClass().getSimpleName(), "Сменился хэщ");
 			    	device=null;
+			    	devicename=null;
+			    	
 			    	SharedPreferences.Editor editor = settings.edit();
 			    editor.remove("device");
+			    editor.remove("devicename");
 			    editor.commit();
 			    }
 			    if (keychanged.equals("login")) {

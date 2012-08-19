@@ -1,5 +1,6 @@
 package com.OsMoDroid;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -25,15 +26,64 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 public class SimLinks extends Activity implements ResultsListener{
 	private ArrayAdapter<String> adapter;
 	// String[] simlinksarray;
 	 ArrayList<String> list;
-	//
+	 SharedPreferences settings;
+	 final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+	 //
 	public SimLinks() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	void reflinks(){
+		String[] params = {
+				"http://api.esya.ru/?system=om&action=get_device_links&hash="+settings.getString("hash", "")+"&n="+Integer.parseInt(settings.getString("n", "0").equals("") ? "0"
+						: settings.getString("n", "0"))
+						+ "&key="
+						+ GPSLocalServiceClient.key
+						+ "&signature="
+						+ GPSLocalServiceClient.SHA1(
+								"system:om;action:get_device_links;hash:"+settings.getString("hash", "")+";n:"+Integer.parseInt(settings.getString("n", "0").equals("") ? "0"
+										: settings.getString("n", "0")) +";key:"
+										+ GPSLocalServiceClient.key
+										+ ";"
+										+ "--"
+										+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
+								.substring(1, 25), "false", "",
+				"get_device_links" };
+		new netutil.MyAsyncTask(SimLinks.this).execute(params) ;
+	 
+	
+		Log.d(getClass().getSimpleName(), params[0]);
+	}
+	
+	void addlink(){
+		//--
+		//[19:27:37.138] GET http://api.esya.ru/?system=om&key=H83_fdDGd34i85gDsd4f&action=add_link&url=zxccvb&item=764&type=0&on=2012-08-16%2019:27:00&off=2012-08-17%2000:00:00&format=jsonp&callback=jQuery17107581103815227868_1345130731429&_=1345130857118 [HTTP/1.1 200 OK 122мс]
+		String[] params = {
+				"http://api.esya.ru/?system=om&action=add_link&url=" +System.currentTimeMillis() +"&item="+settings.getString("device", "")
+				
+						+ "&key="
+						+ GPSLocalServiceClient.key
+						+ "&signature="
+						+ GPSLocalServiceClient.SHA1(
+								"system:om;action:add_link;url:"+System.currentTimeMillis()+";item:"+settings.getString("device", "") +";key:"
+										+ GPSLocalServiceClient.key
+										+ ";"
+										+ "--"
+										+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
+								.substring(1, 25), "false", "",
+				"add_link" };
+		new netutil.MyAsyncTask(SimLinks.this).execute(params) ;
+	 
+	
+		Log.d(getClass().getSimpleName(), params[0]);
+	
 	}
 
 	/** Called when the activity is first created. */
@@ -41,8 +91,7 @@ public class SimLinks extends Activity implements ResultsListener{
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.simlinks); 
-	    final SharedPreferences settings = PreferenceManager
-				.getDefaultSharedPreferences(this);
+	    settings  = PreferenceManager.getDefaultSharedPreferences(this);
 	    
 	    final ListView lv1 = (ListView) findViewById(R.id.listView1);
 	        list = new ArrayList<String>();
@@ -85,53 +134,16 @@ public class SimLinks extends Activity implements ResultsListener{
 	    Button addsimlinkbutton = (Button) findViewById(R.id.addsimlinksbutton);
 	    refsimlinkbutton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
+				reflinks();
 				
-				String[] params = {
-						"http://api.esya.ru/?system=om&action=get_device_links&hash="+settings.getString("hash", "")+"&n="+Integer.parseInt(settings.getString("n", "0").equals("") ? "0"
-								: settings.getString("n", "0"))
-								+ "&key="
-								+ GPSLocalServiceClient.key
-								+ "&signature="
-								+ GPSLocalServiceClient.SHA1(
-										"system:om;action:get_device_links;hash:"+settings.getString("hash", "")+";n:"+Integer.parseInt(settings.getString("n", "0").equals("") ? "0"
-												: settings.getString("n", "0")) +";key:"
-												+ GPSLocalServiceClient.key
-												+ ";"
-												+ "--"
-												+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
-										.substring(1, 25), "false", "",
-						"get_device_links" };
-				new netutil.MyAsyncTask(SimLinks.this).execute(params) ;
-			 
-			
-				Log.d(getClass().getSimpleName(), params[0]);
 			
 
 			}});
 	    
 	    addsimlinkbutton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				//--
-				//[19:27:37.138] GET http://api.esya.ru/?system=om&key=H83_fdDGd34i85gDsd4f&action=add_link&url=zxccvb&item=764&type=0&on=2012-08-16%2019:27:00&off=2012-08-17%2000:00:00&format=jsonp&callback=jQuery17107581103815227868_1345130731429&_=1345130857118 [HTTP/1.1 200 OK 122мс]
-				String[] params = {
-						"http://api.esya.ru/?system=om&action=add_link&url=" +System.currentTimeMillis() +"&item="+settings.getString("device", "")
-						
-								+ "&key="
-								+ GPSLocalServiceClient.key
-								+ "&signature="
-								+ GPSLocalServiceClient.SHA1(
-										"system:om;action:add_link;url:"+System.currentTimeMillis()+";item:"+settings.getString("device", "") +";key:"
-												+ GPSLocalServiceClient.key
-												+ ";"
-												+ "--"
-												+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
-										.substring(1, 25), "false", "",
-						"add_link" };
-				new netutil.MyAsyncTask(SimLinks.this).execute(params) ;
-			 
-			
-				Log.d(getClass().getSimpleName(), params[0]);
-			
+				addlink();
+				
 
 			}});
 	    
@@ -175,11 +187,25 @@ Log.d(getClass().getSimpleName(), list.toString());
 		
 		if (result.Command.equals("add_link")) 
 		{
-			 Log.d(getClass().getSimpleName(),"Добавляли линк");
+			
+				
+					Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
+					
+					
+			
+				}
+			 
+			
+			
+			Log.d(getClass().getSimpleName(),"Добавляли линк");
+			 reflinks();
+			 
+			 
+			 
 			}
 		
 		
 	}
 	
 
-}
+
