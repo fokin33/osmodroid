@@ -109,8 +109,9 @@ public class netutil {
 
 		con.connect();
 		if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-			// String str=inputStreamToString(con.getInputStream());
-			return inputStreamToString(con.getInputStream());
+			 String str=inputStreamToString(con.getInputStream());
+			Log.d( GPSLocalServiceClient.class.getName(), str);
+			return str;
 		} else {
 	//		Log.d(this.getClass().getName(),
 		//			Integer.toString(con.getResponseCode()));

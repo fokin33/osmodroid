@@ -87,7 +87,7 @@ public class GPSLocalServiceClient extends Activity {
 	private String submiturl;
 	private String viewurl;
 	private String pdaviewurl;
-	private String device;
+	private String device="";
 	private String devicename="";
 	private String position;
 	private String sendresult;
@@ -350,8 +350,8 @@ public class GPSLocalServiceClient extends Activity {
 			  public void onSharedPreferenceChanged(SharedPreferences prefs, String keychanged) {
 			    if (keychanged.equals("hash")) {
 			    	Log.d(getClass().getSimpleName(), "Сменился хэщ");
-			    	device=null;
-			    	devicename=null;
+			    	device="";
+			    	devicename="";
 			    	
 			    	SharedPreferences.Editor editor = settings.edit();
 			    editor.remove("device");
@@ -433,7 +433,7 @@ public class GPSLocalServiceClient extends Activity {
 		
 		if (login.equals("")){ mi4.setEnabled(false);} else {mi4.setEnabled(true);}
 		if (key.equals("")){ mi6.setEnabled(false); mi5.setEnabled(false);} else { mi6.setEnabled(true); mi5.setEnabled(true);}
-		if (device==null){ mi7.setEnabled(false);}
+		if (device.equals("")){ mi7.setEnabled(false);}
 		else {
 			mi7.setEnabled(true);
 			mi7.isEnabled();
@@ -565,7 +565,7 @@ public class GPSLocalServiceClient extends Activity {
 		if (item.getItemId() == 5) {
 			if (!(key.equals(""))) {
 				String[] params = {
-						"http://api.esya.ru/?system=om&action=get_device_link&hash="
+						"http://api.esya.ru/?system=om&action=device_link&hash="
 								+ hash
 								+ "&n="
 								+ n
@@ -573,7 +573,7 @@ public class GPSLocalServiceClient extends Activity {
 								+ key
 								+ "&signature="
 								+ SHA1(
-										"system:om;action:get_device_link;hash:"
+										"system:om;action:device_link;hash:"
 												+ hash
 												+ ";n:"
 												+ n
@@ -583,7 +583,7 @@ public class GPSLocalServiceClient extends Activity {
 												+ "--"
 												+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
 										.substring(1, 25), "false", "",
-						"get_device_link" };
+						"device_link" };
 				// String[]
 				// params={"http://api.esya.ru/?system=om&action=device&key="+commandJSON.optString("key")+"&signature="+SHA1("system:om;action:device;key:"+commandJSON.optString("key")+";"+"--"+"JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6").substring(1,
 				// 25),"false",""};
@@ -627,7 +627,7 @@ public class GPSLocalServiceClient extends Activity {
 
 		}
 		if (item.getItemId() == 7) {
-			if (!(device==null)) { 
+			if (!(device.equals(""))) { 
 			
 			LinearLayout layout = new LinearLayout(this);
 			layout.setOrientation(LinearLayout.VERTICAL);
@@ -840,6 +840,7 @@ layout.addView(txv1);
 		// pass = settings.getString("pass", "");
 		login = settings.getString("login", "");
 		key = settings.getString("key", "");
+		device = settings.getString("device", "");
 	}
 
 	private void bindService() {
@@ -1152,7 +1153,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 					}
 				}
 
-				if (params[3].equals("get_device_link")) {
+				if (params[3].equals("device_link")) {
 					if (!(resJSON.optString("url").equals(""))) {
 						aviewurl = resJSON.optString("url");
 						returnstr = "URL найден";

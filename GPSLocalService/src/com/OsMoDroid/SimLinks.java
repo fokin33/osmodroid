@@ -42,20 +42,18 @@ public class SimLinks extends Activity implements ResultsListener{
 	
 	void reflinks(){
 		String[] params = {
-				"http://api.esya.ru/?system=om&action=get_device_links&hash="+settings.getString("hash", "")+"&n="+Integer.parseInt(settings.getString("n", "0").equals("") ? "0"
-						: settings.getString("n", "0"))
+				"http://api.esya.ru/?system=om&action=device_links&device="+settings.getString("device", "")
 						+ "&key="
 						+ GPSLocalServiceClient.key
 						+ "&signature="
 						+ GPSLocalServiceClient.SHA1(
-								"system:om;action:get_device_links;hash:"+settings.getString("hash", "")+";n:"+Integer.parseInt(settings.getString("n", "0").equals("") ? "0"
-										: settings.getString("n", "0")) +";key:"
+								"system:om;action:device_links;device:"+settings.getString("device", "") +";key:"
 										+ GPSLocalServiceClient.key
 										+ ";"
 										+ "--"
 										+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
 								.substring(1, 25), "false", "",
-				"get_device_links" };
+				"device_links" };
 		new netutil.MyAsyncTask(SimLinks.this).execute(params) ;
 	 
 	
@@ -66,19 +64,19 @@ public class SimLinks extends Activity implements ResultsListener{
 		//--
 		//[19:27:37.138] GET http://api.esya.ru/?system=om&key=H83_fdDGd34i85gDsd4f&action=add_link&url=zxccvb&item=764&type=0&on=2012-08-16%2019:27:00&off=2012-08-17%2000:00:00&format=jsonp&callback=jQuery17107581103815227868_1345130731429&_=1345130857118 [HTTP/1.1 200 OK 122мс]
 		String[] params = {
-				"http://api.esya.ru/?system=om&action=add_link&url=" +System.currentTimeMillis() +"&item="+settings.getString("device", "")
+				"http://api.esya.ru/?system=om&action=link_add&url=" +System.currentTimeMillis() +"&item="+settings.getString("device", "")
 				
 						+ "&key="
 						+ GPSLocalServiceClient.key
 						+ "&signature="
 						+ GPSLocalServiceClient.SHA1(
-								"system:om;action:add_link;url:"+System.currentTimeMillis()+";item:"+settings.getString("device", "") +";key:"
+								"system:om;action:link_add;url:"+System.currentTimeMillis()+";item:"+settings.getString("device", "") +";key:"
 										+ GPSLocalServiceClient.key
 										+ ";"
 										+ "--"
 										+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
 								.substring(1, 25), "false", "",
-				"add_link" };
+				"link_add" };
 		new netutil.MyAsyncTask(SimLinks.this).execute(params) ;
 	 
 	
@@ -149,7 +147,7 @@ public class SimLinks extends Activity implements ResultsListener{
 	    
 	    
 	   
-	    
+	    reflinks();	
 	    // TODO Auto-generated method stub
 	}
 
@@ -158,7 +156,7 @@ public class SimLinks extends Activity implements ResultsListener{
 	public void onResultsSucceeded(APIComResult result) {
 		JSONObject a = null; 
 		
-		if (result.Command.equals("get_device_links")) {
+		if (result.Command.equals("device_links")) {
 		list.clear();
 		try {
 			  a =	result.Jo.getJSONObject("links");
@@ -173,7 +171,7 @@ Log.d(getClass().getSimpleName(), list.toString());
           	}
 			  
 			  
-			} catch (JSONException e) {
+			} catch (Exception e) {
 				
 				 Log.d(getClass().getSimpleName(), "Не нашли links или другой эксепшн");
 				e.printStackTrace();
@@ -185,12 +183,12 @@ Log.d(getClass().getSimpleName(), list.toString());
 		adapter.notifyDataSetChanged();
 		}
 		
-		if (result.Command.equals("add_link")) 
+		if (result.Command.equals("link_add")) 
 		{
 			
 				
 					Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
-					
+					 reflinks();	
 					
 			
 				}
@@ -198,7 +196,7 @@ Log.d(getClass().getSimpleName(), list.toString());
 			
 			
 			Log.d(getClass().getSimpleName(),"Добавляли линк");
-			 reflinks();
+		
 			 
 			 
 			 
