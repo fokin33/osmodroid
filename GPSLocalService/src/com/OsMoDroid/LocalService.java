@@ -77,7 +77,7 @@ import android.speech.tts.TextToSpeech.OnInitListener;
 import android.util.Log;
 
 
-public class LocalService extends Service implements LocationListener,GpsStatus.Listener, TextToSpeech.OnInitListener {
+public class LocalService extends Service implements LocationListener,GpsStatus.Listener, TextToSpeech.OnInitListener,  ResultsListener {
 	private static final int OSMODROID_ID = 1;
 	//MediaPlayer mp;
 	//BufferedReader bufferedReader;
@@ -155,7 +155,9 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	private Object[] mStartForegroundArgs = new Object[2];
 	private String pass;
 	private String lastsay="a";
-
+	private AsyncTask<String,Void,APIComResult> imtask;
+	private Boolean imrunning = true;
+	
 	final private static DecimalFormat df6 = new DecimalFormat("########.######");
 	final private static DecimalFormat df1 = new DecimalFormat("########.#");
 	final private static DecimalFormat df0 = new DecimalFormat("########");
@@ -225,7 +227,13 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	public void onCreate() {
 		 //Debug.startMethodTracing("startsbuf");
 		super.onCreate();
-		 settings = PreferenceManager.getDefaultSharedPreferences(this);
+		String[] params = {
+				"http://d.esya.ru/?identifier=testlp&ncrnd=1347794237100", "false", "",
+				"messageread" };
+		imrunning=true;
+		imtask = new netutil.MyAsyncTask(LocalService.this) ;
+		imtask.execute(params);
+		settings = PreferenceManager.getDefaultSharedPreferences(this);
 		tts = new TextToSpeech(this,
 		        (OnInitListener) this  // TextToSpeech.OnInitListener
 		        );
@@ -442,7 +450,10 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-	
+		netutil.Close();
+		imrunning=false;
+		Boolean cancelresult= imtask.cancel(true);
+		Log.d(this.getClass().getName(), Boolean.toString(cancelresult));
 		if (tts != null) {
             tts.stop();
             tts.shutdown();
@@ -539,7 +550,7 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
 		ReadPref();
-				
+		
 if (usecourse)	{
 	//Log.d(this.getClass().getName(), "Запускаем провайдера 0 0");
 		myManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -1144,6 +1155,50 @@ public void onInit(int status) {
     	  
     	  // Initialization failed.
       }
+}
+
+
+
+public void onResultsSucceeded(APIComResult result) {
+	// TODO Auto-generated method stub
+	String toprint = "";
+	if (result.Command.equals("messageread")) 
+	{String[] params = {
+			"http://d.esya.ru/?identifier=testlp&ncrnd=1347794237100", "false", "",
+			"messageread" };
+		
+		try {
+		
+			for (int i = 0; i < result.ja.length(); i++) {
+		        JSONObject jsonObject = result.ja.getJSONObject(i);
+		        Log.i(getClass().getSimpleName(), jsonObject.optString("data")+ jsonObject.optString("ids"));
+		        toprint=toprint+jsonObject.optString("data")+jsonObject.optString("ids");
+		      
+			}
+			
+			Log.d(getClass().getSimpleName(),"messageread"+toprint);
+				
+					Toast.makeText(this,toprint,5).show();
+					vibrator.vibrate(200);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				if (imrunning){
+				new netutil.MyAsyncTask(LocalService.this).execute(params) ;
+				}
+			 
+			
+			
+				
+		
+			}
+		 
+		
+		
+	
+	
+	
 }
 
 }	

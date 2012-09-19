@@ -342,7 +342,7 @@ public class GPSLocalServiceClient extends Activity {
 		super.onResume();
 		// Log.d(getClass().getSimpleName(), "onResume() gpsclient");
 		ReadPref();
-		WritePref();
+		//WritePref();
 		
 		started = checkStarted();
 		updateServiceStatus();
@@ -433,10 +433,15 @@ public class GPSLocalServiceClient extends Activity {
 		
 		if (login.equals("")){ mi4.setEnabled(false);} else {mi4.setEnabled(true);}
 		if (key.equals("")){ mi6.setEnabled(false); mi5.setEnabled(false);} else { mi6.setEnabled(true); mi5.setEnabled(true);}
-		if (device.equals("")){ mi7.setEnabled(false);}
+		if (settings.getString("device", "").equals("")){
+			mi7.setEnabled(false);
+			mi8.setEnabled(false);
+				
+		}
 		else {
 			mi7.setEnabled(true);
-			mi7.isEnabled();
+			mi8.setEnabled(true);
+			//mi7.isEnabled();
 			}
 		
 		return super.onPrepareOptionsMenu(menu);}
@@ -485,8 +490,14 @@ public class GPSLocalServiceClient extends Activity {
 							hdop_gpx = hdop;
 							period_gpx = period;
 							distance_gpx = distance;
-
-							WritePref();
+							SharedPreferences.Editor editor = settings.edit();
+							editor.putString("period_gpx", Integer.toString(period_gpx));
+							editor.putString("distance_gpx", Integer.toString(distance_gpx));
+							editor.putString("speedbearing_gpx", Integer.toString(speedbearing_gpx));
+							editor.putString("bearing_gpx", Integer.toString(bearing_gpx));
+							editor.putString("hdop_gpx", Integer.toString(hdop_gpx));
+							editor.commit();
+						//	WritePref();
 							return;
 						}
 					});
@@ -627,7 +638,7 @@ public class GPSLocalServiceClient extends Activity {
 
 		}
 		if (item.getItemId() == 7) {
-			if (!(device.equals(""))) { 
+			if (!(settings.getString("device", "").equals(""))) { 
 			
 			LinearLayout layout = new LinearLayout(this);
 			layout.setOrientation(LinearLayout.VERTICAL);
@@ -670,7 +681,11 @@ layout.addView(txv1);
 
 				public void onCheckedChanged(CompoundButton buttonView,
 						boolean isChecked) {
-				input1.setEnabled(true);
+				if (isChecked){
+					input1.setEnabled(true);}
+				if (!isChecked){
+					input1.setEnabled(false);}
+
 					
 				}
 			});
@@ -699,13 +714,13 @@ layout.addView(txv1);
 										String[] params = {
 												"http://api.esya.ru/?system=om&action=channel_enter"+"&code="+canalid
 												+"&pass="+canalkey
-												+"&device="+device
+												+"&device="+settings.getString("device", "")
 												+"&name="+canalname
 														+ "&key="
 														+ key
 														+ "&signature="
 														+ SHA1(
-																"system:om;action:channel_enter;code:"+canalid+";pass:"+canalkey+";device:"+device+";name:"+canalname+ ";key:"
+																"system:om;action:channel_enter;code:"+canalid+";pass:"+canalkey+";device:"+settings.getString("device", "")+";name:"+canalname+ ";key:"
 																		+ key
 																		+ ";"
 																		+ "--"
@@ -746,42 +761,42 @@ layout.addView(txv1);
 		
 	}
 
-	private void WritePref() {
-		// Log.d(getClass().getSimpleName(), "onWrightPref() gpsclient");
-		
-		SharedPreferences.Editor editor = settings.edit();
-		editor.putString("speed", Integer.toString(speed));
-		editor.putString("period", Integer.toString(period));
-		editor.putString("distance", Integer.toString(distance));
-		editor.putString("hash", hash);
-		editor.putString("n", Integer.toString(n));
-		editor.putString("submit-url", submiturl);
-		editor.putString("view-url", viewurl);
-		editor.putString("pda-view-url", pdaviewurl);
-		editor.putString("speedbearing", Integer.toString(speedbearing));
-		editor.putString("bearing", Integer.toString(bearing));
-		editor.putBoolean("gpx", gpx);
-		editor.putBoolean("live", live);
-		editor.putString("hdop", Integer.toString(hdop));
-		editor.putString("vibratetime", Integer.toString(vibratetime));
-		editor.putBoolean("vibrate", vibrate);
-		editor.putBoolean("playsound", playsound);
-		editor.putBoolean("usecourse", usecourse);
-		editor.putString("period_gpx", Integer.toString(period_gpx));
-		editor.putString("distance_gpx", Integer.toString(distance_gpx));
-		editor.putString("speedbearing_gpx", Integer.toString(speedbearing_gpx));
-		editor.putString("bearing_gpx", Integer.toString(bearing_gpx));
-		editor.putString("hdop_gpx", Integer.toString(hdop_gpx));
-		editor.putBoolean("usewake", usewake);
-		editor.putBoolean("usebuffer", usebuffer);
-		editor.putBoolean("sendsound", sendsound);
-		editor.putString("notifyperiod", Long.toString(notifyperiod));
-		// editor.putString("pass", pass);
-		editor.putString("login", login);
-		editor.putString("key", key);
-		editor.commit();
-
-	}
+//	private void WritePref() {
+//		// Log.d(getClass().getSimpleName(), "onWrightPref() gpsclient");
+//		
+//		SharedPreferences.Editor editor = settings.edit();
+//		editor.putString("speed", Integer.toString(speed));
+//		editor.putString("period", Integer.toString(period));
+//		editor.putString("distance", Integer.toString(distance));
+//		editor.putString("hash", hash);
+//		editor.putString("n", Integer.toString(n));
+//		editor.putString("submit-url", submiturl);
+//		editor.putString("view-url", viewurl);
+//		editor.putString("pda-view-url", pdaviewurl);
+//		editor.putString("speedbearing", Integer.toString(speedbearing));
+//		editor.putString("bearing", Integer.toString(bearing));
+//		editor.putBoolean("gpx", gpx);
+//		editor.putBoolean("live", live);
+//		editor.putString("hdop", Integer.toString(hdop));
+//		editor.putString("vibratetime", Integer.toString(vibratetime));
+//		editor.putBoolean("vibrate", vibrate);
+//		editor.putBoolean("playsound", playsound);
+//		editor.putBoolean("usecourse", usecourse);
+//		editor.putString("period_gpx", Integer.toString(period_gpx));
+//		editor.putString("distance_gpx", Integer.toString(distance_gpx));
+//		editor.putString("speedbearing_gpx", Integer.toString(speedbearing_gpx));
+//		editor.putString("bearing_gpx", Integer.toString(bearing_gpx));
+//		editor.putString("hdop_gpx", Integer.toString(hdop_gpx));
+//		editor.putBoolean("usewake", usewake);
+//		editor.putBoolean("usebuffer", usebuffer);
+//		editor.putBoolean("sendsound", sendsound);
+//		editor.putString("notifyperiod", Long.toString(notifyperiod));
+//		// editor.putString("pass", pass);
+//		editor.putString("login", login);
+//		editor.putString("key", key);
+//		editor.commit();
+//
+//	}
 
 	private boolean checkStarted() {
 		
@@ -1012,7 +1027,21 @@ layout.addView(txv1);
 				Toast.makeText(GPSLocalServiceClient.this,
 						getString(R.string.CheckInternet), 5).show();
 			} else {
-				WritePref();
+				
+				
+				//WritePref();
+				SharedPreferences.Editor editor = settings.edit();
+
+				editor.putString("hash", hash);
+				editor.putString("n", Integer.toString(n));
+				editor.putString("submit-url", submiturl);
+				editor.putString("view-url", viewurl);
+				editor.putString("pda-view-url", pdaviewurl);
+
+				editor.commit();
+				
+				
+				
 				ReadPref();
 				findViewById(R.id.startButton).setEnabled(true);
 				TextView t2 = (TextView) findViewById(R.id.URL);
@@ -1102,7 +1131,13 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 				t2.setText("Èìÿ: "+devicename+". " +getString(R.string.Adres) + viewurl);
 				Linkify.addLinks(t2, Linkify.ALL);
 
-				WritePref();
+				SharedPreferences.Editor editor = settings.edit();
+
+				editor.putString("view-url", viewurl);
+
+
+				editor.commit();
+
 				ReadPref();
 				Toast.makeText(GPSLocalServiceClient.this,
 						resultString.toString(), 5).show();

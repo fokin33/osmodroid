@@ -130,6 +130,10 @@ public class SimLinks extends Activity implements ResultsListener{
 	       
 	    Button refsimlinkbutton = (Button) findViewById(R.id.refreshsimlinksbutton);
 	    Button addsimlinkbutton = (Button) findViewById(R.id.addsimlinksbutton);
+	    if (settings.getString("device", "").equals("")){
+	    	addsimlinkbutton.setEnabled(false);
+	    	refsimlinkbutton.setEnabled(false);
+	    } else {  reflinks();}
 	    refsimlinkbutton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				reflinks();
@@ -147,7 +151,7 @@ public class SimLinks extends Activity implements ResultsListener{
 	    
 	    
 	   
-	    reflinks();	
+	  	
 	    // TODO Auto-generated method stub
 	}
 
