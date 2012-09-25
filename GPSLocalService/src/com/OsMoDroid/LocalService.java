@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.TimeZone;
 //import java.util.Locale;
 
 import org.json.JSONException;
@@ -164,7 +165,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	final private static DecimalFormat df6 = new DecimalFormat("########.######");
 	final private static DecimalFormat df1 = new DecimalFormat("########.#");
 	final private static DecimalFormat df0 = new DecimalFormat("########");
-	 final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+	 final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	 final private static SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
 	 final private static SimpleDateFormat sdf3 = new SimpleDateFormat("HH:mm:ss");
 	 final private static  DecimalFormatSymbols dot= new DecimalFormatSymbols();
@@ -226,6 +227,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	public void onCreate() {
 		 //Debug.startMethodTracing("startsbuf");
 		super.onCreate();
+		sdf1.setTimeZone(TimeZone.getTimeZone("UTC"));   
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 		if (settings.getBoolean("im", false)){
 		String[] params = {
@@ -475,7 +477,7 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 			}
 			try {
 				// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd'T'HH:mm:ssZ");
-				 String time = sdf1.format(new Date(System.currentTimeMillis()));
+				 String time = sdf1.format(new Date(System.currentTimeMillis()))+"Z";
 			 FileWriter trackwr = new FileWriter(fileName);
 			 trackwr.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
              trackwr.write("<gpx xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.0\" xmlns=\"http://www.topografix.com/GPX/1/0\" creator=\"OcMoDroid\" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd\">");
