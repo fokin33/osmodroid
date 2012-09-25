@@ -143,5 +143,6 @@
             android:title="Звук при отправке" />
         <CheckBoxPreference android:key="usetts" android:title="Проговаривать скорость"/>
     </PreferenceScreen>
+    <CheckBoxPreference android:key="im" android:title="Использовать обмен сообщениями"/>
 
 </PreferenceScreen>
