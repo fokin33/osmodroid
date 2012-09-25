@@ -1,5 +1,7 @@
 package com.OsMoDroid;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Vibrator;
 import java.io.BufferedReader;
 import java.io.File;
@@ -138,6 +140,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	private int sendcounter;
 	BroadcastReceiver receiver;
 	BroadcastReceiver checkreceiver;
+	BroadcastReceiver mConnReceiver;
 	private final IBinder mBinder = new LocalBinder();
 	private String gpxbuffer= new String();
 	private String sendbuffer = new String();
@@ -157,19 +160,15 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	private String lastsay="a";
 	private AsyncTask<String,Void,APIComResult> imtask;
 	private Boolean imrunning = true;
-	
+	private String[] imadress={};
 	final private static DecimalFormat df6 = new DecimalFormat("########.######");
 	final private static DecimalFormat df1 = new DecimalFormat("########.#");
 	final private static DecimalFormat df0 = new DecimalFormat("########");
-	 final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd'T'HH:mm:ssZ");
+	 final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 	 final private static SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
 	 final private static SimpleDateFormat sdf3 = new SimpleDateFormat("HH:mm:ss");
 	 final private static  DecimalFormatSymbols dot= new DecimalFormatSymbols();
-	 //System.out.println(df2.format(1234.56));
-	 private static final String enginePackageName = "com.svox.pico"; 
-	    
-	    private static final String SAMPLE_TEXT = "Synthesizes speech from text for immediate playback or to create a sound file."; 
-	    TextToSpeech tts;
+	 TextToSpeech tts;
 	    private int _langTTSavailable = -1;
 	    
 	    SharedPreferences settings;
@@ -227,13 +226,26 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	public void onCreate() {
 		 //Debug.startMethodTracing("startsbuf");
 		super.onCreate();
+		settings = PreferenceManager.getDefaultSharedPreferences(this);
+		if (settings.getBoolean("im", false)){
 		String[] params = {
-				"http://d.esya.ru/?identifier=testlp&ncrnd=1347794237100", "false", "",
+				"http://api.esya.ru/?system=om&action=im_get_all"
+				+ "&key="
+				+ GPSLocalServiceClient.key
+				+ "&signature="
+				+ GPSLocalServiceClient.SHA1(
+						"system:om;action:im_get_all" +";key:"
+								+ GPSLocalServiceClient.key
+								+ ";"
+								+ "--"
+								+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
+						.substring(1, 25), "false", "",
 				"messageread" };
 		imrunning=true;
 		imtask = new netutil.MyAsyncTask(LocalService.this) ;
 		imtask.execute(params);
-		settings = PreferenceManager.getDefaultSharedPreferences(this);
+		}
+		
 		tts = new TextToSpeech(this,
 		        (OnInitListener) this  // TextToSpeech.OnInitListener
 		        );
@@ -264,6 +276,46 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 		long triggerTime = SystemClock.elapsedRealtime() + notifyperiod;
 		 
 		am.setRepeating( type, triggerTime, notifyperiod, pi );
+		
+		   mConnReceiver = new BroadcastReceiver() {
+		        @Override
+		        public void onReceive(Context context, Intent intent) {
+		            boolean noConnectivity = intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
+		            String reason = intent.getStringExtra(ConnectivityManager.EXTRA_REASON);
+		boolean isFailover = intent.getBooleanExtra(ConnectivityManager.EXTRA_IS_FAILOVER, false);
+		            NetworkInfo currentNetworkInfo = (NetworkInfo) intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
+		            NetworkInfo otherNetworkInfo = (NetworkInfo) intent.getParcelableExtra(ConnectivityManager.EXTRA_OTHER_NETWORK_INFO);
+		            if (settings.getBoolean("im", false)){
+		            if (!noConnectivity&& imrunning){
+		            	String[] params = {
+		            			"http://api.esya.ru/?system=om&action=im_get_all"
+		            			+ "&key="
+		            			+ GPSLocalServiceClient.key
+		            			+ "&signature="
+		            			+ GPSLocalServiceClient.SHA1(
+		            					"system:om;action:im_get_all" +";key:"
+		            							+ GPSLocalServiceClient.key
+		            							+ ";"
+		            							+ "--"
+		            							+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
+		            					.substring(1, 25), "false", "",
+		            			"messageread" };
+		        		imrunning=true;
+		        		imtask = new netutil.MyAsyncTask(LocalService.this) ;
+		        		imtask.execute(params);
+		            	
+		            }
+		            if (noConnectivity&& imrunning){
+		            	netutil.Close();
+		            	
+		            }
+		            ;
+		            }
+		            // do application-specific task(s) based on the current network state, such
+		            // as enabling queuing of HTTP requests when currentNetworkInfo is connected etc.
+		        }
+		    }; 
+		
 		
 		checkreceiver =new BroadcastReceiver() {
 			@Override
@@ -327,6 +379,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 			
 		registerReceiver( receiver, new IntentFilter( "android.location.GPS_FIX_CHANGE"));
 		registerReceiver( checkreceiver, new IntentFilter( "CHECK_GPS"));
+		 registerReceiver(mConnReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)); 
 		//try {
 		gpson = MediaPlayer.create(this, R.raw.gpson);
 		gpsoff = MediaPlayer.create(this, R.raw.gpsoff);
@@ -450,10 +503,13 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		  if (settings.getBoolean("im", false)){
 		netutil.Close();
 		imrunning=false;
 		Boolean cancelresult= imtask.cancel(true);
 		Log.d(this.getClass().getName(), Boolean.toString(cancelresult));
+		
+		  }	
 		if (tts != null) {
             tts.stop();
             tts.shutdown();
@@ -461,6 +517,8 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 		
 		if(receiver!= null){unregisterReceiver(receiver);}
 		if(checkreceiver!= null){unregisterReceiver(checkreceiver);}
+		if(mConnReceiver!= null){unregisterReceiver(mConnReceiver);}
+		
 		//Log.d(getClass().getSimpleName(), "omdestroy() localservice");
 		if (gpx&&fileheaderok) {
 		try {
@@ -1163,8 +1221,20 @@ public void onResultsSucceeded(APIComResult result) {
 	// TODO Auto-generated method stub
 	String toprint = "";
 	if (result.Command.equals("messageread")) 
-	{String[] params = {
-			"http://d.esya.ru/?identifier=testlp&ncrnd=1347794237100", "false", "",
+	{
+		if (settings.getBoolean("im", false)){	
+		String[] params = {
+			"http://api.esya.ru/?system=om&action=im_get_all"
+			+ "&key="
+			+ GPSLocalServiceClient.key
+			+ "&signature="
+			+ GPSLocalServiceClient.SHA1(
+					"system:om;action:im_get_all" +";key:"
+							+ GPSLocalServiceClient.key
+							+ ";"
+							+ "--"
+							+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
+					.substring(1, 25), "false", "",
 			"messageread" };
 		
 		try {
@@ -1191,7 +1261,7 @@ public void onResultsSucceeded(APIComResult result) {
 			
 			
 				
-		
+		}
 			}
 		 
 		

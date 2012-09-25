@@ -75,6 +75,12 @@ public class netutil {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			catch (NullPointerException e){
+	    		e.printStackTrace();
+	    		Log.d(this.getClass().getName(),  "Что-то нулл");
+	    		
+	    	}
+			
 			resAPI.Command=params[3];
 			
 	        return resAPI;
@@ -107,7 +113,7 @@ protected void onCancelled() {
 	public static String getPage(String adr, boolean dopost, String post)
 			throws IOException, NullPointerException {
 		// Log.d(getClass().getSimpleName(), "getpage() gpsclient");
-	//	Log.d(getClass().getSimpleName(), adr);
+		Log.d( GPSLocalServiceClient.class.getName(), adr);
 		
 	
 		int portOfProxy = android.net.Proxy.getDefaultPort();
@@ -137,7 +143,7 @@ protected void onCancelled() {
 			if (con.getResponseCode() == HttpURLConnection.HTTP_OK && !(con.getInputStream()==null)) {
 				 String str=inputStreamToString(con.getInputStream());
 				Log.d( GPSLocalServiceClient.class.getName(), str);
-				con.disconnect();
+				//con.disconnect();
 				return str;
 			} else {
 //		Log.d(this.getClass().getName(),
@@ -146,12 +152,13 @@ protected void onCancelled() {
 				// Log.d(this.getClass().getName(),str);
 				// return str;
 			//	return getString(R.string.ErrorRecieve);
-				con.disconnect();
+			//	con.disconnect();
 				return "Косяк";
 
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			Log.d( GPSLocalServiceClient.class.getName(), e.toString());
 			e.printStackTrace();
 			return "Косяк2";
 		}
