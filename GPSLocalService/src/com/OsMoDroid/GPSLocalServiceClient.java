@@ -55,7 +55,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class GPSLocalServiceClient extends Activity {
+public class GPSLocalServiceClient extends Activity implements ResultsListener{
 	public static String key = "";
 	public String login = "";
 	// private JSONObject commandJSON;
@@ -283,6 +283,14 @@ public class GPSLocalServiceClient extends Activity {
 				start.setEnabled(false);
 				stop.setEnabled(true);
 				started = true;
+				
+				String[] a={"device"};
+				String[] b={device};
+				
+				new netutil.MyAsyncTask(GPSLocalServiceClient.this).execute(buildcommand("start",a,b)) ;
+				 
+				
+				Log.d(getClass().getSimpleName(),buildcommand("start",a,b).toString());
 				// timer = new Timer();
 				// timer.scheduleAtFixedRate(new TimerTask() {
 				// @Override
@@ -1253,6 +1261,57 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 
 			// return null;
 		}
+	}
+
+	String[] buildcommand (String action, String[] params, String[] values ){
+//		"http://api.esya.ru/?system=om&action=device"
+//				+ "&key="
+//				+ key
+//				+ "&signature="
+//				+ SHA1(
+//						"system:om;action:device;key:"
+//								+ key
+//								+ ";"
+//								+ "--"
+//								+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
+//						.substring(1, 25), "false", "",
+//		"device" };
+String tempstr = ""; 
+		 String apicommand = "http://api.esya.ru/?system=om&action="+action+"&key="
+					+ key;
+					//+ "&signature=";
+		 for (int i = 0; i < params.length; i++) {
+			 	 apicommand = apicommand + "&"+ params[i] + "=" + values[i];
+			 	}
+		 for (int i = 0; i < params.length; i++) {
+		 	 tempstr = tempstr +  params[i] + ":" + values[i]+";";
+		 	}
+		 apicommand = apicommand +  "&signature="+SHA1("system:om;action:"+action+";key"+key+";"+tempstr + "--"
+			+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
+	.substring(1, 25);
+		String[] ret= {apicommand,action};
+		 return ret;}
+	
+	public void onResultsSucceeded(APIComResult result) {
+		// TODO Auto-generated method stub
+		if (result.Command.equals("link_add")) 
+		{
+			
+				
+					Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
+					
+					
+			
+				}
+			 
+			
+			
+			Log.d(getClass().getSimpleName(),"Добавляли линк");
+		
+			 
+			 
+			 
+			
 	}
 
 }
