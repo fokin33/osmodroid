@@ -1007,7 +1007,8 @@ private void writegpx(Location location){
 	 long gpstime = location.getTime();
 	 Date date = new Date(gpstime);
 	// SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd'T'HH:mm:ssZ");
-	 String strgpstime = sdf1.format(date);
+	 
+	 String strgpstime = sdf1.format(date)+"Z";
 	if ((gpxbuffer).length()<5000)gpxbuffer = gpxbuffer +  "<trkpt lat=\"" + df6.format( location.getLatitude())+"\""
 			+ " lon=\"" + df6.format( location.getLongitude())
 			+ "\"><ele>" +df1.format( location.getAltitude()) 

@@ -286,8 +286,8 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 				
 				String[] a={"device"};
 				String[] b={device};
-				
-				new netutil.MyAsyncTask(GPSLocalServiceClient.this).execute(buildcommand("start",a,b)) ;
+				String[] params = {buildcommand("start",a,b),"false","","start"};
+				new netutil.MyAsyncTask(GPSLocalServiceClient.this).execute(params) ;
 				 
 				
 				Log.d(getClass().getSimpleName(),buildcommand("start",a,b).toString());
@@ -1263,7 +1263,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 		}
 	}
 
-	String[] buildcommand (String action, String[] params, String[] values ){
+	String buildcommand (String action, String[] params, String[] values ){
 //		"http://api.esya.ru/?system=om&action=device"
 //				+ "&key="
 //				+ key
@@ -1289,8 +1289,8 @@ String tempstr = "";
 		 apicommand = apicommand +  "&signature="+SHA1("system:om;action:"+action+";key"+key+";"+tempstr + "--"
 			+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
 	.substring(1, 25);
-		String[] ret= {apicommand,action};
-		 return ret;}
+	
+		 return apicommand;}
 	
 	public void onResultsSucceeded(APIComResult result) {
 		// TODO Auto-generated method stub
