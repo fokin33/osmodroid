@@ -15,8 +15,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Application;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.widget.TextView;
@@ -44,6 +48,7 @@ public class netutil {
 
 	    @Override
 	    protected APIComResult doInBackground(String... params) {
+	    	Log.d(this.getClass().getName(), "команда"+ params[3]);
 	    	JSONObject resJSON = null;
 	    	String Commandtext = null;
 	    	APIComResult resAPI = new APIComResult();
@@ -60,7 +65,8 @@ public class netutil {
 			Log.d(this.getClass().getName(),  Commandtext);
 			resJSON = new JSONObject(Commandtext);
 			resAPI.Jo= resJSON;
-			
+			Log.d(this.getClass().getName(),  resJSON.toString());
+			Log.d(this.getClass().getName(),  params[3]);
 			}  catch (JSONException e) {
 			e.printStackTrace();}
 	    	catch (NullPointerException e){
@@ -91,6 +97,7 @@ public class netutil {
 	    protected void onPostExecute(APIComResult result) {
 	    	Log.d(this.getClass().getName(), "void onPostExecute");
 	    	Log.d(this.getClass().getName(), Boolean.toString(isCancelled()));
+	    	
 	    	listener.onResultsSucceeded(result);
 
 	    }
@@ -106,7 +113,36 @@ protected void onCancelled() {
 	}
 	
 	
-	
+	public static String buildcommand (Context context, String action, String[] params, String[] values ){
+		SharedPreferences settings  = PreferenceManager.getDefaultSharedPreferences(context);
+		
+		//		"http://api.esya.ru/?system=om&action=device"
+//				+ "&key="
+//				+ key
+//				+ "&signature="
+//				+ SHA1(
+//						"system:om;action:device;key:"
+//								+ key
+//								+ ";"
+//								+ "--"
+//								+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
+//						.substring(1, 25), "false", "",
+//		"device" };
+String tempstr = ""; 
+		 String apicommand = "http://api.esya.ru/?system=om&action="+action+"&key="
+					+ settings.getString("key", "");
+					//+ "&signature=";
+		 for (int i = 0; i < params.length; i++) {
+			 	 apicommand = apicommand + "&"+ params[i] + "=" + values[i];
+			 	}
+		 for (int i = 0; i < params.length; i++) {
+		 	 tempstr = tempstr +  params[i] + ":" + values[i]+";";
+		 	}
+		 
+		 apicommand = apicommand +  "&signature="+SHA1("system:om;action:"+action+";key:"+settings.getString("key", "")+";"+tempstr + "--"
+			+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6").substring(1, 25);
+			//Log.v(getClass().getSimpleName(),apicommand);
+		 return apicommand;}
 	
 	
 
@@ -153,6 +189,7 @@ protected void onCancelled() {
 				// return str;
 			//	return getString(R.string.ErrorRecieve);
 			//	con.disconnect();
+				Log.d( GPSLocalServiceClient.class.getName(), Integer.toString(con.getResponseCode()));
 				return "Косяк";
 
 			}

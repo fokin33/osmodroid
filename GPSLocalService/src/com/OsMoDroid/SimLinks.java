@@ -19,9 +19,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -33,6 +37,7 @@ public class SimLinks extends Activity implements ResultsListener{
 	private ArrayAdapter<String> adapter;
 	// String[] simlinksarray;
 	 ArrayList<String> list;
+	 ArrayList<String> listids;
 	 SharedPreferences settings;
 	 final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
 	 //
@@ -61,16 +66,17 @@ public class SimLinks extends Activity implements ResultsListener{
 	}
 	
 	void addlink(){
+String linkname =  System.currentTimeMillis()+settings.getString("device", "");
 		//--
 		//[19:27:37.138] GET http://api.esya.ru/?system=om&key=H83_fdDGd34i85gDsd4f&action=add_link&url=zxccvb&item=764&type=0&on=2012-08-16%2019:27:00&off=2012-08-17%2000:00:00&format=jsonp&callback=jQuery17107581103815227868_1345130731429&_=1345130857118 [HTTP/1.1 200 OK 122мс]
 		String[] params = {
-				"http://api.esya.ru/?system=om&action=link_add&url=" +System.currentTimeMillis() +"&item="+settings.getString("device", "")
+				"http://api.esya.ru/?system=om&action=link_add&url=" +linkname +"&item="+settings.getString("device", "")
 				
 						+ "&key="
 						+ GPSLocalServiceClient.key
 						+ "&signature="
 						+ GPSLocalServiceClient.SHA1(
-								"system:om;action:link_add;url:"+System.currentTimeMillis()+";item:"+settings.getString("device", "") +";key:"
+								"system:om;action:link_add;url:"+linkname+";item:"+settings.getString("device", "") +";key:"
 										+ GPSLocalServiceClient.key
 										+ ";"
 										+ "--"
@@ -83,6 +89,15 @@ public class SimLinks extends Activity implements ResultsListener{
 		Log.d(getClass().getSimpleName(), params[0]);
 	
 	}
+	
+	void dellink(String linkid){
+		
+		String[] a={"link"};
+		String[] b={linkid};
+		String[] params = {netutil.buildcommand(SimLinks.this,"link_delete",a,b),"false","","link_delete"};
+		new netutil.MyAsyncTask(SimLinks.this).execute(params) ;
+		reflinks();
+	}
 
 	/** Called when the activity is first created. */
 	@Override
@@ -94,35 +109,28 @@ public class SimLinks extends Activity implements ResultsListener{
 	    final ListView lv1 = (ListView) findViewById(R.id.listView1);
 	        list = new ArrayList<String>();
 	        list.clear();
+	        listids = new ArrayList<String>();
+	        listids.clear();
 	       adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, list);
 	       lv1.setAdapter(adapter);
-	     
-	       lv1.setOnItemClickListener(
-	    	        new OnItemClickListener()
-	    	        {
-
-						public void onItemClick(AdapterView<?> arg0, View arg1,
-								int arg2, long arg3) {
-							// TODO Auto-generated method stub
-							
-							
-							Intent sendIntent = new Intent(Intent.ACTION_SEND);
-							sendIntent.setType("text/plain");
-							sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, adapter.getItem(arg2));
-							startActivity(Intent.createChooser(sendIntent, "Email"));
-						}
-
-//	    	            @Override
-//	    	            public void onItemClick(AdapterView<?> arg0, View view,
-//	    	                    int position, long id) {
-//	    	                // TODO Auto-generated method stub
-//	    	                Object o = list1.getItemAtPosition(position);
-//	    	                String pen = o.toString();
-//	    	             //   Toast.makeText(getApplicationContext(), "You have chosen the pen: " + " " + pen, Toast.LENGTH_LONG).show();
+	       registerForContextMenu(lv1);
+//	       lv1.setOnItemClickListener(
+//	    	        new OnItemClickListener()
+//	    	        {
 //
-//	    	            }   
-	    	        }       
-	    	);
+//						public void onItemClick(AdapterView<?> arg0, View arg1,
+//								int arg2, long arg3) {
+//							// TODO Auto-generated method stub
+//							
+//							
+//							Intent sendIntent = new Intent(Intent.ACTION_SEND);
+//							sendIntent.setType("text/plain");
+//							sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, adapter.getItem(arg2));
+//							startActivity(Intent.createChooser(sendIntent, "Email"));
+//						}
+//
+//	    	        }       
+//	    	);
 
 	       
 
@@ -155,13 +163,46 @@ public class SimLinks extends Activity implements ResultsListener{
 	    // TODO Auto-generated method stub
 	}
 
+	 @Override
+	  public void onCreateContextMenu(ContextMenu menu, View v,
+	      ContextMenuInfo menuInfo) {
+	    super.onCreateContextMenu(menu, v, menuInfo);
+	    menu.add(0, 1, 0, "Отправить ссылку");
+	    menu.add(0, 2, 0, "Удалить ссылку");
+	  }
+
+	  @Override
+	  public boolean onContextItemSelected(MenuItem item) {
+	  
+		  if (item.getItemId() == 1) {
+		         AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();
+			  Intent sendIntent = new Intent(Intent.ACTION_SEND);
+				sendIntent.setType("text/plain");
+				sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, adapter.getItem(acmi.position));
+				startActivity(Intent.createChooser(sendIntent, "Email"));
+		         
+		      return true;
+		    }
+			  		  
+		  if (item.getItemId() == 2) {
+	         AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();
+	     dellink(listids.get((int) acmi.id));
+			 
+	      return true;
+	    }
+		  
+		  
+	    return super.onContextItemSelected(item);
+	  }
+	
 	
 
 	public void onResultsSucceeded(APIComResult result) {
 		JSONObject a = null; 
 		
-		if (result.Command.equals("device_links")) {
+		if (result.Command.equals("device_links")  &&!(result.Jo==null)  ) {
 		list.clear();
+		listids.clear();
 		try {
 			  a =	result.Jo.getJSONObject("links");
 			  Log.d(getClass().getSimpleName(), a.toString());
@@ -171,6 +212,7 @@ public class SimLinks extends Activity implements ResultsListener{
           	{
           		String keyname = (String)i.next();
 list.add(a.getString(keyname));
+listids.add(keyname);
 Log.d(getClass().getSimpleName(), list.toString());
           	}
 			  
@@ -187,7 +229,7 @@ Log.d(getClass().getSimpleName(), list.toString());
 		adapter.notifyDataSetChanged();
 		}
 		
-		if (result.Command.equals("link_add")) 
+		if (result.Command.equals("link_add")&& !(result.Jo==null)) 
 		{
 			
 				
@@ -197,9 +239,17 @@ Log.d(getClass().getSimpleName(), list.toString());
 			
 				}
 			 
+		if (result.Command.equals("link_delete")&& !(result.Jo==null)) 
+		{
+			
+				
+					Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
+				//	 reflinks();	
+					
+			
+				}
 			
 			
-			Log.d(getClass().getSimpleName(),"Добавляли линк");
 		
 			 
 			 

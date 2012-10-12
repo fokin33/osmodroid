@@ -286,11 +286,11 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 				
 				String[] a={"device"};
 				String[] b={device};
-				String[] params = {buildcommand("start",a,b),"false","","start"};
+				String[] params = {netutil.buildcommand(GPSLocalServiceClient.this,"start",a,b),"false","","start"};
 				new netutil.MyAsyncTask(GPSLocalServiceClient.this).execute(params) ;
 				 
 				
-				Log.d(getClass().getSimpleName(),buildcommand("start",a,b).toString());
+				//Log.d(getClass().getSimpleName(),buildcommand("start",a,b).toString());
 				// timer = new Timer();
 				// timer.scheduleAtFixedRate(new TimerTask() {
 				// @Override
@@ -583,33 +583,41 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 		}
 		if (item.getItemId() == 5) {
 			if (!(key.equals(""))) {
-				String[] params = {
-						"http://api.esya.ru/?system=om&action=device_link&hash="
-								+ hash
-								+ "&n="
-								+ n
-								+ "&key="
-								+ key
-								+ "&signature="
-								+ SHA1(
-										"system:om;action:device_link;hash:"
-												+ hash
-												+ ";n:"
-												+ n
-												+ ";key:"
-												+ key
-												+ ";"
-												+ "--"
-												+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
-										.substring(1, 25), "false", "",
-						"device_link" };
+//				String[] params = {
+//						"http://api.esya.ru/?system=om&action=device_link&hash="
+//								+ hash
+//								+ "&n="
+//								+ n
+//								+ "&key="
+//								+ key
+//								+ "&signature="
+//								+ SHA1(
+//										"system:om;action:device_link;hash:"
+//												+ hash
+//												+ ";n:"
+//												+ n
+//												+ ";key:"
+//												+ key
+//												+ ";"
+//												+ "--"
+//												+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
+//										.substring(1, 25), "false", "",
+//						"device_link" };
+				String[] a={"device"};
+				String[] b={device};
+				String[] params = {netutil.buildcommand(GPSLocalServiceClient.this,"device_link",a,b),"false","","device_link"};
+				new netutil.MyAsyncTask(GPSLocalServiceClient.this).execute(params) ;
+				
+				
+				
+				
 				// String[]
 				// params={"http://api.esya.ru/?system=om&action=device&key="+commandJSON.optString("key")+"&signature="+SHA1("system:om;action:device;key:"+commandJSON.optString("key")+";"+"--"+"JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6").substring(1,
 				// 25),"false",""};
 				// +commandJSON.optString("key")+
-				Log.d(getClass().getSimpleName(), params[0]);
-				RequestCommandTask Rq = new RequestCommandTask();
-				Rq.execute(params);
+			//	Log.d(getClass().getSimpleName(), params[0]);
+			//	RequestCommandTask Rq = new RequestCommandTask();
+			//	Rq.execute(params);
 			} else {
 				Toast.makeText(GPSLocalServiceClient.this, R.string.nokey, 5)
 						.show();
@@ -1132,7 +1140,11 @@ editor.putString("devicename", unescape(adevicename));
 editor.commit();
 
 }
-if (!(akey==null)){key=akey;}
+if (!(akey==null))
+{key=akey;
+SharedPreferences.Editor editor = settings.edit();
+editor.putString("key", key);
+editor.commit();}
 if (!(aviewurl==null)){viewurl=aviewurl;}
 
 				TextView t2 = (TextView) findViewById(R.id.URL);
@@ -1263,50 +1275,64 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 		}
 	}
 
-	String buildcommand (String action, String[] params, String[] values ){
-//		"http://api.esya.ru/?system=om&action=device"
-//				+ "&key="
-//				+ key
-//				+ "&signature="
-//				+ SHA1(
-//						"system:om;action:device;key:"
-//								+ key
-//								+ ";"
-//								+ "--"
-//								+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
-//						.substring(1, 25), "false", "",
-//		"device" };
-String tempstr = ""; 
-		 String apicommand = "http://api.esya.ru/?system=om&action="+action+"&key="
-					+ key;
-					//+ "&signature=";
-		 for (int i = 0; i < params.length; i++) {
-			 	 apicommand = apicommand + "&"+ params[i] + "=" + values[i];
-			 	}
-		 for (int i = 0; i < params.length; i++) {
-		 	 tempstr = tempstr +  params[i] + ":" + values[i]+";";
-		 	}
-		 apicommand = apicommand +  "&signature="+SHA1("system:om;action:"+action+";key"+key+";"+tempstr + "--"
-			+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
-	.substring(1, 25);
 	
-		 return apicommand;}
 	
 	public void onResultsSucceeded(APIComResult result) {
 		// TODO Auto-generated method stub
-		if (result.Command.equals("link_add")) 
+		if (result.Command.equals("start")&& !(result.Jo==null))
 		{
 			
+				if (!result.Jo.optString("motd").equals("")){
 				
-					Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
+					
+					AlertDialog alertdialog = new AlertDialog.Builder(
+							GPSLocalServiceClient.this).create();
+					alertdialog.setTitle("Сообщение от сервера");
+
+					alertdialog.setMessage(result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")
+							+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month")
+							
+							);
+
+					alertdialog.setButton(getString(R.string.yes),
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int which) {
+									
+									return;
+								}
+							});
+					
+					alertdialog.show();
+					
+				//	Toast.makeText(this,result.Jo.optString("motd"),Toast.LENGTH_LONG ).show();
+					}
+				
 					
 					
 			
 				}
 			 
+		if (result.Command.equals("device_link")) {
+			if (!(result.Jo.optString("url").equals(""))) {
+				viewurl = result.Jo.optString("url");
+				TextView t2 = (TextView) findViewById(R.id.URL);
+				t2.setText("Имя: "+devicename+". " +getString(R.string.Adres) + viewurl);
+				Linkify.addLinks(t2, Linkify.ALL);
+
+				SharedPreferences.Editor editor = settings.edit();
+
+				editor.putString("view-url", viewurl);
+
+
+				editor.commit();
+				
+				//returnstr = "URL найден";
+			} else {
+				Toast.makeText(this, "URL узнать не удалось",Toast.LENGTH_LONG ).show();
+			}
+		}
 			
-			
-			Log.d(getClass().getSimpleName(),"Добавляли линк");
+			//Log.d(getClass().getSimpleName(),"Добавляли линк");
 		
 			 
 			 
