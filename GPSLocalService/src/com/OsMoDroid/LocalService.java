@@ -231,19 +231,9 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 		super.onCreate();
 		sdf1.setTimeZone(TimeZone.getTimeZone("UTC"));   
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
-		if (settings.getBoolean("im", false)){
+		if (settings.getBoolean("im", false) && !settings.getString("lpch", "").equals("")){
 		String[] params = {
-				"http://api.esya.ru/?system=om&action=im_get_all"
-				+ "&key="
-				+ GPSLocalServiceClient.key
-				+ "&signature="
-				+ GPSLocalServiceClient.SHA1(
-						"system:om;action:im_get_all" +";key:"
-								+ GPSLocalServiceClient.key
-								+ ";"
-								+ "--"
-								+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
-						.substring(1, 25), "false", "",
+				"http://d.esya.ru/?identifier="+settings.getString("lpch", "")+"00ms&ncrnd=1347794237100", "false", "",
 				"messageread" };
 		imrunning=true;
 		imtask = new netutil.MyAsyncTask(LocalService.this) ;
@@ -290,19 +280,9 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 		            NetworkInfo currentNetworkInfo = (NetworkInfo) intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
 		            NetworkInfo otherNetworkInfo = (NetworkInfo) intent.getParcelableExtra(ConnectivityManager.EXTRA_OTHER_NETWORK_INFO);
 		            if (settings.getBoolean("im", false)){
-		            if (!noConnectivity&& imrunning){
+		            if (!noConnectivity&& imrunning && !settings.getString("lpch", "").equals("")){
 		            	String[] params = {
-		            			"http://api.esya.ru/?system=om&action=im_get_all"
-		            			+ "&key="
-		            			+ GPSLocalServiceClient.key
-		            			+ "&signature="
-		            			+ GPSLocalServiceClient.SHA1(
-		            					"system:om;action:im_get_all" +";key:"
-		            							+ GPSLocalServiceClient.key
-		            							+ ";"
-		            							+ "--"
-		            							+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
-		            					.substring(1, 25), "false", "",
+		            			"http://d.esya.ru/?identifier="+settings.getString("lpch", "")+"00ms&ncrnd=1347794237100", "false", "",
 		            			"messageread" };
 		        		imrunning=true;
 		        		imtask = new netutil.MyAsyncTask(LocalService.this) ;
@@ -509,9 +489,10 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 		super.onDestroy();
 		  if (settings.getBoolean("im", false)){
 		imtask.Close();
+		Log.d(this.getClass().getName(),"imtask.close");
 		imrunning=false;
-		Boolean cancelresult= imtask.cancel(true);
-		Log.d(this.getClass().getName(), Boolean.toString(cancelresult));
+		//Boolean cancelresult= imtask.cancel(true);
+		//Log.d(this.getClass().getName(), Boolean.toString(cancelresult));
 		
 		  }	
 		if (tts != null) {
@@ -728,6 +709,7 @@ else	{
 
 
 in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+location.getAccuracy());
+in.putExtra("sendresult",sendresult);
 in.putExtra("sendcounter",sendcounter);
 sendBroadcast(in);	
 
@@ -748,6 +730,7 @@ if (gpx && fileheaderok) {
 	brng_gpx = Math.toDegrees(Math.atan2(y, x)); //.toDeg();	
 	position=position+"\n"+getString(R.string.TrackCourseChange)+df1.format( Math.abs(brng_gpx-prevbrng_gpx));
 	in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+location.getAccuracy());
+	in.putExtra("sendresult",sendresult);
 	in.putExtra("sendcounter",sendcounter);
 	sendBroadcast(in);	
 		//Log.d(this.getClass().getName(), "Попали в проверку курса для трека");
@@ -788,6 +771,7 @@ if (gpx && fileheaderok) {
 			brng = Math.toDegrees(Math.atan2(y, x)); //.toDeg();	
 			position=position+"\n"+getString(R.string.SendCourseChange)+df1.format( Math.abs(brng-prevbrng));
 			in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+location.getAccuracy());
+			in.putExtra("sendresult",sendresult);
 			in.putExtra("sendcounter",sendcounter);
 			sendBroadcast(in);	
 		
@@ -1202,14 +1186,14 @@ public void onInit(int status) {
 	// TODO Auto-generated method stub
 	  if (status == TextToSpeech.SUCCESS) {
           // Set preferred language to US english.
-           _langTTSavailable = tts.setLanguage(Locale.US); // Locale.FRANCE etc.
+           _langTTSavailable = tts.setLanguage(Locale.getDefault()); // Locale.FRANCE etc.
           if (_langTTSavailable == TextToSpeech.LANG_MISSING_DATA ||
           	_langTTSavailable == TextToSpeech.LANG_NOT_SUPPORTED) {
         	  Log.d(this.getClass().getName(), "Нету языка");
         	  
            } else if ( _langTTSavailable >= 0 && settings.getBoolean("usetts", false)) {
         	   Log.d(this.getClass().getName(), "Произносим");
-        	   tts.speak("Ryabotayem!", TextToSpeech.QUEUE_ADD, null);
+        	   tts.speak("Поехали!", TextToSpeech.QUEUE_ADD, null);
 			 
 			
           }
@@ -1229,17 +1213,7 @@ public void onResultsSucceeded(APIComResult result) {
 	{
 		if (settings.getBoolean("im", false)){	
 		String[] params = {
-			"http://api.esya.ru/?system=om&action=im_get_all"
-			+ "&key="
-			+ GPSLocalServiceClient.key
-			+ "&signature="
-			+ GPSLocalServiceClient.SHA1(
-					"system:om;action:im_get_all" +";key:"
-							+ GPSLocalServiceClient.key
-							+ ";"
-							+ "--"
-							+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
-					.substring(1, 25), "false", "",
+				"http://d.esya.ru/?identifier="+settings.getString("lpch", "")+"00ms&ncrnd=1347794237100", "false", "",
 			"messageread" };
 		
 		try {
@@ -1256,8 +1230,8 @@ public void onResultsSucceeded(APIComResult result) {
 					Toast.makeText(this,toprint,5).show();
 					vibrator.vibrate(200);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.d(getClass().getSimpleName(),"exeption in analise messageread result");
+			//e.printStackTrace();
 		}
 				if (imrunning){
 				new netutil.MyAsyncTask(LocalService.this).execute(params) ;

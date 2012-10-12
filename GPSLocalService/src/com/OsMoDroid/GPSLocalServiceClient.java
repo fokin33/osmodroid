@@ -1282,6 +1282,15 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 		if (result.Command.equals("start")&& !(result.Jo==null))
 		{
 			
+			if (!result.Jo.optString("lpch").equals("")){
+				SharedPreferences.Editor editor = settings.edit();
+
+				
+				editor.putString("lpch", result.Jo.optString("lpch"));
+
+				editor.commit();
+			}
+			
 				if (!result.Jo.optString("motd").equals("")){
 				
 					

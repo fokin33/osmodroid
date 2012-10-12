@@ -39,7 +39,15 @@ public class netutil {
 
 	    ResultsListener listener;
 	    HttpURLConnection con;
-	    public void Close(){con.disconnect();};
+	    InputStream in;
+	    public void Close(){con.disconnect();
+	    try {
+			in.close();
+		} catch (IOException e) {
+			 Log.d(this.getClass().getName(),"imtask.close IO exeption");
+			//e.printStackTrace();
+		}
+	    Log.d(this.getClass().getName(),"imtask.close");};
 	    String getPage(String adr, boolean dopost, String post)
 				throws IOException, NullPointerException {
 			// Log.d(getClass().getSimpleName(), "getpage() gpsclient");
@@ -54,7 +62,7 @@ public class netutil {
 			} else {
 				con = (HttpURLConnection) new URL(adr).openConnection();
 			}
-			con.setReadTimeout(30000);
+			con.setReadTimeout(300000);
 			con.setConnectTimeout(30000);
 			if (dopost) {
 				con.setRequestMethod("POST");
@@ -70,8 +78,9 @@ public class netutil {
 			con.connect();
 			
 			try {
-				if (con.getResponseCode() == HttpURLConnection.HTTP_OK && !(con.getInputStream()==null)) {
-					 String str=inputStreamToString(con.getInputStream());
+				in = con.getInputStream();
+				if (con.getResponseCode() == HttpURLConnection.HTTP_OK && !(in==null)) {
+					 String str=inputStreamToString(in);
 					Log.d( GPSLocalServiceClient.class.getName(), str);
 					//con.disconnect();
 					return str;
@@ -116,8 +125,9 @@ public class netutil {
 				Commandtext = getPage(params[0],
 						Boolean.parseBoolean(params[1]), params[2]);
 			} catch (IOException e1) {
+				Log.d(this.getClass().getName(),  "IO exp");
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				//e1.printStackTrace();
 			}
 	    	try {
 				
@@ -138,12 +148,13 @@ public class netutil {
 			try {
 				resAPI.ja = new JSONArray(Commandtext);
 			} catch (JSONException e) {
+				Log.d(this.getClass().getName(),  "JSON exeption in array");
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			catch (NullPointerException e){
-	    		e.printStackTrace();
-	    		Log.d(this.getClass().getName(),  "Что-то нулл");
+	    		//e.printStackTrace();
+	    		Log.d(this.getClass().getName(),  "Что-то нулл2");
 	    		
 	    	}
 			
