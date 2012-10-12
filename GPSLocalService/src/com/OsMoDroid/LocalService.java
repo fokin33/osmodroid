@@ -30,6 +30,8 @@ import java.util.TimeZone;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.OsMoDroid.netutil.MyAsyncTask;
+
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -159,7 +161,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	private Object[] mStartForegroundArgs = new Object[2];
 	private String pass;
 	private String lastsay="a";
-	private AsyncTask<String,Void,APIComResult> imtask;
+	private netutil.MyAsyncTask imtask;
 	private Boolean imrunning = true;
 	private String[] imadress={};
 	final private static DecimalFormat df6 = new DecimalFormat("########.######");
@@ -308,7 +310,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 		            	
 		            }
 		            if (noConnectivity&& imrunning){
-		            	netutil.Close();
+		             imtask.Close();
 		            	
 		            }
 		            ;
@@ -506,7 +508,7 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 	public void onDestroy() {
 		super.onDestroy();
 		  if (settings.getBoolean("im", false)){
-		netutil.Close();
+		imtask.Close();
 		imrunning=false;
 		Boolean cancelresult= imtask.cancel(true);
 		Log.d(this.getClass().getName(), Boolean.toString(cancelresult));

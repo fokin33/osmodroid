@@ -96,7 +96,7 @@ String linkname =  System.currentTimeMillis()+settings.getString("device", "");
 		String[] b={linkid};
 		String[] params = {netutil.buildcommand(SimLinks.this,"link_delete",a,b),"false","","link_delete"};
 		new netutil.MyAsyncTask(SimLinks.this).execute(params) ;
-		reflinks();
+		
 	}
 
 	/** Called when the activity is first created. */
