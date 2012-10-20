@@ -33,15 +33,18 @@ import org.json.JSONObject;
 import com.OsMoDroid.netutil.MyAsyncTask;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 //import android.os.Handler;
@@ -61,6 +64,8 @@ import android.speech.tts.TextToSpeech.OnInitListener;
 
 //import android.util.Log;
 //import android.util.Log;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.location.GpsSatellite;
 import android.location.GpsStatus;
@@ -84,6 +89,7 @@ import android.util.Log;
 
 public class LocalService extends Service implements LocationListener,GpsStatus.Listener, TextToSpeech.OnInitListener,  ResultsListener {
 	private static final int OSMODROID_ID = 1;
+	int notifyid=2;
 	//MediaPlayer mp;
 	//BufferedReader bufferedReader;
 	MediaPlayer gpson;
@@ -1203,12 +1209,88 @@ public void onInit(int status) {
     	  // Initialization failed.
       }
 }
-
+public boolean isOnline() {
+    ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+    NetworkInfo nInfo = cm.getActiveNetworkInfo();
+    if (nInfo != null && nInfo.isConnected()) {
+        Log.v("status", "ONLINE");
+        return true;
+    }
+    else {
+        Log.v("status", "OFFLINE");
+        return false;
+    }
+}
 
 
 public void onResultsSucceeded(APIComResult result) {
 	// TODO Auto-generated method stub
 	String toprint = "";
+	if (result.Command.equals("im_get_all")) {
+		String messagestext="";
+		try {
+			
+		
+		        JSONObject jsonObject = result.Jo.getJSONObject("messages");
+		        Iterator i = jsonObject.keys();
+				  while (i.hasNext())
+	          	{
+	          		
+	String keyname= (String)i.next();          		 
+	messagestext="Сообщение номер:"+jsonObject.getJSONObject(keyname).optString("u")+"\n"+"Дата:"+jsonObject.getJSONObject(keyname).optString("time")+"\n"+jsonObject.getJSONObject(keyname).optString("text");
+	
+	if (settings.getBoolean("usetts", false)&&tts!=null )
+	{
+		
+		Log.d(this.getClass().getName(), "try to say message");
+		tts.speak("Сообщение:"+jsonObject.getJSONObject(keyname).optString("text") , TextToSpeech.QUEUE_ADD, null);
+		
+	}
+	          	
+	          	}
+		        Log.d(getClass().getSimpleName(),messagestext);
+		      
+		        
+				Notification mesnotification = new Notification(R.drawable.eye, (CharSequence)messagestext, System.currentTimeMillis());
+				mesnotification.setLatestEventInfo(getApplicationContext(), "Сообщение:", (CharSequence)messagestext, PendingIntent.getActivity(getApplicationContext(), 0, new Intent(), 0));
+				mesnotification.flags |= Notification.FLAG_AUTO_CANCEL;
+		mNotificationManager.notify(notifyid, mesnotification);
+		        notifyid++;
+		        
+		        
+		        LinearLayout layout = new LinearLayout(this);
+				layout.setOrientation(LinearLayout.VERTICAL);
+				
+		        final TextView txv3 = new TextView(this);
+				txv3.setText(messagestext);
+				txv3.setTextSize(16);
+				txv3.setBackgroundColor(Color.GREEN);
+				layout.addView(txv3);
+		        
+		        
+				Toast toast = new Toast(getApplicationContext()); 
+				toast.setView(layout); 
+				toast.setDuration(Toast.LENGTH_LONG);
+				toast.show(); 
+		        vibrator.vibrate(400);
+		        
+		        
+			
+		
+					
+					
+		} catch (Exception e) {
+			Log.d(getClass().getSimpleName(),"exeption in analise im_get_all result");
+			//e.printStackTrace();
+		}
+		
+		
+		
+		
+		
+		
+	}
+	
 	if (result.Command.equals("messageread")) 
 	{
 		if (settings.getBoolean("im", false)){	
@@ -1222,18 +1304,25 @@ public void onResultsSucceeded(APIComResult result) {
 		        JSONObject jsonObject = result.ja.getJSONObject(i);
 		        Log.i(getClass().getSimpleName(), jsonObject.optString("data")+ jsonObject.optString("ids"));
 		        toprint=toprint+jsonObject.optString("data")+jsonObject.optString("ids");
-		      
+		        String[] a={"device","from"};
+				String[] b={settings.getString("device", ""),jsonObject.optString("data")};
+				String[] params2 = {netutil.buildcommand(this,"im_get_all",a,b),"false","","im_get_all"};
+				new netutil.MyAsyncTask(this).execute(params2) ;
+		        
+		        
 			}
 			
 			Log.d(getClass().getSimpleName(),"messageread"+toprint);
 				
-					Toast.makeText(this,toprint,5).show();
-					vibrator.vibrate(200);
+				//	Toast.makeText(this,toprint,5).show();
+				
+					
+					
 		} catch (Exception e) {
 			Log.d(getClass().getSimpleName(),"exeption in analise messageread result");
 			//e.printStackTrace();
 		}
-				if (imrunning){
+				if (imrunning &&isOnline() && settings.getBoolean("im", false) && !settings.getString("lpch", "").equals("")){
 				new netutil.MyAsyncTask(LocalService.this).execute(params) ;
 				}
 			 

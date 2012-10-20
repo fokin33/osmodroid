@@ -43,8 +43,8 @@ public class netutil {
 	    public void Close(){con.disconnect();
 	    try {
 			in.close();
-		} catch (IOException e) {
-			 Log.d(this.getClass().getName(),"imtask.close IO exeption");
+		} catch (Exception e) {
+			 Log.d(this.getClass().getName(),"imtask.close exeption");
 			//e.printStackTrace();
 		}
 	    Log.d(this.getClass().getName(),"imtask.close");};
