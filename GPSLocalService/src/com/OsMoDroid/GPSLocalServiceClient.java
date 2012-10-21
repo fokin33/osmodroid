@@ -103,6 +103,7 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 	MenuItem mi8;
 	String version="Unknown";
 	SharedPreferences settings;
+	private netutil.MyAsyncTask starttask;
 	private ServiceConnection conn = new ServiceConnection() {
 
 		public void onServiceConnected(ComponentName className, IBinder service) {
@@ -239,6 +240,13 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 				// if (timer != null) {
 				// timer.cancel();
 				// }
+				if ( starttask!=null)
+				{
+					starttask.cancel(true);
+					starttask.Close();
+				}
+					
+				
 				if (mBound) {
 					unbindService(conn);
 					mBound = false;
@@ -287,7 +295,8 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 				String[] a={"device"};
 				String[] b={device};
 				String[] params = {netutil.buildcommand(GPSLocalServiceClient.this,"start",a,b),"false","","start"};
-				new netutil.MyAsyncTask(GPSLocalServiceClient.this).execute(params) ;
+				starttask=	new netutil.MyAsyncTask(GPSLocalServiceClient.this);
+				starttask.execute(params) ;
 				 
 				
 				//Log.d(getClass().getSimpleName(),buildcommand("start",a,b).toString());

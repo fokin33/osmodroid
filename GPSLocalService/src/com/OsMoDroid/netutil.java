@@ -40,14 +40,16 @@ public class netutil {
 	    ResultsListener listener;
 	    HttpURLConnection con;
 	    InputStream in;
-	    public void Close(){con.disconnect();
+	    public void Close(){
 	    try {
+	    	
 			in.close();
+			con.disconnect();
 		} catch (Exception e) {
-			 Log.d(this.getClass().getName(),"imtask.close exeption");
-			//e.printStackTrace();
+			 Log.d(this.getClass().getName(),"MyAsyncTask close exeption");
+			e.printStackTrace();
 		}
-	    Log.d(this.getClass().getName(),"imtask.close");};
+	    Log.d(this.getClass().getName(),"MysyncClass.close");};
 	    String getPage(String adr, boolean dopost, String post)
 				throws IOException, NullPointerException {
 			// Log.d(getClass().getSimpleName(), "getpage() gpsclient");
@@ -177,14 +179,7 @@ public class netutil {
 protected void onCancelled() {
 	// TODO Auto-generated method stub
 	super.onCancelled();
-	try {
-		con.disconnect();
-	} catch (Exception e) {
-		// TODO Auto-generated catch block
-		Log.d(this.getClass().getName(), "onCanceled exeption in disconnect");
-		
-		e.printStackTrace();
-	}
+	
 	Log.d(this.getClass().getName(), "void onCanceled");
 	
 	

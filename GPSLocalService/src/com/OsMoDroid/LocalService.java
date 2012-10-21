@@ -1,3 +1,4 @@
+
 package com.OsMoDroid;
 
 import android.net.ConnectivityManager;
@@ -168,6 +169,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	private String pass;
 	private String lastsay="a";
 	private netutil.MyAsyncTask imtask;
+	private Boolean prevstate;
 	private Boolean imrunning = true;
 	private String[] imadress={};
 	final private static DecimalFormat df6 = new DecimalFormat("########.######");
@@ -235,15 +237,19 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	public void onCreate() {
 		 //Debug.startMethodTracing("startsbuf");
 		super.onCreate();
+		prevstate=isOnline();
 		sdf1.setTimeZone(TimeZone.getTimeZone("UTC"));   
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 		if (settings.getBoolean("im", false) && !settings.getString("lpch", "").equals("")){
 		String[] params = {
 				"http://d.esya.ru/?identifier="+settings.getString("lpch", "")+"00ms&ncrnd=1347794237100", "false", "",
 				"messageread" };
+		if (prevstate) {
 		imrunning=true;
+		
 		imtask = new netutil.MyAsyncTask(LocalService.this) ;
 		imtask.execute(params);
+		}
 		}
 		
 		tts = new TextToSpeech(this,
@@ -285,18 +291,25 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 		boolean isFailover = intent.getBooleanExtra(ConnectivityManager.EXTRA_IS_FAILOVER, false);
 		            NetworkInfo currentNetworkInfo = (NetworkInfo) intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
 		            NetworkInfo otherNetworkInfo = (NetworkInfo) intent.getParcelableExtra(ConnectivityManager.EXTRA_OTHER_NETWORK_INFO);
+		            Log.d(getClass().getSimpleName(), reason + " NoConnectivity:" +Boolean.toString(noConnectivity)+ "IsFailover: "+Boolean.toString(isFailover));
 		            if (settings.getBoolean("im", false)){
-		            if (!noConnectivity&& imrunning && !settings.getString("lpch", "").equals("")){
+		            if (!noConnectivity&& !prevstate&& imrunning && !settings.getString("lpch", "").equals("")){
 		            	String[] params = {
 		            			"http://d.esya.ru/?identifier="+settings.getString("lpch", "")+"00ms&ncrnd=1347794237100", "false", "",
 		            			"messageread" };
-		        		imrunning=true;
+		            	Log.d(getClass().getSimpleName(),"prevstate "+ Boolean.toString(prevstate));
+		        		prevstate=true;
 		        		imtask = new netutil.MyAsyncTask(LocalService.this) ;
+		        		Log.d(getClass().getSimpleName(), "Новая задача по ресиверу");
 		        		imtask.execute(params);
+		        		
 		            	
 		            }
-		            if (noConnectivity&& imrunning){
-		             imtask.Close();
+		            if (noConnectivity&& imrunning && prevstate){
+		            	Log.d(getClass().getSimpleName(),"prevstate "+ Boolean.toString(prevstate));
+		            	prevstate=false;
+		            	imtask.cancel(true);
+		            	imtask.Close();
 		            	
 		            }
 		            ;
@@ -494,9 +507,11 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 	public void onDestroy() {
 		super.onDestroy();
 		  if (settings.getBoolean("im", false)){
-		imtask.Close();
-		Log.d(this.getClass().getName(),"imtask.close");
-		imrunning=false;
+			  imrunning=false;
+			  imtask.cancel(true);
+			  imtask.Close();
+		Log.d(this.getClass().getName()," ondestroy imtask.close");
+		
 		//Boolean cancelresult= imtask.cancel(true);
 		//Log.d(this.getClass().getName(), Boolean.toString(cancelresult));
 		
