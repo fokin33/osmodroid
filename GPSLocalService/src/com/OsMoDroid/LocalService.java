@@ -382,8 +382,12 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 			
 		registerReceiver( receiver, new IntentFilter( "android.location.GPS_FIX_CHANGE"));
 		registerReceiver( checkreceiver, new IntentFilter( "CHECK_GPS"));
-		 registerReceiver(mConnReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)); 
-		//try {
+		 
+		
+		//registerReceiver(mConnReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)); 
+		
+		 
+		 //try {
 		gpson = MediaPlayer.create(this, R.raw.gpson);
 		gpsoff = MediaPlayer.create(this, R.raw.gpsoff);
 		ineton = MediaPlayer.create(this, R.raw.ineton);
