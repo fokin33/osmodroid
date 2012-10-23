@@ -42,6 +42,13 @@
     android:clickable="true"
     android:text="Стоп" />
 
+<Button
+    android:id="@+id/forcesendButton"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:text="Принудительно отправить координаты" />
+
 <TextView
     android:id="@+id/Location"
     android:layout_width="fill_parent"

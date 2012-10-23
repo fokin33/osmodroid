@@ -31,6 +31,7 @@ import java.util.TimeZone;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.OsMoDroid.LocalService.SendCoor;
 import com.OsMoDroid.netutil.MyAsyncTask;
 
 import android.app.AlarmManager;
@@ -217,6 +218,23 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 			
 			  return sendresult;
 		}
+		
+		public void sendPosition() {
+		Location forcelocation = myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		
+		URLadr="http://t.esya.ru/?"+  df6.format( forcelocation.getLatitude()) +":"+ df6.format( forcelocation.getLongitude())+":"+ df1.format(forcelocation.getAccuracy())
+				+":"+df1.format( forcelocation.getAltitude())+":"+df1.format( forcelocation.getSpeed())+":"+hash+":"+n;
+			
+			
+			SendCoor forcesend = new SendCoor();	
+			//Log.d(this.getClass().getName(), "sendbuffer отправляемый "+sendbuffer);
+			
+			forcesend.execute(URLadr," ");
+		
+		
+		}
+		
+		
 		public int getSendCounter(){
 			return sendcounter;
 		}
@@ -657,7 +675,7 @@ else	{
         editor.putBoolean("started", started);
         editor.commit();
 	}
-	private class SendCoor extends AsyncTask<String, String, String> {
+	public class SendCoor extends AsyncTask<String, String, String> {
 
 		
 		private  String tmp;   

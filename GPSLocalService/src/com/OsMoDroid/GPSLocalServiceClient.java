@@ -233,8 +233,10 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 		Button exit = (Button) findViewById(R.id.exitButton);
 		Button copy = (Button) findViewById(R.id.copyButton);
 		Button send = (Button) findViewById(R.id.SendButton);
+		Button forcesend = (Button) findViewById(R.id.forcesendButton);
 		start.setEnabled(false);
 		exit.setEnabled(false);
+		forcesend.setEnabled(false);
 		exit.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				// if (timer != null) {
@@ -254,20 +256,35 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 				stop();
 				Button start = (Button) findViewById(R.id.startButton);
 				Button stop = (Button) findViewById(R.id.exitButton);
+				Button forcesend = (Button) findViewById(R.id.forcesendButton);
+				
 				start.setEnabled(true);
+				forcesend.setEnabled(true);
 				stop.setEnabled(false);
 				started = false;
 				updateServiceStatus();
 
 			}
 		});
-
 		copy.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 				if (viewurl != null)
 					clipboard.setText(viewurl);
 				// clipboard.setPrimaryClip(clip);
+			}
+		});
+		forcesend.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+				Log.d(getClass().getSimpleName(), "forcesend click");
+				if (conn == null || mService == null) {
+					Log.d(getClass().getSimpleName(), "нет бинда с сервисом");
+				} else {
+					Log.d(getClass().getSimpleName(), "вызов отправки позиции");
+					mService.sendPosition();
+					Log.d(getClass().getSimpleName(), "послек вызова отправки позиции");
+				}	
+				
 			}
 		});
 		send.setOnClickListener(new OnClickListener() {
@@ -288,7 +305,9 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 				bindService();
 				Button start = (Button) findViewById(R.id.startButton);
 				Button stop = (Button) findViewById(R.id.exitButton);
+				Button forcesend = (Button) findViewById(R.id.forcesendButton);
 				start.setEnabled(false);
+				forcesend.setEnabled(false);
 				stop.setEnabled(true);
 				started = true;
 				
@@ -389,8 +408,10 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 		
 	
 		if (started) {
+			Button forcesend = (Button) findViewById(R.id.forcesendButton);
 			Button start = (Button) findViewById(R.id.startButton);
 			Button stop = (Button) findViewById(R.id.exitButton);
+			forcesend.setEnabled(false);
 			start.setEnabled(false);
 			stop.setEnabled(true);
 			bindService();
@@ -409,8 +430,10 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 			// }, 0, 1000);
 
 		} else {
+			Button forcesend = (Button) findViewById(R.id.forcesendButton);
 			Button start = (Button) findViewById(R.id.startButton);
 			Button stop = (Button) findViewById(R.id.exitButton);
+			forcesend.setEnabled(true);
 			start.setEnabled(true);
 			stop.setEnabled(false);
 		}
