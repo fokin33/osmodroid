@@ -214,9 +214,10 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 		// }
 		//
 		// requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-		 settings = PreferenceManager
+		PreferenceManager.setDefaultValues(this, R.xml.pref, true);
+		settings = PreferenceManager
 				.getDefaultSharedPreferences(this);
-		
+	
 		String strVersionName = getString(R.string.Unknow);
 		try {
 			PackageInfo packageInfo = getPackageManager().getPackageInfo(
@@ -259,7 +260,7 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 				Button forcesend = (Button) findViewById(R.id.forcesendButton);
 				
 				start.setEnabled(true);
-				forcesend.setEnabled(true);
+				forcesend.setEnabled(false);
 				stop.setEnabled(false);
 				started = false;
 				updateServiceStatus();
@@ -307,7 +308,7 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 				Button stop = (Button) findViewById(R.id.exitButton);
 				Button forcesend = (Button) findViewById(R.id.forcesendButton);
 				start.setEnabled(false);
-				forcesend.setEnabled(false);
+				forcesend.setEnabled(true);
 				stop.setEnabled(true);
 				started = true;
 				
@@ -411,7 +412,7 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 			Button forcesend = (Button) findViewById(R.id.forcesendButton);
 			Button start = (Button) findViewById(R.id.startButton);
 			Button stop = (Button) findViewById(R.id.exitButton);
-			forcesend.setEnabled(false);
+			forcesend.setEnabled(true);
 			start.setEnabled(false);
 			stop.setEnabled(true);
 			bindService();
@@ -433,7 +434,7 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 			Button forcesend = (Button) findViewById(R.id.forcesendButton);
 			Button start = (Button) findViewById(R.id.startButton);
 			Button stop = (Button) findViewById(R.id.exitButton);
-			forcesend.setEnabled(true);
+			forcesend.setEnabled(false);
 			start.setEnabled(true);
 			stop.setEnabled(false);
 		}
@@ -1057,6 +1058,7 @@ layout.addView(txv1);
 
 	private class RequestAuthTask extends AsyncTask<Void, Void, Void> {
 		private String authtext;
+		String adevice;
 		private Boolean Err = true;
 		ProgressDialog dialog = ProgressDialog.show(GPSLocalServiceClient.this,
 				"", "Запрос авторизации, Подождите пожалуйста...", true);
@@ -1081,11 +1083,12 @@ layout.addView(txv1);
 				SharedPreferences.Editor editor = settings.edit();
 
 				editor.putString("hash", hash);
+				editor.commit();
 				editor.putString("n", Integer.toString(n));
 				editor.putString("submit-url", submiturl);
 				editor.putString("view-url", viewurl);
 				editor.putString("pda-view-url", pdaviewurl);
-
+				editor.putString("device", adevice);
 				editor.commit();
 				
 				
@@ -1108,11 +1111,13 @@ layout.addView(txv1);
 						false, "");
 				
 				JSONObject auth = new JSONObject(authtext);
+				Log.d(this.getClass().getName(), auth.toString());
 				hash = auth.getString("hash");
 				n = auth.getInt("n");
 				submiturl = auth.getString("submit-url");
 				viewurl = auth.getString("view-url");
 				pdaviewurl = auth.getString("pda-view-url");
+				adevice= auth.getString("device");
 				// Log.d(this.getClass().getName(), "Авторизация закончилась.");
 				if (hash.equals("")) {
 					// Log.d(this.getClass().getName(), "Косяк.");

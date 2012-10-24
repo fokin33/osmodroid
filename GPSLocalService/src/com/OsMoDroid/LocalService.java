@@ -221,15 +221,20 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 		
 		public void sendPosition() {
 		Location forcelocation = myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		Log.d(this.getClass().getName(), forcelocation.toString());
 		
-		URLadr="http://t.esya.ru/?"+  df6.format( forcelocation.getLatitude()) +":"+ df6.format( forcelocation.getLongitude())+":"+ df1.format(forcelocation.getAccuracy())
+		if (forcelocation==null) {}
+		else{
+			if (position==null){position=position = ( "Ш:" + df6.format(forcelocation.getLatitude())+ " Д:"+  df6.format( forcelocation.getLongitude())+" С:" +df1.format(forcelocation.getSpeed()*3.6));}
+			URLadr="http://t.esya.ru/?"+  df6.format( forcelocation.getLatitude()) +":"+ df6.format( forcelocation.getLongitude())+":"+ df1.format(forcelocation.getAccuracy())
 				+":"+df1.format( forcelocation.getAltitude())+":"+df1.format( forcelocation.getSpeed())+":"+hash+":"+n;
-			
+		Log.d(this.getClass().getName(), URLadr);
 			
 			SendCoor forcesend = new SendCoor();	
 			//Log.d(this.getClass().getName(), "sendbuffer отправляемый "+sendbuffer);
 			
 			forcesend.execute(URLadr," ");
+		}
 		
 		
 		}
@@ -260,7 +265,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 		if (settings.getBoolean("im", false) && !settings.getString("lpch", "").equals("")){
 		String[] params = {
-				"http://d.esya.ru/?identifier="+settings.getString("lpch", "")+"00ms&ncrnd=1347794237100", "false", "",
+				"http://d.esya.ru/?identifier="+settings.getString("lpch", "")+"&ncrnd=1347794237100", "false", "",
 				"messageread" };
 		if (prevstate) {
 		imrunning=true;
@@ -313,7 +318,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 		            if (settings.getBoolean("im", false)){
 		            if (!noConnectivity&& !prevstate&& imrunning && !settings.getString("lpch", "").equals("")){
 		            	String[] params = {
-		            			"http://d.esya.ru/?identifier="+settings.getString("lpch", "")+"00ms&ncrnd=1347794237100", "false", "",
+		            			"http://d.esya.ru/?identifier="+settings.getString("lpch", "")+"&ncrnd=1347794237100", "false", "",
 		            			"messageread" };
 		            	Log.d(getClass().getSimpleName(),"prevstate "+ Boolean.toString(prevstate));
 		        		prevstate=true;
@@ -545,7 +550,17 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 		
 		if(receiver!= null){unregisterReceiver(receiver);}
 		if(checkreceiver!= null){unregisterReceiver(checkreceiver);}
-		if(mConnReceiver!= null){unregisterReceiver(mConnReceiver);}
+		if(mConnReceiver!= null){
+			
+			
+			try {
+				unregisterReceiver(mConnReceiver);
+			} catch (Exception e) {
+				Log.d(getClass().getSimpleName(), "А он и не зареген");
+			
+			}
+			
+		}
 		
 		//Log.d(getClass().getSimpleName(), "omdestroy() localservice");
 		if (gpx&&fileheaderok) {
@@ -702,14 +717,14 @@ else	{
 			in.putExtra("sendcounter",sendcounter);
 			sendBroadcast(in);	
 			// if (!tmp.equals(R.string.NoConnection)){ internetnotify(true); sended=false;}
-			 SendwakeLock.release();
+			// SendwakeLock.release();
 				
 			
 		   }
 		protected String doInBackground(String... arg0) {
 			try {
-				 SendwakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "SendWakeLock");
-				SendwakeLock.acquire();
+			//	 SendwakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "SendWakeLock");
+			//	SendwakeLock.acquire();
 				//Log.d(this.getClass().getName(), "Начинаем отправку.");
 				tmp=getPage(arg0[0], arg0[1]);
 				//Log.d(this.getClass().getName(), "Отправка окончена.");
@@ -1332,7 +1347,7 @@ public void onResultsSucceeded(APIComResult result) {
 	{
 		if (settings.getBoolean("im", false)){	
 		String[] params = {
-				"http://d.esya.ru/?identifier="+settings.getString("lpch", "")+"00ms&ncrnd=1347794237100", "false", "",
+				"http://d.esya.ru/?identifier="+settings.getString("lpch", "")+"&ncrnd=1347794237100", "false", "",
 			"messageread" };
 		
 		try {
