@@ -261,15 +261,18 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 		 //Debug.startMethodTracing("startsbuf");
 		super.onCreate();
 		prevstate=isOnline();
+	   	Log.d(getClass().getSimpleName(),"prevstate "+ Boolean.toString(prevstate));
 		sdf1.setTimeZone(TimeZone.getTimeZone("UTC"));   
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 		if (settings.getBoolean("im", false) && !settings.getString("lpch", "").equals("")){
-		String[] params = {
+		   	Log.d(getClass().getSimpleName(),"imrun");
+			imrunning=true;
+			String[] params = {
 				"http://d.esya.ru/?identifier="+settings.getString("lpch", "")+"&ncrnd=1347794237100", "false", "",
 				"messageread" };
 		if (prevstate) {
-		imrunning=true;
 		
+			Log.d(getClass().getSimpleName(),"imrun and prev");
 		imtask = new netutil.MyAsyncTask(LocalService.this) ;
 		imtask.execute(params);
 		}
@@ -331,8 +334,8 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 		            if (noConnectivity&& imrunning && prevstate){
 		            	Log.d(getClass().getSimpleName(),"prevstate "+ Boolean.toString(prevstate));
 		            	prevstate=false;
-		            	imtask.cancel(true);
-		            	imtask.Close();
+		            //	imtask.cancel(true);
+		            //	imtask.Close();
 		            	
 		            }
 		            ;
@@ -407,7 +410,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 		registerReceiver( checkreceiver, new IntentFilter( "CHECK_GPS"));
 		 
 		
-		//registerReceiver(mConnReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)); 
+		registerReceiver(mConnReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)); 
 		
 		 
 		 //try {
@@ -535,9 +538,16 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 		super.onDestroy();
 		  if (settings.getBoolean("im", false)){
 			  imrunning=false;
-			  imtask.cancel(true);
-			  imtask.Close();
-		Log.d(this.getClass().getName()," ondestroy imtask.close");
+			
+			  try {
+				imtask.cancel(true);
+				  imtask.Close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+			}
+		
+			  Log.d(this.getClass().getName()," ondestroy imtask.close");
 		
 		//Boolean cancelresult= imtask.cancel(true);
 		//Log.d(this.getClass().getName(), Boolean.toString(cancelresult));
@@ -1304,7 +1314,7 @@ public void onResultsSucceeded(APIComResult result) {
 		      
 		        
 				Notification mesnotification = new Notification(R.drawable.eye, (CharSequence)messagestext, System.currentTimeMillis());
-				mesnotification.setLatestEventInfo(getApplicationContext(), "Сообщение:", (CharSequence)messagestext, PendingIntent.getActivity(getApplicationContext(), 0, new Intent(), 0));
+				mesnotification.setLatestEventInfo(getApplicationContext(), "Сообщение:"+"\n", (CharSequence)messagestext, PendingIntent.getActivity(getApplicationContext(), 0, new Intent(), 0));
 				mesnotification.flags |= Notification.FLAG_AUTO_CANCEL;
 		mNotificationManager.notify(notifyid, mesnotification);
 		        notifyid++;
