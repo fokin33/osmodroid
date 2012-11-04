@@ -343,9 +343,9 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 				sendcounter = intent.getIntExtra("sendcounter", 0);
 				position = intent.getStringExtra("position");
 				sendresult = intent.getStringExtra("sendresult");
+				String stat = intent.getStringExtra("stat");
 
-				if (position == null)
-					position = context.getString(R.string.NotDefined);
+				if (position == null){position = context.getString(R.string.NotDefined);}
 
 				// Log.d("lbr", "Message received: " +
 				// intent.getStringExtra("position") );
@@ -353,14 +353,12 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 				// intent.getStringExtra("sendcounter") );
 				// Log.d("lbr", "Message received: " +
 				// intent.getStringExtra("sendresult") );
-				if (sendresult == null)
-					sendresult = "";
-				t.setText(getString(R.string.location) + position);
+				if (sendresult == null){	sendresult = "";}
+				t.setText(getString(R.string.location) + position+"\n"+stat);
 				TextView t2 = (TextView) findViewById(R.id.Send);
 
 				updateServiceStatus();
-				if (!(sendresult == null))
-					t2.setText(getString(R.string.Sended) + (sendresult));
+				if (!(sendresult == null)){t2.setText(getString(R.string.Sended) + (sendresult));}
 			}
 			// sendresult=time+ " "+ sendresult;
 
@@ -936,16 +934,17 @@ layout.addView(txv1);
 
 		} else {
 
-			position = mService.getPosition();
-			sendresult = mService.getSendResult();
-			sendcounter = mService.getSendCounter();
-			TextView t = (TextView) findViewById(R.id.Location);
-			t.setText(getString(R.string.location) + position);
-			TextView t2 = (TextView) findViewById(R.id.Send);
-			if (sendresult == null)
-				sendresult = "";
-
-			t2.setText(getString(R.string.Sended) + sendresult);
+			mService.refresh();
+//			position = mService.getPosition();
+//			sendresult = mService.getSendResult();
+//			sendcounter = mService.getSendCounter();
+//			TextView t = (TextView) findViewById(R.id.Location);
+//			t.setText(getString(R.string.location) + position);
+//			TextView t2 = (TextView) findViewById(R.id.Send);
+//			if (sendresult == null)
+//				sendresult = "";
+//
+//			t2.setText(getString(R.string.Sended) + sendresult);
 			updateServiceStatus();
 
 		}

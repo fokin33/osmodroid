@@ -119,7 +119,11 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	private boolean beepedoff=false;
 	private boolean gpsbeepedon=false;
 	private boolean gpsbeepedoff=false;
-	
+	private float maxspeed=0;
+	private float avgspeed;
+	private float workdistance;
+	private long workmilli=0;
+	private boolean firstsend=true;
 	private boolean sended=false;
 	private boolean gpx = false;
 	private boolean live = true;
@@ -135,6 +139,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	private LocationManager myManager; 
 	private Location prevlocation;
 	private Location prevlocation_gpx;
+	private Location prevlocation_spd;
 	private String URLadr;
 	private Vibrator vibrator;
 	private PowerManager pm;
@@ -202,7 +207,13 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 			
     }
 
-
+public void refresh(){
+	in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:");
+	in.putExtra("sendresult",sendresult);
+	in.putExtra("sendcounter",sendcounter);
+	in.putExtra("stat", "Максимальная:"+df1.format(maxspeed*3.6)+" км/ч\n"+"Средняя:"+df1.format(avgspeed)+" км/ч\n"+"Пробег:"+df1.format(workdistance/1000) + " км");
+	sendBroadcast(in);
+}
 	
 		public String getPosition()  {
 	//		Log.d(getClass().getSimpleName(), "position() localservice");
@@ -225,7 +236,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 		
 		if (forcelocation==null) {}
 		else{
-			if (position==null){position=position = ( "Ш:" + df6.format(forcelocation.getLatitude())+ " Д:"+  df6.format( forcelocation.getLongitude())+" С:" +df1.format(forcelocation.getSpeed()*3.6));}
+			if (position==null){position = ( "Ш:" + df6.format(forcelocation.getLatitude())+ " Д:"+  df6.format( forcelocation.getLongitude())+" С:" +df1.format(forcelocation.getSpeed()*3.6));}
 			URLadr="http://t.esya.ru/?"+  df6.format( forcelocation.getLatitude()) +":"+ df6.format( forcelocation.getLongitude())+":"+ df1.format(forcelocation.getAccuracy())
 				+":"+df1.format( forcelocation.getAltitude())+":"+df1.format( forcelocation.getSpeed())+":"+hash+":"+n;
 		Log.d(this.getClass().getName(), URLadr);
@@ -261,6 +272,9 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 		 //Debug.startMethodTracing("startsbuf");
 		super.onCreate();
 		prevstate=isOnline();
+		Sattelite=getString(R.string.Sputniki);
+		position=getString(R.string.NotDefined);
+		
 	   	Log.d(getClass().getSimpleName(),"prevstate "+ Boolean.toString(prevstate));
 		sdf1.setTimeZone(TimeZone.getTimeZone("UTC"));   
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
@@ -725,6 +739,7 @@ else	{
 			in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:");
 			in.putExtra("sendresult",sendresult);
 			in.putExtra("sendcounter",sendcounter);
+			in.putExtra("stat", "Максимальная:"+df1.format(maxspeed*3.6)+" км/ч\n"+"Средняя:"+df1.format(avgspeed)+" км/ч\n"+"Пробег:"+df1.format(workdistance/1000) + " км");
 			sendBroadcast(in);	
 			// if (!tmp.equals(R.string.NoConnection)){ internetnotify(true); sended=false;}
 			// SendwakeLock.release();
@@ -754,12 +769,29 @@ else	{
 		
 		 LocwakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LocWakeLock");
 		LocwakeLock.acquire();
+		if (prevlocation_gpx==null)prevlocation_gpx=location;
+		if (prevlocation==null)prevlocation=location;	
+		if (prevlocation_spd==null)prevlocation_spd=location;
+		if  (firstsend) 
+		{
+sendlocation(location);
+		workmilli=location.getTime();
+		firstsend=false;
+		}
+		if (location.getSpeed()>maxspeed){
+			maxspeed=location.getSpeed();
+		}
 		
+		
+		if (location.getSpeed()>0){
+		workdistance=workdistance+location.distanceTo(prevlocation_spd);
+		avgspeed=workdistance/(location.getTime()-workmilli);
+		}
 		//Log.d(this.getClass().getName(), "Позиция получена.");
 		
 		//mp.release();
-		if (prevlocation_gpx==null)prevlocation_gpx=location;
-		if (prevlocation==null)prevlocation=location;	
+		
+		
 		Log.d(this.getClass().getName(), df0.format(location.getSpeed()*3.6).toString());
 		Log.d(this.getClass().getName(), df0.format(prevlocation.getSpeed()*3.6).toString());
 		if (settings.getBoolean("usetts", false)&&tts!=null && !tts.isSpeaking() && !(df0.format(location.getSpeed()*3.6).toString()).equals(lastsay))
@@ -779,6 +811,7 @@ else	{
 in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+location.getAccuracy());
 in.putExtra("sendresult",sendresult);
 in.putExtra("sendcounter",sendcounter);
+in.putExtra("stat", "Максимальная:"+df1.format(maxspeed*3.6)+" км/ч\n"+"Средняя:"+df1.format(avgspeed)+" км/ч\n"+"Пробег:"+df1.format(workdistance/1000) + " км");
 sendBroadcast(in);	
 
 
@@ -800,6 +833,7 @@ if (gpx && fileheaderok) {
 	in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+location.getAccuracy());
 	in.putExtra("sendresult",sendresult);
 	in.putExtra("sendcounter",sendcounter);
+	in.putExtra("stat", "Максимальная:"+df1.format(maxspeed*3.6)+" км/ч\n"+"Средняя:"+df1.format(avgspeed)+" км/ч\n"+"Пробег:"+df1.format(workdistance/1000) + " км");
 	sendBroadcast(in);	
 		//Log.d(this.getClass().getName(), "Попали в проверку курса для трека");
 	if ((int)location.getAccuracy()<hdop_gpx &&(location.distanceTo(prevlocation_gpx)>distance_gpx || location.getTime()>(prevlocation_gpx.getTime()+period_gpx) || (location.getSpeed()>=speedbearing_gpx/3.6 && Math.abs(brng_gpx-prevbrng_gpx)>=bearing_gpx)))
@@ -841,6 +875,7 @@ if (gpx && fileheaderok) {
 			in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+location.getAccuracy());
 			in.putExtra("sendresult",sendresult);
 			in.putExtra("sendcounter",sendcounter);
+			in.putExtra("stat", "Максимальная:"+df1.format(maxspeed*3.6)+" км/ч\n"+"Средняя:"+df1.format(avgspeed)+" км/ч\n"+"Пробег:"+df1.format(workdistance/1000) + " км");
 			sendBroadcast(in);	
 		
 		if (

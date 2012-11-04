@@ -53,7 +53,8 @@
     android:id="@+id/Location"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:text="Положение:" />
+    android:text="Положение:"
+    />
 
 <TextView
     android:id="@+id/Send"
