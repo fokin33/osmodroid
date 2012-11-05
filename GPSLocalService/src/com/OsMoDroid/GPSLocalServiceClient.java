@@ -354,7 +354,9 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 				// Log.d("lbr", "Message received: " +
 				// intent.getStringExtra("sendresult") );
 				if (sendresult == null){	sendresult = "";}
-				t.setText(getString(R.string.location) + position+"\n"+stat);
+				t.setText(
+						//getString(R.string.location) + 
+						position+"\n"+stat);
 				TextView t2 = (TextView) findViewById(R.id.Send);
 
 				updateServiceStatus();
