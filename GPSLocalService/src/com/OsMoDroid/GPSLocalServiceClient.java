@@ -311,13 +311,13 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 				forcesend.setEnabled(true);
 				stop.setEnabled(true);
 				started = true;
-				
+				if (key.equals("")){
 				String[] a={"device"};
 				String[] b={device};
 				String[] params = {netutil.buildcommand(GPSLocalServiceClient.this,"start",a,b),"false","","start"};
 				starttask=	new netutil.MyAsyncTask(GPSLocalServiceClient.this);
 				starttask.execute(params) ;
-				 
+				}
 				
 				//Log.d(getClass().getSimpleName(),buildcommand("start",a,b).toString());
 				// timer = new Timer();
