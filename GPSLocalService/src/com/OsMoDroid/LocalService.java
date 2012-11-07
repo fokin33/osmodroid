@@ -246,7 +246,7 @@ public void refresh(){
 		
 		public void sendPosition() {
 		Location forcelocation = myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		Log.d(this.getClass().getName(), forcelocation.toString());
+		//Log.d(this.getClass().getName(), forcelocation.toString());
 		
 		if (forcelocation==null) {}
 		else{
