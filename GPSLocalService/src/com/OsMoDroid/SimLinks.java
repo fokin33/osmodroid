@@ -114,6 +114,7 @@ String linkname =  System.currentTimeMillis()+settings.getString("device", "");
 	       adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, list);
 	       lv1.setAdapter(adapter);
 	       registerForContextMenu(lv1);
+	  
 //	       lv1.setOnItemClickListener(
 //	    	        new OnItemClickListener()
 //	    	        {
@@ -201,11 +202,12 @@ String linkname =  System.currentTimeMillis()+settings.getString("device", "");
 		JSONObject a = null; 
 		
 		if (result.Command.equals("device_links")  &&!(result.Jo==null)  ) {
+		Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
 		list.clear();
 		listids.clear();
 		try {
 			  a =	result.Jo.getJSONObject("links");
-			  Log.d(getClass().getSimpleName(), a.toString());
+	 		  Log.d(getClass().getSimpleName(), a.toString());
 			 
 			   Iterator i = a.keys();
 			  while (i.hasNext())
@@ -220,7 +222,7 @@ Log.d(getClass().getSimpleName(), list.toString());
 			} catch (Exception e) {
 				
 				 Log.d(getClass().getSimpleName(), "Не нашли links или другой эксепшн");
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 	
          

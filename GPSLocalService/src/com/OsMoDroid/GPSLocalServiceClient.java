@@ -1214,6 +1214,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 						Boolean.parseBoolean(params[1]), params[2]);
 				Log.d(this.getClass().getName(), Commandtext);
 				resJSON = new JSONObject(Commandtext);
+				//Toast.makeText(this,resJSON.optString("state")+" "+ resJSON.optString("error_description"),5).show();
 				// return new JSONObject(Commandtext);
 
 				// Log.d(this.getClass().getName(), "Авторизация закончилась.");
@@ -1240,18 +1241,14 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 				if (params[3].equals("auth")) {
 					if (!(resJSON.optString("key").equals(""))) {
 						akey = resJSON.optString("key");
-						returnstr = "Ключ получен";
-					} else {
-						returnstr = "Key узнать неудалось";
+						returnstr = resJSON.optString("state")+" "+ resJSON.optString("error_description");
 					}
 				}
 
 				if (params[3].equals("device_link")) {
 					if (!(resJSON.optString("url").equals(""))) {
 						aviewurl = resJSON.optString("url");
-						returnstr = "URL найден";
-					} else {
-						returnstr = "URL узнать не удалось";
+						returnstr = resJSON.optString("state")+" "+ resJSON.optString("error_description");
 					}
 				}
 
@@ -1274,12 +1271,13 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 								e.printStackTrace();
 							}
 						}
-						if (adevice == null) {
-							returnstr = "Устройство узнать не удалось";
-						} else {
-							
-							returnstr = "Устройство найдено";
-						}
+						returnstr = resJSON.optString("state")+" "+ resJSON.optString("error_description");
+//						if (adevice == null) {
+//							returnstr = "Устройство узнать не удалось";
+//						} else {
+//							
+//							returnstr = "Устройство найдено";
+//						}
 
 					}
 
@@ -1316,10 +1314,13 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 	
 	
 	public void onResultsSucceeded(APIComResult result) {
-		// TODO Auto-generated method stub
+		
+		if (result.Jo==null&&result.ja==null ){Toast.makeText(this,"Не удалось получить ответ от сервера",5).show();}
+		
+		
 		if (result.Command.equals("start")&& !(result.Jo==null))
 		{
-			
+			Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
 			if (!result.Jo.optString("lpch").equals("")){
 				SharedPreferences.Editor editor = settings.edit();
 
@@ -1359,7 +1360,8 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 			
 				}
 			 
-		if (result.Command.equals("device_link")) {
+		if (result.Command.equals("device_link")&& !(result.Jo==null)) {
+			Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
 			if (!(result.Jo.optString("url").equals(""))) {
 				viewurl = result.Jo.optString("url");
 				TextView t2 = (TextView) findViewById(R.id.URL);
