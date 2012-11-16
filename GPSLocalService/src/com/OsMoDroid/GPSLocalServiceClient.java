@@ -103,7 +103,7 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 	MenuItem mi8;
 	String version="Unknown";
 	SharedPreferences settings;
-	private netutil.MyAsyncTask starttask;
+	
 	private ServiceConnection conn = new ServiceConnection() {
 
 		public void onServiceConnected(ComponentName className, IBinder service) {
@@ -112,6 +112,15 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 			mService = binder.getService();
 			mBound = true;
 			invokeService();
+			started = true;
+			if (started && ( conn == null || mService == null)) {
+				Log.d(getClass().getSimpleName(), "нет бинда с сервисом - startcommand");
+			} else {
+				Log.d(getClass().getSimpleName(), "вызов startcommand");
+				mService.startcomand();
+				Log.d(getClass().getSimpleName(), "послек вызова startcomand");
+			}	
+			
 		}
 
 		public void onServiceDisconnected(ComponentName arg0) {
@@ -243,11 +252,7 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 				// if (timer != null) {
 				// timer.cancel();
 				// }
-				if ( starttask!=null)
-				{
-					starttask.cancel(true);
-					starttask.Close();
-				}
+			
 					
 				
 				if (mBound) {
@@ -255,6 +260,14 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 					mBound = false;
 				}
 				stop();
+				if (conn == null || mService == null) {
+					Log.d(getClass().getSimpleName(), "нет бинда с сервисом - stopcommand");
+				} else {
+					Log.d(getClass().getSimpleName(), "вызов stopcommand");
+					mService.stopcomand();
+					Log.d(getClass().getSimpleName(), "послек вызова stopcomand");
+				}	
+				
 				Button start = (Button) findViewById(R.id.startButton);
 				Button stop = (Button) findViewById(R.id.exitButton);
 				Button forcesend = (Button) findViewById(R.id.forcesendButton);
@@ -311,13 +324,16 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 				forcesend.setEnabled(true);
 				stop.setEnabled(true);
 				started = true;
-				if (key.equals("")){
-				String[] a={"device"};
-				String[] b={device};
-				String[] params = {netutil.buildcommand(GPSLocalServiceClient.this,"start",a,b),"false","","start"};
-				starttask=	new netutil.MyAsyncTask(GPSLocalServiceClient.this);
-				starttask.execute(params) ;
-				}
+			
+				
+				
+//				if (!key.equals("")){
+//				String[] a={"device"};
+//				String[] b={device};
+//				String[] params = {netutil.buildcommand(GPSLocalServiceClient.this,"start",a,b),"false","","start"};
+//				starttask=	new netutil.MyAsyncTask(GPSLocalServiceClient.this);
+//				starttask.execute(params) ;
+//				}
 				
 				//Log.d(getClass().getSimpleName(),buildcommand("start",a,b).toString());
 				// timer = new Timer();
@@ -344,7 +360,30 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 				position = intent.getStringExtra("position");
 				sendresult = intent.getStringExtra("sendresult");
 				String stat = intent.getStringExtra("stat");
+				String startmessage = intent.getStringExtra("startmessage");
+				if (!(startmessage==null)) {
+					AlertDialog alertdialog = new AlertDialog.Builder(
+							GPSLocalServiceClient.this).create();
+					alertdialog.setTitle("Сообщение от сервера");
 
+					alertdialog.setMessage(startmessage);
+							
+							
+
+					alertdialog.setButton(getString(R.string.yes),
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog, int which) {
+									
+									return;
+								}
+							});
+					
+					alertdialog.show();
+					
+				}
+				
+				
+				
 				if (position == null){position = context.getString(R.string.NotDefined);}
 
 				// Log.d("lbr", "Message received: " +
@@ -1318,47 +1357,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 		if (result.Jo==null&&result.ja==null ){Toast.makeText(this,"Не удалось получить ответ от сервера",5).show();}
 		
 		
-		if (result.Command.equals("start")&& !(result.Jo==null))
-		{
-			Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
-			if (!result.Jo.optString("lpch").equals("")){
-				SharedPreferences.Editor editor = settings.edit();
 
-				
-				editor.putString("lpch", result.Jo.optString("lpch"));
-
-				editor.commit();
-			}
-			
-				if (!result.Jo.optString("motd").equals("")){
-				
-					
-					AlertDialog alertdialog = new AlertDialog.Builder(
-							GPSLocalServiceClient.this).create();
-					alertdialog.setTitle("Сообщение от сервера");
-
-					alertdialog.setMessage(result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")
-							+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month")
-							
-							);
-
-					alertdialog.setButton(getString(R.string.yes),
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog, int which) {
-									
-									return;
-								}
-							});
-					
-					alertdialog.show();
-					
-				//	Toast.makeText(this,result.Jo.optString("motd"),Toast.LENGTH_LONG ).show();
-					}
-				
-					
-					
-			
-				}
 			 
 		if (result.Command.equals("device_link")&& !(result.Jo==null)) {
 			Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();

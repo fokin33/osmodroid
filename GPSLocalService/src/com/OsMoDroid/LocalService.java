@@ -102,6 +102,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	MediaPlayer sendpalyer;
 	String cursendforbuffer="";
 	String prevcursendforbuffer="";
+	private netutil.MyAsyncTask starttask;
 	private Intent in;
 	private boolean glonas=false;
 	private boolean playsound=false;
@@ -221,7 +222,10 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 			
     }
 
+	
+	
 public void refresh(){
+	in.removeExtra("startmessage");
 	in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:");
 	in.putExtra("sendresult",sendresult);
 	in.putExtra("sendcounter",sendcounter);
@@ -229,6 +233,30 @@ public void refresh(){
 	sendBroadcast(in);
 }
 	
+public void startcomand()
+{
+	
+	Log.d(getClass().getSimpleName(), "startcommand");
+	if (!settings.getString("key", "").equals("")){
+		String[] a={"device"};
+		String[] b={settings.getString("device", "")};
+		String[] params = {netutil.buildcommand(this,"start",a,b),"false","","start"};
+		starttask=	new netutil.MyAsyncTask(this);
+		starttask.execute(params) ;
+		Log.d(getClass().getSimpleName(), "startcommand");	
+	}
+}
+
+public void stopcomand()
+{
+	if ( starttask!=null)
+	{
+		starttask.cancel(true);
+		starttask.Close();
+	}
+}
+
+
 		public String getPosition()  {
 	//		Log.d(getClass().getSimpleName(), "position() localservice");
 			if (position == null)return getString(R.string.NotDefined);
@@ -750,7 +778,8 @@ else	{
 			 {		 sendresult=getString(R.string.NoConnection);
 			 internetnotify(true); 
 		}
-			in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:");
+				in.removeExtra("startmessage");
+			 in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:");
 			in.putExtra("sendresult",sendresult);
 			in.putExtra("sendcounter",sendcounter);
 			in.putExtra("stat", "Максимальная:"+df1.format(maxspeed*3.6)+" км/ч\n"+"Средняя:"+df1.format(avgspeed*3600)+" км/ч\n"+"Пробег:"+df2.format(workdistance/1000) + " км"+"\n"+"Интервал:"+formatInterval(timeperiod));
@@ -827,7 +856,7 @@ sendlocation(location);
 //if (location.getTime()<lastfix+3000)notifygps(true);
 
 timeperiod=location.getTime()-workmilli;
-
+in.removeExtra("startmessage");
 in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+location.getAccuracy());
 in.putExtra("sendresult",sendresult);
 in.putExtra("sendcounter",sendcounter);
@@ -850,6 +879,7 @@ if (gpx && fileheaderok) {
 	Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
 	brng_gpx = Math.toDegrees(Math.atan2(y, x)); //.toDeg();	
 	position=position+"\n"+getString(R.string.TrackCourseChange)+df1.format( Math.abs(brng_gpx-prevbrng_gpx));
+	in.removeExtra("startmessage");
 	in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+location.getAccuracy());
 	in.putExtra("sendresult",sendresult);
 	in.putExtra("sendcounter",sendcounter);
@@ -892,6 +922,7 @@ if (gpx && fileheaderok) {
 			Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
 			brng = Math.toDegrees(Math.atan2(y, x)); //.toDeg();	
 			position=position+"\n"+getString(R.string.SendCourseChange)+df1.format( Math.abs(brng-prevbrng));
+			in.removeExtra("startmessage");
 			in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+location.getAccuracy());
 			in.putExtra("sendresult",sendresult);
 			in.putExtra("sendcounter",sendcounter);
@@ -1070,10 +1101,36 @@ private void internetnotify(boolean internet){
 	}
 	
 }
+public static String unescape (String s)
+{
+    while (true)
+    {
+        int n=s.indexOf("&#");
+        if (n<0) break;
+        int m=s.indexOf(";",n+2);
+        if (m<0) break;
+        try
+        {
+            s=s.substring(0,n)+(char)(Integer.parseInt(s.substring(n+2,m)))+
+                s.substring(m+1);
+        }
+        catch (Exception e)
+        {
+            return s;
+        }
+    }
+    s=s.replace("&quot;","\"");
+    s=s.replace("&lt;","<");
+    s=s.replace("&gt;",">");
+    s=s.replace("&amp;","&");
+    return s;
+}
+
+
 
 private String decodesendresult(String str){
 	
-	//Log.d(this.getClass().getName(), "Ответ сервера"+str);
+	Log.d(this.getClass().getName(), "Ответ сервера"+str);
 	int s=-1;
 	int l=-1;
 	
@@ -1085,7 +1142,9 @@ private String decodesendresult(String str){
 		if(result.has("s")){ s = result.optInt("s");}
 		if (result.has("l")){ l =result.optInt("l");}
 		
-		if (s==0 ) {int code=result.optInt("code");str=getString(R.string.error)+code+" "+ result.optString("error");
+		if (s==0 ) {
+		int code=result.optInt("error");
+		str=getString(R.string.error)+code+" "+ unescape(result.optString("description:ru"));
 		sended=true;
 		}
 		if (s==1|| s==2) {
@@ -1407,6 +1466,42 @@ public void onResultsSucceeded(APIComResult result) {
 		
 		
 	}
+	
+	if (result.Command.equals("start")&& !(result.Jo==null))
+	{
+		Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description:ru"),5).show();
+		if (!result.Jo.optString("lpch").equals("")){
+			SharedPreferences.Editor editor = settings.edit();
+
+			
+			editor.putString("lpch", result.Jo.optString("lpch"));
+
+			editor.commit();
+		}
+		
+			if (!result.Jo.optString("motd").equals("")){
+			
+				in.removeExtra("startmessage");
+				in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:");
+				in.putExtra("sendresult",sendresult);
+				in.putExtra("sendcounter",sendcounter);
+				in.putExtra("stat", "Максимальная:"+df1.format(maxspeed*3.6)+" км/ч\n"+"Средняя:"+df1.format(avgspeed*3600)+" км/ч\n"+"Пробег:"+df2.format(workdistance/1000) + " км"+"\n"+"Интервал:"+formatInterval(timeperiod));
+				in.putExtra("startmessage", result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")
+						+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"));
+				sendBroadcast(in);
+				
+
+				
+				Toast.makeText(this, result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")
+						+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"),Toast.LENGTH_LONG ).show();
+				}
+			
+				
+				
+		
+			}
+	
+	
 	
 	if (result.Command.equals("messageread")) 
 	{
