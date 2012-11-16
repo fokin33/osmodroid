@@ -5,17 +5,23 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Vibrator;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.Reader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
+import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.URL;
 
 import java.text.DecimalFormat;
@@ -191,7 +197,9 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	 final private static  DecimalFormatSymbols dot= new DecimalFormatSymbols();
 	 TextToSpeech tts;
 	    private int _langTTSavailable = -1;
-	    
+	    Socket s;
+	    SocketAddress sockaddr;
+	    String text;
 	    SharedPreferences settings;
 	    private static String formatInterval(final long l)
 	    {
@@ -581,7 +589,8 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 			}
 			
 			}
-		
+	     s = new Socket( );
+          sockaddr = new InetSocketAddress("esya.ru", 2145);
 		
 	}
 	
@@ -592,7 +601,15 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		  if (settings.getBoolean("im", false)){
+		
+		try {
+			s.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		if (settings.getBoolean("im", false)){
 			  imrunning=false;
 			
 			  try {
@@ -761,6 +778,7 @@ else	{
 		
 		private  String tmp;   
 		protected void onPostExecute(String result) {
+			 Toast.makeText(LocalService.this, text,Toast.LENGTH_LONG ).show();
 			//Log.d(this.getClass().getName(), "Отправка завершилась.");	
 //			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 			if(usebuffer&&tmp.equals("false")){
@@ -803,6 +821,36 @@ else	{
 				tmp="false";	
 		
 			}
+		    try {
+	       
+	            if (!s.isConnected()){ s.connect(sockaddr, 10000); s.setSoTimeout(5000);}
+	          
+	            PrintWriter out = new PrintWriter( new BufferedWriter( new OutputStreamWriter(s.getOutputStream())),true); 
+
+				 out.println("arg0");  
+				 
+				// BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+				 //StringBuilder builder = new StringBuilder();
+				// String response = "";
+
+				// while ((response = br.readLine()) != null) {
+			//		 Log.d(this.getClass().getName(),"считали из буфера:"+ response);
+				//	 builder.append(response);
+				// }
+				
+				  text = inputStreamToString(s.getInputStream());
+				  Log.d(this.getClass().getName(),"text:"+ text);
+				
+	 
+	        }
+	        
+		    
+		    catch (IOException e) {
+	        	 Log.d(this.getClass().getName(),"Exeption socket:"+ e.toString());
+	        	e.printStackTrace();
+	        }
+			
+			
 			return tmp;
 		}
 	}
@@ -819,7 +867,7 @@ else	{
 		{
 sendlocation(location);
 		workmilli=location.getTime();
-		Log.d(this.getClass().getName(),"workmilli="+ Float.toString(workmilli));
+		//Log.d(this.getClass().getName(),"workmilli="+ Float.toString(workmilli));
 		firstsend=false;
 		}
 		if (location.getSpeed()>maxspeed){
@@ -829,14 +877,14 @@ sendlocation(location);
 		
 		if (location.getSpeed()>0){
 		workdistance=workdistance+location.distanceTo(prevlocation_spd);
-		Log.d(this.getClass().getName(),"Workdistance="+ Float.toString(workdistance));
+		//Log.d(this.getClass().getName(),"Workdistance="+ Float.toString(workdistance));
 		
 		}
-		Log.d(this.getClass().getName(),"workmilli="+ Float.toString(workmilli)+" gettime="+location.getTime());
-		Log.d(this.getClass().getName(),"diff="+ Float.toString(location.getTime()-workmilli));
+		//Log.d(this.getClass().getName(),"workmilli="+ Float.toString(workmilli)+" gettime="+location.getTime());
+		//Log.d(this.getClass().getName(),"diff="+ Float.toString(location.getTime()-workmilli));
 		if ((location.getTime()-workmilli)>0){
 		avgspeed=workdistance/(location.getTime()-workmilli);
-		Log.d(this.getClass().getName(),"avgspeed="+ Float.toString(avgspeed));
+		//Log.d(this.getClass().getName(),"avgspeed="+ Float.toString(avgspeed));
 		}
 		//mp.release();
 		
@@ -845,8 +893,8 @@ sendlocation(location);
 		//Log.d(this.getClass().getName(), df0.format(prevlocation.getSpeed()*3.6).toString());
 		if (settings.getBoolean("usetts", false)&&tts!=null && !tts.isSpeaking() && !(df0.format(location.getSpeed()*3.6).toString()).equals(lastsay))
 		{
-			Log.d(this.getClass().getName(), df0.format(location.getSpeed()*3.6).toString());
-			Log.d(this.getClass().getName(), df0.format(prevlocation.getSpeed()*3.6).toString());
+			//Log.d(this.getClass().getName(), df0.format(location.getSpeed()*3.6).toString());
+			//Log.d(this.getClass().getName(), df0.format(prevlocation.getSpeed()*3.6).toString());
 			tts.speak(df0.format(location.getSpeed()*3.6) , TextToSpeech.QUEUE_ADD, null);
 			lastsay=df0.format(location.getSpeed()*3.6).toString();	
 		}
