@@ -62,6 +62,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.os.RemoteException;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
@@ -201,20 +202,26 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	    SocketAddress sockaddr;
 	    String text;
 	    SharedPreferences settings;
+	    private final IRemoteOsMoDroidService.Stub rBinder = new IRemoteOsMoDroidService.Stub() {
+
+            
+
+			public int getVersion() throws RemoteException {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+
+    };
+	    
+	    
 	    private static String formatInterval(final long l)
 	    {
 	       
 	    	return String.format("%02d:%02d:%02d", l/(1000*60*60), (l%(1000*60*60))/(1000*60), ((l%(1000*60*60))%(1000*60))/1000);
-//	    	
-//	    	final long hr = TimeUnit.MILLISECONDS.toHours(l);
-//	        final long min = TimeUnit.MILLISECONDS.toMinutes(l - TimeUnit.HOURS.toMillis(hr));
-//	        final long sec = TimeUnit.MILLISECONDS.toSeconds(l - TimeUnit.HOURS.toMillis(hr) - TimeUnit.MINUTES.toMillis(min));
-//	        final long ms = TimeUnit.MILLISECONDS.toMillis(l - TimeUnit.HOURS.toMillis(hr) - TimeUnit.MINUTES.toMillis(min) - TimeUnit.SECONDS.toMillis(sec));
-//	        return String.format("%02d:%02d:%02d.%03d", hr, min, sec, ms);
+
 	    }
 
-//private InputStream instream;
-//BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(instream),8192);
+
 	public class LocalBinder extends Binder {
 		LocalService getService() {
     	//Log.d(getClass().getSimpleName(), "getservice() localservice");
@@ -225,9 +232,13 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 
 	@Override
 	 public IBinder onBind(Intent intent) {
+		
 		//Log.d(getClass().getSimpleName(), "onbind() localservice");
-			return mBinder;
-			
+		if (intent.equals("OsMoDroid.remote")){	
+		return rBinder;}
+		
+		return mBinder;
+		
     }
 
 	

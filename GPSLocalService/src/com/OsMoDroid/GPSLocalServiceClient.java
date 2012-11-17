@@ -252,13 +252,13 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 //					mBound = false;
 //				}
 				
-				if (conn == null || mService == null) {
-					Log.d(getClass().getSimpleName(), "нет бинда с сервисом - stopcommand");
-				} else {
-					Log.d(getClass().getSimpleName(), "вызов stopcommand");
-					mService.stopcomand();
-					Log.d(getClass().getSimpleName(), "послек вызова stopcomand");
-				}	
+//				if (conn == null || mService == null) {
+//					Log.d(getClass().getSimpleName(), "нет бинда с сервисом - stopcommand");
+//				} else {
+//					Log.d(getClass().getSimpleName(), "вызов stopcommand");
+//					mService.stopcomand();
+//					Log.d(getClass().getSimpleName(), "послек вызова stopcomand");
+//				}	
 				stop();
 				Button start = (Button) findViewById(R.id.startButton);
 				Button stop = (Button) findViewById(R.id.exitButton);
@@ -948,8 +948,8 @@ layout.addView(txv1);
 	private void bindService() {
 		// Log.d(getClass().getSimpleName(), "bimdservice() gpsclient");
 		// if(!mBound ) {
-		Intent i = new Intent(this, LocalService.class);
-
+		//Intent i = new Intent(this, LocalService.class);
+		Intent i = new Intent("OsMoDroid.local");
 		//startService(i);
 		// Log.d(getClass().getSimpleName(),
 		// "отработал стартсервис() gpsclient");

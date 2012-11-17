@@ -27,7 +27,12 @@
             </intent-filter>
         </activity>
         <activity android:name="PrefActivity"></activity>
-        <service android:name="LocalService"></service>
+        <service android:name="LocalService">
+            <intent-filter>
+                <action android:name="OsMoDroid.local"/>
+                <action android:name="OsMoDroid.remote"/>
+            </intent-filter>
+        </service>
         <activity android:name="SimLinks"></activity>
 
         
