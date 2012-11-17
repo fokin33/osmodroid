@@ -357,7 +357,7 @@ public void stopcomand()
 		
 		
 		//sendbuffer = new String[2048];
-		sendbuffer="";
+	
 		ReadPref();
 		String alarm = Context.ALARM_SERVICE;
 		 am = ( AlarmManager ) getSystemService( alarm );
@@ -367,11 +367,9 @@ public void stopcomand()
 		Intent intent = new Intent( "CHECK_GPS" );
  pi = PendingIntent.getBroadcast( this, 0, intent, 0 );
 		 
-		int type = AlarmManager.ELAPSED_REALTIME_WAKEUP;
-		
-		long triggerTime = SystemClock.elapsedRealtime() + notifyperiod;
+	
 		 
-		am.setRepeating( type, triggerTime, notifyperiod, pi );
+	
 		
 		   mConnReceiver = new BroadcastReceiver() {
 		        @Override
@@ -470,8 +468,7 @@ public void stopcomand()
 		};
 			
 			
-		registerReceiver( receiver, new IntentFilter( "android.location.GPS_FIX_CHANGE"));
-		registerReceiver( checkreceiver, new IntentFilter( "CHECK_GPS"));
+		
 		 
 		
 		registerReceiver(mConnReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)); 
@@ -497,7 +494,7 @@ public void stopcomand()
 		if (inetoff!=null){inetoff.setAudioStreamType(AudioManager.STREAM_MUSIC);}
 		if (sendpalyer!=null){ sendpalyer.setAudioStreamType(AudioManager.STREAM_MUSIC);}
 		//sendpalyer.setVolume(leftVolume, rightVolume)
-		sendcounter=0;
+	
 		//Log.d(getClass().getSimpleName(), "oncreate() localservice");
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -509,7 +506,7 @@ public void stopcomand()
 
 		mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		int icon = R.drawable.eye;
-		CharSequence tickerText = getString(R.string.Working);
+		CharSequence tickerText = "Ждущий режим";// getString(R.string.Working);
 		long when = System.currentTimeMillis();
 
 		Notification notification = new Notification(icon, tickerText, when);
@@ -547,50 +544,13 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 	invokeMethod(mStartForeground, mStartForegroundArgs);
 	}
 		
+
 		
 		
-		
-		boolean crtfile = false;
-		if (gpx) { 
-			String sdState = android.os.Environment.getExternalStorageState();
-			if (sdState.equals(android.os.Environment.MEDIA_MOUNTED)) {
-			 File sdDir = android.os.Environment.getExternalStorageDirectory();
-			// SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-			 String time = sdf2.format(new Date());
-			 fileName = new File (sdDir, "tracks/");
-			 fileName.mkdirs();
-			 fileName = new File(sdDir, "tracks/"+time+".gpx");
-			 } 
-			if (!fileName.exists())
-			{
-				try {
-					crtfile= fileName.createNewFile();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				//Log.d(getClass().getSimpleName(), Boolean.toString(crtfile));
-			}
-			try {
-				// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd'T'HH:mm:ssZ");
-				 String time = sdf1.format(new Date(System.currentTimeMillis()))+"Z";
-			 FileWriter trackwr = new FileWriter(fileName);
-			 trackwr.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-             trackwr.write("<gpx xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.0\" xmlns=\"http://www.topografix.com/GPX/1/0\" creator=\"OcMoDroid\" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd\">");
-             trackwr.write("<time>" +time + "</time>");
-             trackwr.write("<trk>");
-             trackwr.write("<name>" + time + "</name>");
-             trackwr.write("<trkseg>"); 
-             trackwr.flush();
-			 trackwr.close();
-			 fileheaderok=true;
-			} catch (Exception e) {
-				//e.printStackTrace();
-				Toast.makeText(LocalService.this, getString(R.string.CanNotWriteHeader), Toast.LENGTH_SHORT).show();
-			}
-			
-			}
 	     s = new Socket( );
           sockaddr = new InetSocketAddress("esya.ru", 2145);
+startcomand();
+          
 		
 	}
 	
@@ -602,12 +562,7 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 	public void onDestroy() {
 		super.onDestroy();
 		
-		try {
-			s.close();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		stopcomand();
 		
 		if (settings.getBoolean("im", false)){
 			  imrunning=false;
@@ -630,43 +585,19 @@ mNotificationManager.notify(OSMODROID_ID, notification);
             tts.stop();
             tts.shutdown();
         }
-		
+		try {
 		if(receiver!= null){unregisterReceiver(receiver);}
 		if(checkreceiver!= null){unregisterReceiver(checkreceiver);}
-		if(mConnReceiver!= null){
-			
-			
-			try {
-				unregisterReceiver(mConnReceiver);
+		if(mConnReceiver!= null){unregisterReceiver(mConnReceiver);}
 			} catch (Exception e) {
 				Log.d(getClass().getSimpleName(), "А он и не зареген");
 			
 			}
 			
-		}
+		
 		
 		//Log.d(getClass().getSimpleName(), "omdestroy() localservice");
-		if (gpx&&fileheaderok) {
-		try {
-		 FileWriter trackwr = new FileWriter(fileName, true);
-		 String towright = gpxbuffer;
-			trackwr.write(towright.replace(",", "."));  
-			gpxbuffer="";
-		 
-		 trackwr.write("</trkseg></trk></gpx>");
-		 trackwr.flush();
-		 trackwr.close();
-		 
-		} catch (Exception e) {
-			e.printStackTrace();
-			Toast.makeText(LocalService.this, getString(R.string.CanNotWriteEnd), Toast.LENGTH_SHORT).show();
-		}
-		}
 		
-		if (send != null ) {
-			//Log.d(this.getClass().getName(), "Отменяем поток передачи.");
-			send.cancel(true);
-	} 
 		if (gpson!=null) gpson.stop();
 		if (gpsoff!=null) gpsoff.stop();
 		if (ineton!=null) ineton.stop();
@@ -685,8 +616,7 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 		if (!(wakeLock==null) &&wakeLock.isHeld())wakeLock.release();
 	if (!(LocwakeLock==null)&&LocwakeLock.isHeld())LocwakeLock.release();
 		if (!(SendwakeLock==null)&&SendwakeLock.isHeld())SendwakeLock.release();
-		myManager.removeUpdates(this);
-		setstarted(false);
+		
 		//String ns = Context.NOTIFICATION_SERVICE;
 		//NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
 	
@@ -734,7 +664,53 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
 		ReadPref();
+		sendbuffer="";
+	int type = AlarmManager.ELAPSED_REALTIME_WAKEUP;
 		
+		long triggerTime = SystemClock.elapsedRealtime() + notifyperiod;
+		am.setRepeating( type, triggerTime, notifyperiod, pi );
+		registerReceiver( receiver, new IntentFilter( "android.location.GPS_FIX_CHANGE"));
+		registerReceiver( checkreceiver, new IntentFilter( "CHECK_GPS"));
+		sendcounter=0;
+		boolean crtfile = false;
+		if (gpx) { 
+			String sdState = android.os.Environment.getExternalStorageState();
+			if (sdState.equals(android.os.Environment.MEDIA_MOUNTED)) {
+			 File sdDir = android.os.Environment.getExternalStorageDirectory();
+			// SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			 String time = sdf2.format(new Date());
+			 fileName = new File (sdDir, "tracks/");
+			 fileName.mkdirs();
+			 fileName = new File(sdDir, "tracks/"+time+".gpx");
+			 } 
+			if (!fileName.exists())
+			{
+				try {
+					crtfile= fileName.createNewFile();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				//Log.d(getClass().getSimpleName(), Boolean.toString(crtfile));
+			}
+			try {
+				// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd'T'HH:mm:ssZ");
+				 String time = sdf1.format(new Date(System.currentTimeMillis()))+"Z";
+			 FileWriter trackwr = new FileWriter(fileName);
+			 trackwr.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+             trackwr.write("<gpx xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.0\" xmlns=\"http://www.topografix.com/GPX/1/0\" creator=\"OcMoDroid\" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd\">");
+             trackwr.write("<time>" +time + "</time>");
+             trackwr.write("<trk>");
+             trackwr.write("<name>" + time + "</name>");
+             trackwr.write("<trkseg>"); 
+             trackwr.flush();
+			 trackwr.close();
+			 fileheaderok=true;
+			} catch (Exception e) {
+				//e.printStackTrace();
+				Toast.makeText(LocalService.this, getString(R.string.CanNotWriteHeader), Toast.LENGTH_SHORT).show();
+			}
+			
+			}
 if (usecourse)	{
 	//Log.d(this.getClass().getName(), "Запускаем провайдера 0 0");
 		myManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -758,12 +734,67 @@ else	{
 	myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsperiod, 0, this);
 	myManager.addGpsStatusListener(this);	
 }
-		setstarted(true);
-		//Log.d(getClass().getSimpleName(), "onstart() localservice");
+int icon = R.drawable.eye2;
+CharSequence tickerText ="Активный режим";// getString(R.string.Working);
+long when = System.currentTimeMillis();
+
+Notification notification = new Notification(icon, tickerText, when);
+Intent notificationIntent = new Intent(this, GPSLocalServiceClient.class);
+notificationIntent.setAction(Intent.ACTION_MAIN);
+notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+//notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); 
+PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "", contentIntent);
+mNotificationManager.notify(OSMODROID_ID, notification);
+setstarted(true);
+		Log.d(getClass().getSimpleName(), "notify:"+notification.toString());
 	
 	}
 	
-	
+	public void stopServiceWork(){
+		try {
+			s.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		if (gpx&&fileheaderok) {
+			try {
+			 FileWriter trackwr = new FileWriter(fileName, true);
+			 String towright = gpxbuffer;
+				trackwr.write(towright.replace(",", "."));  
+				gpxbuffer="";
+			 
+			 trackwr.write("</trkseg></trk></gpx>");
+			 trackwr.flush();
+			 trackwr.close();
+			 
+			} catch (Exception e) {
+				e.printStackTrace();
+				Toast.makeText(LocalService.this, getString(R.string.CanNotWriteEnd), Toast.LENGTH_SHORT).show();
+			}
+			}
+			
+			if (send != null ) {
+				//Log.d(this.getClass().getName(), "Отменяем поток передачи.");
+				send.cancel(true);
+		} 
+			if (myManager!=null){
+			myManager.removeUpdates(this);}
+			setstarted(false);
+			int icon = R.drawable.eye;
+			CharSequence tickerText ="Ждущий режим"; //getString(R.string.Working);
+			long when = System.currentTimeMillis();
+
+			Notification notification = new Notification(icon, tickerText, when);
+			Intent notificationIntent = new Intent(this, GPSLocalServiceClient.class);
+			notificationIntent.setAction(Intent.ACTION_MAIN);
+			notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+			//notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); 
+			PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+			notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "", contentIntent);
+			mNotificationManager.notify(OSMODROID_ID, notification);
+	}
 	
 	
 	private void setstarted(boolean started){

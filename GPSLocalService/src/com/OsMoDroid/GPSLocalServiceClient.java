@@ -107,19 +107,19 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 	private ServiceConnection conn = new ServiceConnection() {
 
 		public void onServiceConnected(ComponentName className, IBinder service) {
-			// Log.d(getClass().getSimpleName(), "onserviceconnected");
+			 Log.d(getClass().getSimpleName(), "onserviceconnected");
 			LocalBinder binder = (LocalBinder) service;
 			mService = binder.getService();
 			mBound = true;
 			invokeService();
 			started = true;
-			if (started && ( conn == null || mService == null)) {
-				Log.d(getClass().getSimpleName(), "нет бинда с сервисом - startcommand");
-			} else {
-				Log.d(getClass().getSimpleName(), "вызов startcommand");
-				mService.startcomand();
-				Log.d(getClass().getSimpleName(), "послек вызова startcomand");
-			}	
+//			if (started && ( conn == null || mService == null)) {
+//				Log.d(getClass().getSimpleName(), "нет бинда с сервисом - startcommand");
+//			} else {
+//				Log.d(getClass().getSimpleName(), "вызов startcommand");
+//				mService.startcomand();
+//				Log.d(getClass().getSimpleName(), "послек вызова startcomand");
+//			}	
 			
 		}
 
@@ -175,20 +175,11 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 	@Override
 	protected void onStop() {
 
-		Log.d(getClass().getSimpleName(), "onstop() gpsclient");
+		//Log.d(getClass().getSimpleName(), "onstop() gpsclient");
 		// if (timer != null) {
 		// timer.cancel();
 		// }
-		if (mBound) {
-			
-			try {
-				unbindService(conn);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				Log.d(getClass().getSimpleName(), "Исключение при отсоединении от сервиса");
-				e.printStackTrace();
-			}
-		}
+		
 
 		super.onStop();
 
@@ -228,6 +219,7 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 				.getDefaultSharedPreferences(this);
 	
 		String strVersionName = getString(R.string.Unknow);
+	
 		try {
 			PackageInfo packageInfo = getPackageManager().getPackageInfo(
 					getPackageName(), 0);
@@ -255,11 +247,11 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 			
 					
 				
-				if (mBound) {
-					unbindService(conn);
-					mBound = false;
-				}
-				stop();
+//				if (mBound) {
+//					unbindService(conn);
+//					mBound = false;
+//				}
+				
 				if (conn == null || mService == null) {
 					Log.d(getClass().getSimpleName(), "нет бинда с сервисом - stopcommand");
 				} else {
@@ -267,7 +259,7 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 					mService.stopcomand();
 					Log.d(getClass().getSimpleName(), "послек вызова stopcomand");
 				}	
-				
+				stop();
 				Button start = (Button) findViewById(R.id.startButton);
 				Button stop = (Button) findViewById(R.id.exitButton);
 				Button forcesend = (Button) findViewById(R.id.forcesendButton);
@@ -315,8 +307,8 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 
 		start.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-
-				bindService();
+startlocalservice();
+//				bindService();
 				Button start = (Button) findViewById(R.id.startButton);
 				Button stop = (Button) findViewById(R.id.exitButton);
 				Button forcesend = (Button) findViewById(R.id.forcesendButton);
@@ -409,7 +401,7 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 		};
 
 		registerReceiver(receiver, new IntentFilter("OsMoDroid"));
-
+		bindService();
 		// Log.d(getClass().getSimpleName(), "onCreate() gpsclient");
 	}
 
@@ -946,24 +938,32 @@ layout.addView(txv1);
 		device = settings.getString("device", "");
 	}
 
+	private void startlocalservice(){
+		Intent i = new Intent(this, LocalService.class);
+
+		startService(i);
+		started = true;
+	}
+	
 	private void bindService() {
 		// Log.d(getClass().getSimpleName(), "bimdservice() gpsclient");
 		// if(!mBound ) {
 		Intent i = new Intent(this, LocalService.class);
 
-		startService(i);
+		//startService(i);
 		// Log.d(getClass().getSimpleName(),
 		// "отработал стартсервис() gpsclient");
 		// Log.d(getClass().getSimpleName(), "conn=" + conn);
 		bindService(i, conn, Context.BIND_AUTO_CREATE);
 		mBound = true;
-		started = true;
+		
 		updateServiceStatus();
 	}
 
 	private void stop() {
-		// Log.d(getClass().getSimpleName(), "stop() gpsclient");
-		Intent i = new Intent(this, LocalService.class);
+		 Log.d(getClass().getSimpleName(), "stop() gpsclient");
+		mService.stopServiceWork();
+		 Intent i = new Intent(this, LocalService.class);
 		stopService(i);
 
 	}
@@ -1003,6 +1003,17 @@ layout.addView(txv1);
 
 	@Override
 	protected void onDestroy() {
+if (mBound) {
+			
+			try {
+				unbindService(conn);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				Log.d(getClass().getSimpleName(), "Исключение при отсоединении от сервиса");
+				e.printStackTrace();
+			}
+		}
+		
 		conn = null;
 		// releaseService();
 		if (receiver != null) {

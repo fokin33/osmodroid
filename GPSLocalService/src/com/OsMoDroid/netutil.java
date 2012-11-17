@@ -231,6 +231,7 @@ String tempstr = "";
 		String line = null;
 
 		while ((line = bufferedReader.readLine()) != null) {
+			Log.d("OsMo","line="+line);
 			stringBuilder.append(line + "\n");
 		}
 
