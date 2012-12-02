@@ -23,7 +23,7 @@
         android:summary="Увеличит траффик"
         android:title="Передавать неотправленное" android:defaultValue="false"/>
 
-    <PreferenceScreen android:title="Идентификация" >
+    <CheckBoxPreference android:key="usenetwork" android:title="Беспроводные сети" android:defaultValue="true"/><PreferenceScreen android:title="Идентификация" >
         <EditTextPreference
             android:key="hash"
             android:title="Ваш хэш" >
@@ -144,5 +144,6 @@
         <CheckBoxPreference android:key="usetts" android:title="Проговаривать скорость" android:defaultValue="false"/>
     </PreferenceScreen>
     <CheckBoxPreference android:key="im" android:title="Использовать обмен сообщениями" android:defaultValue="false"/>
+    
 
 </PreferenceScreen>

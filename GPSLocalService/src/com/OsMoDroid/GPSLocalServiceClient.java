@@ -233,12 +233,12 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 		setTitle(strVersionName);
 		Button start = (Button) findViewById(R.id.startButton);
 		Button exit = (Button) findViewById(R.id.exitButton);
-		Button copy = (Button) findViewById(R.id.copyButton);
-		Button send = (Button) findViewById(R.id.SendButton);
-		Button forcesend = (Button) findViewById(R.id.forcesendButton);
+	//	Button copy = (Button) findViewById(R.id.copyButton);
+	//	Button send = (Button) findViewById(R.id.SendButton);
+	//	Button forcesend = (Button) findViewById(R.id.forcesendButton);
 		start.setEnabled(false);
 		exit.setEnabled(false);
-		forcesend.setEnabled(false);
+		//forcesend.setEnabled(false);
 		exit.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				// if (timer != null) {
@@ -262,48 +262,48 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 				stop();
 				Button start = (Button) findViewById(R.id.startButton);
 				Button stop = (Button) findViewById(R.id.exitButton);
-				Button forcesend = (Button) findViewById(R.id.forcesendButton);
+			//	Button forcesend = (Button) findViewById(R.id.forcesendButton);
 				
 				start.setEnabled(true);
-				forcesend.setEnabled(false);
+			//	forcesend.setEnabled(false);
 				stop.setEnabled(false);
 				started = false;
 				updateServiceStatus();
 
 			}
 		});
-		copy.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-				if (viewurl != null)
-					clipboard.setText(viewurl);
-				// clipboard.setPrimaryClip(clip);
-			}
-		});
-		forcesend.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				Log.d(getClass().getSimpleName(), "forcesend click");
-				if (conn == null || mService == null) {
-					Log.d(getClass().getSimpleName(), "нет бинда с сервисом");
-				} else {
-					Log.d(getClass().getSimpleName(), "вызов отправки позиции");
-					mService.sendPosition();
-					Log.d(getClass().getSimpleName(), "послек вызова отправки позиции");
-				}	
-				
-			}
-		});
-		send.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				// Intent sendIntent = new
-				// Intent(android.content.Intent.ACTION_SEND);
-				Intent sendIntent = new Intent(Intent.ACTION_SEND);
-				sendIntent.setType("text/plain");
-				sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, viewurl);
-				startActivity(Intent.createChooser(sendIntent, "Email"));
-
-			}
-		});
+//		copy.setOnClickListener(new OnClickListener() {
+//			public void onClick(View v) {
+//				ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+//				if (viewurl != null)
+//					clipboard.setText(viewurl);
+//				// clipboard.setPrimaryClip(clip);
+//			}
+//		});
+//		forcesend.setOnClickListener(new OnClickListener() {
+//			public void onClick(View v) {
+//				Log.d(getClass().getSimpleName(), "forcesend click");
+//				if (conn == null || mService == null) {
+//					Log.d(getClass().getSimpleName(), "нет бинда с сервисом");
+//				} else {
+//					Log.d(getClass().getSimpleName(), "вызов отправки позиции");
+//					mService.sendPosition();
+//					Log.d(getClass().getSimpleName(), "послек вызова отправки позиции");
+//				}	
+//				
+//			}
+//		});
+//		send.setOnClickListener(new OnClickListener() {
+//			public void onClick(View v) {
+//				// Intent sendIntent = new
+//				// Intent(android.content.Intent.ACTION_SEND);
+//				Intent sendIntent = new Intent(Intent.ACTION_SEND);
+//				sendIntent.setType("text/plain");
+//				sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, viewurl);
+//				startActivity(Intent.createChooser(sendIntent, "Email"));
+//
+//			}
+//		});
 
 		start.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -311,9 +311,9 @@ startlocalservice();
 //				bindService();
 				Button start = (Button) findViewById(R.id.startButton);
 				Button stop = (Button) findViewById(R.id.exitButton);
-				Button forcesend = (Button) findViewById(R.id.forcesendButton);
+				//Button forcesend = (Button) findViewById(R.id.forcesendButton);
 				start.setEnabled(false);
-				forcesend.setEnabled(true);
+				//forcesend.setEnabled(true);
 				stop.setEnabled(true);
 				started = true;
 			
@@ -440,10 +440,10 @@ startlocalservice();
 		
 	
 		if (started) {
-			Button forcesend = (Button) findViewById(R.id.forcesendButton);
+			//Button forcesend = (Button) findViewById(R.id.forcesendButton);
 			Button start = (Button) findViewById(R.id.startButton);
 			Button stop = (Button) findViewById(R.id.exitButton);
-			forcesend.setEnabled(true);
+			//forcesend.setEnabled(true);
 			start.setEnabled(false);
 			stop.setEnabled(true);
 			bindService();
@@ -462,10 +462,10 @@ startlocalservice();
 			// }, 0, 1000);
 
 		} else {
-			Button forcesend = (Button) findViewById(R.id.forcesendButton);
+			//Button forcesend = (Button) findViewById(R.id.forcesendButton);
 			Button start = (Button) findViewById(R.id.startButton);
 			Button stop = (Button) findViewById(R.id.exitButton);
-			forcesend.setEnabled(false);
+			//forcesend.setEnabled(false);
 			start.setEnabled(true);
 			stop.setEnabled(false);
 		}
@@ -488,11 +488,15 @@ startlocalservice();
 		MenuItem auth = menu2.add(0, 1, 0, R.string.RepeatAuth);
 		MenuItem mi = menu.add(0, 2, 0, R.string.Settings);
 		MenuItem mi3 = menu2.add(0, 3, 0, R.string.EqualsParameters);
+		
 		 mi4 = menu1.add(0, 4, 0, R.string.getkey);
 		 mi5 = menu1.add(0, 5, 0, R.string.getadres);
 		 mi6 = menu1.add(0, 6, 0, R.string.getdevice);
 		 mi7 = menu1.add(0, 7, 0, R.string.enterchanel);
 		 mi8 = menu1.add(0, 8, 0, "Символические ссылки");
+		 MenuItem forcesenditem = menu.add(0, 9, 0, "Отправить положение\nсейчас");
+		 MenuItem shareadress = menu.add(0, 10, 0, "Поделиться ссылкой\nна положение");
+		 MenuItem copyadress = menu.add(0, 11, 0, "Скопировать ссылку\nна положение в буфер");
 		mi.setIntent(new Intent(this, PrefActivity.class));
 		mi8.setIntent(new Intent(this, SimLinks.class));
 		
@@ -503,18 +507,18 @@ startlocalservice();
 	public boolean onPrepareOptionsMenu (Menu menu){
 
 		
-		if (login.equals("")){ mi4.setEnabled(false);} else {mi4.setEnabled(true);}
-		if (key.equals("")){ mi6.setEnabled(false); mi5.setEnabled(false);} else { mi6.setEnabled(true); mi5.setEnabled(true);}
-		if (settings.getString("device", "").equals("")){
-			mi7.setEnabled(false);
-			mi8.setEnabled(false);
-				
+//		if (login.equals(""))
+//		{ mi4.setEnabled(false);} 
+//		else {mi4.setEnabled(true);}
+		if (key.equals(""))
+		{ mi6.setEnabled(false); mi5.setEnabled(false);mi7.setEnabled(false);mi8.setEnabled(false);}
+		else { mi6.setEnabled(true); mi5.setEnabled(true);mi7.setEnabled(true);mi8.setEnabled(true);
 		}
-		else {
-			mi7.setEnabled(true);
-			mi8.setEnabled(true);
-			//mi7.isEnabled();
-			}
+//		if (settings.getString("device", "").equals("")){
+//			mi7.setEnabled(false);
+//			mi8.setEnabled(false);
+//				
+//		}
 		
 		return super.onPrepareOptionsMenu(menu);}
 
@@ -590,7 +594,13 @@ startlocalservice();
 			// null);
 			LinearLayout layout = new LinearLayout(this);
 			layout.setOrientation(LinearLayout.VERTICAL);
-
+			final TextView txv5 = new TextView(this);
+			txv5.setText("Логин на сайт Esya.ru:");
+			layout.addView(txv5);
+			final EditText inputlogin = new EditText(this);
+			inputlogin.setText(login);
+			layout.addView(inputlogin);
+			
 			final TextView txv3 = new TextView(this);
 			txv3.setText("Одноразовый пароль:");
 			layout.addView(txv3);
@@ -613,13 +623,14 @@ startlocalservice();
 								public void onClick(DialogInterface dialog,
 										int whichButton) {
 									// pass=textEntryView.
+									 
 									pass = input.getText().toString();
 									/* User clicked OK so do some stuff */
 									if (!(pass.equals(""))) {
 										String[] params = {
 												"http://auth.api.esya.ru",
 												"true",
-												"login=" + login + "&password="
+												"login=" + inputlogin.getText().toString() + "&password="
 														+ pass + "&key=G94y",
 												"auth" };
 										RequestCommandTask Rq = new RequestCommandTask();
@@ -836,6 +847,28 @@ layout.addView(txv1);
 				"Предварительно запросите устройство", 5).show();}
 		
 		} 
+		if (item.getItemId() == 9) { 
+			Log.d(getClass().getSimpleName(), "forcesend click");
+			if (conn == null || mService == null) {
+				Log.d(getClass().getSimpleName(), "нет бинда с сервисом");
+			} else {
+				Log.d(getClass().getSimpleName(), "вызов отправки позиции");
+				mService.sendPosition();
+				Log.d(getClass().getSimpleName(), "послек вызова отправки позиции");
+			}	
+		}
+		if (item.getItemId() == 10) {
+			Intent sendIntent = new Intent(Intent.ACTION_SEND);
+			sendIntent.setType("text/plain");
+			sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, viewurl);
+			startActivity(Intent.createChooser(sendIntent, "Email"));	
+		}
+		if (item.getItemId() == 11) {
+			ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+			if (viewurl != null)
+				clipboard.setText(viewurl);
+		}
+		
 		
 		return super.onOptionsItemSelected(item);
 		

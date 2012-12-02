@@ -159,7 +159,7 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	private SendCoor send;
 	private int speedbearing_gpx;
 	private int bearing_gpx;
-
+private long lastgpslocationtime=0;
 	private int hdop_gpx;
 	private int period_gpx;
 	private int distance_gpx;
@@ -188,6 +188,9 @@ public class LocalService extends Service implements LocationListener,GpsStatus.
 	private Boolean prevstate;
 	private Boolean imrunning = true;
 	private String[] imadress={};
+	int gpsperiod;
+	int gpsdistance;
+	long prevnetworklocationtime=0;
 	final private static DecimalFormat df6 = new DecimalFormat("########.######");
 	final private static DecimalFormat df1 = new DecimalFormat("########.#");
 	final private static DecimalFormat df2 = new DecimalFormat("########.##");
@@ -293,10 +296,30 @@ public void stopcomand()
 		
 		public void sendPosition() {
 		Location forcelocation = myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		Location forcenetworklocation = myManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 		//Log.d(this.getClass().getName(), forcelocation.toString());
 		
-		if (forcelocation==null) {}
+		if (forcelocation==null) {
+			if (forcenetworklocation==null)
+			{
+				
+			}
+			else
+			{
+				if (position==null){position = ( "Ш:" + df6.format(forcenetworklocation.getLatitude())+ " Д:"+  df6.format( forcenetworklocation.getLongitude())+" С:" +df1.format(forcenetworklocation.getSpeed()*3.6));}
+				URLadr="http://t.esya.ru/?"+  df6.format( forcenetworklocation.getLatitude()) +":"+ df6.format( forcenetworklocation.getLongitude())+":"+ df1.format(forcenetworklocation.getAccuracy())
+					+":"+df1.format( forcenetworklocation.getAltitude())+":"+df1.format( forcenetworklocation.getSpeed())+":"+hash+":"+n;
+			Log.d(this.getClass().getName(), URLadr);
+				
+				SendCoor forcesend = new SendCoor();	
+				//Log.d(this.getClass().getName(), "sendbuffer отправляемый "+sendbuffer);
+				
+				forcesend.execute(URLadr," ");
+			}
+			
+		}
 		else{
+			
 			if (position==null){position = ( "Ш:" + df6.format(forcelocation.getLatitude())+ " Д:"+  df6.format( forcelocation.getLongitude())+" С:" +df1.format(forcelocation.getSpeed()*3.6));}
 			URLadr="http://t.esya.ru/?"+  df6.format( forcelocation.getLatitude()) +":"+ df6.format( forcelocation.getLongitude())+":"+ df1.format(forcelocation.getAccuracy())
 				+":"+df1.format( forcelocation.getAltitude())+":"+df1.format( forcelocation.getSpeed())+":"+hash+":"+n;
@@ -332,6 +355,7 @@ public void stopcomand()
 	public void onCreate() {
 		 //Debug.startMethodTracing("startsbuf");
 		super.onCreate();
+		myManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 		prevstate=isOnline();
 		Sattelite=getString(R.string.Sputniki);
 		position=getString(R.string.NotDefined);
@@ -724,25 +748,26 @@ startcomand();
 			}
 if (usecourse)	{
 	//Log.d(this.getClass().getName(), "Запускаем провайдера 0 0");
-		myManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+		
 		prevlocation= myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
 		myManager.removeUpdates(this);
 		myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+	if (settings.getBoolean("usenetwork", true)){	myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);}
 		myManager.addGpsStatusListener(this);
 		}
 else	{
 	//Log.d(this.getClass().getName(), "Запускаем провайдера по настройкам");
-	myManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+	
 	prevlocation= myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
 	//myManager.removeUpdates(this);
-	int gpsperiod;
-	int gpsdistance;
+	
 	if (period>=period_gpx&&gpx){gpsperiod=period_gpx;}else {gpsperiod=period;};
 	if (distance>=distance_gpx&&gpx){gpsdistance=distance_gpx;}else {gpsdistance=distance;};
 	//Log.d(this.getClass().getName(), "период"+gpsperiod+"meters"+gpsdistance);
 	myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsperiod, 0, this);
+	if (settings.getBoolean("usenetwork", true)){	myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);}
 	myManager.addGpsStatusListener(this);	
 }
 int icon = R.drawable.eye2;
@@ -820,7 +845,7 @@ setstarted(true);
 		
 		private  String tmp;   
 		protected void onPostExecute(String result) {
-			 Toast.makeText(LocalService.this, text,Toast.LENGTH_LONG ).show();
+			// Toast.makeText(LocalService.this, text,Toast.LENGTH_LONG ).show();
 			//Log.d(this.getClass().getName(), "Отправка завершилась.");	
 //			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 			if(usebuffer&&tmp.equals("false")){
@@ -863,52 +888,108 @@ setstarted(true);
 				tmp="false";	
 		
 			}
-		    try {
-	       
-	            if (!s.isConnected()){ s.connect(sockaddr, 10000); s.setSoTimeout(5000);}
-	          
-	            PrintWriter out = new PrintWriter( new BufferedWriter( new OutputStreamWriter(s.getOutputStream())),true); 
-
-				 out.println("arg0");  
-				 
-				// BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
-				 //StringBuilder builder = new StringBuilder();
-				// String response = "";
-
-				// while ((response = br.readLine()) != null) {
-			//		 Log.d(this.getClass().getName(),"считали из буфера:"+ response);
-				//	 builder.append(response);
-				// }
-				
-				  text = inputStreamToString(s.getInputStream());
-				  Log.d(this.getClass().getName(),"text:"+ text);
-				
-	 
-	        }
-	        
-		    
-		    catch (IOException e) {
-	        	 Log.d(this.getClass().getName(),"Exeption socket:"+ e.toString());
-	        	e.printStackTrace();
-	        }
+//		    try {
+//	       
+//	            if (!s.isConnected()){ s.connect(sockaddr, 10000); s.setSoTimeout(5000);}
+//	          
+//	            PrintWriter out = new PrintWriter( new BufferedWriter( new OutputStreamWriter(s.getOutputStream())),true); 
+//
+//				 out.println("arg0");  
+<<<<<<< HEAD
+//				 
+//				// BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+//				 //StringBuilder builder = new StringBuilder();
+//				// String response = "";
+//
+//				// while ((response = br.readLine()) != null) {
+//			//		 Log.d(this.getClass().getName(),"считали из буфера:"+ response);
+//				//	 builder.append(response);
+//				// }
+//				
+//			//	  text = inputStreamToString(s.getInputStream());
+//			//	  Log.d(this.getClass().getName(),"text:"+ text);
+//				
+//	 
+//	        }
+//	        
+//		    
+//		    catch (IOException e) {
+//	        	 Log.d(this.getClass().getName(),"Exeption socket:"+ e.toString());
+//	        	e.printStackTrace();
+//	        }
+//		    try {
+//	       
+//	            if (!s.isConnected()){ s.connect(sockaddr, 10000); s.setSoTimeout(5000);}
+//	          
+//	            PrintWriter out = new PrintWriter( new BufferedWriter( new OutputStreamWriter(s.getOutputStream())),true); 
+//
+//				 out.println("arg0");  
+//			  text = inputStreamToString(s.getInputStream());
+//				  Log.d(this.getClass().getName(),"text:"+ text);
+//				
+//	 
+//	        }
+//	        
+//		    
+//		    catch (IOException e) {
+//	        	 Log.d(this.getClass().getName(),"Exeption socket:"+ e.toString());
+//	        	e.printStackTrace();
+//	        }
+//			
 			
-			
+=======
+//			  text = inputStreamToString(s.getInputStream());
+//				  Log.d(this.getClass().getName(),"text:"+ text);
+//				
+//	 
+//	        }
+//	        
+//		    
+//		    catch (IOException e) {
+//	        	 Log.d(this.getClass().getName(),"Exeption socket:"+ e.toString());
+//	        	e.printStackTrace();
+//	        }
+//			
+>>>>>>> branch 'master' of https://github.com/fokin33/repo.git
 			return tmp;
 		}
 	}
 	
 	public void onLocationChanged(Location location) {
+		if (System.currentTimeMillis()<lastgpslocationtime+gpsperiod+1000 && location.getProvider().equals(LocationManager.NETWORK_PROVIDER))
+		{
+			Log.d(this.getClass().getName(),"У нас есть GPS еще");
+			return;
+		
+		} 
+		LocwakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LocWakeLock");
+			LocwakeLock.acquire();
+			
+			if (prevlocation_gpx==null)prevlocation_gpx=location;
+			if (prevlocation==null)prevlocation=location;	
+			if (prevlocation_spd==null)prevlocation_spd=location;
+			
+		//Toast.makeText(getApplicationContext(), location.getProvider(), 1).show();
+		
+		if (System.currentTimeMillis()>lastgpslocationtime+gpsperiod+1000 && location.getProvider().equals(LocationManager.NETWORK_PROVIDER))
+		{
+			Log.d(this.getClass().getName(),"У нас уже нет GPS");
+			if ((location.distanceTo(prevlocation)>distance || System.currentTimeMillis()>(prevnetworklocationtime+period)))
+			{
+				prevnetworklocationtime=System.currentTimeMillis();
+				sendlocation(location);
+			}
+		
+		}
 		
 		
-		 LocwakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LocWakeLock");
-		LocwakeLock.acquire();
-		if (prevlocation_gpx==null)prevlocation_gpx=location;
-		if (prevlocation==null)prevlocation=location;	
-		if (prevlocation_spd==null)prevlocation_spd=location;
+		
+		
 		if  (firstsend) 
 		{
 sendlocation(location);
-		workmilli=location.getTime();
+	
+workmilli= System.currentTimeMillis();
 		//Log.d(this.getClass().getName(),"workmilli="+ Float.toString(workmilli));
 		firstsend=false;
 		}
@@ -924,8 +1005,8 @@ sendlocation(location);
 		}
 		//Log.d(this.getClass().getName(),"workmilli="+ Float.toString(workmilli)+" gettime="+location.getTime());
 		//Log.d(this.getClass().getName(),"diff="+ Float.toString(location.getTime()-workmilli));
-		if ((location.getTime()-workmilli)>0){
-		avgspeed=workdistance/(location.getTime()-workmilli);
+		if (( System.currentTimeMillis()-workmilli)>0){
+		avgspeed=workdistance/( System.currentTimeMillis()-workmilli);
 		//Log.d(this.getClass().getName(),"avgspeed="+ Float.toString(avgspeed));
 		}
 		//mp.release();
@@ -945,13 +1026,18 @@ sendlocation(location);
 //if (location.getTime()>lastfix+3000)notifygps(false);
 //if (location.getTime()<lastfix+3000)notifygps(true);
 
-timeperiod=location.getTime()-workmilli;
+timeperiod= System.currentTimeMillis()-workmilli;
 in.removeExtra("startmessage");
 in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+location.getAccuracy());
 in.putExtra("sendresult",sendresult);
 in.putExtra("sendcounter",sendcounter);
 in.putExtra("stat", "Максимальная:"+df1.format(maxspeed*3.6)+" км/ч\n"+"Средняя:"+df1.format(avgspeed*3600)+" км/ч\n"+"Пробег:"+df2.format(workdistance/1000) + " км"+"\n"+"Интервал:"+formatInterval(timeperiod));
 sendBroadcast(in);	
+
+if (location.getProvider().equals(LocationManager.GPS_PROVIDER))
+{
+	
+	lastgpslocationtime=System.currentTimeMillis();
 
 
 
@@ -1050,7 +1136,8 @@ if (gpx && fileheaderok) {
 		
 		}	
 		LocwakeLock.release();	
-	}
+}	
+}
 
 	public void onProviderDisabled(String provider) {
 		// TODO Auto-generated method stub
@@ -1582,8 +1669,12 @@ public void onResultsSucceeded(APIComResult result) {
 				
 
 				
-				Toast.makeText(this, result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")
-						+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"),Toast.LENGTH_LONG ).show();
+<<<<<<< HEAD
+				//Toast.makeText(this, result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"),Toast.LENGTH_LONG ).show();
+=======
+				//Toast.makeText(this, result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")
+					//	+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"),Toast.LENGTH_LONG ).show();
+>>>>>>> branch 'master' of https://github.com/fokin33/repo.git
 				}
 			
 				
