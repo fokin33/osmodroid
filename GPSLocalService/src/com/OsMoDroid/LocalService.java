@@ -896,16 +896,8 @@ setstarted(true);
 //
 //				 out.println("arg0");  
 
-//				 
-//				// BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
-//				 //StringBuilder builder = new StringBuilder();
-//				// String response = "";
-//
-//				// while ((response = br.readLine()) != null) {
-//			//		 Log.d(this.getClass().getName(),"считали из буфера:"+ response);
-//				//	 builder.append(response);
-//				// }
-//				
+
+
 //			//	  text = inputStreamToString(s.getInputStream());
 //			//	  Log.d(this.getClass().getName(),"text:"+ text);
 //				
@@ -917,39 +909,6 @@ setstarted(true);
 //	        	 Log.d(this.getClass().getName(),"Exeption socket:"+ e.toString());
 //	        	e.printStackTrace();
 //	        }
-//		    try {
-//	       
-//	            if (!s.isConnected()){ s.connect(sockaddr, 10000); s.setSoTimeout(5000);}
-//	          
-//	            PrintWriter out = new PrintWriter( new BufferedWriter( new OutputStreamWriter(s.getOutputStream())),true); 
-//
-//				 out.println("arg0");  
-//			  text = inputStreamToString(s.getInputStream());
-//				  Log.d(this.getClass().getName(),"text:"+ text);
-//				
-//	 
-//	        }
-//	        
-//		    
-//		    catch (IOException e) {
-//	        	 Log.d(this.getClass().getName(),"Exeption socket:"+ e.toString());
-//	        	e.printStackTrace();
-//	        }
-//			
-			
-
-//			  text = inputStreamToString(s.getInputStream());
-//				  Log.d(this.getClass().getName(),"text:"+ text);
-//				
-//	 
-//	        }
-//	        
-//		    
-//		    catch (IOException e) {
-//	        	 Log.d(this.getClass().getName(),"Exeption socket:"+ e.toString());
-//	        	e.printStackTrace();
-//	        }
-//			
 
 			return tmp;
 		}
@@ -1670,7 +1629,12 @@ public void onResultsSucceeded(APIComResult result) {
 
 				
 
+
 				//Toast.makeText(this, result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"),Toast.LENGTH_LONG ).show();
+
+				//Toast.makeText(this, result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")
+					//	+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"),Toast.LENGTH_LONG ).show();
+
 
 				//Toast.makeText(this, result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")
 					//	+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"),Toast.LENGTH_LONG ).show();
