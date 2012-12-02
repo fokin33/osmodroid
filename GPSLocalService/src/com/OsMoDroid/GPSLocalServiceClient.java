@@ -425,11 +425,38 @@ startlocalservice();
 			    editor.remove("device");
 			    editor.remove("devicename");
 			    editor.commit();
+			    if (!(key.equals(""))) {
+					String[] params = {
+							"http://api.esya.ru/?system=om&action=device"
+									+ "&key="
+									+ key
+									+ "&signature="
+									+ SHA1(
+											"system:om;action:device;key:"
+													+ key
+													+ ";"
+													+ "--"
+													+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
+											.substring(1, 25), "false", "",
+							"device" };
+					// String[]
+					// params={"http://api.esya.ru/?system=om&action=device&key="+commandJSON.optString("key")+"&signature="+SHA1("system:om;action:device;key:"+commandJSON.optString("key")+";"+"--"+"JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6").substring(1,
+					// 25),"false",""};
+					// +commandJSON.optString("key")+
+					Log.d(getClass().getSimpleName(), params[0]);
+					RequestCommandTask Rq = new RequestCommandTask();
+					Rq.execute(params);
+				} else {
+					Toast.makeText(GPSLocalServiceClient.this, R.string.nokey, 5)
+							.show();
+				}
+			    
+			    
 			    }
-			    if (keychanged.equals("login")) {
-			    	
-			    	Log.d(getClass().getSimpleName(), "Сменился login");
-			    	key="";}
+//			    if (keychanged.equals("login")) {
+//			    	
+//			    	Log.d(getClass().getSimpleName(), "Сменился login");
+//			    	key="";}
 			    if (started){bindService();}
 			  }
 			};
@@ -494,9 +521,9 @@ startlocalservice();
 		 mi6 = menu1.add(0, 6, 0, R.string.getdevice);
 		 mi7 = menu1.add(0, 7, 0, R.string.enterchanel);
 		 mi8 = menu1.add(0, 8, 0, "Символические ссылки");
-		 MenuItem forcesenditem = menu.add(0, 9, 0, "Отправить положение\nсейчас");
-		 MenuItem shareadress = menu.add(0, 10, 0, "Поделиться ссылкой\nна положение");
-		 MenuItem copyadress = menu.add(0, 11, 0, "Скопировать ссылку\nна положение в буфер");
+		 MenuItem forcesenditem = menu.add(0, 9, 0, "Отправить сейчас");
+		 MenuItem shareadress = menu.add(0, 10, 0, "Поделиться ссылкой");
+		 MenuItem copyadress = menu.add(0, 11, 0, "Скопировать ссылку");
 		mi.setIntent(new Intent(this, PrefActivity.class));
 		mi8.setIntent(new Intent(this, SimLinks.class));
 		
