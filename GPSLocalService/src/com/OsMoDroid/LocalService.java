@@ -895,7 +895,7 @@ setstarted(true);
 //	            PrintWriter out = new PrintWriter( new BufferedWriter( new OutputStreamWriter(s.getOutputStream())),true); 
 //
 //				 out.println("arg0");  
-<<<<<<< HEAD
+
 //				 
 //				// BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
 //				 //StringBuilder builder = new StringBuilder();
@@ -937,7 +937,7 @@ setstarted(true);
 //	        }
 //			
 			
-=======
+
 //			  text = inputStreamToString(s.getInputStream());
 //				  Log.d(this.getClass().getName(),"text:"+ text);
 //				
@@ -950,7 +950,7 @@ setstarted(true);
 //	        	e.printStackTrace();
 //	        }
 //			
->>>>>>> branch 'master' of https://github.com/fokin33/repo.git
+
 			return tmp;
 		}
 	}
@@ -1669,12 +1669,12 @@ public void onResultsSucceeded(APIComResult result) {
 				
 
 				
-<<<<<<< HEAD
+
 				//Toast.makeText(this, result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"),Toast.LENGTH_LONG ).show();
-=======
+
 				//Toast.makeText(this, result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")
 					//	+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"),Toast.LENGTH_LONG ).show();
->>>>>>> branch 'master' of https://github.com/fokin33/repo.git
+
 				}
 			
 				
