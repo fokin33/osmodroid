@@ -53,6 +53,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -260,8 +262,20 @@ public void startcomand()
 	
 	Log.d(getClass().getSimpleName(), "startcommand");
 	if (!settings.getString("key", "").equals("")){
-		String[] a={"device"};
-		String[] b={settings.getString("device", "")};
+		String strVersionName = getString(R.string.Unknow);
+		String version=getString(R.string.Unknow);
+		try {
+			PackageInfo packageInfo = getPackageManager().getPackageInfo(
+					getPackageName(), 0);
+			strVersionName = packageInfo.packageName + " "
+					+ packageInfo.versionName;
+			 version = packageInfo.versionName;
+		} catch (NameNotFoundException e) {
+			//e.printStackTrace();
+		}
+		
+		String[] a={"device","c","v"};
+		String[] b={settings.getString("device", ""),"OsMoDroid",version.replace(".", "")};
 		String[] params = {netutil.buildcommand(this,"start",a,b),"false","","start"};
 		starttask=	new netutil.MyAsyncTask(this);
 		starttask.execute(params) ;
@@ -1094,8 +1108,9 @@ if (gpx && fileheaderok) {
 		 }
 		
 		}	
-		LocwakeLock.release();	
+	
 }	
+LocwakeLock.release();	
 }
 
 	public void onProviderDisabled(String provider) {
