@@ -1204,7 +1204,7 @@ LocwakeLock.release();
 		//Log.d(this.getClass().getName(), "void input");
 		
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in),8192);
-//	     stringBuilder = new StringBuilder();
+	     stringBuilder.setLength(0);
 	
 	    int c = 0;
 	    int i=0;
@@ -1398,7 +1398,7 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 		}
 		else
 		{
-			buffersb.append("&").append(sendedsb);
+			buffersb.append("&log[]=").append(sendedsb);
 		}
 		Log.d(this.getClass().getName(), "buffersb.append "+buffersb.toString());
 		
@@ -1425,7 +1425,7 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 		buffersb.append("log[]=").append(df6.format( location.getLatitude())).append(":").append(df6.format( location.getLongitude())).append(":").append(df1.format( location.getAltitude())).append(":").append(df1.format( location.getSpeed())).append(":").append(location.getTime()/1000);
 		Log.d(this.getClass().getName(), "2buffersb.append "+buffersb.toString());}
 	else{	Log.d(this.getClass().getName(), "3uffersb.append "+buffersb.toString());
-		buffersb.append("&").append(df6.format( location.getLatitude())).append(":").append(df6.format( location.getLongitude())).append(":").append(df1.format( location.getAltitude())).append(":").append(df1.format( location.getSpeed())).append(":").append(location.getTime()/1000);
+		buffersb.append("&log[]=").append(df6.format( location.getLatitude())).append(":").append(df6.format( location.getLongitude())).append(":").append(df1.format( location.getAltitude())).append(":").append(df1.format( location.getSpeed())).append(":").append(location.getTime()/1000);
 		Log.d(this.getClass().getName(), "3buffersb.append "+buffersb.toString());}
 	}
 }
