@@ -944,7 +944,7 @@ setstarted(true);
 			
 			if (prevlocation_gpx==null)prevlocation_gpx=location;
 			if (prevlocation==null)prevlocation=location;	
-			if (prevlocation_spd==null)prevlocation_spd=location;
+			if (prevlocation_spd==null&&location.getProvider().equals(LocationManager.GPS_PROVIDER))prevlocation_spd=location;
 			
 		//Toast.makeText(getApplicationContext(), location.getProvider(), 1).show();
 		
@@ -955,6 +955,7 @@ setstarted(true);
 			{
 				prevnetworklocationtime=System.currentTimeMillis();
 				sendlocation(location);
+				return;
 			}
 		
 		}
@@ -977,7 +978,7 @@ workmilli= System.currentTimeMillis();
 		
 		if (location.getSpeed()>0){
 		workdistance=workdistance+location.distanceTo(prevlocation_spd);
-		//Log.d(this.getClass().getName(),"Workdistance="+ Float.toString(workdistance));
+		Log.d(this.getClass().getName(),"Log of Workdistance, Workdistance="+ Float.toString(workdistance)+" location="+location.toString()+" prevlocation_spd="+prevlocation_spd.toString()+" distanceto="+Float.toString(location.distanceTo(prevlocation_spd)));
 		
 		}
 		//Log.d(this.getClass().getName(),"workmilli="+ Float.toString(workmilli)+" gettime="+location.getTime());
