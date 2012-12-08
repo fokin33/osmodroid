@@ -979,7 +979,8 @@ workmilli= System.currentTimeMillis();
 		if (location.getSpeed()>0){
 		workdistance=workdistance+location.distanceTo(prevlocation_spd);
 		Log.d(this.getClass().getName(),"Log of Workdistance, Workdistance="+ Float.toString(workdistance)+" location="+location.toString()+" prevlocation_spd="+prevlocation_spd.toString()+" distanceto="+Float.toString(location.distanceTo(prevlocation_spd)));
-		
+		prevlocation_spd.setLatitude(location.getLatitude());
+		prevlocation_spd.setLongitude(location.getLongitude());
 		}
 		//Log.d(this.getClass().getName(),"workmilli="+ Float.toString(workmilli)+" gettime="+location.getTime());
 		//Log.d(this.getClass().getName(),"diff="+ Float.toString(location.getTime()-workmilli));

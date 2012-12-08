@@ -416,7 +416,7 @@ startlocalservice();
 		updateServiceStatus();
 		OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 			  public void onSharedPreferenceChanged(SharedPreferences prefs, String keychanged) {
-			    if (keychanged.equals("hash")||keychanged.equals("n")) {
+			    if ((keychanged.equals("hash")||keychanged.equals("n")&&!settings.getString("key", "").equals("")) ) {
 			    	Log.d(getClass().getSimpleName(), "Сменился хэщ");
 			    	device="";
 			    	devicename="";
