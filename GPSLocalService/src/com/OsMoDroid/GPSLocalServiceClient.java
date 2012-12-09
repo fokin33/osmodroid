@@ -94,6 +94,7 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 	// private Timer timer;
 	BroadcastReceiver receiver;
 	private int sendcounter;
+	private int buffercounter=0;
 	private boolean usebuffer = false;
 	private boolean usewake = false;
 	MenuItem mi4;
@@ -349,6 +350,7 @@ startlocalservice();
 			public void onReceive(Context context, Intent intent) {
 				TextView t = (TextView) findViewById(R.id.Location);
 				sendcounter = intent.getIntExtra("sendcounter", 0);
+				buffercounter = intent.getIntExtra("buffercounter", 0);
 				position = intent.getStringExtra("position");
 				sendresult = intent.getStringExtra("sendresult");
 				String stat = intent.getStringExtra("stat");
@@ -1056,7 +1058,7 @@ layout.addView(txv1);
 		String startStatus = started ? getString(R.string.Running)
 				: getString(R.string.NotRunning);
 		String statusText = getString(R.string.Status) + startStatus
-				+ getString(R.string.Sendcount) + sendcounter;
+				+ getString(R.string.Sendcount) + sendcounter + " В буфере:"+buffercounter;
 		TextView t = (TextView) findViewById(R.id.serviceStatus);
 		t.setText(statusText);
 	}
@@ -1225,9 +1227,9 @@ if (mBound) {
 				Log.d(this.getClass().getName(), auth.toString());
 				hash = auth.getString("hash");
 				n = auth.getInt("n");
-				submiturl = auth.getString("submit-url");
-				viewurl = auth.getString("view-url");
-				pdaviewurl = auth.getString("pda-view-url");
+				submiturl = auth.optString("submit-url");
+				viewurl = auth.optString("view-url");
+				pdaviewurl = auth.optString("pda-view-url");
 				adevice= auth.getString("device");
 				// Log.d(this.getClass().getName(), "Авторизация закончилась.");
 				if (hash.equals("")) {

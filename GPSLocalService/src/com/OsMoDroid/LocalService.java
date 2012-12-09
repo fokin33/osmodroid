@@ -166,6 +166,7 @@ private long lastgpslocationtime=0;
 	private int period_gpx;
 	private int distance_gpx;
 	private int sendcounter;
+	private int buffercounter=0;
 	BroadcastReceiver receiver;
 	BroadcastReceiver checkreceiver;
 	BroadcastReceiver mConnReceiver;
@@ -197,6 +198,8 @@ private long lastgpslocationtime=0;
 	StringBuilder buffersb = new StringBuilder(327681);
 	StringBuilder lastbuffersb = new StringBuilder(327681);
 	StringBuilder sendedsb = new StringBuilder(327681);
+	private int lcounter=0;
+	private int scounter=0;
 	final private static DecimalFormat df6 = new DecimalFormat("########.######");
 	final private static DecimalFormat df1 = new DecimalFormat("########.#");
 	final private static DecimalFormat df2 = new DecimalFormat("########.##");
@@ -257,6 +260,7 @@ public void refresh(){
 	in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+Accuracy);
 	in.putExtra("sendresult",sendresult);
 	in.putExtra("sendcounter",sendcounter);
+	in.putExtra("buffercounter",buffercounter);
 	in.putExtra("stat", "Максимальная:"+df1.format(maxspeed*3.6)+" км/ч\n"+"Средняя:"+df1.format(avgspeed*3600)+" км/ч\n"+"Пробег:"+df2.format(workdistance/1000) + " км"+"\n"+"Интервал:"+formatInterval(timeperiod));
 	sendBroadcast(in);
 }
@@ -880,12 +884,7 @@ setstarted(true);
 			 {		 sendresult=getString(R.string.NoConnection);
 			 internetnotify(true); 
 		}
-				in.removeExtra("startmessage");
-			 in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+Accuracy);
-			in.putExtra("sendresult",sendresult);
-			in.putExtra("sendcounter",sendcounter);
-			in.putExtra("stat", "Максимальная:"+df1.format(maxspeed*3.6)+" км/ч\n"+"Средняя:"+df1.format(avgspeed*3600)+" км/ч\n"+"Пробег:"+df2.format(workdistance/1000) + " км"+"\n"+"Интервал:"+formatInterval(timeperiod));
-			sendBroadcast(in);	
+			 refresh();	
 			// if (!tmp.equals(R.string.NoConnection)){ internetnotify(true); sended=false;}
 			// SendwakeLock.release();
 				
@@ -1006,12 +1005,8 @@ workmilli= System.currentTimeMillis();
 //if (location.getTime()<lastfix+3000)notifygps(true);
 
 timeperiod= System.currentTimeMillis()-workmilli;
-in.removeExtra("startmessage");
-in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+location.getAccuracy());
-in.putExtra("sendresult",sendresult);
-in.putExtra("sendcounter",sendcounter);
-in.putExtra("stat", "Максимальная:"+df1.format(maxspeed*3.6)+" км/ч\n"+"Средняя:"+df1.format(avgspeed*3600)+" км/ч\n"+"Пробег:"+df2.format(workdistance/1000) + " км"+"\n"+"Интервал:"+formatInterval(timeperiod));
-sendBroadcast(in);	
+refresh();
+
 
 if (location.getProvider().equals(LocationManager.GPS_PROVIDER))
 {
@@ -1034,12 +1029,7 @@ if (gpx && fileheaderok) {
 	Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
 	brng_gpx = Math.toDegrees(Math.atan2(y, x)); //.toDeg();	
 	position=position+"\n"+getString(R.string.TrackCourseChange)+df1.format( Math.abs(brng_gpx-prevbrng_gpx));
-	in.removeExtra("startmessage");
-	in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+location.getAccuracy());
-	in.putExtra("sendresult",sendresult);
-	in.putExtra("sendcounter",sendcounter);
-	in.putExtra("stat", "Максимальная:"+df1.format(maxspeed*3.6)+" км/ч\n"+"Средняя:"+df1.format(avgspeed*3600)+" км/ч\n"+"Пробег:"+df2.format(workdistance/1000) + " км"+"\n"+"Интервал:"+formatInterval(timeperiod));
-	sendBroadcast(in);	
+	refresh();
 		//Log.d(this.getClass().getName(), "Попали в проверку курса для трека");
 	if ((int)location.getAccuracy()<hdop_gpx &&(location.distanceTo(prevlocation_gpx)>distance_gpx || location.getTime()>(prevlocation_gpx.getTime()+period_gpx) || (location.getSpeed()>=speedbearing_gpx/3.6 && Math.abs(brng_gpx-prevbrng_gpx)>=bearing_gpx)))
 	{
@@ -1077,12 +1067,7 @@ if (gpx && fileheaderok) {
 			Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
 			brng = Math.toDegrees(Math.atan2(y, x)); //.toDeg();	
 			position=position+"\n"+getString(R.string.SendCourseChange)+df1.format( Math.abs(brng-prevbrng));
-			in.removeExtra("startmessage");
-			in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+location.getAccuracy());
-			in.putExtra("sendresult",sendresult);
-			in.putExtra("sendcounter",sendcounter);
-			in.putExtra("stat", "Максимальная:"+df1.format(maxspeed*3.6)+" км/ч\n"+"Средняя:"+df1.format(avgspeed*3600)+" км/ч\n"+"Пробег:"+df2.format(workdistance/1000) + " км"+"\n"+"Интервал:"+formatInterval(timeperiod));
-			sendBroadcast(in);	
+			refresh();
 		
 		if (
 				(int)location.getAccuracy()<hdop && location.getSpeed()>=speed/3.6 &&
@@ -1386,6 +1371,7 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 //и прошлая отправка успешная
 		Log.d(this.getClass().getName(), "buffersb.delete "+buffersb.toString());
 		buffersb.delete(0, lastbuffersb.length());
+		buffercounter=buffercounter-lcounter;
 		Log.d(this.getClass().getName(), "buffersb.delete "+buffersb.toString());
 	}
 	else
@@ -1397,10 +1383,12 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 		if (buffersb.length()==0)
 		{
 			buffersb.append("log[]=").append(sendedsb);	
+			buffercounter=buffercounter+scounter;
 		}
 		else
 		{
 			buffersb.append("&log[]=").append(sendedsb);
+			buffercounter=buffercounter+scounter;
 		}
 		Log.d(this.getClass().getName(), "buffersb.append "+buffersb.toString());
 		
@@ -1411,8 +1399,10 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 	{
 		lastbuffersb.setLength(0);
 		lastbuffersb.append(buffersb);
+		lcounter=buffercounter;
 		sendedsb.setLength(0);
 		sendedsb.append(df6.format( location.getLatitude())).append(":").append(df6.format( location.getLongitude())).append(":").append(df1.format( location.getAltitude())).append(":").append(df1.format( location.getSpeed())).append(":").append(location.getTime()/1000);
+		scounter=1;
 		Log.d(this.getClass().getName(), "send.execute "+lastbuffersb.toString());
 		send.execute(URLadr,lastbuffersb.toString());}
 	else {send.execute(URLadr," ");}
@@ -1425,9 +1415,11 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 	if (buffersb.length()==0)
 	{	Log.d(this.getClass().getName(), "2buffersb.append "+buffersb.toString());
 		buffersb.append("log[]=").append(df6.format( location.getLatitude())).append(":").append(df6.format( location.getLongitude())).append(":").append(df1.format( location.getAltitude())).append(":").append(df1.format( location.getSpeed())).append(":").append(location.getTime()/1000);
+		buffercounter=buffercounter+1;
 		Log.d(this.getClass().getName(), "2buffersb.append "+buffersb.toString());}
 	else{	Log.d(this.getClass().getName(), "3uffersb.append "+buffersb.toString());
 		buffersb.append("&log[]=").append(df6.format( location.getLatitude())).append(":").append(df6.format( location.getLongitude())).append(":").append(df1.format( location.getAltitude())).append(":").append(df1.format( location.getSpeed())).append(":").append(location.getTime()/1000);
+		buffercounter=buffercounter+1;
 		Log.d(this.getClass().getName(), "3buffersb.append "+buffersb.toString());}
 	}
 }
@@ -1602,14 +1594,13 @@ public void onResultsSucceeded(APIComResult result) {
 		
 			if (!result.Jo.optString("motd").equals("")){
 			
-				in.removeExtra("startmessage");
-				in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+Accuracy);
-				in.putExtra("sendresult",sendresult);
-				in.putExtra("sendcounter",sendcounter);
-				in.putExtra("stat", "Максимальная:"+df1.format(maxspeed*3.6)+" км/ч\n"+"Средняя:"+df1.format(avgspeed*3600)+" км/ч\n"+"Пробег:"+df2.format(workdistance/1000) + " км"+"\n"+"Интервал:"+formatInterval(timeperiod));
+				
 				in.putExtra("startmessage", result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")
-						+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"));
+				+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"));
 				sendBroadcast(in);
+
+
+
 				
 
 				

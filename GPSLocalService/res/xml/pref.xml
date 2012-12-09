@@ -13,15 +13,12 @@
     <CheckBoxPreference
         android:key="usewake"
         android:summary="Увеличит расход батарейки"
-        android:title="Не спать постоянно" android:defaultValue="false"/>
+        android:title="Не гасить подсветку" android:defaultValue="false"/>
     <CheckBoxPreference
         android:key="usecourse"
         android:summary="Может больше тратить батарею"
         android:title="Использовать изменение курса" android:defaultValue="false"/>
-    <CheckBoxPreference
-        android:key="usebuffer"
-        android:summary="Увеличит траффик"
-        android:title="Передавать неотправленное" android:defaultValue="false"/>
+    
 
     <CheckBoxPreference android:key="usenetwork" android:title="Беспроводные сети" android:defaultValue="true"/><PreferenceScreen android:title="Идентификация" >
         <EditTextPreference
@@ -72,7 +69,7 @@
             android:numeric="integer"
             android:summary="Метры"
             android:title="Допустимая точность" android:defaultValue="50"/>
-    <EditTextPreference android:key="speed" android:title="Минимальная скорость отправки" android:summary="километров в час" android:digits="0123456789" android:inputType="number" android:defaultValue="0"/></PreferenceScreen>
+    <EditTextPreference android:key="speed" android:title="Минимальная скорость отправки" android:summary="километров в час" android:digits="0123456789" android:inputType="number" android:defaultValue="0"/><CheckBoxPreference android:key="usebuffer" android:summary="Увеличит траффик" android:title="Передавать неотправленное" android:defaultValue="false" /></PreferenceScreen>
     <PreferenceScreen android:title="Параметры записи" >
         <EditTextPreference
             android:digits="0123456789"
