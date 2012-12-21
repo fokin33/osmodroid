@@ -721,7 +721,7 @@ startlocalservice();
 				String[] a={"device"};
 				String[] b={device};
 				String[] params = {netutil.buildcommand(GPSLocalServiceClient.this,"device_link",a,b),"false","","device_link"};
-				new netutil.MyAsyncTask(GPSLocalServiceClient.this).execute(params) ;
+				new netutil.MyAsyncTask(GPSLocalServiceClient.this,GPSLocalServiceClient.this).execute(params) ;
 				
 				
 				
