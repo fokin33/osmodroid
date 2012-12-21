@@ -13,10 +13,12 @@ import com.OsMoDroid.GPSLocalServiceClient.RequestCommandTask;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.ClipboardManager;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -168,8 +170,9 @@ String linkname =  System.currentTimeMillis()+settings.getString("device", "");
 	  public void onCreateContextMenu(ContextMenu menu, View v,
 	      ContextMenuInfo menuInfo) {
 	    super.onCreateContextMenu(menu, v, menuInfo);
-	    menu.add(0, 1, 0, "Отправить ссылку");
+	    menu.add(0, 1, 0, "Поделиться ссылкой");
 	    menu.add(0, 2, 0, "Удалить ссылку");
+	    menu.add(0, 3, 0, "Копировать ссылку");
 	  }
 
 	  @Override
@@ -191,7 +194,14 @@ String linkname =  System.currentTimeMillis()+settings.getString("device", "");
 			 
 	      return true;
 	    }
-		  
+		  if (item.getItemId() == 3) {
+		         AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();
+		         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+					
+						clipboard.setText(adapter.getItem(acmi.position));
+				 
+		      return true;
+		    }
 		  
 	    return super.onContextItemSelected(item);
 	  }
