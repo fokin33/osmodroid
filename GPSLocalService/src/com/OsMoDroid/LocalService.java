@@ -927,6 +927,9 @@ setstarted(true);
 			 {
 				 sendresult= time +" "+sendresult;
 				 stopServiceWork();
+				 notifywarnactivity(sendresult);
+				 
+				 
 		}
 			}
 			refresh();	
@@ -1533,6 +1536,22 @@ public boolean isOnline() {
         Log.v("status", "OFFLINE");
         return false;
     }
+}
+
+void notifywarnactivity (String info){
+	int icon = R.drawable.warn;
+	CharSequence tickerText ="Внимание"; //getString(R.string.Working);
+	long when = System.currentTimeMillis();
+
+	Notification notification = new Notification(icon, tickerText, when);
+	Intent notificationIntent = new Intent(this, WarnActivity.class);
+	notificationIntent.putExtra("info", info);
+	//notificationIntent.setAction(Intent.ACTION_MAIN);
+	//notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+	//notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); 
+	PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+	notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "", contentIntent);
+	mNotificationManager.notify(2, notification);
 }
 
 
