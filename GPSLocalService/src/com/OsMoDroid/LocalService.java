@@ -165,6 +165,7 @@ private long lastgpslocationtime=0;
 	private int hdop_gpx;
 	private int period_gpx;
 	private int distance_gpx;
+	private int speed_gpx;
 	private int sendcounter;
 	private int buffercounter=0;
 	BroadcastReceiver receiver;
@@ -219,8 +220,19 @@ private long lastgpslocationtime=0;
             
 
 			public int getVersion() throws RemoteException {
-				// TODO Auto-generated method stub
+				Log.d("OsmoDroid", "Remote getVersion");
+			
+				Toast.makeText(LocalService.this, "vvv" , Toast.LENGTH_SHORT).show();
 				return 0;
+			}
+
+			public void Deactivate() throws RemoteException {
+				Log.d(getClass().getSimpleName(), "Remote Deactivate");
+				LocalService.this.stopServiceWork();
+				Toast.makeText(LocalService.this, "aaa" , Toast.LENGTH_SHORT).show();
+				return;
+				
+				
 			}
 
     };
@@ -257,7 +269,7 @@ private long lastgpslocationtime=0;
 	
 public void refresh(){
 	in.removeExtra("startmessage");
-	in.putExtra("position",position+"\n"+Sattelite+"\n"+"Точность:"+Accuracy);
+	in.putExtra("position",position+"\n"+Sattelite+" "+"Точность:"+Accuracy);
 	in.putExtra("sendresult",sendresult);
 	in.putExtra("sendcounter",sendcounter);
 	in.putExtra("buffercounter",buffercounter);
@@ -267,21 +279,19 @@ public void refresh(){
 	
 public void startcomand()
 {
-	
+	String strVersionName = getString(R.string.Unknow);
+	String version=getString(R.string.Unknow);
 	Log.d(getClass().getSimpleName(), "startcommand");
+	try {
+		PackageInfo packageInfo = getPackageManager().getPackageInfo(
+				getPackageName(), 0);
+		strVersionName = packageInfo.packageName + " "
+				+ packageInfo.versionName;
+		 version = packageInfo.versionName;
+	} catch (NameNotFoundException e) {
+		//e.printStackTrace();
+	}
 	if (!settings.getString("key", "").equals("")){
-		String strVersionName = getString(R.string.Unknow);
-		String version=getString(R.string.Unknow);
-		try {
-			PackageInfo packageInfo = getPackageManager().getPackageInfo(
-					getPackageName(), 0);
-			strVersionName = packageInfo.packageName + " "
-					+ packageInfo.versionName;
-			 version = packageInfo.versionName;
-		} catch (NameNotFoundException e) {
-			//e.printStackTrace();
-		}
-		
 		String[] a={"device","c","v"};
 		String[] b={settings.getString("device", ""),"OsMoDroid",version.replace(".", "")};
 		String[] params = {netutil.buildcommand(this,"start",a,b),"false","","start"};
@@ -289,6 +299,17 @@ public void startcomand()
 		starttask.execute(params) ;
 		Log.d(getClass().getSimpleName(), "startcommand");	
 	}
+	else {
+		String[] a={"hasn","n","c","v"};
+		String[] b={settings.getString("hash", ""),settings.getString("n", ""),"OsMoDroid",version.replace(".", "")};
+		String[] params = {"http://a.t.esya.ru/?act=start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&c=OsMoDroid&v="+version.replace(".", ""),"false","","start"};
+		starttask=	new netutil.MyAsyncTask(this);
+		starttask.execute(params) ;
+		Log.d(getClass().getSimpleName(), "startcommand");	
+	
+	}
+	
+	
 }
 
 public void stopcomand()
@@ -554,10 +575,10 @@ public void stopcomand()
 		//Log.d(getClass().getSimpleName(), "oncreate() localservice");
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-	if (usewake){
-		wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyWakeLock");
-		wakeLock.acquire();
-	}
+//	if (usewake){
+//		wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyWakeLock");
+//		wakeLock.acquire();
+//	}
 		in = new Intent("OsMoDroid");
 
 		mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -617,7 +638,7 @@ startcomand();
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		
+		//stopServiceWork();
 		stopcomand();
 		
 		if (settings.getBoolean("im", false)){
@@ -643,8 +664,19 @@ startcomand();
         }
 		try {
 		if(receiver!= null){unregisterReceiver(receiver);}
+		} catch (Exception e) {
+			Log.d(getClass().getSimpleName(), "А он и не зареген");
+		
+		}
+		try {
 		if(checkreceiver!= null){unregisterReceiver(checkreceiver);}
+	} catch (Exception e) {
+		Log.d(getClass().getSimpleName(), "А он и не зареген");
+	
+	}
+		try {
 		if(mConnReceiver!= null){unregisterReceiver(mConnReceiver);}
+		
 			} catch (Exception e) {
 				Log.d(getClass().getSimpleName(), "А он и не зареген");
 			
@@ -708,6 +740,8 @@ startcomand();
 					.parseInt(settings.getString("speedbearing_gpx", "0").equals("")? "0" :settings.getString("speedbearing_gpx","0"));
 			bearing_gpx = Integer.parseInt(settings.getString("bearing_gpx", "0").equals("") ? "0" :settings.getString("bearing","0"));
 			hdop_gpx = Integer.parseInt(settings.getString("hdop_gpx", "30").equals("") ? "30" :settings.getString("hdop_gpx","30"));
+			speed_gpx =  Integer.parseInt(settings.getString("speed_gpx", "3").equals(
+					"") ? "3" : settings.getString("speed_gpx", "3"));
 			usebuffer = settings.getBoolean("usebuffer", false);
 			usewake = settings.getBoolean("usewake", false);
 			notifyperiod = Integer.parseInt(settings.getString("notifyperiod", "30000").equals("") ? "30000" :settings.getString("notifyperiod","30000"));
@@ -938,8 +972,8 @@ setstarted(true);
 			return;
 		
 		} 
-		LocwakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LocWakeLock");
-			LocwakeLock.acquire();
+		//LocwakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LocWakeLock");
+		//	LocwakeLock.acquire();
 			
 			if (prevlocation_gpx==null)prevlocation_gpx=location;
 			if (prevlocation==null)prevlocation=location;	
@@ -975,7 +1009,7 @@ workmilli= System.currentTimeMillis();
 		}
 		
 		
-		if (location.getSpeed()>0){
+		if (location.getSpeed()>=speed_gpx/3.6 && (int)location.getAccuracy()<hdop_gpx){
 		workdistance=workdistance+location.distanceTo(prevlocation_spd);
 		Log.d(this.getClass().getName(),"Log of Workdistance, Workdistance="+ Float.toString(workdistance)+" location="+location.toString()+" prevlocation_spd="+prevlocation_spd.toString()+" distanceto="+Float.toString(location.distanceTo(prevlocation_spd)));
 		prevlocation_spd.setLatitude(location.getLatitude());
@@ -1042,7 +1076,7 @@ if (gpx && fileheaderok) {
 	}
 	else {
 		//Log.d(this.getClass().getName(), "Пишем трек без курса");
-		if ((int)location.getAccuracy()<hdop_gpx&&(location.distanceTo(prevlocation_gpx)>distance_gpx || location.getTime()>(prevlocation_gpx.getTime()+period_gpx) ))
+		if (location.getSpeed()>=speed_gpx/3.6&&(int)location.getAccuracy()<hdop_gpx&&(location.distanceTo(prevlocation_gpx)>distance_gpx || location.getTime()>(prevlocation_gpx.getTime()+period_gpx) ))
 		{	writegpx(location);
 		prevlocation_gpx.setLatitude(location.getLatitude());
 		prevlocation_gpx.setLongitude(location.getLongitude());
@@ -1101,7 +1135,7 @@ if (gpx && fileheaderok) {
 		}	
 	
 }	
-LocwakeLock.release();	
+//LocwakeLock.release();	
 }
 
 	public void onProviderDisabled(String provider) {
@@ -1446,33 +1480,12 @@ public void onGpsStatusChanged(int event) {
 	        	//Log.e("A fost folosit ", "int fix!");
 	        }
 	        
-//	        if(oSat.toString()!=null){
-	//
-//	            Log.e("Test", "SNR:"+oSat.getSnr()+"; Azimuth:"+oSat.getAzimuth()+"; Elevation:"+oSat.getElevation()+" "+oSat.toString()+"; PRN:"+oSat.getPrn());
-//	        }
+
 	} 
-	if (MaxPrn>32){
-		Sattelite=getString(R.string.Sputniki)+Count+":"+CountFix+getString(R.string.GlonasFindString);
-//		if (!glonas){
-//		if (vibrate){
-//			long[] pattern = {50, 50, 50, 100, 200};
-//		vibrator.vibrate(pattern, -1);}
-//		if (playsound){
-//		Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//		Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
-//		r.play();
-//		}
-//		glonas=true;
-//		}
-	//in.putExtra("position",position+"\n"+Sattelite);
-	//in.putExtra("sendcounter",sendcounter);
-	//sendBroadcast(in);	
-	}else {Sattelite=getString(R.string.Sputniki)+Count+":"+CountFix;
+Sattelite=getString(R.string.Sputniki)+Count+":"+CountFix;
 	
-	//in.putExtra("position",position+"\n"+Sattelite);
-	//in.putExtra("sendcounter",sendcounter);
-	//sendBroadcast(in);
-	};		
+	
+			
 }
 
 
@@ -1493,7 +1506,7 @@ public void onInit(int status) {
 			
           }
       } else {
-    	  Log.d(this.getClass().getName(), "Инициализация файлед");
+    	  Log.d(this.getClass().getName(), "Инициализация TTS не выполнилась");
     	  
     	  // Initialization failed.
       }
@@ -1592,7 +1605,7 @@ public void onResultsSucceeded(APIComResult result) {
 			editor.commit();
 		}
 		
-			if (!result.Jo.optString("motd").equals("")){
+			if (!result.Jo.optString("motd").equals("") ||!result.Jo.optString("query_per_day").equals("")){
 			
 				
 				in.putExtra("startmessage", result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")

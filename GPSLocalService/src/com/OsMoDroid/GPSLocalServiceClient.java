@@ -34,6 +34,8 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
 
 import android.text.ClipboardManager;
@@ -97,6 +99,8 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 	private int buffercounter=0;
 	private boolean usebuffer = false;
 	private boolean usewake = false;
+PowerManager pm;
+	WakeLock	wakeLock;// = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyWakeLock");
 	MenuItem mi4;
 	MenuItem mi5;
 	MenuItem mi6;
@@ -114,6 +118,7 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 			mBound = true;
 			invokeService();
 			started = true;
+			updateServiceStatus();
 //			if (started && ( conn == null || mService == null)) {
 //				Log.d(getClass().getSimpleName(), "нет бинда с сервисом - startcommand");
 //			} else {
@@ -215,10 +220,15 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 		// }
 		//
 		// requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+		
 		PreferenceManager.setDefaultValues(this, R.xml.pref, true);
 		settings = PreferenceManager
 				.getDefaultSharedPreferences(this);
-	
+		pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+		if (settings.getBoolean("usewake", false)){
+		wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyWakeLock");
+		wakeLock.acquire();
+	}
 		String strVersionName = getString(R.string.Unknow);
 	
 		try {
@@ -1038,16 +1048,6 @@ layout.addView(txv1);
 		} else {
 
 			mService.refresh();
-//			position = mService.getPosition();
-//			sendresult = mService.getSendResult();
-//			sendcounter = mService.getSendCounter();
-//			TextView t = (TextView) findViewById(R.id.Location);
-//			t.setText(getString(R.string.location) + position);
-//			TextView t2 = (TextView) findViewById(R.id.Send);
-//			if (sendresult == null)
-//				sendresult = "";
-//
-//			t2.setText(getString(R.string.Sended) + sendresult);
 			updateServiceStatus();
 
 		}
@@ -1055,10 +1055,10 @@ layout.addView(txv1);
 
 	private void updateServiceStatus() {
 		// Log.d(getClass().getSimpleName(), "updateservicestatus() gpsclient");
-		String startStatus = started ? getString(R.string.Running)
+		String startStatus =checkStarted() ? getString(R.string.Running)
 				: getString(R.string.NotRunning);
-		String statusText = getString(R.string.Status) + startStatus
-				+ getString(R.string.Sendcount) + sendcounter + " В буфере:"+buffercounter;
+		String statusText = //getString(R.string.Status) + startStatus+
+				getString(R.string.Sendcount) + sendcounter + " В буфере:"+buffercounter;
 		TextView t = (TextView) findViewById(R.id.serviceStatus);
 		t.setText(statusText);
 	}
@@ -1081,6 +1081,8 @@ if (mBound) {
 		if (receiver != null) {
 			unregisterReceiver(receiver);
 		}
+		if (!(wakeLock==null) &&wakeLock.isHeld())wakeLock.release();
+		
 		// Log.d(getClass().getSimpleName(), "onDestroy() gpsclient");
 		super.onDestroy();
 	}
@@ -1202,6 +1204,7 @@ if (mBound) {
 				editor.putString("view-url", viewurl);
 				editor.putString("pda-view-url", pdaviewurl);
 				editor.putString("device", adevice);
+				editor.putString("key", "");
 				editor.commit();
 				
 				
@@ -1220,15 +1223,14 @@ if (mBound) {
 				// Log.d(this.getClass().getName(),
 				// "Начинаем запрос авторизации.");
 				//authtext = getPage("http://auth.t.esya.ru/?who=OsMoDroid",false, "");
-				authtext = getPage("http://auth.t.esya.ru/?act=new&who=OsMoDroid&ver="+version,
-						false, "");
-				
+				authtext = getPage("http://a.t.esya.ru/?act=new&c=OsMoDroid&v="+version,	false, "");
+				//{"device":1235,"hash":"JoqQtav","n":"2515","url":"26CstQLcgzIYTOin"}
 				JSONObject auth = new JSONObject(authtext);
 				Log.d(this.getClass().getName(), auth.toString());
 				hash = auth.getString("hash");
 				n = auth.getInt("n");
 				submiturl = auth.optString("submit-url");
-				viewurl = auth.optString("view-url");
+				viewurl =  "http://m.esya.ru/"+auth.optString("url");
 				pdaviewurl = auth.optString("pda-view-url");
 				adevice= auth.getString("device");
 				// Log.d(this.getClass().getName(), "Авторизация закончилась.");

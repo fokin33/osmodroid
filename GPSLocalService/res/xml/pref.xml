@@ -46,7 +46,7 @@
             android:key="distance"
             android:numeric="integer"
             android:summary="Метры"
-            android:title="Дистанция опроса GPS" android:defaultValue="0">
+            android:title="Дистанция опроса GPS" android:defaultValue="100">
         </EditTextPreference>
         <EditTextPreference
             android:digits="0123456789"
@@ -69,7 +69,7 @@
             android:numeric="integer"
             android:summary="Метры"
             android:title="Допустимая точность" android:defaultValue="50"/>
-    <EditTextPreference android:key="speed" android:title="Минимальная скорость отправки" android:summary="километров в час" android:digits="0123456789" android:inputType="number" android:defaultValue="0"/><CheckBoxPreference android:key="usebuffer" android:summary="Увеличит траффик" android:title="Передавать неотправленное" android:defaultValue="false" /></PreferenceScreen>
+    <EditTextPreference android:key="speed" android:title="Минимальная скорость отправки" android:summary="километров в час" android:digits="0123456789" android:inputType="number" android:defaultValue="1"/><CheckBoxPreference android:key="usebuffer" android:summary="Увеличит траффик" android:title="Передавать неотправленное" android:defaultValue="true" /></PreferenceScreen>
     <PreferenceScreen android:title="Параметры записи" >
         <EditTextPreference
             android:digits="0123456789"
@@ -107,7 +107,8 @@
             android:key="hdop_gpx"
             android:numeric="integer"
             android:summary="Метры"
-            android:title="Допустимая точность" android:defaultValue="50"/>
+            android:title="Допустимая точность" android:defaultValue="30"/><EditTextPreference android:digits="0123456789" android:inputType="number" android:key="speed_gpx" android:numeric="integer" android:summary="километров в час" android:title="Минимальная скорость записи" android:defaultValue="1">
+        </EditTextPreference>
         
     </PreferenceScreen>
     <PreferenceScreen android:title="Оповещение" >
