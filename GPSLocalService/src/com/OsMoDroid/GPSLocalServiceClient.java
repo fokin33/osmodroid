@@ -163,10 +163,11 @@ PowerManager pm;
 	}
 
 
-	// @Override
-	// protected void onPause(){
-	//
-	// super.onPause();
+	 @Override
+	 protected void onPause(){
+	
+	 super.onPause();
+	 if (!(wakeLock==null) &&wakeLock.isHeld())wakeLock.release();
 	//
 	//
 	// SharedPreferences settings = PreferenceManager
@@ -176,8 +177,8 @@ PowerManager pm;
 	// editor.putInt("sendcounter", sendcounter);
 	//
 	// editor.commit();
-	//
-	// }
+	
+	 }
 
 	@Override
 	protected void onStop() {
@@ -226,10 +227,7 @@ PowerManager pm;
 		settings = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-		if (settings.getBoolean("usewake", false)){
-		wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyWakeLock");
-		wakeLock.acquire();
-	}
+	
 		String strVersionName = getString(R.string.Unknow);
 	
 		try {
@@ -424,7 +422,10 @@ startlocalservice();
 		// Log.d(getClass().getSimpleName(), "onResume() gpsclient");
 		ReadPref();
 		//WritePref();
-		
+		if (settings.getBoolean("usewake", false)){
+			wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyWakeLock");
+			wakeLock.acquire();
+		}
 		started = checkStarted();
 		updateServiceStatus();
 		OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
@@ -1082,7 +1083,7 @@ if (mBound) {
 		if (receiver != null) {
 			unregisterReceiver(receiver);
 		}
-		if (!(wakeLock==null) &&wakeLock.isHeld())wakeLock.release();
+		
 		
 		// Log.d(getClass().getSimpleName(), "onDestroy() gpsclient");
 		super.onDestroy();

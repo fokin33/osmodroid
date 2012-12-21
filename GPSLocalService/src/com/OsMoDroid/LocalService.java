@@ -908,17 +908,28 @@ setstarted(true);
 				//if (sendbuffer.equals("")){sendbuffer=sendbuffer+lastsendforbuffer;} else{sendbuffer=sendbuffer+"&"+lastsendforbuffer;}
 			//}	 
 			Log.d(getClass().getSimpleName(), "SendCoorOnPostExecute, Result="+result);
+			if (result.equals("NoConnection")){
+				 sendresult=getString(R.string.NoConnection);
+				 internetnotify(true); 
+				
+			}
+			else {
+			
+			
 			String time = sdf3.format(new Date(System.currentTimeMillis()));
 			 sendresult= decodesendresult(result);
 			 if (sended){
 				 sendcounter=sendcounter+1;
 				 if(sendsound &&sendpalyer!=null&& !sendpalyer.isPlaying())sendpalyer.start();
 			 
-			 sendresult= time +" "+sendresult;} else
-			 {		 sendresult=getString(R.string.NoConnection);
-			 internetnotify(true); 
+			 sendresult= time +" "+sendresult;}
+			 else
+			 {
+				 sendresult= time +" "+sendresult;
+				 stopServiceWork();
 		}
-			 refresh();	
+			}
+			refresh();	
 			// if (!tmp.equals(R.string.NoConnection)){ internetnotify(true); sended=false;}
 			// SendwakeLock.release();
 				
@@ -935,7 +946,7 @@ setstarted(true);
 				internetnotify(false);
 			//	e.printStackTrace();
 				//sended=false;
-				tmp="false";	
+				tmp="NoConnection";	
 		
 			}
 //		    try {
@@ -1320,7 +1331,7 @@ private String decodesendresult(String str){
 		if (s==0 ) {
 		int code=result.optInt("error");
 		str=getString(R.string.error)+code+" "+ unescape(result.optString("description:ru"));
-		sended=true;
+		sended=false;
 		}
 		if (s==1|| s==2) {
 			if (l!=-1){str=getString(R.string.succes)+getString(R.string.buffer)+ l;}
