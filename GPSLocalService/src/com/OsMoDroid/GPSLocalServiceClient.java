@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.OsMoDroid.LocalService.LocalBinder;
+import com.OsMoDroid.netutil.MyAsyncTask;
 import com.OsMoDroid.R;
 
 import android.app.Activity;

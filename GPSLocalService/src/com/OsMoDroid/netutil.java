@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.OsMoDroid.R;
+
 public class netutil {
 	
 	  
@@ -36,10 +37,34 @@ public class netutil {
 	//public static void Close(){con.disconnect();};
 	
 	public static class MyAsyncTask extends AsyncTask<String, Void, APIComResult> {
+		
+		private Context mContext;
+		 ResultsListener listener;
+		    HttpURLConnection con;
+		    InputStream in;
+		 ProgressDialog dialog;   
+	    public MyAsyncTask(ResultsListener listener, Context context) {
+	    	this.listener = listener;
+	    	mContext = context;
+	    } 
+	 
+	    MyAsyncTask(ResultsListener listener)
+	    { this.listener = listener;}
+		
+	   
+	    
+	     
 
-	    ResultsListener listener;
-	    HttpURLConnection con;
-	    InputStream in;
+		// Dialog dial = Dialog.
+
+		protected void onPreExecute() {
+			// dialog.dismiss();
+			if (!(mContext==null)){
+				dialog= ProgressDialog.show(mContext,"", "Выполняется команда, Подождите пожалуйста...", true);
+				dialog.show();}
+		}
+	    
+	    
 	    public void Close(){
 	    try {
 	    	
@@ -49,7 +74,9 @@ public class netutil {
 			 Log.d(this.getClass().getName(),"MyAsyncTask close exeption");
 			e.printStackTrace();
 		}
-	    Log.d(this.getClass().getName(),"MysyncClass.close");};
+	    Log.d(this.getClass().getName(),"MysyncClass.close");
+	    };
+	    
 	    String getPage(String adr, boolean dopost, String post)
 				throws IOException, NullPointerException {
 			// Log.d(getClass().getSimpleName(), "getpage() gpsclient");
@@ -107,8 +134,7 @@ public class netutil {
 
 		}
 	    
-	    MyAsyncTask(ResultsListener listener)
-	    { this.listener = listener;}
+	   
 	    
 	//    public void setOnResultsListener(ResultsListener listener) {
 	  //      this.listener = listener;
@@ -168,6 +194,12 @@ public class netutil {
 
 	    @Override
 	    protected void onPostExecute(APIComResult result) {
+	    	if (!(mContext==null)&&!(dialog==null)){
+				if (dialog.isShowing()){
+					dialog.dismiss();	
+				}
+				}
+	    	
 	    	Log.d(this.getClass().getName(), "void onPostExecute");
 	    	Log.d(this.getClass().getName(), Boolean.toString(isCancelled()));
 	    	

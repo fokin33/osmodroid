@@ -59,7 +59,7 @@ public class SimLinks extends Activity implements ResultsListener{
 										+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
 								.substring(1, 25), "false", "",
 				"device_links" };
-		new netutil.MyAsyncTask(SimLinks.this).execute(params) ;
+		new netutil.MyAsyncTask(SimLinks.this,SimLinks.this).execute(params) ;
 	 
 	
 		Log.d(getClass().getSimpleName(), params[0]);
