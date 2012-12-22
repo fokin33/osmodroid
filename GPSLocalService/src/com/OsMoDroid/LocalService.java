@@ -295,7 +295,7 @@ public void startcomand()
 	} catch (NameNotFoundException e) {
 		//e.printStackTrace();
 	}
-	if (!settings.getString("key", "").equals("")){
+	if (!settings.getString("key", "").equals("")&&!settings.getString("device", "").equals("")){
 		String[] a={"device","c","v"};
 		String[] b={settings.getString("device", ""),"OsMoDroid",version.replace(".", "")};
 		String[] params = {netutil.buildcommand(this,"start",a,b),"false","","start"};
@@ -1547,9 +1547,7 @@ public boolean isOnline() {
 }
 
 	void notifywarnactivity(String info) {
-		int icon = R.drawable.warn;
-		CharSequence tickerText = "Внимание";
-		long when = System.currentTimeMillis();
+		
 		NotificationCompat.Builder nb = new NotificationCompat.Builder(this)
 		.setSmallIcon(R.drawable.warn).setAutoCancel(true)
 		.setTicker("Важный ответ сервера").setContentText(info)
@@ -1638,7 +1636,11 @@ public void onResultsSucceeded(APIComResult result) {
 	
 	if (result.Command.equals("start")&& !(result.Jo==null))
 	{
-		Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description:ru"),5).show();
+		if (result.Jo.optString("state").equals("error")){
+			notifywarnactivity(result.Jo.optString("state")+":" +result.Jo.optString("error")+" "+result.Jo.optString("error_description"));
+		}
+		//Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description:ru"),5).show();
+		
 		if (!result.Jo.optString("lpch").equals("")){
 			SharedPreferences.Editor editor = settings.edit();
 
