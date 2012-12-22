@@ -270,14 +270,14 @@ PowerManager pm;
 //					Log.d(getClass().getSimpleName(), "послек вызова stopcomand");
 //				}	
 				stop();
-				Button start = (Button) findViewById(R.id.startButton);
-				Button stop = (Button) findViewById(R.id.exitButton);
+			//	Button start = (Button) findViewById(R.id.startButton);
+			//	Button stop = (Button) findViewById(R.id.exitButton);
 			//	Button forcesend = (Button) findViewById(R.id.forcesendButton);
 				
-				start.setEnabled(true);
+			//	start.setEnabled(true);
 			//	forcesend.setEnabled(false);
-				stop.setEnabled(false);
-				started = false;
+			//	stop.setEnabled(false);
+			//	started = false;
 				updateServiceStatus();
 
 			}
@@ -319,13 +319,13 @@ PowerManager pm;
 			public void onClick(View v) {
 startlocalservice();
 //				bindService();
-				Button start = (Button) findViewById(R.id.startButton);
-				Button stop = (Button) findViewById(R.id.exitButton);
+			//	Button start = (Button) findViewById(R.id.startButton);
+			//	Button stop = (Button) findViewById(R.id.exitButton);
 				//Button forcesend = (Button) findViewById(R.id.forcesendButton);
-				start.setEnabled(false);
+			//	start.setEnabled(false);
 				//forcesend.setEnabled(true);
-				stop.setEnabled(true);
-				started = true;
+			//	stop.setEnabled(true);
+			//	started = true;
 			
 				
 				
@@ -364,6 +364,17 @@ startlocalservice();
 				sendresult = intent.getStringExtra("sendresult");
 				String stat = intent.getStringExtra("stat");
 				String startmessage = intent.getStringExtra("startmessage");
+				if (intent.hasExtra("started")){
+					Button start = (Button) findViewById(R.id.startButton);
+					Button stop = (Button) findViewById(R.id.exitButton);
+					
+						
+						start.setEnabled(!intent.getBooleanExtra("started", false));
+					
+						stop.setEnabled(intent.getBooleanExtra("started", false));
+						started=intent.getBooleanExtra("started", false);
+				}
+				
 				if (!(startmessage==null)) {
 					AlertDialog alertdialog = new AlertDialog.Builder(
 							GPSLocalServiceClient.this).create();

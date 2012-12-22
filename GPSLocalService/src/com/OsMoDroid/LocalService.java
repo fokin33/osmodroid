@@ -96,6 +96,7 @@ import android.media.MediaPlayer;
 //import android.media.Ringtone;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 
@@ -193,6 +194,7 @@ private long lastgpslocationtime=0;
 	private Boolean prevstate;
 	private Boolean imrunning = true;
 	private String[] imadress={};
+	Boolean state=false;
 	int gpsperiod;
 	int gpsdistance;
 	long prevnetworklocationtime=0;
@@ -258,7 +260,8 @@ private long lastgpslocationtime=0;
 	 public IBinder onBind(Intent intent) {
 		
 		//Log.d(getClass().getSimpleName(), "onbind() localservice");
-		if (intent.equals("OsMoDroid.remote")){	
+		if (intent.equals("OsMoDroid.remote")){
+			Log.d(getClass().getSimpleName(), "binded remote");
 		return rBinder;}
 		
 		return mBinder;
@@ -274,6 +277,7 @@ public void refresh(){
 	in.putExtra("sendcounter",sendcounter);
 	in.putExtra("buffercounter",buffercounter);
 	in.putExtra("stat", "Максимальная:"+df1.format(maxspeed*3.6)+" км/ч\n"+"Средняя:"+df1.format(avgspeed*3600)+" км/ч\n"+"Пробег:"+df2.format(workdistance/1000) + " км"+"\n"+"Интервал:"+formatInterval(timeperiod));
+	in.putExtra("started",state);
 	sendBroadcast(in);
 }
 	
@@ -838,6 +842,7 @@ PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationInt
 notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "", contentIntent);
 mNotificationManager.notify(OSMODROID_ID, notification);
 setstarted(true);
+
 		Log.d(getClass().getSimpleName(), "notify:"+notification.toString());
 	
 	}
@@ -894,6 +899,8 @@ setstarted(true);
 		SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean("started", started);
         editor.commit();
+        state=started;
+        refresh();
 	}
 	public class SendCoor extends AsyncTask<String, String, String> {
 
@@ -926,8 +933,7 @@ setstarted(true);
 			 else
 			 {
 				 sendresult= time +" "+sendresult;
-				 stopServiceWork();
-				 notifywarnactivity(sendresult);
+				
 				 
 				 
 		}
@@ -1335,6 +1341,8 @@ private String decodesendresult(String str){
 		int code=result.optInt("error");
 		str=getString(R.string.error)+code+" "+ unescape(result.optString("description:ru"));
 		sended=false;
+		 stopServiceWork();
+		 notifywarnactivity(str);
 		}
 		if (s==1|| s==2) {
 			if (l!=-1){str=getString(R.string.succes)+getString(R.string.buffer)+ l;}
@@ -1538,21 +1546,26 @@ public boolean isOnline() {
     }
 }
 
-void notifywarnactivity (String info){
-	int icon = R.drawable.warn;
-	CharSequence tickerText ="Внимание"; //getString(R.string.Working);
-	long when = System.currentTimeMillis();
+	void notifywarnactivity(String info) {
+		int icon = R.drawable.warn;
+		CharSequence tickerText = "Внимание";
+		long when = System.currentTimeMillis();
+		NotificationCompat.Builder nb = new NotificationCompat.Builder(this)
+		.setSmallIcon(R.drawable.warn).setAutoCancel(true)
+		.setTicker("Важный ответ сервера").setContentText(info)
+		.setWhen(System.currentTimeMillis())
+		.setContentTitle("OsMoDroid")
+		.setDefaults(Notification.DEFAULT_ALL);
 
-	Notification notification = new Notification(icon, tickerText, when);
-	Intent notificationIntent = new Intent(this, WarnActivity.class);
-	notificationIntent.putExtra("info", info);
-	//notificationIntent.setAction(Intent.ACTION_MAIN);
-	//notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-	//notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); 
-	PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-	notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "", contentIntent);
-	mNotificationManager.notify(2, notification);
-}
+		Notification notification = nb.getNotification();
+		notification.flags |= Notification.FLAG_INSISTENT;
+		Intent notificationIntent = new Intent(this, WarnActivity.class);
+		notificationIntent.putExtra("info", info);
+		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,notificationIntent, 0);
+		notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid",	"", contentIntent);
+		mNotificationManager.notify(2, notification);
+	}
 
 
 public void onResultsSucceeded(APIComResult result) {
