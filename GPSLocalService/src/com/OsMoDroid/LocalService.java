@@ -304,20 +304,25 @@ public void startcomand()
 		Log.d(getClass().getSimpleName(), "startcommand");	
 	}
 	else {
-		String[] a={"hasn","n","c","v"};
-		String[] b={settings.getString("hash", ""),settings.getString("n", ""),"OsMoDroid",version.replace(".", "")};
+		//String[] a={"hasn","n","c","v"};
+		//String[] b={settings.getString("hash", ""),settings.getString("n", ""),"OsMoDroid",version.replace(".", "")};
 		String[] params = {"http://a.t.esya.ru/?act=start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&c=OsMoDroid&v="+version.replace(".", ""),"false","","start"};
 		starttask=	new netutil.MyAsyncTask(this);
 		starttask.execute(params) ;
 		Log.d(getClass().getSimpleName(), "startcommand");	
 	
 	}
-	
+	//a.t.esya.ru/?act=session_start&hash=*&n=*&ttl=900
+	//String[] a={"hasn","n","ttl"};
+	//String[] b={settings.getString("hash", ""),settings.getString("n", ""),"900",};
+	String[] params = {"http://a.t.esya.ru/?act=session_start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&ttl=900","false","","session_start"};
+	new netutil.MyAsyncTask(this).execute(params);
 	
 }
 
 public void stopcomand()
 {
+	
 	if ( starttask!=null)
 	{
 		starttask.cancel(true);
@@ -848,6 +853,8 @@ setstarted(true);
 	}
 	
 	public void stopServiceWork(){
+		String[] params = {"http://a.t.esya.ru/?act=session_stop&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", ""),"false","","session_stop"};
+		new netutil.MyAsyncTask(this).execute(params);
 		try {
 			s.close();
 		} catch (IOException e1) {
@@ -1342,7 +1349,7 @@ private String decodesendresult(String str){
 		str=getString(R.string.error)+code+" "+ unescape(result.optString("description:ru"));
 		sended=false;
 		 stopServiceWork();
-		 notifywarnactivity(str);
+		 notifywarnactivity("Команда:Отправка положения "+str);
 		}
 		if (s==1|| s==2) {
 			if (l!=-1){str=getString(R.string.succes)+getString(R.string.buffer)+ l;}
@@ -1556,8 +1563,9 @@ public boolean isOnline() {
 		.setDefaults(Notification.DEFAULT_ALL);
 
 		Notification notification = nb.getNotification();
-		notification.flags |= Notification.FLAG_INSISTENT;
+		//notification.flags |= Notification.FLAG_INSISTENT;
 		Intent notificationIntent = new Intent(this, WarnActivity.class);
+		
 		notificationIntent.putExtra("info", info);
 		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,notificationIntent, 0);
@@ -1567,6 +1575,13 @@ public boolean isOnline() {
 
 
 public void onResultsSucceeded(APIComResult result) {
+	if (result.Jo==null&&result.ja==null)
+	{
+		
+		Log.d(getClass().getSimpleName(),"notifwar1 Команда:"+result.Command+" Ответ сервера:"+result.rawresponse);
+			notifywarnactivity("Команда:"+result.Command+" Ответ сервера:"+result.rawresponse);
+		}
+	
 	// TODO Auto-generated method stub
 	String toprint = "";
 	if (result.Command.equals("im_get_all")) {
@@ -1636,8 +1651,9 @@ public void onResultsSucceeded(APIComResult result) {
 	
 	if (result.Command.equals("start")&& !(result.Jo==null))
 	{
-		if (result.Jo.optString("state").equals("error")){
-			notifywarnactivity(result.Jo.optString("state")+":" +result.Jo.optString("error")+" "+result.Jo.optString("error_description"));
+		if (result.Jo.has("error")){
+			Log.d(getClass().getSimpleName(),"notifwar2:"+result.Jo.optString("error")+" "+result.Jo.optString("error_description"));
+			notifywarnactivity("Команда:"+result.Command+result.Jo.optString("error")+" "+result.Jo.optString("error_description"));
 		}
 		//Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description:ru"),5).show();
 		

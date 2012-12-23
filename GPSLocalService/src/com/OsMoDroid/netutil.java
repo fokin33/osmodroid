@@ -153,7 +153,8 @@ public class netutil {
 				Commandtext = getPage(params[0],
 						Boolean.parseBoolean(params[1]), params[2]);
 			} catch (IOException e1) {
-				Log.d(this.getClass().getName(),  "IO exp");
+				Log.d(this.getClass().getName(),  "IO exp"+e1.toString());
+				Commandtext="Нет ответа от сервера";
 				// TODO Auto-generated catch block
 				//e1.printStackTrace();
 			}
@@ -187,7 +188,7 @@ public class netutil {
 	    	}
 			
 			resAPI.Command=params[3];
-			
+			resAPI.rawresponse=Commandtext;
 	        return resAPI;
 
 	    }

@@ -51,4 +51,5 @@
 <string name="SimLinkButtonText">Обновить</string>
 <string name="addsymlink">Создать ссылку</string>
 <string name="message">Сообщение:</string>
+<string name="sendtosuuport">Сообщить в техподдержку</string>
 </resources>
