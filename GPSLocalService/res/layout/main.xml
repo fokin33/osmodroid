@@ -40,7 +40,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
-    android:text="Стоп" />
+    android:text="Стоп"
+     />
 
 <!-- <Button -->
 <!--     android:id="@+id/forcesendButton" -->

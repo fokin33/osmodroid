@@ -315,8 +315,7 @@ public void startcomand()
 	//a.t.esya.ru/?act=session_start&hash=*&n=*&ttl=900
 	//String[] a={"hasn","n","ttl"};
 	//String[] b={settings.getString("hash", ""),settings.getString("n", ""),"900",};
-	String[] params = {"http://a.t.esya.ru/?act=session_start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&ttl=900","false","","session_start"};
-	new netutil.MyAsyncTask(this).execute(params);
+	
 	
 }
 
@@ -635,7 +634,7 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 		
 	     s = new Socket( );
           sockaddr = new InetSocketAddress("esya.ru", 2145);
-startcomand();
+if (live){startcomand();}
           
 		
 	}
@@ -718,7 +717,7 @@ startcomand();
 		//NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
 	
 		mNotificationManager.cancelAll();
-		am.cancel(pi);
+		
 		
 		// Debug.stopMethodTracing();
 	}
@@ -767,7 +766,7 @@ startcomand();
 	int type = AlarmManager.ELAPSED_REALTIME_WAKEUP;
 		
 		long triggerTime = SystemClock.elapsedRealtime() + notifyperiod;
-		am.setRepeating( type, triggerTime, notifyperiod, pi );
+		if (playsound||vibrate){am.setRepeating( type, triggerTime, notifyperiod, pi );}
 		registerReceiver( receiver, new IntentFilter( "android.location.GPS_FIX_CHANGE"));
 		registerReceiver( checkreceiver, new IntentFilter( "CHECK_GPS"));
 		sendcounter=0;
@@ -847,14 +846,19 @@ PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationInt
 notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "", contentIntent);
 mNotificationManager.notify(OSMODROID_ID, notification);
 setstarted(true);
-
+if (live){
+String[] params = {"http://a.t.esya.ru/?act=session_start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&ttl=900","false","","session_start"};
+new netutil.MyAsyncTask(this).execute(params);}
 		Log.d(getClass().getSimpleName(), "notify:"+notification.toString());
 	
 	}
 	
 	public void stopServiceWork(){
+		am.cancel(pi);
+		if (live){
 		String[] params = {"http://a.t.esya.ru/?act=session_stop&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", ""),"false","","session_stop"};
 		new netutil.MyAsyncTask(this).execute(params);
+		}
 		try {
 			s.close();
 		} catch (IOException e1) {
