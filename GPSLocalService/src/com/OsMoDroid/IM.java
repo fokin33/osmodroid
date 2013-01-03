@@ -9,12 +9,16 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.app.PendingIntent.CanceledException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +27,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -39,6 +44,8 @@ public class IM {
 	private BufferedReader    in      = null;
 	Context parent;
 	String mychanel;
+	ArrayList<String> list= new ArrayList<String>();
+	int NOTIFICATION_ID=3;
 	
 	final Handler alertHandler = new Handler() {
 		@Override
@@ -46,6 +53,40 @@ public class IM {
 		Bundle b = message.getData();
 		String text = b.getString("MessageText");
 		Toast.makeText(parent, text, Toast.LENGTH_SHORT).show();
+		list.add(text);
+		Log.d(this.getClass().getName(), "List:"+list);
+		 Bundle a=new Bundle();                                
+         a.putStringArrayList("meslist", list);
+     Intent activ=new Intent(parent,  mesActivity.class);
+     activ.putExtras(a);
+     NotificationCompat.Builder nb = new NotificationCompat.Builder(parent)
+		.setSmallIcon(R.drawable.eye).setAutoCancel(true)
+		.setTicker("Сообщение").setContentText(text)
+		.setWhen(System.currentTimeMillis())
+		.setContentTitle("Сообщение")
+		.setDefaults(Notification.DEFAULT_ALL);
+
+		Notification notification = nb.getNotification();
+		//notification.flags |= Notification.FLAG_INSISTENT;
+		
+		//activ.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		PendingIntent contentIntent = PendingIntent.getActivity(parent, NOTIFICATION_ID,activ, 0);
+		notification.setLatestEventInfo(parent, "OsMoDroid",	"", contentIntent);
+		LocalService.mNotificationManager.notify(NOTIFICATION_ID, notification);    
+//		try {
+//			
+//			contentIntent.send(parent, 0, activ);
+//		} catch (CanceledException e) {
+//			Log.d(this.getClass().getName(), "pending intent exception"+e);
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		NOTIFICATION_ID++;    
+     
+     
+		
+		
+		
 		}
 		};
 	
@@ -112,16 +153,16 @@ public class IM {
 	void parse (String toParse){
 		try {
 		
-		
+		String messageText="";
 			
 			Log.d(this.getClass().getName(), "IM toParse:"+toParse);
 			JSONArray result = new JSONArray(toParse);
-			Log.d(this.getClass().getName(), "IM toParse:"+result);
-			//timestamp=result.optLong("ncrnd");
+		
+		
 			for (int i = 0; i < result.length(); i++) {
 		        JSONObject jsonObject = result.getJSONObject(i);
-		        Log.d(getClass().getSimpleName(), jsonObject.optString("data")+ jsonObject.optString("ids"));
-		        showToastMessage( jsonObject.optString("data"));
+		        
+		        messageText=messageText + (new  JSONObject(jsonObject.optString("data")).optString("from_name"))+":"  + new JSONObject(jsonObject.optString("data")).optString("text") +"\n"  ;
 		        Iterator it = (new JSONObject(jsonObject.optString("ids"))).keys();
 				  while (it.hasNext())
 	          	{
@@ -130,11 +171,12 @@ public class IM {
 	Log.d(getClass().getSimpleName(),(new JSONObject(jsonObject.optString("ids"))).optString(keyname));
 	 
 	adr="http://d.esya.ru/?identifier="+mychanel+",im_messages&ncrnd="+(new JSONObject(jsonObject.optString("ids"))).optString(keyname);
-	Log.d(getClass().getSimpleName(),adr);
+	
 	
 	          	}
 			}
-			
+			Log.d(getClass().getSimpleName(),adr);
+			showToastMessage(messageText);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -163,7 +205,7 @@ public class IM {
 		
 		private boolean           error   = false;
 		private int               retries = 0;
-		int maxRetries = 1;
+		int maxRetries = 100;
 		
 		
 		
@@ -216,7 +258,7 @@ public class IM {
 				
 				if(retries > 0) {
 					try {
-						Thread.sleep(1000*10*retries);
+						Thread.sleep(1000*10);
 					} catch (InterruptedException e) {
 						// If can't back-off, stop trying
 						

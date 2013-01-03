@@ -36,6 +36,7 @@
         <activity android:name="SimLinks"></activity>
         <activity android:name="WarnActivity" android:theme="@android:style/Theme.Dialog"></activity>
         <activity android:theme="@android:style/Theme.Dialog" android:name="aboutActivity"></activity>
+        <activity android:name="mesActivity"></activity>
 
         
     </application>

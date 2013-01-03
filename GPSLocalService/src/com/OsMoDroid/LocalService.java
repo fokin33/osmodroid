@@ -179,7 +179,7 @@ private long lastgpslocationtime=0;
 	private String Accuracy="";
 	private boolean usebuffer = false;
 	private boolean usewake=false;
-	NotificationManager mNotificationManager;
+	static NotificationManager mNotificationManager;
 	private String lastsendforbuffer="First";
 	private long lastgpsontime=0;
 	private long lastgpsofftime=0;
@@ -190,10 +190,6 @@ private long lastgpslocationtime=0;
 	private Object[] mStartForegroundArgs = new Object[2];
 	private String pass;
 	private String lastsay="a";
-	private netutil.MyAsyncTask imtask;
-	private Boolean prevstate;
-	private Boolean imrunning = true;
-	private String[] imadress={};
 	Boolean state=false;
 	int gpsperiod;
 	int gpsdistance;
@@ -409,25 +405,13 @@ public void stopcomand()
 		super.onCreate();
 		
 		myManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-		prevstate=isOnline();
+		
 		Sattelite=getString(R.string.Sputniki);
 		position=getString(R.string.NotDefined);
-		Log.d(getClass().getSimpleName(),"prevstate "+ Boolean.toString(prevstate));
+		
 		sdf1.setTimeZone(TimeZone.getTimeZone("UTC"));   
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
-		if (settings.getBoolean("im", false) && !settings.getString("lpch", "").equals("")){
-		   	Log.d(getClass().getSimpleName(),"imrun");
-			imrunning=true;
-			String[] params = {
-				"http://d.esya.ru/?identifier="+settings.getString("lpch", "")+"&ncrnd=1347794237100", "false", "",
-				"messageread" };
-		if (prevstate) {
 		
-			Log.d(getClass().getSimpleName(),"imrun and prev");
-		imtask = new netutil.MyAsyncTask(LocalService.this) ;
-		imtask.execute(params);
-		}
-		}
 		
 		tts = new TextToSpeech(this,
 		        (OnInitListener) this  // TextToSpeech.OnInitListener
@@ -604,7 +588,9 @@ mNotificationManager.notify(OSMODROID_ID, notification);
           sockaddr = new InetSocketAddress("esya.ru", 2145);
 if (live){startcomand();}
           
+if (settings.getBoolean("im", false) && !settings.getString("key", "" ).equals("") ){
 mesIM = new IM(settings.getString("key", ""),this);
+}
 	}
 	
 	
@@ -1615,7 +1601,8 @@ public void onResultsSucceeded(APIComResult result) {
 			editor.putString("lpch", result.Jo.optString("lpch"));
 
 			editor.commit();
-			myIM = new IM(settings.getString("lpch", "")+"ctrl",this);
+			if (settings.getBoolean("im", false)){
+			myIM = new IM(settings.getString("lpch", "")+"ctrl",this);}
 			
 		}
 		
@@ -1627,21 +1614,6 @@ public void onResultsSucceeded(APIComResult result) {
 				sendBroadcast(in);
 
 
-
-				
-
-				
-
-
-				//Toast.makeText(this, result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"),Toast.LENGTH_LONG ).show();
-
-				//Toast.makeText(this, result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")
-					//	+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"),Toast.LENGTH_LONG ).show();
-
-
-				//Toast.makeText(this, result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")
-					//	+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"),Toast.LENGTH_LONG ).show();
-
 				}
 			
 				
@@ -1651,46 +1623,7 @@ public void onResultsSucceeded(APIComResult result) {
 	
 	
 	
-	if (result.Command.equals("messageread")) 
-	{
-		if (settings.getBoolean("im", false)){	
-		String[] params = {
-				"http://d.esya.ru/?identifier="+settings.getString("lpch", "")+"&ncrnd=1347794237100", "false", "",
-			"messageread" };
-		
-		try {
-		
-			for (int i = 0; i < result.ja.length(); i++) {
-		        JSONObject jsonObject = result.ja.getJSONObject(i);
-		        Log.i(getClass().getSimpleName(), jsonObject.optString("data")+ jsonObject.optString("ids"));
-		        toprint=toprint+jsonObject.optString("data")+jsonObject.optString("ids");
-		        String[] a={"device","from"};
-				String[] b={settings.getString("device", ""),jsonObject.optString("data")};
-				String[] params2 = {netutil.buildcommand(this,"im_get_all",a,b),"false","","im_get_all"};
-				new netutil.MyAsyncTask(this).execute(params2) ;
-		        
-		        
-			}
-			
-			Log.d(getClass().getSimpleName(),"messageread"+toprint);
-				
-				//	Toast.makeText(this,toprint,5).show();
-				
-					
-					
-		} catch (Exception e) {
-			Log.d(getClass().getSimpleName(),"exeption in analise messageread result");
-			//e.printStackTrace();
-		}
-				if (imrunning &&isOnline() && settings.getBoolean("im", false) && !settings.getString("lpch", "").equals("")){
-				new netutil.MyAsyncTask(LocalService.this).execute(params) ;
-				}
-			 
-			
-			
-				
-		}
-			}
+	
 		 
 		
 		
