@@ -552,6 +552,8 @@ startlocalservice();
 		 MenuItem forcesenditem = menu.add(0, 9, 0, "Отправить сейчас");
 		 MenuItem shareadress = menu.add(0, 10, 0, "Поделиться ссылкой");
 		 MenuItem copyadress = menu.add(0, 11, 0, "Скопировать ссылку");
+		 MenuItem about = menu.add(0, 11, 0, "О программе");
+		 about.setIntent(new Intent(this, aboutActivity.class));
 		mi.setIntent(new Intent(this, PrefActivity.class));
 		mi8.setIntent(new Intent(this, SimLinks.class));
 		

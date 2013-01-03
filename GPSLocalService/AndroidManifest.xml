@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.OsMoDroid"
-    android:versionCode="38"
-    android:versionName="1.0.0.35" >
+    android:versionCode="39"
+    android:versionName="1.0.0.36" >
 
     <uses-sdk android:minSdkVersion="4"  />
     
@@ -35,6 +35,7 @@
         </service>
         <activity android:name="SimLinks"></activity>
         <activity android:name="WarnActivity" android:theme="@android:style/Theme.Dialog"></activity>
+        <activity android:theme="@android:style/Theme.Dialog" android:name="aboutActivity"></activity>
 
         
     </application>
