@@ -257,7 +257,9 @@ private long lastgpslocationtime=0;
 	@Override
 	 public IBinder onBind(Intent intent) {
 		
-		//Log.d(getClass().getSimpleName(), "onbind() localservice");
+		
+		Log.d(getClass().getSimpleName(), "onbind() localservice");
+		
 		if (intent.equals("OsMoDroid.remote")){
 			Log.d(getClass().getSimpleName(), "binded remote");
 		return rBinder;}
@@ -656,7 +658,7 @@ mesIM = new IM(settings.getString("key", ""),this);
 	}
 	
 	private void ReadPref() {
-		//	Log.d(getClass().getSimpleName(), "readpref() gpsclient");
+			Log.d(getClass().getSimpleName(), "readpref() localserv");
 			
 			speed =  Integer.parseInt(settings.getString("speed", "3").equals(
 					"") ? "3" : settings.getString("speed", "3"));
@@ -688,6 +690,7 @@ mesIM = new IM(settings.getString("key", ""),this);
 			notifyperiod = Integer.parseInt(settings.getString("notifyperiod", "30000").equals("") ? "30000" :settings.getString("notifyperiod","30000"));
 			sendsound = settings.getBoolean("sendsound", false);
 			//pass = settings.getString("pass", "");
+			Log.d(getClass().getSimpleName(), "localserv hash:"+hash);
 		}
 	
 	
@@ -1499,15 +1502,15 @@ public boolean isOnline() {
 		.setContentTitle("OsMoDroid")
 		.setDefaults(Notification.DEFAULT_ALL);
 
-		Notification notification = nb.getNotification();
+		Notification notification = nb.build();
 		//notification.flags |= Notification.FLAG_INSISTENT;
 		Intent notificationIntent = new Intent(this, WarnActivity.class);
 		notificationIntent.removeExtra("info");
 		notificationIntent.putExtra("info", info);
 		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,notificationIntent, 0);
+		PendingIntent contentIntent = PendingIntent.getActivity(this, OsMoDroid.notifyidApp(),notificationIntent, 0);
 		notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid",	"", contentIntent);
-		mNotificationManager.notify(2, notification);
+		mNotificationManager.notify(OsMoDroid.warnnotifyid, notification);
 	}
 
 

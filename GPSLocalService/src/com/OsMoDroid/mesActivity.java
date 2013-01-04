@@ -47,6 +47,7 @@ public class mesActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onPause();
 		 Log.d("mesActivity", "OnPause");
+		 OsMoDroid.activityVisible=false;
 		 
 	}
 	@Override
@@ -61,6 +62,7 @@ public class mesActivity extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		OsMoDroid.activityVisible=true;
 			Log.d("mesActivity", "OnResume");
 			Bundle b=this.getIntent().getExtras();
 			list.clear();

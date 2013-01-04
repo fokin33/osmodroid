@@ -45,7 +45,7 @@ public class IM {
 	Context parent;
 	String mychanel;
 	ArrayList<String> list= new ArrayList<String>();
-	int NOTIFICATION_ID=3;
+	
 	
 	final Handler alertHandler = new Handler() {
 		@Override
@@ -53,35 +53,42 @@ public class IM {
 		Bundle b = message.getData();
 		String text = b.getString("MessageText");
 		Toast.makeText(parent, text, Toast.LENGTH_SHORT).show();
-		list.add(text);
+		list.add(0,text);
 		Log.d(this.getClass().getName(), "List:"+list);
 		 Bundle a=new Bundle();                                
          a.putStringArrayList("meslist", list);
      Intent activ=new Intent(parent,  mesActivity.class);
      activ.putExtras(a);
+     activ.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+     PendingIntent contentIntent = PendingIntent.getActivity(parent, OsMoDroid.notifyidApp(),activ, 0);
+   
      NotificationCompat.Builder nb = new NotificationCompat.Builder(parent)
-		.setSmallIcon(R.drawable.eye).setAutoCancel(true)
+		.setSmallIcon(android.R.drawable.ic_menu_send).setAutoCancel(true)
 		.setTicker("Сообщение").setContentText(text)
 		.setWhen(System.currentTimeMillis())
 		.setContentTitle("Сообщение")
 		.setDefaults(Notification.DEFAULT_ALL);
 
-		Notification notification = nb.getNotification();
+		Notification notification = nb.build();// getNotification();
 		//notification.flags |= Notification.FLAG_INSISTENT;
 		
-		//activ.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
-		PendingIntent contentIntent = PendingIntent.getActivity(parent, NOTIFICATION_ID,activ, 0);
+		
+		
 		notification.setLatestEventInfo(parent, "OsMoDroid",	"", contentIntent);
-		LocalService.mNotificationManager.notify(NOTIFICATION_ID, notification);    
-//		try {
-//			
-//			contentIntent.send(parent, 0, activ);
-//		} catch (CanceledException e) {
-//			Log.d(this.getClass().getName(), "pending intent exception"+e);
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		NOTIFICATION_ID++;    
+		LocalService.mNotificationManager.notify(OsMoDroid.mesnotifyid, notification);    
+
+		 if (OsMoDroid.activityVisible) {
+    		try {
+			
+			contentIntent.send(parent, 0, activ);
+			LocalService.mNotificationManager.cancel(OsMoDroid.mesnotifyid);
+			
+		} catch (CanceledException e) {
+			Log.d(this.getClass().getName(), "pending intent exception"+e);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
      
      
 		
@@ -245,7 +252,7 @@ public class IM {
 					error = true;
 					
 					//stop();
-				} catch (IOException e) {
+				} catch (Exception e) {
 					error = true;
 					
 					//stop();
