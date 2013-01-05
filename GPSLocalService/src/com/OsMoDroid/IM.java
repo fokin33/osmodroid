@@ -45,7 +45,18 @@ public class IM {
 	Context parent;
 	String mychanel;
 	ArrayList<String> list= new ArrayList<String>();
-	
+	int mestype=0;
+	public IM(String channel, Context context,int type) {
+		adr="http://d.esya.ru/?identifier="+channel+",im_messages&ncrnd="+timestamp;
+		this.parent=context;
+		mychanel=channel;
+		mestype=type;
+		parent.registerReceiver(bcr, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+		start();
+		
+		
+		
+	}
 	
 	final Handler alertHandler = new Handler() {
 		@Override
@@ -62,21 +73,21 @@ public class IM {
      activ.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
      PendingIntent contentIntent = PendingIntent.getActivity(parent, OsMoDroid.notifyidApp(),activ, 0);
    
-     NotificationCompat.Builder nb = new NotificationCompat.Builder(parent)
-		.setSmallIcon(android.R.drawable.ic_menu_send).setAutoCancel(true)
-		.setTicker("Сообщение").setContentText(text)
-		.setWhen(System.currentTimeMillis())
-		.setContentTitle("Сообщение")
-		.setDefaults(Notification.DEFAULT_ALL);
-
-		Notification notification = nb.build();// getNotification();
-		//notification.flags |= Notification.FLAG_INSISTENT;
-		
-		
-		
-		notification.setLatestEventInfo(parent, "OsMoDroid",	"", contentIntent);
-		LocalService.mNotificationManager.notify(OsMoDroid.mesnotifyid, notification);    
-
+ 	Long when=System.currentTimeMillis();
+	
+	
+	NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
+	    	parent.getApplicationContext())
+	    	.setWhen(when)
+	    	.setContentText(text)
+	    	.setContentTitle("OsMoDroid")
+	    	.setSmallIcon(android.R.drawable.ic_menu_send)
+	    	.setAutoCancel(true)
+	    	.setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_VIBRATE| Notification.DEFAULT_SOUND)
+	    	.setContentIntent(contentIntent);
+		Notification notification = notificationBuilder.build();
+		LocalService.mNotificationManager.notify(OsMoDroid.mesnotifyid, notification);
+     
 		 if (OsMoDroid.activityVisible) {
     		try {
 			
@@ -119,6 +130,7 @@ public class IM {
 						// Network is connected
 						if(!running ) {
 							System.out.println("Starting from Reciever"+this.toString());
+							myThread.interrupt();
 							start();
 						}
 					}
@@ -146,18 +158,34 @@ public class IM {
 		myThread.start();
 	}
 	
-	public IM(String channel, Context context) {
-		adr="http://d.esya.ru/?identifier="+channel+",im_messages&ncrnd="+timestamp;
-		this.parent=context;
-		mychanel=channel;
-		parent.registerReceiver(bcr, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
-		start();
-		
-		
-		
-	}
+	
 	
 	void parse (String toParse){
+		if (mestype==0) {
+ //[{"data":"tttt","ids":{"u883006497ctrl":"1357419846.65498040500000"}}]
+
+			
+			
+			System.out.println("mestype0 Parse instance:"+this.toString());	
+			try {
+				JSONArray result = new JSONArray(toParse);
+				for (int i = 0; i < result.length(); i++) {
+			        JSONObject jsonObject = result.getJSONObject(i);
+				
+				
+				if (jsonObject.optString("data").equals("stop"))
+					{
+					Log.d(this.getClass().getName(), "Тут надо послать сигнал остновки сервиса");		
+					}
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		if (mestype==1) {
+		System.out.println("mestype1 Parse instance:"+this.toString());
 		try {
 		
 		String messageText="";
@@ -190,6 +218,7 @@ public class IM {
 			e.printStackTrace();
 			Log.d(this.getClass().getName(), e.toString());
 		}
+		}
 		
 	}
 	void stop (){
@@ -217,8 +246,10 @@ public class IM {
 		
 		
 		public void run() {
+			System.out.println("run thread instance:"+this.toString());
 			String response = "";
 			while (running) {
+				System.out.println("running thread instance:"+this.toString());
 				try {
 					++retries;
 					int portOfProxy = android.net.Proxy.getDefaultPort();
@@ -268,8 +299,8 @@ public class IM {
 						Thread.sleep(1000*10);
 					} catch (InterruptedException e) {
 						// If can't back-off, stop trying
-						
-						running = false;
+						System.out.println("Interrupted from sleep thread instance:"+this.toString());	
+						//running = false;
 						break;
 					}
 				}

@@ -100,7 +100,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 
-public class LocalService extends Service implements LocationListener,GpsStatus.Listener, TextToSpeech.OnInitListener,  ResultsListener {
+public  class LocalService extends Service implements LocationListener,GpsStatus.Listener, TextToSpeech.OnInitListener,  ResultsListener {
 	private static final int OSMODROID_ID = 1;
 	int notifyid=2;
 	//MediaPlayer mp;
@@ -591,7 +591,7 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 if (live){startcomand();}
           
 if (settings.getBoolean("im", false) && !settings.getString("key", "" ).equals("") ){
-mesIM = new IM(settings.getString("key", ""),this);
+mesIM = new IM(settings.getString("key", ""),this,1);
 }
 	}
 	
@@ -1495,22 +1495,23 @@ public boolean isOnline() {
 
 	void notifywarnactivity(String info) {
 		
-		NotificationCompat.Builder nb = new NotificationCompat.Builder(this)
-		.setSmallIcon(R.drawable.warn).setAutoCancel(true)
-		.setTicker("Важный ответ сервера").setContentText(info)
-		.setWhen(System.currentTimeMillis())
-		.setContentTitle("OsMoDroid")
-		.setDefaults(Notification.DEFAULT_ALL);
-
-		Notification notification = nb.build();
-		//notification.flags |= Notification.FLAG_INSISTENT;
+		Long when=System.currentTimeMillis();
 		Intent notificationIntent = new Intent(this, WarnActivity.class);
 		notificationIntent.removeExtra("info");
 		notificationIntent.putExtra("info", info);
 		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		PendingIntent contentIntent = PendingIntent.getActivity(this, OsMoDroid.notifyidApp(),notificationIntent, 0);
-		notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid",	"", contentIntent);
-		mNotificationManager.notify(OsMoDroid.warnnotifyid, notification);
+		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
+		    	getApplicationContext())
+		    	.setWhen(when)
+		    	.setContentText(info)
+		    	.setContentTitle("OsMoDroid")
+		    	.setSmallIcon(R.drawable.warn)
+		    	.setAutoCancel(true)
+		    	.setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_VIBRATE| Notification.DEFAULT_SOUND)
+		    	.setContentIntent(contentIntent);
+			Notification notification = notificationBuilder.build();
+			mNotificationManager.notify(OsMoDroid.warnnotifyid, notification);
 	}
 
 
@@ -1605,7 +1606,7 @@ public void onResultsSucceeded(APIComResult result) {
 
 			editor.commit();
 			if (settings.getBoolean("im", false)){
-			myIM = new IM(settings.getString("lpch", "")+"ctrl",this);}
+			myIM = new IM(settings.getString("lpch", "")+"ctrl",this,0);}
 			
 		}
 		
