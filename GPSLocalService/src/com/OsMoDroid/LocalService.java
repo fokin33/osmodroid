@@ -223,7 +223,7 @@ private long lastgpslocationtime=0;
 				Log.d("OsmoDroid", "Remote getVersion");
 			
 				Toast.makeText(LocalService.this, "vvv" , Toast.LENGTH_SHORT).show();
-				return 0;
+				return 1;
 			}
 
 			public void Deactivate() throws RemoteException {
