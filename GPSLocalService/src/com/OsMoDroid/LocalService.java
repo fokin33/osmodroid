@@ -222,14 +222,14 @@ private long lastgpslocationtime=0;
 			public int getVersion() throws RemoteException {
 				Log.d("OsmoDroid", "Remote getVersion");
 			
-				Toast.makeText(LocalService.this, "vvv" , Toast.LENGTH_SHORT).show();
+				//Toast.makeText(LocalService.this, "vvv" , Toast.LENGTH_SHORT).show();
 				return 1;
 			}
 
 			public void Deactivate() throws RemoteException {
 				Log.d(getClass().getSimpleName(), "Remote Deactivate");
-				LocalService.this.stopServiceWork();
-				Toast.makeText(LocalService.this, "aaa" , Toast.LENGTH_SHORT).show();
+				stopServiceWork();
+				//Toast.makeText(LocalService.this, "aaa" , Toast.LENGTH_SHORT).show();
 				return;
 				
 				
@@ -257,13 +257,13 @@ private long lastgpslocationtime=0;
 	@Override
 	 public IBinder onBind(Intent intent) {
 		
-		
+		Log.d(getClass().getSimpleName(), "onbind() "+intent.getAction());
 		Log.d(getClass().getSimpleName(), "onbind() localservice");
 		
-		if (intent.equals("OsMoDroid.remote")){
+		if (intent.getAction().equals("OsMoDroid.remote")){
 			Log.d(getClass().getSimpleName(), "binded remote");
 		return rBinder;}
-		
+		Log.d(getClass().getSimpleName(), "binded localy");
 		return mBinder;
 		
     }

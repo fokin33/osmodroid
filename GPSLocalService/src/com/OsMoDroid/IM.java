@@ -2,6 +2,7 @@ package com.OsMoDroid;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
@@ -37,6 +38,7 @@ public class IM {
 	protected boolean autoReconnect = true;
 	protected Integer timeout       = 0;
 	private HttpURLConnection con;
+	private InputStream instream;
 	String adr;
 	Long timestamp=System.currentTimeMillis();
 	int pingTimeout=900;
@@ -223,13 +225,29 @@ public class IM {
 	}
 	void stop (){
 		try {
+			instream.close();
+			
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
+		try {
 			
 			in.close();
+			
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+			}
+		try {
+			
 			con.disconnect();
 			} catch (Exception e) {
 				
 				e.printStackTrace();
 			}
+		
+		
 			running = false;
 	}
 	
@@ -259,13 +277,14 @@ public class IM {
 						con = (HttpURLConnection) new URL(adr).openConnection(proxy);
 					} else {
 						con = (HttpURLConnection) new URL(adr).openConnection();
+						
 					}
 					con.setReadTimeout(pingTimeout*1000);
 					con.setConnectTimeout(10000);
 					
 					
-					
-					stream = new InputStreamReader(con.getInputStream());
+					instream=con.getInputStream();
+					stream = new InputStreamReader(instream);
 					in   = new BufferedReader(stream, 1024);
 					if(error){
 						error = false;
@@ -337,7 +356,7 @@ public class IM {
 //							//killConnection.cancel();
 //							parse(response);
 //						}
-						
+						instream.close();
 						in.close();
 						con.disconnect();
 					}
