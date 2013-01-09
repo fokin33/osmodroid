@@ -168,64 +168,27 @@ PowerManager pm;
 	
 	 super.onPause();
 	 if (!(wakeLock==null) &&wakeLock.isHeld())wakeLock.release();
-	//
-	//
-	// SharedPreferences settings = PreferenceManager
-	// .getDefaultSharedPreferences(this);
-	// SharedPreferences.Editor editor = settings.edit();
-	// editor.putString("sendresult", sendresult);
-	// editor.putInt("sendcounter", sendcounter);
-	//
-	// editor.commit();
+	
 	
 	 }
 
 	@Override
 	protected void onStop() {
-
-		//Log.d(getClass().getSimpleName(), "onstop() gpsclient");
-		// if (timer != null) {
-		// timer.cancel();
-		// }
-		
-
 		super.onStop();
 
 	}
 
-	// @Override
-	//
-	// public void onSaveInstanceState(Bundle saveInstanceState) {
-	//
-	// // Извлеките Представление
-	//
-	//
-	// // Сохраните его состояние
-	// saveInstanceState.putString("sendresult", sendresult);
-	// saveInstanceState.putInt("sendcounter", sendcounter);
-	//
-	// super.onSaveInstanceState(saveInstanceState);
-	//
-	// }
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// if (savedInstanceState != null && savedInstanceState.
-		// containsKey("sendresult") && savedInstanceState.
-		// containsKey("sendcounter"))
-		// {
-		// sendresult= savedInstanceState.getString("sendresult");
-		// sendcounter= savedInstanceState.getInt("sendcounter");
-		//
-		//
-		// }
-		//
-		// requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+		
 		
 		PreferenceManager.setDefaultValues(this, R.xml.pref, true);
 		settings = PreferenceManager
 				.getDefaultSharedPreferences(this);
+		ReadPref();
 		pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 	
 		String strVersionName = getString(R.string.Unknow);
@@ -242,7 +205,7 @@ PowerManager pm;
 		OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 			  public void onSharedPreferenceChanged(SharedPreferences prefs, String keychanged) {
 			    if ((keychanged.equals("hash")||keychanged.equals("n")) ) {
-			    	Log.d(getClass().getSimpleName(), "Сменился хэщ");
+			    	Log.d(getClass().getSimpleName(), "Сменился хэш");
 			    	device="";
 			    	devicename="";
 			    	
@@ -264,25 +227,17 @@ PowerManager pm;
 													+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
 											.substring(1, 25), "false", "",
 							"device" };
-					// String[]
-					// params={"http://api.esya.ru/?system=om&action=device&key="+commandJSON.optString("key")+"&signature="+SHA1("system:om;action:device;key:"+commandJSON.optString("key")+";"+"--"+"JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6").substring(1,
-					// 25),"false",""};
-					// +commandJSON.optString("key")+
+					
 					Log.d(getClass().getSimpleName(), params[0]);
 					RequestCommandTask Rq = new RequestCommandTask();
 					Rq.execute(params);
 				} 
-			    //else {
-				//	Toast.makeText(GPSLocalServiceClient.this, R.string.nokey, 5).show();
-				//}
+			 
 			    
 			    
 			    }
-//			    if (keychanged.equals("login")) {
-//			    	
-//			    	Log.d(getClass().getSimpleName(), "Сменился login");
-//			    	key="";}
-			    if (started){bindService();}
+
+			    //if (started){bindService();}
 			  }
 			};
 
@@ -294,114 +249,25 @@ PowerManager pm;
 		setTitle(strVersionName);
 		Button start = (Button) findViewById(R.id.startButton);
 		Button exit = (Button) findViewById(R.id.exitButton);
-	//	Button copy = (Button) findViewById(R.id.copyButton);
-	//	Button send = (Button) findViewById(R.id.SendButton);
-	//	Button forcesend = (Button) findViewById(R.id.forcesendButton);
+	
 		start.setEnabled(false);
 		exit.setEnabled(false);
-		//forcesend.setEnabled(false);
+	
 		exit.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				// if (timer != null) {
-				// timer.cancel();
-				// }
-			
-					
 				
-//				if (mBound) {
-//					unbindService(conn);
-//					mBound = false;
-//				}
-				
-//				if (conn == null || mService == null) {
-//					Log.d(getClass().getSimpleName(), "нет бинда с сервисом - stopcommand");
-//				} else {
-//					Log.d(getClass().getSimpleName(), "вызов stopcommand");
-//					mService.stopcomand();
-//					Log.d(getClass().getSimpleName(), "послек вызова stopcomand");
-//				}	
 				stop();
-			//	Button start = (Button) findViewById(R.id.startButton);
-			//	Button stop = (Button) findViewById(R.id.exitButton);
-			//	Button forcesend = (Button) findViewById(R.id.forcesendButton);
-				
-			//	start.setEnabled(true);
-			//	forcesend.setEnabled(false);
-			//	stop.setEnabled(false);
-			//	started = false;
+			
 				updateServiceStatus();
 
 			}
 		});
-//		copy.setOnClickListener(new OnClickListener() {
-//			public void onClick(View v) {
-//				ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-//				if (viewurl != null)
-//					clipboard.setText(viewurl);
-//				// clipboard.setPrimaryClip(clip);
-//			}
-//		});
-//		forcesend.setOnClickListener(new OnClickListener() {
-//			public void onClick(View v) {
-//				Log.d(getClass().getSimpleName(), "forcesend click");
-//				if (conn == null || mService == null) {
-//					Log.d(getClass().getSimpleName(), "нет бинда с сервисом");
-//				} else {
-//					Log.d(getClass().getSimpleName(), "вызов отправки позиции");
-//					mService.sendPosition();
-//					Log.d(getClass().getSimpleName(), "послек вызова отправки позиции");
-//				}	
-//				
-//			}
-//		});
-//		send.setOnClickListener(new OnClickListener() {
-//			public void onClick(View v) {
-//				// Intent sendIntent = new
-//				// Intent(android.content.Intent.ACTION_SEND);
-//				Intent sendIntent = new Intent(Intent.ACTION_SEND);
-//				sendIntent.setType("text/plain");
-//				sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, viewurl);
-//				startActivity(Intent.createChooser(sendIntent, "Email"));
-//
-//			}
-//		});
+
 
 		start.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 startlocalservice();
-//				bindService();
-			//	Button start = (Button) findViewById(R.id.startButton);
-			//	Button stop = (Button) findViewById(R.id.exitButton);
-				//Button forcesend = (Button) findViewById(R.id.forcesendButton);
-			//	start.setEnabled(false);
-				//forcesend.setEnabled(true);
-			//	stop.setEnabled(true);
-			//	started = true;
-			
-				
-				
-//				if (!key.equals("")){
-//				String[] a={"device"};
-//				String[] b={device};
-//				String[] params = {netutil.buildcommand(GPSLocalServiceClient.this,"start",a,b),"false","","start"};
-//				starttask=	new netutil.MyAsyncTask(GPSLocalServiceClient.this);
-//				starttask.execute(params) ;
-//				}
-				
-				//Log.d(getClass().getSimpleName(),buildcommand("start",a,b).toString());
-				// timer = new Timer();
-				// timer.scheduleAtFixedRate(new TimerTask() {
-				// @Override
-				// public void run() {
-				// runOnUiThread(new Runnable() {
-				// public void run() {
-				// if (mBound)
-				// invokeService();
-				// }
-				// });
-				//
-				// }
-				// }, 0, 1000);
+		
 			}
 		});
 
@@ -451,30 +317,22 @@ startlocalservice();
 				
 				if (position == null){position = context.getString(R.string.NotDefined);}
 
-				// Log.d("lbr", "Message received: " +
-				// intent.getStringExtra("position") );
-				// Log.d("lbr", "Message received: " +
-				// intent.getStringExtra("sendcounter") );
-				// Log.d("lbr", "Message received: " +
-				// intent.getStringExtra("sendresult") );
+				
 				if (sendresult == null){	sendresult = "";}
 				t.setText(
-						//getString(R.string.location) + 
+						
 						position+"\n"+stat);
 				TextView t2 = (TextView) findViewById(R.id.Send);
 
 				updateServiceStatus();
 				if (!(sendresult == null)){t2.setText(getString(R.string.Sended) + (sendresult));}
 			}
-			// sendresult=time+ " "+ sendresult;
-
-			// Log.d("lbr", "Message received: " +
-			// intent.getStringExtra("position") );
+			
 
 		};
 
 		registerReceiver(receiver, new IntentFilter("OsMoDroid"));
-		bindService();
+		if (hash.equals("") && live){} else { bindService();}
 		// Log.d(getClass().getSimpleName(), "onCreate() gpsclient");
 	}
 
@@ -495,32 +353,20 @@ startlocalservice();
 		
 	
 		if (started) {
-			//Button forcesend = (Button) findViewById(R.id.forcesendButton);
+		
 			Button start = (Button) findViewById(R.id.startButton);
 			Button stop = (Button) findViewById(R.id.exitButton);
-			//forcesend.setEnabled(true);
+		
 			start.setEnabled(false);
 			stop.setEnabled(true);
 			bindService();
-			// timer = new Timer();
-			// timer.scheduleAtFixedRate(new TimerTask() {
-			// @Override
-			// public void run() {
-			// runOnUiThread(new Runnable() {
-			// public void run() {
-			// if (mBound)
-			// invokeService();
-			// }
-			// });
-			//
-			// }
-			// }, 0, 1000);
+			
 
 		} else {
-			//Button forcesend = (Button) findViewById(R.id.forcesendButton);
+			
 			Button start = (Button) findViewById(R.id.startButton);
 			Button stop = (Button) findViewById(R.id.exitButton);
-			//forcesend.setEnabled(false);
+		
 			start.setEnabled(true);
 			stop.setEnabled(false);
 		}
@@ -531,7 +377,7 @@ startlocalservice();
 		}
 		TextView t2 = (TextView) findViewById(R.id.URL);
 		t2.setText("Имя: "+settings.getString("devicename", "")+". " +getString(R.string.Adres) + viewurl);
-		//t2.setText(getString(R.string.Adres) + viewurl);
+	
 		Linkify.addLinks(t2, Linkify.ALL);
 
 	}
@@ -542,6 +388,7 @@ startlocalservice();
 		
 		MenuItem auth = menu2.add(0, 1, 0, R.string.RepeatAuth);
 		MenuItem mi = menu.add(0, 2, 0, R.string.Settings);
+		mi.setIcon(android.R.drawable.ic_menu_preferences);
 		MenuItem mi3 = menu2.add(0, 3, 0, R.string.EqualsParameters);
 		
 		 mi4 = menu1.add(0, 4, 0, R.string.getkey);
@@ -550,8 +397,14 @@ startlocalservice();
 		 mi7 = menu1.add(0, 7, 0, R.string.enterchanel);
 		 mi8 = menu1.add(0, 8, 0, "Символические ссылки");
 		 MenuItem forcesenditem = menu.add(0, 9, 0, "Отправить сейчас");
+		 forcesenditem.setIcon(android.R.drawable.ic_menu_mylocation);
 		 MenuItem shareadress = menu.add(0, 10, 0, "Поделиться ссылкой");
+		 shareadress.setIcon(android.R.drawable.ic_menu_share);
 		 MenuItem copyadress = menu.add(0, 11, 0, "Скопировать ссылку");
+		 copyadress.setIcon(android.R.drawable.ic_menu_edit);
+		 MenuItem about = menu.add(0, 11, 0, "О программе");
+		 about.setIcon(android.R.drawable.ic_menu_info_details);
+		 about.setIntent(new Intent(this, aboutActivity.class));
 		mi.setIntent(new Intent(this, PrefActivity.class));
 		mi8.setIntent(new Intent(this, SimLinks.class));
 		
@@ -974,7 +827,7 @@ layout.addView(txv1);
 	}
 
 	private void ReadPref() {
-		// Log.d(getClass().getSimpleName(), "readpref() gpsclient");
+		 Log.d(getClass().getSimpleName(), "readpref() gpsclient");
 		
 
 		speed =  Integer.parseInt(settings.getString("speed", "3").equals(
@@ -1024,6 +877,7 @@ layout.addView(txv1);
 		login = settings.getString("login", "");
 		key = settings.getString("key", "");
 		device = settings.getString("device", "");
+		Log.d(getClass().getSimpleName(), "readpref() hash:"+hash);
 	}
 
 	private void startlocalservice(){
@@ -1034,24 +888,16 @@ layout.addView(txv1);
 	}
 	
 	private void bindService() {
-		// Log.d(getClass().getSimpleName(), "bimdservice() gpsclient");
-		// if(!mBound ) {
-		//Intent i = new Intent(this, LocalService.class);
 		Intent i = new Intent("OsMoDroid.local");
-		//startService(i);
-		// Log.d(getClass().getSimpleName(),
-		// "отработал стартсервис() gpsclient");
-		// Log.d(getClass().getSimpleName(), "conn=" + conn);
 		bindService(i, conn, Context.BIND_AUTO_CREATE);
 		mBound = true;
-		
 		updateServiceStatus();
 	}
 
 	private void stop() {
 		 Log.d(getClass().getSimpleName(), "stop() gpsclient");
 		mService.stopServiceWork();
-		 Intent i = new Intent(this, LocalService.class);
+		Intent i = new Intent(this, LocalService.class);
 		stopService(i);
 
 	}
@@ -1212,9 +1058,7 @@ if (mBound) {
 				
 				//WritePref();
 				SharedPreferences.Editor editor = settings.edit();
-
 				editor.putString("hash", hash);
-				editor.commit();
 				editor.putString("n", Integer.toString(n));
 				editor.putString("submit-url", submiturl);
 				editor.putString("view-url", viewurl);
@@ -1226,10 +1070,14 @@ if (mBound) {
 				
 				
 				ReadPref();
+				
 				findViewById(R.id.startButton).setEnabled(true);
 				TextView t2 = (TextView) findViewById(R.id.URL);
 				t2.setText(getString(R.string.Adres) + viewurl);
 				Linkify.addLinks(t2, Linkify.ALL);
+				 Log.d(this.getClass().getName(), "Задание окончило выполнятся.Bind");
+				bindService();
+				
 			}
 		}
 

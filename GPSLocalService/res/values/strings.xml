@@ -52,4 +52,7 @@
 <string name="addsymlink">Создать ссылку</string>
 <string name="message">Сообщение:</string>
 <string name="sendtosuuport">Сообщить в техподдержку</string>
+<string name="about">О программе</string>
+<string name="abouttext">Cкачать клиента можно тут: osmodroid.ru, узнать поподробнее о мониторинге тут: m.esya.ru</string>
+<string name="sendmes">Отправить</string>
 </resources>

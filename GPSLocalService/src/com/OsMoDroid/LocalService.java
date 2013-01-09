@@ -100,7 +100,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 
-public class LocalService extends Service implements LocationListener,GpsStatus.Listener, TextToSpeech.OnInitListener,  ResultsListener {
+public  class LocalService extends Service implements LocationListener,GpsStatus.Listener, TextToSpeech.OnInitListener,  ResultsListener {
 	private static final int OSMODROID_ID = 1;
 	int notifyid=2;
 	//MediaPlayer mp;
@@ -171,7 +171,7 @@ private long lastgpslocationtime=0;
 	private int buffercounter=0;
 	BroadcastReceiver receiver;
 	BroadcastReceiver checkreceiver;
-	BroadcastReceiver mConnReceiver;
+	
 	private final IBinder mBinder = new LocalBinder();
 	private String gpxbuffer= new String();
 	//private String sendbuffer = new String();
@@ -179,7 +179,7 @@ private long lastgpslocationtime=0;
 	private String Accuracy="";
 	private boolean usebuffer = false;
 	private boolean usewake=false;
-	NotificationManager mNotificationManager;
+	static NotificationManager mNotificationManager;
 	private String lastsendforbuffer="First";
 	private long lastgpsontime=0;
 	private long lastgpsofftime=0;
@@ -190,10 +190,6 @@ private long lastgpslocationtime=0;
 	private Object[] mStartForegroundArgs = new Object[2];
 	private String pass;
 	private String lastsay="a";
-	private netutil.MyAsyncTask imtask;
-	private Boolean prevstate;
-	private Boolean imrunning = true;
-	private String[] imadress={};
 	Boolean state=false;
 	int gpsperiod;
 	int gpsdistance;
@@ -211,6 +207,8 @@ private long lastgpslocationtime=0;
 	 final private static SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
 	 final private static SimpleDateFormat sdf3 = new SimpleDateFormat("HH:mm:ss");
 	 final private static  DecimalFormatSymbols dot= new DecimalFormatSymbols();
+	 IM myIM;
+	 IM mesIM;
 	 TextToSpeech tts;
 	    private int _langTTSavailable = -1;
 	    Socket s;
@@ -224,14 +222,14 @@ private long lastgpslocationtime=0;
 			public int getVersion() throws RemoteException {
 				Log.d("OsmoDroid", "Remote getVersion");
 			
-				Toast.makeText(LocalService.this, "vvv" , Toast.LENGTH_SHORT).show();
-				return 0;
+				//Toast.makeText(LocalService.this, "vvv" , Toast.LENGTH_SHORT).show();
+				return 1;
 			}
 
 			public void Deactivate() throws RemoteException {
 				Log.d(getClass().getSimpleName(), "Remote Deactivate");
-				LocalService.this.stopServiceWork();
-				Toast.makeText(LocalService.this, "aaa" , Toast.LENGTH_SHORT).show();
+				stopServiceWork();
+				//Toast.makeText(LocalService.this, "aaa" , Toast.LENGTH_SHORT).show();
 				return;
 				
 				
@@ -259,11 +257,13 @@ private long lastgpslocationtime=0;
 	@Override
 	 public IBinder onBind(Intent intent) {
 		
-		//Log.d(getClass().getSimpleName(), "onbind() localservice");
-		if (intent.equals("OsMoDroid.remote")){
+		Log.d(getClass().getSimpleName(), "onbind() "+intent.getAction());
+		Log.d(getClass().getSimpleName(), "onbind() localservice");
+		
+		if (intent.getAction().equals("OsMoDroid.remote")){
 			Log.d(getClass().getSimpleName(), "binded remote");
 		return rBinder;}
-		
+		Log.d(getClass().getSimpleName(), "binded localy");
 		return mBinder;
 		
     }
@@ -304,13 +304,12 @@ public void startcomand()
 		Log.d(getClass().getSimpleName(), "startcommand");	
 	}
 	else {
-		//String[] a={"hasn","n","c","v"};
-		//String[] b={settings.getString("hash", ""),settings.getString("n", ""),"OsMoDroid",version.replace(".", "")};
+		if(!settings.getString("device", "").equals("")){
 		String[] params = {"http://a.t.esya.ru/?act=start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&c=OsMoDroid&v="+version.replace(".", ""),"false","","start"};
 		starttask=	new netutil.MyAsyncTask(this);
 		starttask.execute(params) ;
 		Log.d(getClass().getSimpleName(), "startcommand");	
-	
+		}
 	}
 	//a.t.esya.ru/?act=session_start&hash=*&n=*&ttl=900
 	//String[] a={"hasn","n","ttl"};
@@ -406,26 +405,15 @@ public void stopcomand()
 	public void onCreate() {
 		 //Debug.startMethodTracing("startsbuf");
 		super.onCreate();
+		
 		myManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-		prevstate=isOnline();
+		
 		Sattelite=getString(R.string.Sputniki);
 		position=getString(R.string.NotDefined);
-		Log.d(getClass().getSimpleName(),"prevstate "+ Boolean.toString(prevstate));
+		
 		sdf1.setTimeZone(TimeZone.getTimeZone("UTC"));   
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
-		if (settings.getBoolean("im", false) && !settings.getString("lpch", "").equals("")){
-		   	Log.d(getClass().getSimpleName(),"imrun");
-			imrunning=true;
-			String[] params = {
-				"http://d.esya.ru/?identifier="+settings.getString("lpch", "")+"&ncrnd=1347794237100", "false", "",
-				"messageread" };
-		if (prevstate) {
 		
-			Log.d(getClass().getSimpleName(),"imrun and prev");
-		imtask = new netutil.MyAsyncTask(LocalService.this) ;
-		imtask.execute(params);
-		}
-		}
 		
 		tts = new TextToSpeech(this,
 		        (OnInitListener) this  // TextToSpeech.OnInitListener
@@ -456,41 +444,7 @@ public void stopcomand()
 		 
 	
 		
-		   mConnReceiver = new BroadcastReceiver() {
-		        @Override
-		        public void onReceive(Context context, Intent intent) {
-		            boolean noConnectivity = intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
-		            String reason = intent.getStringExtra(ConnectivityManager.EXTRA_REASON);
-		boolean isFailover = intent.getBooleanExtra(ConnectivityManager.EXTRA_IS_FAILOVER, false);
-		            NetworkInfo currentNetworkInfo = (NetworkInfo) intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
-		            NetworkInfo otherNetworkInfo = (NetworkInfo) intent.getParcelableExtra(ConnectivityManager.EXTRA_OTHER_NETWORK_INFO);
-		            Log.d(getClass().getSimpleName(), reason + " NoConnectivity:" +Boolean.toString(noConnectivity)+ "IsFailover: "+Boolean.toString(isFailover));
-		            if (settings.getBoolean("im", false)){
-		            if (!noConnectivity&& !prevstate&& imrunning && !settings.getString("lpch", "").equals("")){
-		            	String[] params = {
-		            			"http://d.esya.ru/?identifier="+settings.getString("lpch", "")+"&ncrnd=1347794237100", "false", "",
-		            			"messageread" };
-		            	Log.d(getClass().getSimpleName(),"prevstate "+ Boolean.toString(prevstate));
-		        		prevstate=true;
-		        		imtask = new netutil.MyAsyncTask(LocalService.this) ;
-		        		Log.d(getClass().getSimpleName(), "Новая задача по ресиверу");
-		        		imtask.execute(params);
-		        		
-		            	
-		            }
-		            if (noConnectivity&& imrunning && prevstate){
-		            	Log.d(getClass().getSimpleName(),"prevstate "+ Boolean.toString(prevstate));
-		            	prevstate=false;
-		            //	imtask.cancel(true);
-		            //	imtask.Close();
-		            	
-		            }
-		            ;
-		            }
-		            // do application-specific task(s) based on the current network state, such
-		            // as enabling queuing of HTTP requests when currentNetworkInfo is connected etc.
-		        }
-		    }; 
+		
 		
 		
 		checkreceiver =new BroadcastReceiver() {
@@ -556,7 +510,7 @@ public void stopcomand()
 		
 		 
 		
-		registerReceiver(mConnReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)); 
+		 
 		
 		 
 		 //try {
@@ -636,7 +590,9 @@ mNotificationManager.notify(OSMODROID_ID, notification);
           sockaddr = new InetSocketAddress("esya.ru", 2145);
 if (live){startcomand();}
           
-		
+if (settings.getBoolean("im", false) && !settings.getString("key", "" ).equals("") ){
+mesIM = new IM(settings.getString("key", ""),this,1);
+}
 	}
 	
 	
@@ -647,25 +603,10 @@ if (live){startcomand();}
 	public void onDestroy() {
 		super.onDestroy();
 		//stopServiceWork();
+		if(myIM!=null){  myIM.close();}
+		if(mesIM!=null){  mesIM.close();}
 		stopcomand();
-		
-		if (settings.getBoolean("im", false)){
-			  imrunning=false;
-			
-			  try {
-				imtask.cancel(true);
-				  imtask.Close();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-			}
-		
-			  Log.d(this.getClass().getName()," ondestroy imtask.close");
-		
-		//Boolean cancelresult= imtask.cancel(true);
-		//Log.d(this.getClass().getName(), Boolean.toString(cancelresult));
-		
-		  }	
+				
 		if (tts != null) {
             tts.stop();
             tts.shutdown();
@@ -682,13 +623,7 @@ if (live){startcomand();}
 		Log.d(getClass().getSimpleName(), "А он и не зареген");
 	
 	}
-		try {
-		if(mConnReceiver!= null){unregisterReceiver(mConnReceiver);}
 		
-			} catch (Exception e) {
-				Log.d(getClass().getSimpleName(), "А он и не зареген");
-			
-			}
 			
 		
 		
@@ -723,7 +658,7 @@ if (live){startcomand();}
 	}
 	
 	private void ReadPref() {
-		//	Log.d(getClass().getSimpleName(), "readpref() gpsclient");
+			Log.d(getClass().getSimpleName(), "readpref() localserv");
 			
 			speed =  Integer.parseInt(settings.getString("speed", "3").equals(
 					"") ? "3" : settings.getString("speed", "3"));
@@ -755,6 +690,7 @@ if (live){startcomand();}
 			notifyperiod = Integer.parseInt(settings.getString("notifyperiod", "30000").equals("") ? "30000" :settings.getString("notifyperiod","30000"));
 			sendsound = settings.getBoolean("sendsound", false);
 			//pass = settings.getString("pass", "");
+			Log.d(getClass().getSimpleName(), "localserv hash:"+hash);
 		}
 	
 	
@@ -1559,22 +1495,23 @@ public boolean isOnline() {
 
 	void notifywarnactivity(String info) {
 		
-		NotificationCompat.Builder nb = new NotificationCompat.Builder(this)
-		.setSmallIcon(R.drawable.warn).setAutoCancel(true)
-		.setTicker("Важный ответ сервера").setContentText(info)
-		.setWhen(System.currentTimeMillis())
-		.setContentTitle("OsMoDroid")
-		.setDefaults(Notification.DEFAULT_ALL);
-
-		Notification notification = nb.getNotification();
-		//notification.flags |= Notification.FLAG_INSISTENT;
+		Long when=System.currentTimeMillis();
 		Intent notificationIntent = new Intent(this, WarnActivity.class);
-		
+		notificationIntent.removeExtra("info");
 		notificationIntent.putExtra("info", info);
 		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,notificationIntent, 0);
-		notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid",	"", contentIntent);
-		mNotificationManager.notify(2, notification);
+		PendingIntent contentIntent = PendingIntent.getActivity(this, OsMoDroid.notifyidApp(),notificationIntent, 0);
+		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
+		    	getApplicationContext())
+		    	.setWhen(when)
+		    	.setContentText(info)
+		    	.setContentTitle("OsMoDroid")
+		    	.setSmallIcon(R.drawable.warn)
+		    	.setAutoCancel(true)
+		    	.setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_VIBRATE| Notification.DEFAULT_SOUND)
+		    	.setContentIntent(contentIntent);
+			Notification notification = notificationBuilder.build();
+			mNotificationManager.notify(OsMoDroid.warnnotifyid, notification);
 	}
 
 
@@ -1668,6 +1605,9 @@ public void onResultsSucceeded(APIComResult result) {
 			editor.putString("lpch", result.Jo.optString("lpch"));
 
 			editor.commit();
+			if (settings.getBoolean("im", false)){
+			myIM = new IM(settings.getString("lpch", "")+"ctrl",this,0);}
+			
 		}
 		
 			if (!result.Jo.optString("motd").equals("") ||!result.Jo.optString("query_per_day").equals("")){
@@ -1678,21 +1618,6 @@ public void onResultsSucceeded(APIComResult result) {
 				sendBroadcast(in);
 
 
-
-				
-
-				
-
-
-				//Toast.makeText(this, result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"),Toast.LENGTH_LONG ).show();
-
-				//Toast.makeText(this, result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")
-					//	+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"),Toast.LENGTH_LONG ).show();
-
-
-				//Toast.makeText(this, result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")
-					//	+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"),Toast.LENGTH_LONG ).show();
-
 				}
 			
 				
@@ -1702,46 +1627,7 @@ public void onResultsSucceeded(APIComResult result) {
 	
 	
 	
-	if (result.Command.equals("messageread")) 
-	{
-		if (settings.getBoolean("im", false)){	
-		String[] params = {
-				"http://d.esya.ru/?identifier="+settings.getString("lpch", "")+"&ncrnd=1347794237100", "false", "",
-			"messageread" };
-		
-		try {
-		
-			for (int i = 0; i < result.ja.length(); i++) {
-		        JSONObject jsonObject = result.ja.getJSONObject(i);
-		        Log.i(getClass().getSimpleName(), jsonObject.optString("data")+ jsonObject.optString("ids"));
-		        toprint=toprint+jsonObject.optString("data")+jsonObject.optString("ids");
-		        String[] a={"device","from"};
-				String[] b={settings.getString("device", ""),jsonObject.optString("data")};
-				String[] params2 = {netutil.buildcommand(this,"im_get_all",a,b),"false","","im_get_all"};
-				new netutil.MyAsyncTask(this).execute(params2) ;
-		        
-		        
-			}
-			
-			Log.d(getClass().getSimpleName(),"messageread"+toprint);
-				
-				//	Toast.makeText(this,toprint,5).show();
-				
-					
-					
-		} catch (Exception e) {
-			Log.d(getClass().getSimpleName(),"exeption in analise messageread result");
-			//e.printStackTrace();
-		}
-				if (imrunning &&isOnline() && settings.getBoolean("im", false) && !settings.getString("lpch", "").equals("")){
-				new netutil.MyAsyncTask(LocalService.this).execute(params) ;
-				}
-			 
-			
-			
-				
-		}
-			}
+	
 		 
 		
 		

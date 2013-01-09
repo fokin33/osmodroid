@@ -170,9 +170,11 @@ String linkname =  System.currentTimeMillis()+settings.getString("device", "");
 	  public void onCreateContextMenu(ContextMenu menu, View v,
 	      ContextMenuInfo menuInfo) {
 	    super.onCreateContextMenu(menu, v, menuInfo);
-	    menu.add(0, 1, 0, "Поделиться ссылкой");
-	    menu.add(0, 2, 0, "Удалить ссылку");
-	    menu.add(0, 3, 0, "Копировать ссылку");
+	    menu.add(0, 1, 0, "Поделиться ссылкой").setIcon(android.R.drawable.ic_menu_share);;
+	    menu.add(0, 2, 0, "Удалить ссылку").setIcon(android.R.drawable.ic_menu_delete);;
+	    menu.add(0, 3, 0, "Копировать ссылку").setIcon(android.R.drawable.ic_menu_edit);;
+	    
+	    
 	  }
 
 	  @Override
