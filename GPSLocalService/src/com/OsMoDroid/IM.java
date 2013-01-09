@@ -315,7 +315,7 @@ public class IM {
 				
 				if(retries > 0) {
 					try {
-						Thread.sleep(1000*10);
+						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 						// If can't back-off, stop trying
 						System.out.println("Interrupted from sleep thread instance:"+this.toString());	
