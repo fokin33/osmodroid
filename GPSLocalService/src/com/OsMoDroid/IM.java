@@ -123,12 +123,15 @@ public class IM {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			
+			Log.d(this.getClass().getName(), "BCR"+this);
+			Log.d(this.getClass().getName(), "BCR"+this+" Intent:"+intent);
 			if (intent.getAction().equals(android.net.ConnectivityManager.CONNECTIVITY_ACTION)) {
 				Bundle extras = intent.getExtras();
 				if(extras.containsKey("networkInfo")) {
 					NetworkInfo netinfo = (NetworkInfo) extras.get("networkInfo");
 					if(netinfo.isConnected()) {
+						Log.d(this.getClass().getName(), "BCR"+this+" Network is connected");
+						Log.d(this.getClass().getName(), "BCR"+this+" Running:"+running);
 						// Network is connected
 						if(!running ) {
 							System.out.println("Starting from Reciever"+this.toString());
@@ -137,10 +140,12 @@ public class IM {
 						}
 					}
 					else {
+						System.out.println("Stoping1 from Reciever"+this.toString());
 						stop();
 					}
 				}
 				else if(extras.containsKey("noConnectivity")) {
+					System.out.println("Stoping2 from Reciever"+this.toString());
 					stop();
 				}
 		    }
