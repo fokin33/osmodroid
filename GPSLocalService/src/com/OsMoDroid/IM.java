@@ -10,7 +10,9 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 
 import org.json.JSONArray;
@@ -48,6 +50,8 @@ public class IM {
 	String mychanel;
 	ArrayList<String> list= new ArrayList<String>();
 	int mestype=0;
+	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
 	public IM(String channel, Context context,int type) {
 		adr="http://d.esya.ru/?identifier="+channel+",im_messages&ncrnd="+timestamp;
 		this.parent=context;
@@ -127,8 +131,11 @@ public class IM {
 			Log.d(this.getClass().getName(), "BCR"+this+" Intent:"+intent);
 			if (intent.getAction().equals(android.net.ConnectivityManager.CONNECTIVITY_ACTION)) {
 				Bundle extras = intent.getExtras();
+				Log.d(this.getClass().getName(), "BCR"+this+ " "+intent.getExtras());
 				if(extras.containsKey("networkInfo")) {
 					NetworkInfo netinfo = (NetworkInfo) extras.get("networkInfo");
+					Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo);
+					Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo.getType());
 					if(netinfo.isConnected()) {
 						Log.d(this.getClass().getName(), "BCR"+this+" Network is connected");
 						Log.d(this.getClass().getName(), "BCR"+this+" Running:"+running);
@@ -203,8 +210,14 @@ public class IM {
 		
 			for (int i = 0; i < result.length(); i++) {
 		        JSONObject jsonObject = result.getJSONObject(i);
+		        if (jsonObject.has("data")){
+		        if 	(new  JSONObject(jsonObject.optString("data")).has("text")) {
+		        messageText=messageText + (new  JSONObject(jsonObject.optString("data")).optString("time"))+ 
+		        		" "+ new  JSONObject(jsonObject.optString("data")).optString("from_name")+":"
+		        + new JSONObject(jsonObject.optString("data")).optString("text")+"\n"  ;
 		        
-		        messageText=messageText + (new  JSONObject(jsonObject.optString("data")).optString("from_name"))+":"  + new JSONObject(jsonObject.optString("data")).optString("text") +"\n"  ;
+		        }
+		        }
 		        Iterator it = (new JSONObject(jsonObject.optString("ids"))).keys();
 				  while (it.hasNext())
 	          	{
@@ -218,8 +231,9 @@ public class IM {
 	          	}
 			}
 			Log.d(getClass().getSimpleName(),adr);
+			if (!messageText.equals("")){
 			showToastMessage(messageText);
-			
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
