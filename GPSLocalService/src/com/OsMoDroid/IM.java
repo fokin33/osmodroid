@@ -50,13 +50,15 @@ public class IM {
 	String mychanel;
 	ArrayList<String> list= new ArrayList<String>();
 	int mestype=0;
+	LocalService lct;
 	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
-	public IM(String channel, Context context,int type) {
+	public IM(String channel, Context context,int type, LocalService lc) {
 		adr="http://d.esya.ru/?identifier="+channel+",im_messages&ncrnd="+timestamp;
 		this.parent=context;
 		mychanel=channel;
 		mestype=type;
+		lct=lc;
 		parent.registerReceiver(bcr, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
 		start();
 		
@@ -189,8 +191,18 @@ public class IM {
 				
 				if (jsonObject.optString("data").equals("stop"))
 					{
-					Log.d(this.getClass().getName(), "Тут надо послать сигнал остновки сервиса");		
+		lct.stopServiceWork();
+					Log.d(this.getClass().getName(), "Сигнал остановки сервиса");		
 					}
+				if (jsonObject.optString("data").equals("start"))
+				{
+	lct.startServiceWork();
+				Log.d(this.getClass().getName(), "Сигнал старта сервиса");		
+				}
+			
+				
+				
+				
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block

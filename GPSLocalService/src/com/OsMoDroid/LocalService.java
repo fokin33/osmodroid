@@ -635,7 +635,7 @@ if (live){
 }
           
 if (settings.getBoolean("im", false) && !settings.getString("key", "" ).equals("") ){
-mesIM = new IM(settings.getString("key", ""),this,1);
+mesIM = new IM(settings.getString("key", ""),this,1,this);
 }
 	}
 	
@@ -821,7 +821,7 @@ else	{
 	if (period>=period_gpx&&gpx){gpsperiod=period_gpx;}else {gpsperiod=period;};
 	if (distance>=distance_gpx&&gpx){gpsdistance=distance_gpx;}else {gpsdistance=distance;};
 	//Log.d(this.getClass().getName(), "период"+gpsperiod+"meters"+gpsdistance);
-	myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsperiod, 0, this);
+	myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsperiod, 0, LocalService.this);
 	if (settings.getBoolean("usenetwork", true)){	myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);}
 	myManager.addGpsStatusListener(this);	
 }
@@ -1666,7 +1666,7 @@ public void onResultsSucceeded(APIComResult result) {
 
 			editor.commit();
 			if (settings.getBoolean("im", false)){
-			myIM = new IM(settings.getString("lpch", "")+"ctrl",this,0);}
+			myIM = new IM(settings.getString("lpch", "")+"ctrl",this,0,this);}
 			
 		}
 		
