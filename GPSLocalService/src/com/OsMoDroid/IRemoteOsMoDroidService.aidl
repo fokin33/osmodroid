@@ -4,5 +4,6 @@ interface IRemoteOsMoDroidService {
 
         int getVersion();
 		void Deactivate();
+		void Activate();
 
 }

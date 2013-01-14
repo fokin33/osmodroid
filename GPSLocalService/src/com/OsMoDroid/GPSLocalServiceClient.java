@@ -402,7 +402,8 @@ startlocalservice();
 		 shareadress.setIcon(android.R.drawable.ic_menu_share);
 		 MenuItem copyadress = menu.add(0, 11, 0, "Скопировать ссылку");
 		 copyadress.setIcon(android.R.drawable.ic_menu_edit);
-		 MenuItem about = menu.add(0, 11, 0, "О программе");
+		 MenuItem about = menu.add(0, 12, 0, "О программе");
+		 MenuItem exit = menu.add(0, 14, 0, "Выход");
 		 about.setIcon(android.R.drawable.ic_menu_info_details);
 		 about.setIntent(new Intent(this, aboutActivity.class));
 		mi.setIntent(new Intent(this, PrefActivity.class));
@@ -776,6 +777,12 @@ layout.addView(txv1);
 			if (viewurl != null)
 				clipboard.setText(viewurl);
 		}
+		if (item.getItemId() == 14) {
+			Intent i = new Intent(this, LocalService.class);
+			stopService(i);
+			finish();
+		
+		}
 		
 		
 		return super.onOptionsItemSelected(item);
@@ -881,24 +888,27 @@ layout.addView(txv1);
 	}
 
 	private void startlocalservice(){
-		Intent i = new Intent(this, LocalService.class);
-
-		startService(i);
+		//Intent i = new Intent(this, LocalService.class);
+		//startService(i);
 		started = true;
+		mService.startServiceWork();
+		
 	}
 	
 	private void bindService() {
 		Intent i = new Intent("OsMoDroid.local");
 		bindService(i, conn, Context.BIND_AUTO_CREATE);
 		mBound = true;
+		Intent is = new Intent(this, LocalService.class);
+		startService(is);
 		updateServiceStatus();
 	}
 
 	private void stop() {
 		 Log.d(getClass().getSimpleName(), "stop() gpsclient");
 		mService.stopServiceWork();
-		Intent i = new Intent(this, LocalService.class);
-		stopService(i);
+		//Intent i = new Intent(this, LocalService.class);
+		//stopService(i);
 
 	}
 

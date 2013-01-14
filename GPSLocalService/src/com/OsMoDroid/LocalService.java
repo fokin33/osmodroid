@@ -171,7 +171,7 @@ private long lastgpslocationtime=0;
 	private int buffercounter=0;
 	BroadcastReceiver receiver;
 	BroadcastReceiver checkreceiver;
-	
+	BroadcastReceiver onlinePauseforStartReciever;
 	private final IBinder mBinder = new LocalBinder();
 	private String gpxbuffer= new String();
 	//private String sendbuffer = new String();
@@ -232,6 +232,12 @@ private long lastgpslocationtime=0;
 				//Toast.makeText(LocalService.this, "aaa" , Toast.LENGTH_SHORT).show();
 				return;
 				
+				
+			}
+
+			public void Activate() throws RemoteException {
+				Log.d(getClass().getSimpleName(), "Remote Deactivate");
+				startServiceWork();
 				
 			}
 
@@ -588,7 +594,45 @@ mNotificationManager.notify(OSMODROID_ID, notification);
 		
 	     s = new Socket( );
           sockaddr = new InetSocketAddress("esya.ru", 2145);
-if (live){startcomand();}
+if (live){
+	if (isOnline()){
+	startcomand();}
+	else {
+		 onlinePauseforStartReciever = new BroadcastReceiver() {
+
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this);
+				Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this+" Intent:"+intent);
+				if (intent.getAction().equals(android.net.ConnectivityManager.CONNECTIVITY_ACTION)) {
+					Bundle extras = intent.getExtras();
+					Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this+ " "+intent.getExtras());
+					if(extras.containsKey("networkInfo")) {
+						NetworkInfo netinfo = (NetworkInfo) extras.get("networkInfo");
+						Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this+ " "+netinfo);
+						Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this+ " "+netinfo.getType());
+						if(netinfo.isConnected()) {
+							Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this+" Network is connected");
+							startcomand();
+							unregisterReceiver(onlinePauseforStartReciever);
+						}
+						else {
+							System.out.println("OnlinePauseforStartReciever offline"+this.toString());
+						}
+					}
+					else if(extras.containsKey("noConnectivity")) {
+						System.out.println("OnlinePauseforStartReciever offline2"+this.toString());
+					}
+			    }
+			}
+		};
+		registerReceiver(onlinePauseforStartReciever, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+		
+		
+		
+	}
+	
+}
           
 if (settings.getBoolean("im", false) && !settings.getString("key", "" ).equals("") ){
 mesIM = new IM(settings.getString("key", ""),this,1);
@@ -602,7 +646,7 @@ mesIM = new IM(settings.getString("key", ""),this,1);
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		//stopServiceWork();
+		if (state){ stopServiceWork();}
 		if(myIM!=null){  myIM.close();}
 		if(mesIM!=null){  mesIM.close();}
 		stopcomand();
@@ -623,6 +667,13 @@ mesIM = new IM(settings.getString("key", ""),this,1);
 		Log.d(getClass().getSimpleName(), "А он и не зареген");
 	
 	}
+		try {
+			if(onlinePauseforStartReciever!= null){unregisterReceiver(onlinePauseforStartReciever);}
+		} catch (Exception e) {
+			Log.d(getClass().getSimpleName(), "А он и не зареген");
+		
+		}
+		
 		
 			
 		
@@ -697,6 +748,11 @@ mesIM = new IM(settings.getString("key", ""),this,1);
 	@Override
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
+		
+	
+	}
+	public void startServiceWork (){
+		
 		ReadPref();
 		//sendbuffer="";
 	int type = AlarmManager.ELAPSED_REALTIME_WAKEUP;
@@ -786,8 +842,12 @@ if (live){
 String[] params = {"http://a.t.esya.ru/?act=session_start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&ttl=900","false","","session_start"};
 new netutil.MyAsyncTask(this).execute(params);}
 		Log.d(getClass().getSimpleName(), "notify:"+notification.toString());
-	
+		
+		
 	}
+	
+	
+	
 	
 	public void stopServiceWork(){
 		am.cancel(pi);

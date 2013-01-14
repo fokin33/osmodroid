@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     
 
     <application
@@ -37,6 +38,11 @@
         <activity android:name="WarnActivity" android:theme="@android:style/Theme.Dialog"></activity>
         <activity android:theme="@android:style/Theme.Dialog" android:name="aboutActivity"></activity>
         <activity android:name="mesActivity"></activity>
+        <receiver android:name="BootComplitedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
 
         
     </application>

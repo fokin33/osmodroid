@@ -114,22 +114,15 @@ public class netutil {
 					//con.disconnect();
 					return str;
 				} else {
-//			Log.d(this.getClass().getName(),
-				//			Integer.toString(con.getResponseCode()));
-					// String str=inputStreamToString(con.getInputStream());
-					// Log.d(this.getClass().getName(),str);
-					// return str;
-				//	return getString(R.string.ErrorRecieve);
-				//	con.disconnect();
 					Log.d( GPSLocalServiceClient.class.getName(), Integer.toString(con.getResponseCode()));
-					return "Косяк";
+					return "HTTP_CODE:"+Integer.toString(con.getResponseCode());
 
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				Log.d( GPSLocalServiceClient.class.getName(), e.toString());
 				e.printStackTrace();
-				return "Косяк2";
+				return e.toString();
 			}
 
 		}
