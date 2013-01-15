@@ -19,6 +19,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.OsMoDroid.LocalService.SendCoor;
+
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.PendingIntent.CanceledException;
@@ -50,15 +52,15 @@ public class IM {
 	String mychanel;
 	ArrayList<String> list= new ArrayList<String>();
 	int mestype=0;
-	LocalService lct;
+	
 	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
-	public IM(String channel, Context context,int type, LocalService lc) {
+	public IM(String channel, Context context,int type) {
 		adr="http://d.esya.ru/?identifier="+channel+",im_messages&ncrnd="+timestamp;
 		this.parent=context;
 		mychanel=channel;
 		mestype=type;
-		lct=lc;
+		
 		parent.registerReceiver(bcr, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
 		start();
 		
@@ -189,16 +191,13 @@ public class IM {
 			        JSONObject jsonObject = result.getJSONObject(i);
 				
 				
-				if (jsonObject.optString("data").equals("stop"))
+				if (jsonObject.has("data"))
 					{
-		lct.stopServiceWork();
-					Log.d(this.getClass().getName(), "Сигнал остановки сервиса");		
+					Intent intent = new Intent("OsMoDroid_Control"); 
+					intent.putExtra("command", jsonObject.optString("data"));
+					Log.d(this.getClass().getName(), "Сигнал для сервиса "+ jsonObject.optString("data"));
+					parent.sendBroadcast(intent);
 					}
-				if (jsonObject.optString("data").equals("start"))
-				{
-	lct.startServiceWork();
-				Log.d(this.getClass().getName(), "Сигнал старта сервиса");		
-				}
 			
 				
 				

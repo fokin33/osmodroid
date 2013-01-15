@@ -213,6 +213,8 @@ protected void onCancelled() {
 	}
 	
 	
+	
+	
 	public static String buildcommand (Context context, String action, String[] params, String[] values ){
 		SharedPreferences settings  = PreferenceManager.getDefaultSharedPreferences(context);
 		

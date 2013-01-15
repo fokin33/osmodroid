@@ -172,6 +172,7 @@ private long lastgpslocationtime=0;
 	BroadcastReceiver receiver;
 	BroadcastReceiver checkreceiver;
 	BroadcastReceiver onlinePauseforStartReciever;
+	BroadcastReceiver remoteControlReciever;
 	private final IBinder mBinder = new LocalBinder();
 	private String gpxbuffer= new String();
 	//private String sendbuffer = new String();
@@ -480,6 +481,28 @@ public void stopcomand()
 							
 		};
 		
+		remoteControlReciever = new BroadcastReceiver() {
+			
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				Log.d(getClass().getSimpleName(), "remoteControlReciever intent "+intent);
+				if (intent.getStringExtra("command").equals("start")){
+					if (!state){
+						startServiceWork();
+					}
+				}
+				if (intent.getStringExtra("command").equals("stop")){
+					if (state){
+						stopServiceWork();
+					}
+				}
+				
+				
+				
+			}
+		};
+		registerReceiver( remoteControlReciever, new IntentFilter( "OsMoDroid_Control"));
+		
 		receiver = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
@@ -635,7 +658,7 @@ if (live){
 }
           
 if (settings.getBoolean("im", false) && !settings.getString("key", "" ).equals("") ){
-mesIM = new IM(settings.getString("key", ""),this,1,this);
+mesIM = new IM(settings.getString("key", ""),this,1);
 }
 	}
 	
@@ -673,7 +696,12 @@ mesIM = new IM(settings.getString("key", ""),this,1,this);
 			Log.d(getClass().getSimpleName(), "А он и не зареген");
 		
 		}
+		try {
+			if(remoteControlReciever!= null){unregisterReceiver(remoteControlReciever);}
+		} catch (Exception e) {
+			Log.d(getClass().getSimpleName(), "А он и не зареген");
 		
+		}
 		
 			
 		
@@ -1666,7 +1694,7 @@ public void onResultsSucceeded(APIComResult result) {
 
 			editor.commit();
 			if (settings.getBoolean("im", false)){
-			myIM = new IM(settings.getString("lpch", "")+"ctrl",this,0,this);}
+			myIM = new IM(settings.getString("lpch", "")+"ctrl",this,0);}
 			
 		}
 		
