@@ -487,7 +487,7 @@ public void stopcomand()
 				if (intent.getStringExtra("command").equals("start")){
 					if (!state){
 						startServiceWork();
-						netutil.newapicommand(context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
+						netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
 					}
 				}
 				if (intent.getStringExtra("command").equals("stop")){
@@ -496,7 +496,7 @@ public void stopcomand()
 					}
 				}
 				if (intent.getStringExtra("command").equals("ping")){
-					netutil.newapicommand(context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
+					netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
 				}
 
 				

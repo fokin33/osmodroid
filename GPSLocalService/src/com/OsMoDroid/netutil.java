@@ -211,6 +211,15 @@ protected void onCancelled() {
 	
 }
 	}
+	public static void newapicommand(ResultsListener listener, String action) {
+		SharedPreferences settings  = PreferenceManager.getDefaultSharedPreferences((Context)listener);
+		
+		String[] params = {"http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),"false","","APIM"};
+		new MyAsyncTask(listener).execute(params);
+			
+	}
+	
+	
 	public static void newapicommand(Context context, String action) {
 		SharedPreferences settings  = PreferenceManager.getDefaultSharedPreferences(context);
 		
