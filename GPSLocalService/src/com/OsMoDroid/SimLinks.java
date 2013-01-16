@@ -67,6 +67,10 @@ public class SimLinks extends Activity implements ResultsListener{
 		Log.d(getClass().getSimpleName(), params[0]);
 	}
 	
+	void addlink_new(){
+		netutil.newapicommand(SimLinks.this, "om_link_add","json:{\"device\":\""+settings.getString("device", "")+"\",\"random\":\"1\",\"from\":\"undefined-undefined-\",\"to\":\"undefined-undefined-\",\"until\":\"-1\"}" );
+	}
+	
 	void addlink(){
 String linkname =  System.currentTimeMillis()+settings.getString("device", "");
 		//--
@@ -156,7 +160,7 @@ String linkname =  System.currentTimeMillis()+settings.getString("device", "");
 	    addsimlinkbutton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				addlink();
-				
+				//addlink_new();
 
 			}});
 	    
@@ -212,6 +216,12 @@ String linkname =  System.currentTimeMillis()+settings.getString("device", "");
 
 	public void onResultsSucceeded(APIComResult result) {
 		JSONObject a = null; 
+		
+		if (result.Command.equals("APIM")&& !(result.Jo==null))
+		{
+			Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);	
+		}
+		
 		
 		if (result.Command.equals("device_links")  &&!(result.Jo==null)  ) {
 		Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();

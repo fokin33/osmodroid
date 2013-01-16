@@ -99,7 +99,7 @@ public class netutil {
 				con.setDoInput(true);
 				OutputStream os = con.getOutputStream();
 				os.write(post.getBytes());
-//				Log.d(this.getClass().getName(), "×òî POSTèì" + post);
+				Log.d(this.getClass().getName(), "×òî POSTèì:" + post);
 				os.flush();
 				os.close();
 			}
@@ -211,8 +211,21 @@ protected void onCancelled() {
 	
 }
 	}
+	public static void newapicommand(Context context, String action) {
+		SharedPreferences settings  = PreferenceManager.getDefaultSharedPreferences(context);
+		
+		String[] params = {"http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),"false","","APIM"};
+		new MyAsyncTask((ResultsListener) context, context).execute(params);
+			
+	}
 	
 	
+	public static void newapicommand (Context context, String action, String post )
+	{
+		SharedPreferences settings  = PreferenceManager.getDefaultSharedPreferences(context);
+			String[] params = {"http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),"true",post,"APIM"};
+			new MyAsyncTask((ResultsListener) context, context).execute(params);	
+	}
 	
 	
 	public static String buildcommand (Context context, String action, String[] params, String[] values ){
@@ -294,6 +307,9 @@ String tempstr = "";
 
 		return bytesToHex(sha1hash);
 	}
+
+
+	
 	
 	
 }

@@ -422,9 +422,7 @@ public void stopcomand()
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 		
 		
-		tts = new TextToSpeech(this,
-		        (OnInitListener) this  // TextToSpeech.OnInitListener
-		        );
+		
 		
 		//Locale. .setDefault(Locale.US);
 	   // DecimalFormat df = new DecimalFormat("%.6f");
@@ -489,6 +487,7 @@ public void stopcomand()
 				if (intent.getStringExtra("command").equals("start")){
 					if (!state){
 						startServiceWork();
+						netutil.newapicommand(context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
 					}
 				}
 				if (intent.getStringExtra("command").equals("stop")){
@@ -496,7 +495,10 @@ public void stopcomand()
 						stopServiceWork();
 					}
 				}
-				
+				if (intent.getStringExtra("command").equals("ping")){
+					netutil.newapicommand(context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
+				}
+
 				
 				
 			}
@@ -780,10 +782,21 @@ mesIM = new IM(settings.getString("key", ""),this,1);
 	
 	}
 	public void startServiceWork (){
+		firstsend=true;
+		avgspeed=0;
+		maxspeed=0;
+		workdistance=0;
+		timeperiod=0;
+		
+		
 		
 		ReadPref();
 		//sendbuffer="";
-	int type = AlarmManager.ELAPSED_REALTIME_WAKEUP;
+	
+		if (settings.getBoolean("usetts", false)){ tts = new TextToSpeech(this,
+		        (OnInitListener) this  // TextToSpeech.OnInitListener
+		        );}
+		int type = AlarmManager.ELAPSED_REALTIME_WAKEUP;
 		
 		long triggerTime = SystemClock.elapsedRealtime() + notifyperiod;
 		if (playsound||vibrate){am.setRepeating( type, triggerTime, notifyperiod, pi );}
@@ -1688,31 +1701,22 @@ public void onResultsSucceeded(APIComResult result) {
 		
 		if (!result.Jo.optString("lpch").equals("")){
 			SharedPreferences.Editor editor = settings.edit();
-
-			
 			editor.putString("lpch", result.Jo.optString("lpch"));
-
 			editor.commit();
 			if (settings.getBoolean("im", false)){
 			myIM = new IM(settings.getString("lpch", "")+"ctrl",this,0);}
-			
 		}
-		
-			if (!result.Jo.optString("motd").equals("") ||!result.Jo.optString("query_per_day").equals("")){
-			
-				
+				if (!result.Jo.optString("motd").equals("") ||!result.Jo.optString("query_per_day").equals("")){
 				in.putExtra("startmessage", result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")
 				+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"));
 				sendBroadcast(in);
-
-
-				}
-			
-				
-				
-		
 			}
-	
+	}
+	if (result.Command.equals("APIM")&& !(result.Jo==null))
+	{
+		Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);	
+	}
+		
 	
 	
 	
