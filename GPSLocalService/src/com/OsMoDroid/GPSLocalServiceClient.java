@@ -209,7 +209,7 @@ PowerManager pm;
 			    	device="";
 			    	devicename="";
 			    	
-			    	SharedPreferences.Editor editor = settings.edit();
+			    SharedPreferences.Editor editor = settings.edit();
 			    editor.remove("device");
 			    editor.remove("devicename");
 			    editor.commit();
@@ -471,10 +471,10 @@ startlocalservice();
 						public void onClick(DialogInterface dialog, int which) {
 							speedbearing_gpx = speedbearing;
 							bearing_gpx = bearing;
-
 							hdop_gpx = hdop;
 							period_gpx = period;
 							distance_gpx = distance;
+							
 							SharedPreferences.Editor editor = settings.edit();
 							editor.putString("period_gpx", Integer.toString(period_gpx));
 							editor.putString("distance_gpx", Integer.toString(distance_gpx));
@@ -531,10 +531,7 @@ startlocalservice();
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int whichButton) {
-									// pass=textEntryView.
-									 
 									pass = input.getText().toString();
-									/* User clicked OK so do some stuff */
 									if (!(pass.equals(""))) {
 										String[] params = {
 												"http://auth.api.esya.ru",
@@ -567,41 +564,11 @@ startlocalservice();
 		}
 		if (item.getItemId() == 5) {
 			if (!(key.equals(""))) {
-//				String[] params = {
-//						"http://api.esya.ru/?system=om&action=device_link&hash="
-//								+ hash
-//								+ "&n="
-//								+ n
-//								+ "&key="
-//								+ key
-//								+ "&signature="
-//								+ SHA1(
-//										"system:om;action:device_link;hash:"
-//												+ hash
-//												+ ";n:"
-//												+ n
-//												+ ";key:"
-//												+ key
-//												+ ";"
-//												+ "--"
-//												+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
-//										.substring(1, 25), "false", "",
-//						"device_link" };
+
 				String[] a={"device"};
 				String[] b={device};
 				String[] params = {netutil.buildcommand(GPSLocalServiceClient.this,"device_link",a,b),"false","","device_link"};
 				new netutil.MyAsyncTask(GPSLocalServiceClient.this,GPSLocalServiceClient.this).execute(params) ;
-				
-				
-				
-				
-				// String[]
-				// params={"http://api.esya.ru/?system=om&action=device&key="+commandJSON.optString("key")+"&signature="+SHA1("system:om;action:device;key:"+commandJSON.optString("key")+";"+"--"+"JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6").substring(1,
-				// 25),"false",""};
-				// +commandJSON.optString("key")+
-			//	Log.d(getClass().getSimpleName(), params[0]);
-			//	RequestCommandTask Rq = new RequestCommandTask();
-			//	Rq.execute(params);
 			} else {
 				Toast.makeText(GPSLocalServiceClient.this, R.string.nokey, 5)
 						.show();
@@ -624,10 +591,6 @@ startlocalservice();
 												+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
 										.substring(1, 25), "false", "",
 						"device" };
-				// String[]
-				// params={"http://api.esya.ru/?system=om&action=device&key="+commandJSON.optString("key")+"&signature="+SHA1("system:om;action:device;key:"+commandJSON.optString("key")+";"+"--"+"JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6").substring(1,
-				// 25),"false",""};
-				// +commandJSON.optString("key")+
 				Log.d(getClass().getSimpleName(), params[0]);
 				RequestCommandTask Rq = new RequestCommandTask();
 				Rq.execute(params);
@@ -702,13 +665,9 @@ layout.addView(txv1);
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int whichButton) {
-									// pass=textEntryView.
-									
 									String canalid = input.getText().toString();
 									String canalkey = input1.getText().toString();
 									String canalname = input2.getText().toString();
-
-									/* User clicked OK so do some stuff */
 									if ( !(canalid.equals("")) && !(canalname.equals("")) && ( chb1.isChecked()&&(!(canalkey.equals(""))) || !chb1.isChecked() )  )
 									{
 										String[] params = {
@@ -905,7 +864,7 @@ layout.addView(txv1);
 	}
 
 	private void stop() {
-		 Log.d(getClass().getSimpleName(), "stop() gpsclient");
+		Log.d(getClass().getSimpleName(), "stop() gpsclient");
 		mService.stopServiceWork();
 		//Intent i = new Intent(this, LocalService.class);
 		//stopService(i);
