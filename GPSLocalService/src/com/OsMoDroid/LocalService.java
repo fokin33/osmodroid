@@ -787,7 +787,10 @@ mesIM = new IM(settings.getString("key", ""),this,1);
 		maxspeed=0;
 		workdistance=0;
 		timeperiod=0;
-		
+		workmilli=0;
+		prevlocation_gpx=null;
+		prevlocation=null;
+		prevlocation_spd=null;
 		
 		
 		ReadPref();
