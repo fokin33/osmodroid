@@ -61,6 +61,7 @@ import android.os.Bundle;
 //import android.os.Handler;
 import android.os.Binder;
 //import android.os.Debug;
+import android.os.BatteryManager;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -173,6 +174,7 @@ private long lastgpslocationtime=0;
 	BroadcastReceiver checkreceiver;
 	BroadcastReceiver onlinePauseforStartReciever;
 	BroadcastReceiver remoteControlReciever;
+	BroadcastReceiver batteryReciever;
 	private final IBinder mBinder = new LocalBinder();
 	private String gpxbuffer= new String();
 	//private String sendbuffer = new String();
@@ -216,6 +218,7 @@ private long lastgpslocationtime=0;
 	    SocketAddress sockaddr;
 	    String text;
 	    SharedPreferences settings;
+	    int batteryprocent=-1;
 	    private final IRemoteOsMoDroidService.Stub rBinder = new IRemoteOsMoDroidService.Stub() {
 
             
@@ -446,8 +449,20 @@ public void stopcomand()
  pi = PendingIntent.getBroadcast( this, 0, intent, 0 );
 		 
 	
-		 
-	
+		batteryReciever = new BroadcastReceiver() {
+
+			public void onReceive(Context context, Intent intent) {
+				int rawlevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+				int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+				int level = -1;
+				if (rawlevel >= 0 && scale > 0) {
+					level = (rawlevel * 100) / scale;
+				}
+				batteryprocent=level;
+				Log.d(getClass().getSimpleName(), "Заряд:"+batteryprocent);
+			}
+		};
+		registerReceiver(batteryReciever, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 		
 		
 		
@@ -704,7 +719,12 @@ mesIM = new IM(settings.getString("key", ""),this,1);
 			Log.d(getClass().getSimpleName(), "А он и не зареген");
 		
 		}
+		try {
+			if(remoteControlReciever!= null){unregisterReceiver(batteryReciever);}
+		} catch (Exception e) {
+			Log.d(getClass().getSimpleName(), "А он и не зареген");
 		
+		}
 			
 		
 		
