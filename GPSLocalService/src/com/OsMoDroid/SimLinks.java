@@ -67,8 +67,14 @@ public class SimLinks extends Activity implements ResultsListener{
 		Log.d(getClass().getSimpleName(), params[0]);
 	}
 	
-	void addlink_new(){
-		netutil.newapicommand(SimLinks.this, "om_link_add","json={\"device\":\""+settings.getString("device", "")+"\",\"random\":\"1\",\"from\":\"undefined-undefined-\",\"to\":\"undefined-undefined-\",\"until\":\"-1\"}" );
+	void addlink_new() throws JSONException{
+		JSONObject postjson = new JSONObject();
+		postjson.put("device", settings.getString("device", ""));
+		postjson.put("random", "1");
+		postjson.put("from", "-1");
+		postjson.put("to", "-1");
+		postjson.put("until", "-1");
+		netutil.newapicommand((ResultsListener)SimLinks.this, "om_link_add","json="+postjson.toString());
 	}
 	
 	void addlink(){
@@ -120,28 +126,13 @@ String linkname =  System.currentTimeMillis()+settings.getString("device", "");
 	       adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, list);
 	       lv1.setAdapter(adapter);
 	       registerForContextMenu(lv1);
-	  
-//	       lv1.setOnItemClickListener(
-//	    	        new OnItemClickListener()
-//	    	        {
-//
-//						public void onItemClick(AdapterView<?> arg0, View arg1,
-//								int arg2, long arg3) {
-//							// TODO Auto-generated method stub
-//							
-//							
-//							Intent sendIntent = new Intent(Intent.ACTION_SEND);
-//							sendIntent.setType("text/plain");
-//							sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, adapter.getItem(arg2));
-//							startActivity(Intent.createChooser(sendIntent, "Email"));
-//						}
-//
-//	    	        }       
-//	    	);
+	  lv1.setOnItemClickListener(new OnItemClickListener() {
 
-	       
-
-	       
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+						arg0.showContextMenuForChild(arg1);
+						}
+	});
 	       
 	    Button refsimlinkbutton = (Button) findViewById(R.id.refreshsimlinksbutton);
 	    Button addsimlinkbutton = (Button) findViewById(R.id.addsimlinksbutton);
@@ -152,24 +143,20 @@ String linkname =  System.currentTimeMillis()+settings.getString("device", "");
 	    refsimlinkbutton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				reflinks();
-				
-			
-
 			}});
 	    
 	    addsimlinkbutton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				//addlink();
-				addlink_new();
-
+			try {
+					addlink_new();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
 			}});
-	    
-	    
 	   
-	  	
-	    // TODO Auto-generated method stub
 	}
-
+	
+	
 	 @Override
 	  public void onCreateContextMenu(ContextMenu menu, View v,
 	      ContextMenuInfo menuInfo) {
@@ -219,7 +206,11 @@ String linkname =  System.currentTimeMillis()+settings.getString("device", "");
 		Log.d(getClass().getSimpleName(),"OnResultListener:"+result);	
 		if (result.Command.equals("APIM")&& !(result.Jo==null))
 		{
-			Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);	
+			Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);
+			if (result.Jo.has("om_link_add")){
+				reflinks();
+			}
+				
 		}
 		
 		

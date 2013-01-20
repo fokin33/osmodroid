@@ -135,7 +135,7 @@ public class netutil {
 
 	    @Override
 	    protected APIComResult doInBackground(String... params) {
-	    	Log.d(this.getClass().getName(), "команда"+ params[3]);
+	    	Log.d(this.getClass().getName(), "команда:"+ params[3]);
 	    	JSONObject resJSON = null;
 	    	String Commandtext = null;
 	    	APIComResult resAPI = new APIComResult();
@@ -194,7 +194,7 @@ public class netutil {
 				}
 				}
 	    	
-	    	Log.d(this.getClass().getName(), "void onPostExecute");
+	    	Log.d(this.getClass().getName(), "void onPostExecute:"+result.Command + " "+ result.rawresponse);
 	    	Log.d(this.getClass().getName(), Boolean.toString(isCancelled()));
 	    	
 	    	listener.onResultsSucceeded(result);
@@ -232,10 +232,16 @@ protected void onCancelled() {
 	public static void newapicommand (Context context, String action, String post )
 	{
 		SharedPreferences settings  = PreferenceManager.getDefaultSharedPreferences(context);
-			String[] params = {"http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),"true",post,"APIM"};
+			String[] params = {"http://apim.esya.ru/?query="+action +"&key="+settings.getString("key", ""),"true",post,"APIM"};
 			new MyAsyncTask((ResultsListener) context, context).execute(params);	
 	}
 	
+	public static void newapicommand (ResultsListener listener, String action, String post )
+	{
+		SharedPreferences settings  = PreferenceManager.getDefaultSharedPreferences((Context)listener);
+			String[] params = {"http://apim.esya.ru/?query="+action +"&key="+settings.getString("key", ""),"true",post,"APIM"};
+			new MyAsyncTask(listener).execute(params);	
+	}
 	
 	public static String buildcommand (Context context, String action, String[] params, String[] values ){
 		SharedPreferences settings  = PreferenceManager.getDefaultSharedPreferences(context);

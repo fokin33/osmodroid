@@ -191,6 +191,7 @@ private long lastgpslocationtime=0;
 	StringBuilder stringBuilder= new StringBuilder();
 	PendingIntent pi;
 	private Object[] mStartForegroundArgs = new Object[2];
+	private Object[] mStopForegroundArgs = new Object[1];
 	private String pass;
 	private String lastsay="a";
 	Boolean state=false;
@@ -502,16 +503,29 @@ public void stopcomand()
 				if (intent.getStringExtra("command").equals("start")){
 					if (!state){
 						startServiceWork();
-						netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
+						try {
+							Pong(context);
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 				if (intent.getStringExtra("command").equals("stop")){
 					if (state){
 						stopServiceWork();
+						try {
+							Pong(context);
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 				if (intent.getStringExtra("command").equals("ping")){
-					netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
+					try {
+						Pong(context);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
 				}
 
 				
@@ -583,51 +597,38 @@ public void stopcomand()
 		//Log.d(getClass().getSimpleName(), "oncreate() localservice");
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-//	if (usewake){
-//		wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyWakeLock");
-//		wakeLock.acquire();
-//	}
+
 		in = new Intent("OsMoDroid");
-
 		mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		int icon = R.drawable.eye;
-		CharSequence tickerText = "Ждущий режим";// getString(R.string.Working);
-		long when = System.currentTimeMillis();
-
-		Notification notification = new Notification(icon, tickerText, when);
-	
-		Intent notificationIntent = new Intent(this, GPSLocalServiceClient.class);
-		notificationIntent.setAction(Intent.ACTION_MAIN);
-
-		notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-		//notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); 
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-
-		notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "", contentIntent);
-		mStartForegroundArgs[0]= OSMODROID_ID;
-		mStartForegroundArgs[1]= notification;
-		Method mStartForeground;
-		
-		 final Class<?>[] mStartForegroundSignature = new Class[] {
-			    int.class, Notification.class};
-		
-		try {
-				mStartForeground = getClass().getMethod("startForeground",
-		                mStartForegroundSignature);
-				
-		      		      
-		    } catch (Exception e) {
-		        // Running on an older platform.
-		        mStartForeground =  null;
-		    }
-if (mStartForeground == null){
-setForeground(true);
-mNotificationManager.notify(OSMODROID_ID, notification);
-
-} else
-	{
-	invokeMethod(mStartForeground, mStartForegroundArgs);
-	}
+//		mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//		int icon = R.drawable.eye;
+//		CharSequence tickerText = "Ждущий режим";// getString(R.string.Working);
+//		long when = System.currentTimeMillis();
+//		Notification notification = new Notification(icon, tickerText, when);
+//		Intent notificationIntent = new Intent(this, GPSLocalServiceClient.class);
+//		notificationIntent.setAction(Intent.ACTION_MAIN);
+//		notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+//		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+//		notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "", contentIntent);
+//		mStartForegroundArgs[0]= OSMODROID_ID;
+//		mStartForegroundArgs[1]= notification;
+//		Method mStartForeground;
+//	 final Class<?>[] mStartForegroundSignature = new Class[] {
+//			    int.class, Notification.class};
+//		try {
+//				mStartForeground = getClass().getMethod("startForeground",
+//		                mStartForegroundSignature);
+//					    } catch (Exception e) {
+//		      mStartForeground =  null;
+//		    }
+//if (mStartForeground == null){
+//setForeground(true);
+//mNotificationManager.notify(OSMODROID_ID, notification);
+//
+//} else
+//	{
+//	invokeMethod(mStartForeground, mStartForegroundArgs);
+//	}
 		
 
 		
@@ -679,6 +680,11 @@ mesIM = new IM(settings.getString("key", ""),this,1);
 }
 	}
 	
+	void Pong(Context context) throws JSONException{
+		JSONObject postjson = new JSONObject();
+		postjson.put("batteryprocent", batteryprocent);
+		netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+	}
 	
 
 
@@ -889,18 +895,51 @@ else	{
 	if (settings.getBoolean("usenetwork", true)){	myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);}
 	myManager.addGpsStatusListener(this);	
 }
-int icon = R.drawable.eye2;
-CharSequence tickerText ="Активный режим";// getString(R.string.Working);
-long when = System.currentTimeMillis();
 
+//int icon = R.drawable.eye2;
+//CharSequence tickerText ="Активный режим";
+//long when = System.currentTimeMillis();
+//Notification notification = new Notification(icon, tickerText, when);
+//Intent notificationIntent = new Intent(this, GPSLocalServiceClient.class);
+//notificationIntent.setAction(Intent.ACTION_MAIN);
+//notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+//PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+//notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "", contentIntent);
+//mNotificationManager.notify(OSMODROID_ID, notification);
+
+
+
+int icon = R.drawable.eye;
+CharSequence tickerText = "Мониторинг запущен"; //"Ждущий режим";//getString(R.string.Working);
+long when = System.currentTimeMillis();
 Notification notification = new Notification(icon, tickerText, when);
 Intent notificationIntent = new Intent(this, GPSLocalServiceClient.class);
 notificationIntent.setAction(Intent.ACTION_MAIN);
 notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-//notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); 
 PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "", contentIntent);
+notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "Мониторинг активен", contentIntent);
+mStartForegroundArgs[0]= OSMODROID_ID;
+mStartForegroundArgs[1]= notification;
+Method mStartForeground;
+final Class<?>[] mStartForegroundSignature = new Class[] {
+	    int.class, Notification.class};
+try {
+		mStartForeground = getClass().getMethod("startForeground",
+                mStartForegroundSignature);
+			    } catch (Exception e) {
+      mStartForeground =  null;
+    }
+if (mStartForeground == null){
+setForeground(true);
 mNotificationManager.notify(OSMODROID_ID, notification);
+
+} else
+{
+invokeMethod(mStartForeground, mStartForegroundArgs);
+}
+
+
+
 setstarted(true);
 if (live){
 String[] params = {"http://a.t.esya.ru/?act=session_start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&ttl=900","false","","session_start"};
@@ -949,18 +988,41 @@ new netutil.MyAsyncTask(this).execute(params);}
 			if (myManager!=null){
 			myManager.removeUpdates(this);}
 			setstarted(false);
-			int icon = R.drawable.eye;
-			CharSequence tickerText ="Ждущий режим"; //getString(R.string.Working);
-			long when = System.currentTimeMillis();
+			
+//			int icon = R.drawable.eye;
+//			CharSequence tickerText ="Ждущий режим"; //getString(R.string.Working);
+//			long when = System.currentTimeMillis();
+//			Notification notification = new Notification(icon, tickerText, when);
+//			Intent notificationIntent = new Intent(this, GPSLocalServiceClient.class);
+//			notificationIntent.setAction(Intent.ACTION_MAIN);
+//			notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+//			PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+//			notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "", contentIntent);
+//			mNotificationManager.notify(OSMODROID_ID, notification);
+			
+			
+			mStopForegroundArgs[0]= Boolean.TRUE;
+			Method mStopForeground;
+			final Class<?>[] mStopForegroundSignature = new Class[] {boolean.class};
+			try {
+					mStopForeground = getClass().getMethod("stopForeground",
+			                mStopForegroundSignature);
+						    } catch (Exception e) {
+			      mStopForeground =  null;
+			    }
+			if (mStopForeground == null){
+			mNotificationManager.cancel(OSMODROID_ID);
+			setForeground(false);
 
-			Notification notification = new Notification(icon, tickerText, when);
-			Intent notificationIntent = new Intent(this, GPSLocalServiceClient.class);
-			notificationIntent.setAction(Intent.ACTION_MAIN);
-			notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-			//notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP); 
-			PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-			notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "", contentIntent);
-			mNotificationManager.notify(OSMODROID_ID, notification);
+			} else
+			{
+				mNotificationManager.cancel(OSMODROID_ID);
+				invokeMethod(mStopForeground, mStopForegroundArgs);
+			}
+
+			
+		//	mNotificationManager.cancel(OSMODROID_ID);
+			
 	}
 	
 	
@@ -1647,7 +1709,7 @@ public void onResultsSucceeded(APIComResult result) {
 			notifywarnactivity("Команда:"+result.Command+" Ответ сервера:"+result.rawresponse);
 		}
 	
-	// TODO Auto-generated method stub
+
 	String toprint = "";
 	if (result.Command.equals("im_get_all")) {
 		String messagestext="";
