@@ -634,7 +634,7 @@ public void stopcomand()
 		
 		
 	     s = new Socket( );
-          sockaddr = new InetSocketAddress("esya.ru", 2145);
+          //sockaddr = new InetSocketAddress("esya.ru", 2145);
 if (live){
 	if (isOnline()){
 	startcomand();}
