@@ -13,12 +13,16 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class mesActivity extends Activity {
+public class mesActivity extends Activity implements ResultsListener {
 	private ArrayAdapter<String> adapter;
 	ArrayList<String> list;
+	 EditText toAppText;
+	 EditText toUserText;
+	 EditText sendText;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,20 @@ public class mesActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.meslist);
+		  toAppText = (EditText) findViewById(R.id.toAppText);
+		  toUserText = (EditText) findViewById(R.id.toUserText);
+		  sendText = (EditText) findViewById(R.id.sendText);
+		
+		Button sendButton = (Button) findViewById(R.id.sendButton);
+		sendButton.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				netutil.newapicommand((ResultsListener)mesActivity.this, "im_send:"+toUserText.getText().toString()+","+toAppText.getText().toString(),sendText.getText().toString());
+				
+			}
+		});
+		
+		
 		 final ListView lv1 = (ListView) findViewById(R.id.meslistView);
 	        list = new ArrayList<String>();
 	        list.clear();
@@ -65,10 +83,17 @@ public class mesActivity extends Activity {
 		OsMoDroid.activityVisible=true;
 			Log.d("mesActivity", "OnResume");
 			Bundle b=this.getIntent().getExtras();
+	if (b!=null){
 			list.clear();
 	        list.addAll(b.getStringArrayList("meslist")); 
 	        Log.d(this.getClass().getName(), "mesList:"+list);
 			adapter.notifyDataSetChanged();
+	}
+	}
+
+	public void onResultsSucceeded(APIComResult result) {
+		 Log.d(this.getClass().getName(), "ResultListenr recieve");
+		
 	}
 
 	
