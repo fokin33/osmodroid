@@ -220,6 +220,10 @@ private long lastgpslocationtime=0;
 	    String text;
 	    SharedPreferences settings;
 	    int batteryprocent=-1;
+	    int plugged=-1;
+	    int temperature=-1;
+	    int voltage=-1;
+	    
 	    private final IRemoteOsMoDroidService.Stub rBinder = new IRemoteOsMoDroidService.Stub() {
 
             
@@ -455,6 +459,10 @@ public void stopcomand()
 			public void onReceive(Context context, Intent intent) {
 				int rawlevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
 				int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+				plugged=intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
+				temperature=intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1);
+				voltage=intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1);
+				
 				int level = -1;
 				if (rawlevel >= 0 && scale > 0) {
 					level = (rawlevel * 100) / scale;
@@ -527,8 +535,13 @@ public void stopcomand()
 						e.printStackTrace();
 					}
 				}
-
-				
+				if (intent.getStringExtra("command").equals("batteryinfo")){
+					try {
+						batteryinfo(context);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
 				
 			}
 		};
@@ -681,11 +694,20 @@ mesIM = new IM(settings.getString("key", ""),this,1);
 	}
 	
 	void Pong(Context context) throws JSONException{
+		//JSONObject postjson = new JSONObject();
+		//postjson.put("batteryprocent", batteryprocent);
+		//netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+		netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
+	}
+	void batteryinfo(Context context) throws JSONException{
 		JSONObject postjson = new JSONObject();
 		postjson.put("batteryprocent", batteryprocent);
+		postjson.put("temperature", temperature);
+		postjson.put("voltage", voltage);
+		postjson.put("plugged", plugged);
 		netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+		
 	}
-	
 
 
 
