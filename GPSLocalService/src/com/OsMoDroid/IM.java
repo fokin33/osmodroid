@@ -80,7 +80,7 @@ public class IM {
          a.putStringArrayList("meslist", list);
      Intent activ=new Intent(parent,  mesActivity.class);
      activ.putExtras(a);
-     activ.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//     activ.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
      PendingIntent contentIntent = PendingIntent.getActivity(parent, OsMoDroid.notifyidApp(),activ, 0);
    
  	Long when=System.currentTimeMillis();

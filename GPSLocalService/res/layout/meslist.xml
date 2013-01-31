@@ -22,26 +22,24 @@
 
     <EditText
         android:id="@+id/toAppText"
-        android:layout_width="match_parent"
+         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:editable="true"
-        android:inputType="text" />
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
         android:id="@+id/toUserText"
-        android:layout_width="match_parent"
+         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:editable="true"
-        android:ems="10"
-        android:inputType="text|textMultiLine" />
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge"  />
 
     <EditText
         android:id="@+id/sendText"
-        android:layout_width="match_parent"
+         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:editable="true"
-        android:ems="10"
-        android:inputType="text|textMultiLine" />
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge"  />
 
     <Button
         android:id="@+id/sendButton"

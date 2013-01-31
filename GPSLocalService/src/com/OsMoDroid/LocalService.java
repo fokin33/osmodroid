@@ -839,7 +839,13 @@ mesIM = new IM(settings.getString("key", ""),this,1);
 		prevlocation_gpx=null;
 		prevlocation=null;
 		prevlocation_spd=null;
-		
+		buffercounter=0;
+		 buffersb.setLength(0);
+		 lastbuffersb.setLength(0);
+		 sendedsb.setLength(0);
+		 lcounter=0;
+		 scounter=0;
+		 sendcounter=0;
 		
 		ReadPref();
 		//sendbuffer="";
@@ -1707,7 +1713,7 @@ public boolean isOnline() {
 		Intent notificationIntent = new Intent(this, WarnActivity.class);
 		notificationIntent.removeExtra("info");
 		notificationIntent.putExtra("info", info);
-		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		//notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		PendingIntent contentIntent = PendingIntent.getActivity(this, OsMoDroid.notifyidApp(),notificationIntent, 0);
 		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
 		    	getApplicationContext())
