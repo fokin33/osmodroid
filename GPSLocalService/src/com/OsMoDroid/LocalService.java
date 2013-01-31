@@ -846,6 +846,7 @@ mesIM = new IM(settings.getString("key", ""),this,1);
 		 lcounter=0;
 		 scounter=0;
 		 sendcounter=0;
+		 sended=true;
 		
 		ReadPref();
 		//sendbuffer="";
@@ -1115,9 +1116,9 @@ new netutil.MyAsyncTask(this).execute(params);}
 			} catch (IOException e) {
 				internetnotify(false);
 			//	e.printStackTrace();
-				//sended=false;
+				sended=false;
 				tmp="NoConnection";	
-		
+				Log.d(this.getClass().getName(), "Exception. NoConnection");
 			}
 //		    try {
 //	       
@@ -1353,7 +1354,7 @@ if (gpx && fileheaderok) {
     	OutputStream os = con.getOutputStream();
     	
     	os.write( buf.getBytes()); 
-    	//Log.d(this.getClass().getName(),"Отправленный буфер"+ buf);
+    	Log.d(this.getClass().getName(),"Отправленный буфер"+ buf);
         os.flush();
         os.close();}
    	   			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -1383,18 +1384,18 @@ if (gpx && fileheaderok) {
         if(usebuffer){   
            	OutputStream os = con.getOutputStream();
         	os.write( buf.getBytes()); 
-        	//Log.d(this.getClass().getName(),"Отправленный буфер"+ buf);
+        	Log.d(this.getClass().getName(),"Отправленный буфер"+ buf);
             os.flush();
             os.close();}
     	   			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
     	   				//instream=con.getInputStream();
     	   				String  ret= inputStreamToString(con.getInputStream());
   			 
-  			//Log.d(this.getClass().getName(), "void getpage end");
+  			Log.d(this.getClass().getName(), "void getpage end");
     	   				return ret;
   			    } 
     	   			else {
-    	   				//Log.d(this.getClass().getName(), "void getpage end");
+    	   				Log.d(this.getClass().getName(), "void getpage end22");
     	   				return getString(R.string.ServerError);
   			}
     	   		
@@ -1714,6 +1715,7 @@ public boolean isOnline() {
 		notificationIntent.removeExtra("info");
 		notificationIntent.putExtra("info", info);
 		//notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		PendingIntent contentIntent = PendingIntent.getActivity(this, OsMoDroid.notifyidApp(),notificationIntent, 0);
 		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
 		    	getApplicationContext())
