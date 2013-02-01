@@ -24,6 +24,15 @@ public class mesActivity extends Activity implements ResultsListener {
 	 EditText toUserText;
 	 EditText sendText;
 	
+	 @Override
+	    public void onBackPressed() {
+			Intent i = new Intent(this, GPSLocalServiceClient.class);
+			i.setAction(Intent.ACTION_MAIN);
+			i.addCategory(Intent.CATEGORY_LAUNCHER);
+		    startActivity(i);
+	    super.onBackPressed();
+	    }
+	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
