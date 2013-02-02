@@ -235,6 +235,10 @@ private long lastgpslocationtime=0;
 				return 1;
 			}
 
+			public int getBackwardCompatibleVersion() throws RemoteException {
+				return 0;
+			}
+
 			public void Deactivate() throws RemoteException {
 				Log.d(getClass().getSimpleName(), "Remote Deactivate");
 				stopServiceWork();
@@ -242,6 +246,10 @@ private long lastgpslocationtime=0;
 				return;
 				
 				
+			}
+
+			public boolean isActive() {
+				return state;
 			}
 
 			public void Activate() throws RemoteException {
