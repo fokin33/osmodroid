@@ -2,8 +2,14 @@ package com.OsMoDroid;
 
 interface IRemoteOsMoDroidService {
 
-        int getVersion();
-		void Deactivate();
-		void Activate();
+    int getVersion();
+
+    int getBackwardCompatibleVersion();
+	
+	void Deactivate();
+	
+	void Activate();
+
+	boolean isActive();
 
 }
