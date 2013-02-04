@@ -12,14 +12,17 @@ import org.json.JSONObject;
 import com.OsMoDroid.GPSLocalServiceClient.RequestCommandTask;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.ClipboardManager;
 import android.text.format.Time;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -31,7 +34,10 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -105,10 +111,55 @@ public class MyDevices extends Activity implements ResultsListener{
 	  public boolean onContextItemSelected(MenuItem item) {
 	  
 		  if (item.getItemId() == 1) {
-		         AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();
+				 final AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();
+				 adapter.getItem(acmi.position);
+			  LinearLayout layout = new LinearLayout(this);
+				layout.setOrientation(LinearLayout.VERTICAL);
+				final TextView txv = new TextView(this);
+				txv.setText("Ваше сообщение:");
+				layout.addView(txv);
+				final EditText input = new EditText(this);
+				layout.addView(input);
+				
+				
+				AlertDialog alertdialog3 = new AlertDialog.Builder(
+						this)
+						.setTitle("Отправка сообщения")
+						.setView(layout)
+						.setPositiveButton(R.string.yes,
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int whichButton) {
+										 
+										if (!(input.getText().toString().equals(""))) {
+											JSONObject postjson = new JSONObject();
+											
+											try {
+											postjson.put("text", input.getText().toString());
+											netutil.newapicommand((ResultsListener) MyDevices.this, "im_send:0"+","+listids.get((int) acmi.id),"json="+postjson.toString());
+											} catch (JSONException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+										} 
+											
+										
+									}
+								})
+						.setNegativeButton(R.string.No,
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int whichButton) {
+
+									
+									}
+								}).create();
+
+				alertdialog3.show();
+
 			  
-			 adapter.getItem(acmi.position);
-			 netutil.newapicommand((ResultsListener)this, "im_send:0"+","+listids.get((int) acmi.id),"test");
+		
+		
 				
 		         
 		      return true;
