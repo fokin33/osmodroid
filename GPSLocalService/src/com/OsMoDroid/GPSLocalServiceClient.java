@@ -121,11 +121,11 @@ PowerManager pm;
 			started = true;
 			updateServiceStatus();
 //			if (started && ( conn == null || mService == null)) {
-//				Log.d(getClass().getSimpleName(), "нет бинда с сервисом - startcommand");
+//				Log.d(getClass().getSimpleName(), "РЅРµС‚ Р±РёРЅРґР° СЃ СЃРµСЂРІРёСЃРѕРј - startcommand");
 //			} else {
-//				Log.d(getClass().getSimpleName(), "вызов startcommand");
+//				Log.d(getClass().getSimpleName(), "РІС‹Р·РѕРІ startcommand");
 //				mService.startcomand();
-//				Log.d(getClass().getSimpleName(), "послек вызова startcomand");
+//				Log.d(getClass().getSimpleName(), "РїРѕСЃР»РµРє РІС‹Р·РѕРІР° startcomand");
 //			}	
 			
 		}
@@ -205,7 +205,7 @@ PowerManager pm;
 		OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
 			  public void onSharedPreferenceChanged(SharedPreferences prefs, String keychanged) {
 			    if ((keychanged.equals("hash")||keychanged.equals("n")) ) {
-			    	Log.d(getClass().getSimpleName(), "Сменился хэш");
+			    	Log.d(getClass().getSimpleName(), "РЎРјРµРЅРёР»СЃСЏ С…СЌС€");
 			    	device="";
 			    	devicename="";
 			    	
@@ -295,7 +295,7 @@ startlocalservice();
 				if (!(startmessage==null)) {
 					AlertDialog alertdialog = new AlertDialog.Builder(
 							GPSLocalServiceClient.this).create();
-					alertdialog.setTitle("Сообщение от сервера");
+					alertdialog.setTitle("РЎРѕРѕР±С‰РµРЅРёРµ РѕС‚ СЃРµСЂРІРµСЂР°");
 
 					alertdialog.setMessage(startmessage);
 							
@@ -376,15 +376,15 @@ startlocalservice();
 			requestAuthTask.execute();
 		}
 		TextView t2 = (TextView) findViewById(R.id.URL);
-		t2.setText("Имя: "+settings.getString("devicename", "")+". " +getString(R.string.Adres) + viewurl);
+		t2.setText("РРјСЏ: "+settings.getString("devicename", "")+". " +getString(R.string.Adres) + viewurl);
 	
 		Linkify.addLinks(t2, Linkify.ALL);
 
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
-		SubMenu menu1 = menu.addSubMenu(Menu.NONE, 11, 4,"Команды");
-		SubMenu menu2 = menu.addSubMenu(Menu.NONE, 12, 4,"Дополнительно");
+		SubMenu menu1 = menu.addSubMenu(Menu.NONE, 11, 4,"РљРѕРјР°РЅРґС‹");
+		SubMenu menu2 = menu.addSubMenu(Menu.NONE, 12, 4,"Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕ");
 		
 		MenuItem auth = menu2.add(0, 1, 0, R.string.RepeatAuth);
 		MenuItem mi = menu.add(0, 2, 0, R.string.Settings);
@@ -395,19 +395,19 @@ startlocalservice();
 		 mi5 = menu1.add(0, 5, 0, R.string.getadres);
 		 mi6 = menu1.add(0, 6, 0, R.string.getdevice);
 		 mi7 = menu1.add(0, 7, 0, R.string.enterchanel);
-		 mi8 = menu1.add(0, 8, 0, "Символические ссылки");
-		 MenuItem forcesenditem = menu.add(0, 9, 0, "Отправить сейчас");
+		 mi8 = menu1.add(0, 8, 0, "РЎРёРјРІРѕР»РёС‡РµСЃРєРёРµ СЃСЃС‹Р»РєРё");
+		 MenuItem forcesenditem = menu.add(0, 9, 0, "РћС‚РїСЂР°РІРёС‚СЊ СЃРµР№С‡Р°СЃ");
 		 forcesenditem.setIcon(android.R.drawable.ic_menu_mylocation);
-		 MenuItem shareadress = menu.add(0, 10, 0, "Поделиться ссылкой");
+		 MenuItem shareadress = menu.add(0, 10, 0, "РџРѕРґРµР»РёС‚СЊСЃСЏ СЃСЃС‹Р»РєРѕР№");
 		 shareadress.setIcon(android.R.drawable.ic_menu_share);
-		 MenuItem copyadress = menu.add(0, 11, 0, "Скопировать ссылку");
+		 MenuItem copyadress = menu.add(0, 11, 0, "РЎРєРѕРїРёСЂРѕРІР°С‚СЊ СЃСЃС‹Р»РєСѓ");
 		 copyadress.setIcon(android.R.drawable.ic_menu_edit);
-		 MenuItem about = menu.add(0, 12, 0, "О программе");
-		 MenuItem exit = menu.add(0, 14, 0, "Выход");
-		 MenuItem messages = menu.add(0, 15, 0, "Сообщения");
+		 MenuItem about = menu.add(0, 12, 0, "Рћ РїСЂРѕРіСЂР°РјРјРµ");
+		 MenuItem exit = menu.add(0, 14, 0, "Р’С‹С…РѕРґ");
+		 MenuItem messages = menu.add(0, 15, 0, "РЎРѕРѕР±С‰РµРЅРёСЏ");
 		 messages.setIcon(android.R.drawable.sym_action_chat);
 		 messages.setIntent(new Intent(this, mesActivity.class));
-		 MenuItem myDevices = menu.add(0, 16, 0, "Мои устройства");
+		 MenuItem myDevices = menu.add(0, 16, 0, "РњРѕРё СѓСЃС‚СЂРѕР№СЃС‚РІР°");
 		 myDevices.setIcon(android.R.drawable.ic_menu_today);
 		 myDevices.setIntent(new Intent(this, MyDevices.class));
 		 about.setIcon(android.R.drawable.ic_menu_info_details);
@@ -510,28 +510,28 @@ startlocalservice();
 			LinearLayout layout = new LinearLayout(this);
 			layout.setOrientation(LinearLayout.VERTICAL);
 			final TextView txv5 = new TextView(this);
-			txv5.setText("Логин на сайт Esya.ru:");
+			txv5.setText("Р›РѕРіРёРЅ РЅР° СЃР°Р№С‚ Esya.ru:");
 			layout.addView(txv5);
 			final EditText inputlogin = new EditText(this);
 			inputlogin.setText(login);
 			layout.addView(inputlogin);
 			
 			final TextView txv3 = new TextView(this);
-			txv3.setText("Одноразовый пароль:");
+			txv3.setText("РћРґРЅРѕСЂР°Р·РѕРІС‹Р№ РїР°СЂРѕР»СЊ:");
 			layout.addView(txv3);
 			
 			final EditText input = new EditText(this);
-			//input2.setText("Ваше имя");
+			//input2.setText("Р’Р°С€Рµ РёРјСЏ");
 			layout.addView(input);
 		//	final EditText input = new EditText(this);
 			final TextView txv4 = new TextView(this);
-			txv4.setText("Одноразовый пароль можно получить по адресу http://esya.ru/app.html?act=add после регистрации");
+			txv4.setText("РћРґРЅРѕСЂР°Р·РѕРІС‹Р№ РїР°СЂРѕР»СЊ РјРѕР¶РЅРѕ РїРѕР»СѓС‡РёС‚СЊ РїРѕ Р°РґСЂРµСЃСѓ http://esya.ru/app.html?act=add РїРѕСЃР»Рµ СЂРµРіРёСЃС‚СЂР°С†РёРё");
 			Linkify.addLinks(txv4, Linkify.ALL);
 			layout.addView(txv4);
 			
 			AlertDialog alertdialog3 = new AlertDialog.Builder(
 					GPSLocalServiceClient.this)
-					.setTitle("Подключение приложения")
+					.setTitle("РџРѕРґРєР»СЋС‡РµРЅРёРµ РїСЂРёР»РѕР¶РµРЅРёСЏ")
 					.setView(layout)
 					.setPositiveButton(R.string.yes,
 							new DialogInterface.OnClickListener() {
@@ -613,34 +613,34 @@ startlocalservice();
 			layout.setOrientation(LinearLayout.VERTICAL);
 
 			final TextView txv3 = new TextView(this);
-			txv3.setText("Ваше имя:");
+			txv3.setText("Р’Р°С€Рµ РёРјСЏ:");
 			layout.addView(txv3);
 			
 			final EditText input2 = new EditText(this);
-			//input2.setText("Ваше имя");
+			//input2.setText("Р’Р°С€Рµ РёРјСЏ");
 			layout.addView(input2);
 			
 final TextView txv1 = new TextView(this);
-txv1.setText("Код канала:");
+txv1.setText("РљРѕРґ РєР°РЅР°Р»Р°:");
 layout.addView(txv1);
 			final EditText input = new EditText(this);
-			//input.setText("Код канала");
+			//input.setText("РљРѕРґ РєР°РЅР°Р»Р°");
 			layout.addView(input);
 
 			final CheckBox chb1 = new CheckBox(this);
-			chb1.setText("Приватный канал");
+			chb1.setText("РџСЂРёРІР°С‚РЅС‹Р№ РєР°РЅР°Р»");
 			
 			layout.addView(chb1);
 			
 			final TextView txv2 = new TextView(this);
-			txv2.setText("Ключ канала:");
+			txv2.setText("РљР»СЋС‡ РєР°РЅР°Р»Р°:");
 			//txv2.setEnabled(false);
 			layout.addView(txv2);
 			
 			
 			
 			final EditText input1 = new EditText(this);
-			//input1.setText("Ключ канала");
+			//input1.setText("РљР»СЋС‡ РєР°РЅР°Р»Р°");
 			input1.setEnabled(false);
 			layout.addView(input1);
 			
@@ -665,7 +665,7 @@ layout.addView(txv1);
 			
 			AlertDialog alertdialog4 = new AlertDialog.Builder(
 					GPSLocalServiceClient.this)
-					.setTitle("Подключение в канал")
+					.setTitle("РџРѕРґРєР»СЋС‡РµРЅРёРµ РІ РєР°РЅР°Р»")
 					.setView(layout)
 					.setPositiveButton(R.string.yes,
 							new DialogInterface.OnClickListener() {
@@ -699,7 +699,7 @@ layout.addView(txv1);
 									} else {
 										Toast.makeText(
 												GPSLocalServiceClient.this,
-												"Указаны не все данные", 5).show();
+												"РЈРєР°Р·Р°РЅС‹ РЅРµ РІСЃРµ РґР°РЅРЅС‹Рµ", 5).show();
 									}
 								}
 							})
@@ -718,17 +718,17 @@ layout.addView(txv1);
 
 		}else {Toast.makeText(
 				GPSLocalServiceClient.this,
-				"Предварительно запросите устройство", 5).show();}
+				"РџСЂРµРґРІР°СЂРёС‚РµР»СЊРЅРѕ Р·Р°РїСЂРѕСЃРёС‚Рµ СѓСЃС‚СЂРѕР№СЃС‚РІРѕ", 5).show();}
 		
 		} 
 		if (item.getItemId() == 9) { 
 			Log.d(getClass().getSimpleName(), "forcesend click");
 			if (conn == null || mService == null) {
-				Log.d(getClass().getSimpleName(), "нет бинда с сервисом");
+				Log.d(getClass().getSimpleName(), "РЅРµС‚ Р±РёРЅРґР° СЃ СЃРµСЂРІРёСЃРѕРј");
 			} else {
-				Log.d(getClass().getSimpleName(), "вызов отправки позиции");
+				Log.d(getClass().getSimpleName(), "РІС‹Р·РѕРІ РѕС‚РїСЂР°РІРєРё РїРѕР·РёС†РёРё");
 				mService.sendPosition();
-				Log.d(getClass().getSimpleName(), "послек вызова отправки позиции");
+				Log.d(getClass().getSimpleName(), "РїРѕСЃР»РµРє РІС‹Р·РѕРІР° РѕС‚РїСЂР°РІРєРё РїРѕР·РёС†РёРё");
 			}	
 		}
 		if (item.getItemId() == 10) {
@@ -895,7 +895,7 @@ layout.addView(txv1);
 		String startStatus =checkStarted() ? getString(R.string.Running)
 				: getString(R.string.NotRunning);
 		String statusText = //getString(R.string.Status) + startStatus+
-				getString(R.string.Sendcount) + sendcounter + " В буфере:"+buffercounter;
+				getString(R.string.Sendcount) + sendcounter + " Р’ Р±СѓС„РµСЂРµ:"+buffercounter;
 		TextView t = (TextView) findViewById(R.id.serviceStatus);
 		t.setText(statusText);
 	}
@@ -908,7 +908,7 @@ if (mBound) {
 				unbindService(conn);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				Log.d(getClass().getSimpleName(), "Исключение при отсоединении от сервиса");
+				Log.d(getClass().getSimpleName(), "РСЃРєР»СЋС‡РµРЅРёРµ РїСЂРё РѕС‚СЃРѕРµРґРёРЅРµРЅРёРё РѕС‚ СЃРµСЂРІРёСЃР°");
 				e.printStackTrace();
 			}
 		}
@@ -945,7 +945,7 @@ if (mBound) {
 			con.setDoInput(true);
 			OutputStream os = con.getOutputStream();
 			os.write(post.getBytes());
-			Log.d(this.getClass().getName(), "Что POSTим" + post);
+			Log.d(this.getClass().getName(), "Р§С‚Рѕ POSTРёРј" + post);
 			os.flush();
 			os.close();
 		}
@@ -1013,7 +1013,7 @@ if (mBound) {
 		String adevice;
 		private Boolean Err = true;
 		ProgressDialog dialog = ProgressDialog.show(GPSLocalServiceClient.this,
-				"", "Запрос авторизации, Подождите пожалуйста...", true);
+				"", "Р—Р°РїСЂРѕСЃ Р°РІС‚РѕСЂРёР·Р°С†РёРё, РџРѕРґРѕР¶РґРёС‚Рµ РїРѕР¶Р°Р»СѓР№СЃС‚Р°...", true);
 
 		// Dialog dial = Dialog.
 
@@ -1023,7 +1023,7 @@ if (mBound) {
 		}
 
 		protected void onPostExecute(Void params) {
-			// Log.d(this.getClass().getName(), "Задание окончило выполнятся.");
+			// Log.d(this.getClass().getName(), "Р—Р°РґР°РЅРёРµ РѕРєРѕРЅС‡РёР»Рѕ РІС‹РїРѕР»РЅСЏС‚СЃСЏ.");
 			dialog.dismiss();
 			if (Err) {
 				Toast.makeText(GPSLocalServiceClient.this,
@@ -1050,7 +1050,7 @@ if (mBound) {
 				TextView t2 = (TextView) findViewById(R.id.URL);
 				t2.setText(getString(R.string.Adres) + viewurl);
 				Linkify.addLinks(t2, Linkify.ALL);
-				 Log.d(this.getClass().getName(), "Задание окончило выполнятся.Bind");
+				 Log.d(this.getClass().getName(), "Р—Р°РґР°РЅРёРµ РѕРєРѕРЅС‡РёР»Рѕ РІС‹РїРѕР»РЅСЏС‚СЃСЏ.Bind");
 				bindService();
 				
 			}
@@ -1060,7 +1060,7 @@ if (mBound) {
 		protected Void doInBackground(Void... params) {
 			try {
 				// Log.d(this.getClass().getName(),
-				// "Начинаем запрос авторизации.");
+				// "РќР°С‡РёРЅР°РµРј Р·Р°РїСЂРѕСЃ Р°РІС‚РѕСЂРёР·Р°С†РёРё.");
 				//authtext = getPage("http://auth.t.esya.ru/?who=OsMoDroid",false, "");
 				authtext = getPage("http://a.t.esya.ru/?act=new&c=OsMoDroid&v="+version,	false, "");
 				//{"device":1235,"hash":"JoqQtav","n":"2515","url":"26CstQLcgzIYTOin"}
@@ -1072,22 +1072,22 @@ if (mBound) {
 				viewurl =  "http://m.esya.ru/"+auth.optString("url");
 				pdaviewurl = auth.optString("pda-view-url");
 				adevice= auth.getString("u");
-				// Log.d(this.getClass().getName(), "Авторизация закончилась.");
+				// Log.d(this.getClass().getName(), "РђРІС‚РѕСЂРёР·Р°С†РёСЏ Р·Р°РєРѕРЅС‡РёР»Р°СЃСЊ.");
 				if (hash.equals("")) {
-					// Log.d(this.getClass().getName(), "Косяк.");
+					// Log.d(this.getClass().getName(), "РљРѕСЃСЏРє.");
 					Err = true;
 				}
 				Err = false;
 			} catch (IOException e) {
 
 				e.printStackTrace();
-				// Log.d(this.getClass().getName(), "Косяк2.");
+				// Log.d(this.getClass().getName(), "РљРѕСЃСЏРє2.");
 				Err = true;
 				// finish();
 
 			} catch (JSONException e) {
 				e.printStackTrace();
-				// Log.d(this.getClass().getName(), "Косяк3.");
+				// Log.d(this.getClass().getName(), "РљРѕСЃСЏРє3.");
 				Err = true;
 
 			}
@@ -1103,7 +1103,7 @@ if (mBound) {
 		private String adevicename;
 		// private Boolean Err = true;
 		ProgressDialog dialog = ProgressDialog.show(GPSLocalServiceClient.this,
-				"", "Выполнение команды, Подождите пожалуйста...", true);
+				"", "Р’С‹РїРѕР»РЅРµРЅРёРµ РєРѕРјР°РЅРґС‹, РџРѕРґРѕР¶РґРёС‚Рµ РїРѕР¶Р°Р»СѓР№СЃС‚Р°...", true);
 
 		// Dialog dial = Dialog.
 
@@ -1139,7 +1139,7 @@ editor.commit();}
 if (!(aviewurl==null)){viewurl=aviewurl;}
 
 				TextView t2 = (TextView) findViewById(R.id.URL);
-				t2.setText("Имя: "+devicename+". " +getString(R.string.Adres) + viewurl);
+				t2.setText("РРјСЏ: "+devicename+". " +getString(R.string.Adres) + viewurl);
 				Linkify.addLinks(t2, Linkify.ALL);
 
 				SharedPreferences.Editor editor = settings.edit();
@@ -1162,7 +1162,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 			String returnstr = null;
 			try {
 				// Log.d(this.getClass().getName(),
-				// "Начинаем запрос авторизации.");
+				// "РќР°С‡РёРЅР°РµРј Р·Р°РїСЂРѕСЃ Р°РІС‚РѕСЂРёР·Р°С†РёРё.");
 				Commandtext = getPage(params[0],
 						Boolean.parseBoolean(params[1]), params[2]);
 				Log.d(this.getClass().getName(), Commandtext);
@@ -1170,20 +1170,20 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 				//Toast.makeText(this,resJSON.optString("state")+" "+ resJSON.optString("error_description"),5).show();
 				// return new JSONObject(Commandtext);
 
-				// Log.d(this.getClass().getName(), "Авторизация закончилась.");
+				// Log.d(this.getClass().getName(), "РђРІС‚РѕСЂРёР·Р°С†РёСЏ Р·Р°РєРѕРЅС‡РёР»Р°СЃСЊ.");
 
 			} catch (IOException e) {
 
 				e.printStackTrace();
 				return null;
-				// Log.d(this.getClass().getName(), "Косяк2.");
+				// Log.d(this.getClass().getName(), "РљРѕСЃСЏРє2.");
 				// Err = true;
 				// finish();
 
 			} catch (JSONException e) {
 				e.printStackTrace();
 				return null;
-				// Log.d(this.getClass().getName(), "Косяк3.");
+				// Log.d(this.getClass().getName(), "РљРѕСЃСЏРє3.");
 				// Err = true;
 
 			}
@@ -1226,10 +1226,10 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 						}
 						returnstr = resJSON.optString("state")+" "+ resJSON.optString("error_description");
 //						if (adevice == null) {
-//							returnstr = "Устройство узнать не удалось";
+//							returnstr = "РЈСЃС‚СЂРѕР№СЃС‚РІРѕ СѓР·РЅР°С‚СЊ РЅРµ СѓРґР°Р»РѕСЃСЊ";
 //						} else {
 //							
-//							returnstr = "Устройство найдено";
+//							returnstr = "РЈСЃС‚СЂРѕР№СЃС‚РІРѕ РЅР°Р№РґРµРЅРѕ";
 //						}
 
 					}
@@ -1241,7 +1241,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 						returnstr = resJSON.optString("state")+" "+ resJSON.optString("error_description");
 						
 					} else {
-						returnstr = "Результат входа в канал не получен";
+						returnstr = "Р РµР·СѓР»СЊС‚Р°С‚ РІС…РѕРґР° РІ РєР°РЅР°Р» РЅРµ РїРѕР»СѓС‡РµРЅ";
 					}
 				}
 				
@@ -1250,7 +1250,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 						returnstr = resJSON.optJSONArray("links")+" "+ resJSON.optString("error_description");
 						
 					} else {
-						returnstr = "Ссылки не считаны";
+						returnstr = "РЎСЃС‹Р»РєРё РЅРµ СЃС‡РёС‚Р°РЅС‹";
 					}
 				}
 				
@@ -1268,7 +1268,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 	
 	public void onResultsSucceeded(APIComResult result) {
 		
-		if (result.Jo==null&&result.ja==null ){Toast.makeText(this,"Не удалось получить ответ от сервера",5).show();}
+		if (result.Jo==null&&result.ja==null ){Toast.makeText(this,"РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕР»СѓС‡РёС‚СЊ РѕС‚РІРµС‚ РѕС‚ СЃРµСЂРІРµСЂР°",5).show();}
 		
 		
 
@@ -1278,7 +1278,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 			if (!(result.Jo.optString("url").equals(""))) {
 				viewurl = result.Jo.optString("url");
 				TextView t2 = (TextView) findViewById(R.id.URL);
-				t2.setText("Имя: "+devicename+". " +getString(R.string.Adres) + viewurl);
+				t2.setText("РРјСЏ: "+devicename+". " +getString(R.string.Adres) + viewurl);
 				Linkify.addLinks(t2, Linkify.ALL);
 
 				SharedPreferences.Editor editor = settings.edit();
@@ -1288,13 +1288,13 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 
 				editor.commit();
 				
-				//returnstr = "URL найден";
+				//returnstr = "URL РЅР°Р№РґРµРЅ";
 			} else {
-				Toast.makeText(this, "URL узнать не удалось",Toast.LENGTH_LONG ).show();
+				Toast.makeText(this, "URL СѓР·РЅР°С‚СЊ РЅРµ СѓРґР°Р»РѕСЃСЊ",Toast.LENGTH_LONG ).show();
 			}
 		}
 			
-			//Log.d(getClass().getSimpleName(),"Добавляли линк");
+			//Log.d(getClass().getSimpleName(),"Р”РѕР±Р°РІР»СЏР»Рё Р»РёРЅРє");
 		
 			 
 			 
