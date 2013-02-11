@@ -1,2 +1,2 @@
-repo
+The OsMoDroid sources repository
 ====

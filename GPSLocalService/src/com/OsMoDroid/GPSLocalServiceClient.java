@@ -109,7 +109,7 @@ PowerManager pm;
 	MenuItem mi8;
 	String version="Unknown";
 	SharedPreferences settings;
-	
+
 	private ServiceConnection conn = new ServiceConnection() {
 
 		public void onServiceConnected(ComponentName className, IBinder service) {
@@ -126,8 +126,8 @@ PowerManager pm;
 //				Log.d(getClass().getSimpleName(), "вызов startcommand");
 //				mService.startcomand();
 //				Log.d(getClass().getSimpleName(), "послек вызова startcomand");
-//			}	
-			
+//			}
+
 		}
 
 		public void onServiceDisconnected(ComponentName arg0) {
@@ -136,7 +136,7 @@ PowerManager pm;
 			// Log.d(getClass().getSimpleName(), "onservicedisconnected");
 		}
 	};
-	
+
 	public static String unescape (String s)
 	{
 	    while (true)
@@ -165,11 +165,11 @@ PowerManager pm;
 
 	 @Override
 	 protected void onPause(){
-	
+
 	 super.onPause();
 	 if (!(wakeLock==null) &&wakeLock.isHeld())wakeLock.release();
-	
-	
+
+
 	 }
 
 	@Override
@@ -178,21 +178,21 @@ PowerManager pm;
 
 	}
 
-	
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		
+
+
 		PreferenceManager.setDefaultValues(this, R.xml.pref, true);
 		settings = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		ReadPref();
 		pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-	
+
 		String strVersionName = getString(R.string.Unknow);
-	
+
 		try {
 			PackageInfo packageInfo = getPackageManager().getPackageInfo(
 					getPackageName(), 0);
@@ -208,7 +208,7 @@ PowerManager pm;
 			    	Log.d(getClass().getSimpleName(), "Сменился хэш");
 			    	device="";
 			    	devicename="";
-			    	
+
 			    SharedPreferences.Editor editor = settings.edit();
 			    editor.remove("device");
 			    editor.remove("devicename");
@@ -227,37 +227,37 @@ PowerManager pm;
 													+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
 											.substring(1, 25), "false", "",
 							"device" };
-					
+
 					Log.d(getClass().getSimpleName(), params[0]);
 					RequestCommandTask Rq = new RequestCommandTask();
 					Rq.execute(params);
-				} 
-			 
-			    
-			    
+				}
+
+
+
 			    }
 
 			    //if (started){bindService();}
 			  }
 			};
 
-		
+
 			settings.registerOnSharedPreferenceChangeListener(listener);
-		
-		
+
+
 		setContentView(R.layout.main);
 		setTitle(strVersionName);
 		Button start = (Button) findViewById(R.id.startButton);
 		Button exit = (Button) findViewById(R.id.exitButton);
-	
+
 		start.setEnabled(false);
 		exit.setEnabled(false);
-	
+
 		exit.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				
+
 				stop();
-			
+
 				updateServiceStatus();
 
 			}
@@ -267,7 +267,7 @@ PowerManager pm;
 		start.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 startlocalservice();
-		
+
 			}
 		});
 
@@ -284,50 +284,50 @@ startlocalservice();
 				if (intent.hasExtra("started")){
 					Button start = (Button) findViewById(R.id.startButton);
 					Button stop = (Button) findViewById(R.id.exitButton);
-					
-						
+
+
 						start.setEnabled(!intent.getBooleanExtra("started", false));
-					
+
 						stop.setEnabled(intent.getBooleanExtra("started", false));
 						started=intent.getBooleanExtra("started", false);
 				}
-				
+
 				if (!(startmessage==null)) {
 					AlertDialog alertdialog = new AlertDialog.Builder(
 							GPSLocalServiceClient.this).create();
 					alertdialog.setTitle("Сообщение от сервера");
 
 					alertdialog.setMessage(startmessage);
-							
-							
+
+
 
 					alertdialog.setButton(getString(R.string.yes),
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog, int which) {
-									
+
 									return;
 								}
 							});
-					
+
 					alertdialog.show();
-					
+
 				}
-				
-				
-				
+
+
+
 				if (position == null){position = context.getString(R.string.NotDefined);}
 
-				
+
 				if (sendresult == null){	sendresult = "";}
 				t.setText(
-						
+
 						position+"\n"+stat);
 				TextView t2 = (TextView) findViewById(R.id.Send);
 
 				updateServiceStatus();
 				if (!(sendresult == null)){t2.setText(getString(R.string.Sended) + (sendresult));}
 			}
-			
+
 
 		};
 
@@ -348,25 +348,25 @@ startlocalservice();
 		}
 		started = checkStarted();
 		updateServiceStatus();
-		
 
-		
-	
+
+
+
 		if (started) {
-		
+
 			Button start = (Button) findViewById(R.id.startButton);
 			Button stop = (Button) findViewById(R.id.exitButton);
-		
+
 			start.setEnabled(false);
 			stop.setEnabled(true);
 			bindService();
-			
+
 
 		} else {
-			
+
 			Button start = (Button) findViewById(R.id.startButton);
 			Button stop = (Button) findViewById(R.id.exitButton);
-		
+
 			start.setEnabled(true);
 			stop.setEnabled(false);
 		}
@@ -377,7 +377,7 @@ startlocalservice();
 		}
 		TextView t2 = (TextView) findViewById(R.id.URL);
 		t2.setText("Имя: "+settings.getString("devicename", "")+". " +getString(R.string.Adres) + viewurl);
-	
+
 		Linkify.addLinks(t2, Linkify.ALL);
 
 	}
@@ -385,12 +385,12 @@ startlocalservice();
 	public boolean onCreateOptionsMenu(Menu menu) {
 		SubMenu menu1 = menu.addSubMenu(Menu.NONE, 11, 4,"Команды");
 		SubMenu menu2 = menu.addSubMenu(Menu.NONE, 12, 4,"Дополнительно");
-		
+
 		MenuItem auth = menu2.add(0, 1, 0, R.string.RepeatAuth);
 		MenuItem mi = menu.add(0, 2, 0, R.string.Settings);
 		mi.setIcon(android.R.drawable.ic_menu_preferences);
 		MenuItem mi3 = menu2.add(0, 3, 0, R.string.EqualsParameters);
-		
+
 		 mi4 = menu1.add(0, 4, 0, R.string.getkey);
 		 mi5 = menu1.add(0, 5, 0, R.string.getadres);
 		 mi6 = menu1.add(0, 6, 0, R.string.getdevice);
@@ -414,16 +414,16 @@ startlocalservice();
 		 about.setIntent(new Intent(this, aboutActivity.class));
 		mi.setIntent(new Intent(this, PrefActivity.class));
 		mi8.setIntent(new Intent(this, SimLinks.class));
-		
+
 		// Log.d(getClass().getSimpleName(), "onCreateOptionsmenu() gpsclient");
 		return super.onCreateOptionsMenu(menu);
 	}
 	@Override
 	public boolean onPrepareOptionsMenu (Menu menu){
 
-		
+
 //		if (login.equals(""))
-//		{ mi4.setEnabled(false);} 
+//		{ mi4.setEnabled(false);}
 //		else {mi4.setEnabled(true);}
 		if (key.equals(""))
 		{ mi6.setEnabled(false); mi5.setEnabled(false);mi7.setEnabled(false);mi8.setEnabled(false);}
@@ -432,9 +432,9 @@ startlocalservice();
 //		if (settings.getString("device", "").equals("")){
 //			mi7.setEnabled(false);
 //			mi8.setEnabled(false);
-//				
+//
 //		}
-		
+
 		return super.onPrepareOptionsMenu(menu);}
 
 	@Override
@@ -480,7 +480,7 @@ startlocalservice();
 							hdop_gpx = hdop;
 							period_gpx = period;
 							distance_gpx = distance;
-							
+
 							SharedPreferences.Editor editor = settings.edit();
 							editor.putString("period_gpx", Integer.toString(period_gpx));
 							editor.putString("distance_gpx", Integer.toString(distance_gpx));
@@ -515,11 +515,11 @@ startlocalservice();
 			final EditText inputlogin = new EditText(this);
 			inputlogin.setText(login);
 			layout.addView(inputlogin);
-			
+
 			final TextView txv3 = new TextView(this);
 			txv3.setText("Одноразовый пароль:");
 			layout.addView(txv3);
-			
+
 			final EditText input = new EditText(this);
 			//input2.setText("Ваше имя");
 			layout.addView(input);
@@ -528,7 +528,7 @@ startlocalservice();
 			txv4.setText("Одноразовый пароль можно получить по адресу http://esya.ru/app.html?act=add после регистрации");
 			Linkify.addLinks(txv4, Linkify.ALL);
 			layout.addView(txv4);
-			
+
 			AlertDialog alertdialog3 = new AlertDialog.Builder(
 					GPSLocalServiceClient.this)
 					.setTitle("Подключение приложения")
@@ -607,19 +607,19 @@ startlocalservice();
 
 		}
 		if (item.getItemId() == 7) {
-			if (!(settings.getString("device", "").equals(""))) { 
-			
+			if (!(settings.getString("device", "").equals(""))) {
+
 			LinearLayout layout = new LinearLayout(this);
 			layout.setOrientation(LinearLayout.VERTICAL);
 
 			final TextView txv3 = new TextView(this);
 			txv3.setText("Ваше имя:");
 			layout.addView(txv3);
-			
+
 			final EditText input2 = new EditText(this);
 			//input2.setText("Ваше имя");
 			layout.addView(input2);
-			
+
 final TextView txv1 = new TextView(this);
 txv1.setText("Код канала:");
 layout.addView(txv1);
@@ -629,24 +629,24 @@ layout.addView(txv1);
 
 			final CheckBox chb1 = new CheckBox(this);
 			chb1.setText("Приватный канал");
-			
+
 			layout.addView(chb1);
-			
+
 			final TextView txv2 = new TextView(this);
 			txv2.setText("Ключ канала:");
 			//txv2.setEnabled(false);
 			layout.addView(txv2);
-			
-			
-			
+
+
+
 			final EditText input1 = new EditText(this);
 			//input1.setText("Ключ канала");
 			input1.setEnabled(false);
 			layout.addView(input1);
-			
+
 			chb1.setOnCheckedChangeListener(new OnCheckedChangeListener()
 			{
-			   
+
 
 				public void onCheckedChanged(CompoundButton buttonView,
 						boolean isChecked) {
@@ -655,14 +655,14 @@ layout.addView(txv1);
 				if (!isChecked){
 					input1.setEnabled(false);}
 
-					
+
 				}
 			});
-			
-			
-			
-			
-			
+
+
+
+
+
 			AlertDialog alertdialog4 = new AlertDialog.Builder(
 					GPSLocalServiceClient.this)
 					.setTitle("Подключение в канал")
@@ -719,9 +719,9 @@ layout.addView(txv1);
 		}else {Toast.makeText(
 				GPSLocalServiceClient.this,
 				"Предварительно запросите устройство", 5).show();}
-		
-		} 
-		if (item.getItemId() == 9) { 
+
+		}
+		if (item.getItemId() == 9) {
 			Log.d(getClass().getSimpleName(), "forcesend click");
 			if (conn == null || mService == null) {
 				Log.d(getClass().getSimpleName(), "нет бинда с сервисом");
@@ -729,13 +729,13 @@ layout.addView(txv1);
 				Log.d(getClass().getSimpleName(), "вызов отправки позиции");
 				mService.sendPosition();
 				Log.d(getClass().getSimpleName(), "послек вызова отправки позиции");
-			}	
+			}
 		}
 		if (item.getItemId() == 10) {
 			Intent sendIntent = new Intent(Intent.ACTION_SEND);
 			sendIntent.setType("text/plain");
 			sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, viewurl);
-			startActivity(Intent.createChooser(sendIntent, "Email"));	
+			startActivity(Intent.createChooser(sendIntent, "Email"));
 		}
 		if (item.getItemId() == 11) {
 			ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -746,17 +746,17 @@ layout.addView(txv1);
 			Intent i = new Intent(this, LocalService.class);
 			stopService(i);
 			finish();
-		
+
 		}
-		
-		
+
+
 		return super.onOptionsItemSelected(item);
-		
+
 	}
 
 //	private void WritePref() {
 //		// Log.d(getClass().getSimpleName(), "onWrightPref() gpsclient");
-//		
+//
 //		SharedPreferences.Editor editor = settings.edit();
 //		editor.putString("speed", Integer.toString(speed));
 //		editor.putString("period", Integer.toString(period));
@@ -792,7 +792,7 @@ layout.addView(txv1);
 //	}
 
 	private boolean checkStarted() {
-		
+
 		// Log.d(getClass().getSimpleName(), "oncheckstartedy() gpsclient");
 		return settings.getBoolean("started", false);
 
@@ -800,7 +800,7 @@ layout.addView(txv1);
 
 	private void ReadPref() {
 		 Log.d(getClass().getSimpleName(), "readpref() gpsclient");
-		
+
 
 		speed =  Integer.parseInt(settings.getString("speed", "3").equals(
 				"") ? "3" : settings.getString("speed", "3"));
@@ -857,9 +857,9 @@ layout.addView(txv1);
 		//startService(i);
 		started = true;
 		mService.startServiceWork();
-		
+
 	}
-	
+
 	private void bindService() {
 		Intent i = new Intent("OsMoDroid.local");
 		bindService(i, conn, Context.BIND_AUTO_CREATE);
@@ -903,7 +903,7 @@ layout.addView(txv1);
 	@Override
 	protected void onDestroy() {
 if (mBound) {
-			
+
 			try {
 				unbindService(conn);
 			} catch (Exception e) {
@@ -912,14 +912,14 @@ if (mBound) {
 				e.printStackTrace();
 			}
 		}
-		
+
 		conn = null;
 		// releaseService();
 		if (receiver != null) {
 			unregisterReceiver(receiver);
 		}
-		
-		
+
+
 		// Log.d(getClass().getSimpleName(), "onDestroy() gpsclient");
 		super.onDestroy();
 	}
@@ -1029,8 +1029,8 @@ if (mBound) {
 				Toast.makeText(GPSLocalServiceClient.this,
 						getString(R.string.CheckInternet), 5).show();
 			} else {
-				
-				
+
+
 				//WritePref();
 				SharedPreferences.Editor editor = settings.edit();
 				editor.putString("hash", hash);
@@ -1041,18 +1041,18 @@ if (mBound) {
 				editor.putString("device", adevice);
 				editor.putString("key", "");
 				editor.commit();
-				
-				
-				
+
+
+
 				ReadPref();
-				
+
 				findViewById(R.id.startButton).setEnabled(true);
 				TextView t2 = (TextView) findViewById(R.id.URL);
 				t2.setText(getString(R.string.Adres) + viewurl);
 				Linkify.addLinks(t2, Linkify.ALL);
 				 Log.d(this.getClass().getName(), "Задание окончило выполнятся.Bind");
 				bindService();
-				
+
 			}
 		}
 
@@ -1228,7 +1228,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 //						if (adevice == null) {
 //							returnstr = "Устройство узнать не удалось";
 //						} else {
-//							
+//
 //							returnstr = "Устройство найдено";
 //						}
 
@@ -1239,21 +1239,21 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 				if (params[3].equals("channel_enter")) {
 					if (!(resJSON.optString("state").equals(""))) {
 						returnstr = resJSON.optString("state")+" "+ resJSON.optString("error_description");
-						
+
 					} else {
 						returnstr = "Результат входа в канал не получен";
 					}
 				}
-				
+
 				if (params[3].equals("get_device_links")) {
 					if (!(resJSON.optString("state").equals(""))) {
 						returnstr = resJSON.optJSONArray("links")+" "+ resJSON.optString("error_description");
-						
+
 					} else {
 						returnstr = "Ссылки не считаны";
 					}
 				}
-				
+
 				// Toast.makeText(GPSLocalServiceClient.this,resJSON.toString(),5).show();
 
 			}
@@ -1264,15 +1264,15 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 		}
 	}
 
-	
-	
-	public void onResultsSucceeded(APIComResult result) {
-		
-		if (result.Jo==null&&result.ja==null ){Toast.makeText(this,"Не удалось получить ответ от сервера",5).show();}
-		
-		
 
-			 
+
+	public void onResultsSucceeded(APIComResult result) {
+
+		if (result.Jo==null&&result.ja==null ){Toast.makeText(this,"Не удалось получить ответ от сервера",5).show();}
+
+
+
+
 		if (result.Command.equals("device_link")&& !(result.Jo==null)) {
 			Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
 			if (!(result.Jo.optString("url").equals(""))) {
@@ -1287,19 +1287,19 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 
 
 				editor.commit();
-				
+
 				//returnstr = "URL найден";
 			} else {
 				Toast.makeText(this, "URL узнать не удалось",Toast.LENGTH_LONG ).show();
 			}
 		}
-			
+
 			//Log.d(getClass().getSimpleName(),"Добавляли линк");
-		
-			 
-			 
-			 
-			
+
+
+
+
+
 	}
 
 }
