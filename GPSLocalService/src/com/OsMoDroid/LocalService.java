@@ -28,7 +28,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 //import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;import java.util.Date;import java.util.List;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -223,7 +223,7 @@ private long lastgpslocationtime=0;
 	    int plugged=-1;
 	    int temperature=-1;
 	    int voltage=-1;
-	    
+	    public static List<Device> deviceList= new ArrayList<Device>();	    	    public static DeviceAdapter deviceAdapter; 
 	    private final IRemoteOsMoDroidService.Stub rBinder = new IRemoteOsMoDroidService.Stub() {
 
             

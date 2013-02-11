@@ -1,7 +1,7 @@
 package com.OsMoDroid;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.ArrayList;import java.util.HashMap;
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -42,10 +42,7 @@ import android.widget.Toast;
 
 
 public class MyDevices extends Activity implements ResultsListener{
-	private ArrayAdapter<String> adapter;
-	// String[] simlinksarray;
-	 ArrayList<String> list;
-	 ArrayList<String> listids;
+
 	 SharedPreferences settings;
 	 final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
 	 //
@@ -64,16 +61,13 @@ public class MyDevices extends Activity implements ResultsListener{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	    setContentView(R.layout.simlinks); 
+	    setContentView(R.layout.mydevices); 
 	    settings  = PreferenceManager.getDefaultSharedPreferences(this);
 	    
-	    final ListView lv1 = (ListView) findViewById(R.id.listView1);
-	        list = new ArrayList<String>();
-	        list.clear();
-	        listids = new ArrayList<String>();
-	        listids.clear();
-	       adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, list);
-	       lv1.setAdapter(adapter);
+	    final ListView lv1 = (ListView) findViewById(R.id.mydeviceslistView);
+	      
+	       LocalService.deviceAdapter = new DeviceAdapter(this,R.layout.deviceitem, LocalService.deviceList);
+	       lv1.setAdapter(LocalService.deviceAdapter);
 	       registerForContextMenu(lv1);
 	  lv1.setOnItemClickListener(new OnItemClickListener() {
 
@@ -83,16 +77,14 @@ public class MyDevices extends Activity implements ResultsListener{
 						}
 	});
 	       
-	    Button refsimlinkbutton = (Button) findViewById(R.id.refreshsimlinksbutton);
-	    Button addsimlinkbutton = (Button) findViewById(R.id.addsimlinksbutton);
-	    
+	    Button refsimlinkbutton = (Button) findViewById(R.id.refreshsimlinksbutton);    
 	    refsimlinkbutton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				getDevices();
 			}});
 	    
 	   
-	   
+	    getDevices(); 
 	}
 	
 	
@@ -112,7 +104,7 @@ public class MyDevices extends Activity implements ResultsListener{
 	  
 		  if (item.getItemId() == 1) {
 				 final AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();
-				 adapter.getItem(acmi.position);
+				 LocalService.deviceAdapter.getItem(acmi.position);
 			  LinearLayout layout = new LinearLayout(this);
 				layout.setOrientation(LinearLayout.VERTICAL);
 				final TextView txv = new TextView(this);
@@ -120,8 +112,7 @@ public class MyDevices extends Activity implements ResultsListener{
 				layout.addView(txv);
 				final EditText input = new EditText(this);
 				layout.addView(input);
-				
-				
+				
 				AlertDialog alertdialog3 = new AlertDialog.Builder(
 						this)
 						.setTitle("Отправка сообщения")
@@ -136,7 +127,7 @@ public class MyDevices extends Activity implements ResultsListener{
 											
 											try {
 											postjson.put("text", input.getText().toString());
-											netutil.newapicommand((ResultsListener) MyDevices.this, "im_send:0"+","+listids.get((int) acmi.id),"json="+postjson.toString());
+											netutil.newapicommand((ResultsListener) MyDevices.this, "im_send:0"+","+LocalService.deviceList.get((int) acmi.id).app,"json="+postjson.toString());
 											} catch (JSONException e) {
 												// TODO Auto-generated catch block
 												e.printStackTrace();
@@ -175,7 +166,7 @@ public class MyDevices extends Activity implements ResultsListener{
 		         AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();
 		         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 					
-						clipboard.setText(adapter.getItem(acmi.position));
+						clipboard.setText(LocalService.deviceAdapter.getItem(acmi.position).url);
 				 
 		      return true;
 		    }
@@ -191,32 +182,7 @@ public class MyDevices extends Activity implements ResultsListener{
 		if (result.Command.equals("APIM")&& !(result.Jo==null))
 		{
 			Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);
-			if (result.Jo.has("om_device")){
-				
-				list.clear();
-				listids.clear();
-				try {
-					  a =	result.Jo.getJSONArray("om_device");
-			 		  Log.d(getClass().getSimpleName(), a.toString());
-			 		 for (int i = 0; i < a.length(); i++) {
-			 			JSONObject jsonObject = a.getJSONObject(i);
-			 			 
-					
-		list.add(jsonObject.getString("name"));
-		listids.add(jsonObject.getString("app"));
-		Log.d(getClass().getSimpleName(), list.toString());
-		Log.d(getClass().getSimpleName(), listids.toString());
-		 	 		 } 
-					} catch (Exception e) {
-						
-						 Log.d(getClass().getSimpleName(), "эксепшн");
-						//e.printStackTrace();
-					}
-			
-   
-				 Log.d(getClass().getSimpleName(),list.toString());
-				
-				 adapter.notifyDataSetChanged();
+			if (result.Jo.has("om_device")){				LocalService.deviceList.clear();				//list.clear();				//listids.clear();				try {					  a =	result.Jo.getJSONArray("om_device");			 		  Log.d(getClass().getSimpleName(), a.toString());			 		 for (int i = 0; i < a.length(); i++) {			 			JSONObject jsonObject = a.getJSONObject(i);			 			 							//list.add(jsonObject.getString("name"));		//listids.add(jsonObject.getString("app"));		Log.d(getClass().getSimpleName(), LocalService.deviceList.toString());		//Log.d(getClass().getSimpleName(), listids.toString());		Device devitem = new Device(jsonObject.getString("u"), jsonObject.getString("name"),jsonObject.getString("app")				,jsonObject.getString("last"),				jsonObject.getString("url"),				jsonObject.getString("where"),				jsonObject.getString("lat"),				jsonObject.getString("lon"),				jsonObject.getString("online"),				jsonObject.getString("state")				); 	 				LocalService.deviceList.add(devitem);			 		 			 		 			 		 			 		 } 					} catch (Exception e) {												 Log.d(getClass().getSimpleName(), "эксепшн");						//e.printStackTrace();					}			   				 Log.d(getClass().getSimpleName(),LocalService.deviceList.toString());								 LocalService.deviceAdapter.notifyDataSetChanged();
 			}
 		}
 	}
