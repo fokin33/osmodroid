@@ -510,7 +510,7 @@ startlocalservice();
 			LinearLayout layout = new LinearLayout(this);
 			layout.setOrientation(LinearLayout.VERTICAL);
 			final TextView txv5 = new TextView(this);
-			txv5.setText("Логин на сайт Esya.ru:");
+			txv5.setText("Логин на esya.ru:");
 			layout.addView(txv5);
 			final EditText inputlogin = new EditText(this);
 			inputlogin.setText(login);
@@ -525,7 +525,7 @@ startlocalservice();
 			layout.addView(input);
 		//	final EditText input = new EditText(this);
 			final TextView txv4 = new TextView(this);
-			txv4.setText("Одноразовый пароль можно получить по адресу http://esya.ru/app.html?act=add после регистрации");
+			txv4.setText("Одноразовый пароль можно получить по адресу http://esya.ru/app.html?act=add при наличии регистрации");
 			Linkify.addLinks(txv4, Linkify.ALL);
 			layout.addView(txv4);
 
@@ -620,9 +620,10 @@ startlocalservice();
 			//input2.setText("Ваше имя");
 			layout.addView(input2);
 
-final TextView txv1 = new TextView(this);
-txv1.setText("Код канала:");
-layout.addView(txv1);
+			final TextView txv1 = new TextView(this);
+			txv1.setText("Код канала:");
+			layout.addView(txv1);
+
 			final EditText input = new EditText(this);
 			//input.setText("Код канала");
 			layout.addView(input);
@@ -637,8 +638,6 @@ layout.addView(txv1);
 			//txv2.setEnabled(false);
 			layout.addView(txv2);
 
-
-
 			final EditText input1 = new EditText(this);
 			//input1.setText("Ключ канала");
 			input1.setEnabled(false);
@@ -646,8 +645,6 @@ layout.addView(txv1);
 
 			chb1.setOnCheckedChangeListener(new OnCheckedChangeListener()
 			{
-
-
 				public void onCheckedChanged(CompoundButton buttonView,
 						boolean isChecked) {
 				if (isChecked){
