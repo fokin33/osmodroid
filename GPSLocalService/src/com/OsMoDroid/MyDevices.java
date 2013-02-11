@@ -50,9 +50,9 @@ public class MyDevices extends Activity implements ResultsListener{
 		// TODO Auto-generated constructor stub
 	}
 	
-	void getDevices(){
-		netutil.newapicommand((ResultsListener)MyDevices.this, "om_device");
-		Log.d(getClass().getSimpleName(), "GetDevices");
+	static public void getDevices(Context context){
+		netutil.newapicommand(context, "om_device");
+	
 	}
 	
 	
@@ -80,11 +80,11 @@ public class MyDevices extends Activity implements ResultsListener{
 	    Button refsimlinkbutton = (Button) findViewById(R.id.refreshsimlinksbutton);    
 	    refsimlinkbutton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				getDevices();
+				getDevices(MyDevices.this);
 			}});
 	    
 	   
-	    getDevices(); 
+	    getDevices(MyDevices.this); 
 	}
 	
 	
@@ -182,7 +182,7 @@ public class MyDevices extends Activity implements ResultsListener{
 		if (result.Command.equals("APIM")&& !(result.Jo==null))
 		{
 			Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);
-			if (result.Jo.has("om_device")){				LocalService.deviceList.clear();				//list.clear();				//listids.clear();				try {					  a =	result.Jo.getJSONArray("om_device");			 		  Log.d(getClass().getSimpleName(), a.toString());			 		 for (int i = 0; i < a.length(); i++) {			 			JSONObject jsonObject = a.getJSONObject(i);			 			 							//list.add(jsonObject.getString("name"));		//listids.add(jsonObject.getString("app"));		Log.d(getClass().getSimpleName(), LocalService.deviceList.toString());		//Log.d(getClass().getSimpleName(), listids.toString());		Device devitem = new Device(jsonObject.getString("u"), jsonObject.getString("name"),jsonObject.getString("app")				,jsonObject.getString("last"),				jsonObject.getString("url"),				jsonObject.getString("where"),				jsonObject.getString("lat"),				jsonObject.getString("lon"),				jsonObject.getString("online"),				jsonObject.getString("state")				); 	 				LocalService.deviceList.add(devitem);			 		 			 		 			 		 			 		 } 					} catch (Exception e) {												 Log.d(getClass().getSimpleName(), "эксепшн");						//e.printStackTrace();					}			   				 Log.d(getClass().getSimpleName(),LocalService.deviceList.toString());								 LocalService.deviceAdapter.notifyDataSetChanged();
+			if (result.Jo.has("om_device")){				LocalService.deviceList.clear();								try {					  a =	result.Jo.getJSONArray("om_device");			 		  Log.d(getClass().getSimpleName(), a.toString());			 		 for (int i = 0; i < a.length(); i++) {			 			JSONObject jsonObject = a.getJSONObject(i);			Device devitem = new Device(jsonObject.getString("u"), jsonObject.getString("name"),jsonObject.getString("app")				,jsonObject.getString("last"),				jsonObject.getString("url"),				jsonObject.getString("where"),				jsonObject.getString("lat"),				jsonObject.getString("lon"),				jsonObject.getString("online"),				jsonObject.getString("state")				); 	 				LocalService.deviceList.add(devitem);			 		 			 		 			 		 			 		 } 					} catch (Exception e) {												 Log.d(getClass().getSimpleName(), "эксепшн");						//e.printStackTrace();					}			   				 Log.d(getClass().getSimpleName(),LocalService.deviceList.toString());								 LocalService.deviceAdapter.notifyDataSetChanged();
 			}
 		}
 	}

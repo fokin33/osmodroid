@@ -54,10 +54,11 @@ public class DeviceAdapter extends ArrayAdapter<Device> {
 		        deviceWhere.setText(device.where);
 		        deviceLast.setText(device.last);
 		        if (device.online.equals("1")){
-		        	deviceName.setBackgroundColor(Color.GREEN);
+		        	
+		        	deviceName.setTextColor(Color.GREEN);
 		        }
 		        if (device.state.equals("1")){
-		        	row.setBackgroundColor(Color.GREEN);
+		        	row.setBackgroundColor(Color.BLUE);
 		        }
 		       
 		        				

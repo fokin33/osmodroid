@@ -35,7 +35,7 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 //import java.util.Locale;
 
-import org.json.JSONException;
+import org.json.JSONArray;import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.OsMoDroid.LocalService.SendCoor;
@@ -698,7 +698,7 @@ if (live){
           
 if (settings.getBoolean("im", false) && !settings.getString("key", "" ).equals("") ){
 mesIM = new IM(settings.getString("key", "")+",im_messages,om_online",this,1);
-}
+}if (!settings.getString("key", "" ).equals("") ){	netutil.newapicommand((ResultsListener)LocalService.this, "om_device");}
 	}
 	
 	void Pong(Context context) throws JSONException{
@@ -1737,9 +1737,9 @@ public boolean isOnline() {
 			Notification notification = notificationBuilder.build();
 			mNotificationManager.notify(OsMoDroid.warnnotifyid, notification);
 	}
+				
 
-
-public void onResultsSucceeded(APIComResult result) {
+public void onResultsSucceeded(APIComResult result) {	JSONArray a = null; 
 	if (result.Jo==null&&result.ja==null)
 	{
 		
@@ -1835,9 +1835,9 @@ public void onResultsSucceeded(APIComResult result) {
 				sendBroadcast(in);
 			}
 	}
-	if (result.Command.equals("APIM")&& !(result.Jo==null))
+	if (result.Command.equals("APIM")&& !(result.Jo==null))		
 	{
-		Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);	
+		Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);			if (result.Jo.has("om_device")){			deviceList.clear();						try {				  a =	result.Jo.getJSONArray("om_device");		 		  Log.d(getClass().getSimpleName(), a.toString());		 		 for (int i = 0; i < a.length(); i++) {		 			JSONObject jsonObject = a.getJSONObject(i);		Device devitem = new Device(jsonObject.getString("u"), jsonObject.getString("name"),jsonObject.getString("app")			,jsonObject.getString("last"),			jsonObject.getString("url"),			jsonObject.getString("where"),			jsonObject.getString("lat"),			jsonObject.getString("lon"),			jsonObject.getString("online"),			jsonObject.getString("state")			); 	 			deviceList.add(devitem);		 		 		 		 		 		 		 		 } 				} catch (Exception e) {										 Log.d(getClass().getSimpleName(), "эксепшн");					//e.printStackTrace();				}					 Log.d(getClass().getSimpleName(),deviceList.toString());						 if (deviceAdapter!=null) {deviceAdapter.notifyDataSetChanged();}		}		
 	}
 		
 	
