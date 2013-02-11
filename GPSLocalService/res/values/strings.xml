@@ -53,6 +53,6 @@
 <string name="message">Сообщение:</string>
 <string name="sendtosuuport">Сообщить в техническую поддержку</string>
 <string name="about">О программе</string>
-<string name="abouttext">Обновления и инструкции к OsMoDroid тут: osmodroid.ru, узнать о мониторинге и дополнительные настройки: m.esya.ru</string>
+<string name="abouttext">Обновления и инструкции к OsMoDroid тут: osmodroid.ru\nИнформация о мониторинге и возможность настройки: m.esya.ru</string>
 <string name="sendmes">Отправить</string>
 </resources>
