@@ -1,4 +1,4 @@
-package com.OsMoDroid; //комент для теста
+package com.OsMoDroid;
 
 import java.io.BufferedReader;
 import java.io.IOException;
