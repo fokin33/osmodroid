@@ -35,8 +35,8 @@
 <string name="AuthWait">Запрос авторизации, Подождите пожалуйста...</string>
 <string name="CheckInternet">Не удалось авторизоватся. Проверьте работу интернета</string>
 <string name="Working">Работаю! :-)</string>
-<string name="CanNotWriteHeader">Файлу не смогли записать заголовок</string>
-<string name="CanNotWriteEnd">Файлу не смогли записать окончание</string>
+<string name="CanNotWriteHeader">Не могу записать заголовок файла трека</string>
+<string name="CanNotWriteEnd">Не могу записать окончание файла трека</string>
 <string name="SendCourseChange">Смена курса передачи:</string>
 <string name="TrackCourseChange">Смена курса трека:</string>
 <string name="ServerError">Ошибка сервера</string>
