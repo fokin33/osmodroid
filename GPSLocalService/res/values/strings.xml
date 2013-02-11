@@ -10,8 +10,8 @@
 <string name="settings">Настройки</string>
 <string name="period">Период опроса GPS</string>
 <string name="succes">Успешно</string>
-<string name="error">Ошибка:</string>
-<string name="Sputniki">Спутники:</string>
+<string name="error">Ошибка: </string>
+<string name="Sputniki">Спутники: </string>
 <string name="GlonasFindString">" используется Глонасс"</string>
 <string name="NoConnection">Нет соединения</string>
 <string name="Unknow">Неизвестная</string>
@@ -29,8 +29,8 @@
 <string name="TrackRecordParameterChanges">Параметры записи трека изменятся</string>
 <string name="Running">Запущен</string>
 <string name="NotRunning">Не запущен</string>
-<string name="Status">"Статус: "</string>
-<string name="Sendcount">" Отправок:"</string>
+<string name="Status">Статус: </string>
+<string name="Sendcount">Отправок: </string>
 <string name="ErrorRecieve">Ошибка при получении</string>
 <string name="AuthWait">Запрос авторизации, Подождите пожалуйста...</string>
 <string name="CheckInternet">Не удалось авторизоватся. Проверьте работу интернета</string>

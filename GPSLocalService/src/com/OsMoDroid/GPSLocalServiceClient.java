@@ -895,7 +895,7 @@ layout.addView(txv1);
 		String startStatus =checkStarted() ? getString(R.string.Running)
 				: getString(R.string.NotRunning);
 		String statusText = //getString(R.string.Status) + startStatus+
-				getString(R.string.Sendcount) + sendcounter + " В буфере:"+buffercounter;
+				getString(R.string.Sendcount) + sendcounter + " В буфере: "+buffercounter;
 		TextView t = (TextView) findViewById(R.id.serviceStatus);
 		t.setText(statusText);
 	}
