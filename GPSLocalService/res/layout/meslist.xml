@@ -20,31 +20,4 @@
         android:layout_weight="0.58" >
     </ListView>
 
-    <EditText
-        android:id="@+id/toAppText"
-         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <EditText
-        android:id="@+id/toUserText"
-         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge"  />
-
-    <EditText
-        android:id="@+id/sendText"
-         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge"  />
-
-    <Button
-        android:id="@+id/sendButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
-
 </LinearLayout>

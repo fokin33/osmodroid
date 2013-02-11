@@ -39,18 +39,9 @@ public class mesActivity extends Activity implements ResultsListener {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.meslist);
-		  toAppText = (EditText) findViewById(R.id.toAppText);
-		  toUserText = (EditText) findViewById(R.id.toUserText);
-		  sendText = (EditText) findViewById(R.id.sendText);
+		  
 		
-		Button sendButton = (Button) findViewById(R.id.sendButton);
-		sendButton.setOnClickListener(new OnClickListener() {
-			
-			public void onClick(View v) {
-				netutil.newapicommand((ResultsListener)mesActivity.this, "im_send:"+toUserText.getText().toString()+","+toAppText.getText().toString(),sendText.getText().toString());
-				
-			}
-		});
+		
 		
 		
 		 final ListView lv1 = (ListView) findViewById(R.id.meslistView);

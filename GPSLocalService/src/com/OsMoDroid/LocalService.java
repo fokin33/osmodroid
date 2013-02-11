@@ -697,7 +697,7 @@ if (live){
 }
           
 if (settings.getBoolean("im", false) && !settings.getString("key", "" ).equals("") ){
-mesIM = new IM(settings.getString("key", ""),this,1);
+mesIM = new IM(settings.getString("key", "")+",im_messages,om_online",this,1);
 }
 	}
 	

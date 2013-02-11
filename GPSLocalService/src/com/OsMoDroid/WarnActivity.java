@@ -64,8 +64,7 @@ public class WarnActivity extends Activity {
 						
 						 sendIntent.setType("text/plain");
 							sendIntent.putExtra(android.content.Intent.EXTRA_EMAIL,new String[] { "support@esya.ru" } );
-							sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, getIntent().getStringExtra("info") + " Устройство:"+settings.getString("device", "")+ " hash:"+settings.getString("hash", ""));
-							sendIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Error");
+							 sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, getIntent().getStringExtra("info") + " Устройство: "+settings.getString("device", "")+", hash: "+settings.getString("hash", "")+", n: "+settings.getString("n", "")+", API key: "+settings.getString("key", ""));							sendIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Error");
 							startActivity(Intent.createChooser(sendIntent, "Email"));
 					}
 				});

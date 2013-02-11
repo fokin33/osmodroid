@@ -56,7 +56,7 @@ public class IM {
 	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	public IM(String channel, Context context,int type) {
-		adr="http://d.esya.ru/?identifier="+channel+",im_messages&ncrnd="+timestamp;
+		adr="http://d.esya.ru/?identifier="+channel+"+&ncrnd="+timestamp;
 		this.parent=context;
 		mychanel=channel;
 		mestype=type;
@@ -221,22 +221,15 @@ public class IM {
 		
 			for (int i = 0; i < result.length(); i++) {
 		        JSONObject jsonObject = result.getJSONObject(i);
-		        if (jsonObject.has("data")){
-		        if 	(new  JSONObject(jsonObject.optString("data")).has("text")) {
-		        messageText=messageText + (new  JSONObject(jsonObject.optString("data")).optString("time"))+ 
-		        		" "+ new  JSONObject(jsonObject.optString("data")).optString("from_name")+":"
-		        + new JSONObject(jsonObject.optString("data")).optString("text")+"\n"  ;
-		        
-		        }
-		        }
+		        
 		        Iterator it = (new JSONObject(jsonObject.optString("ids"))).keys();
 				  while (it.hasNext())
 	          	{
 	          		
-	String keyname= (String)it.next();          		 
+	String keyname= (String)it.next();		if (keyname.equals("im_messages")) {				if (jsonObject.has("data")){	        if 	(new  JSONObject(jsonObject.optString("data")).has("text")) {	        messageText=messageText + (new  JSONObject(jsonObject.optString("data")).optString("time"))+ 	        		" "+ new  JSONObject(jsonObject.optString("data")).optString("from_name")+":"	        + new JSONObject(jsonObject.optString("data")).optString("text")+"\n"  ;	        	        }	        }	}	if (keyname.equals("om_online1")) {				if (jsonObject.has("data")){	        //	        	02-09 13:06:16.020: D/com.OsMoDroid.IM(13197):     "data": "state-40-1"	        	String[] data = jsonObject.optString("data").split("-");	        	if (data[0].equals("state")){	        messageText= messageText + " Устройство:"+data[1]+"Сессия:"+data[2].replace("0", "Остановлена")+data[2].replace("1", "Запущена");	        	}	        	if (data[0].equals("online")){	    	        messageText= messageText + " Устройство:"+data[1]+data[2].replace("0", "Вне связи")+data[2].replace("1", "На связи");	    	        	}	        }	}	
 	Log.d(getClass().getSimpleName(),(new JSONObject(jsonObject.optString("ids"))).optString(keyname));
 	 
-	adr="http://d.esya.ru/?identifier="+mychanel+",im_messages&ncrnd="+(new JSONObject(jsonObject.optString("ids"))).optString(keyname);
+	adr="http://d.esya.ru/?identifier="+mychanel+"&ncrnd="+(new JSONObject(jsonObject.optString("ids"))).optString(keyname);
 	
 	
 	          	}
