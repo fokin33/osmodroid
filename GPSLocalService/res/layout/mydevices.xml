@@ -3,15 +3,15 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" android:alwaysDrawnWithCache="false" android:descendantFocusability="blocksDescendants">
-
+<!--
     <Button
         android:id="@+id/refreshsimlinksbutton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/SimLinkButtonText" />
+-->
 
- 
-    
+
     <ListView
         android:id="@+id/mydeviceslistView"
         android:layout_width="fill_parent"
@@ -22,6 +22,6 @@
 
     </ListView>
 
-  
+
 
 </LinearLayout>
