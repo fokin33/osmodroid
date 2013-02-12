@@ -5,7 +5,6 @@
     android:versionName="1.0.0.37" >
 
     <uses-sdk android:minSdkVersion="4"  />
-    
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -14,7 +13,6 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    
 
     <application
         android:icon="@drawable/eye"
@@ -45,7 +43,6 @@
         </receiver>
         <activity android:name="MyDevices"></activity>
 
-        
     </application>
 
 </manifest>

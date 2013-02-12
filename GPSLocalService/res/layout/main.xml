@@ -4,63 +4,43 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" android:alwaysDrawnWithCache="false" android:descendantFocusability="blocksDescendants">
 
- <TextView
-        android:id="@+id/serviceStatus"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/serviceStatus" />
+	<TextView
+	   android:id="@+id/serviceStatus"
+	   android:layout_width="fill_parent"
+	   android:layout_height="wrap_content"
+	   android:text="@string/serviceStatus" />
 
- <TextView
-     android:id="@+id/URL"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
-     android:text="Адрес:" />
+	<TextView
+	   android:id="@+id/URL"
+	   android:layout_width="wrap_content"
+	   android:layout_height="wrap_content"
+	   android:text="@string/url" />
 
-<!--  <Button -->
-<!--      android:id="@+id/copyButton" -->
-<!--      android:layout_width="fill_parent" -->
-<!--      android:layout_height="wrap_content" -->
-<!--      android:text="Скопировать адрес" /> -->
+	<Button
+		android:id="@+id/startButton"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:clickable="false"
+		android:text="@string/start" />
 
-<!--  <Button -->
-<!--      android:id="@+id/SendButton" -->
-<!--      android:layout_width="fill_parent" -->
-<!--      android:layout_height="wrap_content" -->
-<!--      android:text="Отослать адрес" /> -->
+	<Button
+		android:id="@+id/exitButton"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:clickable="true"
+		android:text="@string/stop" />
 
-<Button
-    android:id="@+id/startButton"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:clickable="false"
-    android:text="Старт" />
+	<TextView
+		android:id="@+id/Location"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/location"
+		android:textSize="22sp" />
 
-<Button
-    android:id="@+id/exitButton"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:clickable="true"
-    android:text="Стоп"
-     />
+	<TextView
+		android:id="@+id/Send"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/send" />
 
-<!-- <Button -->
-<!--     android:id="@+id/forcesendButton" -->
-<!--     android:layout_width="fill_parent" -->
-<!--     android:layout_height="wrap_content" -->
-<!--     android:clickable="true" -->
-<!--     android:text="Принудительно отправить координаты" /> -->
-
-<TextView
-    android:id="@+id/Location"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="Положение:"
-    android:textSize="22sp" />
-
-<TextView
-    android:id="@+id/Send"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Отправка:"
-     />
 </LinearLayout>
