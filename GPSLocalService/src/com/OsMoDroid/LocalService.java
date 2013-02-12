@@ -1760,11 +1760,11 @@ if (!settings.getString("key", "" ).equals("") ){
 
 			 String time = sdf2.format(new Date());
 
-			 fileName = new File (sdDir, "tracks/");
+			 fileName = new File (sdDir, "OsMoDroid/");
 
 			 fileName.mkdirs();
 
-			 fileName = new File(sdDir, "tracks/"+time+".gpx");
+			 fileName = new File(sdDir, "OsMoDroid/"+time+".gpx");
 
 			 }
 
@@ -1787,37 +1787,24 @@ if (!settings.getString("key", "" ).equals("") ){
 			}
 
 			try {
+                            // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd'T'HH:mm:ssZ");
 
-				// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd'T'HH:mm:ssZ");
+                            String time = sdf1.format(new Date(System.currentTimeMillis()))+"Z";
 
-				 String time = sdf1.format(new Date(System.currentTimeMillis()))+"Z";
+                            FileWriter trackwr = new FileWriter(fileName);
+                            trackwr.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+                            trackwr.write("<gpx xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.1\" xmlns=\"http://www.topografix.com/GPX/1/1\" creator=\"OsMoDroid\" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\">");
+                            trackwr.write("<time>" +time + "</time>");
+                            trackwr.write("<trk>");
+                            trackwr.write("<name>" + time + "</name>");
+                            trackwr.write("<trkseg>");
+                            trackwr.flush();
+                            trackwr.close();
 
-			 FileWriter trackwr = new FileWriter(fileName);
-
-			 trackwr.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-
-             trackwr.write("<gpx xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.0\" xmlns=\"http://www.topografix.com/GPX/1/0\" creator=\"OcMoDroid\" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd\">");
-
-             trackwr.write("<time>" +time + "</time>");
-
-             trackwr.write("<trk>");
-
-             trackwr.write("<name>" + time + "</name>");
-
-             trackwr.write("<trkseg>");
-
-             trackwr.flush();
-
-			 trackwr.close();
-
-			 fileheaderok=true;
-
+                            fileheaderok=true;
 			} catch (Exception e) {
-
-				//e.printStackTrace();
-
-				Toast.makeText(LocalService.this, getString(R.string.CanNotWriteHeader), Toast.LENGTH_SHORT).show();
-
+                            //e.printStackTrace();
+                            Toast.makeText(LocalService.this, getString(R.string.CanNotWriteHeader), Toast.LENGTH_SHORT).show();
 			}
 
 
@@ -3451,19 +3438,19 @@ public boolean isOnline() {
 
 	}
 
-	
 
-	
 
-	
 
-	
+
+
+
+
 
 
 
 
 public void onResultsSucceeded(APIComResult result) {
-	JSONArray a = null; 
+	JSONArray a = null;
 
 
 
@@ -3659,7 +3646,7 @@ public void onResultsSucceeded(APIComResult result) {
 	}
 
 	if (result.Command.equals("APIM")&& !(result.Jo==null))
-		
+
 
 
 
@@ -3669,7 +3656,7 @@ public void onResultsSucceeded(APIComResult result) {
 
 		if (result.Jo.has("om_device")){
 			deviceList.clear();
-			
+
 			try {
 				  a =	result.Jo.getJSONArray("om_device");
 		 		  Log.d(getClass().getSimpleName(), a.toString());
@@ -3683,25 +3670,25 @@ public void onResultsSucceeded(APIComResult result) {
 			jsonObject.getString("lon"),
 			jsonObject.getString("online"),
 			jsonObject.getString("state")
-			); 	 		
+			);
 
 	deviceList.add(devitem);
-		 		 
-		 		 
-		 		 
-		 		 } 
+
+
+
+		 		 }
 				} catch (Exception e) {
-					
+
 					 Log.d(getClass().getSimpleName(), "эксепшн");
 					//e.printStackTrace();
 				}
-		
+
 
 			 Log.d(getClass().getSimpleName(),deviceList.toString());
-			
+
 			 if (deviceAdapter!=null) {deviceAdapter.notifyDataSetChanged();}
 		}
-		
+
 
 
 		Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);
@@ -3732,7 +3719,7 @@ public void onResultsSucceeded(APIComResult result) {
 }
 
 
- 
+
 
 
 
