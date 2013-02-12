@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,8 +54,11 @@ public class DeviceAdapter extends ArrayAdapter<Device> {
 		        deviceName.setText(device.name);
 		        deviceWhere.setText(device.where);
 		        deviceLast.setText(device.last);
+		        Log.d(getClass().getSimpleName(),"device.name="+device.name.toString());
+		        Log.d(getClass().getSimpleName(),"device.online="+device.online.toString());
+		        Log.d(getClass().getSimpleName(),"device.state="+device.state.toString());
 		        if (device.online.equals("1")){
-		        	
+		        	 
 		        	deviceName.setTextColor(Color.GREEN);
 		        }
 		        if (device.state.equals("1")){
