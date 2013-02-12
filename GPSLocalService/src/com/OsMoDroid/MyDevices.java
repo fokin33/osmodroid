@@ -77,7 +77,7 @@ public class MyDevices extends Activity implements ResultsListener{
 						}
 	});
 	       
-	    Button refsimlinkbutton = (Button) findViewById(R.id.refreshsimlinksbutton);    
+	    Button refsimlinkbutton = (Button) findViewById(R.id.refreshdevicessbutton);    
 	    refsimlinkbutton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				getDevices(MyDevices.this);

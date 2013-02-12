@@ -3624,7 +3624,7 @@ public void onResultsSucceeded(APIComResult result) {
 
 			Log.d(getClass().getSimpleName(),"notifwar2:"+result.Jo.optString("error")+" "+result.Jo.optString("error_description"));
 
-			notifywarnactivity("Команда:"+result.Command+result.Jo.optString("error")+" "+result.Jo.optString("error_description"));
+			notifywarnactivity("Команда:"+result.Command+" Код ошибки:"+result.Jo.optString("error")+" Расшифровка:"+result.Jo.optString("error_description"));
 
 		}
 

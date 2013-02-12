@@ -3,13 +3,13 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" android:alwaysDrawnWithCache="false" android:descendantFocusability="blocksDescendants">
-<!--
+
     <Button
-        android:id="@+id/refreshsimlinksbutton"
+        android:id="@+id/refreshdevicessbutton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/SimLinkButtonText" />
--->
+
 
 
     <ListView
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         >
 
-        <!-- Preview: listitem=@android:layout/simple_list_item_1 -->
+      
 
     </ListView>
 
