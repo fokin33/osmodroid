@@ -109,7 +109,7 @@ PowerManager pm;
 	MenuItem mi8;
 	MenuItem myDevices;
 	MenuItem messages;
-	
+
 	String version="Unknown";
 	SharedPreferences settings;
 
@@ -379,7 +379,7 @@ startlocalservice();
 			requestAuthTask.execute();
 		}
 		TextView t2 = (TextView) findViewById(R.id.URL);
-		t2.setText("Имя: "+settings.getString("devicename", "")+". " +getString(R.string.Adres) + viewurl);
+		t2.setText(settings.getString("devicename", "")+" : " +getString(R.string.Adres) + viewurl);
 
 		Linkify.addLinks(t2, Linkify.ALL);
 
@@ -1139,7 +1139,7 @@ editor.commit();}
 if (!(aviewurl==null)){viewurl=aviewurl;}
 
 				TextView t2 = (TextView) findViewById(R.id.URL);
-				t2.setText("Имя: "+devicename+". " +getString(R.string.Adres) + viewurl);
+				t2.setText(devicename+" : "+getString(R.string.Adres) + viewurl);
 				Linkify.addLinks(t2, Linkify.ALL);
 
 				SharedPreferences.Editor editor = settings.edit();
@@ -1278,7 +1278,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 			if (!(result.Jo.optString("url").equals(""))) {
 				viewurl = result.Jo.optString("url");
 				TextView t2 = (TextView) findViewById(R.id.URL);
-				t2.setText("Имя: "+devicename+". " +getString(R.string.Adres) + viewurl);
+				t2.setText(devicename+" : "+getString(R.string.Adres) + viewurl);
 				Linkify.addLinks(t2, Linkify.ALL);
 
 				SharedPreferences.Editor editor = settings.edit();

@@ -759,7 +759,7 @@ public void stopcomand()
 
 			{
 
-				if (position==null){position = ( "Ш:" + df6.format(forcenetworklocation.getLatitude())+ " Д:"+  df6.format( forcenetworklocation.getLongitude())+" С:" +df1.format(forcenetworklocation.getSpeed()*3.6));}
+				if (position==null){position = ( df6.format(forcenetworklocation.getLatitude())+", "+df6.format( forcenetworklocation.getLongitude())+" = " +df1.format(forcenetworklocation.getSpeed()*3.6));}
 
 				URLadr="http://t.esya.ru/?"+  df6.format( forcenetworklocation.getLatitude()) +":"+ df6.format( forcenetworklocation.getLongitude())+":"+ df1.format(forcenetworklocation.getAccuracy())
 
@@ -2441,9 +2441,9 @@ workmilli= System.currentTimeMillis();
 
 		}
 
-		position = ( "Ш:" + df6.format(location.getLatitude())+ " Д:"+  df6.format( location.getLongitude())+" С:" +df1.format(location.getSpeed()*3.6));
+		position = ( df6.format(location.getLatitude())+", "+df6.format( location.getLongitude())+" = "+df1.format(location.getSpeed()*3.6));
 
-		//position = ( "Ш:" + String.format("%.6f", location.getLatitude())+ " Д:"+  String.format("%.6f", location.getLongitude())+" С:" +String.format("%.1f", location.getSpeed()));
+		//position = ( String.format("%.6f", location.getLatitude())+", "+String.format("%.6f", location.getLongitude())+" = "+String.format("%.1f", location.getSpeed()));
 
 //if (location.getTime()>lastfix+3000)notifygps(false);
 
