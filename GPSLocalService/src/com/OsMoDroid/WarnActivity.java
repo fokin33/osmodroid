@@ -17,7 +17,7 @@ public class WarnActivity extends Activity {
     public void onBackPressed() {
 		Intent i = new Intent(this, GPSLocalServiceClient.class);
 		i.setAction(Intent.ACTION_MAIN);
-		i.addCategory(Intent.CATEGORY_LAUNCHER);
+		i.addCategory(Intent.CATEGORY_LAUNCHER);		 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
 	    startActivity(i);
     super.onBackPressed();
     }

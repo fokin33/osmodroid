@@ -452,6 +452,8 @@ private long lastgpslocationtime=0;
 	    int voltage=-1;
 
 	    public static List<Device> deviceList= new ArrayList<Device>();
+	    
+	    public static ArrayList<String> messagelist= new ArrayList<String>();
 
 	    public static DeviceAdapter deviceAdapter;
 
@@ -907,6 +909,8 @@ public void stopcomand()
 
 		ReadPref();
 
+		deviceAdapter = new DeviceAdapter(getApplicationContext(),R.layout.deviceitem, LocalService.deviceList);
+		
 		String alarm = Context.ALARM_SERVICE;
 
 		 am = ( AlarmManager ) getSystemService( alarm );
@@ -1316,7 +1320,13 @@ if (live){
 
 	if (isOnline()){
 
-	startcomand();}
+	startcomand();
+	if (!settings.getString("key", "" ).equals("") ){
+
+		netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
+
+	}
+	}
 
 	else {
 
@@ -1351,6 +1361,11 @@ if (live){
 							Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this+" Network is connected");
 
 							startcomand();
+							if (!settings.getString("key", "" ).equals("") ){
+
+								netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
+
+							}
 
 							unregisterReceiver(onlinePauseforStartReciever);
 
@@ -1397,11 +1412,7 @@ if (settings.getBoolean("im", false) && !settings.getString("key", "" ).equals("
 mesIM = new IM(settings.getString("key", "")+",im_messages,om_online",this,1);
 
 }
-if (!settings.getString("key", "" ).equals("") ){
 
-	netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
-
-}
 
 
 
@@ -2610,7 +2621,7 @@ if (gpx && fileheaderok) {
 			prevlocation.setTime(location.getTime());
 
 			prevbrng=brng;
-
+			Log.d(this.getClass().getName(), "send(location)="+location);
 		sendlocation ( location);
 
 
@@ -2638,7 +2649,7 @@ if (gpx && fileheaderok) {
 					prevlocation.setLongitude(location.getLongitude());
 
 					prevlocation.setTime(location.getTime());
-
+					Log.d(this.getClass().getName(), "send(location)="+location);
 				 sendlocation (location);
 
 			 }
@@ -3139,7 +3150,7 @@ private void writegpx(Location location){
 
 private void sendlocation (Location location){
 
-//	Log.d(this.getClass().getName(), "void sendlocation");
+	Log.d(this.getClass().getName(), "void sendlocation");
 
 //http://t.esya.ru/?60.452323:30.153262:5:53:25:hadfDgF:352
 
@@ -3182,17 +3193,17 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 //если задач по отправке не существует или закончена
 
 {
-
+	Log.d(this.getClass().getName(), "sendlocation send==null or FINISHED");
 
 
 	if(usebuffer){
 
 // если используется буфер
-
+		Log.d(this.getClass().getName(), "sendlocation if usebuffer");
 	if (sended )
 
 	{
-
+		Log.d(this.getClass().getName(), "sendlocation if sended");
 //и прошлая отправка успешная
 
 		Log.d(this.getClass().getName(), "buffersb.delete "+buffersb.toString());
@@ -3208,7 +3219,7 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 	else
 
 	{
-
+		Log.d(this.getClass().getName(), "sendlocation if not sended");
 		//прошлая отправка не успешная
 
 		Log.d(this.getClass().getName(), "buffersb.append "+buffersb.toString());
@@ -3220,7 +3231,8 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 		if (buffersb.length()==0)
 
 		{
-
+			Log.d(this.getClass().getName(), "sendlocation if buffersb.l=0");
+			
 			buffersb.append("log[]=").append(sendedsb);
 
 			buffercounter=buffercounter+scounter;
@@ -3230,7 +3242,8 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 		else
 
 		{
-
+			Log.d(this.getClass().getName(), "sendlocation if buffersb.l!=0");
+			
 			buffersb.append("&log[]=").append(sendedsb);
 
 			buffercounter=buffercounter+scounter;
@@ -3244,13 +3257,15 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 	}
 
 				}
-
+	Log.d(this.getClass().getName(), "sendlocation send=new SendCoor");
 	send = new SendCoor();
 
 	if(usebuffer)
 
 	{
 
+		Log.d(this.getClass().getName(), "sendlocation if usebuffer");
+		
 		lastbuffersb.setLength(0);
 
 		lastbuffersb.append(buffersb);
@@ -3267,7 +3282,10 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 
 		send.execute(URLadr,lastbuffersb.toString());}
 
-	else {send.execute(URLadr," ");}
+	else {
+		Log.d(this.getClass().getName(), "sendlocation if not usebuffer");
+		
+		send.execute(URLadr," ");}
 
 	}
 
@@ -3276,14 +3294,17 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
  else
 
 {
-
+	 Log.d(this.getClass().getName(), "sendlocation send!=null or not FINISHED");
 	if(usebuffer)
-
+		
 	{
-
+		Log.d(this.getClass().getName(), "sendlocation if usebuffer");
 	if (buffersb.length()==0)
 
-	{	Log.d(this.getClass().getName(), "2buffersb.append "+buffersb.toString());
+		
+	{	
+		Log.d(this.getClass().getName(), "sendlocation if buffersb.l=0");
+		Log.d(this.getClass().getName(), "2buffersb.append "+buffersb.toString());
 
 		buffersb.append("log[]=").append(df6.format( location.getLatitude())).append(":").append(df6.format( location.getLongitude())).append(":").append(df1.format( location.getAltitude())).append(":").append(df1.format( location.getSpeed())).append(":").append(location.getTime()/1000);
 
@@ -3291,7 +3312,10 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 
 		Log.d(this.getClass().getName(), "2buffersb.append "+buffersb.toString());}
 
-	else{	Log.d(this.getClass().getName(), "3uffersb.append "+buffersb.toString());
+	else{	
+		Log.d(this.getClass().getName(), "sendlocation if buffersb!=0");
+		
+		Log.d(this.getClass().getName(), "3uffersb.append "+buffersb.toString());
 
 		buffersb.append("&log[]=").append(df6.format( location.getLatitude())).append(":").append(df6.format( location.getLongitude())).append(":").append(df1.format( location.getAltitude())).append(":").append(df1.format( location.getSpeed())).append(":").append(location.getTime()/1000);
 
@@ -3336,6 +3360,7 @@ public void onGpsStatusChanged(int event) {
 	}
 
 	Sattelite=getString(R.string.Sputniki)+Count+":"+CountFix+" ("+hasA+"-"+hasE+")";
+	refresh();
 }
 
 public void onInit(int status) {
@@ -3471,159 +3496,30 @@ public void onResultsSucceeded(APIComResult result) {
 
 
 
-		Log.d(getClass().getSimpleName(),"notifwar1 Команда:"+result.Command+" Ответ сервера:"+result.rawresponse);
+		Log.d(getClass().getSimpleName(),"notifwar1 Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ " Запрос:"+result.url);
 
-			notifywarnactivity("Команда:"+result.Command+" Ответ сервера:"+result.rawresponse);
+			notifywarnactivity("Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ " Запрос:"+result.url);
 
 		}
 
+	if (!(result.Jo==null)) {
+		if (result.Jo.has("error")){
 
+		Log.d(getClass().getSimpleName(),"notifwar2:"+result.Jo.optString("error")+" "+result.Jo.optString("error_description"));
 
-
-
-	String toprint = "";
-
-	if (result.Command.equals("im_get_all")) {
-
-		String messagestext="";
-
-		try {
-
-
-
-
-
-		        JSONObject jsonObject = result.Jo.getJSONObject("messages");
-
-		        Iterator i = jsonObject.keys();
-
-				  while (i.hasNext())
-
-	          	{
-
-
-
-	String keyname= (String)i.next();
-
-	messagestext="Сообщение номер:"+jsonObject.getJSONObject(keyname).optString("u")+"\n"+"Дата:"+jsonObject.getJSONObject(keyname).optString("time")+"\n"+jsonObject.getJSONObject(keyname).optString("text");
-
-
-
-	if (settings.getBoolean("usetts", false)&&tts!=null )
-
-	{
-
-
-
-		Log.d(this.getClass().getName(), "try to say message");
-
-		tts.speak("Сообщение:"+jsonObject.getJSONObject(keyname).optString("text") , TextToSpeech.QUEUE_ADD, null);
-
-
-
-	}
-
-
-
-	          	}
-
-		        Log.d(getClass().getSimpleName(),messagestext);
-
-
-
-
-
-				Notification mesnotification = new Notification(R.drawable.eye, (CharSequence)messagestext, System.currentTimeMillis());
-
-				mesnotification.setLatestEventInfo(getApplicationContext(), "Сообщение:"+"\n", (CharSequence)messagestext, PendingIntent.getActivity(getApplicationContext(), 0, new Intent(), 0));
-
-				mesnotification.flags |= Notification.FLAG_AUTO_CANCEL;
-
-		mNotificationManager.notify(notifyid, mesnotification);
-
-		        notifyid++;
-
-
-
-
-
-		        LinearLayout layout = new LinearLayout(this);
-
-				layout.setOrientation(LinearLayout.VERTICAL);
-
-
-
-		        final TextView txv3 = new TextView(this);
-
-				txv3.setText(messagestext);
-
-				txv3.setTextSize(16);
-
-				txv3.setBackgroundColor(Color.GREEN);
-
-				layout.addView(txv3);
-
-
-
-
-
-				Toast toast = new Toast(getApplicationContext());
-
-				toast.setView(layout);
-
-				toast.setDuration(Toast.LENGTH_LONG);
-
-				toast.show();
-
-		        vibrator.vibrate(400);
-
-
-
-
-
-
-
-
-
-
-
-
-
-		} catch (Exception e) {
-
-			Log.d(getClass().getSimpleName(),"exeption in analise im_get_all result");
-
-			//e.printStackTrace();
-
+		notifywarnactivity("Команда:"+result.Command+" Код ошибки:"+result.Jo.optString("error")+" Расшифровка:"+result.Jo.optString("error_description")+" Запрос:"+result.url);
 		}
-
-
-
-
-
-
-
-
-
-
-
-
-
+		
 	}
-
 
 
 	if (result.Command.equals("start")&& !(result.Jo==null))
 
 	{
 
-		if (result.Jo.has("error")){
-
-			Log.d(getClass().getSimpleName(),"notifwar2:"+result.Jo.optString("error")+" "+result.Jo.optString("error_description"));
-
-			notifywarnactivity("Команда:"+result.Command+" Код ошибки:"+result.Jo.optString("error")+" Расшифровка:"+result.Jo.optString("error_description"));
-
-		}
+		
+			
+		
 
 		//Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description:ru"),5).show();
 

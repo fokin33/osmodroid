@@ -181,7 +181,7 @@ public class netutil {
 	    	}
 			
 			resAPI.Command=params[3];
-			resAPI.rawresponse=Commandtext;
+			resAPI.rawresponse=Commandtext;			resAPI.url=params[0];
 	        return resAPI;
 
 	    }

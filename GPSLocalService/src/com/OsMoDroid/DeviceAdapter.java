@@ -61,8 +61,16 @@ public class DeviceAdapter extends ArrayAdapter<Device> {
 		        	 
 		        	deviceName.setTextColor(Color.GREEN);
 		        }
+		        else 
+		        {
+		        	deviceName.setTextColor(Color.WHITE);
+		        }
 		        if (device.state.equals("1")){
-		        	row.setBackgroundColor(Color.BLUE);
+		        	deviceWhere.setTextColor(Color.GREEN);
+		        }
+		        else
+		        {
+		        	deviceWhere.setTextColor(Color.WHITE);
 		        }
 		       
 		        				
