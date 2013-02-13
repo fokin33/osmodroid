@@ -5,7 +5,7 @@
 <string name="stop">Остановить</string>
 <string name="serviceStatus">Состояние:</string>
 <string name="location">"Положение: "</string>
-<string name="send">Отправка:</string>
+<string name="sends">Отправка:</string>
 <string name="url">Адрес:</string>
 <string name="settings">Настройки</string>
 <string name="period">Период опроса GPS</string>
