@@ -379,15 +379,15 @@ startlocalservice();
 			requestAuthTask.execute();
 		}
 		TextView t2 = (TextView) findViewById(R.id.URL);
-		t2.setText(settings.getString("devicename", "")+" : " +getString(R.string.Adres) + viewurl);
+		t2.setText(settings.getString("devicename", "")+" : "+viewurl);
 
 		Linkify.addLinks(t2, Linkify.ALL);
 
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
-		SubMenu menu1 = menu.addSubMenu(Menu.NONE, 11, 4,"Команды");
-		SubMenu menu2 = menu.addSubMenu(Menu.NONE, 12, 4,"Дополнительно");
+		SubMenu menu1 = menu.addSubMenu(Menu.NONE, 11, 4, "Действия");
+		SubMenu menu2 = menu.addSubMenu(Menu.NONE, 12, 4, "Дополнительно");
 
 		MenuItem auth = menu2.add(0, 1, 0, R.string.RepeatAuth);
 		MenuItem mi = menu.add(0, 2, 0, R.string.Settings);
@@ -395,37 +395,36 @@ startlocalservice();
 		MenuItem mi3 = menu2.add(0, 3, 0, R.string.EqualsParameters);
 
 		 mi4 = menu1.add(0, 4, 0, R.string.getkey);
-		 mi5 = menu1.add(0, 5, 0, R.string.getadres);
-		 mi6 = menu1.add(0, 6, 0, R.string.getdevice);
+		 //mi5 = menu1.add(0, 5, 0, R.string.getadres);
+		 //mi6 = menu1.add(0, 6, 0, R.string.getdevice);
 		 mi7 = menu1.add(0, 7, 0, R.string.enterchanel);
-		 mi8 = menu1.add(0, 8, 0, "Символические ссылки");
-		 MenuItem forcesenditem = menu.add(0, 9, 0, "Отправить сейчас");
+		 mi8 = menu1.add(0, 8, 0, R.string.symlink);
+		 MenuItem forcesenditem = menu.add(0, 9, 0, R.string.sendnow);
 		 forcesenditem.setIcon(android.R.drawable.ic_menu_mylocation);
 		 MenuItem shareadress = menu.add(0, 10, 0, "Поделиться ссылкой");
 		 shareadress.setIcon(android.R.drawable.ic_menu_share);
 		 MenuItem copyadress = menu.add(0, 11, 0, "Скопировать ссылку");
 		 copyadress.setIcon(android.R.drawable.ic_menu_edit);
-		 MenuItem about = menu.add(0, 12, 0, "О программе");
+		 MenuItem about = menu.add(0, 12, 5, R.string.about);
 		 MenuItem exit = menu.add(0, 14, 0, "Выход");
 		 messages = menu.add(0, 15, 0, "Сообщения");
 		 messages.setIcon(android.R.drawable.sym_action_chat);
 		 Intent activ=new Intent(this,  mesActivity.class);
 		 Bundle a=new Bundle();
 
-         a.putStringArrayList("meslist", LocalService.messagelist);
+                 a.putStringArrayList("meslist", LocalService.messagelist);
 		 activ.putExtras(a);
 
-	     activ.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
-		 
-		 
+                 activ.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
 		 messages.setIntent(activ);
 		 myDevices = menu.add(0, 16, 0, "Мои устройства");
 		 myDevices.setIcon(android.R.drawable.ic_menu_today);
 		 myDevices.setIntent(new Intent(this, MyDevices.class));
 		 about.setIcon(android.R.drawable.ic_menu_info_details);
 		 about.setIntent(new Intent(this, aboutActivity.class));
-		mi.setIntent(new Intent(this, PrefActivity.class));
-		mi8.setIntent(new Intent(this, SimLinks.class));
+                 mi.setIntent(new Intent(this, PrefActivity.class));
+                 mi8.setIntent(new Intent(this, SimLinks.class));
 
 		// Log.d(getClass().getSimpleName(), "onCreateOptionsmenu() gpsclient");
 		return super.onCreateOptionsMenu(menu);
@@ -1057,7 +1056,7 @@ if (mBound) {
 
 				findViewById(R.id.startButton).setEnabled(true);
 				TextView t2 = (TextView) findViewById(R.id.URL);
-				t2.setText(getString(R.string.Adres) + viewurl);
+				t2.setText(viewurl);
 				Linkify.addLinks(t2, Linkify.ALL);
 				 Log.d(this.getClass().getName(), "Задание окончило выполнятся.Bind");
 				bindService();
@@ -1148,7 +1147,7 @@ editor.commit();}
 if (!(aviewurl==null)){viewurl=aviewurl;}
 
 				TextView t2 = (TextView) findViewById(R.id.URL);
-				t2.setText(devicename+" : "+getString(R.string.Adres) + viewurl);
+				t2.setText(devicename+" : "+viewurl);
 				Linkify.addLinks(t2, Linkify.ALL);
 
 				SharedPreferences.Editor editor = settings.edit();
@@ -1287,7 +1286,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 			if (!(result.Jo.optString("url").equals(""))) {
 				viewurl = result.Jo.optString("url");
 				TextView t2 = (TextView) findViewById(R.id.URL);
-				t2.setText(devicename+" : "+getString(R.string.Adres) + viewurl);
+				t2.setText(devicename+" : "+viewurl);
 				Linkify.addLinks(t2, Linkify.ALL);
 
 				SharedPreferences.Editor editor = settings.edit();

@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" android:alwaysDrawnWithCache="false" android:descendantFocusability="blocksDescendants">
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/about"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/infotextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autoLink="all"
-        android:linksClickable="true"
-        android:text="@string/abouttext"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
+<LinearLayout
+	android:id="@+id/widget37"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+	xmlns:android="http://schemas.android.com/apk/res/android">
+<TextView
+	android:id="@+id/textView1"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="@string/about"
+	android:textColor="#ffffff66" />
+<TextView
+	android:id="@+id/infotextView"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:text="@string/abouttext" />
+<AbsoluteLayout
+	android:id="@+id/widget35"
+	android:layout_width="wrap_content"
+	android:layout_height="96dp">
+</AbsoluteLayout>
+<AnalogClock
+	android:id="@+id/widget36"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" />
+<Ticker
+	android:id="@+id/widget38"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content">
+</Ticker>
 </LinearLayout>
