@@ -730,30 +730,30 @@ startlocalservice();
 
 		}
 		if (item.getItemId() == 9) {
-			Log.d(getClass().getSimpleName(), "forcesend click");
-			if (conn == null || mService == null) {
-				Log.d(getClass().getSimpleName(), "нет бинда с сервисом");
-			} else {
-				Log.d(getClass().getSimpleName(), "вызов отправки позиции");
-				mService.sendPosition();
-				Log.d(getClass().getSimpleName(), "послек вызова отправки позиции");
-			}
+                    Log.d(getClass().getSimpleName(), "forcesend click");
+                    if (conn == null || mService == null) {
+                        Log.d(getClass().getSimpleName(), "нет бинда с сервисом");
+                    } else {
+                        Log.d(getClass().getSimpleName(), "вызов отправки позиции");
+                        mService.sendPosition();
+                        Log.d(getClass().getSimpleName(), "послек вызова отправки позиции");
+                    }
 		}
 		if (item.getItemId() == 10) {
-			Intent sendIntent = new Intent(Intent.ACTION_SEND);
-			sendIntent.setType("text/plain");
-			sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, viewurl);
-			startActivity(Intent.createChooser(sendIntent, "Email"));
+                    Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                    sendIntent.setType("text/plain");
+                    sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, viewurl);
+                    startActivity(Intent.createChooser(sendIntent, "Email"));
 		}
 		if (item.getItemId() == 11) {
-			ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-			if (viewurl != null)
-				clipboard.setText(viewurl);
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    if (viewurl != null)
+                    clipboard.setText(viewurl);
 		}
 		if (item.getItemId() == 14) {
-			Intent i = new Intent(this, LocalService.class);
-			stopService(i);
-			finish();
+                    Intent i = new Intent(this, LocalService.class);
+                    stopService(i);
+                    finish();
 		}
 
 

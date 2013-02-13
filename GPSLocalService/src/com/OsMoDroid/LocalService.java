@@ -1075,13 +1075,14 @@ public void stopcomand()
 				}
 
 				if (intent.getStringExtra("command").equals("closeclient")){
-                                    try {
+                                    //try {
                                         //Intent i = new Intent(this, LocalService.class);
-                                        stopService(intent);
+                                        //stopService(intent);
                                         //finish();
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
+                                    //} catch (JSONException e) {
+                                    //    e.printStackTrace();
+                                    //}
+                                    Toast.makeText(LocalService.this, "Попытка закрыть клиент удалённо" , Toast.LENGTH_SHORT).show();
 				}
 
 
