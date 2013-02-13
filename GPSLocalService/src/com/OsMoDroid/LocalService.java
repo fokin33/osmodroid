@@ -1078,7 +1078,7 @@ public void stopcomand()
                                     try {
                                         //Intent i = new Intent(this, LocalService.class);
                                         stopService(intent);
-                                        finish();
+                                        //finish();
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
