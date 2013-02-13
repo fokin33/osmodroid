@@ -405,7 +405,7 @@ startlocalservice();
 		 shareadress.setIcon(android.R.drawable.ic_menu_share);
 		 MenuItem copyadress = menu.add(0, 11, 0, "Скопировать ссылку");
 		 copyadress.setIcon(android.R.drawable.ic_menu_edit);
-		 MenuItem about = menu.add(0, 12, 5, R.string.about);
+		 MenuItem about = menu.add(0, 12, 0, R.string.about);
 		 MenuItem exit = menu.add(0, 14, 0, "Выход");
 		 messages = menu.add(0, 15, 0, "Сообщения");
 		 messages.setIcon(android.R.drawable.sym_action_chat);
