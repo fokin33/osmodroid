@@ -754,7 +754,6 @@ startlocalservice();
 			Intent i = new Intent(this, LocalService.class);
 			stopService(i);
 			finish();
-
 		}
 
 

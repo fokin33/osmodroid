@@ -452,7 +452,7 @@ private long lastgpslocationtime=0;
 	    int voltage=-1;
 
 	    public static List<Device> deviceList= new ArrayList<Device>();
-	    
+
 	    public static ArrayList<String> messagelist= new ArrayList<String>();
 
 	    public static DeviceAdapter deviceAdapter;
@@ -910,7 +910,7 @@ public void stopcomand()
 		ReadPref();
 
 		deviceAdapter = new DeviceAdapter(getApplicationContext(),R.layout.deviceitem, LocalService.deviceList);
-		
+
 		String alarm = Context.ALARM_SERVICE;
 
 		 am = ( AlarmManager ) getSystemService( alarm );
@@ -1038,71 +1038,51 @@ public void stopcomand()
 				Log.d(getClass().getSimpleName(), "remoteControlReciever intent "+intent);
 
 				if (intent.getStringExtra("command").equals("start")){
-
-					if (!state){
-
-						startServiceWork();
-
-						try {
-
-							Pong(context);
-
-						} catch (JSONException e) {
-
-							e.printStackTrace();
-
-						}
-
-					}
-
+                                    if (!state){
+                                        startServiceWork();
+                                        try {
+                                                Pong(context);
+                                        } catch (JSONException e) {
+                                                e.printStackTrace();
+                                        }
+                                    }
 				}
 
 				if (intent.getStringExtra("command").equals("stop")){
-
-					if (state){
-
-						stopServiceWork();
-
-						try {
-
-							Pong(context);
-
-						} catch (JSONException e) {
-
-							e.printStackTrace();
-
-						}
-
-					}
-
+                                    if (state){
+                                        stopServiceWork();
+                                        try {
+                                            Pong(context);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
 				}
 
 				if (intent.getStringExtra("command").equals("ping")){
-
-					try {
-
-						Pong(context);
-
-					} catch (JSONException e) {
-
-						e.printStackTrace();
-
-					}
-
+                                    try {
+                                        Pong(context);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
 				}
 
 				if (intent.getStringExtra("command").equals("batteryinfo")){
+                                    try {
+                                        batteryinfo(context);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+				}
 
-					try {
-
-						batteryinfo(context);
-
-					} catch (JSONException e) {
-
-						e.printStackTrace();
-
-					}
-
+				if (intent.getStringExtra("command").equals("closeclient")){
+                                    try {
+                                        Intent i = new Intent(this, LocalService.class);
+                                        stopService(i);
+                                        finish();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
 				}
 
 
@@ -3232,7 +3212,7 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 
 		{
 			Log.d(this.getClass().getName(), "sendlocation if buffersb.l=0");
-			
+
 			buffersb.append("log[]=").append(sendedsb);
 
 			buffercounter=buffercounter+scounter;
@@ -3243,7 +3223,7 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 
 		{
 			Log.d(this.getClass().getName(), "sendlocation if buffersb.l!=0");
-			
+
 			buffersb.append("&log[]=").append(sendedsb);
 
 			buffercounter=buffercounter+scounter;
@@ -3265,7 +3245,7 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 	{
 
 		Log.d(this.getClass().getName(), "sendlocation if usebuffer");
-		
+
 		lastbuffersb.setLength(0);
 
 		lastbuffersb.append(buffersb);
@@ -3284,7 +3264,7 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 
 	else {
 		Log.d(this.getClass().getName(), "sendlocation if not usebuffer");
-		
+
 		send.execute(URLadr," ");}
 
 	}
@@ -3296,13 +3276,13 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 {
 	 Log.d(this.getClass().getName(), "sendlocation send!=null or not FINISHED");
 	if(usebuffer)
-		
+
 	{
 		Log.d(this.getClass().getName(), "sendlocation if usebuffer");
 	if (buffersb.length()==0)
 
-		
-	{	
+
+	{
 		Log.d(this.getClass().getName(), "sendlocation if buffersb.l=0");
 		Log.d(this.getClass().getName(), "2buffersb.append "+buffersb.toString());
 
@@ -3312,9 +3292,9 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 
 		Log.d(this.getClass().getName(), "2buffersb.append "+buffersb.toString());}
 
-	else{	
+	else{
 		Log.d(this.getClass().getName(), "sendlocation if buffersb!=0");
-		
+
 		Log.d(this.getClass().getName(), "3uffersb.append "+buffersb.toString());
 
 		buffersb.append("&log[]=").append(df6.format( location.getLatitude())).append(":").append(df6.format( location.getLongitude())).append(":").append(df1.format( location.getAltitude())).append(":").append(df1.format( location.getSpeed())).append(":").append(location.getTime()/1000);
@@ -3509,7 +3489,7 @@ public void onResultsSucceeded(APIComResult result) {
 
 		notifywarnactivity("Команда:"+result.Command+" Код ошибки:"+result.Jo.optString("error")+" Расшифровка:"+result.Jo.optString("error_description")+" Запрос:"+result.url);
 		}
-		
+
 	}
 
 
@@ -3517,9 +3497,9 @@ public void onResultsSucceeded(APIComResult result) {
 
 	{
 
-		
-			
-		
+
+
+
 
 		//Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description:ru"),5).show();
 
