@@ -1202,7 +1202,6 @@ public void stopcomand()
 		sendpalyer=MediaPlayer.create(this, R.raw.sendsound);
 
 
-
 	//  } catch (Exception e) {
 
 
@@ -1904,6 +1903,13 @@ notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
 notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "Мониторинг активен", contentIntent);
+
+///
+MediaPlayer start;
+start = MediaPlayer.create(this, R.raw.start);
+if (start!=null){ start.setAudioStreamType(AudioManager.STREAM_MUSIC);}
+if (start!=null &&!start.isPlaying()) start.start();
+///
 
 mStartForegroundArgs[0]= OSMODROID_ID;
 
