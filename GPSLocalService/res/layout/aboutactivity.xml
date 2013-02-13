@@ -9,25 +9,18 @@
 	android:id="@+id/textView1"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
-	android:text="@string/about"
-	android:textColor="#ffffff66" />
+	android:text="&#1054; &#1087;&#1088;&#1086;&#1075;&#1088;&#1072;&#1084;&#1084;&#1077;"
+	android:textColor="#ffffff66"
+	android:gravity="center" />
+<ImageView
+	android:id="@+id/widget40"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:src="@drawable/eye"
+	android:layout_gravity="center_horizontal" />
 <TextView
 	android:id="@+id/infotextView"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
 	android:text="@string/abouttext" />
-<AbsoluteLayout
-	android:id="@+id/widget35"
-	android:layout_width="wrap_content"
-	android:layout_height="96dp">
-</AbsoluteLayout>
-<AnalogClock
-	android:id="@+id/widget36"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content" />
-<Ticker
-	android:id="@+id/widget38"
-	android:layout_width="wrap_content"
-	android:layout_height="wrap_content">
-</Ticker>
 </LinearLayout>

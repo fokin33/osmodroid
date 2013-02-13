@@ -395,10 +395,10 @@ startlocalservice();
 		MenuItem mi3 = menu2.add(0, 3, 0, R.string.EqualsParameters);
 
 		 mi4 = menu1.add(0, 4, 0, R.string.getkey);
-		 //mi5 = menu1.add(0, 5, 0, R.string.getadres);
-		 //mi6 = menu1.add(0, 6, 0, R.string.getdevice);
-		 mi7 = menu1.add(0, 5, 0, R.string.enterchanel);
-		 mi8 = menu1.add(0, 6, 0, R.string.symlink);
+		 mi5 = menu1.add(0, 5, 0, R.string.getadres);
+		 mi6 = menu1.add(0, 6, 0, R.string.getdevice);
+		 mi7 = menu1.add(0, 7, 0, R.string.enterchanel);
+		 mi8 = menu1.add(0, 8, 0, R.string.symlink);
 		 MenuItem forcesenditem = menu.add(0, 9, 0, R.string.sendnow);
 		 forcesenditem.setIcon(android.R.drawable.ic_menu_mylocation);
 		 MenuItem shareadress = menu.add(0, 10, 0, "Поделиться ссылкой");
