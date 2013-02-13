@@ -76,7 +76,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-
 import org.json.JSONObject;
 
 
@@ -1041,9 +1040,9 @@ public void stopcomand()
                                     if (!state){
                                         startServiceWork();
                                         try {
-                                                Pong(context);
+                                            Pong(context);
                                         } catch (JSONException e) {
-                                                e.printStackTrace();
+                                            e.printStackTrace();
                                         }
                                     }
 				}
@@ -1077,8 +1076,8 @@ public void stopcomand()
 
 				if (intent.getStringExtra("command").equals("closeclient")){
                                     try {
-                                        Intent i = new Intent(this, LocalService.class);
-                                        stopService(i);
+                                        //Intent i = new Intent(this, LocalService.class);
+                                        stopService(intent);
                                         finish();
                                     } catch (JSONException e) {
                                         e.printStackTrace();
