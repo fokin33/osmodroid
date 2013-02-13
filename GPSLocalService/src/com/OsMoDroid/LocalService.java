@@ -1206,7 +1206,6 @@ public void stopcomand()
 		sendpalyer=MediaPlayer.create(this, R.raw.sendsound);
 
 
-
 	//  } catch (Exception e) {
 
 
@@ -1916,6 +1915,13 @@ PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationInt
 
 notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "Мониторинг активен", contentIntent);
 
+///start sound
+MediaPlayer start;
+start = MediaPlayer.create(this, R.raw.start);
+if (start!=null){ start.setAudioStreamType(AudioManager.STREAM_MUSIC);}
+if (start!=null &&!start.isPlaying()) start.start();
+///start sound
+
 mStartForegroundArgs[0]= OSMODROID_ID;
 
 mStartForegroundArgs[1]= notification;
@@ -1989,11 +1995,15 @@ new netutil.MyAsyncTask(this).execute(params);}
 		am.cancel(pi);
 
 		if (live){
+                    String[] params = {"http://a.t.esya.ru/?act=session_stop&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", ""),"false","","session_stop"};
+                    new netutil.MyAsyncTask(this).execute(params);
 
-		String[] params = {"http://a.t.esya.ru/?act=session_stop&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", ""),"false","","session_stop"};
-
-		new netutil.MyAsyncTask(this).execute(params);
-
+                    ///stop sound
+                    MediaPlayer stop;
+                    stop = MediaPlayer.create(this, R.raw.stop);
+                    if (stop!=null){ stop.setAudioStreamType(AudioManager.STREAM_MUSIC);}
+                    if (stop!=null &&!stop.isPlaying()) stop.start();
+                    ///stop sound
 		}
 
 		try {
