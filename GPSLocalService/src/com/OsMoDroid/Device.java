@@ -38,6 +38,14 @@ public class Device {
 		  this.state=state;
 		}
 
+	@Override
+	public String toString() {
+		
+		
+		return "Device:u="+u+",name="+name+",app="+app+",last="+last+",url="+url+",where="+where+",lat="+lat+",lon="+lon
+				+",online="+online+",state="+state;
+	}
+
 	
 
 }

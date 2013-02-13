@@ -42,7 +42,7 @@ import android.widget.Toast;
 
 
 public class MyDevices extends Activity implements ResultsListener{
-
+	 ListView lv1;
 	 SharedPreferences settings;
 	 final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
 	 //
@@ -64,9 +64,9 @@ public class MyDevices extends Activity implements ResultsListener{
 	    setContentView(R.layout.mydevices); 
 	    settings  = PreferenceManager.getDefaultSharedPreferences(this);
 	    
-	    final ListView lv1 = (ListView) findViewById(R.id.mydeviceslistView);
+	    lv1 = (ListView) findViewById(R.id.mydeviceslistView);
 	      
-	       LocalService.deviceAdapter = new DeviceAdapter(this,R.layout.deviceitem, LocalService.deviceList);
+	   //if (LocalService.deviceAdapter==null){    LocalService.deviceAdapter = new DeviceAdapter(getApplicationContext(),R.layout.deviceitem, LocalService.deviceList);}
 	       lv1.setAdapter(LocalService.deviceAdapter);
 	       registerForContextMenu(lv1);
 	  lv1.setOnItemClickListener(new OnItemClickListener() {
@@ -178,11 +178,11 @@ public class MyDevices extends Activity implements ResultsListener{
 
 	public void onResultsSucceeded(APIComResult result) {
 		JSONArray a = null; 
-		Log.d(getClass().getSimpleName(),"OnResultListener:"+result);	
+		Log.d(getClass().getSimpleName(),"OnResultListener Command:"+result.Command+",Jo="+result.Jo);	
 		if (result.Command.equals("APIM")&& !(result.Jo==null))
 		{
 			Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);
-			if (result.Jo.has("om_device")){				LocalService.deviceList.clear();								try {					  a =	result.Jo.getJSONArray("om_device");			 		  Log.d(getClass().getSimpleName(), a.toString());			 		 for (int i = 0; i < a.length(); i++) {			 			JSONObject jsonObject = a.getJSONObject(i);			Device devitem = new Device(jsonObject.getString("u"), jsonObject.getString("name"),jsonObject.getString("app")				,jsonObject.getString("last"),				jsonObject.getString("url"),				jsonObject.getString("where"),				jsonObject.getString("lat"),				jsonObject.getString("lon"),				jsonObject.getString("online"),				jsonObject.getString("state")				); 	 				LocalService.deviceList.add(devitem);			 		 			 		 			 		 			 		 } 					} catch (Exception e) {												 Log.d(getClass().getSimpleName(), "эксепшн");						//e.printStackTrace();					}			   				 Log.d(getClass().getSimpleName(),LocalService.deviceList.toString());								 LocalService.deviceAdapter.notifyDataSetChanged();
+			if (result.Jo.has("om_device")){				LocalService.deviceList.clear();								try {					  a =	result.Jo.getJSONArray("om_device");			 		  Log.d(getClass().getSimpleName(), a.toString());			 		 for (int i = 0; i < a.length(); i++) {			 			JSONObject jsonObject = a.getJSONObject(i);			Device devitem = new Device(jsonObject.getString("u"), jsonObject.getString("name"),jsonObject.getString("app")				,jsonObject.getString("last"),				jsonObject.getString("url"),				jsonObject.getString("where"),				jsonObject.getString("lat"),				jsonObject.getString("lon"),				jsonObject.getString("online"),				jsonObject.getString("state")				); 	 				LocalService.deviceList.add(devitem);			 		 			 		 			 		 			 		 } 					} catch (Exception e) {												 Log.d(getClass().getSimpleName(), "эксепшн");						//e.printStackTrace();					}			   				 Log.d(getClass().getSimpleName(),LocalService.deviceList.toString());				// lv1.setAdapter(LocalService.deviceAdapter);				 LocalService.deviceAdapter.notifyDataSetChanged();
 			}
 		}
 	}

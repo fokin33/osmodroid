@@ -9,11 +9,13 @@ public JSONObject Jo=null;
 public String Command=null;
 public JSONArray ja=null;
 public String rawresponse=null;
+public String url=null;
 
 public  APIComResult() {
 	 JSONObject Jo=null;
 	 String Command=null;
 	 JSONArray ja=null;
 	 String rawresponse=null;
+	 String url=null;
 }
 }

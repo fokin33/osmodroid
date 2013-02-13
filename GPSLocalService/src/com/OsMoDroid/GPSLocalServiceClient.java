@@ -409,7 +409,16 @@ startlocalservice();
 		 MenuItem exit = menu.add(0, 14, 0, "Выход");
 		 messages = menu.add(0, 15, 0, "Сообщения");
 		 messages.setIcon(android.R.drawable.sym_action_chat);
-		 messages.setIntent(new Intent(this, mesActivity.class));
+		 Intent activ=new Intent(this,  mesActivity.class);
+		 Bundle a=new Bundle();
+
+         a.putStringArrayList("meslist", LocalService.messagelist);
+		 activ.putExtras(a);
+
+	     activ.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		 
+		 
+		 messages.setIntent(activ);
 		 myDevices = menu.add(0, 16, 0, "Мои устройства");
 		 myDevices.setIcon(android.R.drawable.ic_menu_today);
 		 myDevices.setIntent(new Intent(this, MyDevices.class));
