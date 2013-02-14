@@ -458,19 +458,19 @@ private long lastgpslocationtime=0;
 	    public static ArrayList<String> messagelist= new ArrayList<String>();
 
 	    public static DeviceAdapter deviceAdapter;
-	    
+
 	    static Context serContext;
-	    
+
 	    final static Handler alertHandler = new Handler() {
 
-	    	
-	    	
+
+
 			@Override
 
 			public void handleMessage(Message message) {
-			
-			
-			
+
+
+
 			Bundle b = message.getData();
 
 			String text = b.getString("MessageText");
@@ -478,8 +478,12 @@ private long lastgpslocationtime=0;
 			if (b.getBoolean("om_online",false)){
 				netutil.newapicommand((ResultsListener)serContext, "om_device");
 			}
-			
+
+
 			if (text != null) {
+
+
+
 			Toast.makeText(serContext, text, Toast.LENGTH_SHORT).show();
 
 			LocalService.messagelist.add(0,text);
@@ -567,7 +571,7 @@ private long lastgpslocationtime=0;
 			}
 
 			};
-	    
+
 
 	    private final IRemoteOsMoDroidService.Stub rBinder = new IRemoteOsMoDroidService.Stub() {
 
@@ -1314,100 +1318,23 @@ public void stopcomand()
 
 
 		if (gpson!=null){ gpson.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
-
 		if (gpsoff!=null){ gpsoff.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
-
 		if (ineton!=null){ ineton.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
-
 		if (inetoff!=null){inetoff.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
-
 		if (sendpalyer!=null){ sendpalyer.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
-
 		//sendpalyer.setVolume(leftVolume, rightVolume)
 
-
-
 		//Log.d(getClass().getSimpleName(), "oncreate() localservice");
-
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-
 		pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
-
-
 		in = new Intent("OsMoDroid");
-
 		mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-//		mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-//		int icon = R.drawable.eye;
-
-//		CharSequence tickerText = "Ждущий режим";// getString(R.string.Working);
-
-//		long when = System.currentTimeMillis();
-
-//		Notification notification = new Notification(icon, tickerText, when);
-
-//		Intent notificationIntent = new Intent(this, GPSLocalServiceClient.class);
-
-//		notificationIntent.setAction(Intent.ACTION_MAIN);
-
-//		notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-
-//		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-
-//		notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "", contentIntent);
-
-//		mStartForegroundArgs[0]= OSMODROID_ID;
-
-//		mStartForegroundArgs[1]= notification;
-
-//		Method mStartForeground;
-
-//	 final Class<?>[] mStartForegroundSignature = new Class[] {
-
-//			    int.class, Notification.class};
-
-//		try {
-
-//				mStartForeground = getClass().getMethod("startForeground",
-
-//		                mStartForegroundSignature);
-
-//					    } catch (Exception e) {
-
-//		      mStartForeground =  null;
-
-//		    }
-
-//if (mStartForeground == null){
-
-//setForeground(true);
-
-//mNotificationManager.notify(OSMODROID_ID, notification);
-
-//
-
-//} else
-
-//	{
-
-//	invokeMethod(mStartForeground, mStartForegroundArgs);
-
-//	}
-
-
-
-
-
-
-
-
-
-	     s = new Socket( );
-
-          //sockaddr = new InetSocketAddress("esya.ru", 2145);
+///////////////////////
+s = new Socket( );
+//sockaddr = new InetSocketAddress("esya.ru", 2145);
+///////////////////////
 
 if (live){
 
@@ -1514,39 +1441,17 @@ mesIM = new IM(settings.getString("key", "")+",im_messages,om_online",this,1);
 
 
 	void Pong(Context context) throws JSONException{
-
-		//JSONObject postjson = new JSONObject();
-
-		//postjson.put("batteryprocent", batteryprocent);
-
-		//netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
-
-		netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
-
+            netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
 	}
 
 	void batteryinfo(Context context) throws JSONException{
-
-		JSONObject postjson = new JSONObject();
-
-		postjson.put("batteryprocent", batteryprocent);
-
-		postjson.put("temperature", temperature);
-
-		postjson.put("voltage", voltage);
-
-		postjson.put("plugged", plugged);
-
-		netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
-
-
-
+            JSONObject postjson = new JSONObject();
+            postjson.put("batteryprocent", batteryprocent);
+            postjson.put("temperature", temperature);
+            postjson.put("voltage", voltage);
+            postjson.put("plugged", plugged);
+            netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 	}
-
-
-
-
-
 
 
 	@Override
