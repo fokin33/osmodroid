@@ -479,6 +479,7 @@ private long lastgpslocationtime=0;
 				netutil.newapicommand((ResultsListener)serContext, "om_device");
 			}
 			
+			if (text != null) {
 			Toast.makeText(serContext, text, Toast.LENGTH_SHORT).show();
 
 			LocalService.messagelist.add(0,text);
@@ -561,7 +562,7 @@ private long lastgpslocationtime=0;
 
 
 
-
+			}
 
 			}
 
