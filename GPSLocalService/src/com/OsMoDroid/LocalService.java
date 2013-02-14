@@ -8,6 +8,8 @@ import android.net.ConnectivityManager;
 
 import android.net.NetworkInfo;
 
+import android.os.Handler;
+import android.os.Message;
 import android.os.Vibrator;
 
 import java.io.BufferedReader;
@@ -97,6 +99,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 
 import android.app.Service;
+import android.app.PendingIntent.CanceledException;
 
 import android.content.BroadcastReceiver;
 
@@ -455,6 +458,115 @@ private long lastgpslocationtime=0;
 	    public static ArrayList<String> messagelist= new ArrayList<String>();
 
 	    public static DeviceAdapter deviceAdapter;
+	    
+	    static Context serContext;
+	    
+	    final static Handler alertHandler = new Handler() {
+
+	    	
+	    	
+			@Override
+
+			public void handleMessage(Message message) {
+			
+			
+			
+			Bundle b = message.getData();
+
+			String text = b.getString("MessageText");
+
+			if (b.getBoolean("om_online",false)){
+				netutil.newapicommand((ResultsListener)serContext, "om_device");
+			}
+			
+			Toast.makeText(serContext, text, Toast.LENGTH_SHORT).show();
+
+			LocalService.messagelist.add(0,text);
+
+			Log.d(this.getClass().getName(), "List:"+LocalService.messagelist);
+
+			 Bundle a=new Bundle();
+
+	         a.putStringArrayList("meslist", LocalService.messagelist);
+
+	     Intent activ=new Intent(serContext,  mesActivity.class);
+
+	     activ.putExtras(a);
+
+	     activ.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+	     PendingIntent contentIntent = PendingIntent.getActivity(serContext, OsMoDroid.notifyidApp(),activ, 0);
+
+
+
+	 	Long when=System.currentTimeMillis();
+
+
+
+
+
+		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
+
+				serContext.getApplicationContext())
+
+		    	.setWhen(when)
+
+		    	.setContentText(text)
+
+		    	.setContentTitle("OsMoDroid")
+
+		    	.setSmallIcon(android.R.drawable.ic_menu_send)
+
+		    	.setAutoCancel(true)
+
+		    	.setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_VIBRATE| Notification.DEFAULT_SOUND)
+
+		    	.setContentIntent(contentIntent);
+
+			Notification notification = notificationBuilder.build();
+
+			LocalService.mNotificationManager.notify(OsMoDroid.mesnotifyid, notification);
+
+
+
+			 if (OsMoDroid.activityVisible) {
+
+	    		try {
+
+
+
+				contentIntent.send(serContext, 0, activ);
+
+				LocalService.mNotificationManager.cancel(OsMoDroid.mesnotifyid);
+
+
+
+			} catch (CanceledException e) {
+
+				Log.d(this.getClass().getName(), "pending intent exception"+e);
+
+				// TODO Auto-generated catch block
+
+				e.printStackTrace();
+
+			}
+
+	    }
+
+
+
+
+
+
+
+
+
+
+
+			}
+
+			};
+	    
 
 	    private final IRemoteOsMoDroidService.Stub rBinder = new IRemoteOsMoDroidService.Stub() {
 
@@ -858,7 +970,7 @@ public void stopcomand()
 
 		super.onCreate();
 
-
+		serContext=LocalService.this;
 
 		myManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
