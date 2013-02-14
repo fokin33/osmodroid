@@ -1200,15 +1200,15 @@ public void stopcomand()
 
 
 
-		if (gpson!=null){ gpson.setAudioStreamType(AudioManager.STREAM_MUSIC);}
+		if (gpson!=null){ gpson.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
 
-		if (gpsoff!=null){ gpsoff.setAudioStreamType(AudioManager.STREAM_MUSIC);}
+		if (gpsoff!=null){ gpsoff.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
 
-		if (ineton!=null){ ineton.setAudioStreamType(AudioManager.STREAM_MUSIC);}
+		if (ineton!=null){ ineton.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
 
-		if (inetoff!=null){inetoff.setAudioStreamType(AudioManager.STREAM_MUSIC);}
+		if (inetoff!=null){inetoff.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
 
-		if (sendpalyer!=null){ sendpalyer.setAudioStreamType(AudioManager.STREAM_MUSIC);}
+		if (sendpalyer!=null){ sendpalyer.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
 
 		//sendpalyer.setVolume(leftVolume, rightVolume)
 
@@ -1898,7 +1898,7 @@ notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "Мони�
 ///start sound
 MediaPlayer start;
 start = MediaPlayer.create(this, R.raw.start);
-if (start!=null){ start.setAudioStreamType(AudioManager.STREAM_MUSIC);}
+if (start!=null){ start.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
 if (start!=null &&!start.isPlaying()) start.start();
 ///start sound
 
@@ -1981,7 +1981,7 @@ new netutil.MyAsyncTask(this).execute(params);}
                     ///stop sound
                     MediaPlayer stop;
                     stop = MediaPlayer.create(this, R.raw.stop);
-                    if (stop!=null){ stop.setAudioStreamType(AudioManager.STREAM_MUSIC);}
+                    if (stop!=null){ stop.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
                     if (stop!=null &&!stop.isPlaying()) stop.start();
                     ///stop sound
 		}
