@@ -91,8 +91,8 @@ public class netutil {
 			} else {
 				con = (HttpURLConnection) new URL(adr).openConnection();
 			}
-			con.setReadTimeout(10000);
-			con.setConnectTimeout(10000);
+			con.setReadTimeout(15000);
+			con.setConnectTimeout(15000);
 			if (dopost) {
 				con.setRequestMethod("POST");
 				con.setDoOutput(true);
