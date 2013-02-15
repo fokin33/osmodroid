@@ -1315,7 +1315,7 @@ public void stopcomand()
 		
 		startsound = soundPool.load(this, R.raw.start, 1);
 		
-		startsound = soundPool.load(this, R.raw.stop, 1);
+		stopsound = soundPool.load(this, R.raw.stop, 1);
 		
 //		gpson = MediaPlayer.create(this, R.raw.gpson);
 //
