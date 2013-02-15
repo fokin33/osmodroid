@@ -178,6 +178,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 
 import android.media.AudioManager;
+import android.media.SoundPool;
+
 
 import android.media.MediaPlayer;
 
@@ -219,16 +221,17 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 
 	//BufferedReader bufferedReader;
 
-	MediaPlayer gpson;
+	int gpson;
 
-	MediaPlayer gpsoff;
+	int gpsoff;
 
-	MediaPlayer ineton;
+	int ineton;
 
-	MediaPlayer inetoff;
+	int inetoff;
 
-	MediaPlayer sendpalyer;
+	int sendpalyer;
 
+	private static SoundPool soundPool;
 	//String cursendforbuffer="";
 
 	//String prevcursendforbuffer="";
@@ -443,7 +446,7 @@ private long lastgpslocationtime=0;
 
 	    String text;
 
-	    SharedPreferences settings;
+	    static SharedPreferences settings;
 
 	    int batteryprocent=-1;
 
@@ -827,9 +830,10 @@ public void stopcomand()
 
 	//		Log.d(getClass().getSimpleName(), "position() localservice");
 
-			if (position == null)return getString(R.string.NotDefined);
+			String result = getString(R.string.NotDefined)+"\n"+getString(R.string.speed);
+			if (position == null) {return result;}
 
-			else return position;
+			else {return position;}
 
 		}
 
@@ -877,7 +881,7 @@ public void stopcomand()
 
 			{
 
-				if (position==null){position = ( df6.format(forcenetworklocation.getLatitude())+", "+df6.format( forcenetworklocation.getLongitude())+" = " +df1.format(forcenetworklocation.getSpeed()*3.6));}
+				if (position==null){position = ( df6.format(forcenetworklocation.getLatitude())+", "+df6.format( forcenetworklocation.getLongitude())+"\nСкорость:" +df1.format(forcenetworklocation.getSpeed()*3.6))+" Км/ч";}
 
 				URLadr="http://t.esya.ru/?"+  df6.format( forcenetworklocation.getLatitude()) +":"+ df6.format( forcenetworklocation.getLongitude())+":"+ df1.format(forcenetworklocation.getAccuracy())
 
@@ -983,7 +987,7 @@ public void stopcomand()
 
 		Sattelite=getString(R.string.Sputniki);
 
-		position=getString(R.string.NotDefined);
+		position=getString(R.string.NotDefined)+ "\n"+getString(R.string.speed);
 
 
 
@@ -1105,8 +1109,8 @@ public void stopcomand()
 
 
 
-				if(playsound&&gpson!=null &&!gpson.isPlaying())gpson.start();
-
+			//	if(playsound&&gpson!=null &&!gpson.isPlaying())gpson.start();
+				soundPool.play(gpson, 1f, 1f, 1, 0, 1f);
 				//Log.d(getClass().getSimpleName(), "Звук он");
 
 			} else {gpsbeepedon=false;}
@@ -1121,7 +1125,8 @@ public void stopcomand()
 
 
 
-				if(playsound &&gpsoff!=null&& !gpsoff.isPlaying())gpsoff.start();
+				//if(playsound &&gpsoff!=null&& !gpsoff.isPlaying())gpsoff.start();
+				soundPool.play(gpsoff, 1f, 1f, 1, 0, 1f);
 
 			} else {gpsbeepedoff=false;}
 
@@ -1292,15 +1297,27 @@ public void stopcomand()
 
 		 //try {
 
-		gpson = MediaPlayer.create(this, R.raw.gpson);
-
-		gpsoff = MediaPlayer.create(this, R.raw.gpsoff);
-
-		ineton = MediaPlayer.create(this, R.raw.ineton);
-
-		inetoff = MediaPlayer.create(this, R.raw.inetoff);
-
-		sendpalyer=MediaPlayer.create(this, R.raw.sendsound);
+		soundPool = new SoundPool(10, AudioManager.STREAM_NOTIFICATION, 0);
+		
+		gpson = soundPool.load(this, R.raw.gpson, 1);
+		
+		gpsoff = soundPool.load(this, R.raw.gpsoff, 1);
+		
+		ineton = soundPool.load(this, R.raw.ineton, 1);
+		
+		inetoff = soundPool.load(this, R.raw.inetoff, 1);
+		
+		sendpalyer = soundPool.load(this, R.raw.sendsound, 1);
+		
+//		gpson = MediaPlayer.create(this, R.raw.gpson);
+//
+//		gpsoff = MediaPlayer.create(this, R.raw.gpsoff);
+//
+//		ineton = MediaPlayer.create(this, R.raw.ineton);
+//
+//		inetoff = MediaPlayer.create(this, R.raw.inetoff);
+//
+//		sendpalyer=MediaPlayer.create(this, R.raw.sendsound);
 
 
 	//  } catch (Exception e) {
@@ -1317,11 +1334,11 @@ public void stopcomand()
 
 
 
-		if (gpson!=null){ gpson.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
-		if (gpsoff!=null){ gpsoff.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
-		if (ineton!=null){ ineton.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
-		if (inetoff!=null){inetoff.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
-		if (sendpalyer!=null){ sendpalyer.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
+//		if (gpson!=null){ gpson.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
+//		if (gpsoff!=null){ gpsoff.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
+//		if (ineton!=null){ ineton.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
+//		if (inetoff!=null){inetoff.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
+//		if (sendpalyer!=null){ sendpalyer.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
 		//sendpalyer.setVolume(leftVolume, rightVolume)
 
 		//Log.d(getClass().getSimpleName(), "oncreate() localservice");
@@ -1546,37 +1563,37 @@ mesIM = new IM(settings.getString("key", "")+",im_messages,om_online",this,1);
 
 		//Log.d(getClass().getSimpleName(), "omdestroy() localservice");
 
+if (soundPool!=null) {soundPool.release();}
 
-
-		if (gpson!=null) gpson.stop();
-
-		if (gpsoff!=null) gpsoff.stop();
-
-		if (ineton!=null) ineton.stop();
-
-		if (inetoff!=null) inetoff.stop();
-
-		if (sendpalyer!=null) sendpalyer.stop();
-
-		if (gpson!=null) gpson.reset();
-
-		if (gpsoff!=null) gpsoff.reset();
-
-		if (ineton!=null) ineton.reset();
-
-		if (inetoff!=null) inetoff.reset();
-
-		if (sendpalyer!=null) sendpalyer.reset();
-
-		if (gpson!=null) gpson.release();
-
-		if (gpsoff!=null) gpsoff.release();
-
-		if (ineton!=null) ineton.release();
-
-		if (inetoff!=null) inetoff.release();
-
-		if (sendpalyer!=null) sendpalyer.release();
+//		if (gpson!=null) gpson.stop();
+//
+//		if (gpsoff!=null) gpsoff.stop();
+//
+//		if (ineton!=null) ineton.stop();
+//
+//		if (inetoff!=null) inetoff.stop();
+//
+//		if (sendpalyer!=null) sendpalyer.stop();
+//
+//		if (gpson!=null) gpson.reset();
+//
+//		if (gpsoff!=null) gpsoff.reset();
+//
+//		if (ineton!=null) ineton.reset();
+//
+//		if (inetoff!=null) inetoff.reset();
+//
+//		if (sendpalyer!=null) sendpalyer.reset();
+//
+//		if (gpson!=null) gpson.release();
+//
+//		if (gpsoff!=null) gpsoff.release();
+//
+//		if (ineton!=null) ineton.release();
+//
+//		if (inetoff!=null) inetoff.release();
+//
+//		if (sendpalyer!=null) sendpalyer.release();
 
 		if (!(wakeLock==null) &&wakeLock.isHeld())wakeLock.release();
 
@@ -2208,8 +2225,8 @@ new netutil.MyAsyncTask(this).execute(params);}
 
 				 sendcounter=sendcounter+1;
 
-				 if(sendsound &&sendpalyer!=null&& !sendpalyer.isPlaying())sendpalyer.start();
-
+				 //if( sendsound &&sendpalyer!=null&& !sendpalyer.isPlaying())sendpalyer.start();
+				 soundPool.play(sendpalyer, 1f, 1f, 1, 0, 1f);
 
 
 			 sendresult= time +" "+sendresult;}
@@ -2460,7 +2477,7 @@ workmilli= System.currentTimeMillis();
 
 		}
 
-		position = ( df6.format(location.getLatitude())+", "+df6.format( location.getLongitude())+" = "+df1.format(location.getSpeed()*3.6));
+		position = ( df6.format(location.getLatitude())+", "+df6.format( location.getLongitude())+"\nСкорость:" +df1.format(location.getSpeed()*3.6))+" Км/ч";
 
 		//position = ( String.format("%.6f", location.getLatitude())+", "+String.format("%.6f", location.getLongitude())+" = "+String.format("%.1f", location.getSpeed()));
 
@@ -2890,16 +2907,8 @@ private void internetnotify(boolean internet){
 
 			if (vibrate)vibrator.vibrate(vibratetime);
 
-			if (playsound &&inetoff!=null&& !inetoff.isPlaying()){
-
-
-
-			inetoff.start();
-
-
-
-}
-
+			//if (playsound &&inetoff!=null&& !inetoff.isPlaying()){inetoff.start();}
+soundPool.play(inetoff, 1f, 1f, 1, 0, 1f);
 	//Log.d(this.getClass().getName(), "Интернет пропал");
 
 
@@ -2926,13 +2935,14 @@ private void internetnotify(boolean internet){
 
 				if(vibrate)vibrator.vibrate(vibratetime);
 
-				if (playsound &&ineton!=null&&!ineton.isPlaying()){
-
-
-
-				ineton.start();
-
-				}
+//				if (playsound &&ineton!=null&&!ineton.isPlaying()){
+//
+//
+//
+//				ineton.start();
+//
+//				}
+				soundPool.play(ineton, 1f, 1f, 1, 0, 1f);
 
 				beepedon=true;
 
@@ -3357,7 +3367,7 @@ public void onGpsStatusChanged(int event) {
 		}
 	}
 
-	Sattelite=getString(R.string.Sputniki)+Count+":"+CountFix+" ("+hasA+"-"+hasE+")";
+	Sattelite=getString(R.string.Sputniki)+Count+":"+CountFix; //+" ("+hasA+"-"+hasE+")";
 	refresh();
 }
 
