@@ -1896,27 +1896,19 @@ else	{
 
 
 int icon = R.drawable.eye;
-
-CharSequence tickerText = "Мониторинг запущен"; //"Ждущий режим";//getString(R.string.Working);
-
+CharSequence tickerText = "Мониторинг запущен"; //getString(R.string.Working);
 long when = System.currentTimeMillis();
-
 Notification notification = new Notification(icon, tickerText, when);
-
 Intent notificationIntent = new Intent(this, GPSLocalServiceClient.class);
-
 notificationIntent.setAction(Intent.ACTION_MAIN);
-
 notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-
 PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-
 notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "Мониторинг активен", contentIntent);
 
 ///start sound
 MediaPlayer start;
 start = MediaPlayer.create(this, R.raw.start);
-if (start!=null){ start.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
+if (start!=null){ start.setAudioStreamType(AudioManager.STREAM_ALARM);}
 if (start!=null &&!start.isPlaying()) start.start();
 ///start sound
 
