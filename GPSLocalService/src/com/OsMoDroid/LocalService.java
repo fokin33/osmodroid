@@ -230,6 +230,10 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	int inetoff;
 
 	int sendpalyer;
+	
+	int startsound;
+	
+	int stopsound;
 
 	private static SoundPool soundPool;
 	//String cursendforbuffer="";
@@ -1110,7 +1114,7 @@ public void stopcomand()
 
 
 			//	if(playsound&&gpson!=null &&!gpson.isPlaying())gpson.start();
-				soundPool.play(gpson, 1f, 1f, 1, 0, 1f);
+				if (playsound){soundPool.play(gpson, 1f, 1f, 1, 0, 1f);}
 				//Log.d(getClass().getSimpleName(), "Звук он");
 
 			} else {gpsbeepedon=false;}
@@ -1126,7 +1130,7 @@ public void stopcomand()
 
 
 				//if(playsound &&gpsoff!=null&& !gpsoff.isPlaying())gpsoff.start();
-				soundPool.play(gpsoff, 1f, 1f, 1, 0, 1f);
+				if (playsound){soundPool.play(gpsoff, 1f, 1f, 1, 0, 1f);}
 
 			} else {gpsbeepedoff=false;}
 
@@ -1308,6 +1312,10 @@ public void stopcomand()
 		inetoff = soundPool.load(this, R.raw.inetoff, 1);
 		
 		sendpalyer = soundPool.load(this, R.raw.sendsound, 1);
+		
+		startsound = soundPool.load(this, R.raw.start, 1);
+		
+		startsound = soundPool.load(this, R.raw.stop, 1);
 		
 //		gpson = MediaPlayer.create(this, R.raw.gpson);
 //
@@ -1749,7 +1757,9 @@ if (soundPool!=null) {soundPool.release();}
 
 		//sendbuffer="";
 
-
+		if (settings.getBoolean("sendsound", false)){
+			 soundPool.play(startsound, 1f, 1f, 1, 0, 1f);
+		}
 
 		if (settings.getBoolean("usetts", false)){ tts = new TextToSpeech(this,
 
@@ -1999,6 +2009,10 @@ new netutil.MyAsyncTask(this).execute(params);}
 
 	public void stopServiceWork(){
 
+		if (settings.getBoolean("sendsound", false)){
+			 soundPool.play(stopsound, 1f, 1f, 1, 0, 1f);
+		}
+		
 		am.cancel(pi);
 
 		if (live){
@@ -2218,7 +2232,7 @@ new netutil.MyAsyncTask(this).execute(params);}
 				 sendcounter=sendcounter+1;
 
 				 //if( sendsound &&sendpalyer!=null&& !sendpalyer.isPlaying())sendpalyer.start();
-				 soundPool.play(sendpalyer, 1f, 1f, 1, 0, 1f);
+				if (sendsound){ soundPool.play(sendpalyer, 1f, 1f, 1, 0, 1f);}
 
 
 			 sendresult= time +" "+sendresult;}
@@ -2900,7 +2914,7 @@ private void internetnotify(boolean internet){
 			if (vibrate)vibrator.vibrate(vibratetime);
 
 			//if (playsound &&inetoff!=null&& !inetoff.isPlaying()){inetoff.start();}
-soundPool.play(inetoff, 1f, 1f, 1, 0, 1f);
+ if (playsound){soundPool.play(inetoff, 1f, 1f, 1, 0, 1f);}
 	//Log.d(this.getClass().getName(), "Интернет пропал");
 
 
@@ -2934,7 +2948,7 @@ soundPool.play(inetoff, 1f, 1f, 1, 0, 1f);
 //				ineton.start();
 //
 //				}
-				soundPool.play(ineton, 1f, 1f, 1, 0, 1f);
+				if (playsound) {soundPool.play(ineton, 1f, 1f, 1, 0, 1f);}
 
 				beepedon=true;
 
