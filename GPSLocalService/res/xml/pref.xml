@@ -59,10 +59,10 @@
     <CheckBoxPreference
 		android:defaultValue="false"
 		android:key="gpx"
-		android:summary="Сохраняется на карте памяти в папке OsMoDroid"
-		android:title="Локальный трек" />
+		android:summary="GPS-трек в формате gpx cохраняется на карте памяти (/sdcard/OsMoDroid/)"
+		android:title="Локальная запись" />
 
-		<PreferenceScreen android:title="Параметры локального трека">
+		<PreferenceScreen android:title="Параметры локальной записи">
 			<EditTextPreference
 				android:digits="0123456789"
 				android:inputType="number"
