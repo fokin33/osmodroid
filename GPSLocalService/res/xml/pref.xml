@@ -22,19 +22,19 @@
 				android:numeric="integer"
 				android:summary="Метры"
 				android:title="Дистанция опроса GPS" android:defaultValue="50" />
+                        <EditTextPreference
+				android:digits="0123456789"
+				android:inputType="number"
+				android:key="bearing"
+				android:numeric="integer"
+				android:summary="Градусы"
+				android:title="Отклонение курса" android:defaultValue="30" />
 			<EditTextPreference
 				android:digits="0123456789"
 				android:inputType="number"
 				android:key="speedbearing"
 				android:summary="Километров в час"
 				android:title="Скорость учета курса" android:defaultValue="10" />
-			<EditTextPreference
-				android:digits="0123456789"
-				android:inputType="number"
-				android:key="bearing"
-				android:numeric="integer"
-				android:summary="Градусы"
-				android:title="Отклонение курса" android:defaultValue="315" />
 			<EditTextPreference
 				android:digits="0123456789"
 				android:inputType="number"
@@ -53,6 +53,7 @@
 				android:key="usebuffer"
 				android:summary="Увеличит трафик"
 				android:title="Передавать неотправленное"
+                                android:summary="Полезно, если нестабильная связь с интернетом"
 				android:defaultValue="false" />
 		</PreferenceScreen>
 
@@ -80,16 +81,16 @@
 			<EditTextPreference
 				android:digits="0123456789"
 				android:inputType="number"
-				android:key="speedbearing_gpx"
-				android:summary="километров в час"
-				android:title="Скорость учета курса" android:defaultValue="0" />
-			<EditTextPreference
-				android:digits="0123456789"
-				android:inputType="number"
 				android:key="bearing_gpx"
 				android:numeric="integer"
 				android:summary="Градусы"
-				android:title="Отклонение курса" android:defaultValue="15" />
+				android:title="Отклонение курса" android:defaultValue="30" />
+                        <EditTextPreference
+				android:digits="0123456789"
+				android:inputType="number"
+				android:key="speedbearing_gpx"
+				android:summary="километров в час"
+				android:title="Скорость учета курса" android:defaultValue="10" />
 			<EditTextPreference
 				android:digits="0123456789"
 				android:inputType="number"
@@ -103,18 +104,17 @@
 				android:key="speed_gpx"
 				android:numeric="integer"
 				android:summary="Километров в час"
-				android:title="Минимал�ная скорость записи"
-				android:defaultValue="1" />
+				android:title="Минимальная скорость записи"
+				android:defaultValue="0" />
 		</PreferenceScreen>
 
 		<PreferenceScreen android:title="Идентификация" >
 			<EditTextPreference
 				android:key="hash"
-				android:title="Ваш хэш" />
+				android:title="Хэш" />
 			<EditTextPreference
 				android:key="n"
 				android:title="Контрольное число" />
-			<!--<EditTextPreference android:key="login" android:title="Логин на esya.ru"/>-->
 		</PreferenceScreen>
 
 		<PreferenceScreen android:title="Оповещение" >
@@ -155,22 +155,26 @@
     <CheckBoxPreference
         android:key="usewake"
         android:summary="Увеличивает расход энергии"
-        android:title="Не гасить подсветку" android:defaultValue="false" />
+        android:title="Не гасить подсветку"
+        android:defaultValue="false" />
     <CheckBoxPreference
         android:key="usecourse"
-        android:summary="Увеличивает расход энергии"
-        android:title="Использовать изменение курса" android:defaultValue="false" />
+        android:summary="Глобальная настройка, увеличивает расход энергии"
+        android:title="Использовать изменение курса"
+        android:defaultValue="false" />
     <CheckBoxPreference
 		android:key="usenetwork"
-		android:summary="Использовать для определения координат"
+		android:summary="Использовать для определения координат сотовые сети и wifi"
 		android:title="Беспроводные сети"
 		android:defaultValue="true" />
     <CheckBoxPreference
 		android:key="im"
+                android:summary="Подписка на мгновенное получение"
 		android:title="Обмен сообщениями"
 		android:defaultValue="false" />
     <CheckBoxPreference
 		android:key="autostart"
+                android:summary="Запускать фоновый сервис при включении телефона"
 		android:title="Автозагрузка"
 		android:defaultValue="false" />
 </PreferenceScreen>
