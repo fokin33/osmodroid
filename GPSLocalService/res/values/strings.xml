@@ -57,5 +57,5 @@
 <string name="abouttext">OsMoDroid, клиент мониторинга OsMo (c) 2012-2013\n\nОфициальный сайт OsMoDroid: osmodroid.ru\nСправка по OsMoDroid: http://osmodroid.ru/help_android.html\n\nИнформация по мониторингу (руководства, управление и т.п.): esya.ru/om/start/</string>
 <string name="send">Отправить</string>
 <string name="cancel">Отмена</string>
-<string name="speed">Скорость: Км/ч</string>
+<string name="speed">Скорость: км/ч</string>
 </resources>

@@ -51,7 +51,7 @@
 				android:defaultValue="0" />
 			<CheckBoxPreference
 				android:key="usebuffer"
-				android:summary="Увеличит траффик"
+				android:summary="Увеличит трафик"
 				android:title="Передавать неотправленное"
 				android:defaultValue="false" />
 		</PreferenceScreen>
@@ -103,7 +103,7 @@
 				android:key="speed_gpx"
 				android:numeric="integer"
 				android:summary="Километров в час"
-				android:title="Минимальная скорость записи"
+				android:title="Минимал�ная скорость записи"
 				android:defaultValue="1" />
 		</PreferenceScreen>
 
