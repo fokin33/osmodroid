@@ -51,9 +51,8 @@
 				android:defaultValue="0" />
 			<CheckBoxPreference
 				android:key="usebuffer"
-				android:summary="Увеличит трафик"
 				android:title="Передавать неотправленное"
-                                android:summary="Полезно, если нестабильная связь с интернетом"
+                                android:summary="Полезно, если нестабильная связь с интернетом. Немного увеличивается интернет-трафик."
 				android:defaultValue="false" />
 		</PreferenceScreen>
 
