@@ -71,8 +71,8 @@ public class SimLinks extends Activity implements ResultsListener{
 		JSONObject postjson = new JSONObject();
 		postjson.put("device", settings.getString("device", ""));
 		postjson.put("random", "1");
-		postjson.put("from", "-1");
-		postjson.put("to", "-1");
+		//postjson.put("from", "-1");
+		//postjson.put("to", "-1");
 		postjson.put("until", "-1");
 		netutil.newapicommand((ResultsListener)SimLinks.this, "om_link_add","json="+postjson.toString());
 	}
