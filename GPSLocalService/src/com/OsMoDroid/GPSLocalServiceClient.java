@@ -387,7 +387,7 @@ startlocalservice();
 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		SubMenu menu1 = menu.addSubMenu(Menu.NONE, 11, 4, "Действия");
-		SubMenu menu2 = menu.addSubMenu(Menu.NONE, 12, 4, "Дополнительно");
+		SubMenu menu2 = menu.addSubMenu(Menu.NONE, 12, 4, "Ещё");
 
 		MenuItem auth = menu2.add(0, 1, 0, R.string.RepeatAuth);
 		MenuItem mi = menu.add(0, 2, 0, R.string.Settings);

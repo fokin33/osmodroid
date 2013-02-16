@@ -42,8 +42,8 @@
 <string name="buffer">" Буфер: "</string>
 <string name="request">Запрос авторизации, пожалуйста подождите...</string>
 <string name="noappcode">Не указан одноразовый пароль</string>
-<string name="nokey">Привязать приложение не удалось</string>
-<string name="getkey">Привязать приложение</string>
+<string name="nokey">Авторизоваться не удалось</string>
+<string name="getkey">Авторизоваться</string>
 <string name="getadres">Получить адрес</string>
 <string name="getdevice">Получить устройство</string>
 <string name="enterchanel">Войти в канал</string>
