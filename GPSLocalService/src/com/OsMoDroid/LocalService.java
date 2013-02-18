@@ -181,7 +181,7 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 
 
-import android.media.MediaPlayer;
+
 
 //import android.media.RingtoneManager;
 
@@ -1932,12 +1932,7 @@ notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "Мониторинг активен", contentIntent);
 
-///start sound
-MediaPlayer start;
-start = MediaPlayer.create(this, R.raw.start);
-if (start!=null){ start.setAudioStreamType(AudioManager.STREAM_ALARM);}
-if (start!=null &&!start.isPlaying()) start.start();
-///start sound
+
 
 mStartForegroundArgs[0]= OSMODROID_ID;
 
@@ -2019,12 +2014,7 @@ new netutil.MyAsyncTask(this).execute(params);}
                     String[] params = {"http://a.t.esya.ru/?act=session_stop&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", ""),"false","","session_stop"};
                     new netutil.MyAsyncTask(this).execute(params);
 
-                    ///stop sound
-                    MediaPlayer stop;
-                    stop = MediaPlayer.create(this, R.raw.stop);
-                    if (stop!=null){ stop.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
-                    if (stop!=null &&!stop.isPlaying()) stop.start();
-                    ///stop sound
+                
 		}
 
 		try {
