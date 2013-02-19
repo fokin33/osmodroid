@@ -460,6 +460,8 @@ private long lastgpslocationtime=0;
 
 	    int voltage=-1;
 
+	    public static List<Channel> channelList = new ArrayList<Channel>();
+	    
 	    public static List<Device> deviceList= new ArrayList<Device>();
 
 	    public static ArrayList<String> messagelist= new ArrayList<String>();
@@ -1369,6 +1371,7 @@ if (live){
 	if (!settings.getString("key", "" ).equals("") ){
 
 		netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
+		netutil.newapicommand((ResultsListener)LocalService.this, "om_channel");
 
 	}
 	}
@@ -3598,7 +3601,86 @@ public void onResultsSucceeded(APIComResult result) {
 
 			 if (deviceAdapter!=null) {deviceAdapter.notifyDataSetChanged();}
 		}
+		if (result.Jo.has("om_channel")){
+			channelList.clear();
 
+			try {
+				  a =	result.Jo.getJSONArray("om_channel");
+		 		  Log.d(getClass().getSimpleName(), a.toString());
+		 		 for (int i = 0; i < a.length(); i++) {
+		 			JSONObject jsonObject = a.getJSONObject(i);
+		Channel chanitem = new Channel( jsonObject.getString("name"),jsonObject.getString("u"),jsonObject.getString("added")
+			);
+
+		channelList.add(chanitem);
+		netutil.newapicommand((ResultsListener)serContext, "om_channel_user:"+chanitem.u);
+
+
+		 		 }
+		 		 
+		 		 
+				} catch (Exception e) {
+
+					 Log.d(getClass().getSimpleName(), "эксепшн");
+					//e.printStackTrace();
+				}
+
+
+			 Log.d(getClass().getSimpleName(),channelList.toString());
+
+			// if (deviceAdapter!=null) {deviceAdapter.notifyDataSetChanged();}
+		}
+		
+		for (Channel chan : channelList){
+		if (result.Jo.has("om_channel_user:"+chan.u)){
+			chan.deviceList.clear();
+
+			try {
+				  a =	result.Jo.getJSONArray("om_channel_user:"+chan.u);
+		 		  Log.d(getClass().getSimpleName(), a.toString());
+		 		 for (int i = 0; i < a.length(); i++) {
+		 			JSONObject jsonObject = a.getJSONObject(i);
+//		 			 u = 1163
+//		 				    uid = 192
+//		 				    lat = 54.907503
+//		 				    lon = 41.271125
+//		 				    state = 0
+//		 				    online = 0
+//		 				    name = toxIC jiayu
+//		 				    icon = 1
+		 			
+		 			
+		chan.deviceList.add(new Device(jsonObject.getString("u")
+				, jsonObject.getString("name"),""
+				,"",
+				"",
+				"",
+				jsonObject.getString("lat"),
+				jsonObject.getString("lon"),
+				jsonObject.getString("online"),
+				jsonObject.getString("state")
+				) );   
+			
+
+		//channelList.add(chanitem);
+	//	netutil.newapicommand((ResultsListener)serContext, "om_channel_user:"+chanitem.u);
+
+
+		 		 }
+		 		 
+		 		 
+				} catch (Exception e) {
+
+					 Log.d(getClass().getSimpleName(), "эксепшн");
+					//e.printStackTrace();
+				}
+
+
+			 Log.d(getClass().getSimpleName(),chan.toString());
+
+			// if (deviceAdapter!=null) {deviceAdapter.notifyDataSetChanged();}
+		}
+		}
 
 
 		Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);
