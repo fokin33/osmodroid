@@ -3614,7 +3614,7 @@ public void onResultsSucceeded(APIComResult result) {
 
 		channelList.add(chanitem);
 		netutil.newapicommand((ResultsListener)serContext, "om_channel_user:"+chanitem.u);
-
+		netutil.newapicommand((ResultsListener)LocalService.this, "om_channel_get:"+chanitem.u);
 
 		 		 }
 		 		 
@@ -3680,8 +3680,22 @@ public void onResultsSucceeded(APIComResult result) {
 
 			// if (deviceAdapter!=null) {deviceAdapter.notifyDataSetChanged();}
 		}
-		}
+		if (result.Jo.has("om_channel_get:"+chan.u)){
+			try {
+				  result.Jo.getJSONObject("om_channel_get:"+chan.u).getString("ch");
+				  Log.d(getClass().getSimpleName(), "Канал CH="+result.Jo.getJSONObject("om_channel_get:"+chan.u).getString("ch"));
+				} catch (Exception e) {
 
+					 Log.d(getClass().getSimpleName(), "эксепшн");
+					//e.printStackTrace();
+				}	
+			
+			
+		}
+		
+		
+		}
+	
 
 		Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);
 

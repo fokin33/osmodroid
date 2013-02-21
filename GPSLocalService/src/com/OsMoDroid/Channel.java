@@ -8,6 +8,7 @@ public class Channel {
 	public String name;
 	public String u;
 	public String added;
+	public String ch;
 	public List<Device> deviceList= new ArrayList<Device>();
 	
 	public Channel(){
