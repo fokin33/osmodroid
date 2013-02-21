@@ -123,6 +123,7 @@ PowerManager pm;
 			invokeService();
 			started = true;
 			updateServiceStatus();
+			mService.startcomand();
 //			if (started && ( conn == null || mService == null)) {
 //				Log.d(getClass().getSimpleName(), "нет бинда с сервисом - startcommand");
 //			} else {

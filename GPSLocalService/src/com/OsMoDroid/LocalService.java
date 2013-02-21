@@ -1,5 +1,4 @@
 
-
 package com.OsMoDroid;
 
 
@@ -3541,7 +3540,7 @@ public void onResultsSucceeded(APIComResult result) {
 			editor.commit();
 
 			if (settings.getBoolean("im", false)){
-
+if(myIM!=null){  myIM.close();}
 			myIM = new IM(settings.getString("lpch", "")+"ctrl",this,0);}
 
 		}
