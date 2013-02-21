@@ -149,6 +149,7 @@
 				android:summary="Используется text-to-speech"
 				android:title="Проговаривать скорость"
 				android:defaultValue="false" />
+			<CheckBoxPreference android:key="silentnotify" android:title="Беззвучное оповещение" android:defaultValue="false"/>
 		</PreferenceScreen>
 
     <CheckBoxPreference

@@ -515,10 +515,30 @@ private long lastgpslocationtime=0;
 	 	Long when=System.currentTimeMillis();
 
 
+	 	NotificationCompat.Builder notificationBuilder = null;
 
+if (settings.getBoolean("silentnotify", false)){
+	 notificationBuilder = new NotificationCompat.Builder(
 
+				serContext.getApplicationContext())
 
-		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
+		    	.setWhen(when)
+
+		    	.setContentText(text)
+
+		    	.setContentTitle("OsMoDroid")
+
+		    	.setSmallIcon(android.R.drawable.ic_menu_send)
+
+		    	.setAutoCancel(true)
+
+		    	.setDefaults(Notification.DEFAULT_LIGHTS)
+
+		    	.setContentIntent(contentIntent);
+	
+}
+else {
+		 notificationBuilder = new NotificationCompat.Builder(
 
 				serContext.getApplicationContext())
 
@@ -534,7 +554,7 @@ private long lastgpslocationtime=0;
 
 		    	.setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_VIBRATE| Notification.DEFAULT_SOUND)
 
-		    	.setContentIntent(contentIntent);
+		    	.setContentIntent(contentIntent);}
 
 			Notification notification = notificationBuilder.build();
 
@@ -3455,7 +3475,30 @@ public boolean isOnline() {
 
 		PendingIntent contentIntent = PendingIntent.getActivity(this, OsMoDroid.notifyidApp(),notificationIntent, 0);
 
-		NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(
+		NotificationCompat.Builder notificationBuilder=null;
+		
+		if (settings.getBoolean("silentnotify", false)) {
+			 notificationBuilder = new NotificationCompat.Builder(
+
+				    	getApplicationContext())
+
+				    	.setWhen(when)
+
+				    	.setContentText(info)
+
+				    	.setContentTitle("OsMoDroid")
+
+				    	.setSmallIcon(R.drawable.warn)
+
+				    	.setAutoCancel(true)
+
+				    	.setDefaults(Notification.DEFAULT_LIGHTS)
+
+				    	.setContentIntent(contentIntent);
+		}
+		else
+		{
+		 notificationBuilder = new NotificationCompat.Builder(
 
 		    	getApplicationContext())
 
@@ -3471,7 +3514,7 @@ public boolean isOnline() {
 
 		    	.setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_VIBRATE| Notification.DEFAULT_SOUND)
 
-		    	.setContentIntent(contentIntent);
+		    	.setContentIntent(contentIntent);}
 
 			Notification notification = notificationBuilder.build();
 
