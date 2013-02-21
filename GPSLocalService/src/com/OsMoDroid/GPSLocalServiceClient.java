@@ -278,6 +278,10 @@ startlocalservice();
 		receiver = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
+				TextView dt = (TextView) findViewById(R.id.URL);
+				dt.setText(settings.getString("devicename", "")+" : "+viewurl);
+
+				Linkify.addLinks(dt, Linkify.ALL);
 				TextView t = (TextView) findViewById(R.id.Location);
 				sendcounter = intent.getIntExtra("sendcounter", 0);
 				buffercounter = intent.getIntExtra("buffercounter", 0);

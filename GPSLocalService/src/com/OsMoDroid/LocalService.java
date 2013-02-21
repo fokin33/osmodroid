@@ -781,7 +781,7 @@ public void startcomand()
 
 	else {
 
-		if(!settings.getString("device", "").equals("")){
+		
 
 		String[] params = {"http://a.t.esya.ru/?act=start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&c=OsMoDroid&v="+version.replace(".", ""),"false","","start"};
 
@@ -791,7 +791,7 @@ public void startcomand()
 
 		Log.d(getClass().getSimpleName(), "startcommand");
 
-		}
+		
 
 	}
 
@@ -3544,6 +3544,18 @@ if(myIM!=null){  myIM.close();}
 			myIM = new IM(settings.getString("lpch", "")+"ctrl",this,0);}
 
 		}
+		if(!result.Jo.optString("device").equals("")){
+			SharedPreferences.Editor editor = settings.edit();
+
+			editor.putString("device", result.Jo.optString("device"));
+			editor.putString("view-url", "http://m.esya.ru/"+result.Jo.optString("device_url"));
+			editor.putString("devicename", result.Jo.optString("device_name"));
+			
+			editor.commit();
+			refresh();
+			
+		}
+		
 
 				if (!result.Jo.optString("motd").equals("") ||!result.Jo.optString("query_per_day").equals("")){
 
