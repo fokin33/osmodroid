@@ -150,7 +150,7 @@ getinfobutton.setOnClickListener(new OnClickListener() {
     		
     		 for (int i = 0; i < mIRemoteService.getNumberOfLayers(); i++) {
     			 
-    			 text=mIRemoteService.getLayerName(mIRemoteService.getLayerId(i));
+    			 text=text+mIRemoteService.getLayerName(mIRemoteService.getLayerId(i));
     			 for (int k = 0; k < mIRemoteService.getNumberOfObjects(mIRemoteService.getLayerId(i)); k++) {
     				 text=text+"\n"+mIRemoteService.getObjectName(mIRemoteService.getLayerId(i),(mIRemoteService.getObjectId(mIRemoteService.getLayerId(i), k)))+" "+mIRemoteService.getObjectLat(mIRemoteService.getLayerId(i),(mIRemoteService.getObjectId(mIRemoteService.getLayerId(i), k)))+" "+mIRemoteService.getObjectLon(mIRemoteService.getLayerId(i),(mIRemoteService.getObjectId(mIRemoteService.getLayerId(i), k)));
     				 
