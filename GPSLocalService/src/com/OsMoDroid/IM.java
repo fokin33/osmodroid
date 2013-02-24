@@ -3,4 +3,59 @@ package com.OsMoDroid;import java.io.BufferedReader;import java.io.IOExcep
                         if (data[0].equals("geozone")&&!device.u.equals(LocalService.settings.getString("device", ""))){
                             messageText = messageText+" Устройство \""+device.name+"\" "+data[2];
                         }
-                                                if (LocalService.deviceAdapter!=null) {                         //	LocalService.deviceAdapter.notifyDataSetChanged();                        	Log.d(getClass().getSimpleName(),"devicelist="+ LocalService.deviceList);                        	                        	Message msg = new Message();                			Bundle b = new Bundle();                			b.putBoolean("om_online", true);                			msg.setData(b);                			LocalService.alertHandler.sendMessage(msg);                        	                        	                        	//lv1.setAdapter(LocalService.deviceAdapter);                        	}                    }                }            }	}	Log.d(getClass().getSimpleName(),(new JSONObject(jsonObject.optString("ids"))).optString(keyname));	adr="http://d.esya.ru/?identifier="+mychanel+"&ncrnd="+(new JSONObject(jsonObject.optString("ids"))).optString(keyname);	          	}			}			Log.d(getClass().getSimpleName(),adr);			if (!messageText.equals("")){			showToastMessage(messageText);			}		} catch (Exception e) {			// TODO Auto-generated catch block			e.printStackTrace();			Log.d(this.getClass().getName(), e.toString());		}		}	}	void stop (){		try {			instream.close();			} catch (Exception e) {				e.printStackTrace();			}		try {			in.close();			} catch (Exception e) {				e.printStackTrace();			}		try {			con.disconnect();			} catch (Exception e) {				e.printStackTrace();			}			running = false;	}	private class IMRunnable implements Runnable {		StringBuilder stringBuilder= new StringBuilder();		private InputStreamReader stream  = null;		private boolean           error   = false;		private int               retries = 0;		int maxRetries = 100;		public void run() {			System.out.println("run thread instance:"+this.toString());			String response = "";			while (running) {				System.out.println("running thread instance:"+this.toString());				try {					++retries;					int portOfProxy = android.net.Proxy.getDefaultPort();					if (portOfProxy > 0) {						Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(								android.net.Proxy.getDefaultHost(), portOfProxy));						con = (HttpURLConnection) new URL(adr).openConnection(proxy);					} else {						con = (HttpURLConnection) new URL(adr).openConnection();					}					con.setReadTimeout(pingTimeout*1000);					con.setConnectTimeout(10000);					instream=con.getInputStream();					stream = new InputStreamReader(instream);					in   = new BufferedReader(stream, 1024);					if(error){						error = false;					}					// Set a timeout on the socket					// This prevents getting stuck in readline() if the pipe breaks					retries = 0;					connected = true;				} catch (UnknownHostException e) {					error = true;					//stop();				} catch (Exception e) {					error = true;					//stop();				}				if(retries > maxRetries) {					stop ();					break;				}				if(retries > 0) {					try {						Thread.sleep(1000);					} catch (InterruptedException e) {						// If can't back-off, stop trying						System.out.println("Interrupted from sleep thread instance:"+this.toString());						//running = false;						break;					}				}				if(!error && running) {					try {						// Wait for a response from the channel						stringBuilder.setLength(0);						    int c = 0;						    int i=0;						    while (!(c==-1) && running) {						    	c = in.read();						        if (!(c==-1))stringBuilder.append((char) c);						        i=i+1;						    }					//return chbuf.toString();						    //Log.d(this.getClass().getName(), "void input end");						    parse( stringBuilder.toString());//						while(running && (response=in. .read()) != null) {//							// Got a response//							//killConnection.cancel();//							parse(response);//						}						instream.close();						in.close();						con.disconnect();					}					catch(IOException e) {						error = true;							//stop();						}					}				else {					// An error was encountered when trying to connect					connected = false;				}			}		}	}}
+                                                if (LocalService.deviceAdapter!=null) {                         //	LocalService.deviceAdapter.notifyDataSetChanged();                        	Log.d(getClass().getSimpleName(),"devicelist="+ LocalService.deviceList);                        	                        	Message msg = new Message();                			Bundle b = new Bundle();                			b.putBoolean("om_online", true);                			msg.setData(b);                			LocalService.alertHandler.sendMessage(msg);                        	                        	                        	//lv1.setAdapter(LocalService.deviceAdapter);                        	}                    }                }            }	}	Log.d(getClass().getSimpleName(),(new JSONObject(jsonObject.optString("ids"))).optString(keyname));	adr="http://d.esya.ru/?identifier="+mychanel+"&ncrnd="+(new JSONObject(jsonObject.optString("ids"))).optString(keyname);	          	}			}			Log.d(getClass().getSimpleName(),adr);			if (!messageText.equals("")){			showToastMessage(messageText);			}		} catch (Exception e) {			// TODO Auto-generated catch block			e.printStackTrace();			Log.d(this.getClass().getName(), e.toString());		}		}
+		
+		if (mestype==2){
+			
+			Log.d(getClass().getSimpleName(),"mestype=2 "+toParse);	
+			try {
+
+				JSONArray result = new JSONArray(toParse);
+
+				for (int i = 0; i < result.length(); i++) {
+
+			        JSONObject jsonObject = result.getJSONObject(i);
+
+
+
+
+
+				if (jsonObject.has("data"))
+
+					{
+
+					
+					Log.d(this.getClass().getName(), "Изменилось состояние в канале "+ jsonObject.optString("data"));
+
+//					02-24 10:03:31.127: D/IM(562):     "data": "0|1436|38|15|0|0|0|271"
+					 String[] data =jsonObject.optString("data").split("\\|");
+					 Log.d(this.getClass().getName(), "data[0]="+data[0]+" data[1]="+data[1]+" data[2]="+data[2]);
+					 for (Channel channel : LocalService.channelList){
+						 Log.d(this.getClass().getName(), "chanal nest"+channel.name);
+						 for (Device device : channel.deviceList){
+							 Log.d(this.getClass().getName(), "device nest"+device.name+ " "+device.u);
+							 if (data[1].equals(device.u)){
+								 Log.d(this.getClass().getName(), "Изменилось состояние устройства в канале с "+ device.toString());
+								 device.lat=data[2];
+								 device.lon=data[3];
+								 Log.d(this.getClass().getName(), "Изменилось состояние устройства в канале на"+ device.toString());
+							 }
+							 
+						 }
+						 
+					 }
+
+					}
+
+				}
+
+			} catch (JSONException e) {
+
+		
+				e.printStackTrace();
+
+			}
+			
+			
+			
+		}	}	void stop (){		try {			instream.close();			} catch (Exception e) {				e.printStackTrace();			}		try {			in.close();			} catch (Exception e) {				e.printStackTrace();			}		try {			con.disconnect();			} catch (Exception e) {				e.printStackTrace();			}			running = false;	}	private class IMRunnable implements Runnable {		StringBuilder stringBuilder= new StringBuilder();		private InputStreamReader stream  = null;		private boolean           error   = false;		private int               retries = 0;		int maxRetries = 100;		public void run() {			System.out.println("run thread instance:"+this.toString());			String response = "";			while (running) {				System.out.println("running thread instance:"+this.toString());				try {					++retries;					int portOfProxy = android.net.Proxy.getDefaultPort();					if (portOfProxy > 0) {						Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(								android.net.Proxy.getDefaultHost(), portOfProxy));						con = (HttpURLConnection) new URL(adr).openConnection(proxy);					} else {						con = (HttpURLConnection) new URL(adr).openConnection();					}					con.setReadTimeout(pingTimeout*1000);					con.setConnectTimeout(10000);					instream=con.getInputStream();					stream = new InputStreamReader(instream);					in   = new BufferedReader(stream, 1024);					if(error){						error = false;					}					// Set a timeout on the socket					// This prevents getting stuck in readline() if the pipe breaks					retries = 0;					connected = true;				} catch (UnknownHostException e) {					error = true;					//stop();				} catch (Exception e) {					error = true;					//stop();				}				if(retries > maxRetries) {					stop ();					break;				}				if(retries > 0) {					try {						Thread.sleep(1000);					} catch (InterruptedException e) {						// If can't back-off, stop trying						System.out.println("Interrupted from sleep thread instance:"+this.toString());						//running = false;						break;					}				}				if(!error && running) {					try {						// Wait for a response from the channel						stringBuilder.setLength(0);						    int c = 0;						    int i=0;						    while (!(c==-1) && running) {						    	c = in.read();						        if (!(c==-1))stringBuilder.append((char) c);						        i=i+1;						    }					//return chbuf.toString();						    //Log.d(this.getClass().getName(), "void input end");						    parse( stringBuilder.toString());//						while(running && (response=in. .read()) != null) {//							// Got a response//							//killConnection.cancel();//							parse(response);//						}						instream.close();						in.close();						con.disconnect();					}					catch(IOException e) {						error = true;							//stop();						}					}				else {					// An error was encountered when trying to connect					connected = false;				}			}		}	}}

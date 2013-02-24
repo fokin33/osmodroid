@@ -609,7 +609,7 @@ else {
 
 
 
-			public int getVersion() throws RemoteException {
+			public int getVersion()  {
 
 				Log.d("OsmoDroid", "Remote getVersion");
 
@@ -617,13 +617,13 @@ else {
 
 				//Toast.makeText(LocalService.this, "vvv" , Toast.LENGTH_SHORT).show();
 
-				return 1;
+				return 3;
 
 			}
 
 
 
-			public int getBackwardCompatibleVersion() throws RemoteException {
+			public int getBackwardCompatibleVersion()  {
 
 				return 0;
 
@@ -631,7 +631,7 @@ else {
 
 
 
-			public void Deactivate() throws RemoteException {
+			public void Deactivate(){
 
 				Log.d(getClass().getSimpleName(), "Remote Deactivate");
 
@@ -657,7 +657,7 @@ else {
 
 
 
-			public void Activate() throws RemoteException {
+			public void Activate() {
 
 				Log.d(getClass().getSimpleName(), "Remote Deactivate");
 
@@ -665,6 +665,217 @@ else {
 
 
 
+			}
+
+
+
+			public int getNumberOfLayers()  {
+				Log.d(getClass().getSimpleName(), "getNumberOfLayers()="+channelList.size());
+				
+				try {
+					return channelList.size();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return 0;
+			}
+
+
+
+			public int getLayerId(int pos) {
+			
+				
+				try {	Log.d(getClass().getSimpleName(), "getLayerId()="+channelList.get(pos).u);
+					return Integer.parseInt(channelList.get(pos).u);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return 0;
+			}
+
+
+
+			public String getLayerName(int layerId) {
+				Log.d(getClass().getSimpleName(), "getLayerName()");
+				try {
+					for (Channel channel: channelList){
+						if (channel.u.equals(Integer.toString(layerId))){
+							return channel.name;
+					}
+					}
+					
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return null;
+			}
+
+
+
+			public String getLayerDescription(int layerId)
+					 {
+				Log.d(getClass().getSimpleName(), "getLayerDescription()");
+				try {
+					for (Channel channel: channelList){
+						if (channel.u.equals(Integer.toString(layerId))){
+							return channel.name;
+					}
+					}
+					
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return null;
+			}
+
+
+
+			public int getNumberOfObjects(int layerId){
+				Log.d(getClass().getSimpleName(), "getNumberOfObjects()");
+				try {
+					for (Channel channel: channelList){
+						if (channel.u.equals(Integer.toString(layerId))){
+							return channel.deviceList.size();
+					}
+					}
+					
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return 0;
+			}
+
+
+
+			public int getObjectId(int layerId, int pos) {
+				Log.d(getClass().getSimpleName(), "getObjectId()");
+				try {
+					for (Channel channel: channelList){
+						if (channel.u.equals(Integer.toString(layerId))){
+							return Integer.parseInt(channel.deviceList.get(pos).u);
+					}
+					}
+					
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+				return 0;
+			}
+
+
+
+			public float getObjectLat(int layerId, int objectId)
+					 {
+				Log.d(getClass().getSimpleName(), "getObjectLat()");
+				try {
+					for (Channel channel: channelList){
+						if (channel.u.equals(Integer.toString(layerId))){
+							for (Device device:channel.deviceList){
+								if (device.u.equals(Integer.toString(objectId))){
+									return Float.parseFloat(device.lat);			
+								}
+							}
+							
+							
+					}
+					}
+					
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return 0;
+			}
+
+
+
+			public float getObjectLon(int layerId, int objectId)
+					{
+				Log.d(getClass().getSimpleName(), "getObjectLon()");
+				try {
+					for (Channel channel: channelList){
+						if (channel.u.equals(Integer.toString(layerId))){
+							for (Device device:channel.deviceList){
+								if (device.u.equals(Integer.toString(objectId))){
+									return Float.parseFloat(device.lon);		
+								}
+							}
+							
+							
+					}
+					}
+					
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return 0;
+			}
+
+
+
+			public String getObjectName(int layerId, int objectId)
+					 {
+				Log.d(getClass().getSimpleName(), "getObjectName()");
+				try {
+					for (Channel channel: channelList){
+						if (channel.u.equals(Integer.toString(layerId))){
+							for (Device device:channel.deviceList){
+								if (device.u.equals(Integer.toString(objectId))){
+									return device.name;		
+								}
+							}
+							
+							
+					}
+					}
+					
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return null;
+			}
+
+
+
+			public String getObjectDescription(int layerId, int objectId)
+					 {
+				Log.d(getClass().getSimpleName(), "getObjectDescription()");
+				try {
+					for (Channel channel: channelList){
+						if (channel.u.equals(Integer.toString(layerId))){
+							for (Device device:channel.deviceList){
+								if (device.u.equals(Integer.toString(objectId))){
+									return device.name;		
+								}
+							}
+							
+							
+					}
+					}
+					
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return null;
 			}
 
 
@@ -1390,7 +1601,7 @@ if (live){
 	if (!settings.getString("key", "" ).equals("") ){
 
 		netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
-		netutil.newapicommand((ResultsListener)LocalService.this, "om_channel");
+		netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
 
 	}
 	}
@@ -1512,6 +1723,11 @@ mesIM = new IM(settings.getString("key", "")+",im_messages,om_online",this,1);
 		if(myIM!=null){  myIM.close();}
 
 		if(mesIM!=null){  mesIM.close();}
+		
+		if(channelList!=null){  for (Channel channel : LocalService.channelList){
+		channel.close();	
+		}
+		}
 
 		stopcomand();
 
@@ -3655,28 +3871,26 @@ if(myIM!=null){  myIM.close();}
 
 			 if (deviceAdapter!=null) {deviceAdapter.notifyDataSetChanged();}
 		}
-		if (result.Jo.has("om_channel")){
+		if (result.Jo.has("om_device_channel_adaptive:"+settings.getString("device", ""))){
 			channelList.clear();
 
 			try {
-				  a =	result.Jo.getJSONArray("om_channel");
+				  a =	result.Jo.getJSONArray("om_device_channel_adaptive:"+settings.getString("device", ""));
 		 		  Log.d(getClass().getSimpleName(), a.toString());
 		 		 for (int i = 0; i < a.length(); i++) {
 		 			JSONObject jsonObject = a.getJSONObject(i);
-		Channel chanitem = new Channel( jsonObject.getString("name"),jsonObject.getString("u"),jsonObject.getString("added")
-			);
-
+		//Channel chanitem = new Channel( jsonObject.getString("name"),jsonObject.getString("u"),jsonObject.getString("created")	);
+		 			Channel chanitem = new Channel( jsonObject);
 		channelList.add(chanitem);
-		netutil.newapicommand((ResultsListener)serContext, "om_channel_user:"+chanitem.u);
-		netutil.newapicommand((ResultsListener)LocalService.this, "om_channel_get:"+chanitem.u);
+		
 
 		 		 }
 		 		 
 		 		 
 				} catch (Exception e) {
 
-					 Log.d(getClass().getSimpleName(), "эксепшн");
-					//e.printStackTrace();
+					 Log.d(getClass().getSimpleName(), "om_device_channel_adaptive эксепшн"+e.getMessage());
+					e.printStackTrace();
 				}
 
 
@@ -3685,70 +3899,7 @@ if(myIM!=null){  myIM.close();}
 			// if (deviceAdapter!=null) {deviceAdapter.notifyDataSetChanged();}
 		}
 		
-		for (Channel chan : channelList){
-		if (result.Jo.has("om_channel_user:"+chan.u)){
-			chan.deviceList.clear();
-
-			try {
-				  a =	result.Jo.getJSONArray("om_channel_user:"+chan.u);
-		 		  Log.d(getClass().getSimpleName(), a.toString());
-		 		 for (int i = 0; i < a.length(); i++) {
-		 			JSONObject jsonObject = a.getJSONObject(i);
-//		 			 u = 1163
-//		 				    uid = 192
-//		 				    lat = 54.907503
-//		 				    lon = 41.271125
-//		 				    state = 0
-//		 				    online = 0
-//		 				    name = toxIC jiayu
-//		 				    icon = 1
-		 			
-		 			
-		chan.deviceList.add(new Device(jsonObject.getString("u")
-				, jsonObject.getString("name"),""
-				,"",
-				"",
-				"",
-				jsonObject.getString("lat"),
-				jsonObject.getString("lon"),
-				jsonObject.getString("online"),
-				jsonObject.getString("state")
-				) );   
-			
-
-		//channelList.add(chanitem);
-	//	netutil.newapicommand((ResultsListener)serContext, "om_channel_user:"+chanitem.u);
-
-
-		 		 }
-		 		 
-		 		 
-				} catch (Exception e) {
-
-					 Log.d(getClass().getSimpleName(), "эксепшн");
-					//e.printStackTrace();
-				}
-
-
-			 Log.d(getClass().getSimpleName(),chan.toString());
-
-			// if (deviceAdapter!=null) {deviceAdapter.notifyDataSetChanged();}
-		}
-		if (result.Jo.has("om_channel_get:"+chan.u)){
-			try {
-				  result.Jo.getJSONObject("om_channel_get:"+chan.u).getString("ch");
-				  Log.d(getClass().getSimpleName(), "Канал CH="+result.Jo.getJSONObject("om_channel_get:"+chan.u).getString("ch"));
-				} catch (Exception e) {
-
-					 Log.d(getClass().getSimpleName(), "эксепшн");
-					//e.printStackTrace();
-				}	
-			
-			
-		}
 		
-		
-		}
 	
 
 		Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);
