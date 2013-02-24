@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.OsMoDroid"
-    android:versionCode="48"
-    android:versionName="1.0.0.39" >
+    android:versionCode="49"
+    android:versionName="1.0.0.40" >
 
     <uses-sdk android:minSdkVersion="4"  />
 
@@ -43,6 +43,7 @@
             </intent-filter>
         </receiver>
         <activity android:name="MyDevices"></activity>
+        <activity android:name="MyChannels"></activity>
 
     </application>
 

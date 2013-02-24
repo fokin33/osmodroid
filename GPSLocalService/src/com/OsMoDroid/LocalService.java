@@ -466,6 +466,7 @@ private long lastgpslocationtime=0;
 	    public static ArrayList<String> messagelist= new ArrayList<String>();
 
 	    public static DeviceAdapter deviceAdapter;
+	    public static ChannelsAdapter channelsAdapter;
 
 	    static Context serContext;
 
@@ -1266,6 +1267,7 @@ public void stopcomand()
 		ReadPref();
 
 		deviceAdapter = new DeviceAdapter(getApplicationContext(),R.layout.deviceitem, LocalService.deviceList);
+		channelsAdapter = new ChannelsAdapter(getApplicationContext(),R.layout.deviceitem, LocalService.channelList);
 
 		String alarm = Context.ALARM_SERVICE;
 
@@ -3896,7 +3898,7 @@ if(myIM!=null){  myIM.close();}
 
 			 Log.d(getClass().getSimpleName(),channelList.toString());
 
-			// if (deviceAdapter!=null) {deviceAdapter.notifyDataSetChanged();}
+			 if (channelsAdapter!=null) {channelsAdapter.notifyDataSetChanged();}
 		}
 		
 		

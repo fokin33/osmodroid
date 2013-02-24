@@ -109,6 +109,7 @@ PowerManager pm;
 	MenuItem mi8;
 	MenuItem myDevices;
 	MenuItem messages;
+	MenuItem miChannels;
 
 	String version="Unknown";
 	SharedPreferences settings;
@@ -426,6 +427,10 @@ startlocalservice();
 		 myDevices = menu.add(0, 16, 0, "Мои устройства");
 		 myDevices.setIcon(android.R.drawable.ic_menu_today);
 		 myDevices.setIntent(new Intent(this, MyDevices.class));
+		 miChannels = menu.add(0, 16, 0, "Мои каналы");
+		 miChannels.setIcon(android.R.drawable.ic_menu_agenda);
+		 miChannels.setIntent(new Intent(this, MyChannels.class));
+		 
 		 about.setIcon(android.R.drawable.ic_menu_info_details);
 		 about.setIntent(new Intent(this, aboutActivity.class));
                  mi.setIntent(new Intent(this, PrefActivity.class));
@@ -442,8 +447,23 @@ startlocalservice();
 //		{ mi4.setEnabled(false);}
 //		else {mi4.setEnabled(true);}
 		if (key.equals(""))
-		{ mi6.setEnabled(false); mi5.setEnabled(false);mi7.setEnabled(false);mi8.setEnabled(false);myDevices.setEnabled(false); messages.setEnabled(false);}
-		else { mi6.setEnabled(true); mi5.setEnabled(true);mi7.setEnabled(true);mi8.setEnabled(true);myDevices.setEnabled(true); messages.setEnabled(true);;
+		{
+		mi6.setEnabled(false);
+		mi5.setEnabled(false);
+		mi7.setEnabled(false);
+		mi8.setEnabled(false);
+		myDevices.setEnabled(false);
+		messages.setEnabled(false);
+		miChannels.setEnabled(false);
+		}
+		else { 
+		mi6.setEnabled(true);
+		mi5.setEnabled(true);
+		mi7.setEnabled(true);
+		mi8.setEnabled(true);
+		myDevices.setEnabled(true);
+		messages.setEnabled(true);
+		miChannels.setEnabled(true);
 		}
 //		if (settings.getString("device", "").equals("")){
 //			mi7.setEnabled(false);
