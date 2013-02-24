@@ -46,7 +46,7 @@ public class RemoteOsMoDroidClientActivity extends Activity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		timer.schedule(task, 0, 1000);
+		
 	}
 	Button b3;
 	Button getinfobutton;
@@ -139,6 +139,7 @@ getinfobutton.setOnClickListener(new OnClickListener() {
 
              
 		bindService(serviceIntent, mConnection, Context.BIND_AUTO_CREATE);
+		timer.schedule(task, 0, 1000);
        
 		
         
