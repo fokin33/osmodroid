@@ -105,7 +105,7 @@ PowerManager pm;
 	MenuItem mi4;
 	MenuItem mi5;
 	MenuItem mi6;
-	MenuItem mi7;
+	//MenuItem mi7;
 	MenuItem mi8;
 	MenuItem myDevices;
 	MenuItem messages;
@@ -403,7 +403,7 @@ startlocalservice();
 		 mi4 = menu1.add(0, 4, 0, R.string.getkey);
 		 mi5 = menu1.add(0, 5, 0, R.string.getadres);
 		 mi6 = menu1.add(0, 6, 0, R.string.getdevice);
-		 mi7 = menu1.add(0, 7, 0, R.string.enterchanel);
+		// mi7 = menu1.add(0, 7, 0, R.string.enterchanel);
 		 mi8 = menu1.add(0, 8, 0, R.string.symlink);
 		 MenuItem forcesenditem = menu.add(0, 9, 0, R.string.sendnow);
 		 forcesenditem.setIcon(android.R.drawable.ic_menu_mylocation);
@@ -450,7 +450,7 @@ startlocalservice();
 		{
 		mi6.setEnabled(false);
 		mi5.setEnabled(false);
-		mi7.setEnabled(false);
+		//mi7.setEnabled(false);
 		mi8.setEnabled(false);
 		myDevices.setEnabled(false);
 		messages.setEnabled(false);
@@ -459,7 +459,7 @@ startlocalservice();
 		else { 
 		mi6.setEnabled(true);
 		mi5.setEnabled(true);
-		mi7.setEnabled(true);
+		//mi7.setEnabled(true);
 		mi8.setEnabled(true);
 		myDevices.setEnabled(true);
 		messages.setEnabled(true);
@@ -642,118 +642,7 @@ startlocalservice();
 			}
 
 		}
-		if (item.getItemId() == 7) {
-			if (!(settings.getString("device", "").equals(""))) {
-
-			LinearLayout layout = new LinearLayout(this);
-			layout.setOrientation(LinearLayout.VERTICAL);
-
-			final TextView txv3 = new TextView(this);
-			txv3.setText("Ваше имя:");
-			layout.addView(txv3);
-
-			final EditText input2 = new EditText(this);
-			//input2.setText("Ваше имя");
-			layout.addView(input2);
-
-			final TextView txv1 = new TextView(this);
-			txv1.setText("Код канала:");
-			layout.addView(txv1);
-
-			final EditText input = new EditText(this);
-			//input.setText("Код канала");
-			layout.addView(input);
-
-			final CheckBox chb1 = new CheckBox(this);
-			chb1.setText("Приватный канал");
-
-			layout.addView(chb1);
-
-			final TextView txv2 = new TextView(this);
-			txv2.setText("Ключ канала:");
-			//txv2.setEnabled(false);
-			layout.addView(txv2);
-
-			final EditText input1 = new EditText(this);
-			//input1.setText("Ключ канала");
-			input1.setEnabled(false);
-			layout.addView(input1);
-
-			chb1.setOnCheckedChangeListener(new OnCheckedChangeListener()
-			{
-				public void onCheckedChanged(CompoundButton buttonView,
-						boolean isChecked) {
-				if (isChecked){
-					input1.setEnabled(true);}
-				if (!isChecked){
-					input1.setEnabled(false);}
-
-
-				}
-			});
-
-
-
-
-
-			AlertDialog alertdialog4 = new AlertDialog.Builder(
-					GPSLocalServiceClient.this)
-					.setTitle("Подключение в канал")
-					.setView(layout)
-					.setPositiveButton(R.string.yes,
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int whichButton) {
-									String canalid = input.getText().toString();
-									String canalkey = input1.getText().toString();
-									String canalname = input2.getText().toString();
-									if ( !(canalid.equals("")) && !(canalname.equals("")) && ( chb1.isChecked()&&(!(canalkey.equals(""))) || !chb1.isChecked() )  )
-									{
-										String[] params = {
-												"http://api.esya.ru/?system=om&action=channel_enter"+"&code="+canalid
-												+"&pass="+canalkey
-												+"&device="+settings.getString("device", "")
-												+"&name="+canalname
-														+ "&key="
-														+ key
-														+ "&signature="
-														+ SHA1(
-																"system:om;action:channel_enter;code:"+canalid+";pass:"+canalkey+";device:"+settings.getString("device", "")+";name:"+canalname+ ";key:"
-																		+ key
-																		+ ";"
-																		+ "--"
-																		+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
-																.substring(1, 25),
-												"false",
-												"",
-												"channel_enter" };
-										RequestCommandTask Rq = new RequestCommandTask();
-										Rq.execute(params);
-									} else {
-										Toast.makeText(
-												GPSLocalServiceClient.this,
-												"Указаны не все данные", 5).show();
-									}
-								}
-							})
-					.setNegativeButton(R.string.No,
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int whichButton) {
-
-									/* User clicked cancel so do some stuff */
-								}
-							}).create();
-
-			alertdialog4.show();
-
-			// 6564 2638 7281 2680
-
-		}else {Toast.makeText(
-				GPSLocalServiceClient.this,
-				"Предварительно запросите устройство", 5).show();}
-
-		}
+		
 		if (item.getItemId() == 9) {
                     Log.d(getClass().getSimpleName(), "forcesend click");
                     if (conn == null || mService == null) {

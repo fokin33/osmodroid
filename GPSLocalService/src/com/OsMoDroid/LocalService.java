@@ -214,6 +214,8 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 
 	private static final int OSMODROID_ID = 1;
 
+	
+	
 	int notifyid=2;
 
 	//MediaPlayer mp;
@@ -317,6 +319,8 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 
 	private Location prevlocation;
 
+	public static Location currentLocation;
+	
 	private Location prevlocation_gpx;
 
 	private Location prevlocation_spd;
@@ -2093,6 +2097,8 @@ if (usecourse)	{
 
 
 		prevlocation= myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		
+		
 
 
 
@@ -2577,6 +2583,8 @@ new netutil.MyAsyncTask(this).execute(params);}
 
 	public void onLocationChanged(Location location) {
 
+		currentLocation.set(location);
+		
 		Accuracy=Float.toString(location.getAccuracy());
 
 		if (System.currentTimeMillis()<lastgpslocationtime+gpsperiod+1000 && location.getProvider().equals(LocationManager.NETWORK_PROVIDER))
