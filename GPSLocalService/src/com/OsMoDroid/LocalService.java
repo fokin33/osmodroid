@@ -471,6 +471,7 @@ private long lastgpslocationtime=0;
 
 	    public static DeviceAdapter deviceAdapter;
 	    public static ChannelsAdapter channelsAdapter;
+	    public static ChannelsDevicesAdapter channelsDevicesAdapter;
 
 	    static Context serContext;
 
@@ -1224,7 +1225,7 @@ public void stopcomand()
 
 		myManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-
+currentLocation = new Location("");
 
 		Sattelite=getString(R.string.Sputniki);
 
@@ -3907,6 +3908,7 @@ if(myIM!=null){  myIM.close();}
 			 Log.d(getClass().getSimpleName(),channelList.toString());
 
 			 if (channelsAdapter!=null) {channelsAdapter.notifyDataSetChanged();}
+			 if (channelsDevicesAdapter!=null) {channelsDevicesAdapter.notifyDataSetChanged();}
 		}
 		
 		

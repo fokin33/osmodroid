@@ -44,7 +44,20 @@ package com.OsMoDroid;import java.io.BufferedReader;import java.io.IOExcep
 						 }
 						 
 					 }
-
+					 
+						 
+						 LocalService.alertHandler.post(new Runnable() {
+							
+							public void run() {
+								if (LocalService.channelsDevicesAdapter!=null)
+								{
+									 Log.d(this.getClass().getName(), "Adapter:"+ LocalService.channelsDevicesAdapter.toString());
+									LocalService.channelsDevicesAdapter.notifyDataSetChanged();
+								}
+								}
+						 }
+							);
+						 
 					}
 
 				}

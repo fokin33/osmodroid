@@ -44,6 +44,7 @@
         </receiver>
         <activity android:name="MyDevices"></activity>
         <activity android:name="MyChannels"></activity>
+        <activity android:name="MyChannelsDevices"></activity>
 
     </application>
 
