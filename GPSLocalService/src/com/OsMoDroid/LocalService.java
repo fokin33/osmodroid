@@ -2590,6 +2590,22 @@ new netutil.MyAsyncTask(this).execute(params);}
 
 		currentLocation.set(location);
 		
+		if (LocalService.channelsDevicesAdapter!=null&&LocalService.currentChannel!=null)
+		{
+			 Log.d(this.getClass().getName(), "Adapter:"+ LocalService.channelsDevicesAdapter.toString());
+			
+			 for (Channel channel:LocalService.channelList){
+					if(channel.u.equals(LocalService.currentChannel.u)){
+						LocalService.currentchanneldeviceList.clear();
+						LocalService.currentchanneldeviceList.addAll(channel.deviceList);
+				 }
+					
+				}
+			 
+			 
+			 LocalService.channelsDevicesAdapter.notifyDataSetChanged();
+		}
+		
 		Accuracy=Float.toString(location.getAccuracy());
 
 		if (System.currentTimeMillis()<lastgpslocationtime+gpsperiod+1000 && location.getProvider().equals(LocationManager.NETWORK_PROVIDER))

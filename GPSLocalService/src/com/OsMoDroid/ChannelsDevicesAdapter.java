@@ -38,12 +38,18 @@ public class ChannelsDevicesAdapter extends ArrayAdapter<Device> {
 		        channelDeviceWhere = (TextView) row.findViewById(R.id.txtWhere);
 		        channelDeviceDistance = (TextView) row.findViewById(R.id.TextDistance);
 		        if (device.name!=null){   channelDeviceName.setText(device.name);}
-		        if (device.lat!=null&device.lon!=null){channelDeviceWhere.setText(device.lat+" "+device.lon);}
+		        if (device.lat!=null&device.lon!=null){channelDeviceWhere.setText("Координаты:"+device.lat+" "+device.lon);}
 		        if (LocalService.currentLocation!=null){
 		        	channelDeviceLocation.setLatitude(Double.parseDouble(device.lat));
 		        	channelDeviceLocation.setLongitude(Double.parseDouble(device.lon));
-		        	channelDeviceDistance.setText(Float.toString(LocalService.currentLocation.distanceTo(channelDeviceLocation)));
 		        	
+		        	if(LocalService.currentLocation.distanceTo(channelDeviceLocation)<1000){
+		        	channelDeviceDistance.setText("Дистанция:"+Float.toString(LocalService.currentLocation.distanceTo(channelDeviceLocation))+" Метров");
+		        	}
+		        	else
+		        	{
+		        		channelDeviceDistance.setText("Дистанция:"+Float.toString(LocalService.currentLocation.distanceTo(channelDeviceLocation)/1000)+" Километров");	
+		        	}
 		        }
 		        return row;
 
