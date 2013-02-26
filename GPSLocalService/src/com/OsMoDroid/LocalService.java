@@ -466,6 +466,10 @@ private long lastgpslocationtime=0;
 	    public static List<Channel> channelList = new ArrayList<Channel>();
 	    
 	    public static List<Device> deviceList= new ArrayList<Device>();
+	    
+	    public static Channel currentChannel;
+	    
+	    public static List<Device> currentchanneldeviceList= new ArrayList<Device>();
 
 	    public static ArrayList<String> messagelist= new ArrayList<String>();
 
@@ -3893,7 +3897,13 @@ if(myIM!=null){  myIM.close();}
 		//Channel chanitem = new Channel( jsonObject.getString("name"),jsonObject.getString("u"),jsonObject.getString("created")	);
 		 			Channel chanitem = new Channel( jsonObject);
 		channelList.add(chanitem);
-		
+		if (currentChannel!=null) {
+			if(chanitem.u.equals(currentChannel.u)){
+				currentchanneldeviceList.clear();
+				currentchanneldeviceList.addAll(chanitem.deviceList);
+				 if (channelsDevicesAdapter!=null) {channelsDevicesAdapter.notifyDataSetChanged();}
+			}
+		}
 
 		 		 }
 		 		 
@@ -3906,9 +3916,9 @@ if(myIM!=null){  myIM.close();}
 
 
 			 Log.d(getClass().getSimpleName(),channelList.toString());
-
+			 
 			 if (channelsAdapter!=null) {channelsAdapter.notifyDataSetChanged();}
-			 if (channelsDevicesAdapter!=null) {channelsDevicesAdapter.notifyDataSetChanged();}
+			
 		}
 		
 		

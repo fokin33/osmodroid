@@ -39,6 +39,7 @@ package com.OsMoDroid;import java.io.BufferedReader;import java.io.IOExcep
 								 device.lat=data[2];
 								 device.lon=data[3];
 								 Log.d(this.getClass().getName(), "Изменилось состояние устройства в канале на"+ device.toString());
+								 
 							 }
 							 
 						 }
@@ -49,10 +50,23 @@ package com.OsMoDroid;import java.io.BufferedReader;import java.io.IOExcep
 						 LocalService.alertHandler.post(new Runnable() {
 							
 							public void run() {
-								if (LocalService.channelsDevicesAdapter!=null)
+								
+								
+								
+								if (LocalService.channelsDevicesAdapter!=null&&LocalService.currentChannel!=null)
 								{
 									 Log.d(this.getClass().getName(), "Adapter:"+ LocalService.channelsDevicesAdapter.toString());
-									LocalService.channelsDevicesAdapter.notifyDataSetChanged();
+									
+									 for (Channel channel:LocalService.channelList){
+											if(channel.u.equals(LocalService.currentChannel.u)){
+												LocalService.currentchanneldeviceList.clear();
+												LocalService.currentchanneldeviceList.addAll(channel.deviceList);
+										 }
+											
+										}
+									 
+									 
+									 LocalService.channelsDevicesAdapter.notifyDataSetChanged();
 								}
 								}
 						 }
