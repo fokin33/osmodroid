@@ -1229,7 +1229,7 @@ public void stopcomand()
 
 		myManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-currentLocation = new Location("");
+
 
 		Sattelite=getString(R.string.Sputniki);
 
@@ -1241,7 +1241,9 @@ currentLocation = new Location("");
 
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 
-
+		currentLocation = new Location("");
+		currentLocation.setLatitude((double)settings.getFloat("lat", 0f));
+		currentLocation.setLongitude((double)settings.getFloat("lon", 0f));
 
 
 
@@ -2255,6 +2257,13 @@ new netutil.MyAsyncTask(this).execute(params);}
 
 	public void stopServiceWork(){
 
+		SharedPreferences.Editor editor = settings.edit();
+
+        editor.putFloat("lat", (float) currentLocation.getLatitude());
+        editor.putFloat("lon", (float) currentLocation.getLongitude());
+
+        editor.commit();
+		
 		if (settings.getBoolean("sendsound", false)){
 			 soundPool.play(stopsound, 1f, 1f, 1, 0, 1f);
 		}
@@ -2694,7 +2703,7 @@ workmilli= System.currentTimeMillis();
 
 
 
-		if (location.getSpeed()>=speed_gpx/3.6 && (int)location.getAccuracy()<hdop_gpx){
+		if (location.getSpeed()>=speed_gpx/3.6 && (int)location.getAccuracy()<hdop_gpx && prevlocation_spd!=null ){
 
 		workdistance=workdistance+location.distanceTo(prevlocation_spd);
 

@@ -42,14 +42,8 @@ public class ChannelsDevicesAdapter extends ArrayAdapter<Device> {
 		        if (LocalService.currentLocation!=null){
 		        	channelDeviceLocation.setLatitude(Double.parseDouble(device.lat));
 		        	channelDeviceLocation.setLongitude(Double.parseDouble(device.lon));
+		        	channelDeviceDistance.setText("Дистанция:"+Integer.toString((int)LocalService.currentLocation.distanceTo(channelDeviceLocation)/1000)+" Км "+Integer.toString((int) (1000*(LocalService.currentLocation.distanceTo(channelDeviceLocation)/1000 -(int)LocalService.currentLocation.distanceTo(channelDeviceLocation)/1000)) )+" м");	
 		        	
-		        	if(LocalService.currentLocation.distanceTo(channelDeviceLocation)<1000){
-		        	channelDeviceDistance.setText("Дистанция:"+Float.toString(LocalService.currentLocation.distanceTo(channelDeviceLocation))+" Метров");
-		        	}
-		        	else
-		        	{
-		        		channelDeviceDistance.setText("Дистанция:"+Float.toString(LocalService.currentLocation.distanceTo(channelDeviceLocation)/1000)+" Километров");	
-		        	}
 		        }
 		        return row;
 
