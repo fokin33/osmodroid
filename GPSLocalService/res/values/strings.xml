@@ -49,7 +49,7 @@
 <string name="enterchanel">Войти в канал</string>
 <string name="SimLinkButtonText">Обновить</string>
 <string name="addsymlink">Создать ссылку</string>
-<string name="symlink">Символические ссылки</string>
+<string name="symlink">Мои ссылки</string>
 <string name="sendnow">Отправить сейчас</string>
 <string name="message">Сообщение:</string>
 <string name="sendsupport">Сообщить в техническую поддержку</string>

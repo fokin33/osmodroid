@@ -2325,7 +2325,8 @@ new netutil.MyAsyncTask(this).execute(params);}
 
 			if (send != null ) {
 
-				//Log.d(this.getClass().getName(), "Отменяем поток передачи.");
+				Log.d(this.getClass().getName(), "Отменяем asynctask передачи send.");
+				Log.d(this.getClass().getName(), "send.status="+send.getStatus().toString());
 
 				send.cancel(true);
 
@@ -2517,17 +2518,18 @@ new netutil.MyAsyncTask(this).execute(params);}
 
 		protected String doInBackground(String... arg0) {
 
+			Log.d(getClass().getSimpleName(), "SendCoorOnPostExecute, doInBackground begin");
 			try {
 
 			//	 SendwakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "SendWakeLock");
 
 			//	SendwakeLock.acquire();
 
-				//Log.d(this.getClass().getName(), "Начинаем отправку.");
+				Log.d(this.getClass().getName(), "Начинаем отправку.");
 
 				tmp=getPage(arg0[0], arg0[1]);
 
-				//Log.d(this.getClass().getName(), "Отправка окончена.");
+				Log.d(this.getClass().getName(), "Отправка окончена.");
 
 			} catch (IOException e) {
 
@@ -2539,7 +2541,7 @@ new netutil.MyAsyncTask(this).execute(params);}
 
 				tmp="NoConnection";
 
-				Log.d(this.getClass().getName(), "Exception. NoConnection");
+				Log.d(this.getClass().getName(), "Exception. NoConnection"+e.toString());
 
 			}
 
@@ -2993,7 +2995,7 @@ if (gpx && fileheaderok) {
 
 	 private String getPage(String adr, String buf) throws IOException {
 
-		 //Log.d(this.getClass().getName(), "void getpage");
+		 Log.d(this.getClass().getName(), "void getpage");
 
 		 int portOfProxy = android.net.Proxy.getDefaultPort();
 
@@ -3098,7 +3100,7 @@ if (gpx && fileheaderok) {
     	   			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
 
     	   				//instream=con.getInputStream();
-
+    	   				Log.d(this.getClass().getName(),"getpage http_ok");
     	   				String  ret= inputStreamToString(con.getInputStream());
 
 
@@ -3129,7 +3131,7 @@ if (gpx && fileheaderok) {
 
 	private String inputStreamToString(InputStream in) throws IOException {
 
-		//Log.d(this.getClass().getName(), "void input");
+		Log.d(this.getClass().getName(), "void inputstreamtostring begin");
 
 
 
@@ -3163,7 +3165,7 @@ if (gpx && fileheaderok) {
 
 //return chbuf.toString();
 
-	    //Log.d(this.getClass().getName(), "void input end");
+	    Log.d(this.getClass().getName(), "void inputstreamtostring end");
 
 	    return stringBuilder.toString();
 
@@ -3468,7 +3470,10 @@ else
 
 
 
-
+if (send!=null)
+{
+	Log.d(this.getClass().getName(), "send.status="+send.getStatus().toString());	
+}
 
 if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
 

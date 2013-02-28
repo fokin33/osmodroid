@@ -103,8 +103,8 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 PowerManager pm;
 	WakeLock	wakeLock;// = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyWakeLock");
 	MenuItem mi4;
-	MenuItem mi5;
-	MenuItem mi6;
+	//MenuItem mi5;
+	//MenuItem mi6;
 	//MenuItem mi7;
 	MenuItem mi8;
 	MenuItem myDevices;
@@ -392,7 +392,7 @@ startlocalservice();
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
-		SubMenu menu1 = menu.addSubMenu(Menu.NONE, 11, 4, "Действия");
+		//SubMenu menu1 = menu.addSubMenu(Menu.NONE, 11, 4, "Действия");
 		SubMenu menu2 = menu.addSubMenu(Menu.NONE, 12, 4, "Ещё");
 
 		MenuItem auth = menu2.add(0, 1, 0, R.string.RepeatAuth);
@@ -400,11 +400,11 @@ startlocalservice();
 		mi.setIcon(android.R.drawable.ic_menu_preferences);
 		MenuItem mi3 = menu2.add(0, 3, 0, R.string.EqualsParameters);
 
-		 mi4 = menu1.add(0, 4, 0, R.string.getkey);
-		 mi5 = menu1.add(0, 5, 0, R.string.getadres);
-		 mi6 = menu1.add(0, 6, 0, R.string.getdevice);
+		 mi4 = menu2.add(0, 4, 0, R.string.getkey);
+		// mi5 = menu1.add(0, 5, 0, R.string.getadres);
+		// mi6 = menu1.add(0, 6, 0, R.string.getdevice);
 		// mi7 = menu1.add(0, 7, 0, R.string.enterchanel);
-		 mi8 = menu1.add(0, 8, 0, R.string.symlink);
+		
 		 MenuItem forcesenditem = menu.add(0, 9, 0, R.string.sendnow);
 		 forcesenditem.setIcon(android.R.drawable.ic_menu_mylocation);
 		 MenuItem shareadress = menu.add(0, 10, 0, "Поделиться ссылкой");
@@ -412,6 +412,8 @@ startlocalservice();
 		 MenuItem copyadress = menu.add(0, 11, 0, "Скопировать ссылку");
 		 copyadress.setIcon(android.R.drawable.ic_menu_edit);
 		 MenuItem about = menu.add(0, 12, 0, R.string.about);
+		 about.setIcon(android.R.drawable.ic_menu_info_details);
+		 about.setIntent(new Intent(this, aboutActivity.class));
 		 MenuItem exit = menu.add(0, 14, 0, "Выход");
 		 messages = menu.add(0, 15, 0, "Сообщения");
 		 messages.setIcon(android.R.drawable.sym_action_chat);
@@ -430,9 +432,8 @@ startlocalservice();
 		 miChannels = menu.add(0, 16, 0, "Мои каналы");
 		 miChannels.setIcon(android.R.drawable.ic_menu_agenda);
 		 miChannels.setIntent(new Intent(this, MyChannels.class));
-		 
-		 about.setIcon(android.R.drawable.ic_menu_info_details);
-		 about.setIntent(new Intent(this, aboutActivity.class));
+		 mi8 = menu.add(0, 8, 0, R.string.symlink);
+		
                  mi.setIntent(new Intent(this, PrefActivity.class));
                  mi8.setIntent(new Intent(this, SimLinks.class));
 
@@ -448,8 +449,8 @@ startlocalservice();
 //		else {mi4.setEnabled(true);}
 		if (key.equals(""))
 		{
-		mi6.setEnabled(false);
-		mi5.setEnabled(false);
+		//mi6.setEnabled(false);
+		//mi5.setEnabled(false);
 		//mi7.setEnabled(false);
 		mi8.setEnabled(false);
 		myDevices.setEnabled(false);
@@ -457,8 +458,8 @@ startlocalservice();
 		miChannels.setEnabled(false);
 		}
 		else { 
-		mi6.setEnabled(true);
-		mi5.setEnabled(true);
+		//mi6.setEnabled(true);
+		//mi5.setEnabled(true);
 		//mi7.setEnabled(true);
 		mi8.setEnabled(true);
 		myDevices.setEnabled(true);
@@ -604,44 +605,44 @@ startlocalservice();
 			// 6564 2638 7281 2680
 
 		}
-		if (item.getItemId() == 5) {
-			if (!(key.equals(""))) {
-
-				String[] a={"device"};
-				String[] b={device};
-				String[] params = {netutil.buildcommand(GPSLocalServiceClient.this,"device_link",a,b),"false","","device_link"};
-				new netutil.MyAsyncTask(GPSLocalServiceClient.this,GPSLocalServiceClient.this).execute(params) ;
-			} else {
-				Toast.makeText(GPSLocalServiceClient.this, R.string.nokey, 5)
-						.show();
-			}
-
-		}
-
-		if (item.getItemId() == 6) {
-			if (!(key.equals(""))) {
-				String[] params = {
-						"http://api.esya.ru/?system=om&action=device"
-								+ "&key="
-								+ key
-								+ "&signature="
-								+ SHA1(
-										"system:om;action:device;key:"
-												+ key
-												+ ";"
-												+ "--"
-												+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
-										.substring(1, 25), "false", "",
-						"device" };
-				Log.d(getClass().getSimpleName(), params[0]);
-				RequestCommandTask Rq = new RequestCommandTask();
-				Rq.execute(params);
-			} else {
-				Toast.makeText(GPSLocalServiceClient.this, R.string.nokey, 5)
-						.show();
-			}
-
-		}
+//		if (item.getItemId() == 5) {
+//			if (!(key.equals(""))) {
+//
+//				String[] a={"device"};
+//				String[] b={device};
+//				String[] params = {netutil.buildcommand(GPSLocalServiceClient.this,"device_link",a,b),"false","","device_link"};
+//				new netutil.MyAsyncTask(GPSLocalServiceClient.this,GPSLocalServiceClient.this).execute(params) ;
+//			} else {
+//				Toast.makeText(GPSLocalServiceClient.this, R.string.nokey, 5)
+//						.show();
+//			}
+//
+//		}
+//
+//		if (item.getItemId() == 6) {
+//			if (!(key.equals(""))) {
+//				String[] params = {
+//						"http://api.esya.ru/?system=om&action=device"
+//								+ "&key="
+//								+ key
+//								+ "&signature="
+//								+ SHA1(
+//										"system:om;action:device;key:"
+//												+ key
+//												+ ";"
+//												+ "--"
+//												+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
+//										.substring(1, 25), "false", "",
+//						"device" };
+//				Log.d(getClass().getSimpleName(), params[0]);
+//				RequestCommandTask Rq = new RequestCommandTask();
+//				Rq.execute(params);
+//			} else {
+//				Toast.makeText(GPSLocalServiceClient.this, R.string.nokey, 5)
+//						.show();
+//			}
+//
+//		}
 		
 		if (item.getItemId() == 9) {
                     Log.d(getClass().getSimpleName(), "forcesend click");
