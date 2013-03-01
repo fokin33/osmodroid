@@ -1702,6 +1702,11 @@ if (settings.getBoolean("im", false) && !settings.getString("key", "" ).equals("
 
 mesIM = new IM(settings.getString("key", "")+",im_messages,om_online",this,1);
 
+if(!settings.getString("lpch", "").equals("")){ 
+			myIM = new IM(settings.getString("lpch", "")+"ctrl",this,0);
+			}
+
+		
 }
 
 
@@ -3808,7 +3813,8 @@ public void onResultsSucceeded(APIComResult result) {
 
 		Log.d(getClass().getSimpleName(),"notifwar1 Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ " Запрос:"+result.url);
 
-			notifywarnactivity("Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ " Запрос:"+result.url);
+	//		notifywarnactivity("Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ " Запрос:"+result.url);
+		Toast.makeText(LocalService.this, "Esya.ru не отвечает. Проверьте работу интернета." , Toast.LENGTH_LONG).show();
 
 		}
 
@@ -3835,7 +3841,7 @@ public void onResultsSucceeded(APIComResult result) {
 
 
 
-		if (!result.Jo.optString("lpch").equals("")){
+		if (!result.Jo.optString("lpch").equals("")&& !result.Jo.optString("lpch").equals(settings.getString("lpch", ""))){
 
 			SharedPreferences.Editor editor = settings.edit();
 

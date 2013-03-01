@@ -204,7 +204,7 @@ String linkname =  System.currentTimeMillis()+settings.getString("device", "");
 	public void onResultsSucceeded(APIComResult result) {
 		JSONObject a = null; 
 		Log.d(getClass().getSimpleName(),"OnResultListener:"+result);	
-		if (result.Command.equals("APIM")&& !(result.Jo==null))
+		if (result.Jo==null&&result.ja==null)		{			Log.d(getClass().getSimpleName(),"notifwar1 Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ " Запрос:"+result.url);		//		notifywarnactivity("Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ " Запрос:"+result.url);			Toast.makeText(LocalService.serContext, "Esya.ru не отвечает. Проверьте работу интернета." , Toast.LENGTH_LONG).show();			}						if (result.Command.equals("APIM")&& !(result.Jo==null))
 		{
 			Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);
 			if (result.Jo.has("om_link_add")){
