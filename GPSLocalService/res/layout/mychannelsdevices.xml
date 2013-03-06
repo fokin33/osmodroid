@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/refreshchannelsbutton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/SimLinkButtonText" />
+
+    <ListView
+        android:id="@+id/mychannelsdeviceslistView"
+        android:layout_width="fill_parent"
+        android:layout_height="152dp" >
+    </ListView>
+
+    <ListView
+        android:id="@+id/mychannelsmessages"
+        android:layout_width="fill_parent"
+        android:layout_height="241dp" >
+
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/mychannelsdeviceseditText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:editable="true"
+            android:ems="10"
+            android:focusable="true"
+            android:inputType="text"
+            android:singleLine="false" />
+
+        <Button
+            android:id="@+id/mychanneldevicesendButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Отправить" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -16,6 +16,7 @@ public class Channel {
 	public String created;
 	public String ch;
 	public List<Device> deviceList= new ArrayList<Device>();
+	public List<String> messagesstringList= new ArrayList<String>();
 	
 	public Channel(){
 		
@@ -82,7 +83,7 @@ public class Channel {
 	
 	public void connect(){
 		Log.d(getClass().getSimpleName(),"Channel connecting");	
-		chanIM= new IM("om_"+this.ch, LocalService.serContext, 2);
+		chanIM= new IM("om_"+this.ch+",om_"+this.ch+"_chat", LocalService.serContext, 2);
 		
 	}
 

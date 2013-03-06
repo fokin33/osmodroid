@@ -160,6 +160,7 @@ import android.speech.tts.TextToSpeech.OnInitListener;
 
 //import android.util.Log;
 
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 
 import android.widget.TextView;
@@ -476,6 +477,7 @@ private long lastgpslocationtime=0;
 	    public static DeviceAdapter deviceAdapter;
 	    public static ChannelsAdapter channelsAdapter;
 	    public static ChannelsDevicesAdapter channelsDevicesAdapter;
+	    public static ArrayAdapter<String> channelsmessagesAdapter;
 
 	    static Context serContext;
 
