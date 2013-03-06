@@ -3479,15 +3479,15 @@ else
 
 if (send!=null)
 {
-	Log.d(this.getClass().getName(), "send.status="+send.getStatus().toString());	
+	Log.d(this.getClass().getName(), "send.status="+send.getStatus().toString() +" isCanceled="+send.isCancelled());	
 }
 
-if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
+if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED) || send.isCancelled())
 
-//если задач по отправке не существует или закончена
+//если задач по отправке не существует или закончена или отменена
 
 {
-	Log.d(this.getClass().getName(), "sendlocation send==null or FINISHED");
+	Log.d(this.getClass().getName(), "sendlocation send==null or FINISHED or isCanceled");
 
 
 	if(usebuffer){
@@ -3588,7 +3588,7 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED))
  else
 
 {
-	 Log.d(this.getClass().getName(), "sendlocation send!=null or not FINISHED");
+	 Log.d(this.getClass().getName(), "sendlocation send!=null or not FINISHED or not canceled");
 	if(usebuffer)
 
 	{
