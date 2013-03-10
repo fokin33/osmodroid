@@ -2053,62 +2053,7 @@ if (soundPool!=null) {soundPool.release();}
 
 		if (gpx) {
 
-			String sdState = android.os.Environment.getExternalStorageState();
-
-			if (sdState.equals(android.os.Environment.MEDIA_MOUNTED)) {
-
-			 File sdDir = android.os.Environment.getExternalStorageDirectory();
-
-			// SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-
-			 String time = sdf2.format(new Date());
-
-			 fileName = new File (sdDir, "OsMoDroid/");
-
-			 fileName.mkdirs();
-
-			 fileName = new File(sdDir, "OsMoDroid/"+time+".gpx");
-
-			 }
-
-			if (!fileName.exists())
-
-			{
-
-				try {
-
-					crtfile= fileName.createNewFile();
-
-				} catch (IOException e) {
-
-					e.printStackTrace();
-
-				}
-
-				//Log.d(getClass().getSimpleName(), Boolean.toString(crtfile));
-
-			}
-
-			try {
-                            // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd'T'HH:mm:ssZ");
-
-                            String time = sdf1.format(new Date(System.currentTimeMillis()))+"Z";
-
-                            FileWriter trackwr = new FileWriter(fileName);
-                            trackwr.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-                            trackwr.write("<gpx xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.1\" xmlns=\"http://www.topografix.com/GPX/1/1\" creator=\"OsMoDroid\" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\">");
-                            trackwr.write("<time>" +time + "</time>");
-                            trackwr.write("<trk>");
-                            trackwr.write("<name>" + time + "</name>");
-                            trackwr.write("<trkseg>");
-                            trackwr.flush();
-                            trackwr.close();
-
-                            fileheaderok=true;
-			} catch (Exception e) {
-                            //e.printStackTrace();
-                            Toast.makeText(LocalService.this, getString(R.string.CanNotWriteHeader), Toast.LENGTH_SHORT).show();
-			}
+			openGPX();
 
 
 
@@ -2239,6 +2184,75 @@ new netutil.MyAsyncTask(this).execute(params);}
 	}
 
 
+
+
+
+
+
+	/**
+	 * 
+	 */
+	private void openGPX() {
+		boolean crtfile;
+		String sdState = android.os.Environment.getExternalStorageState();
+
+		if (sdState.equals(android.os.Environment.MEDIA_MOUNTED)) {
+
+		 File sdDir = android.os.Environment.getExternalStorageDirectory();
+
+		// SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+
+		 String time = sdf2.format(new Date());
+
+		 fileName = new File (sdDir, "OsMoDroid/");
+
+		 fileName.mkdirs();
+
+		 fileName = new File(sdDir, "OsMoDroid/"+time+".gpx");
+
+		 }
+
+		if (!fileName.exists())
+
+		{
+
+			try {
+
+				crtfile= fileName.createNewFile();
+
+			} catch (IOException e) {
+
+				e.printStackTrace();
+
+			}
+
+			//Log.d(getClass().getSimpleName(), Boolean.toString(crtfile));
+
+		}
+
+		try {
+		                // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd'T'HH:mm:ssZ");
+
+		                String time = sdf1.format(new Date(System.currentTimeMillis()))+"Z";
+
+		                FileWriter trackwr = new FileWriter(fileName);
+		                trackwr.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+		                trackwr.write("<gpx xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.1\" xmlns=\"http://www.topografix.com/GPX/1/1\" creator=\"OsMoDroid\" xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\">");
+		                trackwr.write("<time>" +time + "</time>");
+		                trackwr.write("<trk>");
+		                trackwr.write("<name>" + time + "</name>");
+		                trackwr.write("<trkseg>");
+		                trackwr.flush();
+		                trackwr.close();
+
+		                fileheaderok=true;
+		} catch (Exception e) {
+		                //e.printStackTrace();
+		                Toast.makeText(LocalService.this, getString(R.string.CanNotWriteHeader), Toast.LENGTH_SHORT).show();
+		}
+	}
+
+
 public void RequestLocationUpdates (){
 	
 //	if am.cancel(pi);
@@ -2289,33 +2303,7 @@ public void RequestLocationUpdates (){
 
 		if (gpx&&fileheaderok) {
 
-			try {
-
-			 FileWriter trackwr = new FileWriter(fileName, true);
-
-			 String towright = gpxbuffer;
-
-				trackwr.write(towright.replace(",", "."));
-
-				gpxbuffer="";
-
-
-
-			 trackwr.write("</trkseg></trk></gpx>");
-
-			 trackwr.flush();
-
-			 trackwr.close();
-
-
-
-			} catch (Exception e) {
-
-				e.printStackTrace();
-
-				Toast.makeText(LocalService.this, getString(R.string.CanNotWriteEnd), Toast.LENGTH_SHORT).show();
-
-			}
+			closeGPX();
 
 			}
 
@@ -2406,6 +2394,45 @@ public void RequestLocationUpdates (){
 
 
 
+	}
+
+
+
+
+
+
+
+	/**
+	 * 
+	 */
+	private void closeGPX() {
+		try {
+
+		 FileWriter trackwr = new FileWriter(fileName, true);
+
+		 String towright = gpxbuffer;
+
+			trackwr.write(towright.replace(",", "."));
+
+			gpxbuffer="";
+
+
+
+		 trackwr.write("</trkseg></trk></gpx>");
+
+		 trackwr.flush();
+
+		 trackwr.close();
+
+
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+			Toast.makeText(LocalService.this, getString(R.string.CanNotWriteEnd), Toast.LENGTH_SHORT).show();
+
+		}
 	}
 
 
