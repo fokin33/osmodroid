@@ -440,6 +440,8 @@ private long lastgpslocationtime=0;
 
 	 final private static  DecimalFormatSymbols dot= new DecimalFormatSymbols();
 
+	 protected boolean firstgpsbeepedon=false;
+	 
 	 IM myIM;
 
 	 IM mesIM;
@@ -893,6 +895,10 @@ else {
 
 
     };
+
+
+
+		
 
 
 
@@ -1491,6 +1497,10 @@ public void stopcomand()
 					lastgpsontime=System.currentTimeMillis();
 
 					gpsbeepedon=true;
+					
+					if (playsound&&!firstgpsbeepedon){
+						firstgpsbeepedon=true;
+						soundPool.play(gpson, 1f, 1f, 1, 0, 1f);}
 
 				//}
 
@@ -2156,32 +2166,6 @@ else	{
 
 
 
-//int icon = R.drawable.eye2;
-
-//CharSequence tickerText ="Активный режим";
-
-//long when = System.currentTimeMillis();
-
-//Notification notification = new Notification(icon, tickerText, when);
-
-//Intent notificationIntent = new Intent(this, GPSLocalServiceClient.class);
-
-//notificationIntent.setAction(Intent.ACTION_MAIN);
-
-//notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-
-//PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-
-//notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "", contentIntent);
-
-//mNotificationManager.notify(OSMODROID_ID, notification);
-
-
-
-
-
-
-
 int icon = R.drawable.eye;
 CharSequence tickerText = "Мониторинг запущен"; //getString(R.string.Working);
 long when = System.currentTimeMillis();
@@ -2255,7 +2239,14 @@ new netutil.MyAsyncTask(this).execute(params);}
 	}
 
 
+public void RequestLocationUpdates (){
+	
+//	if am.cancel(pi);
+	if (myManager!=null){
 
+		myManager.removeUpdates(this);}
+	
+}
 
 
 
@@ -2270,7 +2261,7 @@ new netutil.MyAsyncTask(this).execute(params);}
         editor.putFloat("lon", (float) currentLocation.getLongitude());
 
         editor.commit();
-		
+        firstgpsbeepedon=false;
 		if (settings.getBoolean("sendsound", false)){
 			 soundPool.play(stopsound, 1f, 1f, 1, 0, 1f);
 		}
