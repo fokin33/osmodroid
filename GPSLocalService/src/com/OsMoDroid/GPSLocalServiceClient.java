@@ -208,6 +208,7 @@ PowerManager pm;
 			//e.printStackTrace();
 		}
 		OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+			
 			  public void onSharedPreferenceChanged(SharedPreferences prefs, String keychanged) {
 			    if ((keychanged.equals("hash")||keychanged.equals("n")) ) {
 			    	Log.d(getClass().getSimpleName(), "Сменился хэш");
@@ -346,6 +347,22 @@ startlocalservice();
 	}
 
 	@Override
+	  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		 Log.d(getClass().getSimpleName(), "void onActivityResult");
+		if (conn == null || mService == null) {
+
+		} else {
+
+			mService.applyPreference();
+			
+
+		}
+	   
+	  }
+	
+	
+	@Override
 	protected void onResume() {
 		super.onResume();
 		// Log.d(getClass().getSimpleName(), "onResume() gpsclient");
@@ -434,7 +451,7 @@ startlocalservice();
 		 miChannels.setIntent(new Intent(this, MyChannels.class));
 		 mi8 = menu.add(0, 8, 0, R.string.symlink);
 		
-                 mi.setIntent(new Intent(this, PrefActivity.class));
+            //     mi.setIntent(new Intent(this, PrefActivity.class));
                  mi8.setIntent(new Intent(this, SimLinks.class));
 
 		// Log.d(getClass().getSimpleName(), "onCreateOptionsmenu() gpsclient");
@@ -501,6 +518,14 @@ startlocalservice();
 					});
 			alertdialog.show();
 		}
+		if (item.getItemId() == 2) {
+			
+			Intent intent = new Intent();
+			intent.setClass(this,PrefActivity.class);
+			startActivityForResult(intent, 0);
+			
+		}
+		
 		if (item.getItemId() == 3) {
 			AlertDialog alertdialog1 = new AlertDialog.Builder(
 					GPSLocalServiceClient.this).create();

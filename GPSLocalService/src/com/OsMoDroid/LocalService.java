@@ -1763,13 +1763,7 @@ if(!settings.getString("lpch", "").equals("")){
 
 
 
-		if (tts != null) {
-
-            tts.stop();
-
-            tts.shutdown();
-
-        }
+	
 
 		try {
 
@@ -1982,6 +1976,25 @@ if (soundPool!=null) {soundPool.release();}
 
 
 	}
+	public void applyPreference(){
+		if (state) {
+		myManager.removeUpdates(this);
+		ReadPref();
+		ttsManage();
+		manageGPSFixAlarm();
+		
+		if ( gpx && !fileheaderok) {
+			openGPX();
+		}
+		if (!gpx && fileheaderok) {
+			closeGPX();
+		}
+		requestLocationUpdates();
+		}
+		Log.d(getClass().getSimpleName(), "applyPreferecne end");
+
+	}
+	
 
 	public void startServiceWork (){
 
@@ -2029,23 +2042,9 @@ if (soundPool!=null) {soundPool.release();}
 			 soundPool.play(startsound, 1f, 1f, 1, 0, 1f);
 		}
 
-		if (settings.getBoolean("usetts", false)){ tts = new TextToSpeech(this,
+		ttsManage();
 
-		        (OnInitListener) this  // TextToSpeech.OnInitListener
-
-		        );}
-
-		int type = AlarmManager.ELAPSED_REALTIME_WAKEUP;
-
-
-
-		long triggerTime = SystemClock.elapsedRealtime() + notifyperiod;
-
-		if (playsound||vibrate){am.setRepeating( type, triggerTime, notifyperiod, pi );}
-
-		registerReceiver( receiver, new IntentFilter( "android.location.GPS_FIX_CHANGE"));
-
-		registerReceiver( checkreceiver, new IntentFilter( "CHECK_GPS"));
+		manageGPSFixAlarm();
 
 		sendcounter=0;
 
@@ -2059,55 +2058,7 @@ if (soundPool!=null) {soundPool.release();}
 
 			}
 
-if (usecourse)	{
-
-	//Log.d(this.getClass().getName(), "Запускаем провайдера 0 0");
-
-
-
-		prevlocation= myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-		
-		
-
-
-
-		myManager.removeUpdates(this);
-
-		myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-
-	if (settings.getBoolean("usenetwork", true)){	myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);}
-
-		myManager.addGpsStatusListener(this);
-
-		}
-
-else	{
-
-	//Log.d(this.getClass().getName(), "Запускаем провайдера по настройкам");
-
-
-
-	prevlocation= myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-
-
-	//myManager.removeUpdates(this);
-
-
-
-	if (period>=period_gpx&&gpx){gpsperiod=period_gpx;}else {gpsperiod=period;};
-
-	if (distance>=distance_gpx&&gpx){gpsdistance=distance_gpx;}else {gpsdistance=distance;};
-
-	//Log.d(this.getClass().getName(), "период"+gpsperiod+"meters"+gpsdistance);
-
-	myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsperiod, 0, LocalService.this);
-
-	if (settings.getBoolean("usenetwork", true)){	myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);}
-
-	myManager.addGpsStatusListener(this);
-
-}
+requestLocationUpdates();
 
 
 
@@ -2189,6 +2140,110 @@ new netutil.MyAsyncTask(this).execute(params);}
 
 
 
+	private void manageGPSFixAlarm() {
+		int type = AlarmManager.ELAPSED_REALTIME_WAKEUP;
+
+
+
+		long triggerTime = SystemClock.elapsedRealtime() + notifyperiod;
+
+		if (playsound||vibrate){am.setRepeating( type, triggerTime, notifyperiod, pi );} else {am.cancel(pi);}
+
+		registerReceiver( receiver, new IntentFilter( "android.location.GPS_FIX_CHANGE"));
+
+		registerReceiver( checkreceiver, new IntentFilter( "CHECK_GPS"));
+	}
+
+
+
+
+
+
+
+	private void ttsManage() {
+		if (settings.getBoolean("usetts", false) && tts==null){ tts = new TextToSpeech(this,
+
+		        (OnInitListener) this  // TextToSpeech.OnInitListener
+
+		        );} 
+		if (!settings.getBoolean("usetts", false) && tts!=null)
+		{
+		        	
+
+		                tts.stop();
+
+		                tts.shutdown();
+		                
+		                
+
+		            
+		        }
+	}
+
+
+
+
+
+
+
+	private void requestLocationUpdates() {
+		if (usecourse)	{
+		
+			//Log.d(this.getClass().getName(), "Запускаем провайдера 0 0");
+		
+		
+		
+				prevlocation= myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+				
+				
+		
+		
+		
+				myManager.removeUpdates(this);
+		
+				myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+		
+			if (settings.getBoolean("usenetwork", true)){	myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);}
+		
+				myManager.addGpsStatusListener(this);
+		
+				}
+		
+		else	{
+		
+			//Log.d(this.getClass().getName(), "Запускаем провайдера по настройкам");
+		
+		
+		
+			prevlocation= myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		
+		
+		
+			//myManager.removeUpdates(this);
+		
+		
+		
+			if (period>=period_gpx&&gpx){gpsperiod=period_gpx;}else {gpsperiod=period;};
+		
+			if (distance>=distance_gpx&&gpx){gpsdistance=distance_gpx;}else {gpsdistance=distance;};
+		
+			//Log.d(this.getClass().getName(), "период"+gpsperiod+"meters"+gpsdistance);
+		
+			myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsperiod, 0, LocalService.this);
+		
+			if (settings.getBoolean("usenetwork", true)){	myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);}
+		
+			myManager.addGpsStatusListener(this);
+		
+		}
+	}
+
+
+
+
+
+
+
 	/**
 	 * 
 	 */
@@ -2253,14 +2308,7 @@ new netutil.MyAsyncTask(this).execute(params);}
 	}
 
 
-public void RequestLocationUpdates (){
-	
-//	if am.cancel(pi);
-	if (myManager!=null){
 
-		myManager.removeUpdates(this);}
-	
-}
 
 
 
@@ -2276,6 +2324,15 @@ public void RequestLocationUpdates (){
 
         editor.commit();
         firstgpsbeepedon=false;
+        if (tts != null) {
+
+            tts.stop();
+
+            tts.shutdown();
+
+        }
+        
+        
 		if (settings.getBoolean("sendsound", false)){
 			 soundPool.play(stopsound, 1f, 1f, 1, 0, 1f);
 		}
@@ -2424,7 +2481,7 @@ public void RequestLocationUpdates (){
 
 		 trackwr.close();
 
-
+		 fileheaderok=false;
 
 		} catch (Exception e) {
 
