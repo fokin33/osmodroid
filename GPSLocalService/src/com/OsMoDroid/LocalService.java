@@ -62,6 +62,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map.Entry;
 
 import java.util.Iterator;
 
@@ -1463,6 +1464,14 @@ public void stopcomand()
                                     //}
                                     Toast.makeText(LocalService.this, "Попытка закрыть клиент удалённо" , Toast.LENGTH_SHORT).show();
 				}
+				
+				if (intent.getStringExtra("command").equals("getpreferences")){
+                    try {
+                    	getpreferences(context);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+}
 
 
 
@@ -1740,6 +1749,16 @@ if(!settings.getString("lpch", "").equals("")){
             postjson.put("plugged", plugged);
             netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 	}
+	
+	void getpreferences(Context context) throws JSONException{
+        JSONObject postjson = new JSONObject();
+        //for (Channel channel : LocalService.channelList)
+        for (Entry header : settings.getAll().entrySet()) {
+        	
+        postjson.put((String) header.getKey(), header.getValue());
+        }
+        netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+}
 
 
 	@Override
@@ -3975,7 +3994,7 @@ if(myIM!=null){  myIM.close();}
 		 			JSONObject jsonObject = a.getJSONObject(i);
 		Device devitem = new Device(jsonObject.getString("u"), jsonObject.getString("name"),jsonObject.getString("app")
 			,jsonObject.getString("last"),
-			jsonObject.getString("url"),
+			"http://m.esya.ru/"+jsonObject.getString("url"),
 			jsonObject.getString("where"),
 			jsonObject.getString("lat"),
 			jsonObject.getString("lon"),

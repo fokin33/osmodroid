@@ -15,6 +15,7 @@ public class Channel {
 	public String u;
 	public String created;
 	public String ch;
+	public String url;
 	public List<Device> deviceList= new ArrayList<Device>();
 	public List<String> messagesstringList= new ArrayList<String>();
 	
@@ -38,6 +39,7 @@ public class Channel {
 		this.u=jo.optString("u");
 		this.created=jo.optString("created");
 		this.ch=jo.optString("ch");
+		this.url="http://esya.ru/om/"+jo.optString("url");
 	
 	
 		 JSONArray a =jo.optJSONArray("user");

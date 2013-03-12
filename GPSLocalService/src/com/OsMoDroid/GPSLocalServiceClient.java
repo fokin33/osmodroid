@@ -683,7 +683,7 @@ startlocalservice();
                     Intent sendIntent = new Intent(Intent.ACTION_SEND);
                     sendIntent.setType("text/plain");
                     sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, viewurl);
-                    startActivity(Intent.createChooser(sendIntent, "Email"));
+                    startActivity(Intent.createChooser(sendIntent, "Поделиться ссылкой"));
 		}
 		if (item.getItemId() == 11) {
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
