@@ -260,11 +260,42 @@ PowerManager pm;
 		exit.setEnabled(false);
 
 		exit.setOnClickListener(new OnClickListener() {
+			Boolean stopsession=true;
 			public void onClick(View v) {
+if (live){
+				AlertDialog alertdialog = new AlertDialog.Builder(
+						GPSLocalServiceClient.this).create();
+				alertdialog.setTitle("Остановка");
 
-				stop();
+				alertdialog.setMessage("Закрыть сессию?");
 
-				updateServiceStatus();
+				alertdialog.setButton(getString(R.string.yes),
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+								stopsession=true;
+								stop(stopsession);
+
+								updateServiceStatus();
+
+								return;
+							}
+						});
+				alertdialog.setButton2(getString(R.string.No),
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+								stopsession=false;
+								stop(stopsession);
+
+								updateServiceStatus();
+
+								return;
+							}
+						});
+				alertdialog.show();
+}
+//				stop(stopsession);
+//
+//				updateServiceStatus();
 
 			}
 		});
@@ -816,9 +847,9 @@ startlocalservice();
 		updateServiceStatus();
 	}
 
-	private void stop() {
+	private void stop(Boolean stopsession) {
 		Log.d(getClass().getSimpleName(), "stop() gpsclient");
-		mService.stopServiceWork();
+		mService.stopServiceWork(stopsession);
 		//Intent i = new Intent(this, LocalService.class);
 		//stopService(i);
 

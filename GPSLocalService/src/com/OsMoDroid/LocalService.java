@@ -216,7 +216,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 
 	private static final int OSMODROID_ID = 1;
 
-	
+	Boolean sessionstarted=false;
 	
 	int notifyid=2;
 
@@ -650,7 +650,7 @@ else {
 
 				Log.d(getClass().getSimpleName(), "Remote Deactivate");
 
-				stopServiceWork();
+				stopServiceWork(true);
 
 				//Toast.makeText(LocalService.this, "aaa" , Toast.LENGTH_SHORT).show();
 
@@ -1013,23 +1013,23 @@ public void startcomand()
 
 	}
 
-	if (!settings.getString("key", "").equals("")&&!settings.getString("device", "").equals("")){
+//	if (!settings.getString("key", "").equals("")&&!settings.getString("device", "").equals("")){
+//
+//		String[] a={"device","c","v"};
+//
+//		String[] b={settings.getString("device", ""),"OsMoDroid",version.replace(".", "")};
+//
+//		String[] params = {netutil.buildcommand(this,"start",a,b),"false","","start"};
+//
+//		starttask=	new netutil.MyAsyncTask(this);
+//
+//		starttask.execute(params) ;
+//
+//		Log.d(getClass().getSimpleName(), "startcommand");
+//
+//	}
 
-		String[] a={"device","c","v"};
-
-		String[] b={settings.getString("device", ""),"OsMoDroid",version.replace(".", "")};
-
-		String[] params = {netutil.buildcommand(this,"start",a,b),"false","","start"};
-
-		starttask=	new netutil.MyAsyncTask(this);
-
-		starttask.execute(params) ;
-
-		Log.d(getClass().getSimpleName(), "startcommand");
-
-	}
-
-	else {
+	//else {
 
 		
 
@@ -1043,7 +1043,7 @@ public void startcomand()
 
 		
 
-	}
+	//}
 
 	//a.t.esya.ru/?act=session_start&hash=*&n=*&ttl=900
 
@@ -1429,7 +1429,7 @@ public void stopcomand()
 
 				if (intent.getStringExtra("command").equals("stop")){
                                     if (state){
-                                        stopServiceWork();
+                                        stopServiceWork(true);
                                         try {
                                             Pong(context);
                                         } catch (JSONException e) {
@@ -1767,7 +1767,7 @@ if(!settings.getString("lpch", "").equals("")){
 
 		super.onDestroy();
 
-		if (state){ stopServiceWork();}
+		if (state){ stopServiceWork(true);}
 
 		if(myIM!=null){  myIM.close();}
 
@@ -2141,7 +2141,7 @@ setstarted(true);
 
 if (live){
 
-String[] params = {"http://a.t.esya.ru/?act=session_start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&ttl=900","false","","session_start"};
+String[] params = {"http://a.t.esya.ru/?act=session_start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&ttl="+settings.getString("session_ttl", "30"),"false","","session_start"};
 
 new netutil.MyAsyncTask(this).execute(params);}
 
@@ -2334,7 +2334,7 @@ new netutil.MyAsyncTask(this).execute(params);}
 
 
 
-	public void stopServiceWork(){
+	public void stopServiceWork(Boolean stopsession){
 
 		SharedPreferences.Editor editor = settings.edit();
 
@@ -2358,7 +2358,7 @@ new netutil.MyAsyncTask(this).execute(params);}
 		
 		am.cancel(pi);
 
-		if (live){
+		if (live&&stopsession){
                     String[] params = {"http://a.t.esya.ru/?act=session_stop&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", ""),"false","","session_stop"};
                     new netutil.MyAsyncTask(this).execute(params);
 
@@ -2958,7 +2958,7 @@ if (gpx && fileheaderok) {
 
 }
 
-		if (!hash.equals("") && live)
+		if (!hash.equals("") && live&&sessionstarted)
 
 		{
 
@@ -3423,7 +3423,7 @@ private String decodesendresult(String str){
 
 		sended=false;
 
-		 stopServiceWork();
+		 stopServiceWork(true);
 
 		 notifywarnactivity("Команда:Отправка положения "+str);
 
@@ -3923,20 +3923,20 @@ public void onResultsSucceeded(APIComResult result) {
 		}
 
 	}
-
+	if (result.Command.equals("session_start"))
+	{
+		sessionstarted=true;
+	}
+	if (result.Command.equals("session_stop"))
+	{
+		sessionstarted=false;
+	}
+	
 
 	if (result.Command.equals("start")&& !(result.Jo==null))
 
 	{
-
-
-
-
-
 		//Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description:ru"),5).show();
-
-
-
 		if (!result.Jo.optString("lpch").equals("")&& !result.Jo.optString("lpch").equals(settings.getString("lpch", ""))){
 
 			SharedPreferences.Editor editor = settings.edit();
@@ -3959,6 +3959,17 @@ if(myIM!=null){  myIM.close();}
 			
 			editor.commit();
 			refresh();
+			
+		}
+		
+		if(!result.Jo.optString("session_ttl").equals("")){
+			SharedPreferences.Editor editor = settings.edit();
+
+			editor.putString("session_ttl", result.Jo.optString("session_ttl"));
+			
+			
+			editor.commit();
+			
 			
 		}
 		
