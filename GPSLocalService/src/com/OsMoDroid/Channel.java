@@ -85,7 +85,14 @@ public class Channel {
 	
 	public void connect(){
 		Log.d(getClass().getSimpleName(),"Channel connecting");	
-		chanIM= new IM("om_"+this.ch+",om_"+this.ch+"_chat", LocalService.serContext, 2);
+	//	chanIM= new IM("om_"+this.ch+",om_"+this.ch+"_chat", LocalService.serContext, 2);
+		ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
+		longPollchannels.add(new String[] {"om_"+this.ch,"ch"});
+		longPollchannels.add(new String[] {"om_"+this.ch+"_chat","chch"});
+		
+		if (LocalService.myIM!=null){
+			LocalService.myIM.addchannels(longPollchannels);	
+	}
 		
 	}
 

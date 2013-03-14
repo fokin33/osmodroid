@@ -443,7 +443,7 @@ private long lastgpslocationtime=0;
 
 	 protected boolean firstgpsbeepedon=false;
 	 
-	 IM myIM;
+	 static IM myIM;
 
 	 IM mesIM;
 
@@ -1721,13 +1721,19 @@ if (live){
 
 if (settings.getBoolean("im", false) && !settings.getString("key", "" ).equals("") ){
 
-mesIM = new IM(settings.getString("key", "")+",im_messages,om_online",this,1);
+//mesIM = new IM(settings.getString("key", "")+",im_messages,om_online",this,1);
+	ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
+	longPollchannels.add(new String[] {"om_online","o"}); 
+	longPollchannels.add(new String[] {"im_messages","m"});
+	
 
+	
 if(!settings.getString("lpch", "").equals("")){ 
-			myIM = new IM(settings.getString("lpch", "")+"ctrl",this,0);
+		//	myIM = new IM(settings.getString("lpch", "")+"ctrl",this,0);
+	longPollchannels.add(new String[] {settings.getString("lpch", "")+"ctrl","r"});
 			}
 
-		
+myIM = new IM( longPollchannels ,this,settings.getString("key", ""));	
 }
 
 
@@ -3945,10 +3951,17 @@ public void onResultsSucceeded(APIComResult result) {
 
 			editor.commit();
 
-			if (settings.getBoolean("im", false)){
-if(myIM!=null){  myIM.close();}
-			myIM = new IM(settings.getString("lpch", "")+"ctrl",this,0);}
+//			if (settings.getBoolean("im", false)){
+//if(myIM!=null){  myIM.close();}
+//			myIM = new IM(settings.getString("lpch", "")+"ctrl",this,0);}
 
+			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
+			longPollchannels.add(new String[] {settings.getString("lpch", "")+"ctrl","r"});
+			
+if (myIM!=null){
+		mesIM.addchannels(longPollchannels);	
+}
+			
 		}
 		if(!result.Jo.optString("device").equals("")){
 			SharedPreferences.Editor editor = settings.edit();
