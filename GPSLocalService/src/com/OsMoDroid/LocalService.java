@@ -2220,7 +2220,7 @@ new netutil.MyAsyncTask(this).execute(params);}
 		                tts.stop();
 
 		                tts.shutdown();
-		                
+		                tts=null;
 		                
 
 		            
