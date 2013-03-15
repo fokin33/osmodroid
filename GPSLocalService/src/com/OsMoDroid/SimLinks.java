@@ -16,7 +16,7 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
+import android.net.Uri;import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.ClipboardManager;
 import android.text.format.Time;
@@ -161,9 +161,9 @@ String linkname =  System.currentTimeMillis()+settings.getString("device", "");
 	  public void onCreateContextMenu(ContextMenu menu, View v,
 	      ContextMenuInfo menuInfo) {
 	    super.onCreateContextMenu(menu, v, menuInfo);
-	    menu.add(0, 1, 0, "Поделиться ссылкой").setIcon(android.R.drawable.ic_menu_share);;
-	    menu.add(0, 2, 0, "Удалить ссылку").setIcon(android.R.drawable.ic_menu_delete);;
-	    menu.add(0, 3, 0, "Копировать ссылку").setIcon(android.R.drawable.ic_menu_edit);;
+	    menu.add(0, 1, 0, "Поделиться ссылкой").setIcon(android.R.drawable.ic_menu_share);
+	    menu.add(0, 2, 0, "Удалить ссылку").setIcon(android.R.drawable.ic_menu_delete);
+	    menu.add(0, 3, 0, "Копировать ссылку").setIcon(android.R.drawable.ic_menu_edit);	    	    menu.add(0, 5, 5, "Открыть в браузере").setIcon(android.R.drawable.ic_menu_edit);
 	    
 	    
 	  }
@@ -194,7 +194,7 @@ String linkname =  System.currentTimeMillis()+settings.getString("device", "");
 						clipboard.setText(adapter.getItem(acmi.position));
 				 
 		      return true;
-		    }
+		    }		  if (item.getItemId() == 5) {			  AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();				 Intent browseIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(LocalService.deviceList.get((int) acmi.id).url));				 startActivity(browseIntent);			             			  						  return true;					  }
 		  
 	    return super.onContextItemSelected(item);
 	  }

@@ -445,7 +445,7 @@ private long lastgpslocationtime=0;
 	 
 	 static IM myIM;
 
-	 IM mesIM;
+	 
 
 	 TextToSpeech tts;
 
@@ -1759,10 +1759,36 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""));
 	void getpreferences(Context context) throws JSONException{
         JSONObject postjson = new JSONObject();
         //for (Channel channel : LocalService.channelList)
-        for (Entry header : settings.getAll().entrySet()) {
-        	
-        postjson.put((String) header.getKey(), header.getValue());
-        }
+//        for (Entry header : settings.getAll().entrySet()) {
+//        	
+//        postjson.put((String) header.getKey(), header.getValue());
+//        
+//        }
+        postjson.put("speed",speed);
+        postjson.put("period",period);
+        postjson.put("distance",distance);
+        postjson.put("hash",hash);
+        postjson.put("n",n);
+        postjson.put("speedbearing",speedbearing);
+        postjson.put("bearing",bearing); 
+        postjson.put("hdop",hdop); 
+        postjson.put("gpx",gpx); 
+        postjson.put("live",live);
+        postjson.put("vibrate",vibrate);
+        postjson.put("usecourse",usecourse);
+        postjson.put("vibratetime",vibratetime);
+        postjson.put("playsound",playsound);
+        postjson.put("period_gpx",period_gpx);
+        postjson.put("distance_gpx",distance_gpx);
+        postjson.put("speedbearing_gpx",speedbearing_gpx);
+        postjson.put("bearing_gpx",bearing_gpx);
+        postjson.put("hdop_gpx",hdop_gpx); 
+        postjson.put("speed_gpx",speed_gpx);
+        postjson.put("usebuffer",usebuffer);
+        postjson.put("usewake",usewake); 
+        postjson.put("notifyperiod",notifyperiod); 
+        postjson.put("sendsound",sendsound); 
+        
         netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 }
 
@@ -1777,12 +1803,8 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""));
 
 		if(myIM!=null){  myIM.close();}
 
-		if(mesIM!=null){  mesIM.close();}
 		
-		if(channelList!=null){  for (Channel channel : LocalService.channelList){
-		channel.close();	
-		}
-		}
+				
 
 		stopcomand();
 
@@ -3945,6 +3967,13 @@ public void onResultsSucceeded(APIComResult result) {
 		//Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description:ru"),5).show();
 		if (!result.Jo.optString("lpch").equals("")&& !result.Jo.optString("lpch").equals(settings.getString("lpch", ""))){
 
+			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
+			longPollchannels.add(new String[] {settings.getString("lpch", "")+"ctrl","r"});
+			
+if (myIM!=null){
+		myIM.removechannels(longPollchannels);	
+}
+			
 			SharedPreferences.Editor editor = settings.edit();
 
 			editor.putString("lpch", result.Jo.optString("lpch"));
@@ -3955,11 +3984,11 @@ public void onResultsSucceeded(APIComResult result) {
 //if(myIM!=null){  myIM.close();}
 //			myIM = new IM(settings.getString("lpch", "")+"ctrl",this,0);}
 
-			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
+			longPollchannels =new ArrayList<String[]>();
 			longPollchannels.add(new String[] {settings.getString("lpch", "")+"ctrl","r"});
 			
 if (myIM!=null){
-		mesIM.addchannels(longPollchannels);	
+		myIM.addchannels(longPollchannels);	
 }
 			
 		}

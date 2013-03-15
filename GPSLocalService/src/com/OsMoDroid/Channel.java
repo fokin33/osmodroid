@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import android.util.Log;
 
 public class Channel {
-	IM chanIM;
+	
 	public String name;
 	public String u;
 	public String created;
@@ -96,8 +96,15 @@ public class Channel {
 		
 	}
 
-	public void close(){
-		if(chanIM!=null){  chanIM.close();}
+	public void disconnect(){
+		Log.d(getClass().getSimpleName(),"Channel disconnecting");	
+		//	chanIM= new IM("om_"+this.ch+",om_"+this.ch+"_chat", LocalService.serContext, 2);
+			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
+			longPollchannels.add(new String[] {"om_"+this.ch,"ch"});
+			longPollchannels.add(new String[] {"om_"+this.ch+"_chat","chch"});
+			
+			if (LocalService.myIM!=null){
+				LocalService.myIM.removechannels(longPollchannels);	}	
 	}
 	
 	@Override

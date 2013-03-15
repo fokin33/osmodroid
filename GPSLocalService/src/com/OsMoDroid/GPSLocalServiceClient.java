@@ -448,7 +448,7 @@ startlocalservice();
 		mi.setIcon(android.R.drawable.ic_menu_preferences);
 		MenuItem mi3 = menu2.add(0, 3, 0, R.string.EqualsParameters);
 
-		 mi4 = menu2.add(0, 4, 0, R.string.getkey);
+		
 		// mi5 = menu1.add(0, 5, 0, R.string.getadres);
 		// mi6 = menu1.add(0, 6, 0, R.string.getdevice);
 		// mi7 = menu1.add(0, 7, 0, R.string.enterchanel);
@@ -463,6 +463,7 @@ startlocalservice();
 		 about.setIcon(android.R.drawable.ic_menu_info_details);
 		 about.setIntent(new Intent(this, aboutActivity.class));
 		 MenuItem exit = menu.add(0, 14, 0, "Выход");
+		 mi4 = menu.add(0, 4, 0, R.string.getkey);
 		 messages = menu.add(0, 15, 0, "Сообщения");
 		 messages.setIcon(android.R.drawable.sym_action_chat);
 		 Intent activ=new Intent(this,  mesActivity.class);
@@ -474,6 +475,7 @@ startlocalservice();
                  activ.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
 		 messages.setIntent(activ);
+		 
 		 myDevices = menu.add(0, 16, 0, "Мои устройства");
 		 myDevices.setIcon(android.R.drawable.ic_menu_today);
 		 myDevices.setIntent(new Intent(this, MyDevices.class));
