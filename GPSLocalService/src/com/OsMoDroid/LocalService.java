@@ -476,11 +476,13 @@ private long lastgpslocationtime=0;
 	    public static List<Device> currentchanneldeviceList= new ArrayList<Device>();
 
 	    public static ArrayList<String> messagelist= new ArrayList<String>();
+	    public static ArrayList<String> chatmessagelist= new ArrayList<String>();
 
 	    public static DeviceAdapter deviceAdapter;
 	    public static ChannelsAdapter channelsAdapter;
 	    public static ChannelsDevicesAdapter channelsDevicesAdapter;
 	    public static ArrayAdapter<String> channelsmessagesAdapter;
+	    public static ArrayAdapter<String> chatmessagesAdapter;
 
 	    static Context serContext;
 
@@ -3627,6 +3629,7 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED) || send.is
 		buffersb.delete(0, lastbuffersb.length());
 
 		buffercounter=buffercounter-lcounter;
+		sendcounter=sendcounter+lcounter;
 
 		Log.d(this.getClass().getName(), "buffersb.delete "+buffersb.toString());
 
@@ -4052,7 +4055,7 @@ if (myIM!=null){
 			jsonObject.getString("lat"),
 			jsonObject.getString("lon"),
 			jsonObject.getString("online"),
-			jsonObject.getString("state")
+			jsonObject.getString("state"), jsonObject.getString("uid")
 			);
 
 	deviceList.add(devitem);

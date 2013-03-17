@@ -45,6 +45,7 @@
         <activity android:name="MyDevices"></activity>
         <activity android:name="MyChannels"></activity>
         <activity android:name="MyChannelsDevices" android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name="DeviceChat"></activity>
 
     </application>
 
