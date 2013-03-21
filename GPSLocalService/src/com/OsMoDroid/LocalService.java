@@ -4064,7 +4064,15 @@ if (myIM!=null){
 
 		if (result.Jo.has("om_device")){
 			deviceList.clear();
-
+deviceList.add(new Device("0","Мой компьютер","0"
+		,"",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"", "uid"
+		));
 			try {
 				  a =	result.Jo.getJSONArray("om_device");
 		 		  Log.d(getClass().getSimpleName(), a.toString());
