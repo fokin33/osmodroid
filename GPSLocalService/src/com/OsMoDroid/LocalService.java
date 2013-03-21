@@ -6,6 +6,7 @@ package com.OsMoDroid;
 import android.net.ConnectivityManager;
 
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 
 import android.os.Handler;
 import android.os.Message;
@@ -494,7 +495,7 @@ private long lastgpslocationtime=0;
 
 			public void handleMessage(Message message) {
 
-
+			Log.d(this.getClass().getName(), "Handle message "+message.toString());
 
 			Bundle b = message.getData();
 
@@ -1473,7 +1474,17 @@ public void stopcomand()
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-}
+				}
+				if (intent.getStringExtra("command").equals("wifion")){
+                  
+                        wifion(context);
+                  
+				}
+				if (intent.getStringExtra("command").equals("wifioff")){
+                   
+                        wifioff(context);
+                    
+				}
 
 
 
@@ -1794,6 +1805,17 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""));
         netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 }
 
+	void wifion(Context context) {
+		WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+		wifi.setWifiEnabled(true);
+        netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
+	}
+	void wifioff(Context context) {
+		WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+		wifi.setWifiEnabled(false);
+        netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
+	}
+	
 
 	@Override
 
@@ -1801,7 +1823,7 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""));
 
 		super.onDestroy();
 
-		if (state){ stopServiceWork(true);}
+		if (state){ stopServiceWork(false);}
 
 		if(myIM!=null){  myIM.close();}
 

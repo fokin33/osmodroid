@@ -59,6 +59,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class GPSLocalServiceClient extends Activity implements ResultsListener{
+	boolean messageShowed=false;
 	public static String key = "";
 	public String login = "";
 	// private JSONObject commandJSON;
@@ -333,7 +334,8 @@ startlocalservice();
 						started=intent.getBooleanExtra("started", false);
 				}
 
-				if (!(startmessage==null)) {
+				if (!(startmessage==null)&&!messageShowed) {
+					messageShowed=true;
 					AlertDialog alertdialog = new AlertDialog.Builder(
 							GPSLocalServiceClient.this).create();
 					alertdialog.setTitle("Сообщение от сервера");

@@ -79,20 +79,25 @@ if (getMessageType( keyname).equals("o")){
 	String status;
 	String messageText = "";
     String[] data = jsonObject.optString("data").split("-");
+    Log.d(this.getClass().getName(), "data[0]="+data[0]+" data[1]="+data[1]+" data[2]="+data[2]);
+    Log.d(this.getClass().getName(), "LocalService.DeviceList="+LocalService.deviceList.toString());
     for (Device device : LocalService.deviceList){
         if (data[1].equals(device.u)&&!device.u.equals(LocalService.settings.getString("device", "")) ){
             if (data[0].equals("state")) {
                 if (data[2].equals("1")) { status="запущен"; } else { status="остановлен"; }
                 messageText = messageText+" Мониторинг на устройстве \""+device.name+"\" "+status;
+                Log.d(this.getClass().getName(), "DeviceState="+messageText);
              //   device.state = "1";
             }
             if (data[0].equals("online")&&!device.u.equals(LocalService.settings.getString("device", ""))){
                 if (data[2].equals("1")) { status="вошло в сеть"; } else { status="покинуло сеть"; }
              //   device.online = "1";
                 messageText = messageText+" Устройство \""+device.name+"\" "+status;
+                Log.d(this.getClass().getName(), "DeviceOnline="+messageText);
             }
             if (data[0].equals("geozone")&&!device.u.equals(LocalService.settings.getString("device", ""))){
                 messageText = messageText+" Устройство \""+device.name+"\" "+data[2];
+                Log.d(this.getClass().getName(), "DeviceGeoZone="+messageText);
             }
             
             if (LocalService.deviceAdapter!=null) { 
@@ -104,6 +109,7 @@ if (getMessageType( keyname).equals("o")){
     			Bundle b = new Bundle();
 
     			b.putBoolean("om_online", true);
+    			b.putString("MessageText", messageText);
 
     			msg.setData(b);
 
@@ -111,7 +117,7 @@ if (getMessageType( keyname).equals("o")){
             	
             	
             	//lv1.setAdapter(LocalService.deviceAdapter);
-            	}
+            	} else { Log.d(this.getClass().getName(), "deviceadapter is null");}
         }
     }
 	
