@@ -57,7 +57,7 @@ public class Channel {
 //	 				    name = toxIC jiayu
 //	 				    icon = 1
 		 			
-	
+	if (!jsonObject.getString("u").equals(LocalService.settings.getString("device", ""))){
 		this.deviceList.add(new Device(jsonObject.getString("u")
 				, jsonObject.getString("name"),""
 				,"",
@@ -67,7 +67,7 @@ public class Channel {
 				jsonObject.getString("lon"),
 				jsonObject.getString("online"),
 				jsonObject.getString("state"), ""
-				) );
+				) );}
 	} catch (JSONException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();

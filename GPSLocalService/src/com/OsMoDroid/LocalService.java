@@ -477,17 +477,18 @@ private long lastgpslocationtime=0;
 	    public static List<Device> currentchanneldeviceList= new ArrayList<Device>();
 
 	    public static ArrayList<String> messagelist= new ArrayList<String>();
-	    public static ArrayList<String> chatmessagelist= new ArrayList<String>();
+	    public static List<MyMessage> chatmessagelist= new ArrayList<MyMessage>();
+	    public static Device currentDevice;
 
 	    public static DeviceAdapter deviceAdapter;
 	    public static ChannelsAdapter channelsAdapter;
 	    public static ChannelsDevicesAdapter channelsDevicesAdapter;
 	    public static ArrayAdapter<String> channelsmessagesAdapter;
-	    public static ArrayAdapter<String> chatmessagesAdapter;
+	    public static DeviceChatAdapter chatmessagesAdapter;
 
 	    static Context serContext;
 
-	    final static Handler alertHandler = new Handler() {
+	    final  Handler alertHandler = new Handler() {
 
 
 
@@ -499,6 +500,12 @@ private long lastgpslocationtime=0;
 
 			Bundle b = message.getData();
 
+			
+			
+			if(b.getString("deviceU") != null){
+				Intent intent =new Intent(LocalService.this, DeviceChat.class).putExtra("deviceU", b.getString("deviceU" ));
+			startActivity(intent);
+			}
 			String text = b.getString("MessageText");
 
 			if (b.getBoolean("om_online",false)){
@@ -533,10 +540,7 @@ private long lastgpslocationtime=0;
 	 	Long when=System.currentTimeMillis();
 
 
-	 	NotificationCompat.Builder notificationBuilder = null;
-
-if (settings.getBoolean("silentnotify", false)){
-	 notificationBuilder = new NotificationCompat.Builder(
+	 	NotificationCompat.Builder notificationBuilder =new NotificationCompat.Builder(
 
 				serContext.getApplicationContext())
 
@@ -553,26 +557,11 @@ if (settings.getBoolean("silentnotify", false)){
 		    	.setDefaults(Notification.DEFAULT_LIGHTS)
 
 		    	.setContentIntent(contentIntent);
-	
-}
-else {
-		 notificationBuilder = new NotificationCompat.Builder(
 
-				serContext.getApplicationContext())
+if (!settings.getBoolean("silentnotify", false)){
+		 notificationBuilder.setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_VIBRATE| Notification.DEFAULT_SOUND);
 
-		    	.setWhen(when)
-
-		    	.setContentText(text)
-
-		    	.setContentTitle("OsMoDroid")
-
-		    	.setSmallIcon(android.R.drawable.ic_menu_send)
-
-		    	.setAutoCancel(true)
-
-		    	.setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_VIBRATE| Notification.DEFAULT_SOUND)
-
-		    	.setContentIntent(contentIntent);}
+		    	}
 
 			Notification notification = notificationBuilder.build();
 
@@ -629,7 +618,7 @@ else {
 
 			public int getVersion()  {
 
-				Log.d("OsmoDroid", "Remote getVersion");
+				//Log.d("OsmoDroid", "Remote getVersion");
 
 
 
@@ -651,7 +640,7 @@ else {
 
 			public void Deactivate(){
 
-				Log.d(getClass().getSimpleName(), "Remote Deactivate");
+			//	Log.d(getClass().getSimpleName(), "Remote Deactivate");
 
 				stopServiceWork(true);
 
@@ -677,7 +666,7 @@ else {
 
 			public void Activate() {
 
-				Log.d(getClass().getSimpleName(), "Remote Deactivate");
+			//	Log.d(getClass().getSimpleName(), "Remote Deactivate");
 
 				startServiceWork();
 
@@ -688,7 +677,7 @@ else {
 
 
 			public int getNumberOfLayers()  {
-				Log.d(getClass().getSimpleName(), "getNumberOfLayers()="+channelList.size());
+			//	Log.d(getClass().getSimpleName(), "getNumberOfLayers()="+channelList.size());
 				
 				try {
 					return channelList.size();
@@ -704,7 +693,7 @@ else {
 			public int getLayerId(int pos) {
 			
 				
-				try {	Log.d(getClass().getSimpleName(), "getLayerId()="+channelList.get(pos).u);
+				try {	//Log.d(getClass().getSimpleName(), "getLayerId()="+channelList.get(pos).u);
 					return Integer.parseInt(channelList.get(pos).u);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -716,7 +705,7 @@ else {
 
 
 			public String getLayerName(int layerId) {
-				Log.d(getClass().getSimpleName(), "getLayerName()");
+			//	Log.d(getClass().getSimpleName(), "getLayerName()");
 				try {
 					for (Channel channel: channelList){
 						if (channel.u.equals(Integer.toString(layerId))){
@@ -736,7 +725,7 @@ else {
 
 			public String getLayerDescription(int layerId)
 					 {
-				Log.d(getClass().getSimpleName(), "getLayerDescription()");
+			//	Log.d(getClass().getSimpleName(), "getLayerDescription()");
 				try {
 					for (Channel channel: channelList){
 						if (channel.u.equals(Integer.toString(layerId))){
@@ -755,7 +744,7 @@ else {
 
 
 			public int getNumberOfObjects(int layerId){
-				Log.d(getClass().getSimpleName(), "getNumberOfObjects()");
+			//	Log.d(getClass().getSimpleName(), "getNumberOfObjects()");
 				try {
 					for (Channel channel: channelList){
 						if (channel.u.equals(Integer.toString(layerId))){
@@ -774,7 +763,7 @@ else {
 
 
 			public int getObjectId(int layerId, int pos) {
-				Log.d(getClass().getSimpleName(), "getObjectId()");
+			//	Log.d(getClass().getSimpleName(), "getObjectId()");
 				try {
 					for (Channel channel: channelList){
 						if (channel.u.equals(Integer.toString(layerId))){
@@ -796,7 +785,7 @@ else {
 
 			public float getObjectLat(int layerId, int objectId)
 					 {
-				Log.d(getClass().getSimpleName(), "getObjectLat()");
+			//	Log.d(getClass().getSimpleName(), "getObjectLat()");
 				try {
 					for (Channel channel: channelList){
 						if (channel.u.equals(Integer.toString(layerId))){
@@ -822,7 +811,7 @@ else {
 
 			public float getObjectLon(int layerId, int objectId)
 					{
-				Log.d(getClass().getSimpleName(), "getObjectLon()");
+			//	Log.d(getClass().getSimpleName(), "getObjectLon()");
 				try {
 					for (Channel channel: channelList){
 						if (channel.u.equals(Integer.toString(layerId))){
@@ -848,7 +837,7 @@ else {
 
 			public String getObjectName(int layerId, int objectId)
 					 {
-				Log.d(getClass().getSimpleName(), "getObjectName()");
+		//		Log.d(getClass().getSimpleName(), "getObjectName()");
 				try {
 					for (Channel channel: channelList){
 						if (channel.u.equals(Integer.toString(layerId))){
@@ -874,7 +863,7 @@ else {
 
 			public String getObjectDescription(int layerId, int objectId)
 					 {
-				Log.d(getClass().getSimpleName(), "getObjectDescription()");
+		//		Log.d(getClass().getSimpleName(), "getObjectDescription()");
 				try {
 					for (Channel channel: channelList){
 						if (channel.u.equals(Integer.toString(layerId))){
@@ -1036,7 +1025,7 @@ public void startcomand()
 
 		
 
-		String[] params = {"http://a.t.esya.ru/?act=start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&c=OsMoDroid&v="+version.replace(".", ""),"false","","start"};
+		String[] params = {"http://a.t.esya.ru/?act=start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&c=OsMoDroid&v="+version.replace(".", "")+"&key="+settings.getString("key", ""),"false","","start"};
 
 		starttask=	new netutil.MyAsyncTask(this);
 
@@ -1746,7 +1735,7 @@ if(!settings.getString("lpch", "").equals("")){
 	longPollchannels.add(new String[] {settings.getString("lpch", "")+"ctrl","r"});
 			}
 
-myIM = new IM( longPollchannels ,this,settings.getString("key", ""));	
+myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);	
 }
 
 
@@ -4039,6 +4028,16 @@ if (myIM!=null){
 			
 			
 		}
+		if(!result.Jo.optString("uid").equals("")){
+			SharedPreferences.Editor editor = settings.edit();
+
+			editor.putString("uid", result.Jo.optString("uid"));
+			
+			
+			editor.commit();
+			
+			
+		}
 		
 
 				if (!result.Jo.optString("motd").equals("") ||!result.Jo.optString("query_per_day").equals("")){
@@ -4071,7 +4070,7 @@ deviceList.add(new Device("0","Мой компьютер","0"
 		"",
 		"",
 		"",
-		"", "uid"
+		"", settings.getString("uid", "0")
 		));
 			try {
 				  a =	result.Jo.getJSONArray("om_device");

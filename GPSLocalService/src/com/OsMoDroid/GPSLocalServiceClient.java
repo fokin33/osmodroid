@@ -466,7 +466,7 @@ startlocalservice();
 		 about.setIntent(new Intent(this, aboutActivity.class));
 		 MenuItem exit = menu.add(0, 14, 0, "Выход");
 		 mi4 = menu.add(0, 4, 0, R.string.getkey);
-		 messages = menu.add(0, 15, 0, "Сообщения");
+		 messages = menu.add(0, 15, 0, "Оповещения");
 		 messages.setIcon(android.R.drawable.sym_action_chat);
 		 Intent activ=new Intent(this,  mesActivity.class);
 		 Bundle a=new Bundle();
