@@ -108,7 +108,7 @@ if (getMessageType( keyname).equals("o")){
     Log.d(this.getClass().getName(), "data[0]="+data[0]+" data[1]="+data[1]+" data[2]="+data[2]);
     Log.d(this.getClass().getName(), "LocalService.DeviceList="+LocalService.deviceList.toString());
     for (Device device : LocalService.deviceList){
-        if (data[1].equals(device.u)&&device.u!=(Integer.parseInt(LocalService.settings.getString("device", ""))) ){
+        if (data[1].equals(Integer.toString(device.u))&&device.u!=(Integer.parseInt(LocalService.settings.getString("device", ""))) ){
             if (data[0].equals("state")) {
                 if (data[2].equals("1")) { status="запущен"; } else { status="остановлен"; }
                 messageText = messageText+" Мониторинг на устройстве \""+device.name+"\" "+status;
@@ -187,7 +187,7 @@ if (getMessageType( keyname).equals("ch")){
 							Log.d(this.getClass().getName(), "chanal nest" + channel.name);
 							for (Device device : channel.deviceList) {
 								Log.d(this.getClass().getName(), "device nest" + device.name + " " + device.u);
-								if (data[1].equals(device.u)) {
+								if (data[1].equals(Integer.toString(device.u))) {
 									Log.d(this.getClass().getName(), "Изменилось состояние устройства в канале с " + device.toString());
 									device.lat = Float.parseFloat(data[2]);
 									device.lon = Float.parseFloat(data[3]);
@@ -235,7 +235,7 @@ if (getMessageType( keyname).equals("chch")){
 		
 		for (Device device : channel.deviceList) {
 			Log.d(this.getClass().getName(), "device nest" + device.name + " " + device.u);
-			if (data[1].equals(device.u)) {
+			if (data[1].equals(Integer.toString(device.u))) {
 				Log.d(this.getClass().getName(), "Сообщение от устройства в канале " + device.toString());
 				channel.messagesstringList.clear();
 				channel.messagesstringList.add(data[2]);
