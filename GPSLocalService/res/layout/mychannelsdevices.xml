@@ -20,7 +20,8 @@
     <ListView
         android:id="@+id/mychannelsmessages"
         android:layout_width="fill_parent"
-        android:layout_height="241dp" >
+        android:layout_height="241dp"
+        android:transcriptMode="alwaysScroll" >
 
     </ListView>
 

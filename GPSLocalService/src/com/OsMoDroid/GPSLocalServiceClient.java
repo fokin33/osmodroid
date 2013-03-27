@@ -1,15 +1,25 @@
 package com.OsMoDroid;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URL;
 import java.security.MessageDigest;
+import java.util.Date;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,11 +39,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -101,6 +113,7 @@ public class GPSLocalServiceClient extends Activity implements ResultsListener{
 	private int buffercounter=0;
 	private boolean usebuffer = false;
 	private boolean usewake = false;
+	File fileName = null;
 PowerManager pm;
 	WakeLock	wakeLock;// = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyWakeLock");
 	MenuItem mi4;
@@ -195,6 +208,30 @@ PowerManager pm;
 		settings = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		ReadPref();
+		String sdState = android.os.Environment.getExternalStorageState();
+
+		
+		if (sdState.equals(android.os.Environment.MEDIA_MOUNTED)) {
+
+		 File sdDir = android.os.Environment.getExternalStorageDirectory();
+
+		 fileName = new File (sdDir, "OsMoDroid/");
+
+		 fileName.mkdirs();
+
+		 fileName = new File(sdDir, "OsMoDroid/settings.dat");
+
+		 }
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
 		pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
 		String strVersionName = getString(R.string.Unknow);
@@ -449,7 +486,6 @@ startlocalservice();
 		MenuItem mi = menu.add(0, 2, 0, R.string.Settings);
 		mi.setIcon(android.R.drawable.ic_menu_preferences);
 		MenuItem mi3 = menu2.add(0, 3, 0, R.string.EqualsParameters);
-
 		
 		// mi5 = menu1.add(0, 5, 0, R.string.getadres);
 		// mi6 = menu1.add(0, 6, 0, R.string.getdevice);
@@ -481,7 +517,7 @@ startlocalservice();
 		 myDevices = menu.add(0, 16, 0, "Мои устройства");
 		 myDevices.setIcon(android.R.drawable.ic_menu_today);
 		 myDevices.setIntent(new Intent(this, MyDevices.class));
-		 miChannels = menu.add(0, 16, 0, "Мои каналы");
+		 miChannels = menu.add(0, 17, 0, "Мои каналы");
 		 miChannels.setIcon(android.R.drawable.ic_menu_agenda);
 		 miChannels.setIntent(new Intent(this, MyChannels.class));
 		 mi8 = menu.add(0, 8, 0, R.string.symlink);
@@ -490,6 +526,9 @@ startlocalservice();
                  mi8.setIntent(new Intent(this, SimLinks.class));
 
 		// Log.d(getClass().getSimpleName(), "onCreateOptionsmenu() gpsclient");
+                 MenuItem save =menu2.add(0, 18, 0, "Сохранить настройки на карту");
+                 MenuItem load =menu2.add(0, 19, 0,"Загрузить настройки с карты");
+
 		return super.onCreateOptionsMenu(menu);
 	}
 	@Override
@@ -730,8 +769,15 @@ startlocalservice();
                     stopService(i);
                     finish();
 		}
-
-
+		if (item.getItemId() == 17) {
+          if (fileName!=null){
+			saveSharedPreferencesToFile(fileName);}
+}
+		if (item.getItemId() == 18) {
+			 if (fileName!=null&&fileName.exists()){
+					loadSharedPreferencesFromFile(fileName);}
+	          
+		}
 		return super.onOptionsItemSelected(item);
 
 	}
@@ -884,6 +930,8 @@ startlocalservice();
 
 	@Override
 	protected void onDestroy() {
+	
+		
 if (mBound) {
 
 			try {
@@ -1282,6 +1330,76 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 
 
 
+	}
+	
+	private boolean saveSharedPreferencesToFile(File dst) {
+	    boolean res = false;
+	    ObjectOutputStream output = null;
+	    try {
+	        output = new ObjectOutputStream(new FileOutputStream(dst));
+	        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+	        output.writeObject(pref.getAll());
+
+	        res = true;
+	    } catch (FileNotFoundException e) {
+	        e.printStackTrace();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }finally {
+	        try {
+	            if (output != null) {
+	                output.flush();
+	                output.close();
+	            }
+	        } catch (IOException ex) {
+	            ex.printStackTrace();
+	        }
+	    }
+	    return res;
+	}
+
+	@SuppressWarnings({ "unchecked" })
+	private boolean loadSharedPreferencesFromFile(File src) {
+	    boolean res = false;
+	    ObjectInputStream input = null;
+	    try {
+	        input = new ObjectInputStream(new FileInputStream(src));
+	            Editor prefEdit =  PreferenceManager.getDefaultSharedPreferences(this).edit();
+	            prefEdit.clear();
+	            Map<String, ?> entries = (Map<String, ?>) input.readObject();
+	            for (Entry<String, ?> entry : entries.entrySet()) {
+	                Object v = entry.getValue();
+	                String key = entry.getKey();
+
+	                if (v instanceof Boolean)
+	                    prefEdit.putBoolean(key, ((Boolean) v).booleanValue());
+	                else if (v instanceof Float)
+	                    prefEdit.putFloat(key, ((Float) v).floatValue());
+	                else if (v instanceof Integer)
+	                    prefEdit.putInt(key, ((Integer) v).intValue());
+	                else if (v instanceof Long)
+	                    prefEdit.putLong(key, ((Long) v).longValue());
+	                else if (v instanceof String)
+	                    prefEdit.putString(key, ((String) v));
+	            }
+	            prefEdit.commit();
+	        res = true;         
+	    } catch (FileNotFoundException e) {
+	        e.printStackTrace();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    } catch (ClassNotFoundException e) {
+	        e.printStackTrace();
+	    }finally {
+	        try {
+	            if (input != null) {
+	                input.close();
+	            }
+	        } catch (IOException ex) {
+	            ex.printStackTrace();
+	        }
+	    }
+	    return res;
 	}
 
 }

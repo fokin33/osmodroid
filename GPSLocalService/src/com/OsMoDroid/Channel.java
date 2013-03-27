@@ -12,7 +12,7 @@ import android.util.Log;
 public class Channel {
 	
 	public String name;
-	public String u;
+	public int u;
 	public String created;
 	public String ch;
 	public String url;
@@ -27,7 +27,7 @@ public class Channel {
 	 String name,
 	 String u,
 	 String created){
-		 this.u=u;
+		 this.u=Integer.parseInt(u);
 		 this.name=name;
 		 this.created=created;
 		}
@@ -36,7 +36,7 @@ public class Channel {
 	{
 		
 		this.name=jo.optString("name");
-		this.u=jo.optString("u");
+		this.u=Integer.parseInt(jo.optString("u"));
 		this.created=jo.optString("created");
 		this.ch=jo.optString("ch");
 		this.url="http://esya.ru/om/"+jo.optString("url");

@@ -54,10 +54,10 @@ public class DeviceAdapter extends ArrayAdapter<Device> {
 		        deviceName.setText(device.name);
 		        deviceWhere.setText(device.where);
 		        deviceLast.setText(device.last);
-		        Log.d(getClass().getSimpleName(),"device.name="+device.name.toString());
-		        Log.d(getClass().getSimpleName(),"device.online="+device.online.toString());
-		        Log.d(getClass().getSimpleName(),"device.state="+device.state.toString());
-		        if (device.online.equals("1")){
+		        //Log.d(getClass().getSimpleName(),"device.name="+device.name.toString());
+		        //Log.d(getClass().getSimpleName(),"device.online="+device.online.toString());
+		        //Log.d(getClass().getSimpleName(),"device.state="+device.state.toString());
+		        if (device.online!=null&&device.online.equals("1")){
 		        	 
 		        	deviceName.setTextColor(Color.GREEN);
 		        }
@@ -65,7 +65,7 @@ public class DeviceAdapter extends ArrayAdapter<Device> {
 		        {
 		        	deviceName.setTextColor(Color.WHITE);
 		        }
-		        if (device.state.equals("1")){
+		        if (device.state!=null&&device.state.equals("1")){
 		        	deviceWhere.setTextColor(Color.GREEN);
 		        }
 		        else

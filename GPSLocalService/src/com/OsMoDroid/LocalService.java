@@ -503,7 +503,7 @@ private long lastgpslocationtime=0;
 			
 			
 			if(b.getString("deviceU") != null){
-				Intent intent =new Intent(LocalService.this, DeviceChat.class).putExtra("deviceU", b.getString("deviceU" ));
+				Intent intent =new Intent(LocalService.this, DeviceChat.class).putExtra("deviceU", b.getInt("deviceU" ));
 			startActivity(intent);
 			}
 			String text = b.getString("MessageText");
@@ -694,7 +694,7 @@ if (!settings.getBoolean("silentnotify", false)){
 			
 				
 				try {	//Log.d(getClass().getSimpleName(), "getLayerId()="+channelList.get(pos).u);
-					return Integer.parseInt(channelList.get(pos).u);
+					return channelList.get(pos).u;
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -708,7 +708,7 @@ if (!settings.getBoolean("silentnotify", false)){
 			//	Log.d(getClass().getSimpleName(), "getLayerName()");
 				try {
 					for (Channel channel: channelList){
-						if (channel.u.equals(Integer.toString(layerId))){
+						if (channel.u==layerId){
 							return channel.name;
 					}
 					}
@@ -728,7 +728,7 @@ if (!settings.getBoolean("silentnotify", false)){
 			//	Log.d(getClass().getSimpleName(), "getLayerDescription()");
 				try {
 					for (Channel channel: channelList){
-						if (channel.u.equals(Integer.toString(layerId))){
+						if (channel.u==layerId){
 							return channel.name;
 					}
 					}
@@ -747,7 +747,7 @@ if (!settings.getBoolean("silentnotify", false)){
 			//	Log.d(getClass().getSimpleName(), "getNumberOfObjects()");
 				try {
 					for (Channel channel: channelList){
-						if (channel.u.equals(Integer.toString(layerId))){
+						if (channel.u==layerId){
 							return channel.deviceList.size();
 					}
 					}
@@ -766,8 +766,8 @@ if (!settings.getBoolean("silentnotify", false)){
 			//	Log.d(getClass().getSimpleName(), "getObjectId()");
 				try {
 					for (Channel channel: channelList){
-						if (channel.u.equals(Integer.toString(layerId))){
-							return Integer.parseInt(channel.deviceList.get(pos).u);
+						if (channel.u==layerId){
+							return channel.deviceList.get(pos).u;
 					}
 					}
 					
@@ -788,10 +788,10 @@ if (!settings.getBoolean("silentnotify", false)){
 			//	Log.d(getClass().getSimpleName(), "getObjectLat()");
 				try {
 					for (Channel channel: channelList){
-						if (channel.u.equals(Integer.toString(layerId))){
+						if (channel.u==layerId){
 							for (Device device:channel.deviceList){
-								if (device.u.equals(Integer.toString(objectId))){
-									return Float.parseFloat(device.lat);			
+								if (device.u==objectId){
+									return device.lat;			
 								}
 							}
 							
@@ -814,10 +814,10 @@ if (!settings.getBoolean("silentnotify", false)){
 			//	Log.d(getClass().getSimpleName(), "getObjectLon()");
 				try {
 					for (Channel channel: channelList){
-						if (channel.u.equals(Integer.toString(layerId))){
+						if (channel.u==layerId){
 							for (Device device:channel.deviceList){
-								if (device.u.equals(Integer.toString(objectId))){
-									return Float.parseFloat(device.lon);		
+								if (device.u==objectId){
+									return device.lon;		
 								}
 							}
 							
@@ -840,9 +840,9 @@ if (!settings.getBoolean("silentnotify", false)){
 		//		Log.d(getClass().getSimpleName(), "getObjectName()");
 				try {
 					for (Channel channel: channelList){
-						if (channel.u.equals(Integer.toString(layerId))){
+						if (channel.u==layerId){
 							for (Device device:channel.deviceList){
-								if (device.u.equals(Integer.toString(objectId))){
+								if (device.u==objectId){
 									return device.name;		
 								}
 							}
@@ -866,9 +866,9 @@ if (!settings.getBoolean("silentnotify", false)){
 		//		Log.d(getClass().getSimpleName(), "getObjectDescription()");
 				try {
 					for (Channel channel: channelList){
-						if (channel.u.equals(Integer.toString(layerId))){
+						if (channel.u==layerId){
 							for (Device device:channel.deviceList){
-								if (device.u.equals(Integer.toString(objectId))){
+								if (device.u==objectId){
 									return device.name;		
 								}
 							}
@@ -2748,7 +2748,7 @@ new netutil.MyAsyncTask(this).execute(params);}
 			 Log.d(this.getClass().getName(), "Adapter:"+ LocalService.channelsDevicesAdapter.toString());
 			
 			 for (Channel channel:LocalService.channelList){
-					if(channel.u.equals(LocalService.currentChannel.u)){
+					if(channel.u==LocalService.currentChannel.u){
 						LocalService.currentchanneldeviceList.clear();
 						LocalService.currentchanneldeviceList.addAll(channel.deviceList);
 				 }
@@ -4063,15 +4063,8 @@ if (myIM!=null){
 
 		if (result.Jo.has("om_device")){
 			deviceList.clear();
-deviceList.add(new Device("0","Мой компьютер","0"
-		,"",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"", settings.getString("uid", "0")
-		));
+deviceList.add(new Device("0","Мой компьютер","1", settings.getString("uid", "0")));
+		
 			try {
 				  a =	result.Jo.getJSONArray("om_device");
 		 		  Log.d(getClass().getSimpleName(), a.toString());
@@ -4115,7 +4108,7 @@ deviceList.add(new Device("0","Мой компьютер","0"
 		 			Channel chanitem = new Channel( jsonObject);
 		channelList.add(chanitem);
 		if (currentChannel!=null) {
-			if(chanitem.u.equals(currentChannel.u)){
+			if(chanitem.u==currentChannel.u){
 				currentchanneldeviceList.clear();
 				currentchanneldeviceList.addAll(chanitem.deviceList);
 				 if (channelsDevicesAdapter!=null) {channelsDevicesAdapter.notifyDataSetChanged();}

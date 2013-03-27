@@ -3,13 +3,13 @@ package com.OsMoDroid;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MyMessage {
+public class MyMessage implements Comparable<MyMessage>{
 	//"data": "{\"u\":33424,\"from\":\"173\",\"from_app\":0,\"for\":\"173\",\"for_app\":184,\"trig\":\"173-173\",\"trig_app\":\"0-184\",\
 	//"text\":\"hjutrrr\",\"time\":\"2013-03-21 21:40:51\",\"readed\":\"0000-00-00 00:00:00\",\"from_name\":\"tox\",\"from_addr\":\"tox\"}"
 	
 	//{"u":"33369","from":"173","from_app":"0","for":"173","for_app":"184"
 	//,"trig":"173-173","trig_app":"0-184","text":"32132132","time":"2013-03-14 21:16:51","readed":"2013-03-15 00:00:04"}
-	public String u;
+	public int u;
 	public String from;
 	public String from_app;
 	public String for_user;
@@ -24,7 +24,7 @@ public class MyMessage {
 	
 	public MyMessage (JSONObject jo){
 		try {
-			this.u=jo.getString("u");
+			this.u=jo.getInt("u");
 			this.from=jo.getString("from");
 			this.from_app=jo.getString("from_app");
 			this.for_user=jo.getString("for");
@@ -48,6 +48,17 @@ public class MyMessage {
 			}
 		}
 		
+	}
+
+	
+
+	
+
+
+
+	public int compareTo(MyMessage another) {
+		// TODO Auto-generated method stub
+		return this.u-another.u;
 	}
 	
 
