@@ -99,6 +99,7 @@ import android.app.NotificationManager;
 
 import android.app.PendingIntent;
 
+import android.app.Activity;
 import android.app.Service;
 import android.app.PendingIntent.CanceledException;
 
@@ -502,9 +503,9 @@ private long lastgpslocationtime=0;
 
 			
 			
-			if(b.getString("deviceU") != null){
+			if(b.getInt("deviceU") != 0){
 				Intent intent =new Intent(LocalService.this, DeviceChat.class).putExtra("deviceU", b.getInt("deviceU" ));
-			startActivity(intent);
+			startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 			}
 			String text = b.getString("MessageText");
 

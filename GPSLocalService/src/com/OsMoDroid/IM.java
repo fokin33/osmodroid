@@ -3,7 +3,7 @@ package com.OsMoDroid;import java.io.BufferedReader;import java.io.IOExcep
 import java.util.Date;import java.util.Iterator;import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import com.OsMoDroid.LocalService.SendCoor;import android.app.Notification;import android.app.PendingIntent;import android.app.PendingIntent.CanceledException;import android.content.BroadcastReceiver;import android.content.Context;import android.content.Intent;import android.content.IntentFilter;import android.net.NetworkInfo;import android.os.Bundle;import android.os.Handler;import android.os.Message;import android.support.v4.app.NotificationCompat;import android.util.Log;import android.widget.Toast;public class IM {	protected  boolean running       = false;	protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;	String mykey;//	String timestamp=Long.toString(System.currentTimeMillis());String lcursor="";	int pingTimeout=900;	Thread myThread;	private BufferedReader    in      = null;	Context parent;	String myLongPollCh;
 	ArrayList<String[]>  myLongPollChList;	//ArrayList<String> list= new ArrayList<String>();	int mestype=0;	LocalService localService;	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");	public IM(ArrayList<String[]> longPollChList, Context context,String key,LocalService localService) {
 	
-		
+		this.localService=localService; 
 		parent=context;
 		myLongPollChList=longPollChList;
 		getadres(longPollChList);
@@ -58,8 +58,10 @@ public void removechannels(ArrayList<String[]> longPollChList){
 	
 }			public void addtoDeviceChat(String message) {int u = 0;			try {
 				MyMessage mes =new MyMessage( new JSONObject(message));
+				Log.d(this.getClass().getName(), "MyMessage,for_app "+mes.for_app);
+
 				for (Device dev : LocalService.deviceList){
-					if(dev.app.equals(mes.for_app)){
+					if(dev.app!=null&&dev.app.equals(mes.for_app)){
 						u=dev.u;
 					}
 				}
@@ -275,9 +277,10 @@ if (getMessageType( keyname).equals("chch")){
 		running = false;		disconnect();				}
 
 	private void disconnect() {
-		try {			instream.close();			} catch (Exception e) {				e.printStackTrace();			}		try {			in.close();			} catch (Exception e) {				e.printStackTrace();			}		try {			con.disconnect();			} catch (Exception e) {				e.printStackTrace();			}
+		try {			instream.close();			} catch (Exception e) {				Log.d(this.getClass().getName(), "close"+this);
+			}		try {			in.close();			} catch (Exception e) {				Log.d(this.getClass().getName(), "close2"+this);			}		try {			con.disconnect();			} catch (Exception e) {				Log.d(this.getClass().getName(), "close3"+this);			}
 	}	private class IMRunnable implements Runnable {		StringBuilder stringBuilder= new StringBuilder(1024);		private InputStreamReader stream  = null;		private boolean           error   = false;		private int               retries = 0;		int maxRetries = 100;		public void run() {			Log.d(this.getClass().getName(), "run thread instance:"+this.toString());			String response = "";			while (running) {
 				Log.d(this.getClass().getName(), "adr="+adr);				Log.d(this.getClass().getName(), "running thread instance:"+this.toString());				try {					++retries;					int portOfProxy = android.net.Proxy.getDefaultPort();					if (portOfProxy > 0) {						Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(								android.net.Proxy.getDefaultHost(), portOfProxy));						con = (HttpURLConnection) new URL(adr).openConnection(proxy);					} else {						con = (HttpURLConnection) new URL(adr).openConnection();					}					Log.d(this.getClass().getName(), "Set connect timeout thread instance:"+this.toString());					con.setReadTimeout(pingTimeout*1000);					con.setConnectTimeout(10000);					instream=con.getInputStream();					stream = new InputStreamReader(instream);					in   = new BufferedReader(stream, 1024);					if(error){						error = false;					}					// Set a timeout on the socket					// This prevents getting stuck in readline() if the pipe breaks					retries = 0;					connected = true;					Log.d(this.getClass().getName(), "Connected=true thread instance:"+this.toString());				} catch (UnknownHostException e) {					error = true;					//stop();				} catch (Exception e) {					error = true;					//stop();				}				if(retries > maxRetries) {					stop ();					break;				}				if(retries > 0) {					try {						Thread.sleep(1000);					} catch (InterruptedException e) {						// If can't back-off, stop trying						Log.d(this.getClass().getName(), "Interrupted from sleep thread instance:"+this.toString());						//running = false;						break;					}				}				if(!error && running) {					try {						// Wait for a response from the channel						Log.d(this.getClass().getName(), "Waiting responce thread instance:"+this.toString()+ " adr="+adr);						stringBuilder.setLength(0);						    int c = 0;						    int i=0;						    while (!(c==-1) && running) {						    	c = in.read();						        if (!(c==-1))stringBuilder.append((char) c);						        i=i+1;						    }						    parseEx( stringBuilder.toString());
 						    getadres(myLongPollChList);						instream.close();						in.close();						con.disconnect();
-						Log.d(this.getClass().getName(), "Got responce  thread instance:"+this.toString()+ " adr="+adr);					}					catch(Exception e) {						Log.d(this.getClass().getName(), "Exception:"+e.toString()+e.getMessage());						e.printStackTrace();
+						Log.d(this.getClass().getName(), "Got responce  thread instance:"+this.toString()+ " adr="+adr);					}					catch(Exception e) {						Log.d(this.getClass().getName(), "Exception after read response :"+e.toString());						e.printStackTrace();
 						error = true;						}					}				else {					// An error was encountered when trying to connect					connected = false;				}			}		}	}}
