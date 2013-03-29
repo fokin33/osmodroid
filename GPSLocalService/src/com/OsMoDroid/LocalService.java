@@ -504,8 +504,41 @@ private long lastgpslocationtime=0;
 			
 			
 			if(b.getInt("deviceU") != 0){
+				
 				Intent intent =new Intent(LocalService.this, DeviceChat.class).putExtra("deviceU", b.getInt("deviceU" ));
-			startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+				  PendingIntent contentIntent = PendingIntent.getActivity(serContext,0,intent, 0);
+				Long when=System.currentTimeMillis();
+
+
+			 	NotificationCompat.Builder notificationBuilder =new NotificationCompat.Builder(
+
+						serContext.getApplicationContext())
+
+				    	.setWhen(when)
+
+				    	.setContentText("Сообщение")
+
+				    	.setContentTitle("OsMoDroid")
+
+				    	.setSmallIcon(android.R.drawable.ic_menu_send)
+
+				    	.setAutoCancel(true)
+
+				    	.setDefaults(Notification.DEFAULT_LIGHTS)
+
+				    	.setContentIntent(contentIntent);
+
+		if (!settings.getBoolean("silentnotify", false)){
+				 notificationBuilder.setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_VIBRATE| Notification.DEFAULT_SOUND);
+
+				    	}
+
+					Notification notification = notificationBuilder.build();
+
+					LocalService.mNotificationManager.notify(OsMoDroid.mesnotifyid, notification);
+				
+				
+				//startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 			}
 			String text = b.getString("MessageText");
 
@@ -1726,17 +1759,15 @@ if (settings.getBoolean("im", false) && !settings.getString("key", "" ).equals("
 
 //mesIM = new IM(settings.getString("key", "")+",im_messages,om_online",this,1);
 	ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
-	longPollchannels.add(new String[] {"om_online","o"}); 
-	longPollchannels.add(new String[] {"im_messages","m"});
+	longPollchannels.add(new String[] {"om_online","o",""}); 
+	longPollchannels.add(new String[] {"im_messages","m",""});
 	
 
 	
 if(!settings.getString("lpch", "").equals("")){ 
-		//	myIM = new IM(settings.getString("lpch", "")+"ctrl",this,0);
-	longPollchannels.add(new String[] {settings.getString("lpch", "")+"ctrl","r"});
+	longPollchannels.add(new String[] {settings.getString("lpch", "")+"ctrl","r",""});
 			}
-
-myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);	
+myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
 }
 
 
@@ -2052,6 +2083,7 @@ if (soundPool!=null) {soundPool.release();}
 		}
 		requestLocationUpdates();
 		}
+		manageIM();
 		Log.d(getClass().getSimpleName(), "applyPreferecne end");
 
 	}
@@ -2215,7 +2247,28 @@ new netutil.MyAsyncTask(this).execute(params);}
 		registerReceiver( checkreceiver, new IntentFilter( "CHECK_GPS"));
 	}
 
+private void manageIM(){
+	if (settings.getBoolean("im", false) && myIM==null&& !settings.getString("key", "" ).equals("") ){
 
+		
+			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
+			longPollchannels.add(new String[] {"om_online","o",""}); 
+			longPollchannels.add(new String[] {"im_messages","m",""});
+			if(!settings.getString("lpch", "").equals(""))
+			{ 
+			longPollchannels.add(new String[] {settings.getString("lpch", "")+"ctrl","r",""});
+			}
+			myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);	
+			netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
+		}
+	if (!settings.getBoolean("im", false) && myIM!=null){
+		myIM.close();
+		myIM=null;
+	}
+		
+		
+	
+}
 
 
 
@@ -3983,7 +4036,7 @@ public void onResultsSucceeded(APIComResult result) {
 		if (!result.Jo.optString("lpch").equals("")&& !result.Jo.optString("lpch").equals(settings.getString("lpch", ""))){
 
 			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
-			longPollchannels.add(new String[] {settings.getString("lpch", "")+"ctrl","r"});
+			longPollchannels.add(new String[] {settings.getString("lpch", "")+"ctrl","r",""});
 			
 if (myIM!=null){
 		myIM.removechannels(longPollchannels);	
@@ -3995,12 +4048,8 @@ if (myIM!=null){
 
 			editor.commit();
 
-//			if (settings.getBoolean("im", false)){
-//if(myIM!=null){  myIM.close();}
-//			myIM = new IM(settings.getString("lpch", "")+"ctrl",this,0);}
-
 			longPollchannels =new ArrayList<String[]>();
-			longPollchannels.add(new String[] {settings.getString("lpch", "")+"ctrl","r"});
+			longPollchannels.add(new String[] {settings.getString("lpch", "")+"ctrl","r",""});
 			
 if (myIM!=null){
 		myIM.addchannels(longPollchannels);	

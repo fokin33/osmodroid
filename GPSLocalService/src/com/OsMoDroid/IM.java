@@ -1,13 +1,18 @@
 
 package com.OsMoDroid;import java.io.BufferedReader;import java.io.IOException;import java.io.InputStream;import java.io.InputStreamReader;import java.io.PrintWriter;import java.net.HttpURLConnection;import java.net.InetSocketAddress;import java.net.Proxy;import java.net.URL;import java.net.UnknownHostException;import java.text.SimpleDateFormat;import java.util.ArrayList;import java.util.Collections;
-import java.util.Date;import java.util.Iterator;import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import com.OsMoDroid.LocalService.SendCoor;import android.app.Notification;import android.app.PendingIntent;import android.app.PendingIntent.CanceledException;import android.content.BroadcastReceiver;import android.content.Context;import android.content.Intent;import android.content.IntentFilter;import android.net.NetworkInfo;import android.os.Bundle;import android.os.Handler;import android.os.Message;import android.support.v4.app.NotificationCompat;import android.util.Log;import android.widget.Toast;public class IM {	protected  boolean running       = false;	protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;	String mykey;//	String timestamp=Long.toString(System.currentTimeMillis());String lcursor="";	int pingTimeout=900;	Thread myThread;	private BufferedReader    in      = null;	Context parent;	String myLongPollCh;
-	ArrayList<String[]>  myLongPollChList;	//ArrayList<String> list= new ArrayList<String>();	int mestype=0;	LocalService localService;	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");	public IM(ArrayList<String[]> longPollChList, Context context,String key,LocalService localService) {
+import java.util.Date;import java.util.Iterator;import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import com.OsMoDroid.LocalService.SendCoor;import android.app.Notification;import android.app.PendingIntent;import android.app.PendingIntent.CanceledException;import android.content.BroadcastReceiver;import android.content.Context;import android.content.Intent;import android.content.IntentFilter;import android.net.NetworkInfo;import android.os.Bundle;import android.os.Handler;import android.os.Message;import android.support.v4.app.NotificationCompat;import android.util.Log;import android.widget.Toast;/**
+ * @author dfokin
+ *Class for work with LongPolling
+ */
+public class IM {	protected  boolean running       = false;	protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;	String mykey;//	String timestamp=Long.toString(System.currentTimeMillis());String lcursor="";	int pingTimeout=900;	Thread myThread;	private BufferedReader    in      = null;	Context parent;	String myLongPollCh;
+	ArrayList<String[]>  myLongPollChList;	//ArrayList<String> list= new ArrayList<String>();	int mestype=0;	LocalService localService;	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		public IM(ArrayList<String[]> longPollChList, Context context,String key,LocalService localService) {
 	
 		this.localService=localService; 
 		parent=context;
 		myLongPollChList=longPollChList;
-		getadres(longPollChList);
 		mykey=key;
+		getadres(longPollChList);
 		parent.registerReceiver(bcr, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
 		start();
 	}
@@ -19,9 +24,14 @@ package com.OsMoDroid;import java.io.BufferedReader;import java.io.IOExcep
 		
 		
 		
-		adr="http://d.esya.ru/?identifier="+lcursor+mykey;
+		adr="http://d.esya.ru/?identifier="+mykey;
 		for (String str[] : longPollChList){
+			if  (str[2].length()>0){
+				adr=adr+","+str[2]+":"+str[0];
+			}
+			else {
 			adr=adr+","+str[0];
+			}
 		}
 		//adr.substring(0, adr.length()-1);
 		adr=adr+"&ncrnd="+Long.toString(System.currentTimeMillis());
@@ -45,9 +55,7 @@ public void removechannels(ArrayList<String[]> longPollChList){
 		
 		
 	}
-	//	public IM(String longPollch, Context context,int type) {////		adr="http://d.esya.ru/?identifier="+longPollch+"+&ncrnd="+timestamp;//		//http://d.esya.ru/?identifier=u883006497ctrl
-//		//http://d.esya.ru/?identifier=iR7xp5Ub5nEoLLVGwrUL
-//		//http://api.esya.ru/?system=om&action=start&key=iR7xp5Ub5nEoLLVGwrUL&device=1526&c=OsMoDroid&v=10041&signature=ec095fafe945a755744a53a2//		this.parent=context;////		myLongPollCh=longPollch;////		mestype=type;////////		parent.registerReceiver(bcr, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));////		start();////////////////	}String getMessageType(String ids){
+	String getMessageType(String ids){
 	for (String[] str: myLongPollChList){
 		if (str[0].equals(ids)){
 			return str[1];
@@ -77,7 +85,17 @@ public void removechannels(ArrayList<String[]> longPollChList){
 				e.printStackTrace();
 			}
 			if (u!=0){
-			Message msg = new Message();			Bundle b = new Bundle();			b.putInt("deviceU", u);			msg.setData(b);			localService.alertHandler.sendMessage(msg);		}			}	private BroadcastReceiver bcr = new BroadcastReceiver() {		@Override		public void onReceive(Context context, Intent intent) {			Log.d(this.getClass().getName(), "BCR"+this);			Log.d(this.getClass().getName(), "BCR"+this+" Intent:"+intent);			if (intent.getAction().equals(android.net.ConnectivityManager.CONNECTIVITY_ACTION)) {				Bundle extras = intent.getExtras();				Log.d(this.getClass().getName(), "BCR"+this+ " "+intent.getExtras());				if(extras.containsKey("networkInfo")) {					NetworkInfo netinfo = (NetworkInfo) extras.get("networkInfo");					Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo);					Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo.getType());					if(netinfo.isConnected()) {						Log.d(this.getClass().getName(), "BCR"+this+" Network is connected");						Log.d(this.getClass().getName(), "BCR"+this+" Running:"+running);						// Network is connected						if(!running ) {							System.out.println("Starting from Reciever"+this.toString());							myThread.interrupt();							start();						}					}					else {						System.out.println("Stoping1 from Reciever"+this.toString());						stop();					}				}				else if(extras.containsKey("noConnectivity")) {					System.out.println("Stoping2 from Reciever"+this.toString());					stop();				}		    }		}	};	 void close(){		parent.unregisterReceiver(bcr);		stop();	};	 void start(){		this.running = true;		System.out.println("About to notify state from start()");		System.out.println("State notifed of start()");		myThread = new Thread(new IMRunnable());		myThread.start();	}void parseEx (String toParse){
+			Message msg = new Message();			Bundle b = new Bundle();			b.putInt("deviceU", u);			msg.setData(b);			localService.alertHandler.sendMessage(msg);		}			}	private BroadcastReceiver bcr = new BroadcastReceiver() {		@Override		public void onReceive(Context context, Intent intent) {			Log.d(this.getClass().getName(), "BCR"+this);			Log.d(this.getClass().getName(), "BCR"+this+" Intent:"+intent);			if (intent.getAction().equals(android.net.ConnectivityManager.CONNECTIVITY_ACTION)) {				Bundle extras = intent.getExtras();				Log.d(this.getClass().getName(), "BCR"+this+ " "+intent.getExtras());				if(extras.containsKey("networkInfo")) {					NetworkInfo netinfo = (NetworkInfo) extras.get("networkInfo");					Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo);					Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo.getType());					if(netinfo.isConnected()) {						Log.d(this.getClass().getName(), "BCR"+this+" Network is connected");						Log.d(this.getClass().getName(), "BCR"+this+" Running:"+running);						// Network is connected						if(!running ) {							System.out.println("Starting from Reciever"+this.toString());							myThread.interrupt();							start();						}					}					else {						System.out.println("Stoping1 from Reciever"+this.toString());						stop();					}				}				else if(extras.containsKey("noConnectivity")) {					System.out.println("Stoping2 from Reciever"+this.toString());					stop();				}		    }		}	};	 /**
+	 * Выключает IM
+	 */
+	void close(){		parent.unregisterReceiver(bcr);		stop();	};	 void start(){		this.running = true;		System.out.println("About to notify state from start()");		System.out.println("State notifed of start()");		myThread = new Thread(new IMRunnable());		myThread.start();	}void parseEx (String toParse){
+
+//	[
+//	  {
+//	    "ids": { "om_omc_RAzHkQ9JzY5_chat": "1364554177.56155052100000" },
+//	    "data": "0|40|fgfg|2013-03-29 14:49:37"
+//	  }
+//	]
 	
 	
 	try {
@@ -99,8 +117,13 @@ public void removechannels(ArrayList<String[]> longPollChList){
 		    	
 		    	String keyname= (String) it.next();
 		    	Log.d(this.getClass().getName(), "keyname="+keyname);
-		    	lcursor = (new JSONObject(jsonObject.optString("ids"))).optString(keyname)+":";
+		    	lcursor = (new JSONObject(jsonObject.optString("ids"))).optString(keyname);
 		    	 Log.d(this.getClass().getName(), "lcursor="+ lcursor);
+		    	 for (String[] str:myLongPollChList){
+		    		 if (str[0].equals(keyname)){
+		    			 str[2]=lcursor;
+		    		 }
+		    	 }
 
 if (getMessageType( keyname).equals("o")){
 	Log.d(this.getClass().getName(), "type=o");

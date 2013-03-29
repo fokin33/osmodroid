@@ -15,6 +15,8 @@ public class OsMoDroid extends Application {
 		  return notifyid++;
 	  }
 	  
+  
+	  
 	
 
 }

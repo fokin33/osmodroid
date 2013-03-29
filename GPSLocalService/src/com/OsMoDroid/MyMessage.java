@@ -23,26 +23,23 @@ public class MyMessage implements Comparable<MyMessage>{
 	public String from_addr;
 	
 	public MyMessage (JSONObject jo){
-		try {
-			this.u=jo.getInt("u");
-			this.from=jo.getString("from");
-			this.from_app=jo.getString("from_app");
-			this.for_user=jo.getString("for");
-			this.for_app=jo.getString("for_app");
-			this.trig=jo.getString("trig");
-			this.trig_app=jo.getString("trig_app");
-			this.text=jo.getString("text");
-			this.time=jo.getString("time");
-			this.readed=jo.getString("readed");
-			this.from_name=jo.getString("from_name");
-			this.from_addr=jo.getString("from_addr");
-		} catch (JSONException e) {
-			
-			e.printStackTrace();
-		}
-		if (from_name==null){
+		
+			this.u=jo.optInt("u");
+			this.from=jo.optString("from");
+			this.from_app=jo.optString("from_app");
+			this.for_user=jo.optString("for");
+			this.for_app=jo.optString("for_app");
+			this.trig=jo.optString("trig");
+			this.trig_app=jo.optString("trig_app");
+			this.text=jo.optString("text");
+			this.time=jo.optString("time");
+			this.readed=jo.optString("readed");
+			this.from_name=jo.optString("from_name");
+			this.from_addr=jo.optString("from_addr");
+		
+		if (from_name.equals("")){
 			for (Device dev : LocalService.deviceList){
-				if (!dev.app.equals("0")&& dev.app.equals(from_app)){
+				if (dev.app!=null&&!dev.app.equals("0")&& dev.app.equals(from_app)){
 					from_name=dev.name;
 				}
 			}
