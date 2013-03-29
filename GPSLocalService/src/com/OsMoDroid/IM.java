@@ -278,13 +278,15 @@ if (getMessageType( keyname).equals("chch")){
 			Log.d(this.getClass().getName(), "device nest" + device.name + " " + device.u);
 			if (data[1].equals(Integer.toString(device.u))) {
 				Log.d(this.getClass().getName(), "Сообщение от устройства в канале " + device.toString());
+			}
+		}
 				channel.messagesstringList.clear();
 				channel.messagesstringList.add(data[2]);
 				localService.alertHandler.post(new Runnable(){
 					public void run() {
 						if (LocalService.channelsmessagesAdapter!=null&& LocalService.currentChannel != null){
 //							LocalService.currentChannel.messagesstringList.clear();
-							LocalService.currentChannel.messagesstringList.addAll(0,channel.messagesstringList);
+							LocalService.currentChannel.messagesstringList.addAll(channel.messagesstringList);
 							
 							LocalService.channelsmessagesAdapter.notifyDataSetChanged();
 
@@ -294,9 +296,9 @@ if (getMessageType( keyname).equals("chch")){
 				});
 				
 
-			}
+			
 
-		}
+		
 		}
 
 	}
