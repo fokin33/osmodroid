@@ -503,7 +503,7 @@ private long lastgpslocationtime=0;
 
 			
 			
-			if(b.getInt("deviceU") != 0){
+			if(b.getInt("deviceU") != -1){
 				
 				Intent intent =new Intent(LocalService.this, DeviceChat.class).putExtra("deviceU", b.getInt("deviceU" ));
 				  PendingIntent contentIntent = PendingIntent.getActivity(serContext,0,intent, 0);
@@ -540,10 +540,15 @@ private long lastgpslocationtime=0;
 				
 				//startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 			}
+			if (LocalService.currentDevice!=null){
+				LocalService.mNotificationManager.cancel(OsMoDroid.mesnotifyid);
+			}
+			
+			
 			String text = b.getString("MessageText");
 
 			if (b.getBoolean("om_online",false)){
-				netutil.newapicommand((ResultsListener)serContext, "om_device");
+			
 			}
 
 

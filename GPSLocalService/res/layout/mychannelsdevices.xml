@@ -21,6 +21,7 @@
         android:id="@+id/mychannelsmessages"
         android:layout_width="fill_parent"
         android:layout_height="241dp"
+        android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll" >
 
     </ListView>

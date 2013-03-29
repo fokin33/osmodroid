@@ -64,7 +64,7 @@ public void removechannels(ArrayList<String[]> longPollChList){
 	
 	return ids;
 	
-}			public void addtoDeviceChat(String message) {int u = 0;			try {
+}			public void addtoDeviceChat(String message) {int u = -1;			try {
 				MyMessage mes =new MyMessage( new JSONObject(message));
 				Log.d(this.getClass().getName(), "MyMessage,for_app "+mes.for_app);
 
@@ -132,17 +132,22 @@ if (getMessageType( keyname).equals("o")){
     String[] data = jsonObject.optString("data").split("-");
     Log.d(this.getClass().getName(), "data[0]="+data[0]+" data[1]="+data[1]+" data[2]="+data[2]);
     Log.d(this.getClass().getName(), "LocalService.DeviceList="+LocalService.deviceList.toString());
-    for (Device device : LocalService.deviceList){
+    final ArrayList<Device> tempdeviceList = new ArrayList<Device>();
+    tempdeviceList.addAll(LocalService.deviceList);
+    
+    for (Device device : tempdeviceList){
         if (data[1].equals(Integer.toString(device.u))&&device.u!=(Integer.parseInt(LocalService.settings.getString("device", ""))) ){
+        	//LocalService.deviceList.remove(device);
+        	int idx=LocalService.deviceList.indexOf(device);
             if (data[0].equals("state")) {
-                if (data[2].equals("1")) { status="запущен"; } else { status="остановлен"; }
+                if (data[2].equals("1")) { status="запущен";device.state = "1"; } else { status="остановлен";device.state = "0"; }
                 messageText = messageText+" Мониторинг на устройстве \""+device.name+"\" "+status;
                 Log.d(this.getClass().getName(), "DeviceState="+messageText);
-             //   device.state = "1";
+                
             }
             if (data[0].equals("online")&&device.u!=(Integer.parseInt(LocalService.settings.getString("device", ""))) ){
-                if (data[2].equals("1")) { status="вошло в сеть"; } else { status="покинуло сеть"; }
-             //   device.online = "1";
+                if (data[2].equals("1")) { status="вошло в сеть";  device.online = "1";} else { status="покинуло сеть"; device.online = "0"; }
+               
                 messageText = messageText+" Устройство \""+device.name+"\" "+status;
                 Log.d(this.getClass().getName(), "DeviceOnline="+messageText);
             }
@@ -155,12 +160,23 @@ if (getMessageType( keyname).equals("o")){
             //	LocalService.deviceAdapter.notifyDataSetChanged();
             	Log.d(getClass().getSimpleName(),"devicelist="+ LocalService.deviceList);
             	
+            	localService.alertHandler.post(new Runnable() {
+
+					public void run() {
+
+						LocalService.deviceList.clear();
+		            	LocalService.deviceAdapter.notifyDataSetChanged();
+		            	LocalService.deviceList.addAll(tempdeviceList);
+		            	LocalService.deviceAdapter.notifyDataSetChanged();}
+				});
+            	
+            	
             	Message msg = new Message();
 
     			Bundle b = new Bundle();
 
     			b.putBoolean("om_online", true);
-    			b.putString("MessageText", messageText);
+    			b.putString("MessageText", sdf1.format(new Date())+" "+messageText);
 
     			msg.setData(b);
 
