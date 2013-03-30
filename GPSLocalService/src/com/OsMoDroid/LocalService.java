@@ -1736,7 +1736,7 @@ if (settings.getBoolean("im", false) && !settings.getString("key", "" ).equals("
 
 	
 if(!settings.getString("lpch", "").equals("")){ 
-	longPollchannels.add(new String[] {settings.getString("lpch", "")+"ctrl","r",""});
+	longPollchannels.add(new String[] {"ctrl_"+settings.getString("lpch", ""),"r",""});
 			}
 myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
 }
@@ -2227,7 +2227,7 @@ private void manageIM(){
 			longPollchannels.add(new String[] {"im_messages","m",""});
 			if(!settings.getString("lpch", "").equals(""))
 			{ 
-			longPollchannels.add(new String[] {settings.getString("lpch", "")+"ctrl","r",""});
+			longPollchannels.add(new String[] {"ctrl_"+settings.getString("lpch", ""),"r",""});
 			}
 			myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);	
 			netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
@@ -4007,7 +4007,7 @@ public void onResultsSucceeded(APIComResult result) {
 		if (!result.Jo.optString("lpch").equals("")&& !result.Jo.optString("lpch").equals(settings.getString("lpch", ""))){
 
 			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
-			longPollchannels.add(new String[] {settings.getString("lpch", "")+"ctrl","r",""});
+			longPollchannels.add(new String[] {"ctrl_"+settings.getString("lpch", ""),"r",""});
 			
 if (myIM!=null){
 		myIM.removechannels(longPollchannels);	
@@ -4020,7 +4020,7 @@ if (myIM!=null){
 			editor.commit();
 
 			longPollchannels =new ArrayList<String[]>();
-			longPollchannels.add(new String[] {settings.getString("lpch", "")+"ctrl","r",""});
+			longPollchannels.add(new String[] {"ctrl_"+settings.getString("lpch", ""),"r",""});
 			
 if (myIM!=null){
 		myIM.addchannels(longPollchannels);	
