@@ -257,31 +257,15 @@ PowerManager pm;
 			    editor.remove("device");
 			    editor.remove("devicename");
 			    editor.commit();
-			    if (!(key.equals(""))) {
-					String[] params = {
-							"http://api.esya.ru/?system=om&action=device"
-									+ "&key="
-									+ key
-									+ "&signature="
-									+ SHA1(
-											"system:om;action:device;key:"
-													+ key
-													+ ";"
-													+ "--"
-													+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
-											.substring(1, 25), "false", "",
-							"device" };
-
-					Log.d(getClass().getSimpleName(), params[0]);
-					RequestCommandTask Rq = new RequestCommandTask();
-					Rq.execute(params);
-				}
-
+		
+if (mBound){
+	mService.startcomand();
+}
 
 
 			    }
 
-			    //if (started){bindService();}
+			  
 			  }
 			};
 
@@ -695,53 +679,16 @@ startlocalservice();
 								public void onClick(DialogInterface dialog,
 										int whichButton) {
 
-									/* User clicked cancel so do some stuff */
+	
 								}
 							}).create();
 
 			alertdialog3.show();
 
-			// 6564 2638 7281 2680
+	
 
 		}
-//		if (item.getItemId() == 5) {
-//			if (!(key.equals(""))) {
-//
-//				String[] a={"device"};
-//				String[] b={device};
-//				String[] params = {netutil.buildcommand(GPSLocalServiceClient.this,"device_link",a,b),"false","","device_link"};
-//				new netutil.MyAsyncTask(GPSLocalServiceClient.this,GPSLocalServiceClient.this).execute(params) ;
-//			} else {
-//				Toast.makeText(GPSLocalServiceClient.this, R.string.nokey, 5)
-//						.show();
-//			}
-//
-//		}
-//
-//		if (item.getItemId() == 6) {
-//			if (!(key.equals(""))) {
-//				String[] params = {
-//						"http://api.esya.ru/?system=om&action=device"
-//								+ "&key="
-//								+ key
-//								+ "&signature="
-//								+ SHA1(
-//										"system:om;action:device;key:"
-//												+ key
-//												+ ";"
-//												+ "--"
-//												+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
-//										.substring(1, 25), "false", "",
-//						"device" };
-//				Log.d(getClass().getSimpleName(), params[0]);
-//				RequestCommandTask Rq = new RequestCommandTask();
-//				Rq.execute(params);
-//			} else {
-//				Toast.makeText(GPSLocalServiceClient.this, R.string.nokey, 5)
-//						.show();
-//			}
-//
-//		}
+
 		
 		if (item.getItemId() == 9) {
                     Log.d(getClass().getSimpleName(), "forcesend click");

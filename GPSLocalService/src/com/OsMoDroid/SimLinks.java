@@ -42,74 +42,23 @@ public class SimLinks extends Activity implements ResultsListener{
 	 ArrayList<String> listids;
 	 SharedPreferences settings;
 	 final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
-	 //
+
 	public SimLinks() {
-		// TODO Auto-generated constructor stub
+	
 	}
 	
-	void reflinks(){
-		String[] params = {
-				"http://api.esya.ru/?system=om&action=device_links&device="+settings.getString("device", "")
-						+ "&key="
-						+ GPSLocalServiceClient.key
-						+ "&signature="
-						+ GPSLocalServiceClient.SHA1(
-								"system:om;action:device_links;device:"+settings.getString("device", "") +";key:"
-										+ GPSLocalServiceClient.key
-										+ ";"
-										+ "--"
-										+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
-								.substring(1, 25), "false", "",
-				"device_links" };
-		new netutil.MyAsyncTask(SimLinks.this,SimLinks.this).execute(params) ;
-	 
-	
-		Log.d(getClass().getSimpleName(), params[0]);
-	}
+	void reflinks(){			netutil.newapicommand((ResultsListener)SimLinks.this, "om_link");	}
 	
 	void addlink_new() throws JSONException{
 		JSONObject postjson = new JSONObject();
 		postjson.put("device", settings.getString("device", ""));
-		postjson.put("random", "1");
-		//postjson.put("from", "-1");
-		//postjson.put("to", "-1");
+		postjson.put("random", "1");		
 		postjson.put("until", "-1");
 		netutil.newapicommand((ResultsListener)SimLinks.this, "om_link_add","json="+postjson.toString());
 	}
 	
-	void addlink(){
-String linkname =  System.currentTimeMillis()+settings.getString("device", "");
-		//--
-		//[19:27:37.138] GET http://api.esya.ru/?system=om&key=H83_fdDGd34i85gDsd4f&action=add_link&url=zxccvb&item=764&type=0&on=2012-08-16%2019:27:00&off=2012-08-17%2000:00:00&format=jsonp&callback=jQuery17107581103815227868_1345130731429&_=1345130857118 [HTTP/1.1 200 OK 122мс]
-		String[] params = {
-				"http://api.esya.ru/?system=om&action=link_add&url=" +linkname +"&item="+settings.getString("device", "")
-				
-						+ "&key="
-						+ GPSLocalServiceClient.key
-						+ "&signature="
-						+ GPSLocalServiceClient.SHA1(
-								"system:om;action:link_add;url:"+linkname+";item:"+settings.getString("device", "") +";key:"
-										+ GPSLocalServiceClient.key
-										+ ";"
-										+ "--"
-										+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
-								.substring(1, 25), "false", "",
-				"link_add" };
-		new netutil.MyAsyncTask(SimLinks.this,SimLinks.this).execute(params) ;
-	 
-	
-		Log.d(getClass().getSimpleName(), params[0]);
-	
-	}
-	
-	void dellink(String linkid){
-		
-		String[] a={"link"};
-		String[] b={linkid};
-		String[] params = {netutil.buildcommand(SimLinks.this,"link_delete",a,b),"false","","link_delete"};
-		new netutil.MyAsyncTask(SimLinks.this,SimLinks.this).execute(params) ;
-		
-	}
+
+	void dellink(String linkid)	{		netutil.newapicommand((ResultsListener)SimLinks.this, "om_link_delete:"+linkid);	}
 
 	/** Called when the activity is first created. */
 	@Override
@@ -204,72 +153,14 @@ String linkname =  System.currentTimeMillis()+settings.getString("device", "");
 	public void onResultsSucceeded(APIComResult result) {
 		JSONObject a = null; 
 		Log.d(getClass().getSimpleName(),"OnResultListener:"+result);	
-		if (result.Jo==null&&result.ja==null)		{			Log.d(getClass().getSimpleName(),"notifwar1 Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ " Запрос:"+result.url);		//		notifywarnactivity("Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ " Запрос:"+result.url);			Toast.makeText(LocalService.serContext, "Esya.ru не отвечает. Проверьте работу интернета." , Toast.LENGTH_LONG).show();			}						if (result.Command.equals("APIM")&& !(result.Jo==null))
+		if (result.Jo==null&&result.ja==null)		{			Toast.makeText(LocalService.serContext, "Esya.ru не отвечает. Проверьте работу интернета." , Toast.LENGTH_LONG).show();			}						if (result.Command.equals("APIM")&& !(result.Jo==null))
 		{
 			Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);
-			if (result.Jo.has("om_link_add")){
-				reflinks();
-			}
-				
+						if (result.Jo.has("om_link")){				list.clear();				listids.clear();								try {					JSONArray ar = new JSONArray(result.Jo.getString("om_link"));					for (int i = 0; i < ar.length(); i++) {			 			JSONObject jsonObject = ar.getJSONObject(i);				if (jsonObject.getString("device").equals(LocalService.settings.getString("device", ""))){					list.add("http://m.esya.ru/"+jsonObject.getString("url"));					listids.add(jsonObject.getString("u"));				}				} 				}				catch (JSONException e) {					e.printStackTrace();				}				adapter.notifyDataSetChanged();			}			else {				reflinks();			}						
 		}
 		
 		
-		if (result.Command.equals("device_links")  &&!(result.Jo==null)  ) {
-		Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
-		list.clear();
-		listids.clear();
-		try {
-			  a =	result.Jo.getJSONObject("links");
-	 		  Log.d(getClass().getSimpleName(), a.toString());
-			 
-			   Iterator i = a.keys();
-			  while (i.hasNext())
-          	{
-          		String keyname = (String)i.next();
-list.add(a.getString(keyname));
-listids.add(keyname);
-Log.d(getClass().getSimpleName(), list.toString());
-          	}
-			  
-			  
-			} catch (Exception e) {
-				
-				 Log.d(getClass().getSimpleName(), "Не нашли links или другой эксепшн");
-				//e.printStackTrace();
-			}
-	
-         
-		 Log.d(getClass().getSimpleName(),list.toString());
-		// TODO Auto-generated method stub
-		adapter.notifyDataSetChanged();
-		}
-		
-		if (result.Command.equals("link_add")&& !(result.Jo==null)) 
-		{
-			
-				
-					Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
-					 reflinks();	
-					
-			
-				}
-			 
-		if (result.Command.equals("link_delete")&& !(result.Jo==null)) 
-		{
-			
-				
-					Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
-					 reflinks();	
-					
-			
-				}
-			
-			
-		
-			 
-			 
-			 
-			}
+	}
 		
 		
 	}

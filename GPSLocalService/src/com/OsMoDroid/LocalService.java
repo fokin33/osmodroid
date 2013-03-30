@@ -1040,29 +1040,9 @@ public void startcomand()
 
 	} catch (NameNotFoundException e) {
 
-		//e.printStackTrace();
+		e.printStackTrace();
 
 	}
-
-//	if (!settings.getString("key", "").equals("")&&!settings.getString("device", "").equals("")){
-//
-//		String[] a={"device","c","v"};
-//
-//		String[] b={settings.getString("device", ""),"OsMoDroid",version.replace(".", "")};
-//
-//		String[] params = {netutil.buildcommand(this,"start",a,b),"false","","start"};
-//
-//		starttask=	new netutil.MyAsyncTask(this);
-//
-//		starttask.execute(params) ;
-//
-//		Log.d(getClass().getSimpleName(), "startcommand");
-//
-//	}
-
-	//else {
-
-		
 
 		String[] params = {"http://a.t.esya.ru/?act=start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&c=OsMoDroid&v="+version.replace(".", "")+"&key="+settings.getString("key", ""),"false","","start"};
 
@@ -1071,20 +1051,6 @@ public void startcomand()
 		starttask.execute(params) ;
 
 		Log.d(getClass().getSimpleName(), "startcommand");
-
-		
-
-	//}
-
-	//a.t.esya.ru/?act=session_start&hash=*&n=*&ttl=900
-
-	//String[] a={"hasn","n","ttl"};
-
-	//String[] b={settings.getString("hash", ""),settings.getString("n", ""),"900",};
-
-
-
-
 
 }
 

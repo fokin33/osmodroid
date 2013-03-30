@@ -243,36 +243,7 @@ protected void onCancelled() {
 			new MyAsyncTask(listener).execute(params);	
 	}
 	
-	public static String buildcommand (Context context, String action, String[] params, String[] values ){
-		SharedPreferences settings  = PreferenceManager.getDefaultSharedPreferences(context);
-		
-		//		"http://api.esya.ru/?system=om&action=device"
-//				+ "&key="
-//				+ key
-//				+ "&signature="
-//				+ SHA1(
-//						"system:om;action:device;key:"
-//								+ key
-//								+ ";"
-//								+ "--"
-//								+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6")
-//						.substring(1, 25), "false", "",
-//		"device" };
-String tempstr = ""; 
-		 String apicommand = "http://api.esya.ru/?system=om&action="+action+"&key="
-					+ settings.getString("key", "");
-					//+ "&signature=";
-		 for (int i = 0; i < params.length; i++) {
-			 	 apicommand = apicommand + "&"+ params[i] + "=" + values[i];
-			 	}
-		 for (int i = 0; i < params.length; i++) {
-		 	 tempstr = tempstr +  params[i] + ":" + values[i]+";";
-		 	}
-		 
-		 apicommand = apicommand +  "&signature="+SHA1("system:om;action:"+action+";key:"+settings.getString("key", "")+";"+tempstr + "--"
-			+ "JGu473g9DFj3y_gsh463j48hdsgl34lqzkvnr420gdsg-32hafUehcDaw3516Ha-aghaerUhhvF42123na38Agqmznv_46bd-67ogpwuNaEv6").substring(1, 25);
-			//Log.v(getClass().getSimpleName(),apicommand);
-		 return apicommand;}
+	
 	
 	
 
