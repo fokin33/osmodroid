@@ -143,7 +143,7 @@ public class SimLinks extends Activity implements ResultsListener{
 						clipboard.setText(adapter.getItem(acmi.position));
 				 
 		      return true;
-		    }		  if (item.getItemId() == 5) {			  AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();				 Intent browseIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(LocalService.deviceList.get((int) acmi.id).url));				 startActivity(browseIntent);			             			  						  return true;					  }
+		    }		  if (item.getItemId() == 5) {			  AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();				 Intent browseIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(adapter.getItem(acmi.position)));				 startActivity(browseIntent);			             			  						  return true;					  }
 		  
 	    return super.onContextItemSelected(item);
 	  }
