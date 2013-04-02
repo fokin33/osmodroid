@@ -218,13 +218,14 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 
 	@Override
 	public boolean onUnbind(Intent intent) {
+		binded=false;
 		disconnectChannels();
 		return super.onUnbind(intent);
 	}
 
 
 
-
+boolean binded=false;
 
 
 
@@ -984,7 +985,7 @@ if (!settings.getBoolean("silentnotify", false)){
 	@Override
 
 	 public IBinder onBind(Intent intent) {
-
+binded=true;
 
 		connectChannels();
 		Log.d(getClass().getSimpleName(), "onbind() "+intent.getAction());
@@ -4174,6 +4175,9 @@ deviceList.add(new Device("0","Мой компьютер","1", settings.getStrin
 			 Log.d(getClass().getSimpleName(),channelList.toString());
 			 
 			 if (channelsAdapter!=null) {channelsAdapter.notifyDataSetChanged();}
+			 if (binded){
+				 connectChannels();
+			 }
 			
 		}
 		
