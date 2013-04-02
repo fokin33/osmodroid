@@ -18,7 +18,7 @@ public class Channel {
 	public String url;
 	public List<Device> deviceList= new ArrayList<Device>();
 	public List<String> messagesstringList= new ArrayList<String>();
-	
+	public Boolean connected;
 	public Channel(){
 		
 	}
@@ -80,7 +80,7 @@ public class Channel {
 
 	 		 }
 		
-		connect();
+		//connect();
 				}
 	
 	public void connect(){
@@ -93,6 +93,7 @@ public class Channel {
 		if (LocalService.myIM!=null){
 			LocalService.myIM.addchannels(longPollchannels);	
 	}
+		connected=true;
 		
 	}
 
@@ -105,6 +106,7 @@ public class Channel {
 			
 			if (LocalService.myIM!=null){
 				LocalService.myIM.removechannels(longPollchannels);	}	
+			connected=false;
 	}
 	
 	@Override

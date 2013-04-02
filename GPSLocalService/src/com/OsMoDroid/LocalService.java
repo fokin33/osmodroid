@@ -216,6 +216,19 @@ import android.util.Log;
 
 public  class LocalService extends Service implements LocationListener,GpsStatus.Listener, TextToSpeech.OnInitListener,  ResultsListener {
 
+	@Override
+	public boolean onUnbind(Intent intent) {
+		disconnectChannels();
+		return super.onUnbind(intent);
+	}
+
+
+
+
+
+
+
+
 	private static final int OSMODROID_ID = 1;
 
 	Boolean sessionstarted=false;
@@ -973,7 +986,7 @@ if (!settings.getBoolean("silentnotify", false)){
 	 public IBinder onBind(Intent intent) {
 
 
-
+		connectChannels();
 		Log.d(getClass().getSimpleName(), "onbind() "+intent.getAction());
 
 		Log.d(getClass().getSimpleName(), "onbind() localservice");
@@ -3952,8 +3965,20 @@ public boolean isOnline() {
 	}
 
 
-
-
+void connectChannels(){
+	for (Channel ch : LocalService.channelList){
+		if (!ch.connected){
+		ch.connect();}
+	}
+	
+	
+}
+void disconnectChannels(){
+	for (Channel ch : LocalService.channelList){
+		if (ch.connected){ch.disconnect();}
+	}
+	
+}
 
 
 
