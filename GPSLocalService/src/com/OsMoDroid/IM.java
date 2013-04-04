@@ -49,11 +49,17 @@ public class IM {	protected  boolean running       = false;	protected boolea
 	
 public void removechannels(ArrayList<String[]> longPollChList){
 		
-		myLongPollChList.removeAll(longPollChList);
-		getadres(myLongPollChList);
-		disconnect();
+	for (String[] str : myLongPollChList){
+		for (String[] strtodel: longPollChList){
+		if (str[0].equals(strtodel[0])){
+			myLongPollChList.remove(str);	
+		}
+		}
 		
 		
+	}
+	getadres(myLongPollChList);
+	disconnect();
 	}
 	String getMessageType(String ids){
 	for (String[] str: myLongPollChList){

@@ -18,7 +18,7 @@ public class Channel {
 	public String url;
 	public List<Device> deviceList= new ArrayList<Device>();
 	public List<String> messagesstringList= new ArrayList<String>();
-	public Boolean connected;
+	public Boolean connected=false;
 	public Channel(){
 		
 	}
@@ -83,6 +83,19 @@ public class Channel {
 		//connect();
 				}
 	
+	@Override
+	public boolean equals(Object o) {
+		
+		 if((o instanceof Channel) && this.u == ((Channel)o).u )  
+	        {    
+	            return true;    
+	        }  
+	        else  
+	        {  
+	            return false;  
+	        }  
+	}
+
 	public void connect(){
 		Log.d(getClass().getSimpleName(),"Channel connecting");	
 	//	chanIM= new IM("om_"+this.ch+",om_"+this.ch+"_chat", LocalService.serContext, 2);

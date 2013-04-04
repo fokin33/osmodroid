@@ -3967,6 +3967,7 @@ public boolean isOnline() {
 
 
 void connectChannels(){
+	Log.d(getClass().getSimpleName(),"void connecChannels");
 	for (Channel ch : LocalService.channelList){
 		if (!ch.connected){
 		ch.connect();}
@@ -3975,6 +3976,7 @@ void connectChannels(){
 	
 }
 void disconnectChannels(){
+	Log.d(getClass().getSimpleName(),"void disconnectChannels");
 	for (Channel ch : LocalService.channelList){
 		if (ch.connected){ch.disconnect();}
 	}
