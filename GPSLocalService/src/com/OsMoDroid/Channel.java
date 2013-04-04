@@ -18,7 +18,7 @@ public class Channel {
 	public String url;
 	public List<Device> deviceList= new ArrayList<Device>();
 	public List<String> messagesstringList= new ArrayList<String>();
-	public Boolean connected;
+	public Boolean connected=false;
 	public Channel(){
 		
 	}

@@ -49,7 +49,21 @@ public class IM {	protected  boolean running       = false;	protected boolea
 	
 public void removechannels(ArrayList<String[]> longPollChList){
 		
-		myLongPollChList.removeAll(longPollChList);
+		//myLongPollChList.removeAll(longPollChList);
+	for (String[] extstr: longPollChList){
+		
+		 for (Iterator<String[]> iter = myLongPollChList.iterator(); iter.hasNext();) {
+		      String[] s = iter.next();
+		      if (s.equals(extstr)) {
+		        iter.remove();
+		      }
+		     
+		    }
+		
+		
+	}
+	
+	
 		getadres(myLongPollChList);
 		disconnect();
 		
