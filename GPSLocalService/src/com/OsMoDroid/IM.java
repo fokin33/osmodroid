@@ -141,7 +141,7 @@ public void removechannels(ArrayList<String[]> longPollChList){
 
 if (getMessageType( keyname).equals("o")){
 	Log.d(this.getClass().getName(), "type=o");
-	String status;
+	String status = "";
 	String messageText = "";
     String[] data = jsonObject.optString("data").split("-");
     Log.d(this.getClass().getName(), "data[0]="+data[0]+" data[1]="+data[1]+" data[2]="+data[2]);
@@ -160,7 +160,8 @@ if (getMessageType( keyname).equals("o")){
                 
             }
             if (data[0].equals("online")&&device.u!=(Integer.parseInt(LocalService.settings.getString("device", ""))) ){
-                if (data[2].equals("1")) { status="вошло в сеть";  device.online = "1";} else { status="покинуло сеть"; device.online = "0"; }
+                if (data[2].equals("1")&&device.online.equals("0")) { status="вошло в сеть";  device.online = "1";}
+                if (data[2].equals("0")&&device.online.equals("1")) { status="покинуло сеть"; device.online = "0"; }
                
                 messageText = messageText+" Устройство \""+device.name+"\" "+status;
                 Log.d(this.getClass().getName(), "DeviceOnline="+messageText);
@@ -235,9 +236,13 @@ if (getMessageType( keyname).equals("ch")){
 						Log.d(this.getClass().getName(), "Изменилось состояние в канале " + jsonObject.optString("data"));
 
 						// 02-24 10:03:31.127: D/IM(562): "data":
-						// "0|1436|38|15|0|0|0|271"
+						//  "data": "0|1436|55.307453|39.232767|0"
+
+
+
+
 						String[] data = jsonObject.optString("data").split("\\|");
-						Log.d(this.getClass().getName(), "data[0]=" + data[0] + " data[1]=" + data[1] + " data[2]=" + data[2]);
+						Log.d(this.getClass().getName(), "data[0]=" + data[0] + " data[1]=" + data[1] + " data[2]=" + data[2]+" data[3]="+data[3]+" data[4]="+data[4]);
 						for (Channel channel : LocalService.channelList) {
 							Log.d(this.getClass().getName(), "chanal nest" + channel.name);
 							for (Device device : channel.deviceList) {
@@ -246,14 +251,16 @@ if (getMessageType( keyname).equals("ch")){
 									Log.d(this.getClass().getName(), "Изменилось состояние устройства в канале с " + device.toString());
 									device.lat = Float.parseFloat(data[2]);
 									device.lon = Float.parseFloat(data[3]);
+									device.speed= data[4];
 									Log.d(this.getClass().getName(), "Изменилось состояние устройства в канале на" + device.toString());
+									
 
 								}
 
 							}
 
 						}
-
+						localService.informRemoteClient();
 						localService.alertHandler.post(new Runnable() {
 
 							public void run() {

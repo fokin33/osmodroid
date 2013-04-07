@@ -17,6 +17,7 @@ public class ChannelsDevicesAdapter extends ArrayAdapter<Device> {
 
 	private TextView channelDeviceName;
 	private TextView channelDeviceWhere;
+	private TextView channelDeviceSpeed;
 	private TextView channelDeviceDistance;
 	private Location channelDeviceLocation =new Location("");
 	public ChannelsDevicesAdapter(Context context, int textViewResourceId, List<Device> objects) {
@@ -36,8 +37,10 @@ public class ChannelsDevicesAdapter extends ArrayAdapter<Device> {
 		        Log.d(getClass().getSimpleName(), "channeldevice:"+device.name+" "+device.lat+" "+device.lon);
 		        channelDeviceName = (TextView) row.findViewById(R.id.txtName);
 		        channelDeviceWhere = (TextView) row.findViewById(R.id.txtWhere);
+		        channelDeviceSpeed = (TextView) row.findViewById(R.id.txtSpeed);
 		        channelDeviceDistance = (TextView) row.findViewById(R.id.TextDistance);
 		        if (device.name!=null){   channelDeviceName.setText(device.name);}
+		        if (device.speed!=null){   channelDeviceSpeed.setText(device.speed);}
 		        //if (device.lat!=null&device.lon!=null){
 		        	channelDeviceWhere.setText("Координаты:"+device.lat+" "+device.lon);
 		        	//}

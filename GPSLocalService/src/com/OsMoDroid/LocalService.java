@@ -10,6 +10,7 @@ import android.net.wifi.WifiManager;
 
 import android.os.Handler;
 import android.os.Message;
+import android.os.RemoteCallbackList;
 import android.os.Vibrator;
 
 import java.io.BufferedReader;
@@ -660,6 +661,9 @@ if (!settings.getBoolean("silentnotify", false)){
 
 			};
 
+			final RemoteCallbackList<IRemoteOsMoDroidListener> remoteListenerCallBackList
+            = new RemoteCallbackList<IRemoteOsMoDroidListener>();
+			
 
 	    private final IRemoteOsMoDroidService.Stub rBinder = new IRemoteOsMoDroidService.Stub() {
 
@@ -677,7 +681,7 @@ if (!settings.getBoolean("silentnotify", false)){
 
 				//Toast.makeText(LocalService.this, "vvv" , Toast.LENGTH_SHORT).show();
 
-				return 3;
+				return 4;
 
 			}
 
@@ -940,6 +944,52 @@ if (!settings.getBoolean("silentnotify", false)){
 
 
 
+			public void registerListener(IRemoteOsMoDroidListener listener)
+					throws RemoteException {
+				if (listener!=null){
+					remoteListenerCallBackList.register(listener);
+				}
+				
+			}
+
+
+
+			public void unregisterListener(IRemoteOsMoDroidListener listener)
+					throws RemoteException {
+				if (listener!=null){
+					remoteListenerCallBackList.unregister(listener);
+				}
+				
+			}
+
+
+
+			public String getObjectSpeed(int layerId, int objectId)
+			 {
+				//	Log.d(getClass().getSimpleName(), "getObjectLat()");
+					try {
+						for (Channel channel: channelList){
+							if (channel.u==layerId){
+								for (Device device:channel.deviceList){
+									if (device.u==objectId){
+										return device.speed;			
+									}
+								}
+								
+								
+						}
+						}
+						
+						
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return null;
+			}
+
+
+
     };
 
 
@@ -1009,7 +1059,19 @@ binded=true;
     }
 
 
-
+public synchronized void informRemoteClient(){
+	final int N = remoteListenerCallBackList.beginBroadcast();
+    for (int i=0; i<N; i++) {
+        try {
+        	remoteListenerCallBackList.getBroadcastItem(i).channelUpdated();
+        } catch (RemoteException e) {
+            // The RemoteCallbackList will take care of removing
+            // the dead object for us.
+        }
+    }
+    remoteListenerCallBackList.finishBroadcast();
+    Log.d(getClass().getSimpleName(), "inform client");
+}
 
 
 
@@ -1963,6 +2025,7 @@ if (soundPool!=null) {soundPool.release();}
 
 
 		// Debug.stopMethodTracing();
+		remoteListenerCallBackList.kill();
 
 	}
 
@@ -4180,6 +4243,7 @@ deviceList.add(new Device("0","Мой компьютер","1", settings.getStrin
 			 if (binded){
 				 connectChannels();
 			 }
+			 
 			
 		}
 		

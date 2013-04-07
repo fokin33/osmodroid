@@ -3,6 +3,7 @@ package com.RemoteOsMoDroidClient;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.OsMoDroid.IRemoteOsMoDroidListener;
 import com.OsMoDroid.IRemoteOsMoDroidService;
 
 import android.app.Activity;
@@ -11,8 +12,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.os.RemoteException;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -21,6 +25,7 @@ import android.widget.TextView;
 public class RemoteOsMoDroidClientActivity extends Activity {
 	TextView t;
 	TextView infotextView;
+	TextView testtextView;
 	Button b1;
 	Button b2;
 	 TimerTask task = new TimerTask(){
@@ -62,6 +67,7 @@ public class RemoteOsMoDroidClientActivity extends Activity {
 			 try {
 				
 				 t.setText(Integer.toString(mIRemoteService.getVersion()));
+				 mIRemoteService.registerListener(inter);
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -69,7 +75,7 @@ public class RemoteOsMoDroidClientActivity extends Activity {
 		}
 
 		public void onServiceDisconnected(ComponentName name) {
-			// TODO Auto-generated method stub
+			connected=false;
 			
 		}
 
@@ -86,6 +92,7 @@ public class RemoteOsMoDroidClientActivity extends Activity {
         Intent serviceIntent = (new Intent("OsMoDroid.remote"));
 t = (TextView) findViewById(R.id.t1);
 infotextView = (TextView) findViewById(R.id.infotextView);
+testtextView = (TextView) findViewById(R.id.testtextView);
 b1 = (Button) findViewById(R.id.button1);
 b2 = (Button) findViewById(R.id.Button2);
 b3 = (Button) findViewById(R.id.Button3);
@@ -170,8 +177,9 @@ getinfobutton.setOnClickListener(new OnClickListener() {
     
     @Override
     protected void onDestroy() {
-    	if (!(mConnection==null)){
+    	if (!(connected==false)){
     		try {
+    			mIRemoteService.unregisterListener(inter);
 				unbindService(mConnection);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -181,6 +189,24 @@ getinfobutton.setOnClickListener(new OnClickListener() {
     	super.onDestroy();
 	}
 
+   
     
+    IRemoteOsMoDroidListener.Stub inter = new IRemoteOsMoDroidListener.Stub() {
+		
+		
+
+		public void channelUpdated() throws RemoteException {
+			runOnUiThread(new Runnable() {
+				
+				public void run() {
+				testtextView.setText(Long.toString(System.currentTimeMillis()));
+				Log.d("com.remoteOsMoDorid", "upd");
+				}
+			});
+			
+		}
+		
+		
+	};
     
 }

@@ -14,6 +14,7 @@ public class Device {
 	public String online;
 	public String state;
 	public String uid;
+	public String speed="";
 	
 	public Device(){
 		
@@ -62,7 +63,7 @@ public class Device {
 		
 		
 		return "Device:u="+u+",name="+name+",app="+app+",last="+last+",url="+url+",where="+where+",lat="+lat+",lon="+lon
-				+",online="+online+",state="+state+",uid="+uid;
+				+",online="+online+",state="+state+",uid="+uid + ",speed="+speed;
 	}
 
 	

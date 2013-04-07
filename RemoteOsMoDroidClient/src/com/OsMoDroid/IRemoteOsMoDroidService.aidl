@@ -1,6 +1,12 @@
 package com.OsMoDroid;
 
+import com.OsMoDroid.IRemoteOsMoDroidListener;
+
 interface IRemoteOsMoDroidService {
+
+void registerListener(IRemoteOsMoDroidListener listener);
+
+void unregisterListener(IRemoteOsMoDroidListener listener);
 
     int getVersion();
 
