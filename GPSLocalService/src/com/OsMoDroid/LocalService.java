@@ -382,8 +382,6 @@ private long lastgpslocationtime=0;
 
 	BroadcastReceiver onlinePauseforStartReciever;
 
-	BroadcastReceiver remoteControlReciever;
-
 	BroadcastReceiver batteryReciever;
 
 	private final IBinder mBinder = new LocalBinder();
@@ -1479,90 +1477,7 @@ public void stopcomand()
 
 
 
-		remoteControlReciever = new BroadcastReceiver() {
-
-
-
-			@Override
-
-			public void onReceive(Context context, Intent intent) {
-
-				Log.d(getClass().getSimpleName(), "remoteControlReciever intent "+intent);
-
-				if (intent.getStringExtra("command").equals("start")){
-                                    if (!state){
-                                        startServiceWork();
-                                        try {
-                                            Pong(context);
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-				}
-
-				if (intent.getStringExtra("command").equals("stop")){
-                                    if (state){
-                                        stopServiceWork(true);
-                                        try {
-                                            Pong(context);
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-				}
-
-				if (intent.getStringExtra("command").equals("ping")){
-                                    try {
-                                        Pong(context);
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-				}
-
-				if (intent.getStringExtra("command").equals("batteryinfo")){
-                                    try {
-                                        batteryinfo(context);
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-				}
-
-				if (intent.getStringExtra("command").equals("closeclient")){
-                                    //try {
-                                        //Intent i = new Intent(this, LocalService.class);
-                                        //stopService(intent);
-                                        //finish();
-                                    //} catch (JSONException e) {
-                                    //    e.printStackTrace();
-                                    //}
-                                    Toast.makeText(LocalService.this, "Попытка закрыть клиент удалённо" , Toast.LENGTH_SHORT).show();
-				}
-				
-				if (intent.getStringExtra("command").equals("getpreferences")){
-                    try {
-                    	getpreferences(context);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-				}
-				if (intent.getStringExtra("command").equals("wifion")){
-                  
-                        wifion(context);
-                  
-				}
-				if (intent.getStringExtra("command").equals("wifioff")){
-                   
-                        wifioff(context);
-                    
-				}
-
-
-
-			}
-
-		};
-
-		registerReceiver( remoteControlReciever, new IntentFilter( "OsMoDroid_Control"));
+		
 
 
 
@@ -1940,21 +1855,11 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
 
 		}
 
-		try {
-
-			if(remoteControlReciever!= null){unregisterReceiver(remoteControlReciever);}
-
-		} catch (Exception e) {
-
-			Log.d(getClass().getSimpleName(), "А он и не зареген");
-
-
-
-		}
+		
 
 		try {
 
-			if(remoteControlReciever!= null){unregisterReceiver(batteryReciever);}
+			if(batteryReciever!= null){unregisterReceiver(batteryReciever);}
 
 		} catch (Exception e) {
 
@@ -1974,35 +1879,6 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
 
 if (soundPool!=null) {soundPool.release();}
 
-//		if (gpson!=null) gpson.stop();
-//
-//		if (gpsoff!=null) gpsoff.stop();
-//
-//		if (ineton!=null) ineton.stop();
-//
-//		if (inetoff!=null) inetoff.stop();
-//
-//		if (sendpalyer!=null) sendpalyer.stop();
-//
-//		if (gpson!=null) gpson.reset();
-//
-//		if (gpsoff!=null) gpsoff.reset();
-//
-//		if (ineton!=null) ineton.reset();
-//
-//		if (inetoff!=null) inetoff.reset();
-//
-//		if (sendpalyer!=null) sendpalyer.reset();
-//
-//		if (gpson!=null) gpson.release();
-//
-//		if (gpsoff!=null) gpsoff.release();
-//
-//		if (ineton!=null) ineton.release();
-//
-//		if (inetoff!=null) inetoff.release();
-//
-//		if (sendpalyer!=null) sendpalyer.release();
 
 		if (!(wakeLock==null) &&wakeLock.isHeld())wakeLock.release();
 
@@ -2011,20 +1887,9 @@ if (soundPool!=null) {soundPool.release();}
 		if (!(SendwakeLock==null)&&SendwakeLock.isHeld())SendwakeLock.release();
 
 
-
-		//String ns = Context.NOTIFICATION_SERVICE;
-
-		//NotificationManager mNotificationManager = (NotificationManager) getSystemService(ns);
-
-
-
 		mNotificationManager.cancelAll();
 
 
-
-
-
-		// Debug.stopMethodTracing();
 		remoteListenerCallBackList.kill();
 
 	}

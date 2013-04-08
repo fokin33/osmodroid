@@ -1,6 +1,9 @@
 
 package com.OsMoDroid;import java.io.BufferedReader;import java.io.IOException;import java.io.InputStream;import java.io.InputStreamReader;import java.io.PrintWriter;import java.net.HttpURLConnection;import java.net.InetSocketAddress;import java.net.Proxy;import java.net.URL;import java.net.UnknownHostException;import java.text.SimpleDateFormat;import java.util.ArrayList;import java.util.Collections;
-import java.util.Date;import java.util.Iterator;import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import com.OsMoDroid.LocalService.SendCoor;import android.app.Notification;import android.app.PendingIntent;import android.app.PendingIntent.CanceledException;import android.content.BroadcastReceiver;import android.content.Context;import android.content.Intent;import android.content.IntentFilter;import android.net.NetworkInfo;import android.os.Bundle;import android.os.Handler;import android.os.Message;import android.support.v4.app.NotificationCompat;import android.util.Log;import android.widget.Toast;/**
+import java.util.Map;
+import java.util.Date;import java.util.Iterator;import java.util.Map.Entry;
+import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import com.OsMoDroid.LocalService.SendCoor;import android.app.Notification;import android.app.PendingIntent;import android.app.PendingIntent.CanceledException;import android.content.BroadcastReceiver;import android.content.SharedPreferences;
+import android.content.Context;import android.content.Intent;import android.content.IntentFilter;import android.net.NetworkInfo;import android.os.Bundle;import android.os.Handler;import android.os.Message;import android.support.v4.app.NotificationCompat;import android.util.Log;import android.widget.Toast;/**
  * @author dfokin
  *Class for work with LongPolling
  */
@@ -205,6 +208,8 @@ if (getMessageType( keyname).equals("o")){
 	
 }
 
+
+
 if (getMessageType( keyname).equals("m")){
 	
 	Log.d(this.getClass().getName(), "type=m");
@@ -220,13 +225,100 @@ if (getMessageType( keyname).equals("m")){
 
 if (getMessageType( keyname).equals("r")){
 	Log.d(this.getClass().getName(), "type=r");
-	Intent intent = new Intent("OsMoDroid_Control");
+	if (jsonObject.optString("data").equals("start")){
+        if (!localService.state){
+        	localService.startServiceWork();
+            try {
+                localService.Pong(localService);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+}
 
-	intent.putExtra("command", jsonObject.optString("data"));
+if (jsonObject.optString("data").equals("stop")){
+        if (localService.state){
+            localService.stopServiceWork(true);
+            try {
+                localService.Pong(localService);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+}
 
-	Log.d(this.getClass().getName(), "Сигнал для сервиса "+ jsonObject.getString("data"));
+if (jsonObject.optString("data").equals("ping")){
+        try {
+            localService.Pong(localService);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+}
 
-	parent.sendBroadcast(intent);
+if (jsonObject.optString("data").equals("batteryinfo")){
+        try {
+            localService.batteryinfo(localService);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+}
+
+if (jsonObject.optString("data").equals("closeclient")){
+              Toast.makeText(localService, "Попытка закрыть клиент удалённо" , Toast.LENGTH_SHORT).show();
+}
+
+if (jsonObject.optString("data").equals("getpreferences")){
+	try {
+		localService.getpreferences(localService);
+		} catch (JSONException e) {
+			e.printStackTrace();
+			}
+		}
+if (jsonObject.optString("data").equals("wifion")){
+
+localService.wifion(localService);
+
+}
+if (jsonObject.optString("data").equals("wifioff")){
+
+localService.wifioff(localService);
+
+}
+Object item = jsonObject.get("data");
+Log.d(this.getClass().getName(), "item="+item+" "+item.getClass()+ " JSONObject is " + (item instanceof JSONObject) );
+
+if (item instanceof JSONObject){
+
+Log.d(this.getClass().getName(), "set preference");
+JSONObject jo = (JSONObject)item;
+Iterator<String> locIt = jo.keys();
+SharedPreferences.Editor editor = LocalService.settings.edit();
+Map<String, ?> entries = LocalService.settings.getAll();
+while (locIt.hasNext()){
+	String lockeyname= (String) locIt.next();
+	 for (Entry<String, ?> entry : entries.entrySet()) {
+         Object v = entry.getValue();
+         String key = entry.getKey();
+if (key.equals(lockeyname)){
+         if (v instanceof Boolean)
+        	 editor.putBoolean(key,jo.optString(lockeyname).equalsIgnoreCase("1")   );
+         else if (v instanceof Float)
+        	 editor.putFloat(key, Float.parseFloat(jo.optString(lockeyname)));
+         else if (v instanceof Integer)
+        	 editor.putInt(key, Integer.parseInt(jo.optString(lockeyname)));
+         else if (v instanceof Long)
+        	 editor.putLong(key, Long.parseLong(jo.optString(lockeyname)));
+         else if (v instanceof String)
+        	 editor.putString(key, jo.optString(lockeyname));
+     }
+	 }
+	
+	
+}
+editor.commit();
+localService.applyPreference();
+}	
+
 	
 	
 }
