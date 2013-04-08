@@ -317,6 +317,7 @@ if (key.equals(lockeyname)){
 }
 editor.commit();
 localService.applyPreference();
+localService.Pong(localService);
 }	
 
 	
