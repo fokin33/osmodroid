@@ -565,7 +565,7 @@ private long lastgpslocationtime=0;
 			}
 
 
-			if (text != null) {
+			if (text != null && !text.equals("")) {
 
 
 

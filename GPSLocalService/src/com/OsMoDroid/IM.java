@@ -156,13 +156,13 @@ if (getMessageType( keyname).equals("o")){
         if (data[1].equals(Integer.toString(device.u))&&device.u!=(Integer.parseInt(LocalService.settings.getString("device", ""))) ){
         	//LocalService.deviceList.remove(device);
         	int idx=LocalService.deviceList.indexOf(device);
-            if (data[0].equals("state")) {
+            if (LocalService.settings.getBoolean("statenotify", true)&&data[0].equals("state")) {
                 if (data[2].equals("1")) { status="запущен";device.state = "1"; } else { status="остановлен";device.state = "0"; }
                 messageText = messageText+" Мониторинг на устройстве \""+device.name+"\" "+status;
                 Log.d(this.getClass().getName(), "DeviceState="+messageText);
                 
             }
-            if (data[0].equals("online")&&device.u!=(Integer.parseInt(LocalService.settings.getString("device", ""))) ){
+            if (LocalService.settings.getBoolean("onlinenotify", false)&&data[0].equals("online")&&device.u!=(Integer.parseInt(LocalService.settings.getString("device", ""))) ){
                 if (data[2].equals("1")&&device.online.equals("0")) { status="вошло в сеть";  device.online = "1";}
                 if (data[2].equals("0")&&device.online.equals("1")) { status="покинуло сеть"; device.online = "0"; }
                

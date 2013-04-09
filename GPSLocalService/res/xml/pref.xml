@@ -149,7 +149,7 @@
 				android:summary="Используется text-to-speech"
 				android:title="Проговаривать скорость"
 				android:defaultValue="false" />
-			<CheckBoxPreference android:key="silentnotify" android:title="Беззвучное оповещение" android:defaultValue="false"/>
+			<CheckBoxPreference android:key="silentnotify" android:title="Беззвучное оповещение" android:defaultValue="false"/><CheckBoxPreference android:key="onlinenotify" android:title="Оповещать об онлайн" android:defaultValue="false" android:summary="Оповещение о смене статуса онлайн ваших устройств"/><CheckBoxPreference android:key="statenotify" android:title="Оповещать о мониторинге" android:defaultValue="true" android:summary="Оповещение о смене статуса мониторинга ваших устройств"/>
 		</PreferenceScreen>
 
     <CheckBoxPreference
