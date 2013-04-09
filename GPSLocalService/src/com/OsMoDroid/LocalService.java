@@ -1045,6 +1045,7 @@ binded=true;
 		if (intent.getAction().equals("OsMoDroid.remote")){
 
 			Log.d(getClass().getSimpleName(), "binded remote");
+			netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
 
 		return rBinder;}
 
@@ -1057,7 +1058,7 @@ binded=true;
     }
 
 
-public synchronized void informRemoteClient(){
+public synchronized void informRemoteClientChannelUpdate(){
 	final int N = remoteListenerCallBackList.beginBroadcast();
     for (int i=0; i<N; i++) {
         try {
@@ -1070,6 +1071,21 @@ public synchronized void informRemoteClient(){
     remoteListenerCallBackList.finishBroadcast();
     Log.d(getClass().getSimpleName(), "inform client");
 }
+
+public synchronized void informRemoteClientChannelsListUpdate(){
+	final int N = remoteListenerCallBackList.beginBroadcast();
+    for (int i=0; i<N; i++) {
+        try {
+        	remoteListenerCallBackList.getBroadcastItem(i).channelsListUpdated();
+        } catch (RemoteException e) {
+            // The RemoteCallbackList will take care of removing
+            // the dead object for us.
+        }
+    }
+    remoteListenerCallBackList.finishBroadcast();
+    Log.d(getClass().getSimpleName(), "inform client");
+}
+
 
 
 
@@ -4107,6 +4123,7 @@ deviceList.add(new Device("0","Мой компьютер","1", settings.getStrin
 			 if (channelsAdapter!=null) {channelsAdapter.notifyDataSetChanged();}
 			 if (binded){
 				 connectChannels();
+				 informRemoteClientChannelsListUpdate();
 			 }
 			 
 			

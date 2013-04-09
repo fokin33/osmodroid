@@ -353,7 +353,7 @@ if (getMessageType( keyname).equals("ch")){
 							}
 
 						}
-						localService.informRemoteClient();
+						localService.informRemoteClientChannelUpdate();
 						localService.alertHandler.post(new Runnable() {
 
 							public void run() {
