@@ -1112,7 +1112,9 @@ if (!(akey==null))
 {key=akey;
 SharedPreferences.Editor editor = settings.edit();
 editor.putString("key", key);
-editor.commit();}
+editor.commit();
+netutil.newapicommand((Context) GPSLocalServiceClient.this, "om_device_bind:"+settings.getString("hash", "")+","+settings.getString("n", ""));
+}
 if (!(aviewurl==null)){viewurl=aviewurl;}
 
 				TextView t2 = (TextView) findViewById(R.id.URL);
@@ -1247,7 +1249,10 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 
 		if (result.Jo==null&&result.ja==null ){Toast.makeText(this,"Не удалось получить ответ от сервера",5).show();}
 
+		if (!(result.Jo==null)  ) {
 
+			Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
+		}		
 
 
 		if (result.Command.equals("device_link")&& !(result.Jo==null)) {
