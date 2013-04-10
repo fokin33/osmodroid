@@ -171,7 +171,7 @@
 		android:key="im"
                 android:summary="Подписка на мгновенное получение"
 		android:title="Обмен сообщениями"
-		android:defaultValue="false" />
+		android:defaultValue="true" />
     <CheckBoxPreference
 		android:key="autostart"
                 android:summary="Запускать фоновый сервис при включении телефона"
