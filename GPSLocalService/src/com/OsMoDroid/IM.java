@@ -188,7 +188,7 @@ if (getMessageType( keyname).equals("o")){
 		            	LocalService.deviceAdapter.notifyDataSetChanged();}
 				});
             	
-            	
+            	if (!messageText.equals("")){
             	Message msg = new Message();
 
     			Bundle b = new Bundle();
@@ -200,7 +200,7 @@ if (getMessageType( keyname).equals("o")){
 
     			localService.alertHandler.sendMessage(msg);
     			Log.d(this.getClass().getName(), "Sended message:"+messageText);
-            	
+            	}
             	//lv1.setAdapter(LocalService.deviceAdapter);
             	} else { Log.d(this.getClass().getName(), "deviceadapter is null");}
         }
