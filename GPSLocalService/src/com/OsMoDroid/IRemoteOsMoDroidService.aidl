@@ -39,6 +39,8 @@ String getObjectSpeed(int layerId, int objectId);
 String getObjectName(int layerId, int objectId);
 
 String getObjectDescription(int layerId, int objectId);
+
+String getObjectColor(int layerId, int objectId);
 	
 
 }

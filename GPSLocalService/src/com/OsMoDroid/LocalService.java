@@ -679,7 +679,7 @@ if (!settings.getBoolean("silentnotify", false)){
 
 				//Toast.makeText(LocalService.this, "vvv" , Toast.LENGTH_SHORT).show();
 
-				return 4;
+				return 5;
 
 			}
 
@@ -984,6 +984,31 @@ if (!settings.getBoolean("silentnotify", false)){
 						e.printStackTrace();
 					}
 					return null;
+			}
+
+
+
+			public String getObjectColor(int layerId, int objectId)
+					throws RemoteException {
+				try {
+					for (Channel channel: channelList){
+						if (channel.u==layerId){
+							for (Device device:channel.deviceList){
+								if (device.u==objectId){
+									return device.color;			
+								}
+							}
+							
+							
+					}
+					}
+					
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return null;
 			}
 
 
