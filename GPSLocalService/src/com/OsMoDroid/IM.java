@@ -227,23 +227,31 @@ if (getMessageType( keyname).equals("r")){
 	Log.d(this.getClass().getName(), "type=r");
 	if (jsonObject.optString("data").equals("start")){
         if (!localService.state){
+        	localService.alertHandler.post(new Runnable() {
+
+				public void run() {
+
         	localService.startServiceWork();
             try {
                 localService.Pong(localService);
             } catch (JSONException e) {
                 e.printStackTrace();
-            }
+            }}});
         }
 }
 
 if (jsonObject.optString("data").equals("stop")){
         if (localService.state){
+        	localService.alertHandler.post(new Runnable() {
+
+				public void run() {
+
             localService.stopServiceWork(true);
             try {
                 localService.Pong(localService);
             } catch (JSONException e) {
                 e.printStackTrace();
-            }
+            }}});
         }
 }
 
@@ -264,7 +272,17 @@ if (jsonObject.optString("data").equals("batteryinfo")){
 }
 
 if (jsonObject.optString("data").equals("closeclient")){
-              Toast.makeText(localService, "Попытка закрыть клиент удалённо" , Toast.LENGTH_SHORT).show();
+	localService.alertHandler.post(new Runnable() {
+
+		public void run() {
+
+			 Toast.makeText(localService, "Попытка закрыть клиент удалённо" , Toast.LENGTH_SHORT).show();
+    try {
+        localService.Pong(localService);
+    } catch (JSONException e) {
+        e.printStackTrace();
+    }}});
+             
 }
 
 if (jsonObject.optString("data").equals("getpreferences")){
@@ -316,8 +334,18 @@ if (key.equals(lockeyname)){
 	
 }
 editor.commit();
-localService.applyPreference();
-localService.Pong(localService);
+localService.alertHandler.post(new Runnable() {
+
+	public void run() {
+
+		localService.applyPreference();
+		
+try {
+    localService.Pong(localService);
+} catch (JSONException e) {
+    e.printStackTrace();
+}}});
+
 }	
 
 	

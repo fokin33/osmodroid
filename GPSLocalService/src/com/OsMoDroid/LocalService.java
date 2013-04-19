@@ -2267,13 +2267,13 @@ private void manageIM(){
 		
 		
 		
-				myManager.removeUpdates(this);
+				myManager.removeUpdates(LocalService.this);
 		
-				myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+				myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, LocalService.this);
 		
-			if (settings.getBoolean("usenetwork", true)){	myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);}
+			if (settings.getBoolean("usenetwork", true)){	myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, LocalService.this);}
 		
-				myManager.addGpsStatusListener(this);
+				myManager.addGpsStatusListener(LocalService.this);
 		
 				}
 		
@@ -2299,9 +2299,10 @@ private void manageIM(){
 		
 			myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsperiod, 0, LocalService.this);
 		
-			if (settings.getBoolean("usenetwork", true)){	myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);}
+			if (settings.getBoolean("usenetwork", true)){	
+				myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, LocalService.this);}
 		
-			myManager.addGpsStatusListener(this);
+			myManager.addGpsStatusListener(LocalService.this);
 		
 		}
 	}
