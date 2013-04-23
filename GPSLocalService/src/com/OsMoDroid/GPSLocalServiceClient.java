@@ -138,7 +138,9 @@ PowerManager pm;
 			invokeService();
 			started = true;
 			updateServiceStatus();
-			mService.startcomand();
+			if (settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-86400000){
+				mService.startcomand();
+				}
 //			if (started && ( conn == null || mService == null)) {
 //				Log.d(getClass().getSimpleName(), "нет бинда с сервисом - startcommand");
 //			} else {
@@ -257,10 +259,7 @@ PowerManager pm;
 			    editor.remove("device");
 			    editor.remove("devicename");
 			    editor.commit();
-		
-if (mBound){
-	mService.startcomand();
-}
+
 
 
 			    }

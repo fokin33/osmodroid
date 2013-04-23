@@ -1670,7 +1670,10 @@ if (live){
 
 	if (isOnline()){
 
-	startcomand();
+	if (settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-86400000){
+		startcomand();
+		}
+	
 	if (!settings.getString("key", "" ).equals("") ){
 
 		netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
@@ -1711,10 +1714,13 @@ if (live){
 
 							Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this+" Network is connected");
 
-							startcomand();
+							if (settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-86400000){
+								startcomand();
+								}
 							if (!settings.getString("key", "" ).equals("") ){
 
 								netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
+								netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
 
 							}
 
@@ -4001,7 +4007,9 @@ public void onResultsSucceeded(APIComResult result) {
 	if (result.Command.equals("start")&& !(result.Jo==null))
 
 	{
-		//Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description:ru"),5).show();
+		SharedPreferences.Editor editor = settings.edit();
+        editor.putLong("laststartcommandtime", System.currentTimeMillis());
+        editor.commit();
 		if (!result.Jo.optString("lpch").equals("")&& !result.Jo.optString("lpch").equals(settings.getString("lpch", ""))){
 
 			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
@@ -4010,9 +4018,6 @@ public void onResultsSucceeded(APIComResult result) {
 if (myIM!=null){
 		myIM.removechannels(longPollchannels);	
 }
-			
-			SharedPreferences.Editor editor = settings.edit();
-
 			editor.putString("lpch", result.Jo.optString("lpch"));
 
 			editor.commit();
@@ -4026,8 +4031,6 @@ if (myIM!=null){
 			
 		}
 		if(!result.Jo.optString("device").equals("")){
-			SharedPreferences.Editor editor = settings.edit();
-
 			editor.putString("device", result.Jo.optString("device"));
 			editor.putString("view-url", "http://m.esya.ru/"+result.Jo.optString("device_url"));
 			editor.putString("devicename", result.Jo.optString("device_name"));
@@ -4038,21 +4041,13 @@ if (myIM!=null){
 		}
 		
 		if(!result.Jo.optString("session_ttl").equals("")){
-			SharedPreferences.Editor editor = settings.edit();
-
 			editor.putString("session_ttl", result.Jo.optString("session_ttl"));
-			
-			
 			editor.commit();
 			
 			
 		}
 		if(!result.Jo.optString("uid").equals("")){
-			SharedPreferences.Editor editor = settings.edit();
-
 			editor.putString("uid", result.Jo.optString("uid"));
-			
-			
 			editor.commit();
 			
 			
