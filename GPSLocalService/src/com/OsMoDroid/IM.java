@@ -3,7 +3,9 @@ package com.OsMoDroid;import java.io.BufferedReader;import java.io.IOExcep
 import java.util.Map;
 import java.util.Date;import java.util.Iterator;import java.util.Map.Entry;
 import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import com.OsMoDroid.LocalService.SendCoor;import android.app.Notification;import android.app.PendingIntent;import android.app.PendingIntent.CanceledException;import android.content.BroadcastReceiver;import android.content.SharedPreferences;
-import android.content.Context;import android.content.Intent;import android.content.IntentFilter;import android.net.NetworkInfo;import android.os.Bundle;import android.os.Handler;import android.os.Message;import android.support.v4.app.NotificationCompat;import android.util.Log;import android.widget.Toast;/**
+import android.content.Context;import android.content.Intent;import android.content.IntentFilter;import android.media.MediaPlayer;
+import android.net.NetworkInfo;import android.os.Bundle;import android.os.Environment;
+import android.os.Handler;import android.os.Message;import android.support.v4.app.NotificationCompat;import android.util.Log;import android.widget.Toast;/**
  * @author dfokin
  *Class for work with LongPolling
  */
@@ -124,7 +126,7 @@ public void removechannels(ArrayList<String[]> longPollChList){
 		for (int i = 0; i < result.length(); i++) {
 
 		    JSONObject jsonObject = result.getJSONObject(i);
-		    Iterator it = (new JSONObject(jsonObject.optString("ids"))).keys();
+		    Iterator<String> it = (new JSONObject(jsonObject.optString("ids"))).keys();
 
 			  while (it.hasNext())
 		    
@@ -132,7 +134,7 @@ public void removechannels(ArrayList<String[]> longPollChList){
 
           	{
 		    	
-		    	String keyname= (String) it.next();
+		    	String keyname= it.next();
 		    	Log.d(this.getClass().getName(), "keyname="+keyname);
 		    	lcursor = (new JSONObject(jsonObject.optString("ids"))).optString(keyname);
 		    	 Log.d(this.getClass().getName(), "lcursor="+ lcursor);
@@ -302,6 +304,41 @@ if (jsonObject.optString("data").equals("wifioff")){
 localService.wifioff(localService);
 
 }
+
+
+	if (jsonObject.optString("data").substring(0, 4).equals("play")){
+		 MediaPlayer mp = new MediaPlayer();
+		 String mp3Path = Environment.getExternalStorageDirectory()
+				 .getAbsolutePath()+ "/OsMoDroid/mp3";
+		 Log.d(this.getClass().getName(), "try play:"+(mp3Path+"/"+jsonObject.optString("data").substring(4, jsonObject.optString("data").length())+".mp3"));
+		    try {
+		        mp.setDataSource(mp3Path+"/"+jsonObject.optString("data").substring(4, jsonObject.optString("data").length())+".mp3");
+		    } catch (IllegalArgumentException e) {
+		        // TODO Auto-generated catch block
+		        e.printStackTrace();
+		    } catch (IllegalStateException e) {
+		        // TODO Auto-generated catch block
+		        e.printStackTrace();
+		    } catch (IOException e) {
+		        // TODO Auto-generated catch block
+		        e.printStackTrace();
+		    }
+		    try {
+		        mp.prepare();
+		    } catch (IllegalStateException e) {
+		        // TODO Auto-generated catch block
+		        e.printStackTrace();
+		    } catch (IOException e) {
+		        // TODO Auto-generated catch block
+		        e.printStackTrace();
+		    }
+		    mp.start();
+	}
+
+
+
+
+
 Object item = jsonObject.get("data");
 Log.d(this.getClass().getName(), "item="+item+" "+item.getClass()+ " JSONObject is " + (item instanceof JSONObject) );
 
@@ -313,7 +350,7 @@ Iterator<String> locIt = jo.keys();
 SharedPreferences.Editor editor = LocalService.settings.edit();
 Map<String, ?> entries = LocalService.settings.getAll();
 while (locIt.hasNext()){
-	String lockeyname= (String) locIt.next();
+	String lockeyname= locIt.next();
 	 for (Entry<String, ?> entry : entries.entrySet()) {
          Object v = entry.getValue();
          String key = entry.getKey();
