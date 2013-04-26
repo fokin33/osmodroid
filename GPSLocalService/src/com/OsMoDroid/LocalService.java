@@ -334,7 +334,7 @@ boolean binded=false;
 
 	private String sendresult="";
 
-	private LocationManager myManager;
+	public LocationManager myManager;
 
 	private Location prevlocation;
 
@@ -2260,7 +2260,7 @@ private void manageIM(){
 
 
 
-	private void requestLocationUpdates() {
+	public void requestLocationUpdates() {
 		if (usecourse)	{
 		
 			//Log.d(this.getClass().getName(), "Запускаем провайдера 0 0");
@@ -2756,6 +2756,10 @@ private void manageIM(){
 
 	public void onLocationChanged(Location location) {
 
+		if (!state){
+			myManager.removeUpdates(this);
+		}
+		
 		currentLocation.set(location);
 		
 		if (LocalService.channelsDevicesAdapter!=null&&LocalService.currentChannel!=null)

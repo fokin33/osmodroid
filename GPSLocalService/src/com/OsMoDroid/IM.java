@@ -3,7 +3,8 @@ package com.OsMoDroid;import java.io.BufferedReader;import java.io.IOExcep
 import java.util.Map;
 import java.util.Date;import java.util.Iterator;import java.util.Map.Entry;
 import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import com.OsMoDroid.LocalService.SendCoor;import android.app.Notification;import android.app.PendingIntent;import android.app.PendingIntent.CanceledException;import android.content.BroadcastReceiver;import android.content.SharedPreferences;
-import android.content.Context;import android.content.Intent;import android.content.IntentFilter;import android.media.MediaPlayer;
+import android.content.Context;import android.content.Intent;import android.content.IntentFilter;import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.net.NetworkInfo;import android.os.Bundle;import android.os.Environment;
 import android.os.Handler;import android.os.Message;import android.support.v4.app.NotificationCompat;import android.util.Log;import android.widget.Toast;/**
  * @author dfokin
@@ -304,6 +305,43 @@ if (jsonObject.optString("data").equals("wifioff")){
 localService.wifioff(localService);
 
 }
+
+if (jsonObject.optString("data").equals("where")){
+
+if (!localService.state){
+	localService.alertHandler.post(new Runnable() {
+
+		public void run() {
+	localService.myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, localService);
+	 Log.d(this.getClass().getName(), "подписались на GPS");
+		}
+	});
+	}
+	localService.alertHandler.postDelayed(new Runnable() {
+
+		public void run() {
+	localService.myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, localService);
+	 Log.d(this.getClass().getName(), "подписались на NETWORK");
+		}
+	},30000);
+	localService.alertHandler.postDelayed(new Runnable() {
+
+		public void run() {
+	if (localService.state){
+			localService.myManager.removeUpdates(localService);
+			localService.requestLocationUpdates();
+			 Log.d(this.getClass().getName(), "Переподписались");
+	} else {
+		localService.myManager.removeUpdates(localService);
+		 Log.d(this.getClass().getName(), "Отписались");
+	}
+		}
+	},90000);
+	
+
+
+}
+
 
 
 	if (jsonObject.optString("data").substring(0, 4).equals("play")){
