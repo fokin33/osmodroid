@@ -715,11 +715,11 @@ startlocalservice();
                     stopService(i);
                     finish();
 		}
-		if (item.getItemId() == 17) {
+		if (item.getItemId() == 18) {
           if (fileName!=null){
 			saveSharedPreferencesToFile(fileName);}
 }
-		if (item.getItemId() == 18) {
+		if (item.getItemId() == 19) {
 			 if (fileName!=null&&fileName.exists()){
 					loadSharedPreferencesFromFile(fileName);}
 	          
