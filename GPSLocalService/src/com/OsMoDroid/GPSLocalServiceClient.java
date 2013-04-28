@@ -721,7 +721,14 @@ startlocalservice();
 }
 		if (item.getItemId() == 19) {
 			 if (fileName!=null&&fileName.exists()){
-					loadSharedPreferencesFromFile(fileName);}
+					loadSharedPreferencesFromFile(fileName);
+					ReadPref();
+					TextView t2 = (TextView) findViewById(R.id.URL);
+					t2.setText(settings.getString("devicename", "")+" : "+viewurl);
+					Linkify.addLinks(t2, Linkify.ALL);
+					mService.applyPreference();
+			 
+			 }
 	          
 		}
 		return super.onOptionsItemSelected(item);
