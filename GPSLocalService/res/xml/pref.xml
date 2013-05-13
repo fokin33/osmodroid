@@ -49,6 +49,14 @@
 				android:digits="0123456789"
 				android:inputType="number"
 				android:defaultValue="0" />
+                        <PreferenceScreen android:title="Идентификация" >
+                                <EditTextPreference
+                                        android:key="hash"
+                                        android:title="Хэш" />
+                                <EditTextPreference
+                                        android:key="n"
+                                        android:title="Контрольное число" />
+                        </PreferenceScreen>
 			<CheckBoxPreference
 				android:key="usebuffer"
 				android:title="Передавать неотправленное"
@@ -105,15 +113,6 @@
 				android:summary="Километров в час"
 				android:title="Минимальная скорость записи"
 				android:defaultValue="0" />
-		</PreferenceScreen>
-
-		<PreferenceScreen android:title="Идентификация" >
-			<EditTextPreference
-				android:key="hash"
-				android:title="Хэш" />
-			<EditTextPreference
-				android:key="n"
-				android:title="Контрольное число" />
 		</PreferenceScreen>
 
 		<PreferenceScreen android:title="Оповещение" >
