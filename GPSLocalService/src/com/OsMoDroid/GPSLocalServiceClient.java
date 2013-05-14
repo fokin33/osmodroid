@@ -355,6 +355,10 @@ startlocalservice();
 				}
 
 				if (!(startmessage==null)&&!messageShowed) {
+					TextView t2 = (TextView) findViewById(R.id.URL);
+					t2.setText(settings.getString("devicename", "")+" : "+viewurl);
+					Linkify.addLinks(t2, Linkify.ALL);
+					
 					messageShowed=true;
 					AlertDialog alertdialog = new AlertDialog.Builder(
 							GPSLocalServiceClient.this).create();
@@ -1120,6 +1124,7 @@ SharedPreferences.Editor editor = settings.edit();
 editor.putString("key", key);
 editor.commit();
 netutil.newapicommand((Context) GPSLocalServiceClient.this, "om_device_bind:"+settings.getString("hash", "")+","+settings.getString("n", ""));
+mService.startcomand();
 }
 if (!(aviewurl==null)){viewurl=aviewurl;}
 
