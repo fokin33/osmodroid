@@ -264,6 +264,8 @@ boolean binded=false;
 
 	private Intent in;
 
+	public boolean mayak=false;
+	
 	private boolean glonas=false;
 
 	private boolean playsound=false;
@@ -2640,7 +2642,8 @@ private void manageIM(){
 				 sendcounter=sendcounter+1;
 
 				 //if( sendsound &&sendpalyer!=null&& !sendpalyer.isPlaying())sendpalyer.start();
-				if (sendsound){ soundPool.play(sendpalyer, 1f, 1f, 1, 0, 1f);}
+				if (sendsound&&!mayak){ soundPool.play(sendpalyer, 1f, 1f, 1, 0, 1f);
+				mayak=false;}
 
 
 			 sendresult= time +" "+sendresult;}

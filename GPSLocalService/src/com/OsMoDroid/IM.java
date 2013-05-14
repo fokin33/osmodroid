@@ -307,7 +307,7 @@ localService.wifioff(localService);
 }
 
 if (jsonObject.optString("data").equals("where")){
-
+localService.mayak=true;
 if (!localService.state){
 	localService.alertHandler.post(new Runnable() {
 
