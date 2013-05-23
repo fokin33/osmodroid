@@ -439,7 +439,9 @@ if (getMessageType( keyname).equals("ch")){
 
 						String[] data = jsonObject.optString("data").split("\\|");
 						Log.d(this.getClass().getName(), "data[0]=" + data[0] + " data[1]=" + data[1] + " data[2]=" + data[2]+" data[3]="+data[3]+" data[4]="+data[4]);
-						for (Channel channel : LocalService.channelList) {
+						if(data[0].equals("0")){
+						for (Channel channel : LocalService.channelList)
+						{
 							Log.d(this.getClass().getName(), "chanal nest" + channel.name);
 							for (Device device : channel.deviceList) {
 								Log.d(this.getClass().getName(), "device nest" + device.name + " " + device.u);
@@ -456,6 +458,8 @@ if (getMessageType( keyname).equals("ch")){
 							}
 
 						}
+						
+						
 						localService.informRemoteClientChannelUpdate();
 						localService.alertHandler.post(new Runnable() {
 
@@ -476,7 +480,10 @@ if (getMessageType( keyname).equals("ch")){
 								}
 							}
 						});
-	
+						}
+						else {
+							netutil.newapicommand((ResultsListener)localService, "om_device_channel_adaptive:"+localService.settings.getString("device", ""));
+						}
 }
 
 if (getMessageType( keyname).equals("chch")){
