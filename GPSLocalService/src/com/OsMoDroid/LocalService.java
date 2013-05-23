@@ -2783,7 +2783,7 @@ private void manageIM(){
 		
 		Accuracy=Float.toString(location.getAccuracy());
 
-		if (System.currentTimeMillis()<lastgpslocationtime+gpsperiod+1000 && location.getProvider().equals(LocationManager.NETWORK_PROVIDER))
+		if (System.currentTimeMillis()<lastgpslocationtime+gpsperiod+30000 && location.getProvider().equals(LocationManager.NETWORK_PROVIDER))
 
 		{
 
@@ -2813,7 +2813,7 @@ private void manageIM(){
 
 
 
-		if (System.currentTimeMillis()>lastgpslocationtime+gpsperiod+1000 && location.getProvider().equals(LocationManager.NETWORK_PROVIDER))
+		if (System.currentTimeMillis()>lastgpslocationtime+gpsperiod+30000 && location.getProvider().equals(LocationManager.NETWORK_PROVIDER))
 
 		{
 
