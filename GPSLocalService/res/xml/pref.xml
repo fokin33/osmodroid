@@ -41,7 +41,7 @@
 				android:key="hdop"
 				android:numeric="integer"
 				android:summary="Метры"
-				android:title="Допустимая точность" android:defaultValue="50" />
+				android:title="Максимальная погрешность HDOP" android:defaultValue="50" />
 			<EditTextPreference
 				android:key="speed"
 				android:title="Минимальная скорость отправки"
@@ -60,7 +60,7 @@
 			<CheckBoxPreference
 				android:key="usebuffer"
 				android:title="Передавать неотправленное"
-                                android:summary="Полезно, если нестабильная связь с интернетом. Немного увеличивается интернет-трафик."
+                                android:summary="Полезно, если нестабильная связь с интернетом. Может повышать интернет-трафик."
 				android:defaultValue="false" />
 		</PreferenceScreen>
 
@@ -148,7 +148,20 @@
 				android:summary="Используется text-to-speech"
 				android:title="Проговаривать скорость"
 				android:defaultValue="false" />
-			<CheckBoxPreference android:key="silentnotify" android:title="Беззвучное оповещение" android:defaultValue="false"/><CheckBoxPreference android:key="onlinenotify" android:title="Оповещать об онлайн" android:defaultValue="false" android:summary="Оповещение о смене статуса онлайн ваших устройств"/><CheckBoxPreference android:key="statenotify" android:title="Оповещать о мониторинге" android:defaultValue="true" android:summary="Оповещение о смене статуса мониторинга ваших устройств"/>
+			<CheckBoxPreference
+                            android:key="silentnotify"
+                            android:title="Беззвучное оповещение"
+                            android:defaultValue="false"/>
+                        <CheckBoxPreference
+                            android:key="onlinenotify"
+                            android:title="Оповещать об онлайн"
+                            android:defaultValue="false"
+                            android:summary="Оповещение о смене онлайн-статуса ваших устройств"/>
+                        <CheckBoxPreference
+                            android:key="statenotify"
+                            android:title="Оповещать о мониторинге"
+                            android:defaultValue="true"
+                            android:summary="Оповещение о смене статуса мониторинга ваших устройств"/>
 		</PreferenceScreen>
 
     <CheckBoxPreference
@@ -163,17 +176,17 @@
         android:defaultValue="false" />
     <CheckBoxPreference
 		android:key="usenetwork"
-		android:summary="Использовать для определения координат сотовые сети и wifi"
+		android:summary="Использовать для определения координат сотовые сети и WiFi (дополнительный интернет-трафик)"
 		android:title="Беспроводные сети"
 		android:defaultValue="true" />
     <CheckBoxPreference
 		android:key="im"
-                android:summary="Подписка на мгновенное получение"
+                android:summary="Если отключить, вы не будете получать сообщения от других устройств и с сайта"
 		android:title="Обмен сообщениями"
 		android:defaultValue="true" />
     <CheckBoxPreference
 		android:key="autostart"
                 android:summary="Запускать фоновый сервис при включении телефона"
-		android:title="Автозагрузка"
+		android:title="Автозагрузка в фоне"
 		android:defaultValue="false" />
 </PreferenceScreen>
