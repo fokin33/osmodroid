@@ -344,6 +344,7 @@ startlocalservice();
 				String stat = intent.getStringExtra("stat");
 				String startmessage = intent.getStringExtra("startmessage");
 				if (intent.hasExtra("started")){
+					
 					Button start = (Button) findViewById(R.id.startButton);
 					Button stop = (Button) findViewById(R.id.exitButton);
 
@@ -1122,6 +1123,7 @@ if (!(akey==null))
 {key=akey;
 SharedPreferences.Editor editor = settings.edit();
 editor.putString("key", key);
+editor.remove("laststartcommandtime");
 editor.commit();
 netutil.newapicommand((Context) GPSLocalServiceClient.this, "om_device_bind:"+settings.getString("hash", "")+","+settings.getString("n", ""));
 mService.startcomand();

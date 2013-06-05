@@ -3020,7 +3020,7 @@ if (gpx && fileheaderok) {
 
 
 }
-
+Log.d(this.getClass().getName(), "sessionstarted="+sessionstarted);
 		if (!hash.equals("") && live&&sessionstarted)
 
 		{
