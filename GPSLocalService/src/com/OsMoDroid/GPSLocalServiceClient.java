@@ -138,7 +138,7 @@ PowerManager pm;
 			invokeService();
 			started = true;
 			updateServiceStatus();
-			if (settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-86400000){
+			if (settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-14400000){
 				mService.startcomand();
 				}
 //			if (started && ( conn == null || mService == null)) {

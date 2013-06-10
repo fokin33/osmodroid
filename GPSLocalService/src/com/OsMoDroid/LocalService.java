@@ -1672,7 +1672,7 @@ if (live){
 
 	if (isOnline()){
 
-	if (settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-86400000){
+	if (settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-14400000){
 		startcomand();
 		}
 	
@@ -1716,7 +1716,7 @@ if (live){
 
 							Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this+" Network is connected");
 
-							if (settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-86400000){
+							if (settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-14000000){
 								startcomand();
 								}
 							if (!settings.getString("key", "" ).equals("") ){
