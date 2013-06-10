@@ -483,7 +483,7 @@ startlocalservice();
 		 forcesenditem.setIcon(android.R.drawable.ic_menu_mylocation);
 		 MenuItem shareadress = menu.add(0, 10, 0, "Поделиться ссылкой");
 		 shareadress.setIcon(android.R.drawable.ic_menu_share);
-		 MenuItem copyadress = menu.add(0, 11, 0, "Скопировать ссылку");
+		 MenuItem copyadress = menu.add(0, 11, 0, "Копировать ссылку");
 		 copyadress.setIcon(android.R.drawable.ic_menu_edit);
 		 MenuItem about = menu.add(0, 12, 0, R.string.about);
 		 about.setIcon(android.R.drawable.ic_menu_info_details);
@@ -515,7 +515,7 @@ startlocalservice();
 
 		// Log.d(getClass().getSimpleName(), "onCreateOptionsmenu() gpsclient");
                  MenuItem save =menu2.add(0, 18, 0, "Сохранить настройки на карту");
-                 MenuItem load =menu2.add(0, 19, 0,"Загрузить настройки с карты");
+                 MenuItem load =menu2.add(0, 19, 0, "Загрузить настройки с карты");
 
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -634,14 +634,14 @@ startlocalservice();
 			LinearLayout layout = new LinearLayout(this);
 			layout.setOrientation(LinearLayout.VERTICAL);
 			final TextView txv5 = new TextView(this);
-			txv5.setText("Логин на esya.ru:");
+			txv5.setText("Логин на Еся.ру:");
 			layout.addView(txv5);
 			final EditText inputlogin = new EditText(this);
 			inputlogin.setText(login);
 			layout.addView(inputlogin);
 
 			final TextView txv3 = new TextView(this);
-			txv3.setText("Одноразовый пароль:");
+			txv3.setText("Обычный или одноразовый пароль:");
 			layout.addView(txv3);
 
 			final EditText input = new EditText(this);
