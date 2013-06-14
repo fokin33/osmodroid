@@ -234,6 +234,7 @@ boolean binded=false;
 	private static final int OSMODROID_ID = 1;
 
 	Boolean sessionstarted=false;
+	Boolean globalsend=false;
 	
 	int notifyid=2;
 
@@ -1126,7 +1127,7 @@ public void refresh(){
 	in.putExtra("buffercounter", buffercounter);
 	in.putExtra("stat", "Максимальная: "+df1.format(maxspeed*3.6)+" км/ч\n"+"Средняя: "+df1.format(avgspeed*3600)+" км/ч\n"+"Пробег: "+df2.format(workdistance/1000) + " км"+"\n"+"Время работы: "+formatInterval(timeperiod));
 	in.putExtra("started", state);
-
+	in.putExtra("globalsend", globalsend);
 	sendBroadcast(in);
 
 }
@@ -1677,7 +1678,7 @@ if (live){
 		}
 	
 	if (!settings.getString("key", "" ).equals("") ){
-
+		netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+settings.getString("device", ""));
 		netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
 		netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
 
@@ -1720,7 +1721,7 @@ if (live){
 								startcomand();
 								}
 							if (!settings.getString("key", "" ).equals("") ){
-
+								netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+settings.getString("device", ""));
 								netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
 								netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
 
@@ -4082,6 +4083,23 @@ if (myIM!=null){
 
 		Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);
 
+		if (result.Jo.has("om_device_get:"+settings.getString("device", ""))){
+			try {
+				JSONObject jsonObject =	result.Jo.getJSONObject("om_device_get:"+settings.getString("device", ""));
+		 		  Log.d(getClass().getSimpleName(), a.toString());
+		 	if (jsonObject.getString("channel_send").equals("1")){
+		 		globalsend=true;
+		 	} else
+		 	{
+		 		globalsend=false;
+		 	}
+		 	refresh();
+			} catch (Exception e) {
+
+					 Log.d(getClass().getSimpleName(), "om_device_get эксепшн"+e.getMessage());
+					e.printStackTrace();
+				}
+		}
 		if (result.Jo.has("om_device")){
 			deviceList.clear();
 deviceList.add(new Device("0","Мой компьютер","1", settings.getString("uid", "0")));

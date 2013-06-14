@@ -5,16 +5,24 @@
     android:orientation="vertical" android:alwaysDrawnWithCache="false" android:descendantFocusability="blocksDescendants">
 
 	<TextView
-	   android:id="@+id/serviceStatus"
-	   android:layout_width="fill_parent"
-	   android:layout_height="wrap_content"
-	   android:text="@string/serviceStatus" />
+	    android:id="@+id/serviceStatus"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="left"
+	    android:text="@string/serviceStatus" />
 
 	<TextView
-	   android:id="@+id/URL"
-	   android:layout_width="wrap_content"
-	   android:layout_height="wrap_content"
-	   android:text="@string/url" />
+	    android:id="@+id/URL"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="left"
+	    android:text="@string/url" />
+
+	<ToggleButton
+	    android:id="@+id/toggleButton1"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="ToggleButton" />
 
 	<Button
 		android:id="@+id/startButton"

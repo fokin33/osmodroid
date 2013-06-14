@@ -69,6 +69,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class GPSLocalServiceClient extends Activity implements ResultsListener{
 	boolean messageShowed=false;
@@ -331,7 +332,7 @@ startlocalservice();
 
 		receiver = new BroadcastReceiver() {
 			@Override
-			public void onReceive(Context context, Intent intent) {
+			public void onReceive(Context context, final Intent intent) {
 				TextView dt = (TextView) findViewById(R.id.URL);
 				dt.setText(settings.getString("devicename", "")+" : "+viewurl);
 
@@ -343,6 +344,21 @@ startlocalservice();
 				sendresult = intent.getStringExtra("sendresult");
 				String stat = intent.getStringExtra("stat");
 				String startmessage = intent.getStringExtra("startmessage");
+				if (intent.hasExtra("globalsend")){
+					final ToggleButton globalsendToggle = (ToggleButton) findViewById(R.id.toggleButton1);
+					globalsendToggle.setOnClickListener(new OnClickListener() {
+						
+						public void onClick(View v) {
+globalsendToggle.toggle();
+String boolglobalsend =intent.getBooleanExtra("globalsend", false) ? "0" : "1";
+netutil.newapicommand((ResultsListener)mService, "om_channel_active:"+settings.getString("device", "")+",0,"+boolglobalsend);
+
+		netutil.newapicommand((ResultsListener)mService, "om_device_get:"+settings.getString("device", ""));
+						}
+					});
+					globalsendToggle.setChecked(intent.getBooleanExtra("globalsend", false));
+					
+				}
 				if (intent.hasExtra("started")){
 					
 					Button start = (Button) findViewById(R.id.startButton);
