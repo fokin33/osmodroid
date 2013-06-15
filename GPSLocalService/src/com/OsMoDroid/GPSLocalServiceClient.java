@@ -351,7 +351,7 @@ startlocalservice();
 						public void onClick(View v) {
 globalsendToggle.toggle();
 String boolglobalsend =intent.getBooleanExtra("globalsend", false) ? "0" : "1";
-netutil.newapicommand((ResultsListener)mService, "om_channel_active:"+settings.getString("device", "")+",0,"+boolglobalsend);
+netutil.newapicommand((ResultsListener)mService, "om_device_channel_active:"+settings.getString("device", "")+",0,"+boolglobalsend);
 
 		netutil.newapicommand((ResultsListener)mService, "om_device_get:"+settings.getString("device", ""));
 						}

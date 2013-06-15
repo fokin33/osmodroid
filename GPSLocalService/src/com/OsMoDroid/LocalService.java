@@ -4086,7 +4086,7 @@ if (myIM!=null){
 		if (result.Jo.has("om_device_get:"+settings.getString("device", ""))){
 			try {
 				JSONObject jsonObject =	result.Jo.getJSONObject("om_device_get:"+settings.getString("device", ""));
-		 		  Log.d(getClass().getSimpleName(), a.toString());
+		 		 // Log.d(getClass().getSimpleName(), a.toString());
 		 	if (jsonObject.getString("channel_send").equals("1")){
 		 		globalsend=true;
 		 	} else
