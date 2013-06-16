@@ -4083,6 +4083,22 @@ if (myIM!=null){
 
 		Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);
 
+		 
+		    Iterator<String> it = (result.Jo).keys();
+
+			  while (it.hasNext())
+		    
+		    
+
+        	{
+		    	
+		    	String keyname= it.next();
+		    	if(keyname.contains("om_device_channel_active")){
+		    		netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+settings.getString("device", ""));
+		    	 }
+        	}
+		
+		
 		if (result.Jo.has("om_device_get:"+settings.getString("device", ""))){
 			try {
 				JSONObject jsonObject =	result.Jo.getJSONObject("om_device_get:"+settings.getString("device", ""));
