@@ -275,6 +275,10 @@ PowerManager pm;
 
 		setContentView(R.layout.main);
 		setTitle(strVersionName);
+		ToggleButton globalsendToggle = (ToggleButton) findViewById(R.id.toggleButton1);
+		if (settings.getString("key", "").isEmpty()){
+		globalsendToggle.setVisibility(View.GONE);
+		}
 		Button start = (Button) findViewById(R.id.startButton);
 		Button exit = (Button) findViewById(R.id.exitButton);
 
@@ -1143,6 +1147,12 @@ editor.remove("laststartcommandtime");
 editor.commit();
 netutil.newapicommand((Context) GPSLocalServiceClient.this, "om_device_bind:"+settings.getString("hash", "")+","+settings.getString("n", ""));
 mService.startcomand();
+ToggleButton globalsendToggle = (ToggleButton) findViewById(R.id.toggleButton1);
+
+globalsendToggle.setVisibility(View.VISIBLE);
+netutil.newapicommand((ResultsListener)mService, "om_device_get:"+settings.getString("device", ""));
+
+
 }
 if (!(aviewurl==null)){viewurl=aviewurl;}
 
