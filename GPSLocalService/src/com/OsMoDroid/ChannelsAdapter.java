@@ -11,11 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 public class ChannelsAdapter extends ArrayAdapter<Channel> {
 
 	private TextView channelName;
 	private TextView channelCreated;
+	ToggleButton tg;
 	
 	public ChannelsAdapter(Context context, int textViewResourceId, List<Channel> objects) {
 		super(context, textViewResourceId, objects);
@@ -34,8 +36,10 @@ public class ChannelsAdapter extends ArrayAdapter<Channel> {
 		     
 		        channelName = (TextView) row.findViewById(R.id.txtName);
 		        channelCreated = (TextView) row.findViewById(R.id.txtCreated);
+		        tg = (ToggleButton) row.findViewById(R.id.toggleButton1);
 		        if (channel.name!=null){   channelName.setText(channel.name);}
-		        if (channel.created!=null)channelCreated.setText(channel.created);
+		        if (channel.created!=null){channelCreated.setText(channel.created);}
+		        if (channel.send!=null){tg.setChecked(true);}
 		     
 		        return row;
 

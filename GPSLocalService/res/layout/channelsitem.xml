@@ -16,5 +16,12 @@
             android:id="@+id/txtCreated"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />
+
+        <ToggleButton
+            android:id="@+id/toggleButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ToggleButton" />
+
     </LinearLayout>
 </LinearLayout>

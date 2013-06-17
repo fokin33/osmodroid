@@ -19,6 +19,7 @@ public class Channel {
 	public List<Device> deviceList= new ArrayList<Device>();
 	public List<String> messagesstringList= new ArrayList<String>();
 	public Boolean connected=false;
+	public Boolean send=false;
 	public Channel(){
 		
 	}
