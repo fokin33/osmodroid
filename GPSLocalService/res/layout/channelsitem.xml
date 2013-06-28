@@ -21,7 +21,9 @@
             android:id="@+id/toggleButton1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ToggleButton" />
+            android:text="ToggleButton"
+            android:focusable="false"
+android:focusableInTouchMode="false" />
 
     </LinearLayout>
 </LinearLayout>
