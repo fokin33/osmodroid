@@ -60,7 +60,8 @@ public class ChannelsAdapter extends ArrayAdapter<Channel> {
 		public void onClick(View v) {
 			((ToggleButton) v).toggle();
 			 Channel channel = getItem((Integer)v.getTag());
-			netutil.newapicommand((ResultsListener)localservice, "om_device_channel_active:"+localservice.settings.getString("device", "")+","+channel.u+","+!channel.send);
+			 String boolglobalsend =channel.send ? "0" : "1";
+			netutil.newapicommand((ResultsListener)localservice, "om_device_channel_active:"+localservice.settings.getString("device", "")+","+channel.u+","+boolglobalsend);
 
 				
 								}
