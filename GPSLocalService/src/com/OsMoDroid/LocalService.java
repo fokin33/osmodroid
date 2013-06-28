@@ -2850,7 +2850,13 @@ private void manageIM(){
 
 sendlocation(location);
 
+prevlocation.setLatitude(location.getLatitude());
 
+prevlocation.setLongitude(location.getLongitude());
+
+prevlocation.setTime(location.getTime());
+
+prevbrng=brng;
 
 workmilli= System.currentTimeMillis();
 
@@ -3028,9 +3034,9 @@ Log.d(this.getClass().getName(), "sessionstarted="+sessionstarted);
 
 		if(usecourse){
 
-			//Log.d(this.getClass().getName(), "Попали в проверку курса для отправки");
+			Log.d(this.getClass().getName(), "Попали в проверку курса для отправки");
 
-			 //Log.d(this.getClass().getName(), "Accuracey"+location.getAccuracy()+"hdop"+hdop);
+			 Log.d(this.getClass().getName(), "Accuracey"+location.getAccuracy()+"hdop"+hdop);
 
 			double lon1=location.getLongitude();
 
@@ -3085,14 +3091,23 @@ Log.d(this.getClass().getName(), "sessionstarted="+sessionstarted);
 
 
 		}
-
+else {
+	Log.d(this.getClass().getName(),Float.toString(location.distanceTo(prevlocation)));
+	Log.d(this.getClass().getName(), Integer.toString(distance));
+	Log.d(this.getClass().getName(), Long.toString(location.getTime()));
+	Log.d(this.getClass().getName(), Long.toString(prevlocation.getTime()+period));
+	Log.d(this.getClass().getName(),  Float.toString((location.getSpeed())));
+	Log.d(this.getClass().getName(),  Float.toString((float) ((speedbearing/3.6))));
+	Log.d(this.getClass().getName(), Boolean.toString( ( Math.abs(brng-prevbrng)>=bearing)));
+	Log.d(this.getClass().getName(), "не выдержали проверку на курс");
+}
 
 
 		}
 
 		 else {
 
-			 //Log.d(this.getClass().getName(), "Отправляем без курса");
+			 Log.d(this.getClass().getName(), "Отправляем без курса");
 
 			 if ((int)location.getAccuracy()<hdop &&location.getSpeed()>=speed/3.6 &&(location.distanceTo(prevlocation)>distance || location.getTime()>(prevlocation.getTime()+period)))
 
@@ -3108,6 +3123,8 @@ Log.d(this.getClass().getName(), "sessionstarted="+sessionstarted);
 					Log.d(this.getClass().getName(), "send(location)="+location);
 				 sendlocation (location);
 
+			 } else {
+				 Log.d(this.getClass().getName(), "не отправляем без курса");
 			 }
 
 
@@ -3116,6 +3133,9 @@ Log.d(this.getClass().getName(), "sessionstarted="+sessionstarted);
 
 
 
+		}
+		else {
+			Log.d(this.getClass().getName(), " not !hash.equals() && live&&sessionstarted");	
 		}
 
 
