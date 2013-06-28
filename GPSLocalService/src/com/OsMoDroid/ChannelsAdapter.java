@@ -3,24 +3,31 @@ package com.OsMoDroid;
 import java.util.List;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 public class ChannelsAdapter extends ArrayAdapter<Channel> {
 
-	private TextView channelName;
-	private TextView channelCreated;
-	ToggleButton tg;
+	//private TextView channelName;
+	//private TextView channelCreated;
+	//ToggleButton tg;
+	LocalService localservice;
 	
-	public ChannelsAdapter(Context context, int textViewResourceId, List<Channel> objects) {
+	
+	public ChannelsAdapter(Context context, int textViewResourceId, List<Channel> objects, LocalService localservice) {
 		super(context, textViewResourceId, objects);
+		this.localservice=localservice;
 		
 	}
 
@@ -32,17 +39,32 @@ public class ChannelsAdapter extends ArrayAdapter<Channel> {
          row = inflater.inflate(R.layout.channelsitem, parent, false);
 		
 		        }
-		        Channel channel = getItem(position);
-		     
-		        channelName = (TextView) row.findViewById(R.id.txtName);
-		        channelCreated = (TextView) row.findViewById(R.id.txtCreated);
-		        tg = (ToggleButton) row.findViewById(R.id.toggleButton1);
+		         Channel channel = getItem(position);
+		        TextView channelName = (TextView) row.findViewById(R.id.txtName);
+		        TextView channelCreated = (TextView) row.findViewById(R.id.txtCreated);
+		        ToggleButton tg = (ToggleButton) row.findViewById(R.id.toggleButton1);
+		        
+		        tg.setOnClickListener(myCheckChangList);
+		        tg.setTag(position);
 		        if (channel.name!=null){   channelName.setText(channel.name);}
 		        if (channel.created!=null){channelCreated.setText(channel.created);}
-		        if (channel.send!=null){tg.setChecked(true);}
+		        if (channel.send!=null){tg.setChecked(channel.send);
+		                
+		        
+		        }
 		     
 		        return row;
+	
+}
+	OnClickListener myCheckChangList = new OnClickListener() {
+		public void onClick(View v) {
+			((ToggleButton) v).toggle();
+			 Channel channel = getItem((Integer)v.getTag());
+			netutil.newapicommand((ResultsListener)localservice, "om_device_channel_active:"+localservice.settings.getString("device", "")+","+channel.u+","+!channel.send);
 
-	}
-
+				
+								}
+							};
+	
+	
 }

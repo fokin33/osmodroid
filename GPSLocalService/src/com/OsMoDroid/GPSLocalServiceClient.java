@@ -276,7 +276,7 @@ PowerManager pm;
 		setContentView(R.layout.main);
 		setTitle(strVersionName);
 		ToggleButton globalsendToggle = (ToggleButton) findViewById(R.id.toggleButton1);
-		if (settings.getString("key", "").isEmpty()){
+		if (settings.getString("key", "").equals("")){
 		globalsendToggle.setVisibility(View.GONE);
 		}
 		Button start = (Button) findViewById(R.id.startButton);

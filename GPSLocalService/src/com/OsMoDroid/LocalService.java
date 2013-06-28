@@ -1402,7 +1402,7 @@ public void stopcomand()
 		ReadPref();
 
 		deviceAdapter = new DeviceAdapter(getApplicationContext(),R.layout.deviceitem, LocalService.deviceList);
-		channelsAdapter = new ChannelsAdapter(getApplicationContext(),R.layout.deviceitem, LocalService.channelList);
+		channelsAdapter = new ChannelsAdapter(getApplicationContext(),R.layout.deviceitem, LocalService.channelList, this);
 
 		String alarm = Context.ALARM_SERVICE;
 
@@ -4115,6 +4115,7 @@ if (myIM!=null){
 		    	String keyname= it.next();
 		    	if(keyname.contains("om_device_channel_active")){
 		    		netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+settings.getString("device", ""));
+		    		netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
 		    	 }
         	}
 		
