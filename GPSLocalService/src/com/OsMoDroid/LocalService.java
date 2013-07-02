@@ -1366,6 +1366,9 @@ public void stopcomand()
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 
 		currentLocation = new Location("");
+		prevlocation = new Location("");
+		prevlocation_gpx = new Location("");
+		prevlocation_spd = new Location("");
 		currentLocation.setLatitude((double)settings.getFloat("lat", 0f));
 		currentLocation.setLongitude((double)settings.getFloat("lon", 0f));
 
@@ -2066,12 +2069,6 @@ if (soundPool!=null) {soundPool.release();}
 
 		workmilli=0;
 
-		prevlocation_gpx=null;
-
-		prevlocation=null;
-
-		prevlocation_spd=null;
-
 		buffercounter=0;
 
 		 buffersb.setLength(0);
@@ -2270,7 +2267,7 @@ private void manageIM(){
 		
 		
 		
-				prevlocation= myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+				
 				
 				
 		
@@ -2292,7 +2289,7 @@ private void manageIM(){
 		
 		
 		
-			prevlocation= myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+			
 		
 		
 		
@@ -2802,11 +2799,11 @@ private void manageIM(){
 
 
 
-			if (prevlocation_gpx==null)prevlocation_gpx=location;
+			//if (prevlocation_gpx==null)prevlocation_gpx.set(location);
 
-			if (prevlocation==null)prevlocation=location;
+			//if (prevlocation==null)prevlocation=location;
 
-			if (prevlocation_spd==null&&location.getProvider().equals(LocationManager.GPS_PROVIDER))prevlocation_spd=location;
+			//if (prevlocation_spd==null&&location.getProvider().equals(LocationManager.GPS_PROVIDER))prevlocation_spd=location;
 
 
 
@@ -2849,12 +2846,9 @@ private void manageIM(){
 		{
 
 sendlocation(location);
-
-prevlocation.setLatitude(location.getLatitude());
-
-prevlocation.setLongitude(location.getLongitude());
-
-prevlocation.setTime(location.getTime());
+prevlocation.set(location);
+prevlocation_gpx.set(location);
+prevlocation_spd.set(location);
 
 prevbrng=brng;
 
@@ -2882,9 +2876,7 @@ workmilli= System.currentTimeMillis();
 
 		Log.d(this.getClass().getName(),"Log of Workdistance, Workdistance="+ Float.toString(workdistance)+" location="+location.toString()+" prevlocation_spd="+prevlocation_spd.toString()+" distanceto="+Float.toString(location.distanceTo(prevlocation_spd)));
 
-		prevlocation_spd.setLatitude(location.getLatitude());
-
-		prevlocation_spd.setLongitude(location.getLongitude());
+		prevlocation_spd.set(location);
 
 		}
 
@@ -2992,11 +2984,7 @@ if (gpx && fileheaderok) {
 
 	{
 
-		prevlocation_gpx.setLatitude(location.getLatitude());
-
-		prevlocation_gpx.setLongitude(location.getLongitude());
-
-		prevlocation_gpx.setTime(location.getTime());
+		prevlocation_gpx.set(location);
 
 		prevbrng_gpx=brng_gpx;
 
@@ -3014,11 +3002,7 @@ if (gpx && fileheaderok) {
 
 		{	writegpx(location);
 
-		prevlocation_gpx.setLatitude(location.getLatitude());
-
-		prevlocation_gpx.setLongitude(location.getLongitude());
-
-		prevlocation_gpx.setTime(location.getTime());
+		prevlocation_gpx.set(location);
 
 		}
 
@@ -3076,11 +3060,7 @@ Log.d(this.getClass().getName(), "sessionstarted="+sessionstarted);
 
 
 
-			prevlocation.setLatitude(location.getLatitude());
-
-			prevlocation.setLongitude(location.getLongitude());
-
-			prevlocation.setTime(location.getTime());
+			prevlocation.set(location);
 
 			prevbrng=brng;
 			Log.d(this.getClass().getName(), "send(location)="+location);
@@ -3115,11 +3095,7 @@ else {
 
 				 //Log.d(this.getClass().getName(), "Accuracey"+location.getAccuracy()+"hdop"+hdop);
 
-					prevlocation.setLatitude(location.getLatitude());
-
-					prevlocation.setLongitude(location.getLongitude());
-
-					prevlocation.setTime(location.getTime());
+				 prevlocation.set(location);
 					Log.d(this.getClass().getName(), "send(location)="+location);
 				 sendlocation (location);
 
