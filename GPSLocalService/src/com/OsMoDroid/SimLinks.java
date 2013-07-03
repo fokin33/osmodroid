@@ -47,18 +47,18 @@ public class SimLinks extends Activity implements ResultsListener{
 	
 	}
 	
-	void reflinks(){			netutil.newapicommand((ResultsListener)SimLinks.this, "om_link");	}
+	void reflinks(){			netutil.newapicommand((Context)SimLinks.this, "om_link");	}
 	
 	void addlink_new() throws JSONException{
 		JSONObject postjson = new JSONObject();
 		postjson.put("device", settings.getString("device", ""));
 		postjson.put("random", "1");		
 		postjson.put("until", "-1");
-		netutil.newapicommand((ResultsListener)SimLinks.this, "om_link_add","json="+postjson.toString());
+		netutil.newapicommand((Context)SimLinks.this, "om_link_add","json="+postjson.toString());
 	}
 	
 
-	void dellink(String linkid)	{		netutil.newapicommand((ResultsListener)SimLinks.this, "om_link_delete:"+linkid);	}
+	void dellink(String linkid)	{		netutil.newapicommand((Context)SimLinks.this, "om_link_delete:"+linkid);	}
 
 	/** Called when the activity is first created. */
 	@Override

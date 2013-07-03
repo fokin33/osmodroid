@@ -23,11 +23,13 @@ public class ChannelsAdapter extends ArrayAdapter<Channel> {
 	//private TextView channelCreated;
 	//ToggleButton tg;
 	LocalService localservice;
+	public Context context;
 	
 	
 	public ChannelsAdapter(Context context, int textViewResourceId, List<Channel> objects, LocalService localservice) {
 		super(context, textViewResourceId, objects);
 		this.localservice=localservice;
+		
 		
 	}
 
@@ -61,7 +63,7 @@ public class ChannelsAdapter extends ArrayAdapter<Channel> {
 			((ToggleButton) v).toggle();
 			 Channel channel = getItem((Integer)v.getTag());
 			 String boolglobalsend =channel.send ? "0" : "1";
-			netutil.newapicommand((ResultsListener)localservice, "om_device_channel_active:"+localservice.settings.getString("device", "")+","+channel.u+","+boolglobalsend);
+			netutil.newapicommand((ResultsListener)localservice,context, "om_device_channel_active:"+localservice.settings.getString("device", "")+","+channel.u+","+boolglobalsend);
 
 				
 								}

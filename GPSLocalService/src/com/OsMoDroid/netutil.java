@@ -59,7 +59,7 @@ public class netutil {
 
 		protected void onPreExecute() {
 			// dialog.dismiss();
-			if (!(mContext==null)){
+			if (!(mContext==null)){				 Log.d(this.getClass().getName(),"Dialog context="+mContext.toString());
 				dialog= ProgressDialog.show(mContext,"", "Выполняется команда, Подождите пожалуйста...", true);
 				dialog.show();}
 		}
@@ -242,7 +242,7 @@ protected void onCancelled() {
 			String[] params = {"http://apim.esya.ru/?query="+action +"&key="+settings.getString("key", ""),"true",post,"APIM"};
 			new MyAsyncTask(listener).execute(params);	
 	}
-	
+		public static void newapicommand(ResultsListener listener, Context context, String action) {SharedPreferences settings  = PreferenceManager.getDefaultSharedPreferences(context);		String[] params = {"http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),"false","","APIM"};		new MyAsyncTask(listener, context).execute(params);			}
 	
 	
 	
@@ -292,7 +292,7 @@ protected void onCancelled() {
 		}
 
 		return bytesToHex(sha1hash);
-	}
+	}	
 
 
 	
