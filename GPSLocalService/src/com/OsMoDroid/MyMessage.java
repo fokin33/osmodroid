@@ -21,6 +21,7 @@ public class MyMessage implements Comparable<MyMessage>{
 	public String readed;
 	public String from_name;
 	public String from_addr;
+	public String to;
 	
 	public MyMessage (JSONObject jo){
 		
@@ -36,10 +37,11 @@ public class MyMessage implements Comparable<MyMessage>{
 			this.readed=jo.optString("readed");
 			this.from_name=jo.optString("from_name");
 			this.from_addr=jo.optString("from_addr");
+			this.to=jo.optString("to");
 		
 		if (from_name.equals("")){
 			for (Device dev : LocalService.deviceList){
-				if (dev.app!=null&&!dev.app.equals("0")&& dev.app.equals(from_app)){
+				if (Integer.toString(dev.u).equals(from)){
 					from_name=dev.name;
 				}
 			}
