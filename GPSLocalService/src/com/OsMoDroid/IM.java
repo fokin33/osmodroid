@@ -95,7 +95,7 @@ public void removechannels(ArrayList<String[]> longPollChList){
 				}
 				
 				
-				if (LocalService.currentDevice!=null&& mes.from.equals(LocalService.currentDevice.u)){
+				if (LocalService.currentDevice!=null&& mes.from.equals(Integer.toString(LocalService.currentDevice.u))){
 				LocalService.chatmessagelist.add(mes);
 				Collections.sort(LocalService.chatmessagelist);
 				LocalService.chatmessagesAdapter.notifyDataSetChanged();
