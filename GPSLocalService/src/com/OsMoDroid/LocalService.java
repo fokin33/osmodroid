@@ -1772,7 +1772,7 @@ if (live){
 
 if (settings.getBoolean("im", false) && !settings.getString("key", "" ).equals("") ){
 
-//mesIM = new IM(settings.getString("key", "")+",im_messages,om_online",this,1);
+//mesIM = new IM(settings.getString("key", "")+",im_chatages,om_online",this,1);
 	ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
 	longPollchannels.add(new String[] {"om_online","o",""}); 
 	
@@ -1781,7 +1781,7 @@ if (settings.getBoolean("im", false) && !settings.getString("key", "" ).equals("
 	
 if(!settings.getString("lpch", "").equals("")){ 
 	longPollchannels.add(new String[] {"ctrl_"+settings.getString("lpch", ""),"r",""});
-	longPollchannels.add(new String[] {settings.getString("lpch", "")+"_mess","m",""});
+	longPollchannels.add(new String[] {settings.getString("lpch", "")+"_chat","m",""});
 			}
 myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
 }
@@ -2217,7 +2217,7 @@ private void manageIM(){
 			if(!settings.getString("lpch", "").equals(""))
 			{ 
 			longPollchannels.add(new String[] {"ctrl_"+settings.getString("lpch", ""),"r",""});
-			longPollchannels.add(new String[] {settings.getString("lpch", "")+"_mess","m",""});
+			longPollchannels.add(new String[] {settings.getString("lpch", "")+"_chat","m",""});
 			}
 			myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);	
 			netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
@@ -4019,7 +4019,7 @@ public void onResultsSucceeded(APIComResult result) {
 
 			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
 			longPollchannels.add(new String[] {"ctrl_"+settings.getString("lpch", ""),"r",""});
-			longPollchannels.add(new String[] {settings.getString("lpch", "")+"_mess","m",""});
+			longPollchannels.add(new String[] {settings.getString("lpch", "")+"_chat","m",""});
 			
 if (myIM!=null){
 		myIM.removechannels(longPollchannels);	
@@ -4030,7 +4030,7 @@ if (myIM!=null){
 
 			longPollchannels =new ArrayList<String[]>();
 			longPollchannels.add(new String[] {"ctrl_"+settings.getString("lpch", ""),"r",""});
-			longPollchannels.add(new String[] {settings.getString("lpch", "")+"_mess","m",""});
+			longPollchannels.add(new String[] {settings.getString("lpch", "")+"_chat","m",""});
 			
 if (myIM!=null){
 		myIM.addchannels(longPollchannels);	
