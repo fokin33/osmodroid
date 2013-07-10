@@ -29,26 +29,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="PrefActivity"></activity>
+        <activity android:name="PrefActivity" android:configChanges="keyboardHidden|orientation"></activity>
         <service android:name="LocalService">
             <intent-filter>
                 <action android:name="OsMoDroid.local"/>
                 <action android:name="OsMoDroid.remote"/>
             </intent-filter>
         </service>
-        <activity android:name="SimLinks"></activity>
-        <activity android:name="WarnActivity" android:theme="@android:style/Theme.Dialog"></activity>
-        <activity android:theme="@android:style/Theme.Dialog" android:name="aboutActivity"></activity>
-        <activity android:name="mesActivity"></activity>
+        <activity android:name="SimLinks" android:configChanges="keyboardHidden|orientation"></activity>
+        <activity android:name="WarnActivity" android:theme="@android:style/Theme.Dialog" android:configChanges="keyboardHidden|orientation"></activity>
+        <activity android:theme="@android:style/Theme.Dialog" android:name="aboutActivity" android:configChanges="keyboardHidden|orientation"></activity>
+        <activity android:name="mesActivity" android:configChanges="keyboardHidden|orientation"></activity>
         <receiver android:name="BootComplitedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
-        <activity android:name="MyDevices"></activity>
-        <activity android:name="MyChannels"></activity>
-        <activity android:name="MyChannelsDevices" android:windowSoftInputMode="adjustPan"></activity>
-        <activity android:name="DeviceChat"></activity>
+        <activity android:name="MyDevices" android:configChanges="keyboardHidden|orientation"></activity>
+        <activity android:name="MyChannels" android:configChanges="keyboardHidden|orientation"></activity>
+        <activity android:name="MyChannelsDevices" android:windowSoftInputMode="adjustPan" android:configChanges="keyboardHidden|orientation"></activity>
+        <activity android:name="DeviceChat" android:configChanges="keyboardHidden|orientation"></activity>
 
     </application>
 
