@@ -87,15 +87,21 @@ public void removechannels(ArrayList<String[]> longPollChList){
 }			public void addtoDeviceChat(String message) {int u = -1;			try {
 				MyMessage mes =new MyMessage( new JSONObject(message));
 				Log.d(this.getClass().getName(), "MyMessage,from "+mes.from);
-
+if (mes.from.equals(localService.settings.getString("device", ""))){
+	for (Device dev : LocalService.deviceList){
+		if(Integer.toString(dev.u).equals(mes.to)){
+			u=dev.u;
+		}
+	}
+} else {
 				for (Device dev : LocalService.deviceList){
 					if(Integer.toString(dev.u).equals(mes.from)){
 						u=dev.u;
 					}
 				}
+}		
 				
-				
-				if (LocalService.currentDevice!=null&& mes.from.equals(Integer.toString(LocalService.currentDevice.u))){
+				if (LocalService.currentDevice!=null&& u ==LocalService.currentDevice.u){
 					boolean contains = false;
 					for (MyMessage mes1: LocalService.chatmessagelist){
 						

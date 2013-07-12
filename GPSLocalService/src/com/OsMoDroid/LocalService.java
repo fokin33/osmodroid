@@ -517,7 +517,7 @@ private long lastgpslocationtime=0;
 
 			Bundle b = message.getData();
 
-			
+			Log.d(this.getClass().getName(), "deviceU "+b.getInt("deviceU"));
 			
 			if(b.getInt("deviceU") != -1){
 				
