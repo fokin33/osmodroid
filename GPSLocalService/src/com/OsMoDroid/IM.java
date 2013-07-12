@@ -96,15 +96,28 @@ public void removechannels(ArrayList<String[]> longPollChList){
 				
 				
 				if (LocalService.currentDevice!=null&& mes.from.equals(Integer.toString(LocalService.currentDevice.u))){
-				LocalService.chatmessagelist.add(mes);
-				Collections.sort(LocalService.chatmessagelist);
-				LocalService.chatmessagesAdapter.notifyDataSetChanged();
+					boolean contains = false;
+					for (MyMessage mes1: LocalService.chatmessagelist){
+						
+						
+						if(mes1.u==mes.u){
+							 contains = true;
+							
+						}
+						
+					}
+					if (!contains){
+						LocalService.chatmessagelist.add(mes);
+						Collections.sort(LocalService.chatmessagelist);
+						LocalService.chatmessagesAdapter.notifyDataSetChanged();
+					}
+				
 				}
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if (u!=0){
+			if (u!=-1){
 			Message msg = new Message();			Bundle b = new Bundle();			b.putInt("deviceU", u);			msg.setData(b);			localService.alertHandler.sendMessage(msg);		}			}	private BroadcastReceiver bcr = new BroadcastReceiver() {		@Override		public void onReceive(Context context, Intent intent) {			Log.d(this.getClass().getName(), "BCR"+this);			Log.d(this.getClass().getName(), "BCR"+this+" Intent:"+intent);			if (intent.getAction().equals(android.net.ConnectivityManager.CONNECTIVITY_ACTION)) {				Bundle extras = intent.getExtras();				Log.d(this.getClass().getName(), "BCR"+this+ " "+intent.getExtras());				if(extras.containsKey("networkInfo")) {					NetworkInfo netinfo = (NetworkInfo) extras.get("networkInfo");					Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo);					Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo.getType());					if(netinfo.isConnected()) {						Log.d(this.getClass().getName(), "BCR"+this+" Network is connected");						Log.d(this.getClass().getName(), "BCR"+this+" Running:"+running);						// Network is connected						if(!running ) {							System.out.println("Starting from Reciever"+this.toString());							myThread.interrupt();							start();						}					}					else {						System.out.println("Stoping1 from Reciever"+this.toString());						stop();					}				}				else if(extras.containsKey("noConnectivity")) {					System.out.println("Stoping2 from Reciever"+this.toString());					stop();				}		    }		}	};	 /**
 	 * Выключает IM
 	 */

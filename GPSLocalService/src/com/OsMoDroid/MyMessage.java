@@ -39,7 +39,7 @@ public class MyMessage implements Comparable<MyMessage>{
 			this.from_addr=jo.optString("from_addr");
 			this.to=jo.optString("to");
 		
-		if (from_name.equals("")){
+		if (from_name.equals("")||from_name.equals("null")){
 			for (Device dev : LocalService.deviceList){
 				if (Integer.toString(dev.u).equals(from)){
 					from_name=dev.name;
