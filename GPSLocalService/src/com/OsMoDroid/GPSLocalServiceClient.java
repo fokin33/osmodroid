@@ -660,21 +660,21 @@ netutil.newapicommand((ResultsListener)mService,(Context)GPSLocalServiceClient.t
 			layout.addView(inputlogin);
 
 			final TextView txv3 = new TextView(this);
-			txv3.setText("Обычный или одноразовый пароль:");
+			txv3.setText("Пароль:");
 			layout.addView(txv3);
 
 			final EditText input = new EditText(this);
 			//input2.setText("Ваше имя");
 			layout.addView(input);
 		//	final EditText input = new EditText(this);
-			final TextView txv4 = new TextView(this);
-			txv4.setText("Одноразовый пароль можно получить по адресу http://esya.ru/app.html?act=add при наличии регистрации");
-			Linkify.addLinks(txv4, Linkify.ALL);
-			layout.addView(txv4);
+			//final TextView txv4 = new TextView(this);
+			//txv4.setText("Одноразовый пароль можно получить по адресу http://esya.ru/app.html?act=add при наличии регистрации");
+			//Linkify.addLinks(txv4, Linkify.ALL);
+			//layout.addView(txv4);
 
 			AlertDialog alertdialog3 = new AlertDialog.Builder(
 					GPSLocalServiceClient.this)
-					.setTitle("Подключение приложения")
+					.setTitle("Авторизация приложения")
 					.setView(layout)
 					.setPositiveButton(R.string.yes,
 							new DialogInterface.OnClickListener() {

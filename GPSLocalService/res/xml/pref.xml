@@ -68,9 +68,9 @@
 		android:defaultValue="false"
 		android:key="gpx"
 		android:summary="GPS-трек в формате gpx cохраняется на карте памяти (/sdcard/OsMoDroid/)"
-		android:title="Локальная запись" />
+		android:title="Запись трека" />
 
-		<PreferenceScreen android:title="Параметры локальной записи">
+		<PreferenceScreen android:title="Параметры записи">
 			<EditTextPreference
 				android:digits="0123456789"
 				android:inputType="number"
@@ -115,10 +115,11 @@
 				android:defaultValue="0" />
 		</PreferenceScreen>
 
-		<PreferenceScreen android:title="Оповещение" >
+		<PreferenceScreen android:title="Оповещения" >
 			<CheckBoxPreference
 				android:key="vibrate"
-				android:title="Вибрировать при потере интернета или GPS" android:defaultValue="false" />
+				android:title="Вибрировать при потере интернета или GPS"
+                                android:defaultValue="false" />
 			<EditTextPreference
 				android:digits="0123456789"
 				android:inputType="number"
@@ -167,7 +168,7 @@
     <CheckBoxPreference
         android:key="usewake"
         android:summary="Увеличивает расход энергии"
-        android:title="Не гасить подсветку"
+        android:title="Не гасить экран"
         android:defaultValue="false" />
     <CheckBoxPreference
         android:key="usecourse"
@@ -177,12 +178,12 @@
     <CheckBoxPreference
 		android:key="usenetwork"
 		android:summary="Использовать для определения координат сотовые сети и WiFi (дополнительный интернет-трафик)"
-		android:title="Беспроводные сети"
+		android:title="Искать по мобильным сетям"
 		android:defaultValue="true" />
     <CheckBoxPreference
 		android:key="im"
-                android:summary="Если отключить, вы не будете получать сообщения от других устройств и с сайта"
-		android:title="Обмен сообщениями"
+                android:summary="Включает постоянную связь с сервером Еся.ру, используется для удалённого управления и обмена сообщениями"
+		android:title="Полнофункциональный режим"
 		android:defaultValue="true" />
     <CheckBoxPreference
 		android:key="autostart"
