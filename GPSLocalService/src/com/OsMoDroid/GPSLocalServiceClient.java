@@ -1165,7 +1165,7 @@ mService.startcomand();
 ToggleButton globalsendToggle = (ToggleButton) findViewById(R.id.toggleButton1);
 Button authButton = (Button)findViewById(R.id.authButton);
 globalsendToggle.setVisibility(View.VISIBLE);
-authButton.setVisibility(View.INVISIBLE);
+authButton.setVisibility(View.GONE);
 netutil.newapicommand((ResultsListener)mService, "om_device_get:"+settings.getString("device", ""));
 
 
