@@ -297,8 +297,9 @@ if (jsonObject.optString("data").equals("closeclient")){
 	localService.alertHandler.post(new Runnable() {
 
 		public void run() {
-
-			 Toast.makeText(localService, "Попытка закрыть клиент удалённо" , Toast.LENGTH_SHORT).show();
+localService.stopServiceWork(false);
+localService.stopSelf();
+			
     try {
         localService.Pong(localService);
     } catch (JSONException e) {
