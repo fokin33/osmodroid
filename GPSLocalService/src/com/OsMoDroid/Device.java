@@ -84,7 +84,7 @@ public class Device {
 				  this.online=online;
 				  this.state=state;
 				  this.uid=uid;
-				  this.color=color;
+				  if (!color.equals("")){this.color=color;}
 				}
 	
 	

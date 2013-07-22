@@ -58,4 +58,5 @@
 <string name="send">Отправить</string>
 <string name="cancel">Отмена</string>
 <string name="speed">Скорость: км/ч</string>
+<string name="auth">Авторизация</string>
 </resources>

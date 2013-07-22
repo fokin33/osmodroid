@@ -24,19 +24,34 @@
 	    android:layout_height="wrap_content"
 	    android:text="ToggleButton" />
 
-	<Button
-		android:id="@+id/startButton"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:clickable="false"
-		android:text="@string/start" />
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="fill_horizontal" >
+
+	    <Button
+	        android:id="@+id/startButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0.49"
+	        android:clickable="false"
+	        android:text="@string/start" />
+
+	    <Button
+	        android:id="@+id/exitButton"
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:layout_weight="0.41"
+	        android:clickable="true"
+	        android:text="@string/stop" />
+
+	</LinearLayout>
 
 	<Button
-		android:id="@+id/exitButton"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:clickable="true"
-		android:text="@string/stop" />
+	    android:id="@+id/authButton"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:text="@string/auth" />
 
 	<TextView
 		android:id="@+id/Location"
