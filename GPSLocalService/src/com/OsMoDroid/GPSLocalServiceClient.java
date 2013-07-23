@@ -275,6 +275,32 @@ PowerManager pm;
 
 		setContentView(R.layout.main);
 		setTitle(strVersionName);
+		
+		final ToggleButton alarmToggle = (ToggleButton) findViewById(R.id.alarmButton);
+		if(settings.contains("signalisation")){
+			alarmToggle.setChecked(true);
+		} else 
+		{
+			alarmToggle.setChecked(false);
+		}
+		alarmToggle.setOnClickListener(new OnClickListener() {
+			
+			public void onClick(View v) {
+				if (conn == null || mService == null) {
+
+				} else {
+if (alarmToggle.isChecked()){
+					mService.enableSignalisation();}
+else {
+	mService.disableSignalisation();
+}
+					
+
+				}
+
+			}
+		});
+		
 		ToggleButton globalsendToggle = (ToggleButton) findViewById(R.id.toggleButton1);
 		Button auth = (Button) findViewById(R.id.authButton);
 		auth.setOnClickListener(new OnClickListener() {
@@ -456,6 +482,10 @@ netutil.newapicommand((ResultsListener)mService,(Context)GPSLocalServiceClient.t
 		// Log.d(getClass().getSimpleName(), "onResume() gpsclient");
 		ReadPref();
 		//WritePref();
+		if (!settings.getBoolean("usealarm", false) || settings.getString("key", "").equals("")){
+			ToggleButton alarmToggle = (ToggleButton)findViewById(R.id.alarmButton);
+			alarmToggle.setVisibility(View.GONE);
+		}
 		if (settings.getBoolean("usewake", false)){
 			wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyWakeLock");
 			wakeLock.acquire();

@@ -121,6 +121,11 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+
 
 import android.os.AsyncTask;
 
@@ -215,7 +220,7 @@ import android.util.Log;
 
 
 
-public  class LocalService extends Service implements LocationListener,GpsStatus.Listener, TextToSpeech.OnInitListener,  ResultsListener {
+public  class LocalService extends Service implements LocationListener,GpsStatus.Listener, TextToSpeech.OnInitListener,  ResultsListener, SensorEventListener  {
 
 	@Override
 	public boolean onUnbind(Intent intent) {
@@ -228,9 +233,10 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 
 boolean binded=false;
 
-
-
-
+private SensorManager mSensorManager;
+private Sensor mAccelerometer;
+final double calibration = SensorManager.STANDARD_GRAVITY;
+float currentAcceleration;
 	private static final int OSMODROID_ID = 1;
 
 	Boolean sessionstarted=false;
@@ -1020,6 +1026,11 @@ if (!settings.getBoolean("silentnotify", false)){
 
 
 
+
+		public SharedPreferences.Editor editor;
+
+
+
 		
 
 
@@ -1348,9 +1359,17 @@ public void stopcomand()
 		 //Debug.startMethodTracing("startsbuf");
 
 		super.onCreate();
-
+		
+		
 		serContext=LocalService.this;
-
+		settings = PreferenceManager.getDefaultSharedPreferences(this);
+		editor = settings.edit();
+		mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+		mAccelerometer=mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		if(settings.contains("signalisation")){
+			mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+			Log.d(this.getClass().getName(), "Enable signalisation after start ");
+		}
 		myManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
 
@@ -1363,7 +1382,7 @@ public void stopcomand()
 
 		sdf1.setTimeZone(TimeZone.getTimeZone("UTC"));
 
-		settings = PreferenceManager.getDefaultSharedPreferences(this);
+		
 
 		currentLocation = new Location("");
 		prevlocation = new Location("");
@@ -1859,7 +1878,8 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
 	public void onDestroy() {
 
 		super.onDestroy();
-
+		mSensorManager.unregisterListener(this);
+		Log.d(this.getClass().getName(), "Disable signalisation after destroy");
 		if (state){ stopServiceWork(false);}
 
 		if(myIM!=null){  myIM.close();}
@@ -2393,7 +2413,7 @@ private void manageIM(){
 
 	public void stopServiceWork(Boolean stopsession){
 
-		SharedPreferences.Editor editor = settings.edit();
+		
 
         editor.putFloat("lat", (float) currentLocation.getLatitude());
         editor.putFloat("lon", (float) currentLocation.getLongitude());
@@ -2576,11 +2596,7 @@ private void manageIM(){
 
 		//Log.d(getClass().getSimpleName(), "setstarted() localservice");
 
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-
-		SharedPreferences.Editor editor = settings.edit();
-
-        editor.putBoolean("started", started);
+		editor.putBoolean("started", started);
 
         editor.commit();
 
@@ -4012,7 +4028,7 @@ public void onResultsSucceeded(APIComResult result) {
 	if (result.Command.equals("start")&& !(result.Jo==null))
 
 	{
-		SharedPreferences.Editor editor = settings.edit();
+		
         editor.putLong("laststartcommandtime", System.currentTimeMillis());
         editor.commit();
 		if (!result.Jo.optString("lpch").equals("")&& !result.Jo.optString("lpch").equals(settings.getString("lpch", ""))){
@@ -4218,6 +4234,46 @@ deviceList.add(new Device("0","Мой компьютер","1", settings.getStrin
 
 
 
+}
+
+public void enableSignalisation (){
+	editor.putLong("signalisation", System.currentTimeMillis());
+	editor.commit();
+	mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+	Log.d(this.getClass().getName(), "Enable signalisation ");
+	}
+
+public void disableSignalisation (){
+	editor.remove("signalisation");
+	editor.commit();
+	mSensorManager.unregisterListener(this);
+	Log.d(this.getClass().getName(), "Disable signalisation ");
+	
+}
+
+public void onAccuracyChanged(Sensor sensor, int accuracy) {
+	// TODO Auto-generated method stub
+	
+}
+
+
+public void onSensorChanged(SensorEvent event) {
+	
+	double x = event.values[0];
+    double y = event.values[1];
+    double z = event.values[2];
+
+    double a = Math.round(Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)
+            + Math.pow(z, 2)));
+    currentAcceleration = Math.abs((float) (a - calibration));
+    if(settings.contains("signalisation")&& settings.getLong("signalisation", 0)+10000<System.currentTimeMillis()&&currentAcceleration>0.5f){
+    	editor.putLong("signalisation", System.currentTimeMillis());
+    	editor.commit();
+    	netutil.newapicommand((ResultsListener)LocalService.this, "om_alarm");
+    	Log.d(this.getClass().getName(), "Alarm Alram Alarm "+Float.toString(currentAcceleration));
+    }
+
+	
 }
 }
 
