@@ -4269,7 +4269,7 @@ public void onSensorChanged(SensorEvent event) {
     if(settings.contains("signalisation")&& settings.getLong("signalisation", 0)+10000<System.currentTimeMillis()&&currentAcceleration>0.5f){
     	editor.putLong("signalisation", System.currentTimeMillis());
     	editor.commit();
-    	netutil.newapicommand((ResultsListener)LocalService.this, "om_alarm");
+    	netutil.newapicommand((ResultsListener)LocalService.this, "om_device_alarm");
     	Log.d(this.getClass().getName(), "Alarm Alram Alarm "+Float.toString(currentAcceleration));
     }
 
