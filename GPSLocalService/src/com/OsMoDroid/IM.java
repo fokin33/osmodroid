@@ -326,6 +326,28 @@ localService.wifioff(localService);
 
 }
 
+if (jsonObject.optString("data").equals("signalon")){
+
+localService.enableSignalisation();
+
+}
+
+if (jsonObject.optString("data").equals("signaloff")){
+
+localService.disableSignalisation();
+
+}
+
+if (jsonObject.optString("data").equals("alarmon")){
+
+localService.playAlarmOn();
+
+}
+
+
+
+
+
 if (jsonObject.optString("data").equals("where")){
 localService.mayak=true;
 if (!localService.state){

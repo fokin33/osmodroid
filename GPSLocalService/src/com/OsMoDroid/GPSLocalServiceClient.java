@@ -485,7 +485,11 @@ netutil.newapicommand((ResultsListener)mService,(Context)GPSLocalServiceClient.t
 		if (!settings.getBoolean("usealarm", false) || settings.getString("key", "").equals("")){
 			ToggleButton alarmToggle = (ToggleButton)findViewById(R.id.alarmButton);
 			alarmToggle.setVisibility(View.GONE);
+		}else{
+			ToggleButton alarmToggle = (ToggleButton)findViewById(R.id.alarmButton);
+			alarmToggle.setVisibility(View.VISIBLE);
 		}
+		
 		if (settings.getBoolean("usewake", false)){
 			wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyWakeLock");
 			wakeLock.acquire();

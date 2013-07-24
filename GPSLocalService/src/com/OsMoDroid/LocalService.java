@@ -261,6 +261,8 @@ float currentAcceleration;
 	int startsound;
 	
 	int stopsound;
+	
+	int alarmsound;
 
 	private static SoundPool soundPool;
 	//String cursendforbuffer="";
@@ -1029,6 +1031,8 @@ if (!settings.getBoolean("silentnotify", false)){
 
 		public SharedPreferences.Editor editor;
 
+		private Float sensivity;
+
 
 
 		
@@ -1646,6 +1650,8 @@ public void stopcomand()
 		startsound = soundPool.load(this, R.raw.start, 1);
 		
 		stopsound = soundPool.load(this, R.raw.stop, 1);
+		
+		alarmsound = soundPool.load(this, R.raw.signal, 1);
 		
 //		gpson = MediaPlayer.create(this, R.raw.gpson);
 //
@@ -4236,18 +4242,34 @@ deviceList.add(new Device("0","Мой компьютер","1", settings.getStrin
 
 }
 
+public void playAlarmOn (){
+	soundPool.play(alarmsound, 1f, 1f, 1, 1, 1f);
+	Log.d(this.getClass().getName(), "play alarm on ");
+}
+
+public void playAlarmOff (){
+	soundPool.pause(alarmsound);
+	Log.d(this.getClass().getName(), "play alarm off ");
+	
+}
+
+
 public void enableSignalisation (){
 	editor.putLong("signalisation", System.currentTimeMillis());
 	editor.commit();
 	mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 	Log.d(this.getClass().getName(), "Enable signalisation ");
+	
 	}
+	
+
 
 public void disableSignalisation (){
 	editor.remove("signalisation");
 	editor.commit();
 	mSensorManager.unregisterListener(this);
 	Log.d(this.getClass().getName(), "Disable signalisation ");
+	playAlarmOff();
 	
 }
 
@@ -4267,7 +4289,15 @@ public void onSensorChanged(SensorEvent event) {
             + Math.pow(z, 2)));
     currentAcceleration = Math.abs((float) (a - calibration));
     
-    if(settings.contains("signalisation")&& settings.getLong("signalisation", 0)+10000<System.currentTimeMillis()&&currentAcceleration>settings.getFloat("sensivity", 5)/10){
+    
+    try {
+		sensivity = ((float)Integer.parseInt(settings.getString("sensivity", "5")))/10f;
+		Log.d(this.getClass().getName(), "sensivity= "+Float.toString(sensivity));
+	} catch (NumberFormatException e) {
+		sensivity=0.5f;
+	}
+    
+    if(settings.contains("signalisation")&& settings.getLong("signalisation", 0)+10000<System.currentTimeMillis()&&currentAcceleration>sensivity){
     	editor.putLong("signalisation", System.currentTimeMillis());
     	editor.commit();
     	netutil.newapicommand((ResultsListener)LocalService.this, "om_device_alarm");
