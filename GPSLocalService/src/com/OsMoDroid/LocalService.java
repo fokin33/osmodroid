@@ -4266,7 +4266,8 @@ public void onSensorChanged(SensorEvent event) {
     double a = Math.round(Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)
             + Math.pow(z, 2)));
     currentAcceleration = Math.abs((float) (a - calibration));
-    if(settings.contains("signalisation")&& settings.getLong("signalisation", 0)+10000<System.currentTimeMillis()&&currentAcceleration>0.2f){
+    
+    if(settings.contains("signalisation")&& settings.getLong("signalisation", 0)+10000<System.currentTimeMillis()&&currentAcceleration>settings.getFloat("sensivity", 5)/10){
     	editor.putLong("signalisation", System.currentTimeMillis());
     	editor.commit();
     	netutil.newapicommand((ResultsListener)LocalService.this, "om_device_alarm");
