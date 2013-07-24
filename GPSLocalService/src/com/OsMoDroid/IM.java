@@ -328,19 +328,25 @@ localService.wifioff(localService);
 
 if (jsonObject.optString("data").equals("signalon")){
 
-localService.enableSignalisation();
+localService.enableSignalisation(true);
 
 }
 
 if (jsonObject.optString("data").equals("signaloff")){
 
-localService.disableSignalisation();
+localService.disableSignalisation(true);
 
 }
 
 if (jsonObject.optString("data").equals("alarmon")){
 
-localService.playAlarmOn();
+localService.playAlarmOn(true);
+
+}
+
+if (jsonObject.optString("data").equals("alarmoff")){
+
+localService.playAlarmOff(true);
 
 }
 

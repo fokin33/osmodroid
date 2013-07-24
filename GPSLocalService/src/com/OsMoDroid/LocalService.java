@@ -241,6 +241,7 @@ float currentAcceleration;
 
 	Boolean sessionstarted=false;
 	Boolean globalsend=false;
+	Boolean signalisationOn=false;
 	
 	int notifyid=2;
 
@@ -263,6 +264,8 @@ float currentAcceleration;
 	int stopsound;
 	
 	int alarmsound;
+	
+	int signalonoff;
 
 	private static SoundPool soundPool;
 	//String cursendforbuffer="";
@@ -1033,6 +1036,8 @@ if (!settings.getBoolean("silentnotify", false)){
 
 		private Float sensivity;
 
+		private int alarmStreamId=0;
+
 
 
 		
@@ -1143,6 +1148,7 @@ public void refresh(){
 	in.putExtra("stat", "Максимальная: "+df1.format(maxspeed*3.6)+" км/ч\n"+"Средняя: "+df1.format(avgspeed*3600)+" км/ч\n"+"Пробег: "+df2.format(workdistance/1000) + " км"+"\n"+"Время работы: "+formatInterval(timeperiod));
 	in.putExtra("started", state);
 	in.putExtra("globalsend", globalsend);
+	in.putExtra("signalisationon", signalisationOn);
 	sendBroadcast(in);
 
 }
@@ -1372,6 +1378,7 @@ public void stopcomand()
 		mAccelerometer=mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		if(settings.contains("signalisation")){
 			mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+			signalisationOn=true;
 			Log.d(this.getClass().getName(), "Enable signalisation after start ");
 		}
 		myManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -1652,6 +1659,8 @@ public void stopcomand()
 		stopsound = soundPool.load(this, R.raw.stop, 1);
 		
 		alarmsound = soundPool.load(this, R.raw.signal, 1);
+		
+		signalonoff = soundPool.load(this, R.raw.signalonoff, 1);
 		
 //		gpson = MediaPlayer.create(this, R.raw.gpson);
 //
@@ -4242,34 +4251,45 @@ deviceList.add(new Device("0","Мой компьютер","1", settings.getStrin
 
 }
 
-public void playAlarmOn (){
-	soundPool.play(alarmsound, 1f, 1f, 1, 1, 1f);
+public void playAlarmOn (Boolean remote){
+	alarmStreamId = soundPool.play(alarmsound, 1f, 1f, 1, -1, 1f);
+	if (remote){netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
 	Log.d(this.getClass().getName(), "play alarm on ");
 }
 
-public void playAlarmOff (){
-	soundPool.pause(alarmsound);
+public void playAlarmOff (Boolean remote){
+	soundPool.pause(alarmStreamId);
+	if (remote){netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
 	Log.d(this.getClass().getName(), "play alarm off ");
 	
 }
 
 
-public void enableSignalisation (){
+public void enableSignalisation (Boolean remote){
 	editor.putLong("signalisation", System.currentTimeMillis());
 	editor.commit();
 	mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 	Log.d(this.getClass().getName(), "Enable signalisation ");
+	alarmStreamId = soundPool.play(signalonoff, 1f, 1f, 1, 0, 1f);
+	signalisationOn=true;
 	
+	if (remote){refresh();
+		netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
 	}
 	
 
 
-public void disableSignalisation (){
+public void disableSignalisation (Boolean remote){
 	editor.remove("signalisation");
 	editor.commit();
 	mSensorManager.unregisterListener(this);
 	Log.d(this.getClass().getName(), "Disable signalisation ");
-	playAlarmOff();
+	playAlarmOff(remote);
+	alarmStreamId = soundPool.play(signalonoff, 1f, 1f, 1, 0, 1f);
+	signalisationOn=false;
+	
+	if (remote){refresh();
+	netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
 	
 }
 
@@ -4292,7 +4312,7 @@ public void onSensorChanged(SensorEvent event) {
     
     try {
 		sensivity = ((float)Integer.parseInt(settings.getString("sensivity", "5")))/10f;
-		Log.d(this.getClass().getName(), "sensivity= "+Float.toString(sensivity));
+		
 	} catch (NumberFormatException e) {
 		sensivity=0.5f;
 	}

@@ -290,9 +290,9 @@ PowerManager pm;
 
 				} else {
 if (alarmToggle.isChecked()){
-					mService.enableSignalisation();}
+					mService.enableSignalisation(false);}
 else {
-	mService.disableSignalisation();
+	mService.disableSignalisation(false);
 }
 					
 
@@ -399,6 +399,11 @@ netutil.newapicommand((ResultsListener)mService,(Context)GPSLocalServiceClient.t
 					globalsendToggle.setChecked(intent.getBooleanExtra("globalsend", false));
 					
 				}
+				if (intent.hasExtra("signalisationon")){
+					ToggleButton alarmButton=(ToggleButton)findViewById(R.id.alarmButton);
+					alarmButton.setChecked(intent.getBooleanExtra("signalisationon", false));
+				}
+				
 				if (intent.hasExtra("started")){
 					
 					Button start = (Button) findViewById(R.id.startButton);
