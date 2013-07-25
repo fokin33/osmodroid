@@ -4252,13 +4252,13 @@ deviceList.add(new Device("0","Мой компьютер","1", settings.getStrin
 }
 
 public void playAlarmOn (Boolean remote){
-	alarmStreamId = soundPool.play(alarmsound, 1f, 1f, 1, -1, 1f);
+	if (alarmStreamId==0){alarmStreamId = soundPool.play(alarmsound, 1f, 1f, 1, -1, 1f);}
 	if (remote){netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
 	Log.d(this.getClass().getName(), "play alarm on ");
 }
 
 public void playAlarmOff (Boolean remote){
-	soundPool.pause(alarmStreamId);
+	soundPool.stop(alarmStreamId);
 	if (remote){netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
 	Log.d(this.getClass().getName(), "play alarm off ");
 	
