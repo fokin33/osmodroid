@@ -711,9 +711,18 @@ if (!settings.getBoolean("silentnotify", false)){
 
 			//	Log.d(getClass().getSimpleName(), "Remote Deactivate");
 
-				stopServiceWork(true);
+			//	stopServiceWork(true);
 
 				//Toast.makeText(LocalService.this, "aaa" , Toast.LENGTH_SHORT).show();
+				if (state){
+		        	alertHandler.post(new Runnable() {
+
+						public void run() {
+
+		        	stopServiceWork(false);
+		           
+		            }});
+		        }
 
 				return;
 
@@ -737,7 +746,17 @@ if (!settings.getBoolean("silentnotify", false)){
 
 			//	Log.d(getClass().getSimpleName(), "Remote Deactivate");
 
-				startServiceWork();
+			//	startServiceWork();
+				
+				if (!state){
+		        	alertHandler.post(new Runnable() {
+
+						public void run() {
+
+		        	startServiceWork();
+		           
+		            }});
+		        }
 
 
 

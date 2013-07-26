@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 public class RemoteOsMoDroidClientActivity extends Activity {
 	TextView t;
@@ -57,6 +58,8 @@ public class RemoteOsMoDroidClientActivity extends Activity {
 	Button getinfobutton;
 	IRemoteOsMoDroidService mIRemoteService;
 	boolean connected=false;
+	Button activate;
+	Button deactivate;
 
     ServiceConnection mConnection = new ServiceConnection() {
 
@@ -97,6 +100,32 @@ b1 = (Button) findViewById(R.id.button1);
 b2 = (Button) findViewById(R.id.Button2);
 b3 = (Button) findViewById(R.id.Button3);
 getinfobutton = (Button) findViewById(R.id.getInfobutton);
+activate =(Button)findViewById(R.id.activate);
+deactivate =(Button)findViewById(R.id.deactivate);
+activate.setOnClickListener(new OnClickListener() {
+	
+	public void onClick(View v) {
+try {
+	mIRemoteService.Activate();
+} catch (RemoteException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+		
+	}
+});
+deactivate.setOnClickListener(new OnClickListener() {
+	
+	public void onClick(View v) {
+try {
+	mIRemoteService.Deactivate();
+} catch (RemoteException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+		
+	}
+});
 
 
 b1.setOnClickListener(new OnClickListener() {
