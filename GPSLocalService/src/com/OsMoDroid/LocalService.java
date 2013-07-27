@@ -4273,12 +4273,34 @@ deviceList.add(new Device("0","Мой компьютер","1", settings.getStrin
 public void playAlarmOn (Boolean remote){
 	if (alarmStreamId==0){alarmStreamId = soundPool.play(alarmsound, 1f, 1f, 1, -1, 1f);}
 	if (remote){netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
+	else{
+		  JSONObject postjson = new JSONObject();
+        try {
+			postjson.put("alarm", "on");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+        netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+	
+	}
 	Log.d(this.getClass().getName(), "play alarm on ");
+	
 }
 
 public void playAlarmOff (Boolean remote){
 	soundPool.stop(alarmStreamId);
+	alarmStreamId=0;
 	if (remote){netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
+	else{
+		  JSONObject postjson = new JSONObject();
+          try {
+			postjson.put("alarm", "off");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+          netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+	
+	}
 	Log.d(this.getClass().getName(), "play alarm off ");
 	
 }
@@ -4289,11 +4311,21 @@ public void enableSignalisation (Boolean remote){
 	editor.commit();
 	mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 	Log.d(this.getClass().getName(), "Enable signalisation ");
-	alarmStreamId = soundPool.play(signalonoff, 1f, 1f, 1, 0, 1f);
+	soundPool.play(signalonoff, 1f, 1f, 1, 0, 1f);
 	signalisationOn=true;
 	
 	if (remote){refresh();
 		netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
+	else{
+		  JSONObject postjson = new JSONObject();
+        try {
+			postjson.put("signal", "on");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+        netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+	
+	}
 	}
 	
 
@@ -4304,11 +4336,21 @@ public void disableSignalisation (Boolean remote){
 	mSensorManager.unregisterListener(this);
 	Log.d(this.getClass().getName(), "Disable signalisation ");
 	playAlarmOff(remote);
-	alarmStreamId = soundPool.play(signalonoff, 1f, 1f, 1, 0, 1f);
+	soundPool.play(signalonoff, 1f, 1f, 1, 0, 1f);
 	signalisationOn=false;
 	
 	if (remote){refresh();
 	netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
+	else{
+		  JSONObject postjson = new JSONObject();
+        try {
+			postjson.put("signal", "off");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+        netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+	
+	}
 	
 }
 
