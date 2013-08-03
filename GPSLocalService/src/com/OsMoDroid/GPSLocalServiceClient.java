@@ -142,6 +142,7 @@ PowerManager pm;
 			if (settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-14400000){
 				mService.startcomand();
 				}
+			netutil.newapicommand((ResultsListener)mService.serContext, "om_device_get:"+settings.getString("device", ""));
 //			if (started && ( conn == null || mService == null)) {
 //				Log.d(getClass().getSimpleName(), "нет бинда с сервисом - startcommand");
 //			} else {

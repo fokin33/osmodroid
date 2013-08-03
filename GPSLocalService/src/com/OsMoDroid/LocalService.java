@@ -1115,9 +1115,11 @@ binded=true;
 			netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
 
 		return rBinder;}
-
+		else {
 		Log.d(getClass().getSimpleName(), "binded localy");
-
+		
+		
+		}
 		return mBinder;
 
 
@@ -2330,11 +2332,12 @@ private void manageIM(){
 		
 				myManager.removeUpdates(LocalService.this);
 		
-				myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, LocalService.this);
+			if (settings.getBoolean("usegps", true))	{myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, LocalService.this);
+			myManager.addGpsStatusListener(LocalService.this);}
 		
 			if (settings.getBoolean("usenetwork", true)){	myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, LocalService.this);}
 		
-				myManager.addGpsStatusListener(LocalService.this);
+			
 		
 				}
 		
@@ -2358,12 +2361,13 @@ private void manageIM(){
 		
 			//Log.d(this.getClass().getName(), "период"+gpsperiod+"meters"+gpsdistance);
 		
-			myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsperiod, 0, LocalService.this);
+			if (settings.getBoolean("usegps", true)){myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsperiod, 0, LocalService.this);
+			myManager.addGpsStatusListener(LocalService.this);}
 		
 			if (settings.getBoolean("usenetwork", true)){	
-				myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, LocalService.this);}
+				myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, gpsperiod, gpsdistance, LocalService.this);}
 		
-			myManager.addGpsStatusListener(LocalService.this);
+			
 		
 		}
 	}

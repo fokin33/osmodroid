@@ -193,6 +193,10 @@
                     android:key="usenetwork"
                     android:summary="Использовать для определения координат сотовые сети и WiFi (дополнительный интернет-трафик)"
                     android:title="Искать по мобильным сетям"
+                    android:defaultValue="true" /><CheckBoxPreference
+                    android:key="usegps"
+                    android:summary="Использовать для определения координат GPS"
+                    android:title="Искать по GPS"
                     android:defaultValue="true" />
         <CheckBoxPreference
                     android:key="im"
