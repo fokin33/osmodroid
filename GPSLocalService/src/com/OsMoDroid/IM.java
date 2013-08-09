@@ -285,6 +285,10 @@ if (jsonObject.optString("data").equals("ping")){
         }
 }
 
+if (jsonObject.optString("data").substring(0, 7).equals("routeto")){
+    localService.informRemoteClientRouteTo(Float.parseFloat(jsonObject.optString("data").substring(8, 17)), Float.parseFloat(jsonObject.optString("data").substring(18, 27)));
+}
+
 if (jsonObject.optString("data").equals("batteryinfo")){
         try {
             localService.batteryinfo(localService);

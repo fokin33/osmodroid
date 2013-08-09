@@ -1138,7 +1138,7 @@ public synchronized void informRemoteClientChannelUpdate(){
         }
     }
     remoteListenerCallBackList.finishBroadcast();
-    Log.d(getClass().getSimpleName(), "inform client");
+    Log.d(getClass().getSimpleName(), "inform client channelUpdated");
 }
 
 public synchronized void informRemoteClientChannelsListUpdate(){
@@ -1152,10 +1152,22 @@ public synchronized void informRemoteClientChannelsListUpdate(){
         }
     }
     remoteListenerCallBackList.finishBroadcast();
-    Log.d(getClass().getSimpleName(), "inform client");
+    Log.d(getClass().getSimpleName(), "inform client channelsListUpdated");
 }
 
-
+public synchronized void informRemoteClientRouteTo(float Lat, float Lon){
+	final int N = remoteListenerCallBackList.beginBroadcast();
+    for (int i=0; i<N; i++) {
+        try {
+        	remoteListenerCallBackList.getBroadcastItem(i).routeTo(Lat, Lon);
+        } catch (RemoteException e) {
+            // The RemoteCallbackList will take care of removing
+            // the dead object for us.
+        }
+    }
+    remoteListenerCallBackList.finishBroadcast();
+    Log.d(getClass().getSimpleName(), "inform client routeTo");
+}
 
 
 
