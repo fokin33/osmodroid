@@ -1112,8 +1112,9 @@ binded=true;
 		if (intent.getAction().equals("OsMoDroid.remote")){
 
 			Log.d(getClass().getSimpleName(), "binded remote");
+			if (!settings.getString("key", "" ).equals("") ){
 			netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
-
+			}
 		return rBinder;}
 		else {
 		Log.d(getClass().getSimpleName(), "binded localy");
