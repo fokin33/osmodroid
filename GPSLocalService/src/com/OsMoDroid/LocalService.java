@@ -3552,8 +3552,13 @@ private String decodesendresult(String str){
 		sended=false;
 
 		 stopServiceWork(true);
-
-		 notifywarnactivity("Команда:Отправка положения "+str);
+		 if (code==5||code==6){
+		 notifywarnactivity("Идентификационные данные(hasn или контрольное число) неправильные, нужно сбросить хеш \n или ввести его в настройках вручную", true);
+		 }
+		 else
+		 {
+			 notifywarnactivity("Команда:Отправка положения "+str, false);
+		 }
 
 		}
 
@@ -3948,7 +3953,7 @@ public boolean isOnline() {
 
 
 
-	void notifywarnactivity(String info) {
+	void notifywarnactivity(String info, boolean b) {
 
 
 
@@ -3959,6 +3964,11 @@ public boolean isOnline() {
 		notificationIntent.removeExtra("info");
 
 		notificationIntent.putExtra("info", info);
+		
+		notificationIntent.removeExtra("neednewhash");
+
+		notificationIntent.putExtra("neednewhash", b);
+
 
 		//notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
@@ -4062,7 +4072,7 @@ public void onResultsSucceeded(APIComResult result) {
 
 		Log.d(getClass().getSimpleName(),"notifwar2:"+result.Jo.optString("error")+" "+result.Jo.optString("error_description"));
 
-		notifywarnactivity("Команда:"+result.Command+" Код ошибки:"+result.Jo.optString("error")+" Расшифровка:"+result.Jo.optString("error_description")+" Запрос:"+result.url);
+		notifywarnactivity("Команда:"+result.Command+" Код ошибки:"+result.Jo.optString("error")+" Расшифровка:"+result.Jo.optString("error_description")+" Запрос:"+result.url, false);
 		}
 
 	}
