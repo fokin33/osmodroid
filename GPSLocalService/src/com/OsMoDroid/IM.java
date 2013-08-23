@@ -286,7 +286,8 @@ if (jsonObject.optString("data").equals("ping")){
 }
 
 if (jsonObject.optString("data").substring(0, 7).equals("routeto")){
-    localService.informRemoteClientRouteTo(Float.parseFloat(jsonObject.optString("data").substring(8, 17)), Float.parseFloat(jsonObject.optString("data").substring(18, 27)));
+	int pluspos=jsonObject.optString("data").indexOf("_");
+	localService.informRemoteClientRouteTo(Float.parseFloat(jsonObject.optString("data").substring(8, pluspos)), Float.parseFloat(jsonObject.optString("data").substring(pluspos, jsonObject.optString("data").length())));
 }
 
 if (jsonObject.optString("data").equals("batteryinfo")){
