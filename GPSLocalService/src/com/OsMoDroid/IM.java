@@ -115,7 +115,16 @@ if (mes.from.equals(localService.settings.getString("device", ""))){
 					if (!contains){
 						LocalService.chatmessagelist.add(mes);
 						Collections.sort(LocalService.chatmessagelist);
-						LocalService.chatmessagesAdapter.notifyDataSetChanged();
+						
+						localService.alertHandler.post(new Runnable(){
+							public void run() {
+								if (LocalService.chatmessagesAdapter!=null){
+									LocalService.chatmessagesAdapter.notifyDataSetChanged();
+								}
+							}
+						});
+						
+						
 					}
 				
 				}

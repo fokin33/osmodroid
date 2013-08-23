@@ -4069,10 +4069,14 @@ public void onResultsSucceeded(APIComResult result) {
 
 	if (!(result.Jo==null)) {
 		if (result.Jo.has("error")){
-
+			if ((result.Command.equals("session_start")||result.Command.equals("start"))&&result.Jo.optString("error").equals("200")){
+				notifywarnactivity("Идентификационные данные(hasn или контрольное число) неправильные, нужно сбросить хеш \n или ввести его в настройках вручную", true);
+			}else
+			{
 		Log.d(getClass().getSimpleName(),"notifwar2:"+result.Jo.optString("error")+" "+result.Jo.optString("error_description"));
 
 		notifywarnactivity("Команда:"+result.Command+" Код ошибки:"+result.Jo.optString("error")+" Расшифровка:"+result.Jo.optString("error_description")+" Запрос:"+result.url, false);
+			}
 		}
 
 	}
