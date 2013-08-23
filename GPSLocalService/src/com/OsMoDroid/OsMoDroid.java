@@ -5,7 +5,8 @@ import android.app.Application;
 public class OsMoDroid extends Application {
 	
 	
-	  public static boolean activityVisible=false;
+	  public static boolean mesactivityVisible=false;
+	  public static boolean gpslocalserviceclientVisible=false;
 	  private static int notifyid=1;
 	  final public static int warnnotifyid=3;
 	  final public static int mesnotifyid=2;

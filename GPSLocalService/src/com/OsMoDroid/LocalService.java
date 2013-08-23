@@ -635,7 +635,7 @@ if (!settings.getBoolean("silentnotify", false)){
 
 
 
-			 if (OsMoDroid.activityVisible) {
+			 if (OsMoDroid.mesactivityVisible) {
 
 	    		try {
 
@@ -3553,7 +3553,12 @@ private String decodesendresult(String str){
 
 		 stopServiceWork(true);
 		 if (code==5||code==6){
-		 notifywarnactivity("Идентификационные данные(hasn или контрольное число) неправильные, нужно сбросить хеш \n или ввести его в настройках вручную", true);
+			 if(!OsMoDroid.gpslocalserviceclientVisible){
+			 notifywarnactivity(getString(R.string.warnhash), true);}
+			 else {
+				 warnwronghash ();
+			 }
+		 
 		 }
 		 else
 		 {
@@ -3951,7 +3956,21 @@ public boolean isOnline() {
 
 }
 
+	void warnwronghash (){
+		Intent notificationIntent = new Intent(this, WarnActivity.class);
 
+		notificationIntent.removeExtra("info");
+
+		notificationIntent.putExtra("info", getString(R.string.warnhash));
+		
+		notificationIntent.removeExtra("neednewhash");
+
+		notificationIntent.putExtra("neednewhash", true);
+
+		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		
+		getApplication().startActivity(notificationIntent);
+	}
 
 	void notifywarnactivity(String info, boolean b) {
 
@@ -4071,7 +4090,12 @@ public void onResultsSucceeded(APIComResult result) {
 		if (result.Jo.has("error")){
 			if ((result.Command.equals("session_start")||result.Command.equals("start"))&&result.Jo.optString("error").equals("200")){
 				stopServiceWork(false);
-				notifywarnactivity("Идентификационные данные(hasn или контрольное число) неправильные, нужно сбросить хеш \n или ввести его в настройках вручную", true);
+				if(!OsMoDroid.gpslocalserviceclientVisible){
+				
+				notifywarnactivity(getString(R.string.warnhash), true);}
+				else {
+					warnwronghash ();
+				}
 			}else
 			{
 		Log.d(getClass().getSimpleName(),"notifwar2:"+result.Jo.optString("error")+" "+result.Jo.optString("error_description"));

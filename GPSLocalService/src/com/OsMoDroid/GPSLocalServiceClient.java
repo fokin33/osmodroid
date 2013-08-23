@@ -192,6 +192,7 @@ PowerManager pm;
 	 protected void onPause(){
 
 	 super.onPause();
+	 OsMoDroid.gpslocalserviceclientVisible=false;
 	 if (!(wakeLock==null) &&wakeLock.isHeld())wakeLock.release();
 
 
@@ -488,6 +489,7 @@ netutil.newapicommand((ResultsListener)mService,(Context)GPSLocalServiceClient.t
 	protected void onResume() {
 		super.onResume();
 		// Log.d(getClass().getSimpleName(), "onResume() gpsclient");
+		OsMoDroid.gpslocalserviceclientVisible=true;
 		ReadPref();
 		//WritePref();
 		if (!settings.getBoolean("usealarm", false) || settings.getString("key", "").equals("")){

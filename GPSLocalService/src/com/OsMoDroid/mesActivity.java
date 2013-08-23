@@ -65,7 +65,7 @@ public class mesActivity extends Activity implements ResultsListener {
 		// TODO Auto-generated method stub
 		super.onPause();
 		 Log.d("mesActivity", "OnPause");
-		 OsMoDroid.activityVisible=false;
+		 OsMoDroid.mesactivityVisible=false;
 		 
 	}
 	@Override
@@ -80,7 +80,7 @@ public class mesActivity extends Activity implements ResultsListener {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		OsMoDroid.activityVisible=true;
+		OsMoDroid.mesactivityVisible=true;
 			Log.d("mesActivity", "OnResume");
 			Bundle b=this.getIntent().getExtras();
 	if (b!=null){
