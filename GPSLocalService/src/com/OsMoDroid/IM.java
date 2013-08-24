@@ -399,7 +399,7 @@ if (!localService.state){
 	}
 		}
 	},90000);
-	
+	  localService.Pong(localService);
 
 
 }
