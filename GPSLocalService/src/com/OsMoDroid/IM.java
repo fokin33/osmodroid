@@ -294,7 +294,7 @@ if (jsonObject.optString("data").equals("ping")){
         }
 }
 
-if (jsonObject.optString("data").substring(0, 7).equals("routeto")){
+if (jsonObject.optString("data").substring(0, 7).equals("routeto")&&jsonObject.optString("data").length()>7){
 	int pluspos=jsonObject.optString("data").lastIndexOf("_");
 	localService.informRemoteClientRouteTo(Float.parseFloat(jsonObject.optString("data").substring(8, pluspos)), Float.parseFloat(jsonObject.optString("data").substring(pluspos+1, jsonObject.optString("data").length())));
 }
