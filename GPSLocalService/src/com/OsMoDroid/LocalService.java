@@ -1064,6 +1064,8 @@ if (!settings.getBoolean("silentnotify", false)){
 
 		private int alarmStreamId=0;
 		private DbxFile testFile;
+		private int count=0;
+		private int countFix=0;
 
 
 
@@ -1885,7 +1887,8 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
 	
 	void satteliteinfo(Context context) throws JSONException{
         JSONObject postjson = new JSONObject();
-        postjson.put("sattelite", sattelite);
+        postjson.put("view", count);
+        postjson.put("active", countFix);
         postjson.put("acuracy", accuracy);
         netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 }
@@ -1941,8 +1944,12 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
 		WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		WifiInfo wifiInfo = wifi.getConnectionInfo();
 		String wifiname = wifiInfo.getSSID();
+		String mac = wifiInfo.getMacAddress();
+		String speed = Integer.toString(wifiInfo.getRssi());
 		 JSONObject postjson = new JSONObject();
          postjson.put("wifiname", wifiname);
+         postjson.put("mac", mac);
+         postjson.put("speed", speed);
          netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 	}
 	
@@ -3916,8 +3923,6 @@ if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED) || send.is
 
 public void onGpsStatusChanged(int event) {
 	int MaxPrn = 0;
-	int Count = 0;
-	int CountFix = 0;
 	boolean hasA = false;
 	boolean hasE = false;
 
@@ -3930,19 +3935,19 @@ public void onGpsStatusChanged(int event) {
 	while ( it.hasNext() ) {
 		GpsSatellite oSat = (GpsSatellite) it.next() ;
 
-		Count=Count+1;
+		count=count+1;
 
 		hasA = oSat.hasAlmanac();
 		hasE = oSat.hasEphemeris();
 
 		if(oSat.usedInFix() ){
-			CountFix=CountFix+1;
+			countFix=countFix+1;
 			if(oSat.getPrn()>MaxPrn) MaxPrn=oSat.getPrn();
 			//Log.e("A fost folosit ", "int fix!");
 		}
 	}
 
-	sattelite=getString(R.string.Sputniki)+Count+":"+CountFix; //+" ("+hasA+"-"+hasE+")";
+	sattelite=getString(R.string.Sputniki)+count+":"+countFix; //+" ("+hasA+"-"+hasE+")";
 	refresh();
 }
 
