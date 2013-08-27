@@ -1937,13 +1937,13 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
         netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
 	}
 	
-	void wifinfo(Context context) throws JSONException {
+	void wifiinfo(Context context) throws JSONException {
 		WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		WifiInfo wifiInfo = wifi.getConnectionInfo();
 		String wifiname = wifiInfo.getSSID();
 		 JSONObject postjson = new JSONObject();
          postjson.put("wifiname", wifiname);
-         netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
+         netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 	}
 	
 	

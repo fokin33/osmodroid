@@ -315,9 +315,9 @@ if (jsonObject.optString("data").equals("sattelite")){
     }
 }
 
-if (jsonObject.optString("data").equals("wifinfo")){
+if (jsonObject.optString("data").equals("wifiinfo")){
     try {
-        localService.wifinfo(localService);
+        localService.wifiinfo(localService);
     } catch (JSONException e) {
         e.printStackTrace();
     }
