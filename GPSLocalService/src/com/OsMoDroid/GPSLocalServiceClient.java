@@ -72,6 +72,8 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class GPSLocalServiceClient extends Activity implements ResultsListener{
+	private static final int PREF_REQUEST = 0;
+	static final int REQUEST_LINK_TO_DBX = 1;  // This value is up to you
 	boolean messageShowed=false;
 	public static String key = "";
 	public String login = "";
@@ -161,6 +163,8 @@ PowerManager pm;
 			// Log.d(getClass().getSimpleName(), "onservicedisconnected");
 		}
 	};
+	private MenuItem linkDropbox;
+	private MenuItem unlinkDropbox;
 
 	public static String unescape (String s)
 	{
@@ -472,15 +476,32 @@ netutil.newapicommand((ResultsListener)mService,(Context)GPSLocalServiceClient.t
 	@Override
 	  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
-		 Log.d(getClass().getSimpleName(), "void onActivityResult");
-		if (conn == null || mService == null) {
+		 Log.d(getClass().getSimpleName(), "void onActivityResult:"+requestCode);
+		 switch (requestCode) {
+		case PREF_REQUEST:
+			if (conn == null || mService == null) {
 
-		} else {
+			} else {
 
-			mService.applyPreference();
+				mService.applyPreference();
+				
+
+			}	
+			break;
+		case REQUEST_LINK_TO_DBX:
+			if (resultCode == Activity.RESULT_OK) {
+				Log.d(getClass().getSimpleName(), "Подключились к дропбоксу");
+	        } else {
+	        	Log.d(getClass().getSimpleName(), "Не смогли подключится к дропбоксу");
+	        }
 			
-
-		}
+			break;
+		default:
+			break;
+		} 
+		 
+		 
+		 
 	   
 	  }
 	
@@ -590,13 +611,30 @@ netutil.newapicommand((ResultsListener)mService,(Context)GPSLocalServiceClient.t
 		// Log.d(getClass().getSimpleName(), "onCreateOptionsmenu() gpsclient");
                  MenuItem save =menu2.add(0, 18, 0, "Сохранить настройки на карту");
                  MenuItem load =menu2.add(0, 19, 0, "Загрузить настройки с карты");
+                
+                 linkDropbox = menu2.add(0,20,0,"Установить связь с Dropbox");
+               
+                
+                 unlinkDropbox = menu2.add(0,21,0,"Разорвать связь с Dropbox");
+                
 
 		return super.onCreateOptionsMenu(menu);
 	}
 	@Override
 	public boolean onPrepareOptionsMenu (Menu menu){
 
-
+		  if(!OsMoDroid.mDbxAcctMgr.hasLinkedAccount()){
+             linkDropbox.setEnabled(true);
+             unlinkDropbox.setEnabled(false);
+             linkDropbox.setVisible(true);
+             unlinkDropbox.setVisible(false);
+              }
+              if(OsMoDroid.mDbxAcctMgr.hasLinkedAccount()){
+              unlinkDropbox.setEnabled(true);
+              linkDropbox.setEnabled(false);
+              unlinkDropbox.setVisible(true);
+              linkDropbox.setVisible(false);
+              }
 //		if (login.equals(""))
 //		{ mi4.setEnabled(false);}
 //		else {mi4.setEnabled(true);}
@@ -658,7 +696,7 @@ netutil.newapicommand((ResultsListener)mService,(Context)GPSLocalServiceClient.t
 			
 			Intent intent = new Intent();
 			intent.setClass(this,PrefActivity.class);
-			startActivityForResult(intent, 0);
+			startActivityForResult(intent, PREF_REQUEST);
 			
 		}
 		
@@ -752,6 +790,22 @@ netutil.newapicommand((ResultsListener)mService,(Context)GPSLocalServiceClient.t
 			 }
 	          
 		}
+		
+		if (item.getItemId() == 20) {
+			if(!OsMoDroid.mDbxAcctMgr.hasLinkedAccount()){
+			OsMoDroid.mDbxAcctMgr.startLink((Activity)this, REQUEST_LINK_TO_DBX);
+			}
+	          
+		}
+		if (item.getItemId() == 21) {
+			if(OsMoDroid.mDbxAcctMgr.hasLinkedAccount()){
+			OsMoDroid.mDbxAcctMgr.unlink();
+			}
+		}
+		
+		
+		
+		
 		return super.onOptionsItemSelected(item);
 
 	}
@@ -1382,6 +1436,9 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 
 
 	}
+	
+	
+	
 	
 	private boolean saveSharedPreferencesToFile(File dst) {
 	    boolean res = false;

@@ -87,6 +87,12 @@ import org.json.JSONObject;
 import com.OsMoDroid.LocalService.SendCoor;
 
 import com.OsMoDroid.netutil.MyAsyncTask;
+import com.dropbox.sync.android.DbxException;
+import com.dropbox.sync.android.DbxException.Unauthorized;
+import com.dropbox.sync.android.DbxFile;
+import com.dropbox.sync.android.DbxFileSystem;
+import com.dropbox.sync.android.DbxPath;
+import com.dropbox.sync.android.DbxPath.InvalidPathException;
 
 
 
@@ -230,7 +236,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	}
 
 
-
+	DbxFileSystem dbxFs;
 boolean binded=false;
 
 private SensorManager mSensorManager;
@@ -1056,6 +1062,7 @@ if (!settings.getBoolean("silentnotify", false)){
 		private Float sensivity;
 
 		private int alarmStreamId=0;
+		private DbxFile testFile;
 
 
 
@@ -2385,11 +2392,12 @@ private void manageIM(){
 		}
 	}
 
+	private boolean isDropBox(){
+		return OsMoDroid.mDbxAcctMgr.hasLinkedAccount();
+		
+	}
 
-
-
-
-
+ 
 
 	/**
 	 * 
@@ -2397,14 +2405,14 @@ private void manageIM(){
 	private void openGPX() {
 		boolean crtfile;
 		String sdState = android.os.Environment.getExternalStorageState();
-
+		 String time = sdf2.format(new Date());
 		if (sdState.equals(android.os.Environment.MEDIA_MOUNTED)) {
 
 		 File sdDir = android.os.Environment.getExternalStorageDirectory();
 
 		// SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 
-		 String time = sdf2.format(new Date());
+		
 
 		 fileName = new File (sdDir, "OsMoDroid/");
 
@@ -2413,6 +2421,9 @@ private void manageIM(){
 		 fileName = new File(sdDir, "OsMoDroid/"+time+".gpx");
 
 		 }
+		
+		
+		
 
 		if (!fileName.exists())
 
@@ -2435,7 +2446,7 @@ private void manageIM(){
 		try {
 		                // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd'T'HH:mm:ssZ");
 
-		                String time = sdf1.format(new Date(System.currentTimeMillis()))+"Z";
+		                time = sdf1.format(new Date(System.currentTimeMillis()))+"Z";
 
 		                FileWriter trackwr = new FileWriter(fileName);
 		                trackwr.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
@@ -2637,6 +2648,32 @@ private void manageIM(){
 			Toast.makeText(LocalService.this, getString(R.string.CanNotWriteEnd), Toast.LENGTH_SHORT).show();
 
 		}
+		
+		if(isDropBox()){
+			try {
+				dbxFs=DbxFileSystem.forAccount(OsMoDroid.mDbxAcctMgr.getLinkedAccount());
+				testFile = dbxFs.create(new DbxPath(fileName.getName()));
+				
+				    testFile.writeFromExistingFile(fileName, false);
+				    testFile.close();
+				
+			} catch (Unauthorized e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidPathException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DbxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
 	}
 
 
