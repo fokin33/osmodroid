@@ -307,6 +307,23 @@ if (jsonObject.optString("data").equals("batteryinfo")){
         }
 }
 
+if (jsonObject.optString("data").equals("sattelite")){
+    try {
+        localService.satteliteinfo(localService);
+    } catch (JSONException e) {
+        e.printStackTrace();
+    }
+}
+
+if (jsonObject.optString("data").equals("wifinfo")){
+    try {
+        localService.wifinfo(localService);
+    } catch (JSONException e) {
+        e.printStackTrace();
+    }
+}
+
+
 if (jsonObject.optString("data").equals("closeclient")){
 	localService.alertHandler.post(new Runnable() {
 

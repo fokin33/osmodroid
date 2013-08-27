@@ -6,6 +6,7 @@ package com.OsMoDroid;
 import android.net.ConnectivityManager;
 
 import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
 import android.os.Handler;
@@ -410,9 +411,9 @@ private long lastgpslocationtime=0;
 
 	//private String sendbuffer = new String();
 
-	private String Sattelite="";
+	private String sattelite="";
 
-	private String Accuracy="";
+	private String accuracy="";
 
 	private boolean usebuffer = false;
 
@@ -1182,7 +1183,7 @@ public synchronized void informRemoteClientRouteTo(float Lat, float Lon){
 public void refresh(){
 
 	in.removeExtra("startmessage");
-	in.putExtra("position", position+"\n"+Sattelite+" "+"Точность: "+Accuracy);
+	in.putExtra("position", position+"\n"+sattelite+" "+"Точность: "+accuracy);
 	in.putExtra("sendresult", sendresult);
 	in.putExtra("sendcounter", sendcounter);
 	in.putExtra("buffercounter", buffercounter);
@@ -1426,7 +1427,7 @@ public void stopcomand()
 
 
 
-		Sattelite=getString(R.string.Sputniki);
+		sattelite=getString(R.string.Sputniki);
 
 		position=getString(R.string.NotDefined)+ "\n"+getString(R.string.speed);
 
@@ -1881,6 +1882,14 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
             netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 	}
 	
+	
+	void satteliteinfo(Context context) throws JSONException{
+        JSONObject postjson = new JSONObject();
+        postjson.put("sattelite", sattelite);
+        postjson.put("acuracy", accuracy);
+        netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+}
+	
 	void getpreferences(Context context) throws JSONException{
         JSONObject postjson = new JSONObject();
         //for (Channel channel : LocalService.channelList)
@@ -1927,6 +1936,16 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
 		wifi.setWifiEnabled(false);
         netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
 	}
+	
+	void wifinfo(Context context) throws JSONException {
+		WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+		WifiInfo wifiInfo = wifi.getConnectionInfo();
+		String wifiname = wifiInfo.getSSID();
+		 JSONObject postjson = new JSONObject();
+         postjson.put("wifiname", wifiname);
+         netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
+	}
+	
 	
 
 	@Override
@@ -2884,7 +2903,7 @@ private void manageIM(){
 			 LocalService.channelsDevicesAdapter.notifyDataSetChanged();
 		}
 		
-		Accuracy=Float.toString(location.getAccuracy());
+		accuracy=Float.toString(location.getAccuracy());
 
 		if (System.currentTimeMillis()<lastgpslocationtime+gpsperiod+30000 && location.getProvider().equals(LocationManager.NETWORK_PROVIDER))
 
@@ -3923,7 +3942,7 @@ public void onGpsStatusChanged(int event) {
 		}
 	}
 
-	Sattelite=getString(R.string.Sputniki)+Count+":"+CountFix; //+" ("+hasA+"-"+hasE+")";
+	sattelite=getString(R.string.Sputniki)+Count+":"+CountFix; //+" ("+hasA+"-"+hasE+")";
 	refresh();
 }
 
