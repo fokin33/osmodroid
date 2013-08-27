@@ -700,7 +700,7 @@ if (!settings.getBoolean("silentnotify", false)){
 
 				//Toast.makeText(LocalService.this, "vvv" , Toast.LENGTH_SHORT).show();
 
-				return 5;
+				return 6;
 
 			}
 
