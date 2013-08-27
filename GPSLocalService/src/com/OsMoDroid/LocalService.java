@@ -1889,7 +1889,7 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
         JSONObject postjson = new JSONObject();
         postjson.put("view", count);
         postjson.put("active", countFix);
-        postjson.put("acuracy", accuracy);
+        postjson.put("accuracy", accuracy);
         netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 }
 	
@@ -1945,11 +1945,11 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
 		WifiInfo wifiInfo = wifi.getConnectionInfo();
 		String wifiname = wifiInfo.getSSID();
 		String mac = wifiInfo.getMacAddress();
-		String speed = Integer.toString(wifiInfo.getRssi());
+		String strength = Integer.toString(wifiInfo.getRssi());
 		 JSONObject postjson = new JSONObject();
-         postjson.put("wifiname", wifiname);
+         postjson.put("ssid", wifiname);
          postjson.put("mac", mac);
-         postjson.put("speed", speed);
+         postjson.put("strength", strength);
          netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 	}
 	
