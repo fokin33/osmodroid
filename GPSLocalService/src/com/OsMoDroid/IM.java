@@ -307,9 +307,9 @@ if (jsonObject.optString("data").equals("batteryinfo")){
         }
 }
 
-if (jsonObject.optString("data").equals("sattelite")){
+if (jsonObject.optString("data").equals("satellite")){
     try {
-        localService.satteliteinfo(localService);
+        localService.satelliteinfo(localService);
     } catch (JSONException e) {
         e.printStackTrace();
     }
