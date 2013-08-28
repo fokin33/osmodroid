@@ -411,7 +411,7 @@ private long lastgpslocationtime=0;
 
 	//private String sendbuffer = new String();
 
-	private String sattelite="";
+	private String satellite="";
 
 	private String accuracy="";
 
@@ -1185,7 +1185,7 @@ public synchronized void informRemoteClientRouteTo(float Lat, float Lon){
 public void refresh(){
 
 	in.removeExtra("startmessage");
-	in.putExtra("position", position+"\n"+sattelite+" "+"Точность: "+accuracy);
+	in.putExtra("position", position+"\n"+satellite+" "+"Точность: "+accuracy);
 	in.putExtra("sendresult", sendresult);
 	in.putExtra("sendcounter", sendcounter);
 	in.putExtra("buffercounter", buffercounter);
@@ -1429,7 +1429,7 @@ public void stopcomand()
 
 
 
-		sattelite=getString(R.string.Sputniki);
+		satellite=getString(R.string.Sputniki);
 
 		position=getString(R.string.NotDefined)+ "\n"+getString(R.string.speed);
 
@@ -1885,11 +1885,11 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
 	}
 	
 	
-	void satteliteinfo(Context context) throws JSONException{
+	void satelliteinfo(Context context) throws JSONException{
         JSONObject postjson = new JSONObject();
         postjson.put("view", count);
         postjson.put("active", countFix);
-        postjson.put("acuracy", accuracy);
+        postjson.put("accuracy", accuracy);
         netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 }
 	
@@ -1945,11 +1945,11 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
 		WifiInfo wifiInfo = wifi.getConnectionInfo();
 		String wifiname = wifiInfo.getSSID();
 		String mac = wifiInfo.getMacAddress();
-		String speed = Integer.toString(wifiInfo.getRssi());
+		String strength = Integer.toString(wifiInfo.getRssi());
 		 JSONObject postjson = new JSONObject();
-         postjson.put("wifiname", wifiname);
+         postjson.put("ssid", wifiname);
          postjson.put("mac", mac);
-         postjson.put("speed", speed);
+         postjson.put("strength", strength);
          netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 	}
 	
@@ -3947,7 +3947,7 @@ public void onGpsStatusChanged(int event) {
 		}
 	}
 
-	sattelite=getString(R.string.Sputniki)+count+":"+countFix; //+" ("+hasA+"-"+hasE+")";
+	satellite=getString(R.string.Sputniki)+count+":"+countFix; //+" ("+hasA+"-"+hasE+")";
 	refresh();
 }
 
