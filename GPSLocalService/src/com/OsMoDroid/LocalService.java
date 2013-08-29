@@ -1750,7 +1750,7 @@ s = new Socket( );
 //sockaddr = new InetSocketAddress("esya.ru", 2145);
 ///////////////////////
 
-if (live){
+if (live&&!settings.getString("hash", "" ).equals("")){
 
 	if (isOnline()){
 
