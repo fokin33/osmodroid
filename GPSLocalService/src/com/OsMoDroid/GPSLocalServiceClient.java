@@ -43,9 +43,11 @@ import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
@@ -1074,6 +1076,30 @@ if (mBound) {
 
 		return bytesToHex(sha1hash);
 	}
+	
+	public String getDeviceName() {
+		  String manufacturer = Build.MANUFACTURER;
+		  String model = Build.MODEL;
+		  if (model.startsWith(manufacturer)) {
+		    return capitalize(model);
+		  } else {
+		    return capitalize(manufacturer) + " " + model;
+		  }
+		}
+
+
+		private String capitalize(String s) {
+		  if (s == null || s.length() == 0) {
+		    return "";
+		  }
+		  char first = s.charAt(0);
+		  if (Character.isUpperCase(first)) {
+		    return s;
+		  } else {
+		    return Character.toUpperCase(first) + s.substring(1);
+		  }
+		} 
+	
 
 	private class RequestAuthTask extends AsyncTask<Void, Void, Void> {
 		private String authtext;
@@ -1129,7 +1155,8 @@ if (mBound) {
 				// Log.d(this.getClass().getName(),
 				// "Начинаем запрос авторизации.");
 				//authtext = getPage("http://auth.t.esya.ru/?who=OsMoDroid",false, "");
-				authtext = getPage("http://a.t.esya.ru/?act=new&c=OsMoDroid&v="+version,	false, "");
+				
+				authtext = getPage("http://a.t.esya.ru/?act=new&c=OsMoDroid&v="+version+"&n="+Uri.encode(getDeviceName()),	false, "");
 				//{"device":1235,"hash":"JoqQtav","n":"2515","url":"26CstQLcgzIYTOin"}
 				JSONObject auth = new JSONObject(authtext);
 				Log.d(this.getClass().getName(), auth.toString());
