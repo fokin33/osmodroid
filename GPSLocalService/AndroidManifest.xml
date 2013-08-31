@@ -19,8 +19,7 @@
 
     <application
         android:icon="@drawable/eye"
-        android:label="@string/app_name" android:debuggable="true" android:name="OsMoDroid">
-     
+        android:label="@string/app_name" android:debuggable="true">
         <activity
             android:name="com.OsMoDroid.GPSLocalServiceClient"
             android:label="@string/app_name" android:launchMode="singleTask" android:configChanges="keyboardHidden|orientation">
@@ -49,22 +48,7 @@
         <activity android:name="MyChannels" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="MyChannelsDevices" android:windowSoftInputMode="adjustPan" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="DeviceChat" android:configChanges="keyboardHidden|orientation"></activity>
-		<activity android:name="com.dropbox.sync.android.DbxAuthActivity" />
-<activity
-  android:name="com.dropbox.client2.android.AuthActivity"
-  android:launchMode="singleTask" >
-  <intent-filter>
-    <data android:scheme="db-3uqguzzvhpqqaux" />
-    <action android:name="android.intent.action.VIEW" />
-    <category android:name="android.intent.category.BROWSABLE" />
-    <category android:name="android.intent.category.DEFAULT" />
-  </intent-filter>
-</activity>
-<service
-  android:name="com.dropbox.sync.android.DbxSyncService"
-  android:enabled="true"
-  android:exported="false"
-  android:label="Dropbox Sync" />
+
     </application>
 
 </manifest>

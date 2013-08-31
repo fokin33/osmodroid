@@ -2,4 +2,3 @@ bin
 local.properties
 gen
 /project.properties
-res/values/dropbox.xml
