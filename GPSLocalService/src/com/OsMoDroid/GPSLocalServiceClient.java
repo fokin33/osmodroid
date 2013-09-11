@@ -592,6 +592,7 @@ netutil.newapicommand((ResultsListener)mService,(Context)GPSLocalServiceClient.t
 		// Log.d(getClass().getSimpleName(), "onCreateOptionsmenu() gpsclient");
                  MenuItem save =menu2.add(0, 18, 0, "Сохранить настройки на карту");
                  MenuItem load =menu2.add(0, 19, 0, "Загрузить настройки с карты");
+                 MenuItem tracklist =menu2.add(0, 20, 0, "Список трек-файлов ");
 
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -754,6 +755,14 @@ netutil.newapicommand((ResultsListener)mService,(Context)GPSLocalServiceClient.t
 			 }
 	          
 		}
+		if (item.getItemId() == 20) {
+			
+			Intent intent = new Intent();
+			intent.setClass(this,TracFileListActivity.class);
+			startActivity(intent);
+			
+		}
+		
 		return super.onOptionsItemSelected(item);
 
 	}

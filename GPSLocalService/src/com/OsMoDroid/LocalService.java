@@ -4297,7 +4297,7 @@ if (myIM!=null){
 		}
 		if (result.Jo.has("om_device")){
 			deviceList.clear();
-deviceList.add(new Device("0","Мой компьютер","1", settings.getString("uid", "0")));
+deviceList.add(new Device("0","Зритель","1", settings.getString("uid", "0")));
 		
 			try {
 				  a =	result.Jo.getJSONArray("om_device");

@@ -48,6 +48,7 @@
         <activity android:name="MyChannels" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="MyChannelsDevices" android:windowSoftInputMode="adjustPan" android:configChanges="keyboardHidden|orientation"></activity>
         <activity android:name="DeviceChat" android:configChanges="keyboardHidden|orientation"></activity>
+        <activity android:name="TracFileListActivity"></activity>
 
     </application>
 
