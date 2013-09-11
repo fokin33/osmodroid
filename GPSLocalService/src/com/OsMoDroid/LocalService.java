@@ -1222,8 +1222,8 @@ public void startcomand()
 
 	}
 
-		String[] params = {"http://a.t.esya.ru/?act=start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&c=OsMoDroid&v="+version.replace(".", "")+"&key="+settings.getString("key", ""),"false","","start"};
-
+		//String[] params = {"http://a.t.esya.ru/?act=start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&c=OsMoDroid&v="+version.replace(".", "")+"&key="+settings.getString("key", ""),"false","","start"};
+		APIcomParams params = new APIcomParams("http://a.t.esya.ru/?act=start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&c=OsMoDroid&v="+version.replace(".", "")+"&key="+settings.getString("key", ""),null,"start"); 
 		starttask=	new netutil.MyAsyncTask(this);
 
 		starttask.execute(params) ;
@@ -2286,8 +2286,8 @@ setstarted(true);
 
 if (live){
 
-String[] params = {"http://a.t.esya.ru/?act=session_start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&ttl="+settings.getString("session_ttl", "30"),"false","","session_start"};
-
+//String[] params = {"http://a.t.esya.ru/?act=session_start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&ttl="+settings.getString("session_ttl", "30"),"false","","session_start"};
+APIcomParams params = new APIcomParams("http://a.t.esya.ru/?act=session_start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&ttl="+settings.getString("session_ttl", "30"),null,"session_start"); 
 new netutil.MyAsyncTask(this).execute(params);}
 
 		Log.d(getClass().getSimpleName(), "notify:"+notification.toString());
@@ -2528,7 +2528,8 @@ private void manageIM(){
 		am.cancel(pi);
 
 		if (live&&stopsession){
-                    String[] params = {"http://a.t.esya.ru/?act=session_stop&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", ""),"false","","session_stop"};
+                    //String[] params = {"http://a.t.esya.ru/?act=session_stop&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", ""),"false","","session_stop"};
+                    APIcomParams params = new APIcomParams("http://a.t.esya.ru/?act=session_stop&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&ttl="+settings.getString("session_ttl", "30"),null,"session_stop");
                     new netutil.MyAsyncTask(this).execute(params);
 
                 
@@ -2678,10 +2679,39 @@ private void manageIM(){
 			Toast.makeText(LocalService.this, getString(R.string.CanNotWriteEnd), Toast.LENGTH_SHORT).show();
 
 		}
+		upload(fileName);
 	}
 
 
+	public void upload (File file){
+		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(), 0);
+		
+		NotificationCompat.Builder notificationBuilder =new NotificationCompat.Builder(
 
+				serContext.getApplicationContext())
+
+		    	.setWhen(System.currentTimeMillis())
+
+		    	.setContentText(file.getName())
+
+		    	.setContentTitle("OsMoDroid Загрузка файла")
+
+		    	.setSmallIcon(android.R.drawable.arrow_up_float)
+
+		    	.setAutoCancel(true)
+		    	.setContentIntent(contentIntent)
+		    	.setProgress(100, 0, false);
+		    	;
+
+
+			Notification notification = notificationBuilder.build();
+			int uploadid = OsMoDroid.uploadnotifyid();
+
+			LocalService.mNotificationManager.notify(uploadid, notification);
+		
+		
+		netutil.newapicommand((ResultsListener)LocalService.this,  "tr_track_upload:1", file,notificationBuilder,uploadid);
+	}
 
 
 	private void setstarted(boolean started){
