@@ -208,6 +208,7 @@
                     android:summary="Запускать фоновый сервис при включении телефона"
                     android:title="Автозагрузка в фоне"
                     android:defaultValue="false" />
+        <CheckBoxPreference android:title="Загружать на ТреРа автоматически" android:key="automaticupload" android:defaultValue="true"/>
         
     </PreferenceCategory>
     

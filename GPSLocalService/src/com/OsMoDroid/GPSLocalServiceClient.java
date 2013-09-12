@@ -331,7 +331,11 @@ else {
 		exit.setOnClickListener(new OnClickListener() {
 			Boolean stopsession=true;
 			public void onClick(View v) {
+				
+				
+				
 if (live){
+		
 				AlertDialog alertdialog = new AlertDialog.Builder(
 						GPSLocalServiceClient.this).create();
 				alertdialog.setTitle("Остановка");
@@ -361,7 +365,39 @@ if (live){
 							}
 						});
 				alertdialog.show();
+				
 }
+
+if (!settings.getBoolean("automaticupload", true)){
+	AlertDialog alertdialog1 = new AlertDialog.Builder(
+			GPSLocalServiceClient.this).create();
+	alertdialog1.setTitle("Загрузка");
+
+	alertdialog1.setMessage("Загрузить на ТреРа?");
+
+	alertdialog1.setButton(getString(R.string.yes),
+			new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					LocalService.uploadto=true;
+					return;
+				}
+			});
+	alertdialog1.setButton2(getString(R.string.No),
+			new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					LocalService.uploadto=false;
+					return;
+				}
+			});
+	alertdialog1.show();
+}
+else
+{
+	LocalService.uploadto=true;	
+}
+
+
+
 //				stop(stopsession);
 //
 //				updateServiceStatus();

@@ -11,6 +11,7 @@ public JSONArray ja=null;
 public String rawresponse=null;
 public String url=null;
 public String post=null;
+public int notificationid=0;
 
 public  APIComResult() {
 	 

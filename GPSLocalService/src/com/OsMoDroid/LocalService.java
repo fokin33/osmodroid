@@ -517,6 +517,8 @@ private long lastgpslocationtime=0;
 
 	    static Context serContext;
 
+		protected static boolean uploadto=false;
+
 	    final  Handler alertHandler = new Handler() {
 
 
@@ -2679,7 +2681,14 @@ private void manageIM(){
 			Toast.makeText(LocalService.this, getString(R.string.CanNotWriteEnd), Toast.LENGTH_SHORT).show();
 
 		}
-		upload(fileName);
+		if (fileName.length()>1024&&uploadto){
+		upload(fileName);	
+		} else
+		{fileName.delete();
+		
+		Toast.makeText(LocalService.this, "Трек слишком короткий(меньше 1 КБ), файл не будет сохранен или загружен" , Toast.LENGTH_LONG).show();
+		}
+		
 	}
 
 
@@ -4295,6 +4304,11 @@ if (myIM!=null){
 					e.printStackTrace();
 				}
 		}
+		if (result.Jo.has("tr_track_upload:1")){
+			
+			LocalService.mNotificationManager.cancel(result.notificationid);
+		}
+		
 		if (result.Jo.has("om_device")){
 			deviceList.clear();
 deviceList.add(new Device("0","Зритель","1", settings.getString("uid", "0")));

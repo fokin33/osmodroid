@@ -7,10 +7,14 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-public class TracFileListActivity extends Activity {
+public class TracFileListActivity extends Activity implements ResultsListener{
 
 	private TrackFileAdapter trackFileAdapter;
 	private ArrayList<TrackFile> trackFileList = new ArrayList<TrackFile>();
@@ -60,7 +64,7 @@ public class TracFileListActivity extends Activity {
 				 for (File file :fileArray){
 					 trackFileList.add(new TrackFile(file.getName(),file.lastModified(),file.length()));
 					 count++;
-		             progress += ( count / fileArray.length ) * 100;
+		             progress += ( (float)count / (float)fileArray.length ) * 100;
 		             publishProgress();
 		             
 				 }
@@ -108,6 +112,7 @@ public class TracFileListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		 progressDialog = new ProgressDialog(this);
 		 progressDialog.setMessage("Loading...");
+		 progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 		setContentView(R.layout.trackfile); 
 	    final ListView lv1 = (ListView) findViewById(R.id.trackfilelistView);
 	    final Button b = (Button)findViewById(R.id.refreshtrackfiles);
@@ -151,7 +156,35 @@ public class TracFileListActivity extends Activity {
 		  final AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();
 
 		  if (item.getItemId() == 1) {
-			  
+			  File sdDir = android.os.Environment.getExternalStorageDirectory();
+			  File file = new File (sdDir,"OsMoDroid/"+trackFileList.get((int) acmi.id).fileName);
+			  PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(), 0);
+				
+				NotificationCompat.Builder notificationBuilder =new NotificationCompat.Builder(
+
+						LocalService.serContext.getApplicationContext())
+
+				    	.setWhen(System.currentTimeMillis())
+
+				    	.setContentText(file.getName())
+
+				    	.setContentTitle("OsMoDroid Загрузка файла")
+
+				    	.setSmallIcon(android.R.drawable.arrow_up_float)
+
+				    	.setAutoCancel(true)
+				    	.setContentIntent(contentIntent)
+				    	.setProgress(100, 0, false);
+				    	;
+
+
+					Notification notification = notificationBuilder.build();
+					int uploadid = OsMoDroid.uploadnotifyid();
+
+					LocalService.mNotificationManager.notify(uploadid, notification);
+				
+				
+				netutil.newapicommand((ResultsListener)TracFileListActivity.this,  "tr_track_upload:1", file,notificationBuilder,uploadid);
 			  
 		  }
 		  
@@ -195,6 +228,11 @@ public class TracFileListActivity extends Activity {
 	void getFileList(){
 		readTask=new ReadTrackList();
 		readTask.execute();
+	}
+
+	@Override
+	public void onResultsSucceeded(APIComResult result) {
+		LocalService.mNotificationManager.cancel(result.notificationid);
 	}
 
 	

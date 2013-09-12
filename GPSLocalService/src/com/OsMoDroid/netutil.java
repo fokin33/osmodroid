@@ -180,7 +180,7 @@ public class netutil {
 	    	}
 			
 			resAPI.Command=params[0].command;
-			resAPI.rawresponse=Commandtext;			resAPI.url=params[0].action;			resAPI.post=params[0].post;
+			resAPI.rawresponse=Commandtext;			resAPI.url=params[0].action;			resAPI.post=params[0].post;			resAPI.notificationid=params[0].notification;
 	        return resAPI;
 
 	    }
