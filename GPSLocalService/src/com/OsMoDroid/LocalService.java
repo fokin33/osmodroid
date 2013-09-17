@@ -1073,6 +1073,8 @@ if (!settings.getBoolean("silentnotify", false)){
 
 		private String strVersionName;
 
+		private String androidver;
+
 
 
 
@@ -1210,6 +1212,22 @@ public void startcomand()
 
 {
 
+	String version = getversion();
+
+		//String[] params = {"http://a.t.esya.ru/?act=start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&c=OsMoDroid&v="+version.replace(".", "")+"&key="+settings.getString("key", ""),"false","","start"};
+		APIcomParams params = new APIcomParams("http://a.t.esya.ru/?act=start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&c=OsMoDroid&v="+version.replace(".", "")+"&key="+settings.getString("key", ""),null,"start"); 
+		starttask=	new netutil.MyAsyncTask(this);
+
+		starttask.execute(params) ;
+
+		Log.d(getClass().getSimpleName(), "startcommand");
+
+}
+
+
+private String getversion() {
+	
+	 androidver = android.os.Build.VERSION.RELEASE;
 	strVersionName = getString(R.string.Unknow);
 
 	String version=getString(R.string.Unknow);
@@ -1233,15 +1251,7 @@ public void startcomand()
 		e.printStackTrace();
 
 	}
-
-		//String[] params = {"http://a.t.esya.ru/?act=start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&c=OsMoDroid&v="+version.replace(".", "")+"&key="+settings.getString("key", ""),"false","","start"};
-		APIcomParams params = new APIcomParams("http://a.t.esya.ru/?act=start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&c=OsMoDroid&v="+version.replace(".", "")+"&key="+settings.getString("key", ""),null,"start"); 
-		starttask=	new netutil.MyAsyncTask(this);
-
-		starttask.execute(params) ;
-
-		Log.d(getClass().getSimpleName(), "startcommand");
-
+	return version;
 }
 
 
@@ -1420,7 +1430,7 @@ public void stopcomand()
 		 //Debug.startMethodTracing("startsbuf");
 
 		super.onCreate();
-		
+		getversion();
 		
 		serContext=LocalService.this;
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
@@ -1917,6 +1927,7 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
 		int height = display.getHeight();  // deprecated
 		JSONObject postjson = new JSONObject();
         postjson.put("version", strVersionName);
+        postjson.put("andoirdversion", androidver);
         postjson.put("devicename", getDeviceName());
         postjson.put("display", Integer.toString(width)+"x"+Integer.toString(height));
         netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
