@@ -1927,7 +1927,7 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
 		int height = display.getHeight();  // deprecated
 		JSONObject postjson = new JSONObject();
         postjson.put("version", strVersionName);
-        postjson.put("andoirdversion", androidver);
+        postjson.put("androidversion", androidver);
         postjson.put("devicename", getDeviceName());
         postjson.put("display", Integer.toString(width)+"x"+Integer.toString(height));
         netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
@@ -4334,7 +4334,7 @@ if (myIM!=null){
 		
 		if (result.Jo.has("om_device")){
 			deviceList.clear();
-deviceList.add(new Device("0","Зритель","1", settings.getString("uid", "0")));
+deviceList.add(new Device("0","Зрители","1", settings.getString("uid", "0")));
 		
 			try {
 				  a =	result.Jo.getJSONArray("om_device");
