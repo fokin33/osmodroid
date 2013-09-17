@@ -299,6 +299,10 @@ if (jsonObject.optString("data").length()>7&&jsonObject.optString("data").substr
 	localService.informRemoteClientRouteTo(Float.parseFloat(jsonObject.optString("data").substring(8, pluspos)), Float.parseFloat(jsonObject.optString("data").substring(pluspos+1, jsonObject.optString("data").length())));
 }
 
+
+
+
+
 if (jsonObject.optString("data").equals("batteryinfo")){
         try {
             localService.batteryinfo(localService);
@@ -306,6 +310,15 @@ if (jsonObject.optString("data").equals("batteryinfo")){
             e.printStackTrace();
         }
 }
+
+if (jsonObject.optString("data").equals("systeminfo")){
+    try {
+        localService.systeminfo(localService);
+    } catch (JSONException e) {
+        e.printStackTrace();
+    }
+}
+
 
 if (jsonObject.optString("data").equals("satellite")){
     try {
@@ -512,23 +525,25 @@ if (getMessageType( keyname).equals("ch")){
 
 						// 02-24 10:03:31.127: D/IM(562): "data":
 						//  "data": "0|1436|55.307453|39.232767|0"
+						//09-17 17:55:53.122: D/com.OsMoDroid.IM(877):     "data": "0|3084+37.416667+-122.083332+0"
 
 
 
 
 						String[] data = jsonObject.optString("data").split("\\|");
-						Log.d(this.getClass().getName(), "data[0]=" + data[0] + " data[1]=" + data[1] + " data[2]=" + data[2]+" data[3]="+data[3]+" data[4]="+data[4]);
+						String[] datanew = data[1].split("\\+");
+						//Log.d(this.getClass().getName(), "data[0]=" + data[0] + " data[1]=" + data[1] + " data[2]=" + data[2]+" data[3]="+data[3]+" data[4]="+data[4]);
 						if(data[0].equals("0")){
 						for (Channel channel : LocalService.channelList)
 						{
 							Log.d(this.getClass().getName(), "chanal nest" + channel.name);
 							for (Device device : channel.deviceList) {
 								Log.d(this.getClass().getName(), "device nest" + device.name + " " + device.u);
-								if (data[1].equals(Integer.toString(device.u))) {
+								if (datanew[0].equals(Integer.toString(device.u))) {
 									Log.d(this.getClass().getName(), "Изменилось состояние устройства в канале с " + device.toString());
-									device.lat = Float.parseFloat(data[2]);
-									device.lon = Float.parseFloat(data[3]);
-									device.speed= data[4];
+									device.lat = Float.parseFloat(datanew[1]);
+									device.lon = Float.parseFloat(datanew[2]);
+									device.speed= datanew[3];
 									Log.d(this.getClass().getName(), "Изменилось состояние устройства в канале на" + device.toString());
 									
 
@@ -568,23 +583,27 @@ if (getMessageType( keyname).equals("ch")){
 if (getMessageType( keyname).equals("chch")){
 	Log.d(this.getClass().getName(), "type=chch");
 	Log.d(this.getClass().getName(), "Сообщение в чат канала " + jsonObject.optString("data"));
-	 //"data": "0|40|cxbcxvbcxvbcxvb|2013-03-14 22:42:34"
+//09-16 18:25:41.057: D/com.OsMoDroid.IM(1474):     "data": "0|40+\u041e\u043f\u0430\u0441\u043d\u043e +2013-09-16 22:25:44"
+
+	//"data": "0|40|cxbcxvbcxvbcxvb|2013-03-14 22:42:34"
 	String[] data = jsonObject.optString("data").split("\\|");
-	Log.d(this.getClass().getName(), "data[0]=" + data[0] + " data[1]=" + data[1] + " data[2]=" + data[2]);
+	//Log.d(this.getClass().getName(), "data[0]=" + data[0] + " data[1]=" + data[1] + " data[2]=" + data[2]);
+	String[] datanew = data[1].split("\\+");
+	//Log.d(this.getClass().getName(), "datanew[0]=" + datanew[0] + " datanew[1]=" + datanew[1] + " datanew[2]=" + datanew[2]);
 	for (final Channel channel : LocalService.channelList) {
 		Log.d(this.getClass().getName(), "chanal nest" + channel.name);
-		if (keyname.equals("om_"+channel.ch+"_chat")){
+		if (keyname.equals(channel.ch+"_chat")){
 			
 		
 		
 		for (Device device : channel.deviceList) {
 			Log.d(this.getClass().getName(), "device nest" + device.name + " " + device.u);
-			if (data[1].equals(Integer.toString(device.u))) {
+			if (datanew[0].equals(Integer.toString(device.u))) {
 				Log.d(this.getClass().getName(), "Сообщение от устройства в канале " + device.toString());
 			}
 		}
 				channel.messagesstringList.clear();
-				channel.messagesstringList.add(data[2]);
+				channel.messagesstringList.add(datanew[1]);
 				localService.alertHandler.post(new Runnable(){
 					public void run() {
 						if (LocalService.channelsmessagesAdapter!=null&& LocalService.currentChannel != null){

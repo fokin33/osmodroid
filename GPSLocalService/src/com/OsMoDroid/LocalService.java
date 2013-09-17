@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.os.RemoteCallbackList;
@@ -170,6 +171,8 @@ import android.speech.tts.TextToSpeech.OnInitListener;
 
 //import android.util.Log;
 
+import android.view.Display;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 
@@ -388,6 +391,7 @@ private long lastgpslocationtime=0;
 	private int speed_gpx;
 
 	private int sendcounter;
+	private int writecounter=0;
 
 	private int buffercounter=0;
 
@@ -1063,6 +1067,12 @@ if (!settings.getBoolean("silentnotify", false)){
 		private int count=0;
 		private int countFix=0;
 
+		private Notification notification;
+
+		private PendingIntent osmodroidLaunchIntent;
+
+		private String strVersionName;
+
 
 
 
@@ -1200,7 +1210,7 @@ public void startcomand()
 
 {
 
-	String strVersionName = getString(R.string.Unknow);
+	strVersionName = getString(R.string.Unknow);
 
 	String version=getString(R.string.Unknow);
 
@@ -1880,6 +1890,37 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
             postjson.put("plugged", plugged);
             netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 	}
+	private String capitalize(String s) {
+		  if (s == null || s.length() == 0) {
+		    return "";
+		  }
+		  char first = s.charAt(0);
+		  if (Character.isUpperCase(first)) {
+		    return s;
+		  } else {
+		    return Character.toUpperCase(first) + s.substring(1);
+		  }
+		} 
+	public String getDeviceName() {
+		  String manufacturer = Build.MANUFACTURER;
+		  String model = Build.MODEL;
+		  if (model.startsWith(manufacturer)) {
+		    return capitalize(model);
+		  } else {
+		    return capitalize(manufacturer) + " " + model;
+		  }
+		}
+	void systeminfo(Context context) throws JSONException{
+		WindowManager wm = (WindowManager)getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
+		int width = display.getWidth();  // deprecated
+		int height = display.getHeight();  // deprecated
+		JSONObject postjson = new JSONObject();
+        postjson.put("version", strVersionName);
+        postjson.put("devicename", getDeviceName());
+        postjson.put("display", Integer.toString(width)+"x"+Integer.toString(height));
+        netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+}
 	
 	
 	void satelliteinfo(Context context) throws JSONException{
@@ -2231,12 +2272,12 @@ requestLocationUpdates();
 int icon = R.drawable.eye;
 CharSequence tickerText = "Мониторинг запущен"; //getString(R.string.Working);
 long when = System.currentTimeMillis();
-Notification notification = new Notification(icon, tickerText, when);
+notification = new Notification(icon, tickerText, when);
 Intent notificationIntent = new Intent(this, GPSLocalServiceClient.class);
 notificationIntent.setAction(Intent.ACTION_MAIN);
 notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "Мониторинг активен", contentIntent);
+osmodroidLaunchIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "Мониторинг активен", osmodroidLaunchIntent);
 
 
 
@@ -2325,7 +2366,7 @@ private void manageIM(){
 
 		
 			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
-			longPollchannels.add(new String[] {"om_online","o",""}); 
+			longPollchannels.add(new String[] {"online","o",""}); 
 			if(!settings.getString("lpch", "").equals(""))
 			{ 
 			longPollchannels.add(new String[] {"ctrl_"+settings.getString("lpch", ""),"r",""});
@@ -2744,83 +2785,54 @@ private void manageIM(){
 
 
 		private  String tmp;
+		
+		
 
 		protected void onPostExecute(String result) {
 
-			// Toast.makeText(LocalService.this, text,Toast.LENGTH_LONG ).show();
+			Log.d(getClass().getSimpleName(), "SendCoorOnPostExecute, Result=" + result);
 
-			//Log.d(this.getClass().getName(), "Отправка завершилась.");
+			if (result.equals("NoConnection")) {
 
-//			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+				sendresult = getString(R.string.NoConnection);
 
-			//if(usebuffer&&tmp.equals("false")){
-
-				//sended=false;
-
-				//if (sendbuffer.equals("")){sendbuffer=sendbuffer+lastsendforbuffer;} else{sendbuffer=sendbuffer+"&"+lastsendforbuffer;}
-
-			//}
-
-			Log.d(getClass().getSimpleName(), "SendCoorOnPostExecute, Result="+result);
-
-			if (result.equals("NoConnection")){
-
-				 sendresult=getString(R.string.NoConnection);
-
-				 internetnotify(true);
-
-
+				internetnotify(true);
 
 			}
 
 			else {
 
+				String time = sdf3.format(new Date(System.currentTimeMillis()));
 
+				sendresult = decodesendresult(result);
 
+				if (sended) {
 
+					sendcounter = sendcounter + 1;
 
-			String time = sdf3.format(new Date(System.currentTimeMillis()));
+					if (sendsound && !mayak) {
+						soundPool.play(sendpalyer, 1f, 1f, 1, 0, 1f);
+						mayak = false;
+					}
 
-			 sendresult= decodesendresult(result);
+					sendresult = time + " " + sendresult;
+				}
 
-			 if (sended){
+				else
 
-				 sendcounter=sendcounter+1;
+				{
 
-				 //if( sendsound &&sendpalyer!=null&& !sendpalyer.isPlaying())sendpalyer.start();
-				if (sendsound&&!mayak){ soundPool.play(sendpalyer, 1f, 1f, 1, 0, 1f);
-				mayak=false;}
+					sendresult = time + " " + sendresult;
 
-
-			 sendresult= time +" "+sendresult;}
-
-			 else
-
-			 {
-
-				 sendresult= time +" "+sendresult;
-
-
-
-
-
-
-
-		}
+				}
 
 			}
-
+			//notification.tickerText=sendresult;
+			notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "Отправлено:"+sendcounter+" Записано:"+writecounter, osmodroidLaunchIntent);
+			mNotificationManager.notify(OSMODROID_ID, notification);
 			refresh();
 
-			// if (!tmp.equals(R.string.NoConnection)){ internetnotify(true); sended=false;}
-
-			// SendwakeLock.release();
-
-
-
-
-
-		   }
+		}
 
 		protected String doInBackground(String... arg0) {
 
@@ -3708,7 +3720,7 @@ private void writegpx(Location location){
 
 
 	 String strgpstime = sdf1.format(date)+"Z";
-
+	 writecounter++;
 	if ((gpxbuffer).length()<5000)gpxbuffer = gpxbuffer +  "<trkpt lat=\"" + df6.format( location.getLatitude())+"\""
 
 			+ " lon=\"" + df6.format( location.getLongitude())
