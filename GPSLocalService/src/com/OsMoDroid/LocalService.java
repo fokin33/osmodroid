@@ -1933,6 +1933,10 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
         netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 }
 	
+	void vibrate (Context context,long milliseconds) throws JSONException{
+		vibrator.vibrate(milliseconds);
+	}
+	
 	
 	void satelliteinfo(Context context) throws JSONException{
         JSONObject postjson = new JSONObject();
@@ -2191,7 +2195,7 @@ if (soundPool!=null) {soundPool.release();}
 	@Override
 
 	public void onStart(Intent intent, int startId) {
-
+		Log.d(getClass().getSimpleName(), "on start ");
 		super.onStart(intent, startId);
 
 
@@ -2201,7 +2205,7 @@ if (soundPool!=null) {soundPool.release();}
 	}
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		
+		Log.d(getClass().getSimpleName(), "on startcommand");
 		 return START_STICKY;
 	}
 
