@@ -1927,7 +1927,7 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
 		int height = display.getHeight();  // deprecated
 		JSONObject postjson = new JSONObject();
         postjson.put("version", strVersionName);
-        postjson.put("andoirdversion", androidver);
+        postjson.put("androidversion", androidver);
         postjson.put("devicename", getDeviceName());
         postjson.put("display", Integer.toString(width)+"x"+Integer.toString(height));
         netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
@@ -2199,6 +2199,13 @@ if (soundPool!=null) {soundPool.release();}
 
 
 	}
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		
+		 return START_STICKY;
+	}
+
+
 	public void applyPreference(){
 		if (state) {
 		myManager.removeUpdates(this);
