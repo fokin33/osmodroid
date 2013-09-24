@@ -299,7 +299,7 @@ if (jsonObject.optString("data").length()>7&&jsonObject.optString("data").substr
 	localService.informRemoteClientRouteTo(Float.parseFloat(jsonObject.optString("data").substring(8, pluspos)), Float.parseFloat(jsonObject.optString("data").substring(pluspos+1, jsonObject.optString("data").length())));
 }
 
-if (jsonObject.optString("data").length()>6&&jsonObject.optString("data").substring(0, 6).equals("vibrate")){
+if (jsonObject.optString("data").length()>7&&jsonObject.optString("data").substring(0, 7).equals("vibrate")){
 	
 	localService.vibrate( localService, Long.parseLong(jsonObject.optString("data").substring(7, jsonObject.optString("data").length())));
 }
