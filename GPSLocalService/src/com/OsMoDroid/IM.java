@@ -1,5 +1,7 @@
 
-package com.OsMoDroid;import java.io.BufferedReader;import java.io.IOException;import java.io.InputStream;import java.io.InputStreamReader;import java.io.PrintWriter;import java.net.HttpURLConnection;import java.net.InetSocketAddress;import java.net.Proxy;import java.net.URL;import java.net.UnknownHostException;import java.text.SimpleDateFormat;import java.util.ArrayList;import java.util.Collections;
+package com.OsMoDroid;import java.io.BufferedReader;import java.io.IOException;import java.io.InputStream;import java.io.InputStreamReader;import java.io.PrintWriter;import java.net.HttpURLConnection;import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.net.InetSocketAddress;import java.net.Proxy;import java.net.URL;import java.net.UnknownHostException;import java.text.SimpleDateFormat;import java.util.ArrayList;import java.util.Collections;
 import java.util.Map;
 import java.util.Date;import java.util.Iterator;import java.util.Map.Entry;
 import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import com.OsMoDroid.LocalService.SendCoor;import android.app.Notification;import android.app.PendingIntent;import android.app.PendingIntent.CanceledException;import android.content.BroadcastReceiver;import android.content.SharedPreferences;
@@ -133,7 +135,16 @@ if (mes.from.equals(localService.settings.getString("device", ""))){
 				e.printStackTrace();
 			}
 			if (u!=-1){
-			Message msg = new Message();			Bundle b = new Bundle();			b.putInt("deviceU", u);			msg.setData(b);			localService.alertHandler.sendMessage(msg);		}			}	private BroadcastReceiver bcr = new BroadcastReceiver() {		@Override		public void onReceive(Context context, Intent intent) {			Log.d(this.getClass().getName(), "BCR"+this);			Log.d(this.getClass().getName(), "BCR"+this+" Intent:"+intent);			if (intent.getAction().equals(android.net.ConnectivityManager.CONNECTIVITY_ACTION)) {				Bundle extras = intent.getExtras();				Log.d(this.getClass().getName(), "BCR"+this+ " "+intent.getExtras());				if(extras.containsKey("networkInfo")) {					NetworkInfo netinfo = (NetworkInfo) extras.get("networkInfo");					Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo);					Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo.getType());					if(netinfo.isConnected()) {						Log.d(this.getClass().getName(), "BCR"+this+" Network is connected");						Log.d(this.getClass().getName(), "BCR"+this+" Running:"+running);						// Network is connected						if(!running ) {							System.out.println("Starting from Reciever"+this.toString());							myThread.interrupt();							start();						}					}					else {						System.out.println("Stoping1 from Reciever"+this.toString());						stop();					}				}				else if(extras.containsKey("noConnectivity")) {					System.out.println("Stoping2 from Reciever"+this.toString());					stop();				}		    }		}	};	 /**
+			Message msg = new Message();			Bundle b = new Bundle();			b.putInt("deviceU", u);			msg.setData(b);			localService.alertHandler.sendMessage(msg);		}			}	private BroadcastReceiver bcr = new BroadcastReceiver() {		@Override		public void onReceive(Context context, Intent intent) {			Log.d(this.getClass().getName(), "BCR"+this);			Log.d(this.getClass().getName(), "BCR"+this+" Intent:"+intent);			if (intent.getAction().equals(android.net.ConnectivityManager.CONNECTIVITY_ACTION)) {				Bundle extras = intent.getExtras();				Log.d(this.getClass().getName(), "BCR"+this+ " "+intent.getExtras());				if(extras.containsKey("networkInfo")) {					NetworkInfo netinfo = (NetworkInfo) extras.get("networkInfo");					Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo);					Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo.getType());					if(netinfo.isConnected()) {						Log.d(this.getClass().getName(), "BCR"+this+" Network is connected");						Log.d(this.getClass().getName(), "BCR"+this+" Running:"+running);						
+						// Network is connected						if(!running ) {							System.out.println("Starting from Reciever"+this.toString());							myThread.interrupt();							start();
+							Toast.makeText(parent.getApplicationContext(), "Connect by network change", Toast.LENGTH_SHORT).show();
+							localService.vibrate(localService, 1000);						}					}					else {						System.out.println("Stoping1 from Reciever"+this.toString());						stop();
+						
+						Toast.makeText(parent.getApplicationContext(), "Stop by network change", Toast.LENGTH_SHORT).show();
+						localService.vibrate(localService, 1000);					}				}				else if(extras.containsKey("noConnectivity")) {					System.out.println("Stoping2 from Reciever"+this.toString());					stop();
+					
+					Toast.makeText(parent.getApplicationContext(), "Stop2 by network change", Toast.LENGTH_SHORT).show();
+					localService.vibrate(localService, 1000);				}		    }		}	};	 /**
 	 * Выключает IM
 	 */
 	void close(){		parent.unregisterReceiver(bcr);		stop();	};	 void start(){		this.running = true;		System.out.println("About to notify state from start()");		System.out.println("State notifed of start()");		myThread = new Thread(new IMRunnable());		myThread.start();	}void parseEx (String toParse){
@@ -148,7 +159,8 @@ if (mes.from.equals(localService.settings.getString("device", ""))){
 	
 	try {
 		Log.d(this.getClass().getName(), "toParse= "+ toParse);
-
+		
+		if (toParse.length()==0){Toast.makeText(parent.getApplicationContext(), "TIMEOUT BY SERVER", Toast.LENGTH_SHORT).show();localService.vibrate(localService, 1000);}
 		//Toast.makeText(LocalService.serContext, toParse, Toast.LENGTH_LONG).show();
 		JSONArray result = new JSONArray(toParse);
 
@@ -300,7 +312,6 @@ if (jsonObject.optString("data").length()>7&&jsonObject.optString("data").substr
 }
 
 if (jsonObject.optString("data").length()>7&&jsonObject.optString("data").substring(0, 7).equals("vibrate")){
-	
 	localService.vibrate( localService, Long.parseLong(jsonObject.optString("data").substring(7, jsonObject.optString("data").length())));
 }
 
@@ -648,5 +659,9 @@ if (getMessageType( keyname).equals("chch")){
 	}	private class IMRunnable implements Runnable {		StringBuilder stringBuilder= new StringBuilder(1024);		private InputStreamReader stream  = null;		private boolean           error   = false;		private int               retries = 0;		int maxRetries = 100;		public void run() {			Log.d(this.getClass().getName(), "run thread instance:"+this.toString());			String response = "";			while (running) {
 				Log.d(this.getClass().getName(), "adr="+adr);				Log.d(this.getClass().getName(), "running thread instance:"+this.toString());				try {					++retries;					int portOfProxy = android.net.Proxy.getDefaultPort();					if (portOfProxy > 0) {						Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(								android.net.Proxy.getDefaultHost(), portOfProxy));						con = (HttpURLConnection) new URL(adr).openConnection(proxy);					} else {						con = (HttpURLConnection) new URL(adr).openConnection();					}					Log.d(this.getClass().getName(), "Set connect timeout thread instance:"+this.toString());					con.setReadTimeout(pingTimeout*1000);					con.setConnectTimeout(10000);					instream=con.getInputStream();					stream = new InputStreamReader(instream);					in   = new BufferedReader(stream, 1024);					if(error){						error = false;					}					// Set a timeout on the socket					// This prevents getting stuck in readline() if the pipe breaks					retries = 0;					connected = true;					Log.d(this.getClass().getName(), "Connected=true thread instance:"+this.toString());				} catch (UnknownHostException e) {					error = true;					//stop();				} catch (Exception e) {					error = true;					//stop();				}				if(retries > maxRetries) {					stop ();					break;				}				if(retries > 0) {					try {						Thread.sleep(1000);					} catch (InterruptedException e) {						// If can't back-off, stop trying						Log.d(this.getClass().getName(), "Interrupted from sleep thread instance:"+this.toString());						//running = false;						break;					}				}				if(!error && running) {					try {						// Wait for a response from the channel						Log.d(this.getClass().getName(), "Waiting responce thread instance:"+this.toString()+ " adr="+adr);						stringBuilder.setLength(0);						    int c = 0;						    int i=0;						    while (!(c==-1) && running) {						    	c = in.read();						        if (!(c==-1))stringBuilder.append((char) c);						        i=i+1;						    }						    parseEx( stringBuilder.toString());
 						    getadres(myLongPollChList);						instream.close();						in.close();						con.disconnect();
-						Log.d(this.getClass().getName(), "Got responce  thread instance:"+this.toString()+ " adr="+adr);					}					catch(Exception e) {						Log.d(this.getClass().getName(), "Exception after read response :"+e.toString());						e.printStackTrace();
+						Log.d(this.getClass().getName(), "Got responce  thread instance:"+this.toString()+ " adr="+adr);					}					catch(Exception e) {						if(e instanceof SocketTimeoutException){
+							Toast.makeText(parent.getApplicationContext(), "TIMEOUT by CLIENT", Toast.LENGTH_SHORT).show();
+							localService.vibrate(localService, 1000);
+						}
+						Log.d(this.getClass().getName(), "Exception after read response :"+e.toString());						e.printStackTrace();
 						error = true;						}					}				else {					// An error was encountered when trying to connect					connected = false;				}			}		}	}}

@@ -1757,6 +1757,7 @@ public void stopcomand()
 
 		//Log.d(getClass().getSimpleName(), "oncreate() localservice");
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+		vibrator.vibrate(1000);
 		pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
 		in = new Intent("OsMoDroid");
@@ -1933,7 +1934,7 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
         netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 }
 	
-	void vibrate (Context context,long milliseconds) throws JSONException{
+	void vibrate (Context context,long milliseconds) {
 		vibrator.vibrate(milliseconds);
 	}
 	
@@ -2196,6 +2197,7 @@ if (soundPool!=null) {soundPool.release();}
 
 	public void onStart(Intent intent, int startId) {
 		Log.d(getClass().getSimpleName(), "on start ");
+		Toast.makeText(getApplicationContext(), "OnStart", Toast.LENGTH_SHORT).show();
 		super.onStart(intent, startId);
 
 
@@ -2206,6 +2208,7 @@ if (soundPool!=null) {soundPool.release();}
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.d(getClass().getSimpleName(), "on startcommand");
+		Toast.makeText(getApplicationContext(), "OnStart command", Toast.LENGTH_SHORT).show();
 		 return START_STICKY;
 	}
 
@@ -2850,8 +2853,10 @@ private void manageIM(){
 
 			}
 			//notification.tickerText=sendresult;
+			if (notification!=null){
 			notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "Отправлено:"+sendcounter+" Записано:"+writecounter, osmodroidLaunchIntent);
 			mNotificationManager.notify(OSMODROID_ID, notification);
+			}
 			refresh();
 
 		}
