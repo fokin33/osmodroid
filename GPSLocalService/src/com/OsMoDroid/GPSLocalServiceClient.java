@@ -346,10 +346,40 @@ if (live){
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
 								stopsession=true;
-								stop(stopsession);
+								if (!settings.getBoolean("automaticupload", true)){
+									AlertDialog alertdialog1 = new AlertDialog.Builder(
+											GPSLocalServiceClient.this).create();
+									alertdialog1.setTitle("Загрузка");
 
-								updateServiceStatus();
+									alertdialog1.setMessage("Загрузить на ТреРа?");
 
+									alertdialog1.setButton(getString(R.string.yes),
+											new DialogInterface.OnClickListener() {
+												public void onClick(DialogInterface dialog, int which) {
+													LocalService.uploadto=true;
+													stop(stopsession);
+													updateServiceStatus();
+													return;
+												}
+											});
+									alertdialog1.setButton2(getString(R.string.No),
+											new DialogInterface.OnClickListener() {
+												public void onClick(DialogInterface dialog, int which) {
+													LocalService.uploadto=false;
+													stop(stopsession);
+													updateServiceStatus();
+													return;
+												}
+											});
+									alertdialog1.show();
+								}
+								else
+								{
+									LocalService.uploadto=true;
+									stop(stopsession);
+									updateServiceStatus();
+
+								}
 								return;
 							}
 						});
@@ -357,51 +387,87 @@ if (live){
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
 								stopsession=false;
-								stop(stopsession);
+								if (!settings.getBoolean("automaticupload", true)){
+									AlertDialog alertdialog1 = new AlertDialog.Builder(
+											GPSLocalServiceClient.this).create();
+									alertdialog1.setTitle("Загрузка");
 
-								updateServiceStatus();
+									alertdialog1.setMessage("Загрузить на ТреРа?");
 
+									alertdialog1.setButton(getString(R.string.yes),
+											new DialogInterface.OnClickListener() {
+												public void onClick(DialogInterface dialog, int which) {
+													LocalService.uploadto=true;
+													stop(stopsession);
+													updateServiceStatus();
+													return;
+												}
+											});
+									alertdialog1.setButton2(getString(R.string.No),
+											new DialogInterface.OnClickListener() {
+												public void onClick(DialogInterface dialog, int which) {
+													LocalService.uploadto=false;
+													stop(stopsession);
+													updateServiceStatus();
+													return;
+												}
+											});
+									alertdialog1.show();
+								}
+								else
+								{
+									LocalService.uploadto=true;
+									stop(stopsession);
+									updateServiceStatus();
+
+								}
 								return;
 							}
 						});
 				alertdialog.show();
 				
 }
+else {
+	
+	if (!settings.getBoolean("automaticupload", true)){
+		AlertDialog alertdialog1 = new AlertDialog.Builder(
+				GPSLocalServiceClient.this).create();
+		alertdialog1.setTitle("Загрузка");
 
-if (!settings.getBoolean("automaticupload", true)){
-	AlertDialog alertdialog1 = new AlertDialog.Builder(
-			GPSLocalServiceClient.this).create();
-	alertdialog1.setTitle("Загрузка");
+		alertdialog1.setMessage("Загрузить на ТреРа?");
 
-	alertdialog1.setMessage("Загрузить на ТреРа?");
+		alertdialog1.setButton(getString(R.string.yes),
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						LocalService.uploadto=true;
+						stop(stopsession);
+						updateServiceStatus();
+						return;
+					}
+				});
+		alertdialog1.setButton2(getString(R.string.No),
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						LocalService.uploadto=false;
+						stop(stopsession);
+						updateServiceStatus();
+						return;
+					}
+				});
+		alertdialog1.show();
+	}
+	else
+	{
+		LocalService.uploadto=true;
+		stop(stopsession);
+		updateServiceStatus();
 
-	alertdialog1.setButton(getString(R.string.yes),
-			new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					LocalService.uploadto=true;
-					return;
-				}
-			});
-	alertdialog1.setButton2(getString(R.string.No),
-			new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					LocalService.uploadto=false;
-					return;
-				}
-			});
-	alertdialog1.show();
+	}
+	
 }
-else
-{
-	LocalService.uploadto=true;	
-}
 
 
-
-//				stop(stopsession);
-//
-//				updateServiceStatus();
-
+			
 			}
 		});
 

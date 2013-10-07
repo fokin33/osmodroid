@@ -1,0 +1,42 @@
+android.support.v4.app.BackStackState
+android.support.v4.app.BackStackState: android.os.Parcelable$Creator CREATOR
+android.support.v4.app.Fragment$SavedState
+android.support.v4.app.Fragment$SavedState: android.os.Parcelable$Creator CREATOR
+android.support.v4.app.FragmentActivity
+android.support.v4.app.FragmentManagerState
+android.support.v4.app.FragmentManagerState: android.os.Parcelable$Creator CREATOR
+android.support.v4.app.FragmentState
+android.support.v4.app.FragmentState: android.os.Parcelable$Creator CREATOR
+android.support.v4.app.FragmentTabHost$SavedState
+android.support.v4.app.FragmentTabHost$SavedState: android.os.Parcelable$Creator CREATOR
+android.support.v4.content.ModernAsyncTask$Status: android.support.v4.content.ModernAsyncTask$Status[] values()
+android.support.v4.content.ModernAsyncTask$Status: android.support.v4.content.ModernAsyncTask$Status valueOf(java.lang.String)
+android.support.v4.view.ViewPager$SavedState
+android.support.v4.view.ViewPager$SavedState: android.os.Parcelable$Creator CREATOR
+com.OsMoDroid.BootComplitedReceiver
+com.OsMoDroid.BootComplitedReceiver: BootComplitedReceiver()
+com.OsMoDroid.DeviceChat
+com.OsMoDroid.DeviceChat: DeviceChat()
+com.OsMoDroid.GPSLocalServiceClient
+com.OsMoDroid.GPSLocalServiceClient: GPSLocalServiceClient()
+com.OsMoDroid.LocalService
+com.OsMoDroid.LocalService: LocalService()
+com.OsMoDroid.MyChannels
+com.OsMoDroid.MyChannels: MyChannels()
+com.OsMoDroid.MyChannelsDevices
+com.OsMoDroid.MyChannelsDevices: MyChannelsDevices()
+com.OsMoDroid.MyDevices
+com.OsMoDroid.MyDevices: MyDevices()
+com.OsMoDroid.OsMoDroid
+com.OsMoDroid.PrefActivity
+com.OsMoDroid.PrefActivity: PrefActivity()
+com.OsMoDroid.SimLinks
+com.OsMoDroid.SimLinks: SimLinks()
+com.OsMoDroid.TracFileListActivity
+com.OsMoDroid.TracFileListActivity: TracFileListActivity()
+com.OsMoDroid.WarnActivity
+com.OsMoDroid.WarnActivity: WarnActivity()
+com.OsMoDroid.aboutActivity
+com.OsMoDroid.aboutActivity: aboutActivity()
+com.OsMoDroid.mesActivity
+com.OsMoDroid.mesActivity: mesActivity()

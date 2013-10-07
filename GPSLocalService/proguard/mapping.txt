@@ -1,0 +1,1752 @@
+android.support.v4.app.BackStackRecord -> android.support.v4.app.a:
+    android.support.v4.app.FragmentManagerImpl mManager -> a
+    android.support.v4.app.BackStackRecord$Op mHead -> b
+    android.support.v4.app.BackStackRecord$Op mTail -> c
+    int mNumOp -> d
+    int mEnterAnim -> e
+    int mExitAnim -> f
+    int mPopEnterAnim -> g
+    int mPopExitAnim -> h
+    int mTransition -> i
+    int mTransitionStyle -> j
+    boolean mAddToBackStack -> k
+    boolean mAllowAddToBackStack -> l
+    java.lang.String mName -> m
+    boolean mCommitted -> n
+    int mIndex -> o
+    int mBreadCrumbTitleRes -> p
+    java.lang.CharSequence mBreadCrumbTitleText -> q
+    int mBreadCrumbShortTitleRes -> r
+    java.lang.CharSequence mBreadCrumbShortTitleText -> s
+    java.lang.String toString() -> toString
+    void dump$ec96877(java.lang.String,java.io.PrintWriter) -> a
+    void dump(java.lang.String,java.io.PrintWriter,boolean) -> a
+    void addOp(android.support.v4.app.BackStackRecord$Op) -> a
+    android.support.v4.app.FragmentTransaction add(int,android.support.v4.app.Fragment,java.lang.String) -> a
+    android.support.v4.app.FragmentTransaction detach(android.support.v4.app.Fragment) -> a
+    android.support.v4.app.FragmentTransaction attach(android.support.v4.app.Fragment) -> b
+    void bumpBackStackNesting(int) -> a
+    int commit() -> a
+    void run() -> run
+    void popFromBackStack$1385ff() -> b
+android.support.v4.app.BackStackRecord$Op -> android.support.v4.app.b:
+    android.support.v4.app.BackStackRecord$Op next -> a
+    android.support.v4.app.BackStackRecord$Op prev -> b
+    int cmd -> c
+    android.support.v4.app.Fragment fragment -> d
+    int enterAnim -> e
+    int exitAnim -> f
+    int popEnterAnim -> g
+    int popExitAnim -> h
+    java.util.ArrayList removed -> i
+android.support.v4.app.BackStackState -> android.support.v4.app.BackStackState:
+    int[] mOps -> a
+    int mTransition -> b
+    int mTransitionStyle -> c
+    java.lang.String mName -> d
+    int mIndex -> e
+    int mBreadCrumbTitleRes -> f
+    java.lang.CharSequence mBreadCrumbTitleText -> g
+    int mBreadCrumbShortTitleRes -> h
+    java.lang.CharSequence mBreadCrumbShortTitleText -> i
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    android.support.v4.app.BackStackRecord instantiate(android.support.v4.app.FragmentManagerImpl) -> a
+    int describeContents() -> describeContents
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+android.support.v4.app.BackStackState$1 -> android.support.v4.app.c:
+    java.lang.Object[] newArray(int) -> newArray
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+android.support.v4.app.Fragment -> android.support.v4.app.Fragment:
+    java.util.HashMap sClassMap -> P
+    int mState -> a
+    android.view.View mAnimatingAway -> b
+    int mStateAfterAnimating -> c
+    android.os.Bundle mSavedFragmentState -> d
+    android.util.SparseArray mSavedViewState -> e
+    int mIndex -> f
+    java.lang.String mWho -> g
+    android.os.Bundle mArguments -> h
+    android.support.v4.app.Fragment mTarget -> i
+    int mTargetIndex -> j
+    int mTargetRequestCode -> k
+    boolean mAdded -> l
+    boolean mRemoving -> m
+    boolean mResumed -> n
+    boolean mFromLayout -> o
+    boolean mInLayout -> p
+    boolean mRestored -> q
+    int mBackStackNesting -> r
+    android.support.v4.app.FragmentManagerImpl mFragmentManager -> s
+    android.support.v4.app.FragmentActivity mActivity -> t
+    android.support.v4.app.FragmentManagerImpl mChildFragmentManager -> u
+    android.support.v4.app.Fragment mParentFragment -> v
+    int mFragmentId -> w
+    int mContainerId -> x
+    java.lang.String mTag -> y
+    boolean mHidden -> z
+    boolean mDetached -> A
+    boolean mRetainInstance -> B
+    boolean mRetaining -> C
+    boolean mHasMenu -> D
+    boolean mMenuVisible -> E
+    boolean mCalled -> F
+    int mNextAnim -> G
+    android.view.ViewGroup mContainer -> H
+    android.view.View mView -> I
+    android.view.View mInnerView -> J
+    boolean mDeferStart -> K
+    boolean mUserVisibleHint -> L
+    android.support.v4.app.LoaderManagerImpl mLoaderManager -> M
+    boolean mLoadersStarted -> N
+    boolean mCheckedForLoaderManager -> O
+    android.support.v4.app.Fragment instantiate(android.content.Context,java.lang.String) -> a
+    android.support.v4.app.Fragment instantiate(android.content.Context,java.lang.String,android.os.Bundle) -> a
+    void restoreViewState$79e5e33f() -> a
+    void setIndex(int,android.support.v4.app.Fragment) -> a
+    boolean isInBackStack() -> b
+    boolean equals(java.lang.Object) -> equals
+    int hashCode() -> hashCode
+    java.lang.String toString() -> toString
+    android.content.res.Resources getResources() -> c
+    boolean isDetached() -> d
+    void onHiddenChanged$1385ff() -> e
+    void onActivityResult$6eb84b52() -> f
+    android.view.LayoutInflater getLayoutInflater$2ee30c11() -> g
+    void onInflate$423a76cd() -> h
+    void onAttach$63a22f9() -> i
+    android.view.animation.Animation onCreateAnimation$24236ca7() -> j
+    void onViewCreated$65f1d89() -> k
+    void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
+    void onLowMemory() -> onLowMemory
+    void initState() -> l
+    void onDetach() -> m
+    void onDestroyOptionsMenu() -> n
+    void onCreateContextMenu(android.view.ContextMenu,android.view.View,android.view.ContextMenu$ContextMenuInfo) -> onCreateContextMenu
+    void dump(java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[]) -> a
+    void performCreate(android.os.Bundle) -> a
+    android.view.View performCreateView$469ccb8a() -> o
+    void performActivityCreated$79e5e33f() -> p
+    void performStart() -> q
+    void performResume() -> r
+    void performConfigurationChanged(android.content.res.Configuration) -> a
+    void performLowMemory() -> s
+    boolean performCreateOptionsMenu(android.view.Menu,android.view.MenuInflater) -> a
+    boolean performPrepareOptionsMenu(android.view.Menu) -> a
+    boolean performOptionsItemSelected(android.view.MenuItem) -> a
+    boolean performContextItemSelected(android.view.MenuItem) -> b
+    void performOptionsMenuClosed(android.view.Menu) -> b
+    void performSaveInstanceState(android.os.Bundle) -> b
+    void performPause() -> t
+    void performStop() -> u
+    void performReallyStop() -> v
+    void performDestroyView() -> w
+    void performDestroy() -> x
+android.support.v4.app.Fragment$1 -> android.support.v4.app.d:
+    android.support.v4.app.Fragment this$0 -> a
+    android.view.View findViewById(int) -> a
+android.support.v4.app.Fragment$InstantiationException -> android.support.v4.app.e:
+android.support.v4.app.Fragment$SavedState -> android.support.v4.app.Fragment$SavedState:
+    android.os.Bundle mState -> a
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    int describeContents() -> describeContents
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+android.support.v4.app.Fragment$SavedState$1 -> android.support.v4.app.f:
+    java.lang.Object[] newArray(int) -> newArray
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+android.support.v4.app.FragmentActivity -> android.support.v4.app.FragmentActivity:
+    android.os.Handler mHandler -> a
+    android.support.v4.app.FragmentManagerImpl mFragments -> b
+    android.support.v4.app.FragmentContainer mContainer -> c
+    boolean mCreated -> d
+    boolean mResumed -> e
+    boolean mStopped -> f
+    boolean mReallyStopped -> g
+    boolean mRetaining -> h
+    boolean mOptionsMenuInvalidated -> i
+    boolean mCheckedForLoaderManager -> j
+    boolean mLoadersStarted -> k
+    java.util.HashMap mAllLoaderManagers -> l
+    android.support.v4.app.LoaderManagerImpl mLoaderManager -> m
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    void onBackPressed() -> onBackPressed
+    void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
+    void onCreate(android.os.Bundle) -> onCreate
+    boolean onCreatePanelMenu(int,android.view.Menu) -> onCreatePanelMenu
+    android.view.View onCreateView(java.lang.String,android.content.Context,android.util.AttributeSet) -> onCreateView
+    void onDestroy() -> onDestroy
+    boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
+    void onLowMemory() -> onLowMemory
+    boolean onMenuItemSelected(int,android.view.MenuItem) -> onMenuItemSelected
+    void onPanelClosed(int,android.view.Menu) -> onPanelClosed
+    void onPause() -> onPause
+    void onNewIntent(android.content.Intent) -> onNewIntent
+    void onResume() -> onResume
+    void onPostResume() -> onPostResume
+    void onResumeFragments() -> a
+    boolean onPreparePanel(int,android.view.View,android.view.Menu) -> onPreparePanel
+    java.lang.Object onRetainNonConfigurationInstance() -> onRetainNonConfigurationInstance
+    void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    void onStart() -> onStart
+    void onStop() -> onStop
+    void supportInvalidateOptionsMenu() -> b
+    void dump$ec96877(java.lang.String,java.io.PrintWriter,java.lang.String[]) -> a
+    java.lang.String viewToString(android.view.View) -> a
+    void dumpViewHierarchy(java.lang.String,java.io.PrintWriter,android.view.View) -> a
+    void doReallyStop(boolean) -> a
+    void onAttachFragment$65850823() -> c
+    void startActivityForResult(android.content.Intent,int) -> startActivityForResult
+    void invalidateSupportFragment(java.lang.String) -> a
+    android.support.v4.app.LoaderManagerImpl getLoaderManager$2cd5ab55(java.lang.String) -> b
+android.support.v4.app.FragmentActivity$1 -> android.support.v4.app.g:
+    android.support.v4.app.FragmentActivity this$0 -> a
+    void handleMessage(android.os.Message) -> handleMessage
+android.support.v4.app.FragmentActivity$2 -> android.support.v4.app.h:
+    android.support.v4.app.FragmentActivity this$0 -> a
+    android.view.View findViewById(int) -> a
+android.support.v4.app.FragmentActivity$FragmentTag -> android.support.v4.app.i:
+    int[] Fragment -> a
+android.support.v4.app.FragmentActivity$NonConfigurationInstances -> android.support.v4.app.j:
+    java.lang.Object activity -> a
+    java.lang.Object custom -> b
+    java.util.HashMap children -> c
+    java.util.ArrayList fragments -> d
+    java.util.HashMap loaders -> e
+android.support.v4.app.FragmentContainer -> android.support.v4.app.k:
+    android.view.View findViewById(int) -> a
+android.support.v4.app.FragmentManager -> android.support.v4.app.l:
+    android.support.v4.app.FragmentTransaction beginTransaction() -> a
+    boolean executePendingTransactions() -> b
+    android.support.v4.app.Fragment findFragmentByTag(java.lang.String) -> a
+android.support.v4.app.FragmentManagerImpl -> android.support.v4.app.m:
+    boolean DEBUG -> a
+    boolean HONEYCOMB -> b
+    java.util.ArrayList mPendingActions -> c
+    java.lang.Runnable[] mTmpActions -> d
+    boolean mExecutingActions -> e
+    java.util.ArrayList mActive -> f
+    java.util.ArrayList mAdded -> g
+    java.util.ArrayList mAvailIndices -> h
+    java.util.ArrayList mBackStack -> i
+    java.util.ArrayList mCreatedMenus -> j
+    java.util.ArrayList mBackStackIndices -> k
+    java.util.ArrayList mAvailBackStackIndices -> l
+    java.util.ArrayList mBackStackChangeListeners -> m
+    int mCurState -> n
+    android.support.v4.app.FragmentActivity mActivity -> o
+    android.support.v4.app.FragmentContainer mContainer -> p
+    android.support.v4.app.Fragment mParent -> q
+    boolean mNeedMenuInvalidate -> r
+    boolean mStateSaved -> s
+    boolean mDestroyed -> t
+    java.lang.String mNoTransactionsBecause -> u
+    boolean mHavePendingDeferredStart -> v
+    android.os.Bundle mStateBundle -> w
+    android.util.SparseArray mStateArray -> x
+    java.lang.Runnable mExecCommit -> y
+    android.view.animation.Interpolator DECELERATE_QUINT -> z
+    android.view.animation.Interpolator DECELERATE_CUBIC -> A
+    android.view.animation.Interpolator ACCELERATE_QUINT -> B
+    android.view.animation.Interpolator ACCELERATE_CUBIC -> C
+    void throwException(java.lang.RuntimeException) -> a
+    android.support.v4.app.FragmentTransaction beginTransaction() -> a
+    boolean executePendingTransactions() -> b
+    boolean popBackStackImmediate() -> c
+    android.support.v4.app.Fragment getFragment(android.os.Bundle,java.lang.String) -> a
+    java.lang.String toString() -> toString
+    void dump(java.lang.String,java.io.FileDescriptor,java.io.PrintWriter,java.lang.String[]) -> a
+    android.view.animation.Animation makeOpenCloseAnimation$376f30fd(float,float,float,float) -> a
+    android.view.animation.Animation makeFadeAnimation$424ea1bd(float,float) -> a
+    android.view.animation.Animation loadAnimation(android.support.v4.app.Fragment,int,boolean,int) -> a
+    void moveToState(android.support.v4.app.Fragment,int,int,int,boolean) -> a
+    void moveToState(android.support.v4.app.Fragment) -> a
+    void moveToState$2563266(int) -> d
+    void moveToState(int,int,int,boolean) -> a
+    void startPendingDeferredFragments() -> r
+    void addFragment(android.support.v4.app.Fragment,boolean) -> a
+    void removeFragment(android.support.v4.app.Fragment,int,int) -> a
+    void hideFragment(android.support.v4.app.Fragment,int,int) -> b
+    void showFragment(android.support.v4.app.Fragment,int,int) -> c
+    void detachFragment(android.support.v4.app.Fragment,int,int) -> d
+    void attachFragment(android.support.v4.app.Fragment,int,int) -> e
+    android.support.v4.app.Fragment findFragmentById(int) -> a
+    android.support.v4.app.Fragment findFragmentByTag(java.lang.String) -> a
+    void checkStateLoss() -> s
+    void enqueueAction$574583f(java.lang.Runnable) -> a
+    int allocBackStackIndex(android.support.v4.app.BackStackRecord) -> a
+    void setBackStackIndex(int,android.support.v4.app.BackStackRecord) -> a
+    void freeBackStackIndex(int) -> b
+    boolean execPendingActions() -> d
+    void reportBackStackChanged() -> t
+    void addBackStackState(android.support.v4.app.BackStackRecord) -> b
+    java.util.ArrayList retainNonConfig() -> e
+    void saveFragmentViewState(android.support.v4.app.Fragment) -> b
+    android.os.Parcelable saveAllState() -> f
+    void restoreAllState(android.os.Parcelable,java.util.ArrayList) -> a
+    void attachActivity(android.support.v4.app.FragmentActivity,android.support.v4.app.FragmentContainer,android.support.v4.app.Fragment) -> a
+    void noteStateNotSaved() -> g
+    void dispatchCreate() -> h
+    void dispatchActivityCreated() -> i
+    void dispatchStart() -> j
+    void dispatchResume() -> k
+    void dispatchPause() -> l
+    void dispatchStop() -> m
+    void dispatchReallyStop() -> n
+    void dispatchDestroyView() -> o
+    void dispatchDestroy() -> p
+    void dispatchConfigurationChanged(android.content.res.Configuration) -> a
+    void dispatchLowMemory() -> q
+    boolean dispatchCreateOptionsMenu(android.view.Menu,android.view.MenuInflater) -> a
+    boolean dispatchPrepareOptionsMenu(android.view.Menu) -> a
+    boolean dispatchOptionsItemSelected(android.view.MenuItem) -> a
+    boolean dispatchContextItemSelected(android.view.MenuItem) -> b
+    void dispatchOptionsMenuClosed(android.view.Menu) -> b
+    int reverseTransit(int) -> c
+android.support.v4.app.FragmentManagerImpl$1 -> android.support.v4.app.n:
+    android.support.v4.app.FragmentManagerImpl this$0 -> a
+    void run() -> run
+android.support.v4.app.FragmentManagerImpl$5 -> android.support.v4.app.o:
+    android.support.v4.app.Fragment val$fragment -> a
+    android.support.v4.app.FragmentManagerImpl this$0 -> b
+    void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
+    void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
+    void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
+android.support.v4.app.FragmentManagerState -> android.support.v4.app.FragmentManagerState:
+    android.support.v4.app.FragmentState[] mActive -> a
+    int[] mAdded -> b
+    android.support.v4.app.BackStackState[] mBackStack -> c
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    int describeContents() -> describeContents
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+android.support.v4.app.FragmentManagerState$1 -> android.support.v4.app.p:
+    java.lang.Object[] newArray(int) -> newArray
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+android.support.v4.app.FragmentState -> android.support.v4.app.FragmentState:
+    java.lang.String mClassName -> a
+    int mIndex -> b
+    boolean mFromLayout -> c
+    int mFragmentId -> d
+    int mContainerId -> e
+    java.lang.String mTag -> f
+    boolean mRetainInstance -> g
+    boolean mDetached -> h
+    android.os.Bundle mArguments -> i
+    android.os.Bundle mSavedFragmentState -> j
+    android.support.v4.app.Fragment mInstance -> k
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    android.support.v4.app.Fragment instantiate(android.support.v4.app.FragmentActivity,android.support.v4.app.Fragment) -> a
+    int describeContents() -> describeContents
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+android.support.v4.app.FragmentState$1 -> android.support.v4.app.q:
+    java.lang.Object[] newArray(int) -> newArray
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+android.support.v4.app.FragmentTabHost -> android.support.v4.app.FragmentTabHost:
+    java.util.ArrayList mTabs -> a
+    android.content.Context mContext -> b
+    android.support.v4.app.FragmentManager mFragmentManager -> c
+    int mContainerId -> d
+    android.widget.TabHost$OnTabChangeListener mOnTabChangeListener -> e
+    android.support.v4.app.FragmentTabHost$TabInfo mLastTab -> f
+    boolean mAttached -> g
+    void setup() -> setup
+    void setOnTabChangedListener(android.widget.TabHost$OnTabChangeListener) -> setOnTabChangedListener
+    void onAttachedToWindow() -> onAttachedToWindow
+    void onDetachedFromWindow() -> onDetachedFromWindow
+    android.os.Parcelable onSaveInstanceState() -> onSaveInstanceState
+    void onRestoreInstanceState(android.os.Parcelable) -> onRestoreInstanceState
+    void onTabChanged(java.lang.String) -> onTabChanged
+    android.support.v4.app.FragmentTransaction doTabChanged(java.lang.String,android.support.v4.app.FragmentTransaction) -> a
+android.support.v4.app.FragmentTabHost$SavedState -> android.support.v4.app.FragmentTabHost$SavedState:
+    java.lang.String curTab -> a
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    java.lang.String toString() -> toString
+android.support.v4.app.FragmentTabHost$SavedState$1 -> android.support.v4.app.r:
+    java.lang.Object[] newArray(int) -> newArray
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+android.support.v4.app.FragmentTabHost$TabInfo -> android.support.v4.app.s:
+    java.lang.String tag -> a
+    java.lang.Class clss -> b
+    android.os.Bundle args -> c
+    android.support.v4.app.Fragment fragment -> d
+    android.support.v4.app.Fragment access$102(android.support.v4.app.FragmentTabHost$TabInfo,android.support.v4.app.Fragment) -> a
+    android.support.v4.app.Fragment access$100(android.support.v4.app.FragmentTabHost$TabInfo) -> a
+    java.lang.String access$200(android.support.v4.app.FragmentTabHost$TabInfo) -> b
+    java.lang.Class access$300(android.support.v4.app.FragmentTabHost$TabInfo) -> c
+    android.os.Bundle access$400(android.support.v4.app.FragmentTabHost$TabInfo) -> d
+android.support.v4.app.FragmentTransaction -> android.support.v4.app.t:
+    android.support.v4.app.FragmentTransaction add(int,android.support.v4.app.Fragment,java.lang.String) -> a
+    android.support.v4.app.FragmentTransaction detach(android.support.v4.app.Fragment) -> a
+    android.support.v4.app.FragmentTransaction attach(android.support.v4.app.Fragment) -> b
+    int commit() -> a
+android.support.v4.app.LoaderManager -> android.support.v4.app.u:
+    boolean hasRunningLoaders() -> a
+android.support.v4.app.LoaderManager$LoaderCallbacks -> android.support.v4.app.v:
+    android.support.v4.content.Loader onCreateLoader$e57f803() -> a
+android.support.v4.app.LoaderManagerImpl -> android.support.v4.app.w:
+    boolean DEBUG -> a
+    android.support.v4.util.SparseArrayCompat mLoaders -> b
+    android.support.v4.util.SparseArrayCompat mInactiveLoaders -> c
+    java.lang.String mWho -> d
+    android.support.v4.app.FragmentActivity mActivity -> e
+    boolean mStarted -> f
+    boolean mRetaining -> g
+    void updateActivity(android.support.v4.app.FragmentActivity) -> a
+    void doStart() -> b
+    void doStop() -> c
+    void doRetain() -> d
+    void finishRetain() -> e
+    void doReportNextStart() -> f
+    void doReportStart() -> g
+    void doDestroy() -> h
+    java.lang.String toString() -> toString
+    void dump$ec96877$79f041d6(java.lang.String,java.io.PrintWriter) -> a
+    boolean hasRunningLoaders() -> a
+android.support.v4.app.LoaderManagerImpl$LoaderInfo -> android.support.v4.app.x:
+    int mId -> a
+    android.os.Bundle mArgs -> b
+    android.support.v4.app.LoaderManager$LoaderCallbacks mCallbacks -> c
+    android.support.v4.content.Loader mLoader -> d
+    boolean mHaveData -> e
+    boolean mDeliveredData -> f
+    java.lang.Object mData -> g
+    boolean mStarted -> h
+    boolean mRetaining -> i
+    boolean mRetainingStarted -> j
+    boolean mReportNextStart -> k
+    boolean mDestroyed -> l
+    boolean mListenerRegistered -> m
+    android.support.v4.app.LoaderManagerImpl$LoaderInfo mPendingLoader -> n
+    android.support.v4.app.LoaderManagerImpl this$0 -> o
+    void stop() -> a
+    void destroy() -> b
+    void callOnLoadFinished(android.support.v4.content.Loader,java.lang.Object) -> a
+    java.lang.String toString() -> toString
+    void dump$ec96877$79f041d6(java.lang.String,java.io.PrintWriter) -> a
+android.support.v4.app.NoSaveStateFrameLayout -> android.support.v4.app.y:
+    android.view.ViewGroup wrap(android.view.View) -> a
+    void dispatchSaveInstanceState(android.util.SparseArray) -> dispatchSaveInstanceState
+    void dispatchRestoreInstanceState(android.util.SparseArray) -> dispatchRestoreInstanceState
+android.support.v4.app.NotificationCompat -> android.support.v4.app.z:
+    android.support.v4.app.NotificationCompat$NotificationCompatImpl IMPL -> a
+    android.support.v4.app.NotificationCompat$NotificationCompatImpl access$000() -> a
+android.support.v4.app.NotificationCompat$Action -> android.support.v4.app.aa:
+    int icon -> a
+    java.lang.CharSequence title -> b
+    android.app.PendingIntent actionIntent -> c
+android.support.v4.app.NotificationCompat$BigPictureStyle -> android.support.v4.app.ab:
+    android.graphics.Bitmap mPicture -> a
+android.support.v4.app.NotificationCompat$BigTextStyle -> android.support.v4.app.ac:
+    java.lang.CharSequence mBigText -> a
+android.support.v4.app.NotificationCompat$Builder -> android.support.v4.app.ad:
+    android.content.Context mContext -> a
+    java.lang.CharSequence mContentTitle -> b
+    java.lang.CharSequence mContentText -> c
+    android.app.PendingIntent mContentIntent -> d
+    android.app.PendingIntent mFullScreenIntent -> e
+    android.widget.RemoteViews mTickerView -> f
+    android.graphics.Bitmap mLargeIcon -> g
+    java.lang.CharSequence mContentInfo -> h
+    int mNumber -> i
+    int mPriority -> j
+    boolean mUseChronometer -> k
+    android.support.v4.app.NotificationCompat$Style mStyle -> l
+    java.lang.CharSequence mSubText -> m
+    int mProgressMax -> n
+    int mProgress -> o
+    boolean mProgressIndeterminate -> p
+    java.util.ArrayList mActions -> q
+    android.app.Notification mNotification -> r
+    android.support.v4.app.NotificationCompat$Builder setWhen(long) -> a
+    android.support.v4.app.NotificationCompat$Builder setSmallIcon(int) -> a
+    android.support.v4.app.NotificationCompat$Builder setContentTitle(java.lang.CharSequence) -> a
+    android.support.v4.app.NotificationCompat$Builder setContentText(java.lang.CharSequence) -> b
+    android.support.v4.app.NotificationCompat$Builder setProgress$2e2eb293(int) -> b
+    android.support.v4.app.NotificationCompat$Builder setContentIntent(android.app.PendingIntent) -> a
+    android.support.v4.app.NotificationCompat$Builder setAutoCancel$7abcb88d() -> a
+    android.support.v4.app.NotificationCompat$Builder setDefaults(int) -> c
+    android.app.Notification build() -> b
+android.support.v4.app.NotificationCompat$InboxStyle -> android.support.v4.app.ae:
+    java.util.ArrayList mTexts -> a
+android.support.v4.app.NotificationCompat$NotificationCompatImpl -> android.support.v4.app.af:
+    android.app.Notification build(android.support.v4.app.NotificationCompat$Builder) -> a
+android.support.v4.app.NotificationCompat$NotificationCompatImplBase -> android.support.v4.app.ag:
+    android.app.Notification build(android.support.v4.app.NotificationCompat$Builder) -> a
+android.support.v4.app.NotificationCompat$NotificationCompatImplHoneycomb -> android.support.v4.app.ah:
+    android.app.Notification build(android.support.v4.app.NotificationCompat$Builder) -> a
+android.support.v4.app.NotificationCompat$NotificationCompatImplIceCreamSandwich -> android.support.v4.app.ai:
+    android.app.Notification build(android.support.v4.app.NotificationCompat$Builder) -> a
+android.support.v4.app.NotificationCompat$NotificationCompatImplJellybean -> android.support.v4.app.aj:
+    android.app.Notification build(android.support.v4.app.NotificationCompat$Builder) -> a
+android.support.v4.app.NotificationCompat$Style -> android.support.v4.app.ak:
+    java.lang.CharSequence mBigContentTitle -> b
+    java.lang.CharSequence mSummaryText -> c
+    boolean mSummaryTextSet -> d
+android.support.v4.app.NotificationCompatJellybean -> android.support.v4.app.al:
+    android.app.Notification$Builder b -> a
+    void addAction(int,java.lang.CharSequence,android.app.PendingIntent) -> a
+    void addBigTextStyle(java.lang.CharSequence,boolean,java.lang.CharSequence,java.lang.CharSequence) -> a
+    void addBigPictureStyle(java.lang.CharSequence,boolean,java.lang.CharSequence,android.graphics.Bitmap) -> a
+    void addInboxStyle(java.lang.CharSequence,boolean,java.lang.CharSequence,java.util.ArrayList) -> a
+    android.app.Notification build() -> a
+android.support.v4.app.SuperNotCalledException -> android.support.v4.app.am:
+android.support.v4.content.Loader -> android.support.v4.a.a:
+    int mId -> a
+    android.support.v4.content.Loader$OnLoadCompleteListener mListener -> b
+    boolean mStarted -> c
+    boolean mAbandoned -> d
+    boolean mReset -> e
+    boolean mContentChanged -> f
+    void registerListener(int,android.support.v4.content.Loader$OnLoadCompleteListener) -> a
+    void unregisterListener(android.support.v4.content.Loader$OnLoadCompleteListener) -> a
+    void startLoading() -> a
+    void stopLoading() -> b
+    void reset() -> c
+    java.lang.String toString() -> toString
+    void dump$ec96877(java.lang.String,java.io.PrintWriter) -> a
+android.support.v4.content.Loader$OnLoadCompleteListener -> android.support.v4.a.b:
+android.support.v4.os.ParcelableCompat -> android.support.v4.b.a:
+    android.os.Parcelable$Creator newCreator(android.support.v4.os.ParcelableCompatCreatorCallbacks) -> a
+android.support.v4.os.ParcelableCompat$CompatCreator -> android.support.v4.b.b:
+    android.support.v4.os.ParcelableCompatCreatorCallbacks mCallbacks -> a
+    java.lang.Object createFromParcel(android.os.Parcel) -> createFromParcel
+    java.lang.Object[] newArray(int) -> newArray
+android.support.v4.os.ParcelableCompatCreatorCallbacks -> android.support.v4.b.c:
+    java.lang.Object createFromParcel$58b95460(android.os.Parcel) -> a
+    java.lang.Object[] newArray(int) -> a
+android.support.v4.os.ParcelableCompatCreatorHoneycombMR2 -> android.support.v4.b.d:
+    android.support.v4.os.ParcelableCompatCreatorCallbacks mCallbacks -> a
+android.support.v4.util.DebugUtils -> android.support.v4.c.a:
+    void buildShortClassTag(java.lang.Object,java.lang.StringBuilder) -> a
+android.support.v4.util.LogWriter -> android.support.v4.c.b:
+    java.lang.String mTag -> a
+    java.lang.StringBuilder mBuilder -> b
+    void close() -> close
+    void flush() -> flush
+    void write(char[],int,int) -> write
+    void flushBuilder() -> a
+android.support.v4.util.SparseArrayCompat -> android.support.v4.c.c:
+    java.lang.Object DELETED -> a
+    boolean mGarbage -> b
+    int[] mKeys -> c
+    java.lang.Object[] mValues -> d
+    int mSize -> e
+    void gc() -> c
+    int size() -> a
+    int keyAt(int) -> a
+    java.lang.Object valueAt(int) -> b
+    void clear() -> b
+android.support.v4.view.KeyEventCompat -> android.support.v4.view.a:
+    android.support.v4.view.KeyEventCompat$KeyEventVersionImpl IMPL -> a
+    boolean hasModifiers$79c6ddc0(android.view.KeyEvent) -> a
+    boolean hasNoModifiers(android.view.KeyEvent) -> b
+android.support.v4.view.KeyEventCompat$BaseKeyEventVersionImpl -> android.support.v4.view.b:
+    int metaStateFilterDirectionalModifiers$2e71581f(int,int,int,int) -> a
+    int normalizeMetaState(int) -> c
+    boolean metaStateHasModifiers$255f299(int) -> a
+    boolean metaStateHasNoModifiers(int) -> b
+android.support.v4.view.KeyEventCompat$HoneycombKeyEventVersionImpl -> android.support.v4.view.c:
+    boolean metaStateHasModifiers$255f299(int) -> a
+    boolean metaStateHasNoModifiers(int) -> b
+android.support.v4.view.KeyEventCompat$KeyEventVersionImpl -> android.support.v4.view.d:
+    boolean metaStateHasModifiers$255f299(int) -> a
+    boolean metaStateHasNoModifiers(int) -> b
+android.support.v4.view.MotionEventCompat -> android.support.v4.view.e:
+    android.support.v4.view.MotionEventCompat$MotionEventVersionImpl IMPL -> a
+    int getActionIndex(android.view.MotionEvent) -> a
+    int findPointerIndex(android.view.MotionEvent,int) -> a
+    int getPointerId(android.view.MotionEvent,int) -> b
+    float getX(android.view.MotionEvent,int) -> c
+    float getY(android.view.MotionEvent,int) -> d
+android.support.v4.view.MotionEventCompat$BaseMotionEventVersionImpl -> android.support.v4.view.f:
+    int findPointerIndex(android.view.MotionEvent,int) -> a
+    int getPointerId(android.view.MotionEvent,int) -> b
+    float getX(android.view.MotionEvent,int) -> c
+    float getY(android.view.MotionEvent,int) -> d
+android.support.v4.view.MotionEventCompat$EclairMotionEventVersionImpl -> android.support.v4.view.g:
+    int findPointerIndex(android.view.MotionEvent,int) -> a
+    int getPointerId(android.view.MotionEvent,int) -> b
+    float getX(android.view.MotionEvent,int) -> c
+    float getY(android.view.MotionEvent,int) -> d
+android.support.v4.view.MotionEventCompat$MotionEventVersionImpl -> android.support.v4.view.h:
+    int findPointerIndex(android.view.MotionEvent,int) -> a
+    int getPointerId(android.view.MotionEvent,int) -> b
+    float getX(android.view.MotionEvent,int) -> c
+    float getY(android.view.MotionEvent,int) -> d
+android.support.v4.view.PagerAdapter -> android.support.v4.view.i:
+    int getCount() -> a
+    void destroyItem$30510aeb() -> b
+    boolean isViewFromObject$171eb1dd() -> c
+android.support.v4.view.VelocityTrackerCompat -> android.support.v4.view.j:
+    android.support.v4.view.VelocityTrackerCompat$VelocityTrackerVersionImpl IMPL -> a
+    float getXVelocity(android.view.VelocityTracker,int) -> a
+android.support.v4.view.VelocityTrackerCompat$BaseVelocityTrackerVersionImpl -> android.support.v4.view.k:
+    float getXVelocity(android.view.VelocityTracker,int) -> a
+android.support.v4.view.VelocityTrackerCompat$HoneycombVelocityTrackerVersionImpl -> android.support.v4.view.l:
+    float getXVelocity(android.view.VelocityTracker,int) -> a
+android.support.v4.view.VelocityTrackerCompat$VelocityTrackerVersionImpl -> android.support.v4.view.m:
+    float getXVelocity(android.view.VelocityTracker,int) -> a
+android.support.v4.view.ViewCompat -> android.support.v4.view.n:
+    android.support.v4.view.ViewCompat$ViewCompatImpl IMPL -> a
+    boolean canScrollHorizontally(android.view.View,int) -> a
+    int getOverScrollMode(android.view.View) -> a
+    void postInvalidateOnAnimation(android.view.View) -> b
+    void postOnAnimation(android.view.View,java.lang.Runnable) -> a
+    void setLayerType$7672597b(android.view.View,int) -> b
+android.support.v4.view.ViewCompat$BaseViewCompatImpl -> android.support.v4.view.o:
+    boolean canScrollHorizontally(android.view.View,int) -> a
+    int getOverScrollMode(android.view.View) -> a
+    void postInvalidateOnAnimation(android.view.View) -> b
+    void postOnAnimation(android.view.View,java.lang.Runnable) -> a
+    long getFrameTime() -> a
+    void setLayerType$7672597b(android.view.View,int) -> b
+android.support.v4.view.ViewCompat$GBViewCompatImpl -> android.support.v4.view.p:
+    int getOverScrollMode(android.view.View) -> a
+android.support.v4.view.ViewCompat$HCViewCompatImpl -> android.support.v4.view.q:
+    long getFrameTime() -> a
+    void setLayerType$7672597b(android.view.View,int) -> b
+android.support.v4.view.ViewCompat$ICSViewCompatImpl -> android.support.v4.view.r:
+    boolean canScrollHorizontally(android.view.View,int) -> a
+android.support.v4.view.ViewCompat$JBViewCompatImpl -> android.support.v4.view.s:
+    void postInvalidateOnAnimation(android.view.View) -> b
+    void postOnAnimation(android.view.View,java.lang.Runnable) -> a
+android.support.v4.view.ViewCompat$JbMr1ViewCompatImpl -> android.support.v4.view.t:
+android.support.v4.view.ViewCompat$ViewCompatImpl -> android.support.v4.view.u:
+    boolean canScrollHorizontally(android.view.View,int) -> a
+    int getOverScrollMode(android.view.View) -> a
+    void postInvalidateOnAnimation(android.view.View) -> b
+    void postOnAnimation(android.view.View,java.lang.Runnable) -> a
+    void setLayerType$7672597b(android.view.View,int) -> b
+android.support.v4.view.ViewPager -> android.support.v4.view.ViewPager:
+    int[] LAYOUT_ATTRS -> a
+    java.util.Comparator COMPARATOR -> b
+    android.view.animation.Interpolator sInterpolator -> c
+    java.util.ArrayList mItems -> d
+    android.support.v4.view.ViewPager$ItemInfo mTempItem -> e
+    android.graphics.Rect mTempRect -> f
+    android.support.v4.view.PagerAdapter mAdapter -> g
+    int mCurItem -> h
+    int mRestoredCurItem -> i
+    android.os.Parcelable mRestoredAdapterState -> j
+    java.lang.ClassLoader mRestoredClassLoader -> k
+    android.widget.Scroller mScroller -> l
+    int mPageMargin -> m
+    android.graphics.drawable.Drawable mMarginDrawable -> n
+    int mTopPageBounds -> o
+    int mBottomPageBounds -> p
+    float mFirstOffset -> q
+    float mLastOffset -> r
+    int mChildWidthMeasureSpec -> s
+    int mChildHeightMeasureSpec -> t
+    boolean mInLayout -> u
+    boolean mScrollingCacheEnabled -> v
+    boolean mPopulatePending -> w
+    int mOffscreenPageLimit -> x
+    boolean mIsBeingDragged -> y
+    boolean mIsUnableToDrag -> z
+    int mDefaultGutterSize -> A
+    int mGutterSize -> B
+    int mTouchSlop -> C
+    float mInitialMotionX -> D
+    float mLastMotionX -> E
+    float mLastMotionY -> F
+    int mActivePointerId -> G
+    android.view.VelocityTracker mVelocityTracker -> H
+    int mMinimumVelocity -> I
+    int mMaximumVelocity -> J
+    int mFlingDistance -> K
+    int mCloseEnough -> L
+    int mSeenPositionMin -> M
+    int mSeenPositionMax -> N
+    boolean mFakeDragging -> O
+    android.support.v4.widget.EdgeEffectCompat mLeftEdge -> P
+    android.support.v4.widget.EdgeEffectCompat mRightEdge -> Q
+    boolean mFirstLayout -> R
+    boolean mNeedCalculatePageOffsets -> S
+    boolean mCalledSuper -> T
+    int mDecorChildCount -> U
+    android.support.v4.view.ViewPager$OnPageChangeListener mOnPageChangeListener -> V
+    android.support.v4.view.ViewPager$OnPageChangeListener mInternalPageChangeListener -> W
+    android.support.v4.view.ViewPager$PageTransformer mPageTransformer -> X
+    int mDrawingOrder -> Y
+    java.util.ArrayList mDrawingOrderedChildren -> Z
+    android.support.v4.view.ViewPager$ViewPositionComparator sPositionComparator -> aa
+    java.lang.Runnable mEndScrollRunnable -> ab
+    int mScrollState -> ac
+    void onDetachedFromWindow() -> onDetachedFromWindow
+    void setScrollState(int) -> a
+    void setCurrentItem$2563266(int) -> b
+    void setCurrentItemInternal(int,boolean,boolean) -> a
+    void setCurrentItemInternal(int,boolean,boolean,int) -> a
+    void scrollToItem(int,boolean,int,boolean) -> a
+    int getChildDrawingOrder(int,int) -> getChildDrawingOrder
+    boolean verifyDrawable(android.graphics.drawable.Drawable) -> verifyDrawable
+    void drawableStateChanged() -> drawableStateChanged
+    android.support.v4.view.ViewPager$ItemInfo addNewItem$3af7e890(int) -> c
+    void populate() -> b
+    void populate(int) -> d
+    android.os.Parcelable onSaveInstanceState() -> onSaveInstanceState
+    void onRestoreInstanceState(android.os.Parcelable) -> onRestoreInstanceState
+    void addView(android.view.View,int,android.view.ViewGroup$LayoutParams) -> addView
+    android.support.v4.view.ViewPager$ItemInfo infoForChild$31e08638() -> c
+    android.support.v4.view.ViewPager$ItemInfo infoForAnyChild(android.view.View) -> a
+    android.support.v4.view.ViewPager$ItemInfo infoForPosition(int) -> e
+    void onAttachedToWindow() -> onAttachedToWindow
+    void onMeasure(int,int) -> onMeasure
+    void onSizeChanged(int,int,int,int) -> onSizeChanged
+    void onLayout(boolean,int,int,int,int) -> onLayout
+    void computeScroll() -> computeScroll
+    boolean pageScrolled(int) -> f
+    void onPageScrolled$486775f1(int,float) -> a
+    void completeScroll(boolean) -> a
+    boolean onInterceptTouchEvent(android.view.MotionEvent) -> onInterceptTouchEvent
+    boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
+    boolean performDrag(float) -> a
+    android.support.v4.view.ViewPager$ItemInfo infoForCurrentScrollPosition() -> d
+    void draw(android.graphics.Canvas) -> draw
+    void onDraw(android.graphics.Canvas) -> onDraw
+    void onSecondaryPointerUp(android.view.MotionEvent) -> a
+    void endDrag() -> e
+    void setScrollingCacheEnabled(boolean) -> b
+    boolean canScroll(android.view.View,boolean,int,int,int) -> a
+    boolean dispatchKeyEvent(android.view.KeyEvent) -> dispatchKeyEvent
+    boolean arrowScroll(int) -> g
+    android.graphics.Rect getChildRectInPagerCoordinates(android.graphics.Rect,android.view.View) -> a
+    boolean pageLeft() -> f
+    void addFocusables(java.util.ArrayList,int,int) -> addFocusables
+    void addTouchables(java.util.ArrayList) -> addTouchables
+    boolean onRequestFocusInDescendants(int,android.graphics.Rect) -> onRequestFocusInDescendants
+    boolean dispatchPopulateAccessibilityEvent(android.view.accessibility.AccessibilityEvent) -> dispatchPopulateAccessibilityEvent
+    android.view.ViewGroup$LayoutParams generateDefaultLayoutParams() -> generateDefaultLayoutParams
+    android.view.ViewGroup$LayoutParams generateLayoutParams(android.view.ViewGroup$LayoutParams) -> generateLayoutParams
+    boolean checkLayoutParams(android.view.ViewGroup$LayoutParams) -> checkLayoutParams
+    android.view.ViewGroup$LayoutParams generateLayoutParams(android.util.AttributeSet) -> generateLayoutParams
+    int[] access$400() -> a
+android.support.v4.view.ViewPager$1 -> android.support.v4.view.v:
+    int compare(java.lang.Object,java.lang.Object) -> compare
+android.support.v4.view.ViewPager$2 -> android.support.v4.view.w:
+    float getInterpolation(float) -> getInterpolation
+android.support.v4.view.ViewPager$Decor -> android.support.v4.view.x:
+android.support.v4.view.ViewPager$ItemInfo -> android.support.v4.view.y:
+    java.lang.Object object -> a
+    int position -> b
+    boolean scrolling -> c
+    float widthFactor -> d
+    float offset -> e
+android.support.v4.view.ViewPager$LayoutParams -> android.support.v4.view.z:
+    boolean isDecor -> a
+    int gravity -> b
+    float widthFactor -> c
+    boolean needsMeasure -> d
+    int position -> e
+    int childIndex -> f
+android.support.v4.view.ViewPager$OnPageChangeListener -> android.support.v4.view.aa:
+android.support.v4.view.ViewPager$PageTransformer -> android.support.v4.view.ab:
+android.support.v4.view.ViewPager$SavedState -> android.support.v4.view.ViewPager$SavedState:
+    int position -> a
+    android.os.Parcelable adapterState -> b
+    java.lang.ClassLoader loader -> c
+    android.os.Parcelable$Creator CREATOR -> CREATOR
+    void writeToParcel(android.os.Parcel,int) -> writeToParcel
+    java.lang.String toString() -> toString
+android.support.v4.view.ViewPager$SavedState$1 -> android.support.v4.view.ac:
+    java.lang.Object[] newArray(int) -> a
+    java.lang.Object createFromParcel$58b95460(android.os.Parcel) -> a
+android.support.v4.view.ViewPager$ViewPositionComparator -> android.support.v4.view.ad:
+    int compare(java.lang.Object,java.lang.Object) -> compare
+android.support.v4.widget.EdgeEffectCompat -> android.support.v4.d.a:
+    java.lang.Object mEdgeEffect -> a
+    android.support.v4.widget.EdgeEffectCompat$EdgeEffectImpl IMPL -> b
+    void setSize(int,int) -> a
+    boolean isFinished() -> a
+    void finish() -> b
+    boolean onPull(float) -> a
+    boolean onRelease() -> c
+    boolean draw(android.graphics.Canvas) -> a
+android.support.v4.widget.EdgeEffectCompat$BaseEdgeEffectImpl -> android.support.v4.d.b:
+    void setSize(java.lang.Object,int,int) -> a
+    boolean isFinished(java.lang.Object) -> a
+    void finish(java.lang.Object) -> b
+    boolean onPull(java.lang.Object,float) -> a
+    boolean onRelease(java.lang.Object) -> c
+    boolean draw(java.lang.Object,android.graphics.Canvas) -> a
+android.support.v4.widget.EdgeEffectCompat$EdgeEffectIcsImpl -> android.support.v4.d.c:
+    void setSize(java.lang.Object,int,int) -> a
+    boolean isFinished(java.lang.Object) -> a
+    void finish(java.lang.Object) -> b
+    boolean onPull(java.lang.Object,float) -> a
+    boolean onRelease(java.lang.Object) -> c
+    boolean draw(java.lang.Object,android.graphics.Canvas) -> a
+android.support.v4.widget.EdgeEffectCompat$EdgeEffectImpl -> android.support.v4.d.d:
+    void setSize(java.lang.Object,int,int) -> a
+    boolean isFinished(java.lang.Object) -> a
+    void finish(java.lang.Object) -> b
+    boolean onPull(java.lang.Object,float) -> a
+    boolean onRelease(java.lang.Object) -> c
+    boolean draw(java.lang.Object,android.graphics.Canvas) -> a
+com.OsMoDroid.APIComResult -> com.OsMoDroid.a:
+    org.json.JSONObject Jo -> a
+    java.lang.String Command -> b
+    org.json.JSONArray ja -> c
+    java.lang.String rawresponse -> d
+    java.lang.String url -> e
+    java.lang.String post -> f
+    int notificationid -> g
+com.OsMoDroid.APIcomParams -> com.OsMoDroid.b:
+    java.lang.String action -> a
+    java.lang.String post -> b
+    java.lang.String command -> c
+    java.io.File uploadfile -> d
+    android.support.v4.app.NotificationCompat$Builder notificationBuilder -> e
+    int notification -> f
+com.OsMoDroid.BootComplitedReceiver -> com.OsMoDroid.BootComplitedReceiver:
+    void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.OsMoDroid.Channel -> com.OsMoDroid.c:
+    java.lang.String name -> a
+    int u -> b
+    java.lang.String created -> c
+    java.lang.String ch -> d
+    java.lang.String url -> e
+    java.util.List deviceList -> f
+    java.util.List messagesstringList -> g
+    java.lang.Boolean connected -> h
+    java.lang.Boolean send -> i
+    boolean equals(java.lang.Object) -> equals
+    java.lang.String toString() -> toString
+com.OsMoDroid.ChannelsAdapter -> com.OsMoDroid.d:
+    com.OsMoDroid.LocalService localservice -> a
+    android.content.Context context -> b
+    android.view.View$OnClickListener myCheckChangList -> c
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.OsMoDroid.ChannelsAdapter$1 -> com.OsMoDroid.e:
+    com.OsMoDroid.ChannelsAdapter this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.OsMoDroid.ChannelsDevicesAdapter -> com.OsMoDroid.f:
+    android.widget.TextView channelDeviceName -> a
+    android.widget.TextView channelDeviceWhere -> b
+    android.widget.TextView channelDeviceSpeed -> c
+    android.widget.TextView channelDeviceDistance -> d
+    android.location.Location channelDeviceLocation -> e
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.OsMoDroid.Device -> com.OsMoDroid.g:
+    int u -> a
+    java.lang.String name -> b
+    java.lang.String app -> c
+    java.lang.String last -> d
+    java.lang.String url -> e
+    java.lang.String where -> f
+    float lat -> g
+    float lon -> h
+    java.lang.String online -> i
+    java.lang.String state -> j
+    java.lang.String uid -> k
+    java.lang.String speed -> l
+    java.lang.String color -> m
+    java.lang.String toString() -> toString
+com.OsMoDroid.DeviceAdapter -> com.OsMoDroid.h:
+    android.widget.TextView deviceName -> a
+    android.widget.TextView deviceWhere -> b
+    android.widget.TextView deviceLast -> c
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.OsMoDroid.DeviceChat -> com.OsMoDroid.DeviceChat:
+    android.widget.ListView lv2 -> a
+    android.content.SharedPreferences settings -> b
+    android.widget.Button sendButton -> c
+    android.widget.EditText input -> d
+    java.text.SimpleDateFormat sdf1 -> e
+    com.OsMoDroid.Device getDeviceByU(int) -> a
+    void onCreate(android.os.Bundle) -> onCreate
+    void onDestroy() -> onDestroy
+    void onCreateContextMenu(android.view.ContextMenu,android.view.View,android.view.ContextMenu$ContextMenuInfo) -> onCreateContextMenu
+    boolean onContextItemSelected(android.view.MenuItem) -> onContextItemSelected
+    void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+com.OsMoDroid.DeviceChat$1 -> com.OsMoDroid.i:
+    com.OsMoDroid.DeviceChat this$0 -> a
+    void onChanged() -> onChanged
+com.OsMoDroid.DeviceChat$2 -> com.OsMoDroid.j:
+    com.OsMoDroid.DeviceChat this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.OsMoDroid.DeviceChat$3 -> com.OsMoDroid.k:
+    com.OsMoDroid.DeviceChat this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.OsMoDroid.DeviceChatAdapter -> com.OsMoDroid.l:
+    android.widget.TextView txtFromAddr -> a
+    android.widget.TextView txtFromName -> b
+    android.widget.TextView txtText -> c
+    android.widget.TextView txtTime -> d
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.OsMoDroid.GPSLocalServiceClient -> com.OsMoDroid.GPSLocalServiceClient:
+    boolean messageShowed -> a
+    java.lang.String key -> b
+    java.lang.String login -> c
+    int speed -> q
+    int speedbearing_gpx -> r
+    int bearing_gpx -> s
+    long notifyperiod -> t
+    int hdop_gpx -> u
+    int period_gpx -> v
+    int distance_gpx -> w
+    boolean sendsound -> x
+    boolean playsound -> y
+    boolean started -> z
+    boolean vibrate -> A
+    boolean usecourse -> B
+    int vibratetime -> C
+    com.OsMoDroid.LocalService mService -> d
+    boolean mBound -> e
+    int speedbearing -> D
+    int bearing -> E
+    boolean gpx -> F
+    boolean live -> G
+    int hdop -> H
+    int period -> I
+    int distance -> J
+    java.lang.String pass -> K
+    java.lang.String hash -> L
+    int n -> M
+    java.lang.String submiturl -> N
+    java.lang.String viewurl -> O
+    java.lang.String pdaviewurl -> P
+    java.lang.String device -> Q
+    java.lang.String devicename -> R
+    java.lang.String position -> S
+    java.lang.String sendresult -> T
+    android.content.BroadcastReceiver receiver -> f
+    int sendcounter -> U
+    int buffercounter -> V
+    boolean usebuffer -> W
+    boolean usewake -> X
+    java.io.File fileName -> g
+    android.os.PowerManager pm -> h
+    android.os.PowerManager$WakeLock wakeLock -> i
+    android.view.MenuItem mi4 -> j
+    android.view.MenuItem mi8 -> k
+    android.view.MenuItem myDevices -> l
+    android.view.MenuItem messages -> m
+    android.view.MenuItem miChannels -> n
+    java.lang.String version -> o
+    android.content.SharedPreferences settings -> p
+    android.content.ServiceConnection conn -> Y
+    java.lang.String unescape(java.lang.String) -> a
+    void onPause() -> onPause
+    void onStop() -> onStop
+    void onCreate(android.os.Bundle) -> onCreate
+    void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    void onResume() -> onResume
+    boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    boolean onPrepareOptionsMenu(android.view.Menu) -> onPrepareOptionsMenu
+    boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    void auth() -> a
+    boolean checkStarted() -> c
+    void ReadPref() -> d
+    void bindService() -> e
+    void updateServiceStatus() -> f
+    void onDestroy() -> onDestroy
+    java.lang.String getPage(java.lang.String,boolean,java.lang.String) -> a
+    java.lang.String inputStreamToString(java.io.InputStream) -> a
+    java.lang.String getDeviceName() -> b
+    java.lang.String capitalize(java.lang.String) -> b
+    void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+    boolean saveSharedPreferencesToFile(java.io.File) -> a
+    boolean loadSharedPreferencesFromFile(java.io.File) -> b
+    void access$0(com.OsMoDroid.GPSLocalServiceClient) -> a
+    void access$1(com.OsMoDroid.GPSLocalServiceClient,boolean) -> a
+    void access$2(com.OsMoDroid.GPSLocalServiceClient) -> b
+    java.lang.String access$3(com.OsMoDroid.GPSLocalServiceClient) -> c
+    int access$4(com.OsMoDroid.GPSLocalServiceClient) -> d
+    java.lang.String access$5(com.OsMoDroid.GPSLocalServiceClient) -> e
+    java.lang.String access$6(com.OsMoDroid.GPSLocalServiceClient) -> f
+    java.lang.String access$7(com.OsMoDroid.GPSLocalServiceClient) -> g
+    void access$8(com.OsMoDroid.GPSLocalServiceClient) -> h
+    void access$9(com.OsMoDroid.GPSLocalServiceClient) -> i
+    void access$10(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> a
+    void access$11(com.OsMoDroid.GPSLocalServiceClient,int) -> a
+    void access$12(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> b
+    void access$13(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> c
+    void access$14(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> d
+    void access$15(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> e
+    void access$16(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> f
+    java.lang.String access$17(com.OsMoDroid.GPSLocalServiceClient) -> j
+    android.content.ServiceConnection access$18(com.OsMoDroid.GPSLocalServiceClient) -> k
+    boolean access$19(com.OsMoDroid.GPSLocalServiceClient) -> l
+    void access$20(com.OsMoDroid.GPSLocalServiceClient,java.lang.Boolean) -> a
+    void access$21(com.OsMoDroid.GPSLocalServiceClient) -> m
+    void access$22(com.OsMoDroid.GPSLocalServiceClient,int) -> b
+    void access$23(com.OsMoDroid.GPSLocalServiceClient,int) -> c
+    void access$24(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> g
+    void access$25(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> h
+    java.lang.String access$26(com.OsMoDroid.GPSLocalServiceClient) -> n
+    java.lang.String access$27(com.OsMoDroid.GPSLocalServiceClient) -> o
+    int access$28(com.OsMoDroid.GPSLocalServiceClient) -> p
+    void access$29(com.OsMoDroid.GPSLocalServiceClient,int) -> d
+    int access$30(com.OsMoDroid.GPSLocalServiceClient) -> q
+    void access$31(com.OsMoDroid.GPSLocalServiceClient,int) -> e
+    int access$32(com.OsMoDroid.GPSLocalServiceClient) -> r
+    void access$33(com.OsMoDroid.GPSLocalServiceClient,int) -> f
+    int access$34(com.OsMoDroid.GPSLocalServiceClient) -> s
+    void access$35(com.OsMoDroid.GPSLocalServiceClient,int) -> g
+    int access$36(com.OsMoDroid.GPSLocalServiceClient) -> t
+    void access$37(com.OsMoDroid.GPSLocalServiceClient,int) -> h
+    int access$38(com.OsMoDroid.GPSLocalServiceClient) -> u
+    int access$39(com.OsMoDroid.GPSLocalServiceClient) -> v
+    int access$40(com.OsMoDroid.GPSLocalServiceClient) -> w
+    int access$41(com.OsMoDroid.GPSLocalServiceClient) -> x
+    int access$42(com.OsMoDroid.GPSLocalServiceClient) -> y
+    void access$43(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> i
+    java.lang.String access$44(com.OsMoDroid.GPSLocalServiceClient) -> z
+com.OsMoDroid.GPSLocalServiceClient$1 -> com.OsMoDroid.m:
+    com.OsMoDroid.GPSLocalServiceClient this$0 -> a
+    void onServiceConnected(android.content.ComponentName,android.os.IBinder) -> onServiceConnected
+    void onServiceDisconnected(android.content.ComponentName) -> onServiceDisconnected
+com.OsMoDroid.GPSLocalServiceClient$10 -> com.OsMoDroid.n:
+    com.OsMoDroid.GPSLocalServiceClient this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$11 -> com.OsMoDroid.o:
+    com.OsMoDroid.GPSLocalServiceClient this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$12 -> com.OsMoDroid.p:
+    com.OsMoDroid.GPSLocalServiceClient this$0 -> a
+    android.widget.EditText val$input -> b
+    android.widget.EditText val$inputlogin -> c
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$13 -> com.OsMoDroid.q:
+    com.OsMoDroid.GPSLocalServiceClient this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$2 -> com.OsMoDroid.r:
+    com.OsMoDroid.GPSLocalServiceClient this$0 -> a
+    void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
+com.OsMoDroid.GPSLocalServiceClient$3 -> com.OsMoDroid.s:
+    com.OsMoDroid.GPSLocalServiceClient this$0 -> a
+    android.widget.ToggleButton val$alarmToggle -> b
+    void onClick(android.view.View) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$4 -> com.OsMoDroid.t:
+    com.OsMoDroid.GPSLocalServiceClient this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$5 -> com.OsMoDroid.u:
+    java.lang.Boolean stopsession -> a
+    com.OsMoDroid.GPSLocalServiceClient this$0 -> b
+    void onClick(android.view.View) -> onClick
+    com.OsMoDroid.GPSLocalServiceClient access$0(com.OsMoDroid.GPSLocalServiceClient$5) -> a
+com.OsMoDroid.GPSLocalServiceClient$5$1 -> com.OsMoDroid.v:
+    com.OsMoDroid.GPSLocalServiceClient$5 this$1 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$5$1$1 -> com.OsMoDroid.w:
+    com.OsMoDroid.GPSLocalServiceClient$5$1 this$2 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$5$1$2 -> com.OsMoDroid.x:
+    com.OsMoDroid.GPSLocalServiceClient$5$1 this$2 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$5$2 -> com.OsMoDroid.y:
+    com.OsMoDroid.GPSLocalServiceClient$5 this$1 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$5$2$1 -> com.OsMoDroid.z:
+    com.OsMoDroid.GPSLocalServiceClient$5$2 this$2 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$5$2$2 -> com.OsMoDroid.aa:
+    com.OsMoDroid.GPSLocalServiceClient$5$2 this$2 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$5$3 -> com.OsMoDroid.ab:
+    com.OsMoDroid.GPSLocalServiceClient$5 this$1 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$5$4 -> com.OsMoDroid.ac:
+    com.OsMoDroid.GPSLocalServiceClient$5 this$1 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$6 -> com.OsMoDroid.ad:
+    com.OsMoDroid.GPSLocalServiceClient this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$7 -> com.OsMoDroid.ae:
+    com.OsMoDroid.GPSLocalServiceClient this$0 -> a
+    void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    com.OsMoDroid.GPSLocalServiceClient access$0(com.OsMoDroid.GPSLocalServiceClient$7) -> a
+com.OsMoDroid.GPSLocalServiceClient$7$1 -> com.OsMoDroid.af:
+    com.OsMoDroid.GPSLocalServiceClient$7 this$1 -> a
+    android.widget.ToggleButton val$globalsendToggle -> b
+    android.content.Intent val$intent -> c
+    void onClick(android.view.View) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$7$2 -> com.OsMoDroid.ag:
+    com.OsMoDroid.GPSLocalServiceClient$7 this$1 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$8 -> com.OsMoDroid.ah:
+    com.OsMoDroid.GPSLocalServiceClient this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$9 -> com.OsMoDroid.ai:
+    com.OsMoDroid.GPSLocalServiceClient this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$RequestAuthTask -> com.OsMoDroid.aj:
+    java.lang.String authtext -> d
+    java.lang.String adevice -> a
+    java.lang.Boolean Err -> e
+    android.app.ProgressDialog dialog -> b
+    com.OsMoDroid.GPSLocalServiceClient this$0 -> c
+    void onPreExecute() -> onPreExecute
+    java.lang.Void doInBackground$10299ca() -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+com.OsMoDroid.GPSLocalServiceClient$RequestCommandTask -> com.OsMoDroid.ak:
+    java.lang.String Commandtext -> c
+    java.lang.String adevice -> d
+    java.lang.String akey -> e
+    java.lang.String aviewurl -> f
+    java.lang.String adevicename -> g
+    android.app.ProgressDialog dialog -> a
+    com.OsMoDroid.GPSLocalServiceClient this$0 -> b
+    void onPreExecute() -> onPreExecute
+    java.lang.String doInBackground(java.lang.String[]) -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+com.OsMoDroid.IM -> com.OsMoDroid.al:
+    boolean running -> a
+    boolean connected -> b
+    boolean autoReconnect -> c
+    java.lang.Integer timeout -> d
+    java.net.HttpURLConnection con -> n
+    java.io.InputStream instream -> o
+    java.lang.String adr -> e
+    java.lang.String mykey -> f
+    java.lang.String lcursor -> g
+    int pingTimeout -> h
+    java.lang.Thread myThread -> i
+    java.io.BufferedReader in -> p
+    android.content.Context parent -> j
+    java.util.ArrayList myLongPollChList -> k
+    int mestype -> l
+    com.OsMoDroid.LocalService localService -> m
+    java.text.SimpleDateFormat sdf1 -> q
+    android.content.BroadcastReceiver bcr -> r
+    void getadres(java.util.ArrayList) -> c
+    void addchannels(java.util.ArrayList) -> a
+    void removechannels(java.util.ArrayList) -> b
+    java.lang.String getMessageType(java.lang.String) -> b
+    void addtoDeviceChat(java.lang.String) -> c
+    void close() -> a
+    void start() -> b
+    void parseEx(java.lang.String) -> a
+    void stop() -> c
+    void disconnect() -> d
+    void access$0(com.OsMoDroid.IM,java.net.HttpURLConnection) -> a
+    java.net.HttpURLConnection access$1(com.OsMoDroid.IM) -> a
+    void access$2(com.OsMoDroid.IM,java.io.InputStream) -> a
+    java.io.InputStream access$3(com.OsMoDroid.IM) -> b
+    void access$4(com.OsMoDroid.IM,java.io.BufferedReader) -> a
+    java.io.BufferedReader access$5(com.OsMoDroid.IM) -> c
+    void access$6(com.OsMoDroid.IM,java.util.ArrayList) -> a
+com.OsMoDroid.IM$1 -> com.OsMoDroid.am:
+    com.OsMoDroid.IM this$0 -> a
+    void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.OsMoDroid.IM$10 -> com.OsMoDroid.an:
+    com.OsMoDroid.IM this$0 -> a
+    void run() -> run
+com.OsMoDroid.IM$11 -> com.OsMoDroid.ao:
+    com.OsMoDroid.IM this$0 -> a
+    void run() -> run
+com.OsMoDroid.IM$12 -> com.OsMoDroid.ap:
+    com.OsMoDroid.IM this$0 -> a
+    com.OsMoDroid.Channel val$channel -> b
+    void run() -> run
+com.OsMoDroid.IM$2 -> com.OsMoDroid.aq:
+    com.OsMoDroid.IM this$0 -> a
+    void run() -> run
+com.OsMoDroid.IM$3 -> com.OsMoDroid.ar:
+    com.OsMoDroid.IM this$0 -> a
+    java.util.ArrayList val$tempdeviceList -> b
+    void run() -> run
+com.OsMoDroid.IM$4 -> com.OsMoDroid.as:
+    com.OsMoDroid.IM this$0 -> a
+    void run() -> run
+com.OsMoDroid.IM$5 -> com.OsMoDroid.at:
+    com.OsMoDroid.IM this$0 -> a
+    void run() -> run
+com.OsMoDroid.IM$6 -> com.OsMoDroid.au:
+    com.OsMoDroid.IM this$0 -> a
+    void run() -> run
+com.OsMoDroid.IM$7 -> com.OsMoDroid.av:
+    com.OsMoDroid.IM this$0 -> a
+    void run() -> run
+com.OsMoDroid.IM$8 -> com.OsMoDroid.aw:
+    com.OsMoDroid.IM this$0 -> a
+    void run() -> run
+com.OsMoDroid.IM$9 -> com.OsMoDroid.ax:
+    com.OsMoDroid.IM this$0 -> a
+    void run() -> run
+com.OsMoDroid.IM$IMRunnable -> com.OsMoDroid.ay:
+    java.lang.StringBuilder stringBuilder -> a
+    java.io.InputStreamReader stream -> d
+    boolean error -> e
+    int retries -> f
+    int maxRetries -> b
+    com.OsMoDroid.IM this$0 -> c
+    void run() -> run
+com.OsMoDroid.IRemoteOsMoDroidListener -> com.OsMoDroid.az:
+    void channelUpdated() -> a
+    void channelsListUpdated() -> b
+    void routeTo(float,float) -> a
+com.OsMoDroid.IRemoteOsMoDroidListener$Stub -> com.OsMoDroid.ba:
+    com.OsMoDroid.IRemoteOsMoDroidListener asInterface(android.os.IBinder) -> a
+    boolean onTransact(int,android.os.Parcel,android.os.Parcel,int) -> onTransact
+com.OsMoDroid.IRemoteOsMoDroidListener$Stub$Proxy -> com.OsMoDroid.bb:
+    android.os.IBinder mRemote -> a
+    android.os.IBinder asBinder() -> asBinder
+    void channelUpdated() -> a
+    void channelsListUpdated() -> b
+    void routeTo(float,float) -> a
+com.OsMoDroid.IRemoteOsMoDroidService -> com.OsMoDroid.bc:
+    void registerListener(com.OsMoDroid.IRemoteOsMoDroidListener) -> a
+    void unregisterListener(com.OsMoDroid.IRemoteOsMoDroidListener) -> b
+    void Deactivate() -> a
+    void Activate() -> b
+    boolean isActive() -> c
+    int getNumberOfLayers() -> d
+    int getLayerId(int) -> a
+    java.lang.String getLayerName(int) -> b
+    java.lang.String getLayerDescription(int) -> c
+    int getNumberOfObjects(int) -> d
+    int getObjectId(int,int) -> a
+    float getObjectLat(int,int) -> b
+    float getObjectLon(int,int) -> c
+    java.lang.String getObjectSpeed(int,int) -> d
+    java.lang.String getObjectName(int,int) -> e
+    java.lang.String getObjectDescription(int,int) -> f
+    java.lang.String getObjectColor(int,int) -> g
+com.OsMoDroid.IRemoteOsMoDroidService$Stub -> com.OsMoDroid.bd:
+    android.os.IBinder asBinder() -> asBinder
+    boolean onTransact(int,android.os.Parcel,android.os.Parcel,int) -> onTransact
+com.OsMoDroid.LocalService -> com.OsMoDroid.LocalService:
+    boolean binded -> a
+    android.hardware.SensorManager mSensorManager -> ah
+    android.hardware.Sensor mAccelerometer -> ai
+    double calibration -> b
+    float currentAcceleration -> c
+    java.lang.Boolean sessionstarted -> d
+    java.lang.Boolean globalsend -> e
+    java.lang.Boolean signalisationOn -> f
+    int notifyid -> g
+    int gpson -> h
+    int gpsoff -> i
+    int ineton -> j
+    int inetoff -> k
+    int sendpalyer -> l
+    int startsound -> m
+    int stopsound -> n
+    int alarmsound -> o
+    int signalonoff -> p
+    android.media.SoundPool soundPool -> aj
+    com.OsMoDroid.netutil$MyAsyncTask starttask -> ak
+    android.content.Intent in -> al
+    boolean mayak -> q
+    boolean glonas -> am
+    boolean playsound -> an
+    boolean sendsound -> ao
+    boolean vibrate -> ap
+    boolean usecourse -> aq
+    int vibratetime -> ar
+    double brng -> as
+    double brng_gpx -> at
+    double prevbrng -> au
+    double prevbrng_gpx -> av
+    float speedbearing -> aw
+    float bearing -> ax
+    int speed -> ay
+    boolean beepedon -> az
+    boolean beepedoff -> aA
+    boolean gpsbeepedon -> aB
+    boolean gpsbeepedoff -> aC
+    float maxspeed -> aD
+    float avgspeed -> aE
+    long timeperiod -> aF
+    float workdistance -> aG
+    long workmilli -> aH
+    boolean firstsend -> aI
+    boolean sended -> aJ
+    boolean gpx -> aK
+    boolean live -> aL
+    int hdop -> aM
+    boolean fileheaderok -> aN
+    java.io.File fileName -> aO
+    int period -> aP
+    int distance -> aQ
+    java.lang.String hash -> aR
+    int n -> aS
+    java.lang.String position -> aT
+    java.lang.String sendresult -> aU
+    android.location.LocationManager myManager -> r
+    android.location.Location prevlocation -> aV
+    android.location.Location currentLocation -> s
+    android.location.Location prevlocation_gpx -> aW
+    android.location.Location prevlocation_spd -> aX
+    java.lang.String URLadr -> aY
+    android.os.Vibrator vibrator -> aZ
+    android.os.PowerManager pm -> ba
+    android.os.PowerManager$WakeLock wakeLock -> bb
+    android.os.PowerManager$WakeLock LocwakeLock -> bc
+    android.os.PowerManager$WakeLock SendwakeLock -> bd
+    com.OsMoDroid.LocalService$SendCoor send -> be
+    int speedbearing_gpx -> bf
+    int bearing_gpx -> bg
+    long lastgpslocationtime -> bh
+    int hdop_gpx -> bi
+    int period_gpx -> bj
+    int distance_gpx -> bk
+    int speed_gpx -> bl
+    int sendcounter -> bm
+    int writecounter -> bn
+    int buffercounter -> bo
+    android.content.BroadcastReceiver receiver -> t
+    android.content.BroadcastReceiver checkreceiver -> u
+    android.content.BroadcastReceiver onlinePauseforStartReciever -> v
+    android.content.BroadcastReceiver batteryReciever -> w
+    android.os.IBinder mBinder -> bp
+    java.lang.String gpxbuffer -> bq
+    java.lang.String satellite -> br
+    java.lang.String accuracy -> bs
+    boolean usebuffer -> bt
+    boolean usewake -> bu
+    android.app.NotificationManager mNotificationManager -> x
+    java.lang.String lastsendforbuffer -> bv
+    long lastgpsontime -> bw
+    long lastgpsofftime -> bx
+    long notifyperiod -> by
+    android.app.AlarmManager am -> bz
+    java.lang.StringBuilder stringBuilder -> y
+    android.app.PendingIntent pi -> z
+    java.lang.Object[] mStartForegroundArgs -> bA
+    java.lang.Object[] mStopForegroundArgs -> bB
+    java.lang.String lastsay -> bC
+    java.lang.Boolean state -> A
+    int gpsperiod -> B
+    int gpsdistance -> C
+    long prevnetworklocationtime -> D
+    java.lang.StringBuilder buffersb -> E
+    java.lang.StringBuilder lastbuffersb -> F
+    java.lang.StringBuilder sendedsb -> G
+    int lcounter -> bD
+    int scounter -> bE
+    java.text.DecimalFormat df6 -> bF
+    java.text.DecimalFormat df1 -> bG
+    java.text.DecimalFormat df2 -> bH
+    java.text.DecimalFormat df0 -> bI
+    java.text.SimpleDateFormat sdf1 -> bJ
+    java.text.SimpleDateFormat sdf2 -> bK
+    java.text.SimpleDateFormat sdf3 -> bL
+    java.text.DecimalFormatSymbols dot -> bM
+    boolean firstgpsbeepedon -> H
+    com.OsMoDroid.IM myIM -> I
+    android.speech.tts.TextToSpeech tts -> J
+    int _langTTSavailable -> bN
+    java.net.Socket s -> K
+    android.content.SharedPreferences settings -> L
+    int batteryprocent -> M
+    int plugged -> N
+    int temperature -> O
+    int voltage -> P
+    java.util.List channelList -> Q
+    java.util.List deviceList -> R
+    com.OsMoDroid.Channel currentChannel -> S
+    java.util.List currentchanneldeviceList -> T
+    java.util.ArrayList messagelist -> U
+    java.util.List chatmessagelist -> V
+    com.OsMoDroid.Device currentDevice -> W
+    com.OsMoDroid.DeviceAdapter deviceAdapter -> X
+    com.OsMoDroid.ChannelsAdapter channelsAdapter -> Y
+    com.OsMoDroid.ChannelsDevicesAdapter channelsDevicesAdapter -> Z
+    android.widget.ArrayAdapter channelsmessagesAdapter -> aa
+    com.OsMoDroid.DeviceChatAdapter chatmessagesAdapter -> ab
+    android.content.Context serContext -> ac
+    boolean uploadto -> ad
+    android.os.Handler alertHandler -> ae
+    android.os.RemoteCallbackList remoteListenerCallBackList -> af
+    com.OsMoDroid.IRemoteOsMoDroidService$Stub rBinder -> bO
+    android.content.SharedPreferences$Editor editor -> ag
+    java.lang.Float sensivity -> bP
+    int alarmStreamId -> bQ
+    int count -> bR
+    int countFix -> bS
+    android.app.Notification notification -> bT
+    android.app.PendingIntent osmodroidLaunchIntent -> bU
+    java.lang.String strVersionName -> bV
+    java.lang.String androidver -> bW
+    boolean onUnbind(android.content.Intent) -> onUnbind
+    android.os.IBinder onBind(android.content.Intent) -> onBind
+    void informRemoteClientChannelUpdate() -> a
+    void informRemoteClientChannelsListUpdate() -> j
+    void informRemoteClientRouteTo(float,float) -> a
+    void refresh() -> b
+    void startcomand() -> c
+    java.lang.String getversion() -> k
+    void sendPosition() -> d
+    void invokeMethod(java.lang.reflect.Method,java.lang.Object[]) -> a
+    void onCreate() -> onCreate
+    void Pong(android.content.Context) -> a
+    void batteryinfo(android.content.Context) -> b
+    java.lang.String capitalize(java.lang.String) -> a
+    void systeminfo(android.content.Context) -> c
+    void vibrate$1a54e731(long) -> a
+    void satelliteinfo(android.content.Context) -> d
+    void getpreferences(android.content.Context) -> e
+    void wifion(android.content.Context) -> f
+    void wifioff(android.content.Context) -> g
+    void wifiinfo(android.content.Context) -> h
+    void onDestroy() -> onDestroy
+    void ReadPref() -> l
+    void onStart(android.content.Intent,int) -> onStart
+    int onStartCommand(android.content.Intent,int,int) -> onStartCommand
+    void applyPreference() -> e
+    void startServiceWork() -> f
+    void manageGPSFixAlarm() -> m
+    void ttsManage() -> n
+    void requestLocationUpdates() -> g
+    void openGPX() -> o
+    void stopServiceWork(java.lang.Boolean) -> a
+    void closeGPX() -> p
+    void setstarted(boolean) -> a
+    void onLocationChanged(android.location.Location) -> onLocationChanged
+    void onProviderDisabled(java.lang.String) -> onProviderDisabled
+    void onProviderEnabled(java.lang.String) -> onProviderEnabled
+    void onStatusChanged(java.lang.String,int,android.os.Bundle) -> onStatusChanged
+    java.lang.String inputStreamToString(java.io.InputStream) -> a
+    java.lang.String unescape(java.lang.String) -> b
+    java.lang.String decodesendresult(java.lang.String) -> c
+    void writegpx(android.location.Location) -> a
+    void sendlocation(android.location.Location) -> b
+    void onGpsStatusChanged(int) -> onGpsStatusChanged
+    void onInit(int) -> onInit
+    void warnwronghash() -> q
+    void notifywarnactivity(java.lang.String,boolean) -> a
+    void connectChannels() -> r
+    void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+    void playAlarmOn(java.lang.Boolean) -> b
+    void playAlarmOff(java.lang.Boolean) -> c
+    void enableSignalisation(java.lang.Boolean) -> d
+    void disableSignalisation(java.lang.Boolean) -> e
+    void onAccuracyChanged(android.hardware.Sensor,int) -> onAccuracyChanged
+    void onSensorChanged(android.hardware.SensorEvent) -> onSensorChanged
+    void access$0(com.OsMoDroid.LocalService,java.lang.String) -> a
+    void access$1(com.OsMoDroid.LocalService,boolean) -> a
+    java.text.SimpleDateFormat access$2() -> h
+    java.lang.String access$3(com.OsMoDroid.LocalService,java.lang.String) -> b
+    boolean access$4(com.OsMoDroid.LocalService) -> a
+    int access$5(com.OsMoDroid.LocalService) -> b
+    void access$6(com.OsMoDroid.LocalService,int) -> a
+    boolean access$7(com.OsMoDroid.LocalService) -> c
+    android.media.SoundPool access$8() -> i
+    java.lang.String access$9(com.OsMoDroid.LocalService) -> d
+    android.app.Notification access$10(com.OsMoDroid.LocalService) -> e
+    int access$11(com.OsMoDroid.LocalService) -> f
+    android.app.PendingIntent access$12(com.OsMoDroid.LocalService) -> g
+    java.lang.String access$13(com.OsMoDroid.LocalService,java.lang.String,java.lang.String) -> a
+    void access$14$32c62201(com.OsMoDroid.LocalService) -> h
+    long access$15(com.OsMoDroid.LocalService) -> i
+    long access$16(com.OsMoDroid.LocalService) -> j
+    boolean access$17(com.OsMoDroid.LocalService) -> k
+    boolean access$18(com.OsMoDroid.LocalService) -> l
+    android.os.Vibrator access$19(com.OsMoDroid.LocalService) -> m
+    int access$20(com.OsMoDroid.LocalService) -> n
+    boolean access$21(com.OsMoDroid.LocalService) -> o
+    void access$22(com.OsMoDroid.LocalService,boolean) -> b
+    long access$23(com.OsMoDroid.LocalService) -> p
+    boolean access$24(com.OsMoDroid.LocalService) -> q
+    void access$25(com.OsMoDroid.LocalService,boolean) -> c
+    void access$26(com.OsMoDroid.LocalService,long) -> a
+    void access$27(com.OsMoDroid.LocalService,long) -> b
+com.OsMoDroid.LocalService$1 -> com.OsMoDroid.be:
+    com.OsMoDroid.LocalService this$0 -> a
+    void handleMessage(android.os.Message) -> handleMessage
+com.OsMoDroid.LocalService$2 -> com.OsMoDroid.bf:
+    com.OsMoDroid.LocalService this$0 -> a
+    void Deactivate() -> a
+    boolean isActive() -> c
+    void Activate() -> b
+    int getNumberOfLayers() -> d
+    int getLayerId(int) -> a
+    java.lang.String getLayerName(int) -> b
+    java.lang.String getLayerDescription(int) -> c
+    int getNumberOfObjects(int) -> d
+    int getObjectId(int,int) -> a
+    float getObjectLat(int,int) -> b
+    float getObjectLon(int,int) -> c
+    java.lang.String getObjectName(int,int) -> e
+    java.lang.String getObjectDescription(int,int) -> f
+    void registerListener(com.OsMoDroid.IRemoteOsMoDroidListener) -> a
+    void unregisterListener(com.OsMoDroid.IRemoteOsMoDroidListener) -> b
+    java.lang.String getObjectSpeed(int,int) -> d
+    java.lang.String getObjectColor(int,int) -> g
+    com.OsMoDroid.LocalService access$0(com.OsMoDroid.LocalService$2) -> a
+com.OsMoDroid.LocalService$2$1 -> com.OsMoDroid.bg:
+    com.OsMoDroid.LocalService$2 this$1 -> a
+    void run() -> run
+com.OsMoDroid.LocalService$2$2 -> com.OsMoDroid.bh:
+    com.OsMoDroid.LocalService$2 this$1 -> a
+    void run() -> run
+com.OsMoDroid.LocalService$3 -> com.OsMoDroid.bi:
+    com.OsMoDroid.LocalService this$0 -> a
+    void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.OsMoDroid.LocalService$4 -> com.OsMoDroid.bj:
+    com.OsMoDroid.LocalService this$0 -> a
+    void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.OsMoDroid.LocalService$5 -> com.OsMoDroid.bk:
+    com.OsMoDroid.LocalService this$0 -> a
+    void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.OsMoDroid.LocalService$6 -> com.OsMoDroid.bl:
+    com.OsMoDroid.LocalService this$0 -> a
+    void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.OsMoDroid.LocalService$LocalBinder -> com.OsMoDroid.bm:
+    com.OsMoDroid.LocalService this$0 -> a
+    com.OsMoDroid.LocalService getService() -> a
+com.OsMoDroid.LocalService$SendCoor -> com.OsMoDroid.bn:
+    java.lang.String tmp -> b
+    com.OsMoDroid.LocalService this$0 -> a
+    java.lang.String doInBackground(java.lang.String[]) -> a
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+com.OsMoDroid.MyChannels -> com.OsMoDroid.MyChannels:
+    android.widget.ListView lv1 -> a
+    android.content.SharedPreferences settings -> b
+    java.lang.String canalid -> c
+    java.lang.String u -> d
+    java.text.SimpleDateFormat sdf1 -> e
+    boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    void onCreate(android.os.Bundle) -> onCreate
+    void onCreateContextMenu(android.view.ContextMenu,android.view.View,android.view.ContextMenu$ContextMenuInfo) -> onCreateContextMenu
+    boolean onContextItemSelected(android.view.MenuItem) -> onContextItemSelected
+    void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+com.OsMoDroid.MyChannels$1 -> com.OsMoDroid.bo:
+    com.OsMoDroid.MyChannels this$0 -> a
+    android.widget.EditText val$input1 -> b
+    void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
+com.OsMoDroid.MyChannels$10 -> com.OsMoDroid.bp:
+    com.OsMoDroid.MyChannels this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.MyChannels$2 -> com.OsMoDroid.bq:
+    com.OsMoDroid.MyChannels this$0 -> a
+    android.widget.EditText val$input -> b
+    android.widget.EditText val$input1 -> c
+    android.widget.EditText val$input2 -> d
+    android.widget.CheckBox val$chb1 -> e
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.MyChannels$3 -> com.OsMoDroid.br:
+    com.OsMoDroid.MyChannels this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.MyChannels$4 -> com.OsMoDroid.bs:
+    com.OsMoDroid.MyChannels this$0 -> a
+    android.widget.EditText val$input1 -> b
+    void onCheckedChanged(android.widget.CompoundButton,boolean) -> onCheckedChanged
+com.OsMoDroid.MyChannels$5 -> com.OsMoDroid.bt:
+    com.OsMoDroid.MyChannels this$0 -> a
+    android.widget.EditText val$input -> b
+    android.widget.EditText val$input1 -> c
+    android.widget.CheckBox val$chb1 -> d
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.MyChannels$6 -> com.OsMoDroid.bu:
+    com.OsMoDroid.MyChannels this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.MyChannels$7 -> com.OsMoDroid.bv:
+    com.OsMoDroid.MyChannels this$0 -> a
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+com.OsMoDroid.MyChannels$8 -> com.OsMoDroid.bw:
+    com.OsMoDroid.MyChannels this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.OsMoDroid.MyChannels$9 -> com.OsMoDroid.bx:
+    com.OsMoDroid.MyChannels this$0 -> a
+    android.widget.EditText val$input -> b
+    android.widget.AdapterView$AdapterContextMenuInfo val$acmi -> c
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.MyChannelsDevices -> com.OsMoDroid.MyChannelsDevices:
+    android.widget.ListView lv1 -> a
+    android.widget.ListView lv2 -> b
+    android.content.SharedPreferences settings -> c
+    android.widget.Button sendButton -> d
+    android.widget.EditText input -> e
+    java.text.SimpleDateFormat sdf1 -> f
+    void onCreate(android.os.Bundle) -> onCreate
+    void onDestroy() -> onDestroy
+    void onCreateContextMenu(android.view.ContextMenu,android.view.View,android.view.ContextMenu$ContextMenuInfo) -> onCreateContextMenu
+    boolean onContextItemSelected(android.view.MenuItem) -> onContextItemSelected
+    void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+com.OsMoDroid.MyChannelsDevices$1 -> com.OsMoDroid.by:
+    com.OsMoDroid.MyChannelsDevices this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.OsMoDroid.MyChannelsDevices$2 -> com.OsMoDroid.bz:
+    com.OsMoDroid.MyChannelsDevices this$0 -> a
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+com.OsMoDroid.MyChannelsDevices$3 -> com.OsMoDroid.ca:
+    com.OsMoDroid.MyChannelsDevices this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.OsMoDroid.MyDevices -> com.OsMoDroid.MyDevices:
+    android.widget.ListView lv1 -> a
+    android.content.SharedPreferences settings -> b
+    java.text.SimpleDateFormat sdf1 -> c
+    void getDevices(android.content.Context) -> a
+    boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
+    boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
+    void onCreate(android.os.Bundle) -> onCreate
+    void onCreateContextMenu(android.view.ContextMenu,android.view.View,android.view.ContextMenu$ContextMenuInfo) -> onCreateContextMenu
+    boolean onContextItemSelected(android.view.MenuItem) -> onContextItemSelected
+    void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+com.OsMoDroid.MyDevices$1 -> com.OsMoDroid.cb:
+    com.OsMoDroid.MyDevices this$0 -> a
+    android.widget.EditText val$inputhash -> b
+    android.widget.EditText val$inputN -> c
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.MyDevices$2 -> com.OsMoDroid.cc:
+    com.OsMoDroid.MyDevices this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.MyDevices$3 -> com.OsMoDroid.cd:
+    com.OsMoDroid.MyDevices this$0 -> a
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+com.OsMoDroid.MyDevices$4 -> com.OsMoDroid.ce:
+    com.OsMoDroid.MyDevices this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.OsMoDroid.MyDevices$5 -> com.OsMoDroid.cf:
+    com.OsMoDroid.MyDevices this$0 -> a
+    android.widget.EditText val$input -> b
+    android.widget.AdapterView$AdapterContextMenuInfo val$acmi -> c
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.MyDevices$6 -> com.OsMoDroid.cg:
+    com.OsMoDroid.MyDevices this$0 -> a
+    void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.MyMessage -> com.OsMoDroid.ch:
+    int u -> a
+    java.lang.String from -> b
+    java.lang.String from_app -> c
+    java.lang.String for_user -> d
+    java.lang.String for_app -> e
+    java.lang.String trig -> f
+    java.lang.String trig_app -> g
+    java.lang.String text -> h
+    java.lang.String time -> i
+    java.lang.String readed -> j
+    java.lang.String from_name -> k
+    java.lang.String from_addr -> l
+    java.lang.String to -> m
+    int compareTo(java.lang.Object) -> compareTo
+com.OsMoDroid.OsMoDroid -> com.OsMoDroid.OsMoDroid:
+    boolean mesactivityVisible -> a
+    boolean gpslocalserviceclientVisible -> b
+    int notifyid -> d
+    int uploadnotifyid -> c
+    int notifyidApp() -> a
+    int uploadnotifyid() -> b
+com.OsMoDroid.PrefActivity -> com.OsMoDroid.PrefActivity:
+    void onCreate(android.os.Bundle) -> onCreate
+    void onDestroy() -> onDestroy
+com.OsMoDroid.ResultsListener -> com.OsMoDroid.ci:
+    void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+com.OsMoDroid.SimLinks -> com.OsMoDroid.SimLinks:
+    android.widget.ArrayAdapter adapter -> d
+    java.util.ArrayList list -> a
+    java.util.ArrayList listids -> b
+    android.content.SharedPreferences settings -> c
+    java.text.SimpleDateFormat sdf1 -> e
+    void reflinks() -> a
+    void addlink_new() -> b
+    void onCreate(android.os.Bundle) -> onCreate
+    void onCreateContextMenu(android.view.ContextMenu,android.view.View,android.view.ContextMenu$ContextMenuInfo) -> onCreateContextMenu
+    boolean onContextItemSelected(android.view.MenuItem) -> onContextItemSelected
+    void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+com.OsMoDroid.SimLinks$1 -> com.OsMoDroid.cj:
+    com.OsMoDroid.SimLinks this$0 -> a
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+com.OsMoDroid.SimLinks$2 -> com.OsMoDroid.ck:
+    com.OsMoDroid.SimLinks this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.OsMoDroid.SimLinks$3 -> com.OsMoDroid.cl:
+    com.OsMoDroid.SimLinks this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.OsMoDroid.TracFileListActivity -> com.OsMoDroid.TracFileListActivity:
+    com.OsMoDroid.TrackFileAdapter trackFileAdapter -> c
+    java.util.ArrayList trackFileList -> d
+    java.io.File path -> e
+    int count -> a
+    int progress -> b
+    android.app.ProgressDialog progressDialog -> f
+    com.OsMoDroid.TracFileListActivity$ReadTrackList readTask -> g
+    void onCreate(android.os.Bundle) -> onCreate
+    void onCreateContextMenu(android.view.ContextMenu,android.view.View,android.view.ContextMenu$ContextMenuInfo) -> onCreateContextMenu
+    boolean onContextItemSelected(android.view.MenuItem) -> onContextItemSelected
+    void onDestroy() -> onDestroy
+    void onPause() -> onPause
+    void onResume() -> onResume
+    void getFileList() -> a
+    void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+    android.app.ProgressDialog access$0(com.OsMoDroid.TracFileListActivity) -> a
+    java.util.ArrayList access$1(com.OsMoDroid.TracFileListActivity) -> b
+    com.OsMoDroid.TrackFileAdapter access$2(com.OsMoDroid.TracFileListActivity) -> c
+    void access$3(com.OsMoDroid.TracFileListActivity,java.io.File) -> a
+    java.io.File access$4(com.OsMoDroid.TracFileListActivity) -> d
+com.OsMoDroid.TracFileListActivity$1 -> com.OsMoDroid.cm:
+    com.OsMoDroid.TracFileListActivity this$0 -> a
+    void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+com.OsMoDroid.TracFileListActivity$2 -> com.OsMoDroid.cn:
+    com.OsMoDroid.TracFileListActivity this$0 -> a
+    void onClick(android.view.View) -> onClick
+com.OsMoDroid.TracFileListActivity$ReadTrackList -> com.OsMoDroid.co:
+    java.util.ArrayList tempTrackFileList -> b
+    com.OsMoDroid.TracFileListActivity this$0 -> a
+    void onPreExecute() -> onPreExecute
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    void onProgressUpdate(java.lang.Object[]) -> onProgressUpdate
+com.OsMoDroid.TracFileListActivity$ReadTrackList$1 -> com.OsMoDroid.cp:
+    com.OsMoDroid.TracFileListActivity$ReadTrackList this$1 -> a
+    boolean accept(java.io.File,java.lang.String) -> accept
+com.OsMoDroid.TrackFile -> com.OsMoDroid.cq:
+    java.text.SimpleDateFormat sdf1 -> d
+    java.lang.String fileName -> a
+    java.lang.String fileDate -> b
+    java.lang.String fileSize -> c
+    int compareTo(java.lang.Object) -> compareTo
+com.OsMoDroid.TrackFileAdapter -> com.OsMoDroid.cr:
+    android.widget.TextView fileName -> a
+    android.widget.TextView fileDate -> b
+    android.widget.TextView fileSize -> c
+    android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.OsMoDroid.WarnActivity -> com.OsMoDroid.WarnActivity:
+    void onBackPressed() -> onBackPressed
+    void onCreate(android.os.Bundle) -> onCreate
+    void onDestroy() -> onDestroy
+    void onPause() -> onPause
+    void onResume() -> onResume
+com.OsMoDroid.WarnActivity$1 -> com.OsMoDroid.cs:
+    com.OsMoDroid.WarnActivity this$0 -> a
+    android.content.SharedPreferences val$settings -> b
+    void onClick(android.view.View) -> onClick
+com.OsMoDroid.WarnActivity$2 -> com.OsMoDroid.ct:
+    com.OsMoDroid.WarnActivity this$0 -> a
+    android.content.SharedPreferences val$settings -> b
+    void onClick(android.view.View) -> onClick
+com.OsMoDroid.aboutActivity -> com.OsMoDroid.aboutActivity:
+    void onCreate(android.os.Bundle) -> onCreate
+    void onDestroy() -> onDestroy
+    void onPause() -> onPause
+    void onResume() -> onResume
+com.OsMoDroid.mesActivity -> com.OsMoDroid.mesActivity:
+    android.widget.ArrayAdapter adapter -> b
+    java.util.ArrayList list -> a
+    void onBackPressed() -> onBackPressed
+    void onCreate(android.os.Bundle) -> onCreate
+    void onDestroy() -> onDestroy
+    void onPause() -> onPause
+    void onNewIntent(android.content.Intent) -> onNewIntent
+    void onResume() -> onResume
+    void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+com.OsMoDroid.netutil -> com.OsMoDroid.cu:
+    void newapicommand(com.OsMoDroid.ResultsListener,java.lang.String) -> a
+    void newapicommand(android.content.Context,java.lang.String) -> a
+    void newapicommand(android.content.Context,java.lang.String,java.lang.String) -> a
+    void newapicommand(com.OsMoDroid.ResultsListener,java.lang.String,java.lang.String) -> a
+    void newapicommand(com.OsMoDroid.ResultsListener,android.content.Context,java.lang.String) -> a
+    void newapicommand(com.OsMoDroid.ResultsListener,java.lang.String,java.io.File,android.support.v4.app.NotificationCompat$Builder,int) -> a
+    java.lang.String inputStreamToString(java.io.InputStream) -> a
+com.OsMoDroid.netutil$MyAsyncTask -> com.OsMoDroid.cv:
+    android.content.Context mContext -> e
+    com.OsMoDroid.ResultsListener listener -> a
+    java.net.HttpURLConnection con -> b
+    java.io.InputStream in -> c
+    android.app.ProgressDialog dialog -> d
+    void onPreExecute() -> onPreExecute
+    void Close() -> a
+    java.lang.String getPage(java.lang.String,java.lang.String,java.io.File,android.support.v4.app.NotificationCompat$Builder,int) -> a
+    com.OsMoDroid.APIComResult doInBackground(com.OsMoDroid.APIcomParams[]) -> a
+    void onCancelled() -> onCancelled
+    void onPostExecute(java.lang.Object) -> onPostExecute
+    java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    void onProgressUpdate(java.lang.Object[]) -> onProgressUpdate

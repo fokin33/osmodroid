@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 
 import android.app.Activity;
@@ -37,13 +39,24 @@ public class TracFileListActivity extends Activity implements ResultsListener{
 	private ProgressDialog progressDialog;
 	private ReadTrackList readTask;
 	
-	private class ReadTrackList extends AsyncTask<Void, Void, Void> {
+	private class ReadTrackList extends AsyncTask<Void, TrackFile, Void> {
+		@Override
+		protected void onProgressUpdate(TrackFile... values) {
+			
+				progressDialog.setProgress(progress);
+				trackFileList.add(values[0]);
+				Collections.sort(trackFileList);
+				trackFileAdapter.notifyDataSetChanged();
+			
+			super.onProgressUpdate(values);
+		}
 
+		private ArrayList<TrackFile> tempTrackFileList = new ArrayList<TrackFile>();
 		@Override
 		protected Void doInBackground(Void... params) {
 			 count=0;
 			 progress=0;
-			trackFileList.clear();
+			
 			String sdState = android.os.Environment.getExternalStorageState();
 			if (sdState.equals(android.os.Environment.MEDIA_MOUNTED)) {
 
@@ -62,12 +75,13 @@ public class TracFileListActivity extends Activity implements ResultsListener{
 					}
 				});
 				 for (File file :fileArray){
-					 trackFileList.add(new TrackFile(file.getName(),file.lastModified(),file.length()));
+					 //tempTrackFileList.add(new TrackFile(file.getName(),file.lastModified(),file.length()));
 					 count++;
 		             progress += ( (float)count / (float)fileArray.length ) * 100;
-		             publishProgress();
-		             
+		            publishProgress(new TrackFile(file.getName(),file.lastModified(),file.length()));
+		            
 				 }
+				 
 			
 			}
 			
@@ -80,6 +94,7 @@ public class TracFileListActivity extends Activity implements ResultsListener{
 		@Override
 		protected void onPostExecute(Void result) {
 			progressDialog.dismiss();
+			Collections.sort(trackFileList);
 			trackFileAdapter.notifyDataSetChanged();
 			super.onPostExecute(result);
 		}
@@ -89,18 +104,17 @@ public class TracFileListActivity extends Activity implements ResultsListener{
 		 */
 		@Override
 		protected void onPreExecute() {
+			trackFileList.clear();
 			progressDialog.show();
+			Collections.sort(trackFileList);
+			trackFileAdapter.notifyDataSetChanged();
 			super.onPreExecute();
 		}
 
 		/* (non-Javadoc)
 		 * @see android.os.AsyncTask#onProgressUpdate(Progress[])
 		 */
-		@Override
-		protected void onProgressUpdate(Void... values) {
-			progressDialog.setProgress(progress);
-			super.onProgressUpdate(values);
-		}
+		
 		
 	}
 	/* (non-Javadoc)
@@ -226,6 +240,9 @@ public class TracFileListActivity extends Activity implements ResultsListener{
 	}
 
 	void getFileList(){
+		if (readTask!=null){
+			readTask.cancel(true);
+		}
 		readTask=new ReadTrackList();
 		readTask.execute();
 	}
