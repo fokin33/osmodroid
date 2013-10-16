@@ -2749,7 +2749,8 @@ private void manageIM(){
 		}
 		if (fileName.length()>1024&&uploadto){
 		upload(fileName);	
-		} else
+		}
+		if (fileName.length()<1024)
 		{fileName.delete();
 		
 		Toast.makeText(LocalService.this, "Трек слишком короткий(меньше 1 КБ), файл не будет сохранен или загружен" , Toast.LENGTH_LONG).show();
