@@ -51,7 +51,7 @@ public class ChannelsAdapter extends ArrayAdapter<Channel> {
 		        if (channel.name!=null){   channelName.setText(channel.name);}
 		        if (channel.created!=null){channelCreated.setText(channel.created);}
 		        if (channel.send!=null){tg.setChecked(channel.send);
-		                
+		          channelName.setTextColor(Color.BLACK);      
 		        
 		        }
 		     

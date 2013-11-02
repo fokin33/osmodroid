@@ -18,7 +18,7 @@
             android:text="@string/sendsupport" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/AvgSpeedtextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/message"

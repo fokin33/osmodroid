@@ -5,12 +5,6 @@
     
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/refreshchannelsbutton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/SimLinkButtonText" />
-
     <ListView
         android:id="@+id/mychannelsdeviceslistView"
         android:layout_width="fill_parent"
@@ -20,7 +14,7 @@
     <ListView
         android:id="@+id/mychannelsmessages"
         android:layout_width="fill_parent"
-        android:layout_height="241dp"
+        android:layout_height="150dp"
         android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll" >
 

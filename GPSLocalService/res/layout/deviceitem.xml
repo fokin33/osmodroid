@@ -10,15 +10,20 @@
             android:id="@+id/txtName"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:text="Name"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtWhere" />
+            android:id="@+id/txtWhere"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Where" />
+
          <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtLast" />
+             android:id="@+id/txtLast"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:text="Last" />
+
     </LinearLayout>
 </LinearLayout>

@@ -102,7 +102,7 @@ public class netutil {
 				Log.d(this.getClass().getName(), "Что POSTим:" + post);
 				os.flush();
 				os.close();
-			}			if (uploadfile!=null){				String lineEnd = "\r\n";		        String twoHyphens = "--";		        String boundary = "*****";				con.setChunkedStreamingMode(4096);		        con.setRequestMethod("POST");				con.setDoOutput(true);				con.setDoInput(true);                con.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);				OutputStream os = con.getOutputStream();				DataOutputStream dos = new DataOutputStream(os);				InputStream in = new FileInputStream(uploadfile);				dos.writeBytes(twoHyphens + boundary + lineEnd);                dos.writeBytes("Content-Disposition: form-data; name=\"track\";filename=\"" + uploadfile.getName() + "\""+ lineEnd+" Content-Type: application//gpx+xml"+ lineEnd );                dos.writeBytes(lineEnd);				byte[] buffer=new byte[4096];				int bytesRead=-1;				int count = 0;				while ((bytesRead = in.read(buffer)) != -1) {										dos.write(buffer, 0, bytesRead);					count=count+buffer.length;					if (notificationBuilder!=null){						notificationBuilder.setProgress(100, (int)(count * 100 / uploadfile.length()), false);						LocalService.mNotificationManager.notify(notification, notificationBuilder.build());					}					Log.d(this.getClass().getName(), "poststreambuffer:" +new String(buffer, "UTF-8") );				    }				 dos.writeBytes(lineEnd);                 dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);                 Log.d(this.getClass().getName(), "Что upload:" + uploadfile.getName());				dos.flush();				os.flush();				os.close();				dos.close();							}						
+			}			if (uploadfile!=null){				String lineEnd = "\r\n";		        String twoHyphens = "--";		        String boundary = "*****";				con.setRequestMethod("POST");				con.setDoOutput(true);				con.setDoInput(true);                con.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);				OutputStream os = con.getOutputStream();				DataOutputStream dos = new DataOutputStream(os);				InputStream in = new FileInputStream(uploadfile);				dos.writeBytes(twoHyphens + boundary + lineEnd);                dos.writeBytes("Content-Disposition: form-data; name=\"track\";filename=\"" + uploadfile.getName() + "\""+ lineEnd+" Content-Type: application//gpx+xml"+ lineEnd );                dos.writeBytes(lineEnd);				byte[] buffer=new byte[512];				int bytesRead=-1;				int count = 0;				while ((bytesRead = in.read(buffer)) != -1) {										dos.write(buffer, 0, bytesRead);					count=count+buffer.length;					if (notificationBuilder!=null){						notificationBuilder.setProgress(100, (int)(count * 100 / uploadfile.length()), false);						LocalService.mNotificationManager.notify(notification, notificationBuilder.build());					}					Log.d(this.getClass().getName(), "poststreambuffer:" +new String(buffer, "UTF-8") );				    }				 dos.writeBytes(lineEnd);                 dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);                 Log.d(this.getClass().getName(), "Что upload:" + uploadfile.getName());				dos.flush();				os.flush();				os.close();				dos.close();							}						
 
 			con.connect();
 			
@@ -211,17 +211,17 @@ protected void onCancelled() {
 }
 	}
 	public static void newapicommand(ResultsListener listener, String action) {
-		SharedPreferences settings  = PreferenceManager.getDefaultSharedPreferences((Context)listener);
+//		SharedPreferences settings  =  PreferenceManager.getDefaultSharedPreferences( LocalService.serContext);
 		
-		APIcomParams params = new APIcomParams("http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),null,"APIM"); 			//{"http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),"false","","APIM"};
+		APIcomParams params = new APIcomParams("http://apim.esya.ru/?query="+action +";&key="+OsMoDroid.settings.getString("key", ""),null,"APIM"); 			//{"http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),"false","","APIM"};
 		new MyAsyncTask(listener).execute(params);
 			
 	}
 	
 	
 	public static void newapicommand(Context context, String action) {
-		SharedPreferences settings  = PreferenceManager.getDefaultSharedPreferences(context);
-				APIcomParams params = new APIcomParams("http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),null,"APIM"); 
+		//SharedPreferences settings  =  PreferenceManager.getDefaultSharedPreferences( LocalService.serContext);
+				APIcomParams params = new APIcomParams("http://apim.esya.ru/?query="+action +";&key="+OsMoDroid.settings.getString("key", ""),null,"APIM"); 
 		//String[] params = {"http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),"false","","APIM"};
 		new MyAsyncTask((ResultsListener) context, context).execute(params);
 			
@@ -230,18 +230,18 @@ protected void onCancelled() {
 	
 	public static void newapicommand (Context context, String action, String post )
 	{
-		SharedPreferences settings  = PreferenceManager.getDefaultSharedPreferences(context);		APIcomParams params = new APIcomParams("http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),post,"APIM"); 
+	//	SharedPreferences settings  =  PreferenceManager.getDefaultSharedPreferences( LocalService.serContext);		APIcomParams params = new APIcomParams("http://apim.esya.ru/?query="+action +";&key="+OsMoDroid.settings.getString("key", ""),post,"APIM"); 
 			//String[] params = {"http://apim.esya.ru/?query="+action +"&key="+settings.getString("key", ""),"true",post,"APIM"};
 			new MyAsyncTask((ResultsListener) context, context).execute(params);	
-	}
+	}	public static void newapicommand (ResultsListener listener,Context context, String action, String post )	{	//	SharedPreferences settings  =  PreferenceManager.getDefaultSharedPreferences( LocalService.serContext);		APIcomParams params = new APIcomParams("http://apim.esya.ru/?query="+action +";&key="+OsMoDroid.settings.getString("key", ""),post,"APIM"); 			//String[] params = {"http://apim.esya.ru/?query="+action +"&key="+settings.getString("key", ""),"true",post,"APIM"};			new MyAsyncTask(listener, context).execute(params);		}
 	
 	public static void newapicommand (ResultsListener listener, String action, String post )
 	{
-		SharedPreferences settings  = PreferenceManager.getDefaultSharedPreferences((Context)listener);
-			//String[] params = {"http://apim.esya.ru/?query="+action +"&key="+settings.getString("key", ""),"true",post,"APIM"};			APIcomParams params = new APIcomParams("http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),post,"APIM"); 
+	//	SharedPreferences settings  =  PreferenceManager.getDefaultSharedPreferences( LocalService.serContext);
+			//String[] params = {"http://apim.esya.ru/?query="+action +"&key="+settings.getString("key", ""),"true",post,"APIM"};			APIcomParams params = new APIcomParams("http://apim.esya.ru/?query="+action +";&key="+OsMoDroid.settings.getString("key", ""),post,"APIM"); 
 			new MyAsyncTask(listener).execute(params);	
 	}
-		public static void newapicommand(ResultsListener listener, Context context, String action) {SharedPreferences settings  = PreferenceManager.getDefaultSharedPreferences(context);		//String[] params = {"http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),"false","","APIM"};APIcomParams params = new APIcomParams("http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),null,"APIM"); 		new MyAsyncTask(listener, context).execute(params);			}		public static void newapicommand(ResultsListener listener, String action, File file, Builder notificationBuilder, int notificationid) {		SharedPreferences settings  = PreferenceManager.getDefaultSharedPreferences((Context)listener);				//String[] params = {"http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),"false","","APIM"};		APIcomParams params = new APIcomParams("http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),null,"APIM",file, notificationBuilder, notificationid); 				new MyAsyncTask(listener).execute(params);							}
+		public static void newapicommand(ResultsListener listener, Context context, String action) {		//SharedPreferences settings  =  PreferenceManager.getDefaultSharedPreferences( LocalService.serContext);		//String[] params = {"http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),"false","","APIM"};APIcomParams params = new APIcomParams("http://apim.esya.ru/?query="+action +";&key="+OsMoDroid.settings.getString("key", ""),null,"APIM"); 		new MyAsyncTask(listener, context).execute(params);			}		public static void newapicommand(ResultsListener listener, String action, File file, Builder notificationBuilder, int notificationid) {		//SharedPreferences settings  =  PreferenceManager.getDefaultSharedPreferences( LocalService.serContext);				//String[] params = {"http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),"false","","APIM"};		APIcomParams params = new APIcomParams("http://apim.esya.ru/?query="+action +";&key="+OsMoDroid.settings.getString("key", ""),null,"APIM",file, notificationBuilder, notificationid); 				new MyAsyncTask(listener).execute(params);							}
 	
 	
 	

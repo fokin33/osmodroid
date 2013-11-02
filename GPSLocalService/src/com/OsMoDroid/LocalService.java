@@ -67,6 +67,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import java.util.Iterator;
 
@@ -316,13 +318,15 @@ float currentAcceleration;
 
 	private boolean gpsbeepedoff=false;
 
-	private float maxspeed=0;
+	 float maxspeed=0;
 
-	private float avgspeed;
+	 float avgspeed;
+	
+	 float currentspeed;
 
-	private long timeperiod=0;
+	 long timeperiod=0;
 
-	private float workdistance;
+	 float workdistance;
 
 	private long workmilli=0;
 
@@ -390,8 +394,8 @@ private long lastgpslocationtime=0;
 
 	private int speed_gpx;
 
-	private int sendcounter;
-	private int writecounter=0;
+	int sendcounter;
+	int writecounter=0;
 
 	private int buffercounter=0;
 
@@ -461,9 +465,9 @@ private long lastgpslocationtime=0;
 
 	final private static DecimalFormat df6 = new DecimalFormat("########.######");
 
-	final private static DecimalFormat df1 = new DecimalFormat("########.#");
+	final static DecimalFormat df1 = new DecimalFormat("########.#");
 
-	final private static DecimalFormat df2 = new DecimalFormat("########.##");
+	final static DecimalFormat df2 = new DecimalFormat("########.##");
 
 	final private static DecimalFormat df0 = new DecimalFormat("########");
 
@@ -539,11 +543,10 @@ private long lastgpslocationtime=0;
 			
 			if(b.getInt("deviceU") != -1){
 				
-				Intent intent =new Intent(LocalService.this, DeviceChat.class).putExtra("deviceU", b.getInt("deviceU" ));
-				  PendingIntent contentIntent = PendingIntent.getActivity(serContext,0,intent, 0);
+				Intent intent =new Intent(LocalService.this, GPSLocalServiceClient.class).putExtra("deviceU", b.getInt("deviceU" ));
+				intent.setAction("devicechat");
+				PendingIntent contentIntent = PendingIntent.getActivity(serContext,333,intent, PendingIntent.FLAG_CANCEL_CURRENT);
 				Long when=System.currentTimeMillis();
-
-
 			 	NotificationCompat.Builder notificationBuilder =new NotificationCompat.Builder(
 
 						serContext.getApplicationContext())
@@ -600,11 +603,10 @@ private long lastgpslocationtime=0;
 
 	         a.putStringArrayList("meslist", LocalService.messagelist);
 
-	     Intent activ=new Intent(serContext,  mesActivity.class);
-
+	     Intent activ=new Intent(serContext,  GPSLocalServiceClient.class);
+	     activ.setAction("notif");
 	     activ.putExtras(a);
-
-	     activ.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP	| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+ 
 
 	     PendingIntent contentIntent = PendingIntent.getActivity(serContext, OsMoDroid.notifyidApp(),activ, 0);
 
@@ -1084,7 +1086,7 @@ if (!settings.getBoolean("silentnotify", false)){
 
 
 
-	    private static String formatInterval(final long l)
+	     static String formatInterval(final long l)
 
 	    {
 
@@ -1196,12 +1198,18 @@ public void refresh(){
 	in.removeExtra("startmessage");
 	in.putExtra("position", position+"\n"+satellite+" "+"Точность: "+accuracy);
 	in.putExtra("sendresult", sendresult);
-	in.putExtra("sendcounter", sendcounter);
 	in.putExtra("buffercounter", buffercounter);
 	in.putExtra("stat", "Максимальная: "+df1.format(maxspeed*3.6)+" км/ч\n"+"Средняя: "+df1.format(avgspeed*3600)+" км/ч\n"+"Пробег: "+df2.format(workdistance/1000) + " км"+"\n"+"Время работы: "+formatInterval(timeperiod));
 	in.putExtra("started", state);
 	in.putExtra("globalsend", globalsend);
 	in.putExtra("signalisationon", signalisationOn);
+	in.putExtra("sendcounter", sendcounter);
+	in.putExtra("writecounter", writecounter);
+	in.putExtra("currentspeed", df1.format(currentspeed*3.6));
+	in.putExtra("avgspeed", df1.format(avgspeed*3600));
+	in.putExtra("maxspeed", df1.format(maxspeed*3.6));
+	in.putExtra("workdistance", df2.format(workdistance/1000));
+	in.putExtra("timeperiod", formatInterval(timeperiod));
 	sendBroadcast(in);
 
 }
@@ -1757,7 +1765,7 @@ public void stopcomand()
 
 		//Log.d(getClass().getSimpleName(), "oncreate() localservice");
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-		//vibrator.vibrate(1000);
+		
 		pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 
 		in = new Intent("OsMoDroid");
@@ -1881,6 +1889,8 @@ if(!settings.getString("lpch", "").equals("")){
 			}
 myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
 }
+
+
 
 
 
@@ -2197,7 +2207,7 @@ if (soundPool!=null) {soundPool.release();}
 
 	public void onStart(Intent intent, int startId) {
 		Log.d(getClass().getSimpleName(), "on start ");
-		//Toast.makeText(getApplicationContext(), "OnStart", Toast.LENGTH_SHORT).show();
+		
 		super.onStart(intent, startId);
 
 
@@ -2208,7 +2218,7 @@ if (soundPool!=null) {soundPool.release();}
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.d(getClass().getSimpleName(), "on startcommand");
-		//Toast.makeText(getApplicationContext(), "OnStart command", Toast.LENGTH_SHORT).show();
+		
 		 return START_STICKY;
 	}
 
@@ -2278,7 +2288,7 @@ if (soundPool!=null) {soundPool.release();}
 
 		manageGPSFixAlarm();
 
-		writecounter=0;
+		sendcounter=0;
 
 		boolean crtfile = false;
 
@@ -2330,7 +2340,7 @@ try {
 
 if (mStartForeground == null){
 
-setForeground(true);
+//setForeground(true);
 
 mNotificationManager.notify(OSMODROID_ID, notification);
 
@@ -2482,12 +2492,23 @@ private void manageIM(){
 			if (distance>=distance_gpx&&gpx){gpsdistance=distance_gpx;}else {gpsdistance=distance;};
 		
 			//Log.d(this.getClass().getName(), "период"+gpsperiod+"meters"+gpsdistance);
-		
-			if (settings.getBoolean("usegps", true)){myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsperiod, 0, LocalService.this);
-			myManager.addGpsStatusListener(LocalService.this);}
+			List<String> list = myManager.getAllProviders();
+			if (settings.getBoolean("usegps", true))
+			{
+				if(list.contains(LocationManager.GPS_PROVIDER))
+				{
+			myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsperiod, 0, LocalService.this);
+			myManager.addGpsStatusListener(LocalService.this);
+				}
+			}
 		
 			if (settings.getBoolean("usenetwork", true)){	
-				myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, gpsperiod, gpsdistance, LocalService.this);}
+				
+				if(list.contains(LocationManager.NETWORK_PROVIDER))
+				{
+				myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, gpsperiod, gpsdistance, LocalService.this);
+				}
+				}
 		
 			
 		
@@ -2686,7 +2707,7 @@ private void manageIM(){
 
 			mNotificationManager.cancel(OSMODROID_ID);
 
-			setForeground(false);
+			//setForeground(false);
 
 
 
@@ -2747,11 +2768,11 @@ private void manageIM(){
 			Toast.makeText(LocalService.this, getString(R.string.CanNotWriteEnd), Toast.LENGTH_SHORT).show();
 
 		}
-		if (fileName.length()>1024&&uploadto){
-		upload(fileName);	
-		}
-		if (fileName.length()<1024)
-		{fileName.delete();
+		 if (fileName.length()>1024&&uploadto){
+             upload(fileName);        
+             }
+             if (fileName.length()<1024)
+             {fileName.delete();
 		
 		Toast.makeText(LocalService.this, "Трек слишком короткий(меньше 1 КБ), файл не будет сохранен или загружен" , Toast.LENGTH_LONG).show();
 		}
@@ -3010,9 +3031,9 @@ private void manageIM(){
 			{
 
 				prevnetworklocationtime=System.currentTimeMillis();
-				if ( live){
+
 				sendlocation(location);
-				}
+
 				return;
 
 			}
@@ -3032,9 +3053,8 @@ private void manageIM(){
 		if  (firstsend)
 
 		{
-			if (live){
+
 sendlocation(location);
-			}
 prevlocation.set(location);
 prevlocation_gpx.set(location);
 prevlocation_spd.set(location);
@@ -3048,7 +3068,7 @@ workmilli= System.currentTimeMillis();
 		firstsend=false;
 
 		}
-
+		currentspeed=location.getSpeed();
 		if (location.getSpeed()>maxspeed){
 
 			maxspeed=location.getSpeed();
@@ -3750,7 +3770,7 @@ private void writegpx(Location location){
 
 	 String strgpstime = sdf1.format(date)+"Z";
 	 writecounter++;
-	if ((gpxbuffer).length()<5000){gpxbuffer = gpxbuffer +  "<trkpt lat=\"" + df6.format( location.getLatitude())+"\""
+	if ((gpxbuffer).length()<5000)gpxbuffer = gpxbuffer +  "<trkpt lat=\"" + df6.format( location.getLatitude())+"\""
 
 			+ " lon=\"" + df6.format( location.getLongitude())
 
@@ -3761,14 +3781,9 @@ private void writegpx(Location location){
 			+ "</time><speed>" + df1.format( location.getSpeed())
 
 			+ "</speed>" +"<hdop>"+df1.format( location.getAccuracy()/4)+"</hdop>"  +"</trkpt>";
-	if (notification!=null){
-		notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "Отправлено:"+sendcounter+" Записано:"+writecounter, osmodroidLaunchIntent);
-		mNotificationManager.notify(OSMODROID_ID, notification);
-		}
-		refresh();
-	}
+
 	else
-	{
+
 
 
 	 try {
@@ -3793,7 +3808,7 @@ private void writegpx(Location location){
 
 	}
 
-	}
+
 
 }
 

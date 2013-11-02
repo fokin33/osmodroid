@@ -117,11 +117,6 @@
                                 android:summary="Километров в час"
                                 android:title="Минимальная скорость записи"
                                 android:defaultValue="0" />
-                            
-                            <CheckBoxPreference
-                                android:title="Загружать на ТреРа автоматически"
-                                android:key="automaticupload"
-                                android:defaultValue="false"/>
                     </PreferenceScreen>
                     
     </PreferenceCategory>
@@ -214,9 +209,13 @@
             android:defaultValue="true" />
         <CheckBoxPreference
             android:key="autostart"
-            android:summary="Запускать фоновый сервис при включении"
+            android:summary="Запускать фоновый сервис при включении телефона"
             android:title="Автозагрузка в фоне"
             android:defaultValue="false" />
+        <CheckBoxPreference
+            android:title="Загружать на ТреРа автоматически"
+            android:key="automaticupload"
+            android:defaultValue="false"/>
         
     </PreferenceCategory>
     

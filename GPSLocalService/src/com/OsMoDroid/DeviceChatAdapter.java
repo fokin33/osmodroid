@@ -60,14 +60,14 @@ public class DeviceChatAdapter extends ArrayAdapter<MyMessage> {
 		        txtFromName.setText(message.from_name);
 		        txtText.setText(message.text);
 		        txtTime.setText(message.time);
-		        
+		        txtText.setTextColor(Color.BLACK);
 		        if (message.from.equals(LocalService.settings.getString("uid", ""))){
 		        	 
 		        	txtFromName.setTextColor(Color.GREEN);
 		        }
 		        else 
 		        {
-		        	txtFromName.setTextColor(Color.WHITE);
+		        	txtFromName.setTextColor(Color.BLACK);
 		        }
 		       
 		       

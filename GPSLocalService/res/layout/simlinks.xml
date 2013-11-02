@@ -3,18 +3,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" android:alwaysDrawnWithCache="false" android:descendantFocusability="blocksDescendants">
-
-    <Button
-        android:id="@+id/refreshsimlinksbutton"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/SimLinkButtonText" />
-
-  <Button
-      android:id="@+id/addsimlinksbutton"
-      android:layout_width="fill_parent"
-      android:layout_height="wrap_content"
-      android:text="@string/addsymlink" />
     
     <ListView
         android:id="@+id/listView1"

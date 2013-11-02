@@ -5,6 +5,7 @@
     android:layout_height="fill_parent"
     android:gravity="bottom"
     android:orientation="vertical" >
+    
 
     <ListView
         android:id="@+id/chatmessages"
@@ -37,11 +38,5 @@ android:transcriptMode="alwaysScroll">
             android:layout_weight="1"
             android:text="Отправить" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/refreshchat"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/SimLinkButtonText" />
 
 </LinearLayout>

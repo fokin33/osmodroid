@@ -1,6 +1,8 @@
 package com.OsMoDroid;
 
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 public class OsMoDroid extends Application {
 
@@ -12,10 +14,16 @@ public class OsMoDroid extends Application {
 	final public static int warnnotifyid = 3;
 	final public static int mesnotifyid = 2;
 	static int uploadnotifyid = MIN_UPLOAD_ID;
-
+	public static SharedPreferences settings; 
 	public static int notifyidApp() {
 
 		return notifyid++;
+	}
+
+	@Override
+	public void onCreate() {
+		settings =  PreferenceManager.getDefaultSharedPreferences(this);
+		super.onCreate();
 	}
 
 	public static int uploadnotifyid() {

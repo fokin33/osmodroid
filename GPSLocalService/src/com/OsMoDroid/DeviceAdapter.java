@@ -63,14 +63,14 @@ public class DeviceAdapter extends ArrayAdapter<Device> {
 		        }
 		        else 
 		        {
-		        	deviceName.setTextColor(Color.WHITE);
+		        	deviceName.setTextColor(Color.BLACK);
 		        }
 		        if (device.state!=null&&device.state.equals("1")){
 		        	deviceWhere.setTextColor(Color.GREEN);
 		        }
 		        else
 		        {
-		        	deviceWhere.setTextColor(Color.WHITE);
+		        	deviceWhere.setTextColor(Color.BLACK);
 		        }
 		       
 		        				
