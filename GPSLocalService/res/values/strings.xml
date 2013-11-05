@@ -54,10 +54,11 @@
 <string name="message">Сообщение:</string>
 <string name="sendsupport">Сообщить в техническую поддержку</string>
 <string name="about">О программе</string>
-<string name="abouttext">OsMoDroid, клиент мониторинга OsMo\nАвтор: Денис Фокин (c) 2012-2013\n\nОфициальный сайт OsMoDroid: osmodroid.ru\nСправка по OsMoDroid: http://osmodroid.ru/help_android.html\n\nИнформация по мониторингу (руководства, управление и т.п.): http://esya.ru/om/start/</string>
+<string name="abouttext">OsMoDroid, клиент мониторинга OsMo\nАвтор: Денис Фокин (c) 2012-2013\n\nИспользуя данное приложение вы принимаете Условия Использования: http://esya.ru/om/terms/\n\nОфициальный сайт OsMoDroid: http://osmodroid.ru\nСправка по OsMoDroid: http://osmodroid.ru/help_android.html\nСвязка с OsmAnd: http://osmodroid.ru/withosmand.html\n\nСправка по мониторингу: http://esya.ru/om/start/</string>
 <string name="send">Отправить</string>
 <string name="cancel">Отмена</string>
 <string name="speed">Скорость: км/ч</string>
 <string name="auth">Авторизация</string>
-<string name="warnhash">Идентификационные данные(хеш или контрольное число) неправильные, нужно сбросить хеш \n или ввести его в настройках вручную</string>
+<string name="warnhash">Идентификационные данные(хеш или контрольное число) неправильные, нужно сбросить хеш 
+\n или ввести его в настройках вручную</string>
 </resources>

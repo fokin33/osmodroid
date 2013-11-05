@@ -71,53 +71,57 @@
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="gpx"
-            android:summary="GPS-трек в формате gpx cохраняется на карте памяти (/sdcard/OsMoDroid/)"
+            android:summary="Треки сохраняются на карте памяти (/sdcard/OsMoDroid/)"
             android:title="Запись трека" />
 
-                    <PreferenceScreen android:title="Параметры записи">
-                            <EditTextPreference
-                                android:digits="0123456789"
-                                android:inputType="number"
-                                android:key="period_gpx"
-                                android:numeric="integer"
-                                android:summary="Миллисекунды"
-                                android:title="Период опроса GPS" android:defaultValue="0" />
-                            <EditTextPreference
-                                android:digits="0123456789"
-                                android:inputType="number"
-                                android:key="distance_gpx"
-                                android:numeric="integer"
-                                android:summary="Метры"
-                                android:title="Дистанция опроса GPS" android:defaultValue="0" />
-                            <EditTextPreference
-                                android:digits="0123456789"
-                                android:inputType="number"
-                                android:key="bearing_gpx"
-                                android:numeric="integer"
-                                android:summary="Градусы"
-                                android:title="Отклонение курса" android:defaultValue="30" />
-                            <EditTextPreference
-                                android:digits="0123456789"
-                                android:inputType="number"
-                                android:key="speedbearing_gpx"
-                                android:summary="километров в час"
-                                android:title="Скорость учета курса" android:defaultValue="10" />
-                            <EditTextPreference
-                                android:digits="0123456789"
-                                android:inputType="number"
-                                android:key="hdop_gpx"
-                                android:numeric="integer"
-                                android:summary="Метры"
-                                android:title="Допустимая точность" android:defaultValue="50" />
-                            <EditTextPreference
-                                android:digits="0123456789"
-                                android:inputType="number"
-                                android:key="speed_gpx"
-                                android:numeric="integer"
-                                android:summary="Километров в час"
-                                android:title="Минимальная скорость записи"
-                                android:defaultValue="0" />
-                    </PreferenceScreen>
+                <PreferenceScreen android:title="Параметры записи">
+                        <EditTextPreference
+                            android:digits="0123456789"
+                            android:inputType="number"
+                            android:key="period_gpx"
+                            android:numeric="integer"
+                            android:summary="Миллисекунды"
+                            android:title="Период опроса GPS" android:defaultValue="0" />
+                        <EditTextPreference
+                            android:digits="0123456789"
+                            android:inputType="number"
+                            android:key="distance_gpx"
+                            android:numeric="integer"
+                            android:summary="Метры"
+                            android:title="Дистанция опроса GPS" android:defaultValue="0" />
+                        <EditTextPreference
+                            android:digits="0123456789"
+                            android:inputType="number"
+                            android:key="bearing_gpx"
+                            android:numeric="integer"
+                            android:summary="Градусы"
+                            android:title="Отклонение курса" android:defaultValue="30" />
+                        <EditTextPreference
+                            android:digits="0123456789"
+                            android:inputType="number"
+                            android:key="speedbearing_gpx"
+                            android:summary="километров в час"
+                            android:title="Скорость учета курса" android:defaultValue="10" />
+                        <EditTextPreference
+                            android:digits="0123456789"
+                            android:inputType="number"
+                            android:key="hdop_gpx"
+                            android:numeric="integer"
+                            android:summary="Метры"
+                            android:title="Допустимая точность" android:defaultValue="50" />
+                        <EditTextPreference
+                            android:digits="0123456789"
+                            android:inputType="number"
+                            android:key="speed_gpx"
+                            android:numeric="integer"
+                            android:summary="Километров в час"
+                            android:title="Минимальная скорость записи"
+                            android:defaultValue="0" />
+                        <CheckBoxPreference
+                            android:title="Загружать на ТреРа автоматически"
+                            android:key="automaticupload"
+                            android:defaultValue="false"/>
+                </PreferenceScreen>
                     
     </PreferenceCategory>
     
@@ -190,21 +194,21 @@
         <CheckBoxPreference
             android:key="usecourse"
             android:summary="Глобальная настройка, увеличивает расход энергии"
-            android:title="Использовать изменение курса"
+            android:title="Реагировать на курс"
             android:defaultValue="false" />
-        <CheckBoxPreference
-            android:key="usenetwork"
-            android:summary="Использовать для определения координат сотовые сети и WiFi (дополнительный интернет-трафик)"
-            android:title="Искать по мобильным сетям"
-            android:defaultValue="true" />
         <CheckBoxPreference
             android:key="usegps"
             android:summary="Использовать для определения координат GPS"
-            android:title="Искать по GPS"
+            android:title="GPS"
+            android:defaultValue="true" />
+        <CheckBoxPreference
+            android:key="usenetwork"
+            android:summary="Использовать для определения координат сотовые сети и WiFi (дополнительный интернет-трафик)"
+            android:title="Мобильные сети"
             android:defaultValue="true" />
         <CheckBoxPreference
             android:key="im"
-            android:summary="Включает постоянную связь с сервером Еся.ру, используется для удалённого управления и обмена сообщениями"
+            android:summary="Включает постоянную связь с сервером Еся.ру"
             android:title="Полнофункциональный режим"
             android:defaultValue="true" />
         <CheckBoxPreference
@@ -212,10 +216,6 @@
             android:summary="Запускать фоновый сервис при включении телефона"
             android:title="Автозагрузка в фоне"
             android:defaultValue="false" />
-        <CheckBoxPreference
-            android:title="Загружать на ТреРа автоматически"
-            android:key="automaticupload"
-            android:defaultValue="false"/>
         
     </PreferenceCategory>
     
