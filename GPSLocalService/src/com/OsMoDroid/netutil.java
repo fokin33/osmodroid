@@ -60,7 +60,7 @@ public class netutil {
 		protected void onPreExecute() {
 			// dialog.dismiss();
 			if (!(mContext==null)){				 Log.d(this.getClass().getName(),"Dialog context="+mContext.toString());
-				dialog= ProgressDialog.show(mContext,"", "Выполняется команда, Подождите пожалуйста...", true);
+				dialog= ProgressDialog.show(mContext,"", mContext.getString(R.string.commandpleasewait), true);
 				dialog.show();}
 		}
 	    
@@ -146,7 +146,7 @@ public class netutil {
 				Commandtext = getPage(params[0].action, params[0].post, params[0].uploadfile, params[0].notificationBuilder, params[0].notification);
 			} catch (IOException e1) {
 				Log.d(this.getClass().getName(),  "IO exp"+e1.toString());
-				Commandtext="Нет ответа от сервера";
+				Commandtext=mContext.getString(R.string.noanswerfromserver);
 				// TODO Auto-generated catch block
 				//e1.printStackTrace();
 			}

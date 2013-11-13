@@ -54,7 +54,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 	
 	@Override
 	public void onResume() {
-		globalActivity.channelsTab.setText("Каналы");
+		globalActivity.channelsTab.setText(R.string.chanals);
 //		if(globalActivity.NeedIntent!=null){
 //			globalActivity.openDeviceChatByIntent(globalActivity.NeedIntent);
 //			globalActivity.NeedIntent=null;
@@ -80,7 +80,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 
 				final TextView txv = new TextView(getSherlockActivity());
 
-				txv.setText("Ваше сообщение:");
+				txv.setText(R.string.yourmessage);
 
 				layout.addView(txv);
 
@@ -93,7 +93,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 
 						getSherlockActivity())
 
-						.setTitle("Отправка сообщения")
+						.setTitle(R.string.sendingmessage)
 
 						.setView(layout)
 
@@ -199,7 +199,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 			  Intent sendIntent = new Intent(Intent.ACTION_SEND);
             sendIntent.setType("text/plain");
             sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, LocalService.channelList.get((int) acmi.id).url != null);
-            startActivity(Intent.createChooser(sendIntent, "Поделиться ссылкой"));
+            startActivity(Intent.createChooser(sendIntent, getSherlockActivity().getString(R.string.sharelink)));
 			  
 			  return true;
 
@@ -231,12 +231,12 @@ if (item.getItemId() == 6) {
 	 */
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-		  menu.add(0, 2, 1, "Список устройств").setIcon(android.R.drawable.ic_menu_delete);
-		    menu.add(0, 1, 2, "Cообщение в канал").setIcon(android.R.drawable.ic_menu_share);
-		    menu.add(0, 3, 3, "Скопировать ссылку").setIcon(android.R.drawable.ic_menu_edit);
-		    menu.add(0, 4, 4, "Поделиться ссылкой").setIcon(android.R.drawable.ic_menu_edit);
-		    menu.add(0, 5, 5, "Открыть в браузере").setIcon(android.R.drawable.ic_menu_edit);
-		    menu.add(0, 6, 6, "Выйти из канала").setIcon(android.R.drawable.ic_menu_edit);
+		  menu.add(0, 2, 1, R.string.deviceslis).setIcon(android.R.drawable.ic_menu_delete);
+		    menu.add(0, 1, 2, R.string.messagetochanal).setIcon(android.R.drawable.ic_menu_share);
+		    menu.add(0, 3, 3, R.string.copylink).setIcon(android.R.drawable.ic_menu_edit);
+		    menu.add(0, 4, 4, R.string.sharelink).setIcon(android.R.drawable.ic_menu_edit);
+		    menu.add(0, 5, 5, R.string.openinbrowser).setIcon(android.R.drawable.ic_menu_edit);
+		    menu.add(0, 6, 6, R.string.exitfromchanal).setIcon(android.R.drawable.ic_menu_edit);
 		super.onCreateContextMenu(menu, v, menuInfo);
 	}
 
@@ -265,13 +265,13 @@ if (item.getItemId() == 6) {
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		 MenuItem refresh = menu.add(0, 3, 0, "Обновить");
+		 MenuItem refresh = menu.add(0, 3, 0, R.string.refresh);
 		 refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		 refresh.setIcon(android.R.drawable.ic_menu_rotate); 
-		MenuItem createchannel = menu.add(0, 1, 0, "Создать канал");
+		MenuItem createchannel = menu.add(0, 1, 0, R.string.createchanel);
 		 createchannel.setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 		 createchannel.setIcon(android.R.drawable.ic_menu_add);
-		 MenuItem enterchannel = menu.add(0, 2, 0, "Вступить в канал");
+		 MenuItem enterchannel = menu.add(0, 2, 0, R.string.enterchanal);
 		 enterchannel.setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT);
 		 enterchannel.setIcon(android.R.drawable.ic_menu_agenda);
 	
@@ -299,31 +299,31 @@ if (item.getItemId() == 1) {
 			layout.setOrientation(LinearLayout.VERTICAL);
 
 			final TextView txv3 = new TextView(globalActivity);
-			txv3.setText("Имя канала:");
+			txv3.setText(R.string.chanalname);
 			layout.addView(txv3);
 
 			final EditText input2 = new EditText(globalActivity);
 			layout.addView(input2);
 
 			final TextView txv1 = new TextView(globalActivity);
-			txv1.setText("Код канала:");
+			txv1.setText(R.string.chanalcode);
 			layout.addView(txv1);
 
 			final EditText input = new EditText(globalActivity);
 			layout.addView(input);
 
 			final CheckBox chb1 = new CheckBox(globalActivity);
-			chb1.setText("Приватный канал");
+			chb1.setText(R.string.privatechanal);
 
 			layout.addView(chb1);
 
 			final TextView txv2 = new TextView(globalActivity);
-			txv2.setText("Ключ канала:");
+			txv2.setText(R.string.chanalkey);
 			txv2.setEnabled(false);
 			layout.addView(txv2);
 
 			final EditText input1 = new EditText(globalActivity);
-			input1.setText("Ключ канала");
+			input1.setText(R.string.chanalkey);
 			input1.setEnabled(false);
 			layout.addView(input1);
 
@@ -339,7 +339,7 @@ if (item.getItemId() == 1) {
 			});
 AlertDialog alertdialog4 = new AlertDialog.Builder(
 		globalActivity)
-					.setTitle("Cоздать канал")
+					.setTitle(R.string.createchanal)
 					.setView(layout)
 					.setPositiveButton(R.string.yes,
 							new DialogInterface.OnClickListener() {
@@ -365,7 +365,7 @@ AlertDialog alertdialog4 = new AlertDialog.Builder(
 									} else {
 										Toast.makeText(
 												globalActivity,
-												"Указаны не все данные", 5).show();
+												R.string.noallenter, 5).show();
 									}
 								}
 							})
@@ -396,7 +396,7 @@ AlertDialog alertdialog4 = new AlertDialog.Builder(
 //			layout.addView(input2);
 
 			final TextView txv1 = new TextView(globalActivity);
-			txv1.setText("Код канала:");
+			txv1.setText(R.string.chanalcode);
 			layout.addView(txv1);
 
 			final EditText input = new EditText(globalActivity);
@@ -437,7 +437,7 @@ AlertDialog alertdialog4 = new AlertDialog.Builder(
 
 			AlertDialog alertdialog4 = new AlertDialog.Builder(
 					globalActivity)
-					.setTitle("Подключение в канал")
+					.setTitle(R.string.bindtochanal)
 					.setView(layout)
 					.setPositiveButton(R.string.yes,
 							new DialogInterface.OnClickListener() {
@@ -453,7 +453,7 @@ AlertDialog alertdialog4 = new AlertDialog.Builder(
 									} else {
 										Toast.makeText(
 												globalActivity,
-												"Указаны не все данные", 5).show();
+												R.string.noallenter, 5).show();
 									}
 								}
 							})
@@ -472,7 +472,7 @@ AlertDialog alertdialog4 = new AlertDialog.Builder(
 
 		}else {Toast.makeText(
 				globalActivity,
-				"Предварительно запросите устройство", 5).show();}
+				R.string.requestdevicebefore, 5).show();}
 
 		}
         if (item.getItemId() == 3) {

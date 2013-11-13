@@ -1,5 +1,8 @@
 
-package com.OsMoDroid;import java.io.BufferedReader;import java.io.IOException;import java.io.InputStream;import java.io.InputStreamReader;import java.io.PrintWriter;import java.net.HttpURLConnection;import java.net.SocketException;
+package com.OsMoDroid;import java.io.BufferedReader;import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.IOException;import java.io.InputStream;import java.io.InputStreamReader;import java.io.PrintWriter;import java.net.HttpURLConnection;import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.InetSocketAddress;import java.net.Proxy;import java.net.URL;import java.net.UnknownHostException;import java.text.SimpleDateFormat;import java.util.ArrayList;import java.util.Collections;
 import java.util.Map;
@@ -8,12 +11,15 @@ import java.util.Map;
 import android.content.Context;import android.content.Intent;import android.content.IntentFilter;import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.net.NetworkInfo;import android.os.Bundle;import android.os.Environment;
-import android.os.Handler;import android.os.Message;import android.support.v4.app.NotificationCompat;import android.util.Log;import android.widget.Toast;/**
+import android.os.Handler;import android.os.Message;import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;import android.util.Log;import android.widget.Toast;/**
  * @author dfokin
  *Class for work with LongPolling
  */
 public class IM {	protected  boolean running       = false;	protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;	String mykey;//	String timestamp=Long.toString(System.currentTimeMillis());String lcursor="";	int pingTimeout=900;	Thread myThread;	private BufferedReader    in      = null;	Context parent;	String myLongPollCh;
-	ArrayList<String[]>  myLongPollChList;	//ArrayList<String> list= new ArrayList<String>();	int mestype=0;	LocalService localService;	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	ArrayList<String[]>  myLongPollChList;	//ArrayList<String> list= new ArrayList<String>();	int mestype=0;	LocalService localService;	
+	FileOutputStream fos;
+	ObjectOutputStream output = null;	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		public IM(ArrayList<String[]> longPollChList, Context context,String key,LocalService localService) {
 	
 		this.localService=localService; 
@@ -30,8 +36,6 @@ public class IM {	protected  boolean running       = false;	protected boolea
 		//http://d.esya.ru/?identifier=1364306035.30188078700000:somaanjUobpong&ncrnd=1364306032050
 		//http://d.esya.ru/?identifier=somaanjUobpong&ncrnd=1364306032050
 		
-		
-		
 		adr="http://d.esya.ru/?identifier="+mykey;
 		for (String str[] : longPollChList){
 			if  (str[2].length()>0){
@@ -41,9 +45,21 @@ public class IM {	protected  boolean running       = false;	protected boolea
 			adr=adr+","+str[0];
 			}
 		}
-		//adr.substring(0, adr.length()-1);
 		adr=adr+"&ncrnd="+Long.toString(System.currentTimeMillis());
 		Log.d(this.getClass().getName(), "IM adr="+adr);
+		try {
+		Log.d(this.getClass().getName(), "try to save longPollChList");
+		fos = LocalService.serContext.openFileOutput(OsMoDroid.FILENAME, Context.MODE_PRIVATE);
+	    output = new ObjectOutputStream(fos);
+		output.writeObject(longPollChList);
+		output.flush();
+        output.close();
+        Log.d(this.getClass().getName(), "Success saved longPollChList");
+		} catch (FileNotFoundException e) {
+					e.printStackTrace();
+		} catch (IOException e) {
+					e.printStackTrace();
+		}
 	}
 	
 	public void addchannels(ArrayList<String[]> longPollChList){
@@ -89,6 +105,7 @@ public void removechannels(ArrayList<String[]> longPollChList){
 }			public void addtoDeviceChat(String message) {int u = -1;			try {
 				MyMessage mes =new MyMessage( new JSONObject(message));
 				Log.d(this.getClass().getName(), "MyMessage,from "+mes.from);
+				Log.d(this.getClass().getName(), "DeviceList= "+LocalService.deviceList);
 if (mes.from.equals(localService.settings.getString("device", ""))){
 	for (Device dev : LocalService.deviceList){
 		if(Integer.toString(dev.u).equals(mes.to)){
@@ -197,20 +214,20 @@ if (getMessageType( keyname).equals("o")){
         	//LocalService.deviceList.remove(device);
         	int idx=LocalService.deviceList.indexOf(device);
             if (LocalService.settings.getBoolean("statenotify", true)&&data[0].equals("state")) {
-                if (data[2].equals("1")) { status="запущен";device.state = "1"; } else { status="остановлен";device.state = "0"; }
-                messageText = messageText+" Мониторинг на устройстве \""+device.name+"\" "+status;
+                if (data[2].equals("1")) { status=localService.getString(R.string.started);device.state = "1"; } else { status=localService.getString(R.string.stoped);device.state = "0"; }
+                messageText = messageText+localService.getString(R.string.monitoringondevice)+device.name+"\" "+status;
                 Log.d(this.getClass().getName(), "DeviceState="+messageText);
                 
             }
             if (LocalService.settings.getBoolean("onlinenotify", false)&&data[0].equals("online")&&device.u!=(Integer.parseInt(LocalService.settings.getString("device", ""))) ){
-                if (data[2].equals("1")&&device.online.equals("0")) { status="вошло в сеть";  device.online = "1";}
-                if (data[2].equals("0")&&device.online.equals("1")) { status="покинуло сеть"; device.online = "0"; }
+                if (data[2].equals("1")&&device.online.equals("0")) { status=localService.getString(R.string.enternet);  device.online = "1";}
+                if (data[2].equals("0")&&device.online.equals("1")) { status=localService.getString(R.string.exitnet); device.online = "0"; }
                
-                messageText = messageText+" Устройство \""+device.name+"\" "+status;
+                messageText = messageText+localService.getString(R.string.device)+device.name+"\" "+status;
                 Log.d(this.getClass().getName(), "DeviceOnline="+messageText);
             }
             if (data[0].equals("geozone")&&device.u!=(Integer.parseInt(LocalService.settings.getString("device", ""))) ){
-                messageText = messageText+" Устройство \""+device.name+"\" "+data[2];
+                messageText = messageText+localService.getString(R.string.device)+device.name+"\" "+data[2];
                 Log.d(this.getClass().getName(), "DeviceGeoZone="+messageText);
             }
             

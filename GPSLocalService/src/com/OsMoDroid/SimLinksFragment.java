@@ -99,7 +99,7 @@ public class SimLinksFragment extends SherlockFragment implements ResultsListene
 	
 	@Override
 	public void onResume() {
-		globalActivity.devicesTab.setText("Устройства");
+		globalActivity.devicesTab.setText(R.string.devices);
 		
 		super.onResume();
 	}
@@ -113,20 +113,20 @@ public class SimLinksFragment extends SherlockFragment implements ResultsListene
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		MenuItem bind = menu.add(0, 1, 0, "Добавить ссылку");
+		MenuItem bind = menu.add(0, 1, 0, R.string.addsymlink);
 		bind.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		bind.setIcon(android.R.drawable.ic_menu_add);
-		MenuItem refresh = menu.add(0, 2, 0, "Обновить");
+		MenuItem refresh = menu.add(0, 2, 0, R.string.refresh);
 		refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		refresh.setIcon(android.R.drawable.ic_menu_rotate);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-		 menu.add(0, 1, 0, "Поделиться ссылкой").setIcon(android.R.drawable.ic_menu_share);
-		 menu.add(0, 2, 0, "Удалить ссылку").setIcon(android.R.drawable.ic_menu_delete);
-		 menu.add(0, 3, 0, "Копировать ссылку").setIcon(android.R.drawable.ic_menu_edit);
-		 menu.add(0, 5, 5, "Открыть в браузере").setIcon(android.R.drawable.ic_menu_edit);
+		 menu.add(0, 1, 0, R.string.sharelink).setIcon(android.R.drawable.ic_menu_share);
+		 menu.add(0, 2, 0, R.string.deletelink).setIcon(android.R.drawable.ic_menu_delete);
+		 menu.add(0, 3, 0, R.string.copylink).setIcon(android.R.drawable.ic_menu_edit);
+		 menu.add(0, 5, 5, R.string.openinbrowser).setIcon(android.R.drawable.ic_menu_edit);
 		super.onCreateContextMenu(menu, v, menuInfo);
 	}
 	public boolean onContextItemSelected(android.view.MenuItem item) {
@@ -189,7 +189,7 @@ public class SimLinksFragment extends SherlockFragment implements ResultsListene
 		if (result.Jo==null&&result.ja==null)
 
 		{
-			Toast.makeText(LocalService.serContext, "Esya.ru не отвечает. Проверьте работу интернета." , Toast.LENGTH_LONG).show();
+			Toast.makeText(LocalService.serContext, R.string.esya_ru_notrespond , Toast.LENGTH_LONG).show();
 
 			}
 		

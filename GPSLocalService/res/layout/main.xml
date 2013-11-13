@@ -28,17 +28,17 @@
 	        android:layout_height="wrap_content"
 	        android:layout_weight="0.49"
 	        android:text="ToggleButton"
-	        android:textOff="Рассылка в каналы"
-	        android:textOn="Рассылка в каналы" />
+	        android:textOff="@string/channelsend"
+	        android:textOn="@string/channelsend" />
 
 	    <ToggleButton
 	        android:id="@+id/alarmButton"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1.08"
-	        android:text="Сигнализация"
-	        android:textOff="Сигнализация"
-	        android:textOn="Сигнализация" />
+	        android:text="@string/alarm"
+	        android:textOff="@string/alarm"
+	        android:textOn="@string/alarm" />
 
 	</LinearLayout>
 

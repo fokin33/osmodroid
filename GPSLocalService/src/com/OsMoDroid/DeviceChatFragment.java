@@ -96,7 +96,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 	}
 	@Override
 	public void onResume() {
-		globalActivity.devicesTab.setText("Чат с "+getDeviceByU(deviceU).name);
+		globalActivity.devicesTab.setText(R.string.chatwith+getDeviceByU(deviceU).name);
 		super.onResume();
 	}
 	
@@ -111,7 +111,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		
-		MenuItem refresh = menu.add(0, 2, 0, "Обновить");
+		MenuItem refresh = menu.add(0, 2, 0, R.string.refresh);
 		refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		refresh.setIcon(android.R.drawable.ic_menu_rotate);
 		super.onCreateOptionsMenu(menu, inflater);

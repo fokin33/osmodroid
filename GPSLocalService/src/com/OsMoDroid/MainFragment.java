@@ -71,7 +71,7 @@ public class MainFragment extends SherlockFragment implements ResultsListener {
 	 */
 	public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
 		//SubMenu menu1 = menu.addSubMenu(Menu.NONE, 11, 4, "Действия");
-		SubMenu menu2 = menu.addSubMenu(Menu.NONE, 12, 4, "Ещё");
+		SubMenu menu2 = menu.addSubMenu(Menu.NONE, 12, 4, R.string.more);
 
 		MenuItem auth = menu2.add(0, 1, 0, R.string.RepeatAuth);
 		MenuItem mi = menu.add(0, 2, 0, R.string.Settings);
@@ -79,18 +79,18 @@ public class MainFragment extends SherlockFragment implements ResultsListener {
 		MenuItem mi3 = menu2.add(0, 3, 0, R.string.EqualsParameters);
 		MenuItem forcesenditem = menu.add(0, 9, 0, R.string.sendnow);
 		forcesenditem.setIcon(android.R.drawable.ic_menu_mylocation);
-		MenuItem shareadress = menu.add(0, 10, 0, "Поделиться ссылкой");
+		MenuItem shareadress = menu.add(0, 10, 0, R.string.sharelink);
 		shareadress.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		shareadress.setIcon(android.R.drawable.ic_menu_share);
-		MenuItem copyadress = menu.add(0, 11, 0, "Копировать ссылку");
+		MenuItem copyadress = menu.add(0, 11, 0, R.string.copylink);
 		copyadress.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		copyadress.setIcon(android.R.drawable.ic_menu_edit);
 		MenuItem about = menu.add(0, 12, 0, R.string.about);
 		about.setIcon(android.R.drawable.ic_menu_info_details);
 		about.setIntent(new Intent(getSherlockActivity(), aboutActivity.class));
-		MenuItem exit = menu.add(0, 14, 0, "Выход");
-		MenuItem save =menu2.add(0, 18, 0, "Сохранить настройки на карту");
-        MenuItem load =menu2.add(0, 19, 0, "Загрузить настройки с карты");
+		MenuItem exit = menu.add(0, 14, 0, R.string.exit);
+		MenuItem save =menu2.add(0, 18, 0, R.string.savepref);
+        MenuItem load =menu2.add(0, 19, 0, R.string.loadpref);
               
 
                  super.onCreateOptionsMenu(menu, inflater);
@@ -195,14 +195,14 @@ public class MainFragment extends SherlockFragment implements ResultsListener {
 		if (item.getItemId() == 10) {
                     Intent sendIntent = new Intent(Intent.ACTION_SEND);
                     sendIntent.setType("text/plain");
-                    sendIntent.putExtra(android.content.Intent.EXTRA_TEXT,"Я тут! "+ globalActivity.viewurl);
-                    startActivity(Intent.createChooser(sendIntent, "Поделиться ссылкой"));
+                    sendIntent.putExtra(android.content.Intent.EXTRA_TEXT,getString(R.string.iamhere)+ globalActivity.viewurl);
+                    startActivity(Intent.createChooser(sendIntent, getSherlockActivity().getString(R.string.sharelink)));
 		}
 		if (item.getItemId() == 11) {
                     ClipboardManager clipboard = (ClipboardManager) getSherlockActivity().getSystemService(Context.CLIPBOARD_SERVICE);
                     if (globalActivity.viewurl != null)
                     clipboard.setText(globalActivity.viewurl);
-                    Toast.makeText(getSherlockActivity(), "Ссылка скопирована в буфер обмена", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getSherlockActivity(), R.string.linkcopied, Toast.LENGTH_SHORT).show();
 		}
 		if (item.getItemId() == 14) {
                     Intent i = new Intent(getSherlockActivity(), LocalService.class);
@@ -297,9 +297,9 @@ if (globalActivity.live){
          
                          AlertDialog alertdialog = new AlertDialog.Builder(
                                          getSherlockActivity()).create();
-                         alertdialog.setTitle("Остановка");
+                         alertdialog.setTitle(getSherlockActivity().getString(R.string.Stoping));
 
-                         alertdialog.setMessage("Закрыть сессию?");
+                         alertdialog.setMessage(getSherlockActivity().getString(R.string.closesession));
 
                          alertdialog.setButton(getString(R.string.yes),
                                          new DialogInterface.OnClickListener() {
@@ -308,9 +308,13 @@ if (globalActivity.live){
                                                          if (!OsMoDroid.settings.getBoolean("automaticupload", true)){
                                                                  AlertDialog alertdialog1 = new AlertDialog.Builder(
                                                                                  getSherlockActivity()).create();
-                                                                 alertdialog1.setTitle("Загрузка");
+                                                                 alertdialog1.setTitle(getSherlockActivity()
+																		.getString(
+																				R.string.loading));
 
-                                                                 alertdialog1.setMessage("Загрузить на ТреРа?");
+                                                                 alertdialog1.setMessage(getSherlockActivity()
+																		.getString(
+																				R.string.uploadtrera));
 
                                                                  alertdialog1.setButton(getString(R.string.yes),
                                                                                  new DialogInterface.OnClickListener() {
@@ -349,9 +353,13 @@ if (globalActivity.live){
                                                          if (!OsMoDroid.settings.getBoolean("automaticupload", true)){
                                                                  AlertDialog alertdialog1 = new AlertDialog.Builder(
                                                                                  getSherlockActivity()).create();
-                                                                 alertdialog1.setTitle("Загрузка");
+                                                                 alertdialog1.setTitle(getSherlockActivity()
+																		.getString(
+																				R.string.loading));
 
-                                                                 alertdialog1.setMessage("Загрузить на ТреРа?");
+                                                                 alertdialog1.setMessage(getSherlockActivity()
+																		.getString(
+																				R.string.uploadtrera));
 
                                                                  alertdialog1.setButton(getString(R.string.yes),
                                                                                  new DialogInterface.OnClickListener() {
@@ -391,9 +399,9 @@ else {
  if (!OsMoDroid.settings.getBoolean("automaticupload", true)){
          AlertDialog alertdialog1 = new AlertDialog.Builder(
                          getSherlockActivity()).create();
-         alertdialog1.setTitle("Загрузка");
+         alertdialog1.setTitle(getSherlockActivity().getString(R.string.loading));
 
-         alertdialog1.setMessage("Загрузить на ТреРа?");
+         alertdialog1.setMessage(getSherlockActivity().getString(R.string.uploadtrera));
 
          alertdialog1.setButton(getString(R.string.yes),
                          new DialogInterface.OnClickListener() {
@@ -490,7 +498,7 @@ else {
 						globalActivity.messageShowed=true;
 						AlertDialog alertdialog = new AlertDialog.Builder(
 								globalActivity).create();
-						alertdialog.setTitle("Сообщение от сервера");
+						alertdialog.setTitle(context.getString(R.string.servermessage));
 
 						alertdialog.setMessage(startmessage);
 
@@ -545,7 +553,7 @@ else {
 		String startStatus =globalActivity.checkStarted() ? getString(R.string.Running)
 				: getString(R.string.NotRunning);
 		String statusText = //getString(R.string.Status) + startStatus+
-				getString(R.string.Sendcount) + globalActivity.sendcounter + " В буфере: "+globalActivity.buffercounter;
+				getString(R.string.Sendcount) + globalActivity.sendcounter + getSherlockActivity().getString(R.string.inbuffer)+globalActivity.buffercounter;
 		TextView t = (TextView) view.findViewById(R.id.serviceStatus);
 		t.setText(statusText);
 	}

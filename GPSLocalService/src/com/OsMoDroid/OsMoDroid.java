@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class OsMoDroid extends Application {
-
+	static String FILENAME = "longPollChList";
 	private static final int MIN_UPLOAD_ID = 4;
 	private static final int MAX_UPLOAD_ID = 1000;
 	public static boolean mesactivityVisible = false;
@@ -13,6 +13,7 @@ public class OsMoDroid extends Application {
 	private static int notifyid = 1;
 	final public static int warnnotifyid = 3;
 	final public static int mesnotifyid = 2;
+	public static final String NOTIFIESFILENAME = "messagelist";
 	static int uploadnotifyid = MIN_UPLOAD_ID;
 	public static SharedPreferences settings; 
 	public static int notifyidApp() {

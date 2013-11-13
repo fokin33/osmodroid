@@ -59,7 +59,7 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 			try {
 				startActivity(intent);
 			} catch (Exception e) {
-				Toast.makeText(getSherlockActivity(), "Не установленно ни одного приложения типа Карты", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getSherlockActivity(), R.string.nomapapp, Toast.LENGTH_SHORT).show();
 				e.printStackTrace();
 			}  
 			return super.onContextItemSelected(item);
@@ -70,7 +70,7 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
-		   menu.add(0, 1, 0, "Показать на картах").setIcon(android.R.drawable.ic_menu_mylocation);;
+		   menu.add(0, 1, 0, R.string.showonmap).setIcon(android.R.drawable.ic_menu_mylocation);;
 		super.onCreateContextMenu(menu, v, menuInfo);
 	}
 
@@ -120,13 +120,13 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 	}
 	@Override
 	public void onResume() {
-		globalActivity.channelsTab.setText("Канал "+LocalService.currentChannel.name);
+		globalActivity.channelsTab.setText(R.string.chanal+LocalService.currentChannel.name);
 		super.onResume();
 	}
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		 MenuItem refresh = menu.add(0, 3, 0, "Обновить");
+		 MenuItem refresh = menu.add(0, 3, 0, R.string.refresh);
 		 refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		 refresh.setIcon(android.R.drawable.ic_menu_rotate); 
 			

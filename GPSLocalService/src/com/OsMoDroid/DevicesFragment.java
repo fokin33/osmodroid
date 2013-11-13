@@ -49,7 +49,7 @@ public class DevicesFragment extends SherlockFragment implements ResultsListener
 	
 	@Override
 	public void onResume() {
-		globalActivity.devicesTab.setText("Устройства");
+		globalActivity.devicesTab.setText(R.string.devices);
 		if(globalActivity.NeedIntent!=null){
 			if(globalActivity.NeedIntent.getAction().equals("devicechat")){
 			globalActivity.openTabByIntent(globalActivity.NeedIntent);
@@ -78,7 +78,7 @@ public class DevicesFragment extends SherlockFragment implements ResultsListener
 
 				final TextView txv = new TextView(globalActivity);
 
-				txv.setText("Ваше сообщение:");
+				txv.setText(R.string.yourmessage);
 
 				layout.addView(txv);
 
@@ -91,7 +91,7 @@ public class DevicesFragment extends SherlockFragment implements ResultsListener
 
 						globalActivity)
 
-						.setTitle("Отправка сообщения")
+						.setTitle(R.string.sendingmessage)
 
 						.setView(layout)
 
@@ -203,7 +203,7 @@ public class DevicesFragment extends SherlockFragment implements ResultsListener
 			  Intent sendIntent = new Intent(Intent.ACTION_SEND);
               sendIntent.setType("text/plain");
               sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, LocalService.deviceList.get((int) acmi.id).url != null);
-              startActivity(Intent.createChooser(sendIntent, "Поделиться ссылкой"));
+              startActivity(Intent.createChooser(sendIntent, getSherlockActivity().getString(R.string.sharelink)));
 			  
 			  return true;
 
@@ -229,13 +229,13 @@ public class DevicesFragment extends SherlockFragment implements ResultsListener
 	 */
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-		 menu.add(0, 1, 1, "Написать сообщение").setIcon(android.R.drawable.ic_menu_share);
+		 menu.add(0, 1, 1, R.string.writemessage).setIcon(android.R.drawable.ic_menu_share);
 
-		    menu.add(0, 2, 2, "Сообщения").setIcon(android.R.drawable.ic_menu_delete);
+		    menu.add(0, 2, 2, R.string.messages).setIcon(android.R.drawable.ic_menu_delete);
 		   
-		    menu.add(0, 3, 3, "Скопировать ссылку").setIcon(android.R.drawable.ic_menu_edit);
-		    menu.add(0, 4, 4, "Поделиться ссылкой").setIcon(android.R.drawable.ic_menu_edit);
-		    menu.add(0, 5, 5, "Открыть в браузере").setIcon(android.R.drawable.ic_menu_edit);
+		    menu.add(0, 3, 3, R.string.copylink).setIcon(android.R.drawable.ic_menu_edit);
+		    menu.add(0, 4, 4, R.string.sharelink).setIcon(android.R.drawable.ic_menu_edit);
+		    menu.add(0, 5, 5, R.string.openinbrowser).setIcon(android.R.drawable.ic_menu_edit);
 		super.onCreateContextMenu(menu, v, menuInfo);
 	}
 
@@ -261,10 +261,10 @@ public class DevicesFragment extends SherlockFragment implements ResultsListener
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		MenuItem bind = menu.add(0, 1, 0, "Привязать устройство");
+		MenuItem bind = menu.add(0, 1, 0, R.string.binddevice);
 		bind.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		bind.setIcon(android.R.drawable.ic_menu_add);
-		MenuItem refresh = menu.add(0, 2, 0, "Обновить");
+		MenuItem refresh = menu.add(0, 2, 0, R.string.refresh);
 		refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		refresh.setIcon(android.R.drawable.ic_menu_rotate);
 		super.onCreateOptionsMenu(menu, inflater);
@@ -291,14 +291,14 @@ public class DevicesFragment extends SherlockFragment implements ResultsListener
 			LinearLayout layout = new LinearLayout(getSherlockActivity());
 			layout.setOrientation(LinearLayout.VERTICAL);
 			final TextView txv5 = new TextView(getSherlockActivity());
-			txv5.setText("Хэш:");
+			txv5.setText(R.string.hash);
 			layout.addView(txv5);
 			final EditText inputhash = new EditText(getSherlockActivity());
 			
 			layout.addView(inputhash);
 
 			final TextView txv3 = new TextView(getSherlockActivity());
-			txv3.setText("Контрольное число:");
+			txv3.setText(R.string.controlnumber);
 			layout.addView(txv3);
 
 			final EditText inputN = new EditText(getSherlockActivity());
@@ -309,7 +309,7 @@ public class DevicesFragment extends SherlockFragment implements ResultsListener
 
 			AlertDialog alertdialog3 = new AlertDialog.Builder(
 					getSherlockActivity())
-					.setTitle("Подключение приложения")
+					.setTitle(R.string.bindapp)
 					.setView(layout)
 					.setPositiveButton(R.string.yes,
 							new DialogInterface.OnClickListener() {
@@ -403,7 +403,7 @@ public class DevicesFragment extends SherlockFragment implements ResultsListener
 			Log.d(getClass().getSimpleName(),"notifwar1 Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ " Запрос:"+result.url);
 
 		//		notifywarnactivity("Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ " Запрос:"+result.url);
-			Toast.makeText(LocalService.serContext, "Esya.ru не отвечает. Проверьте работу интернета." , Toast.LENGTH_LONG).show();
+			Toast.makeText(LocalService.serContext, R.string.esya_ru_notrespond , Toast.LENGTH_LONG).show();
 
 			}
 		
@@ -419,7 +419,7 @@ public class DevicesFragment extends SherlockFragment implements ResultsListener
 
 			if (result.Jo.has("om_device")){
 				LocalService.deviceList.clear();
-				LocalService.deviceList.add(new Device("0","Зрители","0"
+				LocalService.deviceList.add(new Device("0",getString(R.string.observers),"0"
 						,"",
 						"",
 						"",

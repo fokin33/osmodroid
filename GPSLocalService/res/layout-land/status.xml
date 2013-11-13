@@ -22,7 +22,7 @@
                 android:id="@+id/TextView01"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/spd"
+                android:text="Скорость"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/sign_text_size" />
 
@@ -32,9 +32,10 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_margin="0dp"
-                android:text="777.7"
+                android:text="0"
+                android:textSize="@dimen/speed_text_size"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="@dimen/speed_text_size" />
+                 />
 
         </LinearLayout>
 
@@ -51,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="0dp"
-                android:text="@string/max"
+                android:text="Максимум"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/sign_text_size" />
 
@@ -62,7 +63,7 @@
                 android:layout_margin="0dp"
                 android:layout_marginBottom="0dp"
                 android:layout_marginTop="0dp"
-                android:text="777.77"
+                android:text="0"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/all_text_size" />
 
@@ -70,7 +71,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/avg"
+                android:text="Средняя"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/sign_text_size" />
 
@@ -78,63 +79,69 @@
                 android:id="@+id/AvgSpeedtextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="777.77"
+                android:text="0"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/all_text_size" />
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center" android:baselineAligned="false">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.50"
+            android:layout_weight="0.15"
+            android:baselineAligned="false"
+            android:gravity="center|right"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/TextView07"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/ingoing2"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="@dimen/sign_text_size" />
+                android:layout_weight="0.50"
+                android:gravity="right"
+                android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/WorkDistanceTextView"
+                <TextView
+                    android:id="@+id/TextView07"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Пробег"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="@dimen/sign_text_size" />
+
+                <TextView
+                    android:id="@+id/WorkDistanceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="@dimen/all_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="777.77"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="@dimen/all_text_size" />
+                android:layout_weight="0.50"
+                android:baselineAligned="false"
+                android:gravity="center|right"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/TextView06"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="В пути"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="@dimen/sign_text_size" />
+
+                <TextView
+                    android:id="@+id/timeperiodTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00:00"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="@dimen/all_text_size" />
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.50"
-            android:gravity="center|right"
-            android:orientation="vertical" android:baselineAligned="false">
-
-            <TextView
-                android:id="@+id/TextView06"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/inway"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="@dimen/sign_text_size" />
-
-            <TextView
-                android:id="@+id/timeperiodTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00:00:00"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="@dimen/all_text_size" />
-        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -153,7 +160,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="@string/sended"
+                android:text="Отправлено"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/sign_text_size" />
 
@@ -180,7 +187,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="@string/writen"
+                android:text="Записано"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/sign_text_size" />
 

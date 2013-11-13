@@ -76,8 +76,8 @@ public class StatFragment extends SherlockFragment {
 					avgSpeedTextView.setText(intent.getStringExtra("avgspeed"));
 					workDistanceTextView.setText(intent.getStringExtra("workdistance"));
 					timeperiodTextView.setText(intent.getStringExtra("timeperiod"));
-					sendTextView.setText(intent.getStringExtra("sendcounter"));
-					writeTextView.setText(intent.getStringExtra("writecounter"));
+					sendTextView.setText(Integer.toString(intent.getIntExtra("sendcounter",0)));
+					writeTextView.setText(Integer.toString(intent.getIntExtra("writecounter",0)));
 								
 				}
 

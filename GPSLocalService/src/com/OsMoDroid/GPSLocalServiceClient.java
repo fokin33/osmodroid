@@ -155,8 +155,11 @@ ft.commit();
 		actionBar.selectTab(mesListTab);
 	    ft.commit();
 		}
-		
-		
+		if (intent.getAction().equals(Intent.ACTION_MAIN)&&checkStarted()){
+			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			actionBar.selectTab(statTab);
+		    ft.commit();
+		}
 		NeedIntent=intent;
 	}
 	
@@ -280,6 +283,7 @@ private HashMap<TabType, Stack<String>> backStacks;
 			// Log.d(this.getClass().getSimpleName(), "onservicedisconnected");
 		}
 	};
+	private boolean SavedInstanceState;
 	
 
 	public static String unescape (String s)
@@ -436,13 +440,13 @@ private HashMap<TabType, Stack<String>> backStacks;
 	        backStacks.put(TabType.STAT, new Stack<String>());
 	        
 	        }
-	        mainTab = actionBar.newTab().setTag(TabType.MAIN).setText("Трекер").setTabListener(this);
-			devicesTab = actionBar.newTab().setTag(TabType.DEVICES).setText("Устройства").setTabListener(this);
-			channelsTab = actionBar.newTab().setTag(TabType.CHANNELS).setText("Каналы").setTabListener(this);
-			simLinksTab = actionBar.newTab().setTag(TabType.LINKS).setText("Ссылки").setTabListener(this);
-			trackListTab = actionBar.newTab().setTag(TabType.TRACKS).setText("Треки").setTabListener(this);
-			mesListTab = actionBar.newTab().setTag(TabType.NOTIFS).setText("Оповещения").setTabListener(this);
-			statTab =actionBar.newTab().setTag(TabType.STAT).setText("Статистика").setTabListener(this);
+	        mainTab = actionBar.newTab().setTag(TabType.MAIN).setText(R.string.tracker).setTabListener(this);
+			devicesTab = actionBar.newTab().setTag(TabType.DEVICES).setText(R.string.devices).setTabListener(this);
+			channelsTab = actionBar.newTab().setTag(TabType.CHANNELS).setText(R.string.chanals).setTabListener(this);
+			simLinksTab = actionBar.newTab().setTag(TabType.LINKS).setText(R.string.links).setTabListener(this);
+			trackListTab = actionBar.newTab().setTag(TabType.TRACKS).setText(R.string.tracks).setTabListener(this);
+			mesListTab = actionBar.newTab().setTag(TabType.NOTIFS).setText(R.string.notifications).setTabListener(this);
+			statTab =actionBar.newTab().setTag(TabType.STAT).setText(R.string.stat).setTabListener(this);
 			Log.d(this.getClass().getSimpleName(), "backstack="+backStacks);
 			addTabs();
 		
@@ -530,7 +534,7 @@ private HashMap<TabType, Stack<String>> backStacks;
 		// Restore topmost fragment (e.g. after application switch)
 		String tag = backStack.peek();
 		SherlockFragment fragment = (SherlockFragment) getSupportFragmentManager().findFragmentByTag(tag);
-		if (fragment.isDetached())
+		if (fragment.isDetached()&&fragment!=null)
 		{
 		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 		if(fragment!=null){ft.attach(fragment);}
@@ -538,7 +542,15 @@ private HashMap<TabType, Stack<String>> backStacks;
 		}
 		}
 		
+		super.onPostResume();
+	}
+	@Override
+	protected void onResumeFragments() {
+		
+		
+		super.onResumeFragments();
 		updateMainUI();
+				
 		
 		if (getIntent().getAction().equals("devicechat")){
 			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -546,27 +558,26 @@ private HashMap<TabType, Stack<String>> backStacks;
 		    ft.commit();
 			NeedIntent=getIntent();
 			Log.d(this.getClass().getSimpleName(), "needintent devicechat");
-			}
+			
+			} else
 		if (getIntent().getAction().equals("notif")){
 			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 			actionBar.selectTab(mesListTab);
 		    ft.commit();
 		    NeedIntent=null;
+		  
 		}
-		
-		if (getIntent().getAction().equals(Intent.ACTION_MAIN)&&checkStarted()){
-			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-			actionBar.selectTab(statTab);
-		    ft.commit();
-		}
-//		if (NeedIntent!=null){
+//		else 
+//		if (getIntent().getAction().equals(Intent.ACTION_MAIN)&&checkStarted()){
 //			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//			actionBar.selectTab(devicesTab);
+//			actionBar.selectTab(statTab);
 //		    ft.commit();
+//		   
 //		}
 		
-		super.onPostResume();
 	}
+	
+	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		Log.d(this.getClass().getSimpleName(), "onSaveInstanceState() gpsclient");
@@ -576,7 +587,7 @@ private HashMap<TabType, Stack<String>> backStacks;
 		outState.putSerializable("stacks", st);
 		Log.d(this.getClass().getSimpleName(), "saved stack="+backStacks);
 		Log.d(this.getClass().getSimpleName(), "saved st="+st);
-		
+		SavedInstanceState=true;
 		//outState.putSerializable("stacks", backStacks);
 	}
 
@@ -587,7 +598,9 @@ private HashMap<TabType, Stack<String>> backStacks;
 		super.onRestoreInstanceState(savedInstanceState);
 		int saved = savedInstanceState.getInt("tab", 0);
 		if (saved != getSupportActionBar().getSelectedNavigationIndex())
-		getSupportActionBar().setSelectedNavigationItem(saved);
+		{getSupportActionBar().setSelectedNavigationItem(saved);}
+		SavedInstanceState=false;
+		
 	}
 
 
@@ -597,14 +610,14 @@ private HashMap<TabType, Stack<String>> backStacks;
 		LinearLayout layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
 		final TextView txv5 = new TextView(this);
-		txv5.setText("Логин на Еся.ру:");
+		txv5.setText(R.string.login);
 		layout.addView(txv5);
 		final EditText inputlogin = new EditText(this);
 		inputlogin.setText(login);
 		layout.addView(inputlogin);
 
 		final TextView txv3 = new TextView(this);
-		txv3.setText("Пароль:");
+		txv3.setText(R.string.password);
 		layout.addView(txv3);
 
 		final EditText input = new EditText(this);
@@ -618,7 +631,7 @@ private HashMap<TabType, Stack<String>> backStacks;
 
 		AlertDialog alertdialog3 = new AlertDialog.Builder(
 				GPSLocalServiceClient.this)
-				.setTitle("Авторизация приложения")
+				.setTitle(R.string.appauth)
 				.setView(layout)
 				.setPositiveButton(R.string.yes,
 						new DialogInterface.OnClickListener() {
@@ -760,7 +773,7 @@ private HashMap<TabType, Stack<String>> backStacks;
 		String startStatus =checkStarted() ? getString(R.string.Running)
 				: getString(R.string.NotRunning);
 		String statusText = //getString(R.string.Status) + startStatus+
-				getString(R.string.Sendcount) + sendcounter + " В буфере: "+buffercounter;
+				getString(R.string.Sendcount) + sendcounter + getString(R.string.inbuffer)+buffercounter;
 		Tab tab = getSupportActionBar().getSelectedTab();
 		Stack<String> backStack = backStacks.get(tab.getTag());
 		if(tab.getTag().equals(TabType.MAIN)){
@@ -956,7 +969,7 @@ if (mBound) {
 		String adevice;
 		private Boolean Err = true;
 		ProgressDialog dialog = ProgressDialog.show(GPSLocalServiceClient.this,
-				"", "Запрос авторизации, Подождите пожалуйста...", true);
+				"", getString(R.string.AuthWait), true);
 
 		// Dialog dial = Dialog.
 
@@ -1044,7 +1057,7 @@ if (mBound) {
 		private String adevicename;
 		// private Boolean Err = true;
 		ProgressDialog dialog = ProgressDialog.show(GPSLocalServiceClient.this,
-				"", "Выполнение команды, Подождите пожалуйста...", true);
+				"", getString(R.string.commandpleasewait), true);
 
 		// Dialog dial = Dialog.
 
@@ -1188,7 +1201,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 						returnstr = resJSON.optString("state")+" "+ resJSON.optString("error_description");
 
 					} else {
-						returnstr = "Результат входа в канал не получен";
+						returnstr = getString(R.string.resultenterchanalnoget);
 					}
 				}
 
@@ -1197,7 +1210,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 						returnstr = resJSON.optJSONArray("links")+" "+ resJSON.optString("error_description");
 
 					} else {
-						returnstr = "Ссылки не считаны";
+						returnstr = getString(R.string.linksnotget);
 					}
 				}
 
@@ -1215,7 +1228,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 
 	public void onResultsSucceeded(APIComResult result) {
 
-		if (result.Jo==null&&result.ja==null ){Toast.makeText(this,"Не удалось получить ответ от сервера",5).show();}
+		if (result.Jo==null&&result.ja==null ){Toast.makeText(this,R.string.noanswerfromserver,5).show();}
 
 		if (!(result.Jo==null)  ) {
 
@@ -1238,7 +1251,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 
 				//returnstr = "URL найден";
 			} else {
-				Toast.makeText(this, "URL узнать не удалось",Toast.LENGTH_LONG ).show();
+				Toast.makeText(this, R.string.urlnoget,Toast.LENGTH_LONG ).show();
 			}
 		}
 
@@ -1257,7 +1270,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 	        output = new ObjectOutputStream(new FileOutputStream(dst));
 	        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
 	        output.writeObject(pref.getAll());
-	        Toast.makeText(this, "Настройки сохранены на карту памяти", Toast.LENGTH_SHORT).show();
+	        Toast.makeText(this, R.string.prefsaved, Toast.LENGTH_SHORT).show();
 	        res = true;
 	    } catch (FileNotFoundException e) {
 	        e.printStackTrace();
@@ -1300,7 +1313,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 	                    prefEdit.putString(key, ((String) v));
 	            }
 	            prefEdit.commit();
-	            Toast.makeText(this, "Настройки считаны с карты памяти", Toast.LENGTH_SHORT).show();
+	            Toast.makeText(this, R.string.prefloaded, Toast.LENGTH_SHORT).show();
 	        res = true;         
 	    } catch (FileNotFoundException e) {
 	        e.printStackTrace();

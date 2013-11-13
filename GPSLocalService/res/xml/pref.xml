@@ -1,221 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:title="Настройки" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:title="Nastroyki">
     
-    <PreferenceCategory android:title="Онлайн">
+    <PreferenceCategory android:title="Onlayn">
         
         <CheckBoxPreference
             android:defaultValue="true"
-            android:key="live"
-            android:title="Онлайн-Мониторинг" />
+            android:key= "live"
+            android:title= " Live Monitoring "/>
 
-                    <PreferenceScreen android:title="Параметры мониторинга" >
+                    <PreferenceScreen android:title="Parametry monitoringa">
                             <EditTextPreference
-                                android:digits="0123456789"
-                                android:inputType="number"
-                                android:key="period"
-                                android:numeric="integer"
-                                android:summary="Миллисекунды"
-                                android:title="Период опроса GPS" android:defaultValue="5000" />
+                                android:digits=" 0123456789"
+                                android:inputType= "number"
+                                android:key= "period"
+                                android:numeric= "integer"
+                                android:summary= " Milliseconds "
+                                android:title= " Sampling GPS" android:defaultValue= " 5000 "/>
                             <EditTextPreference
-                                android:digits="0123456789"
-                                android:inputType="number"
-                                android:key="distance"
-                                android:numeric="integer"
-                                android:summary="Метры"
-                                android:title="Дистанция опроса GPS" android:defaultValue="50" />
+                                android:digits= " 0123456789"
+                                android:inputType= "number"
+                                android:key= "distance"
+                                android:numeric= "integer"
+                                android:summary= " Meters "
+                                android:title= " Distance poll GPS" android:defaultValue= " 50 "/>
                             <EditTextPreference
-                                android:digits="0123456789"
-                                android:inputType="number"
-                                android:key="bearing"
-                                android:numeric="integer"
-                                android:summary="Градусы"
-                                android:title="Отклонение курса" android:defaultValue="30" />
+                                android:digits= " 0123456789"
+                                android:inputType= "number"
+                                android:key= "bearing"
+                                android:numeric= "integer"
+                                android:summary= " Degrees "
+                                android:title= " Course Deviation " android:defaultValue= " 30 "/>
                             <EditTextPreference
-                                android:digits="0123456789"
-                                android:inputType="number"
-                                android:key="speedbearing"
-                                android:summary="Километров в час"
-                                android:title="Скорость учета курса" android:defaultValue="10" />
+                                android:digits= " 0123456789"
+                                android:inputType= "number"
+                                android:key= "speedbearing"
+                                android:summary= " kilometers per hour "
+                                android:title=" Speed ​​accounting course " android:defaultValue=" 10" />
                             <EditTextPreference
-                                android:digits="0123456789"
-                                android:inputType="number"
-                                android:key="hdop"
-                                android:numeric="integer"
-                                android:summary="Метры"
-                                android:title="Максимальная погрешность HDOP" android:defaultValue="50" />
+                                android:digits= " 0123456789"
+                                android:inputType= "number"
+                                android:key= "hdop"
+                                android:numeric= "integer"
+                                android:summary= " Meters "
+                                android:title= " The maximum error HDOP" android:defaultValue= " 50 "/>
                             <EditTextPreference
-                                android:key="speed"
-                                android:title="Минимальная скорость отправки"
-                                android:summary="Километров в час"
-                                android:digits="0123456789"
-                                android:inputType="number"
-                                android:defaultValue="0" />
-                            <PreferenceScreen android:title="Идентификация" >
+                                android:key= "speed"
+                                android:title= " The minimum upload speed "
+                                android:summary= " kilometers per hour "
+                                android:digits= " 0123456789"
+                                android:inputType= "number"
+                                android:defaultValue= " 0"/>
+                            <PreferenceScreen android:title="Identifikatsiya" >
                                 <EditTextPreference
-                                    android:key="hash"
-                                    android:title="Хэш" />
+                                    android:key= "hash"
+                                    android:title= " Hash "/>
                                 <EditTextPreference
-                                    android:key="n"
-                                    android:title="Контрольное число" />
+                                    android:key= "n"
+                                    android:title= " Control number "/>
                             </PreferenceScreen>
                             <CheckBoxPreference
-                                android:key="usebuffer"
-                                android:title="Передавать неотправленное"
-                                android:summary="Полезно, если нестабильная связь с интернетом. Может повышать интернет-трафик."
-                                android:defaultValue="false" />
+                                android:key= "usebuffer"
+                                android:title= " Transfer unsent "
+                                android:summary= " Useful if the unstable internet connection . May increase web traffic . "
+                                android:defaultValue= "false"/>
                     </PreferenceScreen>
     </PreferenceCategory>
     
-    <PreferenceCategory android:title="Оффлайн">
+    <PreferenceCategory android:title="Offlayn">
 
         <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="gpx"
-            android:summary="Треки сохраняются на карте памяти (/sdcard/OsMoDroid/)"
-            android:title="Запись трека" />
+            android:defaultValue= "false"
+            android:key= "gpx"
+            android:summary= " Tracks are stored on the memory card (/ sdcard / OsMoDroid /)"
+            android:title= " Track record "/>
 
-                <PreferenceScreen android:title="Параметры записи">
+                <PreferenceScreen android:title="Parametry zapisi">
                         <EditTextPreference
-                            android:digits="0123456789"
-                            android:inputType="number"
-                            android:key="period_gpx"
-                            android:numeric="integer"
-                            android:summary="Миллисекунды"
-                            android:title="Период опроса GPS" android:defaultValue="0" />
+                            android:digits= " 0123456789"
+                            android:inputType= "number"
+                            android:key= "period_gpx"
+                            android:numeric= "integer"
+                            android:summary= " Milliseconds "
+                            android:title= " Sampling GPS" android:defaultValue= " 0"/>
                         <EditTextPreference
-                            android:digits="0123456789"
-                            android:inputType="number"
-                            android:key="distance_gpx"
-                            android:numeric="integer"
-                            android:summary="Метры"
-                            android:title="Дистанция опроса GPS" android:defaultValue="0" />
+                            android:digits= " 0123456789"
+                            android:inputType= "number"
+                            android:key= "distance_gpx"
+                            android:numeric= "integer"
+                            android:summary= " Meters "
+                            android:title= " Distance poll GPS" android:defaultValue= " 0"/>
                         <EditTextPreference
-                            android:digits="0123456789"
-                            android:inputType="number"
-                            android:key="bearing_gpx"
-                            android:numeric="integer"
-                            android:summary="Градусы"
-                            android:title="Отклонение курса" android:defaultValue="30" />
+                            android:digits= " 0123456789"
+                            android:inputType= "number"
+                            android:key= "bearing_gpx"
+                            android:numeric= "integer"
+                            android:summary= " Degrees "
+                            android:title= " Course Deviation " android:defaultValue= " 30 "/>
                         <EditTextPreference
-                            android:digits="0123456789"
-                            android:inputType="number"
-                            android:key="speedbearing_gpx"
-                            android:summary="километров в час"
-                            android:title="Скорость учета курса" android:defaultValue="10" />
+                            android:digits= " 0123456789"
+                            android:inputType= "number"
+                            android:key= "speedbearing_gpx"
+                            android:summary= " miles per hour "
+                            android:title= " Speed ​​accounting course " android:defaultValue= " 10"/>
                         <EditTextPreference
-                            android:digits="0123456789"
-                            android:inputType="number"
-                            android:key="hdop_gpx"
-                            android:numeric="integer"
-                            android:summary="Метры"
-                            android:title="Допустимая точность" android:defaultValue="50" />
+                            android:digits= " 0123456789"
+                            android:inputType= "number"
+                            android:key= "hdop_gpx"
+                            android:numeric= "integer"
+                            android:summary= " Meters "
+                            android:title= " Acceptable accuracy " android:defaultValue= " 50 "/>
                         <EditTextPreference
-                            android:digits="0123456789"
-                            android:inputType="number"
-                            android:key="speed_gpx"
-                            android:numeric="integer"
-                            android:summary="Километров в час"
-                            android:title="Минимальная скорость записи"
-                            android:defaultValue="0" />
+                            android:digits= " 0123456789"
+                            android:inputType= "number"
+                            android:key= "speed_gpx"
+                            android:numeric= "integer"
+                            android:summary= " kilometers per hour "
+                            android:title= " Minimum Write Speed ​​"
+                            android:defaultValue= " 0"/>
                         <CheckBoxPreference
-                            android:title="Загружать на ТреРа автоматически"
-                            android:key="automaticupload"
-                            android:defaultValue="false"/>
+                            android:title= " Load automatically on TreRa "
+                            android:key= "automaticupload"
+                            android:defaultValue= "false"/>
                 </PreferenceScreen>
                     
     </PreferenceCategory>
     
-    <PreferenceCategory android:title="Дополнительно">
+    <PreferenceCategory android:title="Dopolnitelno">
 
-                    <PreferenceScreen android:title="Оповещения" >
+                    <PreferenceScreen android:title="Opovescheniya" >
                             <CheckBoxPreference
-                                android:key="vibrate"
-                                android:title="Вибрировать при потере интернета или GPS"
-                                android:defaultValue="false" />
+                                android:key= "vibrate"
+                                android:title= " Vibrate on loss of Internet or GPS"
+                                android:defaultValue= "false"/>
                             <EditTextPreference
-                                android:digits="0123456789"
-                                android:inputType="number"
-                                android:key="vibratetime"
-                                android:numeric="integer"
-                                android:summary="Миллисекунды"
-                                android:title="Период вибрации"
-                                android:defaultValue="500" />
+                                android:digits= " 0123456789"
+                                android:inputType= "number"
+                                android:key= "vibratetime"
+                                android:numeric= "integer"
+                                android:summary= " Milliseconds "
+                                android:title= " The period of vibration "
+                                android:defaultValue= " 500 "/>
                             <CheckBoxPreference
-                                android:key="playsound"
-                                android:title="Издавать звуки при потере интернета и GPS"
-                                android:defaultValue="false" />
+                                android:key= "playsound"
+                                android:title= " makes a sound when the loss of the internet and GPS"
+                                android:defaultValue= "false"/>
                             <EditTextPreference
-                                android:digits="0123456789"
-                                android:inputType="number"
-                                android:key="notifyperiod"
-                                android:numeric="integer"
-                                android:summary="Миллисекунды"
-                                android:title="Период определения недоступности GPS"
-                                android:defaultValue="60000" />
+                                android:digits= " 0123456789"
+                                android:inputType= "number"
+                                android:key= "notifyperiod"
+                                android:numeric= "integer"
+                                android:summary= " Milliseconds "
+                                android:title= " Period of unavailability of GPS"
+                                android:defaultValue= " 60000 "/>
                             <CheckBoxPreference
-                                android:key="sendsound"
-                                android:title="Звук при отправке"
-                                android:defaultValue="false"/>
+                                android:key= "sendsound"
+                                android:title= " Sound when sending "
+                                android:defaultValue= "false"/>
                             <CheckBoxPreference
-                                android:key="usetts"
-                                android:summary="Используется text-to-speech"
-                                android:title="Проговаривать скорость"
-                                android:defaultValue="false" />
+                                android:key= "usetts"
+                                android:summary= " Use text-to-speech"
+                                android:title= " blurts speed"
+                                android:defaultValue= "false"/>
                             <CheckBoxPreference
-                                android:key="silentnotify"
-                                android:title="Беззвучное оповещение"
-                                android:defaultValue="false"/>
+                                android:key= "silentnotify"
+                                android:title= " without a sound notification "
+                                android:defaultValue= "false"/>
                             <CheckBoxPreference
-                                android:key="onlinenotify"
-                                android:title="Оповещать об онлайн"
-                                android:defaultValue="false"
-                                android:summary="Оповещение о смене онлайн-статуса ваших устройств"/>
+                                android:key= "onlinenotify"
+                                android:title= " Alert on online "
+                                android:defaultValue= "false"
+                                android:summary= " Notification of change online status of your devices "/>
                             <CheckBoxPreference
-                                android:key="statenotify"
-                                android:title="Оповещать о мониторинге"
-                                android:defaultValue="false"
-                                android:summary="Оповещение о смене статуса мониторинга ваших устройств"/>
+                                android:key= "statenotify"
+                                android:title= " Notify the monitoring "
+                                android:defaultValue= "false"
+                                android:summary= " status notification for monitoring your devices "/>
                             <CheckBoxPreference
-                                android:summary="Использовать сигнализацию"
-                                android:key="usealarm"
-                                android:title="Сигнализация"
-                                android:defaultValue="false" />
+                                android:summary= " Use the alarm "
+                                android:key= "usealarm"
+                                android:title= " Alarm "
+                                android:defaultValue= "false"/>
                             <EditTextPreference
-                                android:title="Чувствительность"
-                                android:summary="Ускорение для активации сигнализации"
-                                android:key="sensivity" android:defaultValue="2" />
+                                android:title= " Sensitivity"
+                                android:summary= " Acceleration to activate the alarm "
+                                android:key= "sensivity" android:defaultValue= " 2"/>
                     </PreferenceScreen>
 
         <CheckBoxPreference
-            android:key="usewake"
-            android:summary="Увеличивает расход энергии"
-            android:title="Не гасить экран"
-            android:defaultValue="false" />
+            android:key= "usewake"
+            android:summary= " Increases energy consumption "
+            android:title= " Do not put out the screen "
+            android:defaultValue= "false"/>
         <CheckBoxPreference
-            android:key="usecourse"
-            android:summary="Глобальная настройка, увеличивает расход энергии"
-            android:title="Реагировать на курс"
-            android:defaultValue="false" />
+            android:key= "usecourse"
+            android:summary= " A global setting increases energy expenditure "
+            android:title= " Respond to the course"
+            android:defaultValue= "false"/>
         <CheckBoxPreference
-            android:key="usegps"
-            android:summary="Использовать для определения координат GPS"
-            android:title="GPS"
-            android:defaultValue="true" />
+            android:key= "usegps"
+            android:summary= " Use to determine the coordinates of GPS"
+            android:title= "GPS"
+            android:defaultValue= "true"/>
         <CheckBoxPreference
-            android:key="usenetwork"
-            android:summary="Использовать для определения координат сотовые сети и WiFi (дополнительный интернет-трафик)"
-            android:title="Мобильные сети"
-            android:defaultValue="true" />
+            android:key= "usenetwork"
+            android:summary= " Use to determine the coordinates cellular networks and WiFi ( additional Internet traffic ) "
+            android:title= " Mobile Networks "
+            android:defaultValue= "true"/>
         <CheckBoxPreference
-            android:key="im"
-            android:summary="Включает постоянную связь с сервером Еся.ру"
-            android:title="Полнофункциональный режим"
-            android:defaultValue="true" />
+            android:key= "im"
+            android:summary= " Enables continuous communication with the server Esya.ru "
+            android:title= " full mode "
+            android:defaultValue= "true"/>
         <CheckBoxPreference
-            android:key="autostart"
-            android:summary="Запускать фоновый сервис при включении телефона"
-            android:title="Автозагрузка в фоне"
-            android:defaultValue="false" />
+            android:key= "autostart"
+            android:summary= " Launch background service when the phone "
+            android:title= " Startup in the background "
+            android:defaultValue= "false"/>
         
     </PreferenceCategory>
     

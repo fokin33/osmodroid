@@ -42,12 +42,12 @@ public class ChannelsDevicesAdapter extends ArrayAdapter<Device> {
 		        if (device.name!=null){   channelDeviceName.setText(device.name);}
 		        if (device.speed!=null){   channelDeviceSpeed.setText(device.speed);}
 		        //if (device.lat!=null&device.lon!=null){
-		        	channelDeviceWhere.setText("Координаты:"+device.lat+" "+device.lon);
+		        	channelDeviceWhere.setText(R.string.coordinats+device.lat+" "+device.lon);
 		        	//}
 		        if (LocalService.currentLocation!=null){
 		        	channelDeviceLocation.setLatitude((device.lat));
 		        	channelDeviceLocation.setLongitude((device.lon));
-		        	channelDeviceDistance.setText("Дистанция:"+Integer.toString((int)LocalService.currentLocation.distanceTo(channelDeviceLocation)/1000)+" Км "+Integer.toString((int) (1000*(LocalService.currentLocation.distanceTo(channelDeviceLocation)/1000 -(int)LocalService.currentLocation.distanceTo(channelDeviceLocation)/1000)) )+" м");	
+		        	channelDeviceDistance.setText(R.string.Distantion+Integer.toString((int)LocalService.currentLocation.distanceTo(channelDeviceLocation)/1000)+R.string.Km+Integer.toString((int) (1000*(LocalService.currentLocation.distanceTo(channelDeviceLocation)/1000 -(int)LocalService.currentLocation.distanceTo(channelDeviceLocation)/1000)) )+R.string.m);	
 		        	
 		        }
 		        return row;

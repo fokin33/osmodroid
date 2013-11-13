@@ -16,8 +16,15 @@ import android.os.RemoteCallbackList;
 import android.os.Vibrator;
 
 import java.io.BufferedReader;
-
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.io.ObjectInputStream;
 import java.io.BufferedWriter;
+import java.io.StreamCorruptedException;
 
 import java.io.File;
 
@@ -66,6 +73,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -553,7 +561,7 @@ private long lastgpslocationtime=0;
 
 				    	.setWhen(when)
 
-				    	.setContentText("Сообщение")
+				    	.setContentText(getString(R.string.message))
 
 				    	.setContentTitle("OsMoDroid")
 
@@ -596,6 +604,19 @@ private long lastgpslocationtime=0;
 			Toast.makeText(serContext, text, Toast.LENGTH_SHORT).show();
 
 			LocalService.messagelist.add(0,text);
+			try {
+				Log.d(this.getClass().getName(), "try to save messaglsit");
+				FileOutputStream fos = openFileOutput(OsMoDroid.NOTIFIESFILENAME, Context.MODE_PRIVATE);
+			    ObjectOutputStream output = new ObjectOutputStream(fos);
+				output.writeObject(LocalService.messagelist);
+				output.flush();
+		        output.close();
+		        Log.d(this.getClass().getName(), "Success saved messaglsit");
+				} catch (FileNotFoundException e) {
+							e.printStackTrace();
+				} catch (IOException e) {
+							e.printStackTrace();
+				}
 
 			Log.d(this.getClass().getName(), "List:"+LocalService.messagelist);
 
@@ -1077,6 +1098,8 @@ if (!settings.getBoolean("silentnotify", false)){
 
 		private String androidver;
 
+		private ObjectInputStream input;
+
 
 
 
@@ -1196,10 +1219,10 @@ public synchronized void informRemoteClientRouteTo(float Lat, float Lon){
 public void refresh(){
 
 	in.removeExtra("startmessage");
-	in.putExtra("position", position+"\n"+satellite+" "+"Точность: "+accuracy);
+	in.putExtra("position", position+"\n"+satellite+" "+getString(R.string.accuracy)+accuracy);
 	in.putExtra("sendresult", sendresult);
 	in.putExtra("buffercounter", buffercounter);
-	in.putExtra("stat", "Максимальная: "+df1.format(maxspeed*3.6)+" км/ч\n"+"Средняя: "+df1.format(avgspeed*3600)+" км/ч\n"+"Пробег: "+df2.format(workdistance/1000) + " км"+"\n"+"Время работы: "+formatInterval(timeperiod));
+	in.putExtra("stat", getString(R.string.maximal)+df1.format(maxspeed*3.6)+getString(R.string.kmch)+getString(R.string.average)+df1.format(avgspeed*3600)+getString(R.string.kmch)+getString(R.string.going)+df2.format(workdistance/1000) + getString(R.string.km)+"\n"+getString(R.string.worktime)+formatInterval(timeperiod));
 	in.putExtra("started", state);
 	in.putExtra("globalsend", globalsend);
 	in.putExtra("signalisationon", signalisationOn);
@@ -1406,23 +1429,12 @@ public void stopcomand()
 		}
 
 		void invokeMethod(Method method, Object[] args) {
-
 		    try {
-
 		        method.invoke(this, args);
-
 		    } catch (InvocationTargetException e) {
-
 		        // Should not happen.
-
-
-
 		    } catch (IllegalAccessException e) {
-
-		        // Should not happen.
-
-
-
+		    	// Should not happen.
 		    }
 
 		}
@@ -1434,12 +1446,8 @@ public void stopcomand()
 	@Override
 
 	public void onCreate() {
-
-		 //Debug.startMethodTracing("startsbuf");
-
 		super.onCreate();
 		getversion();
-		
 		serContext=LocalService.this;
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 		editor = settings.edit();
@@ -1451,453 +1459,308 @@ public void stopcomand()
 			Log.d(this.getClass().getName(), "Enable signalisation after start ");
 		}
 		myManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-
-
 		satellite=getString(R.string.Sputniki);
-
 		position=getString(R.string.NotDefined)+ "\n"+getString(R.string.speed);
-
-
-
 		sdf1.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-		
-
 		currentLocation = new Location("");
 		prevlocation = new Location("");
 		prevlocation_gpx = new Location("");
 		prevlocation_spd = new Location("");
 		currentLocation.setLatitude((double)settings.getFloat("lat", 0f));
 		currentLocation.setLongitude((double)settings.getFloat("lon", 0f));
-
-
-
-
-
-
-
-		//Locale. .setDefault(Locale.US);
-
-	   // DecimalFormat df = new DecimalFormat("%.6f");
-
-		//DecimalFormatSymbols dot= new DecimalFormatSymbols();
-
 		dot.setDecimalSeparator('.');
-
-	df1.setDecimalSeparatorAlwaysShown(false);
-
-	df6.setDecimalSeparatorAlwaysShown(false);
-
+		df1.setDecimalSeparatorAlwaysShown(false);
+		df6.setDecimalSeparatorAlwaysShown(false);
 		df1.setDecimalFormatSymbols(dot);
-
 		df6.setDecimalFormatSymbols(dot);
-
-
-
-
-
-		//sendbuffer = new String[2048];
-
-
-
 		ReadPref();
-
 		deviceAdapter = new DeviceAdapter(getApplicationContext(),R.layout.deviceitem, LocalService.deviceList);
 		channelsAdapter = new ChannelsAdapter(getApplicationContext(),R.layout.deviceitem, LocalService.channelList, this);
-
 		String alarm = Context.ALARM_SERVICE;
-
-		 am = ( AlarmManager ) getSystemService( alarm );
-
-
-
-
-
-
-
+		am = ( AlarmManager ) getSystemService( alarm );
 		Intent intent = new Intent( "CHECK_GPS" );
-
- pi = PendingIntent.getBroadcast( this, 0, intent, 0 );
-
-
-
-
-
+		pi = PendingIntent.getBroadcast( this, 0, intent, 0 );
 		batteryReciever = new BroadcastReceiver() {
-
-
-
 			public void onReceive(Context context, Intent intent) {
-
 				int rawlevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-
 				int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-
 				plugged=intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
-
 				temperature=intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1);
-
 				voltage=intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1);
-
-
-
 				int level = -1;
-
 				if (rawlevel >= 0 && scale > 0) {
-
 					level = (rawlevel * 100) / scale;
-
 				}
-
 				batteryprocent=level;
-
-				Log.d(getClass().getSimpleName(), "Заряд:"+batteryprocent);
-
 			}
 
 		};
-
 		registerReceiver(batteryReciever, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-
-
-
-
-
-
-
-
-
 		checkreceiver =new BroadcastReceiver() {
-
 			@Override
-
 			public void onReceive(Context context, Intent intent)
-
 			{
-
 			if ( System.currentTimeMillis()>lastgpsontime+notifyperiod && gpsbeepedon)
-
-			{
-
+				{
 				if(vibrate)vibrator.vibrate(vibratetime);
-
-
-
-			//	if(playsound&&gpson!=null &&!gpson.isPlaying())gpson.start();
 				if (playsound){soundPool.play(gpson, 1f, 1f, 1, 0, 1f);}
-				//Log.d(getClass().getSimpleName(), "Звук он");
-
-			} else {gpsbeepedon=false;}
+				} else
+					{gpsbeepedon=false;}
 
 			if ( System.currentTimeMillis()>lastgpsofftime+notifyperiod &&gpsbeepedoff)
-
 			{
-
-				//Log.d(getClass().getSimpleName(), "Звук офф");
-
 				if(vibrate)vibrator.vibrate(vibratetime);
-
-
-
-				//if(playsound &&gpsoff!=null&& !gpsoff.isPlaying())gpsoff.start();
 				if (playsound){soundPool.play(gpsoff, 1f, 1f, 1, 0, 1f);}
-
-			} else {gpsbeepedoff=false;}
-
-
-
-
-
-
-
-
-
-
-
+			} else 
+				{gpsbeepedoff=false;}
 			}
-
-
-
 		};
-
-
-
-		
-
-
 
 		receiver = new BroadcastReceiver() {
-
 			@Override
-
 			public void onReceive(Context context, Intent intent) {
-
 				boolean gpxfix = false;
-
 				gpxfix=	intent.getBooleanExtra("enabled", false);
-
-				if(gpxfix){//if (lastgpsontime+notifyperiod<System.currentTimeMillis()){
-
-
-
-					//if(vibrate)vibrator.vibrate(vibratetime);
-
-
-
-					//if(playsound)gpson.start();
-
+				if(gpxfix)
+					{
 					lastgpsontime=System.currentTimeMillis();
-
 					gpsbeepedon=true;
-					
-					if (playsound&&!firstgpsbeepedon){
+					if (playsound&&!firstgpsbeepedon)
+						{
 						firstgpsbeepedon=true;
-						soundPool.play(gpson, 1f, 1f, 1, 0, 1f);}
-
-				//}
-
-				}
-
-				else {
-
-					//if (lastgpsofftime+notifyperiod<System.currentTimeMillis()){
-
-					//if(vibrate)vibrator.vibrate(vibratetime);
-
-					//if(playsound)gpsoff.start();
-
+						soundPool.play(gpson, 1f, 1f, 1, 0, 1f);
+						}
+					}
+				else 
+					{
 					lastgpsofftime=System.currentTimeMillis();
-
 					gpsbeepedoff=true;
-
-					//}
-
-				}
+					}
 
 			}
-
-
-
-
-
-
-
-				//Toast.makeText(LocalService.this, Boolean.toString(gpxfix) , Toast.LENGTH_SHORT).show();
-
-			//	Log.d("lbr", "Message received: " + intent.getStringExtra("position") );
-
-
-
-
-
 		};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		 //try {
-
 		soundPool = new SoundPool(10, AudioManager.STREAM_NOTIFICATION, 0);
-		
 		gpson = soundPool.load(this, R.raw.gpson, 1);
-		
 		gpsoff = soundPool.load(this, R.raw.gpsoff, 1);
-		
 		ineton = soundPool.load(this, R.raw.ineton, 1);
-		
 		inetoff = soundPool.load(this, R.raw.inetoff, 1);
-		
 		sendpalyer = soundPool.load(this, R.raw.sendsound, 1);
-		
 		startsound = soundPool.load(this, R.raw.start, 1);
-		
 		stopsound = soundPool.load(this, R.raw.stop, 1);
-		
 		alarmsound = soundPool.load(this, R.raw.signal, 1);
-		
 		signalonoff = soundPool.load(this, R.raw.signalonoff, 1);
-		
-//		gpson = MediaPlayer.create(this, R.raw.gpson);
-//
-//		gpsoff = MediaPlayer.create(this, R.raw.gpsoff);
-//
-//		ineton = MediaPlayer.create(this, R.raw.ineton);
-//
-//		inetoff = MediaPlayer.create(this, R.raw.inetoff);
-//
-//		sendpalyer=MediaPlayer.create(this, R.raw.sendsound);
-
-
-	//  } catch (Exception e) {
-
-
-
-
-
-		  // Should not happen.
-
-
-
-	//    }
-
-
-
-//		if (gpson!=null){ gpson.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
-//		if (gpsoff!=null){ gpsoff.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
-//		if (ineton!=null){ ineton.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
-//		if (inetoff!=null){inetoff.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
-//		if (sendpalyer!=null){ sendpalyer.setAudioStreamType(AudioManager.STREAM_NOTIFICATION);}
-		//sendpalyer.setVolume(leftVolume, rightVolume)
-
-		//Log.d(getClass().getSimpleName(), "oncreate() localservice");
 		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-		
 		pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-
 		in = new Intent("OsMoDroid");
 		mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
 ///////////////////////
 s = new Socket( );
 //sockaddr = new InetSocketAddress("esya.ru", 2145);
 ///////////////////////
-
-if (live&&!settings.getString("hash", "" ).equals("")){
-
-	if (isOnline()){
-
-	if (settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-14400000){
-		startcomand();
+if (live&&!settings.getString("hash", "" ).equals(""))
+{
+	if (isOnline())
+		{
+			if (settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-14400000)
+			{
+				startcomand();
+			}	
+	
+			if (!settings.getString("key", "" ).equals("") )
+			{
+				String om_device_get = settings.getString("om_device_get", "");
+				String om_device = settings.getString("om_device", "");
+				String om_device_channel_adaptive = settings.getString("om_device_channel_adaptive", "");
+				
+				if(settings.getBoolean("ondestroy", false))
+				{
+					Log.d(this.getClass().getName(), "oncreate was after ondestroy ");
+					netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+settings.getString("device", ""));
+					netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
+					netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
+				}
+				else
+				{
+					Log.d(this.getClass().getName(), "oncreate was not after ondestroy ");
+					if (om_device_get.equals(""))
+					{
+						netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+settings.getString("device", ""));
+					} else
+					{
+						globalsend=settings.getBoolean("globalsend", false);
+					}
+					if (om_device.equals(""))
+					{
+						netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
+					} else
+					{
+						try {			deviceList.clear();
+						deviceList.add(new Device("0",getString(R.string.observers),"1", settings.getString("uid", "0")));
+							deviceListFromJSONArray(new JSONArray(om_device));
+						} catch (JSONException e) {
+							netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
+							e.printStackTrace();
+						}
+					}
+					if (om_device_channel_adaptive.equals(""))
+					{
+						netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
+					} else
+					{
+						try {
+							channelListFromJSONArray(new JSONArray(om_device_channel_adaptive));
+						} catch (JSONException e) {
+							netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
+							e.printStackTrace();
+						}
+					}
+					
+				}
+			}
 		}
-	
-	if (!settings.getString("key", "" ).equals("") ){
-		netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+settings.getString("device", ""));
-		netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
-		netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
 
-	}
-	}
-
-	else {
-
+	else 
+		{
 		 onlinePauseforStartReciever = new BroadcastReceiver() {
-
-
-
 			@Override
-
 			public void onReceive(Context context, Intent intent) {
-
-				Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this);
-
-				Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this+" Intent:"+intent);
-
-				if (intent.getAction().equals(android.net.ConnectivityManager.CONNECTIVITY_ACTION)) {
-
-					Bundle extras = intent.getExtras();
-
-					Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this+ " "+intent.getExtras());
-
-					if(extras.containsKey("networkInfo")) {
-
+			Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this);
+			Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this+" Intent:"+intent);
+			if (intent.getAction().equals(android.net.ConnectivityManager.CONNECTIVITY_ACTION))
+			{
+				Bundle extras = intent.getExtras();
+				Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this+ " "+intent.getExtras());
+				if(extras.containsKey("networkInfo")) 
+					{
 						NetworkInfo netinfo = (NetworkInfo) extras.get("networkInfo");
-
 						Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this+ " "+netinfo);
-
 						Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this+ " "+netinfo.getType());
-
-						if(netinfo.isConnected()) {
-
-							Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this+" Network is connected");
-
-							if (settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-14000000){
-								startcomand();
+						if(netinfo.isConnected()) 
+							{
+								Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this+" Network is connected");
+							if (settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-14000000)
+								{
+									startcomand();
 								}
-							if (!settings.getString("key", "" ).equals("") ){
-								netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+settings.getString("device", ""));
-								netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
-								netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
-
+							if (!settings.getString("key", "" ).equals("") )
+							{
+								String om_device_get = settings.getString("om_device_get", "");
+								String om_device = settings.getString("om_device", "");
+								String om_device_channel_adaptive = settings.getString("om_device_channel_adaptive", "");
+								
+								if(settings.getBoolean("ondestroy", false))
+								{
+									netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+settings.getString("device", ""));
+									netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
+									netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
+								}
+								else
+								{
+									if (om_device_get.equals(""))
+									{
+										netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+settings.getString("device", ""));
+									} else
+									{
+										globalsend=settings.getBoolean("globalsend", false);
+									}
+									if (om_device.equals(""))
+									{
+										netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
+									} else
+									{
+										try {			deviceList.clear();
+										deviceList.add(new Device("0",getString(R.string.observers),"1", settings.getString("uid", "0")));
+											deviceListFromJSONArray(new JSONArray(om_device));
+										} catch (JSONException e) {
+											netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
+											e.printStackTrace();
+										}
+									}
+									if (om_device_channel_adaptive.equals(""))
+									{
+										netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
+									} else
+									{
+										try {
+											channelListFromJSONArray(new JSONArray(om_device_channel_adaptive));
+										} catch (JSONException e) {
+											netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
+											e.printStackTrace();
+										}
+									}
+									
+								}
 							}
-
 							unregisterReceiver(onlinePauseforStartReciever);
-
 						}
-
 						else {
-
 							System.out.println("OnlinePauseforStartReciever offline"+this.toString());
-
 						}
-
 					}
-
-					else if(extras.containsKey("noConnectivity")) {
-
-						System.out.println("OnlinePauseforStartReciever offline2"+this.toString());
-
-					}
-
+					else if(extras.containsKey("noConnectivity")) 
+						{
+							System.out.println("OnlinePauseforStartReciever offline2"+this.toString());
+						}
 			    }
-
 			}
-
 		};
-
 		registerReceiver(onlinePauseforStartReciever, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
-
-
-
-
-
-
-
 	}
-
-
-
 }
-
-
-
 if (settings.getBoolean("im", false) && !settings.getString("key", "" ).equals("") ){
-
-//mesIM = new IM(settings.getString("key", "")+",im_chatages,om_online",this,1);
-	ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
-	longPollchannels.add(new String[] {"om_online","o",""}); 
-	
-	
-
-	
-if(!settings.getString("lpch", "").equals("")){ 
-	longPollchannels.add(new String[] {"ctrl_"+settings.getString("lpch", ""),"r",""});
-	longPollchannels.add(new String[] {settings.getString("lpch", "")+"_chat","m",""});
-			}
-myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
-}
-
-
-
-
-
-
+	ArrayList<String[]>  entries = null;
+	try {
+		Log.d(this.getClass().getName(), "try load longPollchannels");
+		input = new ObjectInputStream(openFileInput(OsMoDroid.FILENAME));
+		entries = (ArrayList<String[]> )input.readObject();
+		Log.d(this.getClass().getName(), "success load longPollchannels");
+	} catch (StreamCorruptedException e) {
+		e.printStackTrace();
+	} catch (FileNotFoundException e) {
+		e.printStackTrace();
+	} catch (IOException e) {
+		e.printStackTrace();
+	} catch (ClassNotFoundException e) {
+		e.printStackTrace();
 	}
-
-
+		if(entries==null){
+			{
+				ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
+				longPollchannels.add(new String[] {"om_online","o",""}); 
+				if(!settings.getString("lpch", "").equals(""))
+				{ 
+				longPollchannels.add(new String[] {"ctrl_"+settings.getString("lpch", ""),"r",""});
+				longPollchannels.add(new String[] {settings.getString("lpch", "")+"_chat","m",""});
+				}
+				myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
+			}
+		} else
+		{
+			Log.d(this.getClass().getName(), "start IM with saves longpollchannels");
+			myIM = new IM( entries ,this,settings.getString("key", ""), this);
+		}
+		try {
+		Log.d(this.getClass().getName(), "try load notifications");
+		input = new ObjectInputStream(openFileInput(OsMoDroid.NOTIFIESFILENAME));
+		LocalService.messagelist.addAll((ArrayList<String>)input.readObject());
+		Log.d(this.getClass().getName(), "success load notification");
+		}
+		catch (StreamCorruptedException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		
+if (settings.getBoolean("started", false)){
+	startServiceWork();
+}
+}
+	}
 
 	void Pong(Context context) throws JSONException{
             netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
@@ -1959,12 +1822,6 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
 	
 	void getpreferences(Context context) throws JSONException{
         JSONObject postjson = new JSONObject();
-        //for (Channel channel : LocalService.channelList)
-//        for (Entry header : settings.getAll().entrySet()) {
-//        	
-//        postjson.put((String) header.getKey(), header.getValue());
-//        
-//        }
         postjson.put("speed",speed);
         postjson.put("period",period);
         postjson.put("distance",distance);
@@ -1989,7 +1846,6 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
         postjson.put("usewake",usewake); 
         postjson.put("notifyperiod",notifyperiod); 
         postjson.put("sendsound",sendsound); 
-        
         netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 }
 
@@ -2023,11 +1879,7 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
 		{
 			postjson.put("state", "noconnect");
 		}
-		
-		
-		
-       
-         netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+	         netutil.newapicommand((ResultsListener)context, "om_device_pong:"+settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 	}
 	
 	
@@ -2035,95 +1887,44 @@ myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);
 	@Override
 
 	public void onDestroy() {
-
 		super.onDestroy();
 		mSensorManager.unregisterListener(this);
 		Log.d(this.getClass().getName(), "Disable signalisation after destroy");
 		if (state){ stopServiceWork(false);}
-
 		if(myIM!=null){  myIM.close();}
-
-		
-				
-
+		deleteFile(OsMoDroid.FILENAME);
+		deleteFile(OsMoDroid.NOTIFIESFILENAME);
 		stopcomand();
-
-
-
-	
-
 		try {
-
 		if(receiver!= null){unregisterReceiver(receiver);}
-
 		} catch (Exception e) {
-
 			Log.d(getClass().getSimpleName(), "А он и не зареген");
-
-
-
 		}
-
 		try {
-
 		if(checkreceiver!= null){unregisterReceiver(checkreceiver);}
-
-	} catch (Exception e) {
-
-		Log.d(getClass().getSimpleName(), "А он и не зареген");
-
-
-
-	}
+		} catch (Exception e) 
+			{
+			Log.d(getClass().getSimpleName(), "А он и не зареген");
+			}
 
 		try {
-
 			if(onlinePauseforStartReciever!= null){unregisterReceiver(onlinePauseforStartReciever);}
-
 		} catch (Exception e) {
-
 			Log.d(getClass().getSimpleName(), "А он и не зареген");
-
-
-
 		}
-
-		
-
 		try {
-
 			if(batteryReciever!= null){unregisterReceiver(batteryReciever);}
-
 		} catch (Exception e) {
-
 			Log.d(getClass().getSimpleName(), "А он и не зареген");
-
-
-
 		}
-
-
-
-
-
-
-
-		//Log.d(getClass().getSimpleName(), "omdestroy() localservice");
-
-if (soundPool!=null) {soundPool.release();}
-
-
+		if (soundPool!=null) {soundPool.release();}
 		if (!(wakeLock==null) &&wakeLock.isHeld())wakeLock.release();
-
-	if (!(LocwakeLock==null)&&LocwakeLock.isHeld())LocwakeLock.release();
-
+		if (!(LocwakeLock==null)&&LocwakeLock.isHeld())LocwakeLock.release();
 		if (!(SendwakeLock==null)&&SendwakeLock.isHeld())SendwakeLock.release();
-
-
 		mNotificationManager.cancelAll();
-
-
 		remoteListenerCallBackList.kill();
+		settings.edit().remove("globalsend");
+		settings.edit().putBoolean("ondestroy", true);
 
 	}
 
@@ -2305,14 +2106,14 @@ requestLocationUpdates();
 
 
 int icon = R.drawable.eye;
-CharSequence tickerText = "Мониторинг запущен"; //getString(R.string.Working);
+CharSequence tickerText = getString(R.string.monitoringstarted); //getString(R.string.Working);
 long when = System.currentTimeMillis();
 notification = new Notification(icon, tickerText, when);
 Intent notificationIntent = new Intent(this, GPSLocalServiceClient.class);
 notificationIntent.setAction(Intent.ACTION_MAIN);
 notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 osmodroidLaunchIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "Мониторинг активен", osmodroidLaunchIntent);
+notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", getString(R.string.monitoringactive), osmodroidLaunchIntent);
 
 
 
@@ -2408,6 +2209,7 @@ private void manageIM(){
 			longPollchannels.add(new String[] {settings.getString("lpch", "")+"_chat","m",""});
 			}
 			myIM = new IM( longPollchannels ,this,settings.getString("key", ""), this);	
+			Log.d(getClass().getSimpleName(), "om_device_channel_adaptive from manageim");
 			netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
 		}
 	if (!settings.getBoolean("im", false) && myIM!=null){
@@ -2774,7 +2576,7 @@ private void manageIM(){
              if (fileName.length()<1024)
              {fileName.delete();
 		
-		Toast.makeText(LocalService.this, "Трек слишком короткий(меньше 1 КБ), файл не будет сохранен или загружен" , Toast.LENGTH_LONG).show();
+		Toast.makeText(LocalService.this, R.string.tracktoshort , Toast.LENGTH_LONG).show();
 		}
 		
 	}
@@ -2791,7 +2593,7 @@ private void manageIM(){
 
 		    	.setContentText(file.getName())
 
-		    	.setContentTitle("OsMoDroid Загрузка файла")
+		    	.setContentTitle(getString(R.string.osmodroiduploadfile))
 
 		    	.setSmallIcon(android.R.drawable.arrow_up_float)
 
@@ -3703,7 +3505,7 @@ private String decodesendresult(String str){
 		 }
 		 else
 		 {
-			 notifywarnactivity("Команда:Отправка положения "+str, false);
+			 notifywarnactivity(getString(R.string.commansendlocation)+str, false);
 		 }
 
 		}
@@ -4055,7 +3857,7 @@ public void onInit(int status) {
 
         	   Log.d(this.getClass().getName(), "Произносим");
 
-        	   tts.speak("Поехали!", TextToSpeech.QUEUE_ADD, null);
+        	   tts.speak(getString(R.string.letsgo), TextToSpeech.QUEUE_ADD, null);
 
 
 
@@ -4222,10 +4024,10 @@ public void onResultsSucceeded(APIComResult result) {
 
 
 
-		Log.d(getClass().getSimpleName(),"notifwar1 Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ " Запрос:"+result.url);
+		Log.d(getClass().getSimpleName(),"notifwar1 Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ getString(R.string.query)+result.url);
 
 	//		notifywarnactivity("Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ " Запрос:"+result.url);
-		Toast.makeText(LocalService.this, "Esya.ru не отвечает. Проверьте работу интернета." , Toast.LENGTH_LONG).show();
+		Toast.makeText(LocalService.this, R.string.esya_ru_notrespond , Toast.LENGTH_LONG).show();
 
 		}
 
@@ -4243,7 +4045,7 @@ public void onResultsSucceeded(APIComResult result) {
 			{
 		Log.d(getClass().getSimpleName(),"notifwar2:"+result.Jo.optString("error")+" "+result.Jo.optString("error_description"));
 		
-		notifywarnactivity("Команда:"+result.Command+" Код ошибки:"+result.Jo.optString("error")+" Расшифровка:"+result.Jo.optString("error_description")+" Запрос:"+result.url+ "Версия OsMoDroid:"+strVersionName, false);
+		notifywarnactivity(getString(R.string.comand)+result.Command+getString(R.string.errorcode)+result.Jo.optString("error")+getString(R.string.detalisation)+result.Jo.optString("error_description")+getString(R.string.query)+result.url+ getString(R.string.versionosmodroid)+strVersionName, false);
 			}
 		}
 
@@ -4312,9 +4114,9 @@ if (myIM!=null){
 
 				if (!result.Jo.optString("motd").equals("") ||!result.Jo.optString("query_per_day").equals("")){
 
-				in.putExtra("startmessage", result.Jo.optString("motd")+"\n"+ "Отправок в день:" +result.Jo.optString("query_per_day")
+				in.putExtra("startmessage", result.Jo.optString("motd")+"\n"+ getString(R.string.dayssend) +result.Jo.optString("query_per_day")
 
-				+"\n"+ "Отправок в неделю:"+result.Jo.optString("query_per_week")+ "\n" +"Отправок в месяц:"+result.Jo.optString("query_per_month"));
+				+"\n"+ getString(R.string.wekksends)+result.Jo.optString("query_per_week")+ "\n" +getString(R.string.monthsends)+result.Jo.optString("query_per_month"));
 
 				sendBroadcast(in);
 
@@ -4352,11 +4154,15 @@ if (myIM!=null){
 			try {
 				JSONObject jsonObject =	result.Jo.getJSONObject("om_device_get:"+settings.getString("device", ""));
 		 		 // Log.d(getClass().getSimpleName(), a.toString());
+				settings.edit().putString("om_device_get", jsonObject.toString()).commit();
 		 	if (jsonObject.getString("channel_send").equals("1")){
 		 		globalsend=true;
+		 		settings.edit().putBoolean("globalsend", globalsend).commit();
+		 		
 		 	} else
 		 	{
 		 		globalsend=false;
+		 		settings.edit().putBoolean("globalsend", globalsend).commit();
 		 	}
 		 	refresh();
 			} catch (Exception e) {
@@ -4372,28 +4178,13 @@ if (myIM!=null){
 		
 		if (result.Jo.has("om_device")){
 			deviceList.clear();
-deviceList.add(new Device("0","Зрители","1", settings.getString("uid", "0")));
+deviceList.add(new Device("0",getString(R.string.observers),"1", settings.getString("uid", "0")));
 		
 			try {
 				  a =	result.Jo.getJSONArray("om_device");
+				  settings.edit().putString("om_device", a.toString()).commit();
 		 		  Log.d(getClass().getSimpleName(), a.toString());
-		 		 for (int i = 0; i < a.length(); i++) {
-		 			JSONObject jsonObject = a.getJSONObject(i);
-		Device devitem = new Device(jsonObject.getString("u"), jsonObject.getString("name"),jsonObject.getString("app")
-			,jsonObject.getString("last"),
-			"http://m.esya.ru/"+jsonObject.getString("url"),
-			jsonObject.getString("where"),
-			jsonObject.getString("lat"),
-			jsonObject.getString("lon"),
-			jsonObject.getString("online"),
-			jsonObject.getString("state"), jsonObject.getString("uid")
-			);
-
-	deviceList.add(devitem);
-
-
-
-		 		 }
+		 		 deviceListFromJSONArray(a);
 				} catch (Exception e) {
 
 					 Log.d(getClass().getSimpleName(), "эксепшн");
@@ -4407,24 +4198,13 @@ deviceList.add(new Device("0","Зрители","1", settings.getString("uid", "0
 		}
 		if (result.Jo.has("om_device_channel_adaptive:"+settings.getString("device", ""))){
 			channelList.clear();
-
+			
+			
 			try {
 				  a =	result.Jo.getJSONArray("om_device_channel_adaptive:"+settings.getString("device", ""));
-		 		  Log.d(getClass().getSimpleName(), a.toString());
-		 		 for (int i = 0; i < a.length(); i++) {
-		 			JSONObject jsonObject = a.getJSONObject(i);
-		//Channel chanitem = new Channel( jsonObject.getString("name"),jsonObject.getString("u"),jsonObject.getString("created")	);
-		 			Channel chanitem = new Channel( jsonObject);
-		channelList.add(chanitem);
-		if (currentChannel!=null) {
-			if(chanitem.u==currentChannel.u){
-				currentchanneldeviceList.clear();
-				currentchanneldeviceList.addAll(chanitem.deviceList);
-				 if (channelsDevicesAdapter!=null) {channelsDevicesAdapter.notifyDataSetChanged();}
-			}
-		}
-
-		 		 }
+				  settings.edit().putString("om_device_channel_adaptive", a.toString()).commit();
+				  Log.d(getClass().getSimpleName(), a.toString());
+		 		 channelListFromJSONArray(a);
 		 		 
 		 		 
 				} catch (Exception e) {
@@ -4472,6 +4252,45 @@ deviceList.add(new Device("0","Зрители","1", settings.getString("uid", "0
 
 
 
+}
+
+
+void deviceListFromJSONArray(JSONArray a) throws JSONException {
+	for (int i = 0; i < a.length(); i++) {
+		JSONObject jsonObject = a.getJSONObject(i);
+Device devitem = new Device(jsonObject.getString("u"), jsonObject.getString("name"),jsonObject.getString("app")
+,jsonObject.getString("last"),
+"http://m.esya.ru/"+jsonObject.getString("url"),
+jsonObject.getString("where"),
+jsonObject.getString("lat"),
+jsonObject.getString("lon"),
+jsonObject.getString("online"),
+jsonObject.getString("state"), jsonObject.getString("uid")
+);
+
+deviceList.add(devitem);
+
+
+
+	 }
+}
+
+
+void channelListFromJSONArray(JSONArray a) throws JSONException {
+	for (int i = 0; i < a.length(); i++) {
+		JSONObject jsonObject = a.getJSONObject(i);
+//Channel chanitem = new Channel( jsonObject.getString("name"),jsonObject.getString("u"),jsonObject.getString("created")	);
+		Channel chanitem = new Channel( jsonObject);
+channelList.add(chanitem);
+if (currentChannel!=null) {
+if(chanitem.u==currentChannel.u){
+	currentchanneldeviceList.clear();
+	currentchanneldeviceList.addAll(chanitem.deviceList);
+	 if (channelsDevicesAdapter!=null) {channelsDevicesAdapter.notifyDataSetChanged();}
+}
+}
+
+	 }
 }
 
 public void playAlarmOn (Boolean remote){

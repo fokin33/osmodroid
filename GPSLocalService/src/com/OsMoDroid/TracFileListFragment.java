@@ -134,7 +134,7 @@ public class TracFileListFragment extends SherlockFragment  implements ResultsLi
       
       @Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-    	MenuItem refresh = menu.add(0, 1, 0, "Обновить");
+    	MenuItem refresh = menu.add(0, 1, 0, R.string.refresh);
   		refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
   		refresh.setIcon(android.R.drawable.ic_menu_rotate);
 		super.onCreateOptionsMenu(menu, inflater);
@@ -170,7 +170,8 @@ public class TracFileListFragment extends SherlockFragment  implements ResultsLi
 
                                  .setContentText(file.getName())
 
-                                 .setContentTitle("OsMoDroid Загрузка файла")
+                                 .setContentTitle(getSherlockActivity().getString(
+										R.string.osmodroiduploadfile))
 
                                  .setSmallIcon(android.R.drawable.arrow_up_float)
 
@@ -202,8 +203,8 @@ public class TracFileListFragment extends SherlockFragment  implements ResultsLi
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
-		 menu.add(0, 1, 1, "Загрузить в ТреРа").setIcon(android.R.drawable.arrow_up_float);
-         menu.add(0, 2, 2, "Удалить").setIcon(android.R.drawable.ic_menu_delete);
+		 menu.add(0, 1, 1, R.string.uploadtotrera).setIcon(android.R.drawable.arrow_up_float);
+         menu.add(0, 2, 2, R.string.delete).setIcon(android.R.drawable.ic_menu_delete);
 		super.onCreateContextMenu(menu, v, menuInfo);
 	}
 
@@ -212,7 +213,7 @@ public class TracFileListFragment extends SherlockFragment  implements ResultsLi
 			Bundle savedInstanceState) {
 		View view=inflater.inflate(R.layout.trackfile, container, false);
 	     progressDialog = new ProgressDialog(getSherlockActivity());
-         progressDialog.setMessage("Loading...");
+         progressDialog.setMessage(getSherlockActivity().getString(R.string.loading));
          progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
        
  final ListView lv1 = (ListView) view.findViewById(R.id.trackfilelistView);
