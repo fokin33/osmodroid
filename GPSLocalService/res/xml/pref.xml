@@ -100,8 +100,8 @@
                             android:digits= " 0123456789"
                             android:inputType= "number"
                             android:key= "speedbearing_gpx"
-                            android:summary= " miles per hour "
-                            android:title= " Speed ​​accounting course " android:defaultValue= " 10"/>
+                            android:summary= " kilometer per hour "
+                            android:title= " Speed accounting course " android:defaultValue= " 10"/>
                         <EditTextPreference
                             android:digits= " 0123456789"
                             android:inputType= "number"
