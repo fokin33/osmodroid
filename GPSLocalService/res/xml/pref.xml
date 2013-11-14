@@ -5,8 +5,8 @@
         
         <CheckBoxPreference
             android:defaultValue="true"
-            android:key= "live"
-            android:title= " Live Monitoring "/>
+            android:key="live"
+            android:title="Live Monitoring"/>
 
                     <PreferenceScreen android:title="Parametry monitoringa">
                             <EditTextPreference
