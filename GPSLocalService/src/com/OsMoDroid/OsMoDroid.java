@@ -1,6 +1,7 @@
 package com.OsMoDroid;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -21,9 +22,12 @@ public class OsMoDroid extends Application {
 		return notifyid++;
 	}
 
+	public static Context context;
+
 	@Override
 	public void onCreate() {
 		settings =  PreferenceManager.getDefaultSharedPreferences(this);
+		context = getApplicationContext();
 		super.onCreate();
 	}
 

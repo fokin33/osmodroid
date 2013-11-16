@@ -120,7 +120,7 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 	}
 	@Override
 	public void onResume() {
-		globalActivity.channelsTab.setText(R.string.chanal+LocalService.currentChannel.name);
+		globalActivity.channelsTab.setText(getString(R.string.chanal)+LocalService.currentChannel.name);
 		super.onResume();
 	}
 	
@@ -248,7 +248,7 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 
 			Toast.makeText(getSherlockActivity(),result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
 			
-		}
+		
 		
 		//"om_channel_chat_get:"+LocalService.currentChannel.u
 		if (result.Jo.has("om_channel_chat_get:"+LocalService.currentChannel.u)){
@@ -275,7 +275,7 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 				}
 
 
-		
+		}
 		}
 		
 		

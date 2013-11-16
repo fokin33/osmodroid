@@ -1076,6 +1076,53 @@ if (!settings.getBoolean("silentnotify", false)){
 
 
 
+			@Override
+			public void refreshChannels() throws RemoteException {
+				// TODO Auto-generated method stub
+				netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
+			}
+
+
+
+			@Override
+			public int getNumberOfGpx(int layerId) throws RemoteException {
+				try {
+					for (Channel channel: channelList){
+						if (channel.u==layerId){
+							return channel.gpxList.size();
+					}
+					}
+					
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return 0;
+							}
+
+
+
+			@Override
+			public String getGpxFile(int layerId, int pos)
+					throws RemoteException {
+				try {
+					for (Channel channel: channelList){
+						if (channel.u==layerId){
+							return channel.gpxList.get(pos).getPath();
+					}
+					}
+					
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return null;
+			}
+
+
+
     };
 
 
@@ -1755,11 +1802,11 @@ if (settings.getBoolean("im", false) && !settings.getString("key", "" ).equals("
 			e.printStackTrace();
 		}
 		
-		
+}		
 if (settings.getBoolean("started", false)){
 	startServiceWork();
 }
-}
+settings.edit().putBoolean("ondestroy", false).commit();
 	}
 
 	void Pong(Context context) throws JSONException{
@@ -1923,8 +1970,8 @@ if (settings.getBoolean("started", false)){
 		if (!(SendwakeLock==null)&&SendwakeLock.isHeld())SendwakeLock.release();
 		mNotificationManager.cancelAll();
 		remoteListenerCallBackList.kill();
-		settings.edit().remove("globalsend");
-		settings.edit().putBoolean("ondestroy", true);
+		settings.edit().remove("globalsend").commit();
+		settings.edit().putBoolean("ondestroy", true).commit();
 
 	}
 
@@ -4147,6 +4194,22 @@ if (myIM!=null){
 		    		netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+settings.getString("device", ""));
 		    		netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
 		    	 }
+		    	if(keyname.contains("om_channel_overlay_get")){
+		    		for (Channel ch : channelList){
+		    			if (result.Jo.has("om_channel_overlay_get:"+Integer.toString(ch.u))){
+		    				try {
+		    				for (int i = 0; i < result.Jo.getJSONArray("om_channel_overlay_get:"+Integer.toString(ch.u)).length(); i++) {
+		    					JSONObject jsonObject = result.Jo.getJSONArray("om_channel_overlay_get:"+Integer.toString(ch.u)).getJSONObject(i);
+		    					ch.downloadgpx(jsonObject.getJSONObject("data").getString("download_url"), jsonObject.getJSONObject("data").getString("u"));
+		    				}
+		    				}
+		    				catch (JSONException e) {
+		    					Log.d(getClass().getSimpleName(), e.getMessage());
+							}
+		    				informRemoteClientChannelsListUpdate();
+		    			}
+		    		}
+		    	}
         	}
 		
 		
@@ -4198,18 +4261,14 @@ deviceList.add(new Device("0",getString(R.string.observers),"1", settings.getStr
 		}
 		if (result.Jo.has("om_device_channel_adaptive:"+settings.getString("device", ""))){
 			channelList.clear();
-			
-			
-			try {
+				try {
 				  a =	result.Jo.getJSONArray("om_device_channel_adaptive:"+settings.getString("device", ""));
 				  settings.edit().putString("om_device_channel_adaptive", a.toString()).commit();
 				  Log.d(getClass().getSimpleName(), a.toString());
-		 		 channelListFromJSONArray(a);
-		 		 
-		 		 
-				} catch (Exception e) {
-
-					 Log.d(getClass().getSimpleName(), "om_device_channel_adaptive эксепшн"+e.getMessage());
+				  channelListFromJSONArray(a);
+					}
+				catch (Exception e) {
+					Log.d(getClass().getSimpleName(), "om_device_channel_adaptive эксепшн"+e.getMessage());
 					e.printStackTrace();
 				}
 
@@ -4217,14 +4276,17 @@ deviceList.add(new Device("0",getString(R.string.observers),"1", settings.getStr
 			 Log.d(getClass().getSimpleName(),channelList.toString());
 			 
 			 if (channelsAdapter!=null) {channelsAdapter.notifyDataSetChanged();}
+			 Log.d(getClass().getSimpleName(),"binded="+binded);
 			 if (binded){
 				 connectChannels();
 				 informRemoteClientChannelsListUpdate();
+				 Log.d(getClass().getSimpleName(), "inform cleint");
 			 }
-			 
+			for (Channel channel : channelList){
+				netutil.newapicommand((ResultsListener)this, "om_channel_overlay_get:"+channel.u);	
+			}
 			
 		}
-		
 		
 	
 
@@ -4280,7 +4342,7 @@ void channelListFromJSONArray(JSONArray a) throws JSONException {
 	for (int i = 0; i < a.length(); i++) {
 		JSONObject jsonObject = a.getJSONObject(i);
 //Channel chanitem = new Channel( jsonObject.getString("name"),jsonObject.getString("u"),jsonObject.getString("created")	);
-		Channel chanitem = new Channel( jsonObject);
+		Channel chanitem = new Channel( jsonObject, LocalService.this);
 channelList.add(chanitem);
 if (currentChannel!=null) {
 if(chanitem.u==currentChannel.u){

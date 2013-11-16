@@ -20,9 +20,10 @@ public class ChannelsDevicesAdapter extends ArrayAdapter<Device> {
 	private TextView channelDeviceSpeed;
 	private TextView channelDeviceDistance;
 	private Location channelDeviceLocation =new Location("");
+	private Context context;
 	public ChannelsDevicesAdapter(Context context, int textViewResourceId, List<Device> objects) {
 		super(context, textViewResourceId, objects);
-		
+		this.context=context;
 	}
 
 	@Override
@@ -42,12 +43,12 @@ public class ChannelsDevicesAdapter extends ArrayAdapter<Device> {
 		        if (device.name!=null){   channelDeviceName.setText(device.name);}
 		        if (device.speed!=null){   channelDeviceSpeed.setText(device.speed);}
 		        //if (device.lat!=null&device.lon!=null){
-		        	channelDeviceWhere.setText(R.string.coordinats+device.lat+" "+device.lon);
+		        	channelDeviceWhere.setText(context.getString(R.string.coordinats)+device.lat+" "+device.lon);
 		        	//}
 		        if (LocalService.currentLocation!=null){
 		        	channelDeviceLocation.setLatitude((device.lat));
 		        	channelDeviceLocation.setLongitude((device.lon));
-		        	channelDeviceDistance.setText(R.string.Distantion+Integer.toString((int)LocalService.currentLocation.distanceTo(channelDeviceLocation)/1000)+R.string.Km+Integer.toString((int) (1000*(LocalService.currentLocation.distanceTo(channelDeviceLocation)/1000 -(int)LocalService.currentLocation.distanceTo(channelDeviceLocation)/1000)) )+R.string.m);	
+		        	channelDeviceDistance.setText(context.getString(R.string.Distantion)+Integer.toString((int)LocalService.currentLocation.distanceTo(channelDeviceLocation)/1000)+context.getString(R.string.Km)+Integer.toString((int) (1000*(LocalService.currentLocation.distanceTo(channelDeviceLocation)/1000 -(int)LocalService.currentLocation.distanceTo(channelDeviceLocation)/1000)) )+context.getString(R.string.m));	
 		        	
 		        }
 		        return row;

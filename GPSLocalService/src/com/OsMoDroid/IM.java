@@ -75,11 +75,14 @@ public void removechannels(ArrayList<String[]> longPollChList){
 		
 		//myLongPollChList.removeAll(longPollChList);
 	for (String[] extstr: longPollChList){
-		
+		Log.d(this.getClass().getName(), "extstr="+extstr[0]);
 		 for (Iterator<String[]> iter = myLongPollChList.iterator(); iter.hasNext();) {
 		      String[] s = iter.next();
-		      if (s.equals(extstr)) {
-		        iter.remove();
+		      if (s[0].equals(extstr[0])) {
+		    	 Log.d(this.getClass().getName(), "myLongPollChList.count="+myLongPollChList.size());
+		    	iter.remove();
+		        Log.d(this.getClass().getName(), "iter removed");
+		        Log.d(this.getClass().getName(), "myLongPollChList.count="+myLongPollChList.size());
 		      }
 		     
 		    }
@@ -677,4 +680,4 @@ if (getMessageType( keyname).equals("chch")){
 							
 						}
 						Log.d(this.getClass().getName(), "Exception after read response :"+e.toString());						e.printStackTrace();
-						error = true;						}					}				else {					// An error was encountered when trying to connect					connected = false;				}			}		}	}}
+						error = true;						}					}				else {					// An error was encountered when trying to connect					connected = false;				}			}		}	}}

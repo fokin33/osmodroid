@@ -522,8 +522,10 @@ AlertDialog alertdialog4 = new AlertDialog.Builder(
 				netutil.newapicommand((ResultsListener)LocalService.serContext, (Context)getSherlockActivity(), "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 
 			}});
+	    
+	    if(LocalService.channelList.size()==0){
 	netutil.newapicommand((ResultsListener)LocalService.serContext,(Context)getSherlockActivity(), "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
-
+	    }
 
 		
 		return view;

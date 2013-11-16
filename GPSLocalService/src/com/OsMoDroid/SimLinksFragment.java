@@ -79,7 +79,7 @@ public class SimLinksFragment extends SherlockFragment implements ResultsListene
 		}
 
         });
-        reflinks();
+        if(list.size()==0){reflinks();}
 		return view;
 	}
 	

@@ -372,7 +372,7 @@ public class DevicesFragment extends SherlockFragment implements ResultsListener
 
 		});
 
-		    getDevices(DevicesFragment.this, getSherlockActivity());
+		    if(LocalService.deviceList.size()==0){getDevices(DevicesFragment.this, getSherlockActivity());}
 
 		
 		return view;

@@ -96,7 +96,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 	}
 	@Override
 	public void onResume() {
-		globalActivity.devicesTab.setText(R.string.chatwith+getDeviceByU(deviceU).name);
+		globalActivity.devicesTab.setText(getString(R.string.chatwith)+getDeviceByU(deviceU).name);
 		super.onResume();
 	}
 	
@@ -230,7 +230,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 
 			Toast.makeText(getActivity(),result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
 			
-		}
+		
 		
 		
 		if (result.Jo.has("om_device_message_get:"+globalActivity.settings.getString("device", "")+","+getDeviceByU(deviceU).u)){
@@ -261,7 +261,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 			
 		}
 		
-		
+		}
 	}
 
 }

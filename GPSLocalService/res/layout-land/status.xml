@@ -22,7 +22,7 @@
                 android:id="@+id/TextView01"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Скорость"
+                android:text="@string/spd"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/sign_text_size" />
 
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="0dp"
-                android:text="Максимум"
+                android:text="@string/max"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/sign_text_size" />
 
@@ -71,7 +71,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Средняя"
+                android:text="@string/avg"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/sign_text_size" />
 
@@ -103,7 +103,7 @@
                     android:id="@+id/TextView07"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Пробег"
+                    android:text="@string/ingoing2"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textSize="@dimen/sign_text_size" />
 
@@ -128,7 +128,7 @@
                     android:id="@+id/TextView06"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="В пути"
+                    android:text="@string/inway"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textSize="@dimen/sign_text_size" />
 
@@ -160,7 +160,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Отправлено"
+                android:text="@string/sended"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/sign_text_size" />
 
@@ -187,7 +187,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Записано"
+                android:text="@string/writen"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/sign_text_size" />
 

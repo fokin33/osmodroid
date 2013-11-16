@@ -22,6 +22,10 @@ public APIcomParams(String action, String post, String command ) {
 	
 	
 }
+	public APIcomParams(String url, File fileName) {
+	this.action=url;
+	this.savename=fileName;
+}
 	//	String[] params = {"http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),"false","","APIM"};
 	String action;
 	String post;
@@ -29,6 +33,8 @@ public APIcomParams(String action, String post, String command ) {
 	File uploadfile;
 	Builder notificationBuilder;
 	int notification;
+	
+	File savename;
 	
 	
 	
