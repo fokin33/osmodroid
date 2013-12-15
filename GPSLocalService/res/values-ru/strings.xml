@@ -165,6 +165,5 @@
 <string name="ingoing2">Пробег</string>
 <string name="sended">Отправлено</string>
 <string name="writen">Записано</string>
-<string name="monitoringparams">Параметры мониторинга</string>
 <string name="wekksends">Отправок в неделю:</string>
 </resources>

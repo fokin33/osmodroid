@@ -1,8 +1,10 @@
 package com.OsMoDroid;
 
+import java.io.Serializable;
+
 import android.util.Log;
 
-public class Device {
+public class Device implements Serializable{
 	public int u;
 	public String name;
 	public String app;

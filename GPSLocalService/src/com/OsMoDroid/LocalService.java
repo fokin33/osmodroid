@@ -71,6 +71,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -96,6 +97,7 @@ import org.json.JSONObject;
 
 
 
+import com.OsMoDroid.Channel.Point;
 import com.OsMoDroid.LocalService.SendCoor;
 
 import com.OsMoDroid.netutil.MyAsyncTask;
@@ -242,565 +244,264 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 		disconnectChannels();
 		return super.onUnbind(intent);
 	}
-
-
-
-boolean binded=false;
-
-private SensorManager mSensorManager;
-private Sensor mAccelerometer;
-final double calibration = SensorManager.STANDARD_GRAVITY;
-float currentAcceleration;
+	boolean binded=false;
+	private SensorManager mSensorManager;
+	private Sensor mAccelerometer;
+	final double calibration = SensorManager.STANDARD_GRAVITY;
+	float currentAcceleration;
 	private static final int OSMODROID_ID = 1;
-
 	Boolean sessionstarted=false;
 	Boolean globalsend=false;
 	Boolean signalisationOn=false;
-	
 	int notifyid=2;
-
-	//MediaPlayer mp;
-
-	//BufferedReader bufferedReader;
-
 	int gpson;
-
 	int gpsoff;
-
 	int ineton;
-
 	int inetoff;
-
 	int sendpalyer;
-	
 	int startsound;
-	
 	int stopsound;
-	
 	int alarmsound;
-	
 	int signalonoff;
-
 	private static SoundPool soundPool;
-	//String cursendforbuffer="";
-
-	//String prevcursendforbuffer="";
-
 	private netutil.MyAsyncTask starttask;
-
 	private Intent in;
-
 	public boolean mayak=false;
-	
 	private boolean glonas=false;
-
 	private boolean playsound=false;
-
 	private boolean sendsound=false;
-
 	private boolean vibrate;
-
 	private boolean usecourse;
-
 	private int vibratetime;
-
 	private double brng;
-
 	private double brng_gpx;
-
 	private double prevbrng;
-
 	private double prevbrng_gpx;
-
 	private float speedbearing ;
-
 	private float bearing ;
-
 	private int speed;
-
 	private boolean beepedon=false;
-
 	private boolean beepedoff=false;
-
 	private boolean gpsbeepedon=false;
-
 	private boolean gpsbeepedoff=false;
-
-	 float maxspeed=0;
-
-	 float avgspeed;
-	
-	 float currentspeed;
-
-	 long timeperiod=0;
-
-	 float workdistance;
-
+	float maxspeed=0;
+	float avgspeed;
+	float currentspeed;
+	long timeperiod=0;
+	float workdistance;
 	private long workmilli=0;
-
 	private boolean firstsend=true;
-
 	private boolean sended=true;
-
 	private boolean gpx = false;
-
 	private boolean live = true;
-
 	private int hdop;
-
 	private boolean fileheaderok = false;
-
 	private File fileName = null;
-
 	private int period;
-
 	private int distance;
-
 	private String hash;
-
 	private int n;
-
 	private String position;
-
 	private String sendresult="";
-
 	public LocationManager myManager;
-
 	private Location prevlocation;
-
 	public static Location currentLocation;
-	
 	private Location prevlocation_gpx;
-
 	private Location prevlocation_spd;
-
 	private String URLadr;
-
 	private Vibrator vibrator;
-
 	private PowerManager pm;
-
 	private WakeLock wakeLock;
-
 	private WakeLock LocwakeLock;
-
 	private WakeLock SendwakeLock;
-
 	private SendCoor send;
-
 	private int speedbearing_gpx;
-
 	private int bearing_gpx;
-
-private long lastgpslocationtime=0;
-
+	private long lastgpslocationtime=0;
 	private int hdop_gpx;
-
 	private int period_gpx;
-
 	private int distance_gpx;
-
 	private int speed_gpx;
-
 	int sendcounter;
 	int writecounter=0;
-
 	private int buffercounter=0;
-
 	BroadcastReceiver receiver;
-
 	BroadcastReceiver checkreceiver;
-
 	BroadcastReceiver onlinePauseforStartReciever;
-
 	BroadcastReceiver batteryReciever;
-
 	private final IBinder mBinder = new LocalBinder();
-
 	private String gpxbuffer= new String();
-
-	//private String sendbuffer = new String();
-
 	private String satellite="";
-
 	private String accuracy="";
-
 	private boolean usebuffer = false;
-
 	private boolean usewake=false;
-
 	static NotificationManager mNotificationManager;
-
 	private String lastsendforbuffer="First";
-
 	private long lastgpsontime=0;
-
 	private long lastgpsofftime=0;
-
 	private long notifyperiod=30000;
-
 	private AlarmManager am;
-
 	StringBuilder stringBuilder= new StringBuilder();
-
 	PendingIntent pi;
-
 	private Object[] mStartForegroundArgs = new Object[2];
-
 	private Object[] mStopForegroundArgs = new Object[1];
-
 	private String pass;
-
 	private String lastsay="a";
-
 	Boolean state=false;
-
 	int gpsperiod;
-
 	int gpsdistance;
-
 	long prevnetworklocationtime=0;
-
 	StringBuilder buffersb = new StringBuilder(327681);
-
 	StringBuilder lastbuffersb = new StringBuilder(327681);
-
 	StringBuilder sendedsb = new StringBuilder(327681);
-
 	private int lcounter=0;
-
 	private int scounter=0;
-
 	final private static DecimalFormat df6 = new DecimalFormat("########.######");
-
 	final static DecimalFormat df1 = new DecimalFormat("########.#");
-
 	final static DecimalFormat df2 = new DecimalFormat("########.##");
-
 	final private static DecimalFormat df0 = new DecimalFormat("########");
-
-	 final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-
-	 final private static SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
-
-	 final private static SimpleDateFormat sdf3 = new SimpleDateFormat("HH:mm:ss");
-
-	 final private static  DecimalFormatSymbols dot= new DecimalFormatSymbols();
-
-	 protected boolean firstgpsbeepedon=false;
-	 
-	 static IM myIM;
-
-	 
-
-	 TextToSpeech tts;
-
-	    private int _langTTSavailable = -1;
-
-	    Socket s;
-
-	    SocketAddress sockaddr;
-
-	    String text;
-
-	    static SharedPreferences settings;
-
-	    int batteryprocent=-1;
-
-	    int plugged=-1;
-
-	    int temperature=-1;
-
-	    int voltage=-1;
-
-	    public static List<Channel> channelList = new ArrayList<Channel>();
-	    
-	    public static List<Device> deviceList= new ArrayList<Device>();
-	    
-	    public static Channel currentChannel;
-	    
-	    public static List<Device> currentchanneldeviceList= new ArrayList<Device>();
-
-	    public static ArrayList<String> messagelist= new ArrayList<String>();
-	    public static List<MyMessage> chatmessagelist= new ArrayList<MyMessage>();
-	    public static Device currentDevice;
-
-	    public static DeviceAdapter deviceAdapter;
-	    public static ChannelsAdapter channelsAdapter;
-	    public static ChannelsDevicesAdapter channelsDevicesAdapter;
-	    public static ArrayAdapter<String> channelsmessagesAdapter;
-	    public static DeviceChatAdapter chatmessagesAdapter;
-
-	    static Context serContext;
-
-		protected static boolean uploadto=false;
-
-	    final  Handler alertHandler = new Handler() {
-
-
-
+	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+	final private static SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
+	final private static SimpleDateFormat sdf3 = new SimpleDateFormat("HH:mm:ss");
+	final private static  DecimalFormatSymbols dot= new DecimalFormatSymbols();
+	protected boolean firstgpsbeepedon=false;
+	static IM myIM;
+	TextToSpeech tts;
+	private int _langTTSavailable = -1;
+	Socket s;
+	SocketAddress sockaddr;
+	String text;
+	static SharedPreferences settings;
+	int batteryprocent=-1;
+	int plugged=-1;
+	int temperature=-1;
+	int voltage=-1;
+	public static List<Channel> channelList = new ArrayList<Channel>();
+	public static List<Device> deviceList= new ArrayList<Device>();
+	public static Channel currentChannel;
+	public static List<Device> currentchanneldeviceList= new ArrayList<Device>();
+    public static ArrayList<String> messagelist= new ArrayList<String>();
+    public static List<MyMessage> chatmessagelist= new ArrayList<MyMessage>();
+    public static Device currentDevice;
+    public static DeviceAdapter deviceAdapter;
+    public static ChannelsAdapter channelsAdapter;
+    public static ChannelsDevicesAdapter channelsDevicesAdapter;
+    public static ArrayAdapter<String> channelsmessagesAdapter;
+    public static DeviceChatAdapter chatmessagesAdapter;
+    static Context serContext;
+	protected static boolean uploadto=false;
+    final  Handler alertHandler = new Handler() {
 			@Override
-
 			public void handleMessage(Message message) {
-
 			Log.d(this.getClass().getName(), "Handle message "+message.toString());
-
 			Bundle b = message.getData();
-
 			Log.d(this.getClass().getName(), "deviceU "+b.getInt("deviceU"));
-			
 			if(b.getInt("deviceU") != -1){
-				
 				Intent intent =new Intent(LocalService.this, GPSLocalServiceClient.class).putExtra("deviceU", b.getInt("deviceU" ));
 				intent.setAction("devicechat");
 				PendingIntent contentIntent = PendingIntent.getActivity(serContext,333,intent, PendingIntent.FLAG_CANCEL_CURRENT);
 				Long when=System.currentTimeMillis();
 			 	NotificationCompat.Builder notificationBuilder =new NotificationCompat.Builder(
-
 						serContext.getApplicationContext())
-
 				    	.setWhen(when)
-
 				    	.setContentText(getString(R.string.message))
-
 				    	.setContentTitle("OsMoDroid")
-
 				    	.setSmallIcon(android.R.drawable.ic_menu_send)
-
 				    	.setAutoCancel(true)
-
 				    	.setDefaults(Notification.DEFAULT_LIGHTS)
-
 				    	.setContentIntent(contentIntent);
 
 		if (!settings.getBoolean("silentnotify", false)){
 				 notificationBuilder.setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_VIBRATE| Notification.DEFAULT_SOUND);
-
 				    	}
-
 					Notification notification = notificationBuilder.build();
-
 					LocalService.mNotificationManager.notify(OsMoDroid.mesnotifyid, notification);
-				
-				
-				//startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
 			}
 			if (LocalService.currentDevice!=null){
 				LocalService.mNotificationManager.cancel(OsMoDroid.mesnotifyid);
 			}
-			
-			
 			String text = b.getString("MessageText");
-
 			if (b.getBoolean("om_online",false)){
-			
+
 			}
 
-
 			if (text != null && !text.equals("")) {
-
-
-
 			Toast.makeText(serContext, text, Toast.LENGTH_SHORT).show();
-
 			LocalService.messagelist.add(0,text);
-			try {
-				Log.d(this.getClass().getName(), "try to save messaglsit");
-				FileOutputStream fos = openFileOutput(OsMoDroid.NOTIFIESFILENAME, Context.MODE_PRIVATE);
-			    ObjectOutputStream output = new ObjectOutputStream(fos);
-				output.writeObject(LocalService.messagelist);
-				output.flush();
-		        output.close();
-		        Log.d(this.getClass().getName(), "Success saved messaglsit");
-				} catch (FileNotFoundException e) {
-							e.printStackTrace();
-				} catch (IOException e) {
-							e.printStackTrace();
-				}
-
+			Log.d(this.getClass().getName(), "try to save messaglsit");
+			saveObject(messagelist, OsMoDroid.NOTIFIESFILENAME);
+		    Log.d(this.getClass().getName(), "Success saved messaglsit");
 			Log.d(this.getClass().getName(), "List:"+LocalService.messagelist);
-
-			 Bundle a=new Bundle();
-
-	         a.putStringArrayList("meslist", LocalService.messagelist);
-
-	     Intent activ=new Intent(serContext,  GPSLocalServiceClient.class);
-	     activ.setAction("notif");
-	     activ.putExtras(a);
- 
-
-	     PendingIntent contentIntent = PendingIntent.getActivity(serContext, OsMoDroid.notifyidApp(),activ, 0);
-
-
-
-	 	Long when=System.currentTimeMillis();
-
-
-	 	NotificationCompat.Builder notificationBuilder =new NotificationCompat.Builder(
-
+			Bundle a=new Bundle();
+			a.putStringArrayList("meslist", LocalService.messagelist);
+			Intent activ=new Intent(serContext,  GPSLocalServiceClient.class);
+			activ.setAction("notif");
+			activ.putExtras(a);
+			PendingIntent contentIntent = PendingIntent.getActivity(serContext, OsMoDroid.notifyidApp(),activ, 0);
+			Long when=System.currentTimeMillis();
+			NotificationCompat.Builder notificationBuilder =new NotificationCompat.Builder(
 				serContext.getApplicationContext())
-
 		    	.setWhen(when)
-
 		    	.setContentText(text)
-
 		    	.setContentTitle("OsMoDroid")
-
 		    	.setSmallIcon(android.R.drawable.ic_menu_send)
-
 		    	.setAutoCancel(true)
-
 		    	.setDefaults(Notification.DEFAULT_LIGHTS)
-
 		    	.setContentIntent(contentIntent);
-
-if (!settings.getBoolean("silentnotify", false)){
-		 notificationBuilder.setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_VIBRATE| Notification.DEFAULT_SOUND);
-
+			if (!settings.getBoolean("silentnotify", false)){
+				notificationBuilder.setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_VIBRATE| Notification.DEFAULT_SOUND);
 		    	}
-
 			Notification notification = notificationBuilder.build();
-
 			LocalService.mNotificationManager.notify(OsMoDroid.mesnotifyid, notification);
-
-
-
-			 if (OsMoDroid.mesactivityVisible) {
-
+			if (OsMoDroid.mesactivityVisible) {
 	    		try {
-
-
-
 				contentIntent.send(serContext, 0, activ);
-
 				LocalService.mNotificationManager.cancel(OsMoDroid.mesnotifyid);
-
-
-
-			} catch (CanceledException e) {
-
+	    		} catch (CanceledException e) {
 				Log.d(this.getClass().getName(), "pending intent exception"+e);
-
-				// TODO Auto-generated catch block
-
 				e.printStackTrace();
 
 			}
 
 	    }
+	}
+}
+};
 
-
-
-
-
-
-
-
-
-			}
-
-			}
-
-			};
-
-			final RemoteCallbackList<IRemoteOsMoDroidListener> remoteListenerCallBackList
-            = new RemoteCallbackList<IRemoteOsMoDroidListener>();
-			
-
-	    private final IRemoteOsMoDroidService.Stub rBinder = new IRemoteOsMoDroidService.Stub() {
-
-
-
-
-
-
-
+	final RemoteCallbackList<IRemoteOsMoDroidListener> remoteListenerCallBackList = new RemoteCallbackList<IRemoteOsMoDroidListener>();
+	private final IRemoteOsMoDroidService.Stub rBinder = new IRemoteOsMoDroidService.Stub() {
 			public int getVersion()  {
-
-				//Log.d("OsmoDroid", "Remote getVersion");
-
-
-
-				//Toast.makeText(LocalService.this, "vvv" , Toast.LENGTH_SHORT).show();
-
 				return 5;
-
 			}
-
-
-
 			public int getBackwardCompatibleVersion()  {
-
 				return 0;
-
 			}
-
-
-
 			public void Deactivate(){
-
-			//	Log.d(getClass().getSimpleName(), "Remote Deactivate");
-
-			//	stopServiceWork(true);
-
-				//Toast.makeText(LocalService.this, "aaa" , Toast.LENGTH_SHORT).show();
 				if (state){
 		        	alertHandler.post(new Runnable() {
-
 						public void run() {
-
-		        	stopServiceWork(false);
-		           
-		            }});
+							stopServiceWork(false);
+		                }});
 		        }
-
 				return;
-
-
-
-
-
 			}
-
-
-
 			public boolean isActive() {
-
 				return state;
-
 			}
-
-
-
 			public void Activate() {
-
-			//	Log.d(getClass().getSimpleName(), "Remote Deactivate");
-
-			//	startServiceWork();
-				
 				if (!state){
 		        	alertHandler.post(new Runnable() {
-
 						public void run() {
-
 		        	startServiceWork();
-		           
 		            }});
 		        }
-
-
-
 			}
-
 
 
 			public int getNumberOfLayers()  {
-			//	Log.d(getClass().getSimpleName(), "getNumberOfLayers()="+channelList.size());
-				
 				try {
 					return channelList.size();
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return 0;
@@ -809,21 +510,15 @@ if (!settings.getBoolean("silentnotify", false)){
 
 
 			public int getLayerId(int pos) {
-			
-				
-				try {	//Log.d(getClass().getSimpleName(), "getLayerId()="+channelList.get(pos).u);
+				try {	
 					return channelList.get(pos).u;
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return 0;
 			}
 
-
-
 			public String getLayerName(int layerId) {
-			//	Log.d(getClass().getSimpleName(), "getLayerName()");
 				try {
 					for (Channel channel: channelList){
 						if (channel.u==layerId){
@@ -833,17 +528,13 @@ if (!settings.getBoolean("silentnotify", false)){
 					
 					
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return null;
 			}
 
-
-
 			public String getLayerDescription(int layerId)
-					 {
-			//	Log.d(getClass().getSimpleName(), "getLayerDescription()");
+				{
 				try {
 					for (Channel channel: channelList){
 						if (channel.u==layerId){
@@ -853,7 +544,6 @@ if (!settings.getBoolean("silentnotify", false)){
 					
 					
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return null;
@@ -862,7 +552,6 @@ if (!settings.getBoolean("silentnotify", false)){
 
 
 			public int getNumberOfObjects(int layerId){
-			//	Log.d(getClass().getSimpleName(), "getNumberOfObjects()");
 				try {
 					for (Channel channel: channelList){
 						if (channel.u==layerId){
@@ -872,7 +561,6 @@ if (!settings.getBoolean("silentnotify", false)){
 					
 					
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return 0;
@@ -881,7 +569,6 @@ if (!settings.getBoolean("silentnotify", false)){
 
 
 			public int getObjectId(int layerId, int pos) {
-			//	Log.d(getClass().getSimpleName(), "getObjectId()");
 				try {
 					for (Channel channel: channelList){
 						if (channel.u==layerId){
@@ -891,19 +578,12 @@ if (!settings.getBoolean("silentnotify", false)){
 					
 					
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-				
 				return 0;
 			}
-
-
-
 			public float getObjectLat(int layerId, int objectId)
-					 {
-			//	Log.d(getClass().getSimpleName(), "getObjectLat()");
+			{
 				try {
 					for (Channel channel: channelList){
 						if (channel.u==layerId){
@@ -912,14 +592,11 @@ if (!settings.getBoolean("silentnotify", false)){
 									return device.lat;			
 								}
 							}
-							
-							
 					}
 					}
 					
 					
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return 0;
@@ -929,7 +606,6 @@ if (!settings.getBoolean("silentnotify", false)){
 
 			public float getObjectLon(int layerId, int objectId)
 					{
-			//	Log.d(getClass().getSimpleName(), "getObjectLon()");
 				try {
 					for (Channel channel: channelList){
 						if (channel.u==layerId){
@@ -941,11 +617,8 @@ if (!settings.getBoolean("silentnotify", false)){
 							
 							
 					}
-					}
-					
-					
+					}									
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return 0;
@@ -955,7 +628,6 @@ if (!settings.getBoolean("silentnotify", false)){
 
 			public String getObjectName(int layerId, int objectId)
 					 {
-		//		Log.d(getClass().getSimpleName(), "getObjectName()");
 				try {
 					for (Channel channel: channelList){
 						if (channel.u==layerId){
@@ -964,14 +636,11 @@ if (!settings.getBoolean("silentnotify", false)){
 									return device.name;		
 								}
 							}
-							
-							
 					}
 					}
 					
 					
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return null;
@@ -981,7 +650,6 @@ if (!settings.getBoolean("silentnotify", false)){
 
 			public String getObjectDescription(int layerId, int objectId)
 					 {
-		//		Log.d(getClass().getSimpleName(), "getObjectDescription()");
 				try {
 					for (Channel channel: channelList){
 						if (channel.u==layerId){
@@ -997,7 +665,6 @@ if (!settings.getBoolean("silentnotify", false)){
 					
 					
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return null;
@@ -1027,7 +694,6 @@ if (!settings.getBoolean("silentnotify", false)){
 
 			public String getObjectSpeed(int layerId, int objectId)
 			 {
-				//	Log.d(getClass().getSimpleName(), "getObjectLat()");
 					try {
 						for (Channel channel: channelList){
 							if (channel.u==layerId){
@@ -1036,14 +702,11 @@ if (!settings.getBoolean("silentnotify", false)){
 										return device.speed;			
 									}
 								}
-								
-								
 						}
 						}
 						
 						
 					} catch (Exception e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					return null;
@@ -1061,14 +724,9 @@ if (!settings.getBoolean("silentnotify", false)){
 									return device.color;			
 								}
 							}
-							
-							
+						}
 					}
-					}
-					
-					
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
+			} catch (Exception e) {
 					e.printStackTrace();
 				}
 				return null;
@@ -1078,12 +736,8 @@ if (!settings.getBoolean("silentnotify", false)){
 
 			@Override
 			public void refreshChannels() throws RemoteException {
-				// TODO Auto-generated method stub
 				netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
 			}
-
-
-
 			@Override
 			public int getNumberOfGpx(int layerId) throws RemoteException {
 				try {
@@ -1095,7 +749,6 @@ if (!settings.getBoolean("silentnotify", false)){
 					
 					
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				return 0;
@@ -1109,13 +762,125 @@ if (!settings.getBoolean("silentnotify", false)){
 				try {
 					for (Channel channel: channelList){
 						if (channel.u==layerId){
-							return channel.gpxList.get(pos).getPath();
+							return channel.gpxList.get(pos).gpxfile.getPath();
 					}
 					}
 					
 					
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return null;
+			}
+
+			@Override
+			public int getGpxColor(int layerId, int pos) throws RemoteException {
+				try {
+					for (Channel channel: channelList){
+						if (channel.u==layerId){
+							return channel.gpxList.get(pos).color;
+					}
+					}
+					
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return Color.MAGENTA;
+			}
+
+			@Override
+			public int getNumberOfPoints(int layerId) throws RemoteException {
+				try {
+					for (Channel channel: channelList){
+						if (channel.u==layerId){
+							return channel.pointList.size();
+					}
+					}
+					
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return 0;
+			}
+
+
+
+			@Override
+			public int getPointId(int layerId, int pos) throws RemoteException {
+				try {
+					for (Channel channel: channelList){
+						if (channel.u==layerId){
+							return channel.pointList.get(pos).u;
+					}
+					}
+					
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return 0;
+			}
+
+
+
+			@Override
+			public float getPointLat(int layerId, int pointId)
+					throws RemoteException {
+				try {
+					for (Channel channel: channelList){
+						if (channel.u==layerId){
+							for (Point point:channel.pointList){
+								if (point.u==pointId){
+									return point.lat;			
+								}
+							}
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return 0;
+			}
+
+
+
+			@Override
+			public float getPointLon(int layerId, int pointId)
+					throws RemoteException {
+				try {
+					for (Channel channel: channelList){
+						if (channel.u==layerId){
+							for (Point point:channel.pointList){
+								if (point.u==pointId){
+									return point.lon;			
+								}
+							}
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return 0;
+			}
+
+
+
+			@Override
+			public String getPointName(int layerId, int pointId)
+					throws RemoteException {
+				try {
+					for (Channel channel: channelList){
+						if (channel.u==layerId){
+							for (Point point:channel.pointList){
+								if (point.u==pointId){
+									return point.name;			
+								}
+							}
+						}
+					}
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				return null;
@@ -1123,99 +888,88 @@ if (!settings.getBoolean("silentnotify", false)){
 
 
 
-    };
+			@Override
+			public String getPointDescription(int layerId, int pointId)
+					throws RemoteException {
+				try {
+					for (Channel channel: channelList){
+						if (channel.u==layerId){
+							for (Point point:channel.pointList){
+								if (point.u==pointId){
+									return point.description;			
+								}
+							}
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
 
 
 
-
-		public SharedPreferences.Editor editor;
-
-		private Float sensivity;
-
-		private int alarmStreamId=0;
-
-		private int count=0;
-		private int countFix=0;
-
-		private Notification notification;
-
-		private PendingIntent osmodroidLaunchIntent;
-
-		private String strVersionName;
-
-		private String androidver;
-
-		private ObjectInputStream input;
-
-
-
-
+			@Override
+			public String getPointColor(int layerId, int pointId)
+					throws RemoteException {
+				try {
+					for (Channel channel: channelList){
+						if (channel.u==layerId){
+							for (Point point:channel.pointList){
+								if (point.u==pointId){
+									return point.color;			
+								}
+							}
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				return null;
+			}
 		
-
-
-
-
-
+    };
+    public SharedPreferences.Editor editor;
+    private Float sensivity;
+    private int alarmStreamId=0;
+    private int count=0;
+    private int countFix=0;
+	private Notification notification;
+	private PendingIntent osmodroidLaunchIntent;
+	private String strVersionName;
+	private String androidver;
+	private ObjectInputStream input;
 	     static String formatInterval(final long l)
-
 	    {
-
-
-
 	    	return String.format("%02d:%02d:%02d", l/(1000*60*60), (l%(1000*60*60))/(1000*60), ((l%(1000*60*60))%(1000*60))/1000);
-
-
-
 	    }
 
-
-
-
-
 	public class LocalBinder extends Binder {
-
 		LocalService getService() {
-
-    	//Log.d(getClass().getSimpleName(), "getservice() localservice");
-
-    	 return LocalService.this;
+		return LocalService.this;
 
     }
 
 }
-
-
-
-
-
 	@Override
-
 	 public IBinder onBind(Intent intent) {
-binded=true;
-
+		binded=true;
 		connectChannels();
 		Log.d(getClass().getSimpleName(), "onbind() "+intent.getAction());
-
 		Log.d(getClass().getSimpleName(), "onbind() localservice");
-
-
-
-		if (intent.getAction().equals("OsMoDroid.remote")){
-
+		if (intent.getAction().equals("OsMoDroid.remote"))
+			{
 			Log.d(getClass().getSimpleName(), "binded remote");
-			if (!settings.getString("key", "" ).equals("") ){
-			netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
+				if (!settings.getString("key", "" ).equals("") )
+				{
+					netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
+				}
+				return rBinder;
 			}
-		return rBinder;}
 		else {
 		Log.d(getClass().getSimpleName(), "binded localy");
-		
-		
-		}
+			}
 		return mBinder;
-
-
-
     }
 
 
@@ -1289,190 +1043,87 @@ public void refresh(){
 public void startcomand()
 
 {
-
 	String version = getversion();
-
-		//String[] params = {"http://a.t.esya.ru/?act=start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&c=OsMoDroid&v="+version.replace(".", "")+"&key="+settings.getString("key", ""),"false","","start"};
-		APIcomParams params = new APIcomParams("http://a.t.esya.ru/?act=start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&c=OsMoDroid&v="+version.replace(".", "")+"&key="+settings.getString("key", ""),null,"start"); 
-		starttask=	new netutil.MyAsyncTask(this);
-
-		starttask.execute(params) ;
-
-		Log.d(getClass().getSimpleName(), "startcommand");
+	APIcomParams params = new APIcomParams("http://a.t.esya.ru/?act=start&hash="+settings.getString("hash", "")+"&n="+settings.getString("n", "")+"&c=OsMoDroid&v="+version.replace(".", "")+"&key="+settings.getString("key", ""),null,"start"); 
+	starttask=	new netutil.MyAsyncTask(this);
+	starttask.execute(params) ;
+	Log.d(getClass().getSimpleName(), "startcommand");
 
 }
 
 
 private String getversion() {
-	
-	 androidver = android.os.Build.VERSION.RELEASE;
+	androidver = android.os.Build.VERSION.RELEASE;
 	strVersionName = getString(R.string.Unknow);
-
 	String version=getString(R.string.Unknow);
-
 	Log.d(getClass().getSimpleName(), "startcommand");
-
 	try {
-
-		PackageInfo packageInfo = getPackageManager().getPackageInfo(
-
-				getPackageName(), 0);
-
-		strVersionName = packageInfo.packageName + " "
-
-				+ packageInfo.versionName;
-
-		 version = packageInfo.versionName;
-
-	} catch (NameNotFoundException e) {
-
+		PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+		strVersionName = packageInfo.packageName + " "+ packageInfo.versionName;
+		version = packageInfo.versionName;
+		}
+	catch (NameNotFoundException e)
+	{
 		e.printStackTrace();
-
 	}
 	return version;
 }
 
-
-
 public void stopcomand()
-
 {
-
-
-
 	if ( starttask!=null)
-
 	{
-
 		starttask.cancel(true);
-
 		starttask.Close();
-
 	}
 
 }
 
-
-
-
-
 		public String getPosition()  {
-
-	//		Log.d(getClass().getSimpleName(), "position() localservice");
-
 			String result = getString(R.string.NotDefined)+"\n"+getString(R.string.speed);
 			if (position == null) {return result;}
-
 			else {return position;}
 
 		}
 
-
-
 		public  String getSendResult()  {
-
-		//	Log.d(getClass().getSimpleName(), "sendresult() localservice");
-
-		//		if (sendresult == null) return "";
-
-			//else
-
-
-
-
-
 			  return sendresult;
-
 		}
 
 
 
 		public void sendPosition() {
-
 		Location forcelocation = myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
 		Location forcenetworklocation = myManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
-		//Log.d(this.getClass().getName(), forcelocation.toString());
-
-
-
 		if (forcelocation==null) {
-
 			if (forcenetworklocation==null)
-
 			{
-
-
 
 			}
 
 			else
-
 			{
-
 				if (position==null){position = ( df6.format(forcenetworklocation.getLatitude())+", "+df6.format( forcenetworklocation.getLongitude())+"\nСкорость:" +df1.format(forcenetworklocation.getSpeed()*3.6))+" Км/ч";}
-
 				URLadr="http://t.esya.ru/?"+  df6.format( forcenetworklocation.getLatitude()) +":"+ df6.format( forcenetworklocation.getLongitude())+":"+ df1.format(forcenetworklocation.getAccuracy())
-
 					+":"+df1.format( forcenetworklocation.getAltitude())+":"+df1.format( forcenetworklocation.getSpeed())+":"+hash+":"+n;
-
-			Log.d(this.getClass().getName(), URLadr);
-
-
-
+				Log.d(this.getClass().getName(), URLadr);
 				SendCoor forcesend = new SendCoor();
-
-				//Log.d(this.getClass().getName(), "sendbuffer отправляемый "+sendbuffer);
-
-
-
 				forcesend.execute(URLadr," ");
-
 			}
-
-
-
 		}
-
 		else{
-
-
-
 			if (position==null){position = ( "Ш:" + df6.format(forcelocation.getLatitude())+ " Д:"+  df6.format( forcelocation.getLongitude())+" С:" +df1.format(forcelocation.getSpeed()*3.6));}
-
 			URLadr="http://t.esya.ru/?"+  df6.format( forcelocation.getLatitude()) +":"+ df6.format( forcelocation.getLongitude())+":"+ df1.format(forcelocation.getAccuracy())
-
 				+":"+df1.format( forcelocation.getAltitude())+":"+df1.format( forcelocation.getSpeed())+":"+hash+":"+n;
-
-		Log.d(this.getClass().getName(), URLadr);
-
-
-
+			Log.d(this.getClass().getName(), URLadr);
 			SendCoor forcesend = new SendCoor();
-
-			//Log.d(this.getClass().getName(), "sendbuffer отправляемый "+sendbuffer);
-
-
-
 			forcesend.execute(URLadr," ");
 
 		}
-
-
-
-
-
-		}
-
-
-
-
+	}
 
 		public int getSendCounter(){
-
 			return sendcounter;
-
 		}
 
 		void invokeMethod(Method method, Object[] args) {
@@ -1485,13 +1136,7 @@ public void stopcomand()
 		    }
 
 		}
-
-
-
-
-
 	@Override
-
 	public void onCreate() {
 		super.onCreate();
 		getversion();
@@ -1641,13 +1286,12 @@ if (live&&!settings.getString("hash", "" ).equals(""))
 						netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
 					} else
 					{
-						try {			deviceList.clear();
-						deviceList.add(new Device("0",getString(R.string.observers),"1", settings.getString("uid", "0")));
-							deviceListFromJSONArray(new JSONArray(om_device));
-						} catch (JSONException e) {
-							netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
-							e.printStackTrace();
+						List<Device> loaded=(List<Device>) loadObject(OsMoDroid.DEVLIST, deviceList.getClass());
+						if (loaded!=null)
+						{
+							deviceList.addAll(loaded);
 						}
+
 					}
 					if (om_device_channel_adaptive.equals(""))
 					{
@@ -1715,13 +1359,12 @@ if (live&&!settings.getString("hash", "" ).equals(""))
 										netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
 									} else
 									{
-										try {			deviceList.clear();
-										deviceList.add(new Device("0",getString(R.string.observers),"1", settings.getString("uid", "0")));
-											deviceListFromJSONArray(new JSONArray(om_device));
-										} catch (JSONException e) {
-											netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
-											e.printStackTrace();
+										List loaded=(List<Device>) loadObject(OsMoDroid.DEVLIST, deviceList.getClass());
+										if (loaded!=null)
+										{
+											deviceList.addAll(loaded);
 										}
+
 									}
 									if (om_device_channel_adaptive.equals(""))
 									{
@@ -1755,22 +1398,12 @@ if (live&&!settings.getString("hash", "" ).equals(""))
 	}
 }
 if (settings.getBoolean("im", false) && !settings.getString("key", "" ).equals("") ){
-	ArrayList<String[]>  entries = null;
-	try {
-		Log.d(this.getClass().getName(), "try load longPollchannels");
-		input = new ObjectInputStream(openFileInput(OsMoDroid.FILENAME));
-		entries = (ArrayList<String[]> )input.readObject();
-		Log.d(this.getClass().getName(), "success load longPollchannels");
-	} catch (StreamCorruptedException e) {
-		e.printStackTrace();
-	} catch (FileNotFoundException e) {
-		e.printStackTrace();
-	} catch (IOException e) {
-		e.printStackTrace();
-	} catch (ClassNotFoundException e) {
-		e.printStackTrace();
-	}
-		if(entries==null){
+	Log.d(this.getClass().getName(), "try load longPollchannels");
+	ArrayList<String[]>  entries =  (ArrayList<String[]>)loadObject(OsMoDroid.FILENAME, new ArrayList<String[]>().getClass());
+	
+	
+	//Log.d(this.getClass().getName(), "entries="+entries);
+	if(entries==null){
 			{
 				ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
 				longPollchannels.add(new String[] {"om_online","o",""}); 
@@ -1941,6 +1574,7 @@ settings.edit().putBoolean("ondestroy", false).commit();
 		if(myIM!=null){  myIM.close();}
 		deleteFile(OsMoDroid.FILENAME);
 		deleteFile(OsMoDroid.NOTIFIESFILENAME);
+		deleteFile(OsMoDroid.DEVLIST);
 		stopcomand();
 		try {
 		if(receiver!= null){unregisterReceiver(receiver);}
@@ -4200,11 +3834,24 @@ if (myIM!=null){
 		    				try {
 		    				for (int i = 0; i < result.Jo.getJSONArray("om_channel_overlay_get:"+Integer.toString(ch.u)).length(); i++) {
 		    					JSONObject jsonObject = result.Jo.getJSONArray("om_channel_overlay_get:"+Integer.toString(ch.u)).getJSONObject(i);
-		    					ch.downloadgpx(jsonObject.getJSONObject("data").getString("download_url"), jsonObject.getJSONObject("data").getString("u"));
+		    					ch.downloadgpx(jsonObject.getJSONObject("data").getString("download_url"), jsonObject.getJSONObject("data").getString("u"),jsonObject.getString("color"));
 		    				}
 		    				}
 		    				catch (JSONException e) {
 		    					Log.d(getClass().getSimpleName(), e.getMessage());
+							}
+		    				informRemoteClientChannelsListUpdate();
+		    			}
+		    		}
+		    	}
+		    	if(keyname.contains("om_channel_point_list")){
+		    		for (Channel ch: channelList){
+		    			if (result.Jo.has("om_channel_point_list:"+Integer.toString(ch.u))){
+		    				try {
+		    					ch.getPointList(result.Jo.getJSONArray("om_channel_point_list:"+Integer.toString(ch.u)));
+			    				}		    					
+		    				 catch (Exception e) {
+		    					e.printStackTrace();
 							}
 		    				informRemoteClientChannelsListUpdate();
 		    			}
@@ -4235,28 +3882,23 @@ if (myIM!=null){
 				}
 		}
 		if (result.Jo.has("tr_track_upload:1")){
-			
-			LocalService.mNotificationManager.cancel(result.notificationid);
+				LocalService.mNotificationManager.cancel(result.notificationid);
 		}
 		
 		if (result.Jo.has("om_device")){
 			deviceList.clear();
-deviceList.add(new Device("0",getString(R.string.observers),"1", settings.getString("uid", "0")));
+			deviceList.add(new Device("0",getString(R.string.observers),"1", settings.getString("uid", "0")));
 		
 			try {
 				  a =	result.Jo.getJSONArray("om_device");
-				  settings.edit().putString("om_device", a.toString()).commit();
-		 		  Log.d(getClass().getSimpleName(), a.toString());
-		 		 deviceListFromJSONArray(a);
+				  //settings.edit().putString("om_device", a.toString()).commit();
+				  Log.d(getClass().getSimpleName(), a.toString());
+		 		  deviceListFromJSONArray(a);
+		 		  saveObject(deviceList, OsMoDroid.DEVLIST);
 				} catch (Exception e) {
-
 					 Log.d(getClass().getSimpleName(), "эксепшн");
-					//e.printStackTrace();
 				}
-
-
 			 Log.d(getClass().getSimpleName(),deviceList.toString());
-
 			 if (deviceAdapter!=null) {deviceAdapter.notifyDataSetChanged();}
 		}
 		if (result.Jo.has("om_device_channel_adaptive:"+settings.getString("device", ""))){
@@ -4283,7 +3925,8 @@ deviceList.add(new Device("0",getString(R.string.observers),"1", settings.getStr
 				 Log.d(getClass().getSimpleName(), "inform cleint");
 			 }
 			for (Channel channel : channelList){
-				netutil.newapicommand((ResultsListener)this, "om_channel_overlay_get:"+channel.u);	
+				netutil.newapicommand((ResultsListener)this, "om_channel_overlay_get:"+channel.u);
+				netutil.newapicommand((ResultsListener)this, "om_channel_point_list:"+channel.u);
 			}
 			
 		}
@@ -4295,29 +3938,10 @@ deviceList.add(new Device("0",getString(R.string.observers),"1", settings.getStr
 	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 
-void deviceListFromJSONArray(JSONArray a) throws JSONException {
+static void deviceListFromJSONArray(JSONArray a) throws JSONException {
 	for (int i = 0; i < a.length(); i++) {
 		JSONObject jsonObject = a.getJSONObject(i);
 Device devitem = new Device(jsonObject.getString("u"), jsonObject.getString("name"),jsonObject.getString("app")
@@ -4472,7 +4096,42 @@ public void onSensorChanged(SensorEvent event) {
 
 	
 }
+
+
+void saveObject(Object obj, String filename)  {
+	try {
+		FileOutputStream fos = openFileOutput(filename, Context.MODE_PRIVATE);
+		ObjectOutputStream output = new ObjectOutputStream(fos);
+		output.writeObject(obj);
+		output.flush();
+		output.close();
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	
 }
+
+Object loadObject(String filename, Class type){
+	try {
+		input = new ObjectInputStream(openFileInput(filename));
+		
+		return type.cast(input.readObject());
+		
+	} catch (StreamCorruptedException e) {
+		e.printStackTrace();
+	} catch (FileNotFoundException e) {
+		e.printStackTrace();
+	} catch (IOException e) {
+		e.printStackTrace();
+	} catch (ClassNotFoundException e) {
+		e.printStackTrace();
+	}
+	return null;
+	
+}
+
+}
+
 
 
 

@@ -15,6 +15,7 @@ public class OsMoDroid extends Application {
 	final public static int warnnotifyid = 3;
 	final public static int mesnotifyid = 2;
 	public static final String NOTIFIESFILENAME = "messagelist";
+	public static final String DEVLIST = "devlist";
 	static int uploadnotifyid = MIN_UPLOAD_ID;
 	public static SharedPreferences settings; 
 	public static int notifyidApp() {

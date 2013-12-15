@@ -14,7 +14,7 @@ import android.location.Address;
 import android.util.Log;
 
 public class Channel {
-	public ArrayList<File> gpxList = new ArrayList<File>();
+	public ArrayList<ColoredGPX> gpxList = new ArrayList<ColoredGPX>();
 	public String name;
 	public int u;
 	public String created;
@@ -29,18 +29,35 @@ public class Channel {
 		
 		@Override
 		public void onResultsSucceeded(APIComResult result) {
-			Log.d(getClass().getSimpleName(),"download result="+result.savename);
-			addtrack(result.savename);
+			Log.d(getClass().getSimpleName(),"download result="+result.load);
+			addtrack(result.load);
 			localService.informRemoteClientChannelsListUpdate();
 					}
 	};
+	ArrayList<Point> pointList= new ArrayList<Channel.Point>();
+	class Point {
+		int u;
+		float lat;
+		float lon;
+		String name;
+		String description; 
+		String color;
+		Point(JSONObject json) throws JSONException{
+		u=json.getInt("u");
+		lat=Float.parseFloat(json.getString("lat"));
+		lon=Float.parseFloat(json.getString("lon"));
+		description=json.getString("description");
+		color=json.getString("color");
+		name=json.getString("name");
+		}
+	}
 	public Channel(){
 		
 	}
 	
-	public void addtrack(File file){
-		if (!gpxList.contains(file)){
-			gpxList.add(file);
+	public void addtrack(ColoredGPX load){
+		if (!gpxList.contains(load)){
+			gpxList.add(load);
 			Log.d(getClass().getSimpleName(),"add download result to gpxlist="+gpxList.size());
 		}
 	}
@@ -152,18 +169,19 @@ public class Channel {
 			connected=false;
 	}
 	
-	public void downloadgpx(String url, String u){
+	public void downloadgpx(String url, String u, String color){
 		 File sdDir = android.os.Environment.getExternalStorageDirectory();
 			 File fileName = new File (sdDir, "OsMoDroid/channelsgpx/");
 			 fileName.mkdirs();
 			 fileName = new File(sdDir, "OsMoDroid/channelsgpx/"+u+".gpx");
 			 Log.d(getClass().getSimpleName(),"filename="+fileName);
+			 ColoredGPX load = new ColoredGPX(fileName,color);
 			 if(!fileName.exists())
 			 	{
-				 netutil.downloadfile(gpxdownloadListener, url, fileName);
+				 netutil.downloadfile(gpxdownloadListener, url, load);
 			 	}	else
 			 	{
-			 		addtrack(fileName);
+			 		addtrack(load);
 			 	}
 	}
 	
@@ -172,6 +190,18 @@ public class Channel {
 		
 		
 		return "Channel:u="+u+",name="+name+",added="+created;
+	}
+
+	public void getPointList(JSONArray jsonArray) {
+		pointList.clear();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			try {
+				pointList.add(new Point(jsonArray.getJSONObject(i)));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 
 	

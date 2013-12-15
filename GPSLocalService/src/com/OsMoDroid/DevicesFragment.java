@@ -419,44 +419,18 @@ public class DevicesFragment extends SherlockFragment implements ResultsListener
 
 			if (result.Jo.has("om_device")){
 				LocalService.deviceList.clear();
-				LocalService.deviceList.add(new Device("0",getString(R.string.observers),"0"
-						,"",
-						"",
-						"",
-						"",
-						"",
-						"",
-						"", globalActivity.settings.getString("uid", "0")
-						));
+				LocalService.deviceList.add(new Device("0",getString(R.string.observers),"1", OsMoDroid.settings.getString("uid", "0")));
+			
 				try {
 					  a =	result.Jo.getJSONArray("om_device");
-			 		  Log.d(getClass().getSimpleName(), a.toString());
-			 		 for (int i = 0; i < a.length(); i++) {
-			 			JSONObject jsonObject = a.getJSONObject(i);
-			Device devitem = new Device(jsonObject.getString("u"), jsonObject.getString("name"),jsonObject.getString("app")
-				,jsonObject.getString("last"),
-				"http://m.esya.ru/"+jsonObject.getString("url"),
-				jsonObject.getString("where"),
-				jsonObject.getString("lat"),
-				jsonObject.getString("lon"),
-				jsonObject.getString("online"),
-				jsonObject.getString("state"),jsonObject.getString("uid")
-				);
-
-		LocalService.deviceList.add(devitem);
-
-
-
-			 		 }
+					  //settings.edit().putString("om_device", a.toString()).commit();
+					  Log.d(getClass().getSimpleName(), a.toString());
+			 		  LocalService.deviceListFromJSONArray(a);
+			 		  globalActivity.mService.saveObject(LocalService.deviceList, OsMoDroid.DEVLIST);
 					} catch (Exception e) {
-
 						 Log.d(getClass().getSimpleName(), "эксепшн");
-						//e.printStackTrace();
 					}
-
-
 				 Log.d(getClass().getSimpleName(),LocalService.deviceList.toString());
-				// lv1.setAdapter(LocalService.deviceAdapter);
 				 LocalService.deviceAdapter.notifyDataSetChanged();
 			}
 

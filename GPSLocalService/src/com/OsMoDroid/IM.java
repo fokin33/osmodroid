@@ -47,19 +47,10 @@ public class IM {	protected  boolean running       = false;	protected boolea
 		}
 		adr=adr+"&ncrnd="+Long.toString(System.currentTimeMillis());
 		Log.d(this.getClass().getName(), "IM adr="+adr);
-		try {
 		Log.d(this.getClass().getName(), "try to save longPollChList");
-		fos = LocalService.serContext.openFileOutput(OsMoDroid.FILENAME, Context.MODE_PRIVATE);
-	    output = new ObjectOutputStream(fos);
-		output.writeObject(longPollChList);
-		output.flush();
-        output.close();
-        Log.d(this.getClass().getName(), "Success saved longPollChList");
-		} catch (FileNotFoundException e) {
-					e.printStackTrace();
-		} catch (IOException e) {
-					e.printStackTrace();
-		}
+		localService.saveObject(longPollChList, OsMoDroid.FILENAME);
+		Log.d(this.getClass().getName(), "Success saved longPollChList");
+		
 	}
 	
 	public void addchannels(ArrayList<String[]> longPollChList){
@@ -233,7 +224,7 @@ if (getMessageType( keyname).equals("o")){
                 messageText = messageText+localService.getString(R.string.device)+device.name+"\" "+data[2];
                 Log.d(this.getClass().getName(), "DeviceGeoZone="+messageText);
             }
-            
+            localService.saveObject(LocalService.deviceList, OsMoDroid.DEVLIST);
             if (LocalService.deviceAdapter!=null) { 
             //	LocalService.deviceAdapter.notifyDataSetChanged();
             	Log.d(getClass().getSimpleName(),"devicelist="+ LocalService.deviceList);
@@ -552,63 +543,51 @@ try {
 
 if (getMessageType( keyname).equals("ch")){
 	Log.d(this.getClass().getName(), "type=ch");
-						Log.d(this.getClass().getName(), "Изменилось состояние в канале " + jsonObject.optString("data"));
+	Log.d(this.getClass().getName(), "Изменилось состояние в канале " + jsonObject.optString("data"));
+	// 02-24 10:03:31.127: D/IM(562): "data":
+	//  "data": "0|1436|55.307453|39.232767|0"
+	//09-17 17:55:53.122: D/com.OsMoDroid.IM(877):     "data": "0|3084+37.416667+-122.083332+0"
+	String[] data = jsonObject.optString("data").split("\\|");
+	String[] datanew = data[1].split("\\+");
+	//Log.d(this.getClass().getName(), "data[0]=" + data[0] + " data[1]=" + data[1] + " data[2]=" + data[2]+" data[3]="+data[3]+" data[4]="+data[4]);
+	if(data[0].equals("0")){
+		for (Channel channel : LocalService.channelList)
+		{
+			Log.d(this.getClass().getName(), "chanal nest" + channel.name);
+			for (Device device : channel.deviceList) {
+				Log.d(this.getClass().getName(), "device nest" + device.name + " " + device.u);
+				if (datanew[0].equals(Integer.toString(device.u))) {
+					Log.d(this.getClass().getName(), "Изменилось состояние устройства в канале с " + device.toString());
+					device.lat = Float.parseFloat(datanew[1]);
+					device.lon = Float.parseFloat(datanew[2]);
+					device.speed= datanew[3];
+					Log.d(this.getClass().getName(), "Изменилось состояние устройства в канале на" + device.toString());
+				}
 
-						// 02-24 10:03:31.127: D/IM(562): "data":
-						//  "data": "0|1436|55.307453|39.232767|0"
-						//09-17 17:55:53.122: D/com.OsMoDroid.IM(877):     "data": "0|3084+37.416667+-122.083332+0"
+			}
 
-
-
-
-						String[] data = jsonObject.optString("data").split("\\|");
-						String[] datanew = data[1].split("\\+");
-						//Log.d(this.getClass().getName(), "data[0]=" + data[0] + " data[1]=" + data[1] + " data[2]=" + data[2]+" data[3]="+data[3]+" data[4]="+data[4]);
-						if(data[0].equals("0")){
-						for (Channel channel : LocalService.channelList)
-						{
-							Log.d(this.getClass().getName(), "chanal nest" + channel.name);
-							for (Device device : channel.deviceList) {
-								Log.d(this.getClass().getName(), "device nest" + device.name + " " + device.u);
-								if (datanew[0].equals(Integer.toString(device.u))) {
-									Log.d(this.getClass().getName(), "Изменилось состояние устройства в канале с " + device.toString());
-									device.lat = Float.parseFloat(datanew[1]);
-									device.lon = Float.parseFloat(datanew[2]);
-									device.speed= datanew[3];
-									Log.d(this.getClass().getName(), "Изменилось состояние устройства в канале на" + device.toString());
-									
-
-								}
-
-							}
-
+		}
+		localService.informRemoteClientChannelUpdate();
+		localService.alertHandler.post(new Runnable() {
+			public void run() {
+				if (LocalService.channelsDevicesAdapter != null && LocalService.currentChannel != null) {
+					Log.d(this.getClass().getName(), "Adapter:" + LocalService.channelsDevicesAdapter.toString());
+					for (Channel channel : LocalService.channelList) {
+						if (channel.u==LocalService.currentChannel.u) {
+							LocalService.currentchanneldeviceList.clear();
+							LocalService.currentchanneldeviceList.addAll(channel.deviceList);
 						}
 						
-						
-						localService.informRemoteClientChannelUpdate();
-						localService.alertHandler.post(new Runnable() {
-
-							public void run() {
-
-								if (LocalService.channelsDevicesAdapter != null && LocalService.currentChannel != null) {
-									Log.d(this.getClass().getName(), "Adapter:" + LocalService.channelsDevicesAdapter.toString());
-
-									for (Channel channel : LocalService.channelList) {
-										if (channel.u==LocalService.currentChannel.u) {
-											LocalService.currentchanneldeviceList.clear();
-											LocalService.currentchanneldeviceList.addAll(channel.deviceList);
-										}
-
-									}
-
-									LocalService.channelsDevicesAdapter.notifyDataSetChanged();
-								}
-							}
-						});
-						}
-						else {
-							netutil.newapicommand((ResultsListener)localService, "om_device_channel_adaptive:"+localService.settings.getString("device", ""));
-						}
+					}
+					
+					LocalService.channelsDevicesAdapter.notifyDataSetChanged();
+				}
+			}
+		});
+	}
+	else {
+		netutil.newapicommand((ResultsListener)localService, "om_device_channel_adaptive:"+localService.settings.getString("device", ""));
+	}
 }
 
 if (getMessageType( keyname).equals("chch")){

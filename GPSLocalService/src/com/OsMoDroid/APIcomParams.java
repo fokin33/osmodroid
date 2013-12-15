@@ -22,9 +22,9 @@ public APIcomParams(String action, String post, String command ) {
 	
 	
 }
-	public APIcomParams(String url, File fileName) {
+	public APIcomParams(String url, ColoredGPX load) {
 	this.action=url;
-	this.savename=fileName;
+	this.load=load;
 }
 	//	String[] params = {"http://apim.esya.ru/?query="+action +";&key="+settings.getString("key", ""),"false","","APIM"};
 	String action;
@@ -34,7 +34,7 @@ public APIcomParams(String action, String post, String command ) {
 	Builder notificationBuilder;
 	int notification;
 	
-	File savename;
+	ColoredGPX load;
 	
 	
 	
