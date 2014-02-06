@@ -53,7 +53,7 @@ public class StatFragment extends SherlockFragment {
 				TextView timeperiodTextView = (TextView) view.findViewById(R.id.timeperiodTextView);
 				TextView sendTextView = (TextView) view.findViewById(R.id.sendTextView);
 				TextView writeTextView = (TextView) view.findViewById(R.id.WriteTextView);
-				currentSpeedTextView.setText(LocalService.df1.format(globalActivity.mService.currentspeed*3.6));
+				currentSpeedTextView.setText(LocalService.df0.format(globalActivity.mService.currentspeed*3.6));
 				maxSpeedTextView.setText(LocalService.df1.format(globalActivity.mService.avgspeed*3600));
 				avgSpeedTextView.setText(LocalService.df1.format(globalActivity.mService.maxspeed*3.6));
 				workDistanceTextView.setText( LocalService.df2.format(globalActivity.mService.workdistance/1000));

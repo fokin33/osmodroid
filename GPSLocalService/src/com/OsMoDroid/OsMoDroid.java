@@ -29,6 +29,7 @@ public class OsMoDroid extends Application {
 	public void onCreate() {
 		settings =  PreferenceManager.getDefaultSharedPreferences(this);
 		context = getApplicationContext();
+		Thread.setDefaultUncaughtExceptionHandler(ExceptionHandler.inContext(context));
 		super.onCreate();
 	}
 

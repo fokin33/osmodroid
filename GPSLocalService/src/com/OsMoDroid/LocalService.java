@@ -357,9 +357,9 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	private int lcounter=0;
 	private int scounter=0;
 	final private static DecimalFormat df6 = new DecimalFormat("########.######");
-	final static DecimalFormat df1 = new DecimalFormat("########.#");
-	final static DecimalFormat df2 = new DecimalFormat("########.##");
-	final private static DecimalFormat df0 = new DecimalFormat("########");
+	final static DecimalFormat df1 = new DecimalFormat("#######0.0");
+	final static DecimalFormat df2 = new DecimalFormat("#######0.00");
+	final static DecimalFormat df0 = new DecimalFormat("########");
 	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	final private static SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
 	final private static SimpleDateFormat sdf3 = new SimpleDateFormat("HH:mm:ss");
@@ -417,7 +417,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 					Notification notification = notificationBuilder.build();
 					LocalService.mNotificationManager.notify(OsMoDroid.mesnotifyid, notification);
 			}
-			if (LocalService.currentDevice!=null){
+			if (LocalService.currentDevice!=null&&LocalService.currentDevice.u==b.getInt("deviceU") ){
 				LocalService.mNotificationManager.cancel(OsMoDroid.mesnotifyid);
 			}
 			String text = b.getString("MessageText");
@@ -737,7 +737,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 			@Override
 			public void refreshChannels() throws RemoteException {
 				netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
-			}
+							}
 			@Override
 			public int getNumberOfGpx(int layerId) throws RemoteException {
 				try {
@@ -939,6 +939,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	private String strVersionName;
 	private String androidver;
 	private ObjectInputStream input;
+	 boolean connect=false;
 	     static String formatInterval(final long l)
 	    {
 	    	return String.format("%02d:%02d:%02d", l/(1000*60*60), (l%(1000*60*60))/(1000*60), ((l%(1000*60*60))%(1000*60))/1000);
@@ -1029,11 +1030,12 @@ public void refresh(){
 	in.putExtra("signalisationon", signalisationOn);
 	in.putExtra("sendcounter", sendcounter);
 	in.putExtra("writecounter", writecounter);
-	in.putExtra("currentspeed", df1.format(currentspeed*3.6));
+	in.putExtra("currentspeed", df0.format(currentspeed*3.6));
 	in.putExtra("avgspeed", df1.format(avgspeed*3600));
 	in.putExtra("maxspeed", df1.format(maxspeed*3.6));
 	in.putExtra("workdistance", df2.format(workdistance/1000));
 	in.putExtra("timeperiod", formatInterval(timeperiod));
+	in.putExtra("connect", connect);
 	sendBroadcast(in);
 
 }
@@ -1274,6 +1276,8 @@ if (live&&!settings.getString("hash", "" ).equals(""))
 				else
 				{
 					Log.d(this.getClass().getName(), "oncreate was not after ondestroy ");
+					//ExceptionHandler.reportOnlyHandler(getApplicationContext()).uncaughtException(Thread.currentThread(), new Throwable("oncreate was not after ondestroy"));
+			    
 					if (om_device_get.equals(""))
 					{
 						netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+settings.getString("device", ""));
@@ -1406,7 +1410,8 @@ if (settings.getBoolean("im", false) && !settings.getString("key", "" ).equals("
 	if(entries==null){
 			{
 				ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
-				longPollchannels.add(new String[] {"om_online","o",""}); 
+				longPollchannels.add(new String[] {"om_online","o",""});
+				//longPollchannels.add(new String[] {"om_check_"+settings.getString("device", ""),"r",""});
 				if(!settings.getString("lpch", "").equals(""))
 				{ 
 				longPollchannels.add(new String[] {"ctrl_"+settings.getString("lpch", ""),"r",""});
@@ -1883,7 +1888,7 @@ private void manageIM(){
 
 		
 			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
-			longPollchannels.add(new String[] {"online","o",""}); 
+			longPollchannels.add(new String[] {"om_online","o",""}); 
 			if(!settings.getString("lpch", "").equals(""))
 			{ 
 			longPollchannels.add(new String[] {"ctrl_"+settings.getString("lpch", ""),"r",""});
@@ -2551,19 +2556,20 @@ workmilli= System.currentTimeMillis();
 		firstsend=false;
 
 		}
-		currentspeed=location.getSpeed();
-		if (location.getSpeed()>maxspeed){
-
-			maxspeed=location.getSpeed();
-
-		}
+		
 
 
 
 
 
 		if (location.getSpeed()>=speed_gpx/3.6 && (int)location.getAccuracy()<hdop_gpx && prevlocation_spd!=null ){
+			currentspeed=location.getSpeed();
+			if (location.getSpeed()>maxspeed){
 
+				maxspeed=location.getSpeed();
+
+			}
+			
 		workdistance=workdistance+location.distanceTo(prevlocation_spd);
 
 		Log.d(this.getClass().getName(),"Log of Workdistance, Workdistance="+ Float.toString(workdistance)+" location="+location.toString()+" prevlocation_spd="+prevlocation_spd.toString()+" distanceto="+Float.toString(location.distanceTo(prevlocation_spd)));
@@ -3748,25 +3754,20 @@ public void onResultsSucceeded(APIComResult result) {
         editor.putLong("laststartcommandtime", System.currentTimeMillis());
         editor.commit();
 		if (!result.Jo.optString("lpch").equals("")&& !result.Jo.optString("lpch").equals(settings.getString("lpch", ""))){
-
+			
 			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
 			longPollchannels.add(new String[] {"ctrl_"+settings.getString("lpch", ""),"r",""});
 			longPollchannels.add(new String[] {settings.getString("lpch", "")+"_chat","m",""});
-			
-if (myIM!=null){
-		myIM.removechannels(longPollchannels);	
-}
 			editor.putString("lpch", result.Jo.optString("lpch"));
-
 			editor.commit();
-
-			longPollchannels =new ArrayList<String[]>();
-			longPollchannels.add(new String[] {"ctrl_"+settings.getString("lpch", ""),"r",""});
-			longPollchannels.add(new String[] {settings.getString("lpch", "")+"_chat","m",""});
 			
-if (myIM!=null){
-		myIM.addchannels(longPollchannels);	
-}
+			if (myIM!=null){
+				myIM.removechannels(longPollchannels);	
+				longPollchannels =new ArrayList<String[]>();
+				longPollchannels.add(new String[] {"ctrl_"+settings.getString("lpch", ""),"r",""});
+				longPollchannels.add(new String[] {settings.getString("lpch", "")+"_chat","m",""});
+				myIM.addchannels(longPollchannels);	
+				}
 			
 		}
 		if(!result.Jo.optString("device").equals("")){
@@ -3902,6 +3903,9 @@ if (myIM!=null){
 			 if (deviceAdapter!=null) {deviceAdapter.notifyDataSetChanged();}
 		}
 		if (result.Jo.has("om_device_channel_adaptive:"+settings.getString("device", ""))){
+			 if (binded){
+				 disconnectChannels();
+			 }
 			channelList.clear();
 				try {
 				  a =	result.Jo.getJSONArray("om_device_channel_adaptive:"+settings.getString("device", ""));
@@ -3920,6 +3924,7 @@ if (myIM!=null){
 			 if (channelsAdapter!=null) {channelsAdapter.notifyDataSetChanged();}
 			 Log.d(getClass().getSimpleName(),"binded="+binded);
 			 if (binded){
+				 disconnectChannels();
 				 connectChannels();
 				 informRemoteClientChannelsListUpdate();
 				 Log.d(getClass().getSimpleName(), "inform cleint");

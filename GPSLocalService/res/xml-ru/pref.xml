@@ -8,7 +8,7 @@
             android:key="live"
             android:title="Онлайн-Мониторинг" />
 
-                    <PreferenceScreen android:title="Параметры мониторинга" >
+                    <PreferenceScreen android:title="Параметры мониторинга" android:dependency="live">
                             <EditTextPreference
                                 android:digits="0123456789"
                                 android:inputType="number"
@@ -74,7 +74,7 @@
             android:summary="Треки сохраняются на карте памяти (/sdcard/OsMoDroid/)"
             android:title="Запись трека" />
 
-                <PreferenceScreen android:title="Параметры записи">
+                <PreferenceScreen android:title="Параметры записи" android:dependency="gpx">
                         <EditTextPreference
                             android:digits="0123456789"
                             android:inputType="number"

@@ -54,11 +54,11 @@
 <string name="message">Message</string>
 <string name="sendsupport">Report to support</string>
 <string name="about">About</string>
-<string name="abouttext"> OsMoDroid, monitoring client OsMo \n Author : Denis Fokin (c) 2012-2013 \n \n Using this application you accept the Terms of Use : http://esya.ru/om/terms/ \n \n Site OsMoDroid: http://osmodroid.com \nManual on OsMoDroid: http://osmodroid.com/help_android.html \nLink with OsmAnd: http://osmodroid.com/withosmand.html \n \nManual monitoring : http://esya.ru/om/start/ </string>
+<string name="abouttext"> OsMoDroid, monitoring client OsMo \n Author : Denis Fokin (c) 2012-2014 \n \n Using this application you accept the Terms of Use : http://esya.ru/om/terms/ \n \n Site OsMoDroid: http://osmodroid.com \nManual on OsMoDroid: http://osmodroid.com/help_android.html \nLink with OsmAnd: http://osmodroid.com/withosmand.html \n \nManual monitoring : http://esya.ru/om/start/ </string>
 <string name="send">Send</string>
 <string name="cancel">Cancel</string>
 <string name="speed">Speed: km/h</string>
-<string name="auth">Authorization</string>
+<string name="auth">Link to account</string>
 <string name="warnhash">Identification data ( hash or check number ) is incorrect, you need to reset the hash
 \n or enter it manually in the settings</string>
 <string name="nomapapp">Not installed application like Maps </string>
@@ -130,7 +130,7 @@
 <string name="observers">Observers</string>
 <string name="monitoringstarted">Monitoring started</string>
 <string name="monitoringactive">Monitoring is active</string>
-<string name="tracktoshort">Track is too short ( less than 1 MB) , the file will not be saved or uploaded</string>
+<string name="tracktoshort">Track is too short ( less than 1 kb) , the file will not be saved or uploaded</string>
 <string name="osmodroiduploadfile">OsMoDroid File upload</string>
 <string name="commansendlocation">&quot; Command: Sending position &quot;</string>
 <string name="letsgo">Lets go!</string>

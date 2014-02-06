@@ -1,5 +1,6 @@
 package com.OsMoDroid;
 
+//import android.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -8,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.text.ClipboardManager;
 import android.text.util.Linkify;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -238,7 +241,24 @@ public class MainFragment extends SherlockFragment implements ResultsListener {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		 final View view =  inflater.inflate(R.layout.main,container, false);
+		 
+		
+		final View view =  inflater.inflate(R.layout.main,container, false);
+		
+		
+		if (OsMoDroid.settings.getBoolean("im", false)){
+		
+		 if (globalActivity.mService!=null&&globalActivity.mService.myIM!=null&&!OsMoDroid.settings.getString("key", "").equals("")){
+			 if(globalActivity.mService.myIM.connOpened){
+		
+				 globalActivity.actionBar.setLogo(R.drawable.eyeo);
+			 } else {
+				 globalActivity.actionBar.setLogo(R.drawable.eyen);
+			 }
+				 
+		 }
+		}
+		
 			final ToggleButton alarmToggle = (ToggleButton) view.findViewById(R.id.alarmButton);
 			if(globalActivity.settings.contains("signalisation")){
 				alarmToggle.setChecked(true);
@@ -305,7 +325,7 @@ if (globalActivity.live){
                                          new DialogInterface.OnClickListener() {
                                                  public void onClick(DialogInterface dialog, int which) {
                                                          stopsession=true;
-                                                         if (!OsMoDroid.settings.getBoolean("automaticupload", true)){
+                                                         if (OsMoDroid.settings.getBoolean("gpx", true)&&OsMoDroid.settings.getBoolean("automaticupload", true)){
                                                                  AlertDialog alertdialog1 = new AlertDialog.Builder(
                                                                                  getSherlockActivity()).create();
                                                                  alertdialog1.setTitle(getSherlockActivity()
@@ -338,7 +358,7 @@ if (globalActivity.live){
                                                          }
                                                          else
                                                          {
-                                                                 LocalService.uploadto=true;
+                                                                 LocalService.uploadto=false;
                                                                  globalActivity.stop(stopsession);
                                                                  updateServiceStatus(view);
 
@@ -350,7 +370,7 @@ if (globalActivity.live){
                                          new DialogInterface.OnClickListener() {
                                                  public void onClick(DialogInterface dialog, int which) {
                                                          stopsession=false;
-                                                         if (!OsMoDroid.settings.getBoolean("automaticupload", true)){
+                                                         if (OsMoDroid.settings.getBoolean("gpx", true)&&OsMoDroid.settings.getBoolean("automaticupload", true)){
                                                                  AlertDialog alertdialog1 = new AlertDialog.Builder(
                                                                                  getSherlockActivity()).create();
                                                                  alertdialog1.setTitle(getSherlockActivity()
@@ -383,7 +403,7 @@ if (globalActivity.live){
                                                          }
                                                          else
                                                          {
-                                                                 LocalService.uploadto=true;
+                                                                 LocalService.uploadto=false;
                                                                  globalActivity.stop(stopsession);
                                                                  updateServiceStatus(view);
 
@@ -396,7 +416,7 @@ if (globalActivity.live){
 }
 else {
  
- if (!OsMoDroid.settings.getBoolean("automaticupload", true)){
+ if (OsMoDroid.settings.getBoolean("gpx", true)&&OsMoDroid.settings.getBoolean("automaticupload", true)){
          AlertDialog alertdialog1 = new AlertDialog.Builder(
                          getSherlockActivity()).create();
          alertdialog1.setTitle(getSherlockActivity().getString(R.string.loading));
@@ -425,7 +445,7 @@ else {
  }
  else
  {
-         LocalService.uploadto=true;
+         LocalService.uploadto=false;
          globalActivity.stop(stopsession);
          updateServiceStatus(view);
 
@@ -449,7 +469,7 @@ else {
 				@Override
 				public void onReceive(Context context, final Intent intent) {
 					TextView dt = (TextView) view.findViewById(R.id.URL);
-					dt.setText(globalActivity.settings.getString("devicename", "")+" : "+globalActivity.viewurl);
+					dt.setText(globalActivity.settings.getString("devicename", "")+" :\n "+globalActivity.viewurl);
 
 					Linkify.addLinks(dt, Linkify.ALL);
 					TextView t = (TextView) view.findViewById(R.id.Location);
@@ -489,10 +509,23 @@ else {
 							stop.setEnabled(intent.getBooleanExtra("started", false));
 							globalActivity.started=intent.getBooleanExtra("started", false);
 					}
+					
+					if (intent.hasExtra("connect")&&!OsMoDroid.settings.getString("key", "").equals(""))
+					{
+						
+						if(intent.getBooleanExtra("connect", false))
+							{
+								globalActivity.actionBar.setLogo(R.drawable.eyeo);
+							}
+						else 
+							{
+								globalActivity.actionBar.setLogo(R.drawable.eyen);
+							}
+					}
 
 					if (!(startmessage==null)&&!globalActivity.messageShowed) {
 						TextView t2 = (TextView) view.findViewById(R.id.URL);
-						t2.setText(globalActivity.settings.getString("devicename", "")+" : "+globalActivity.viewurl);
+						t2.setText(globalActivity.settings.getString("devicename", "")+" :\n "+globalActivity.viewurl);
 						Linkify.addLinks(t2, Linkify.ALL);
 						
 						globalActivity.messageShowed=true;

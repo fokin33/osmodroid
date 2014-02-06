@@ -242,7 +242,7 @@ PowerManager pm;
 	String version="Unknown";
 	SharedPreferences settings;
 	ActionBar.Tab mainTab,devicesTab,channelsTab, simLinksTab, trackListTab, mesListTab, statTab;
-	private ActionBar actionBar;
+	public ActionBar actionBar;
 	
 	enum TabType
 {
@@ -261,7 +261,7 @@ private HashMap<TabType, Stack<String>> backStacks;
 			invokeService();
 			started = true;
 			updateMainUI();
-			if (settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-14400000){
+			if (live&&!settings.getString("hash", "" ).equals("")&&settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-14400000){
 				mService.startcomand();
 				}
 			if (!settings.getString("key", "" ).equals("") ){
@@ -808,7 +808,7 @@ private HashMap<TabType, Stack<String>> backStacks;
 		}
 		
 		TextView t2 = (TextView) fragment.getView().findViewById(R.id.URL);
-		t2.setText(settings.getString("devicename", "")+" : "+viewurl);
+		t2.setText(settings.getString("devicename", "")+" :\n "+viewurl);
 		Linkify.addLinks(t2, Linkify.ALL);
 		}
 		ToggleButton globalsendToggle = (ToggleButton) fragment.getView().findViewById(R.id.toggleButton1);

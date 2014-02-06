@@ -7,29 +7,132 @@ import java.net.SocketTimeoutException;
 import java.net.InetSocketAddress;import java.net.Proxy;import java.net.URL;import java.net.UnknownHostException;import java.text.SimpleDateFormat;import java.util.ArrayList;import java.util.Collections;
 import java.util.Map;
 import java.util.Date;import java.util.Iterator;import java.util.Map.Entry;
-import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import com.OsMoDroid.LocalService.SendCoor;import android.app.Notification;import android.app.PendingIntent;import android.app.PendingIntent.CanceledException;import android.content.BroadcastReceiver;import android.content.SharedPreferences;
+import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import com.OsMoDroid.LocalService.SendCoor;import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.Notification;import android.app.PendingIntent;import android.app.PendingIntent.CanceledException;import android.content.BroadcastReceiver;import android.content.SharedPreferences;
 import android.content.Context;import android.content.Intent;import android.content.IntentFilter;import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.net.NetworkInfo;import android.os.Bundle;import android.os.Environment;
+import android.os.SystemClock;
 import android.os.Handler;import android.os.Message;import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;import android.util.Log;import android.widget.Toast;/**
+import android.support.v4.app.NotificationCompat;import android.util.Log;import android.widget.Toast;import de.tavendo.autobahn.*;import de.tavendo.autobahn.Wamp.ConnectionHandler;
+import de.tavendo.autobahn.Wamp.EventHandler;
+/**
  * @author dfokin
  *Class for work with LongPolling
  */
-public class IM {	protected  boolean running       = false;	protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;	String mykey;//	String timestamp=Long.toString(System.currentTimeMillis());String lcursor="";	int pingTimeout=900;	Thread myThread;	private BufferedReader    in      = null;	Context parent;	String myLongPollCh;
-	ArrayList<String[]>  myLongPollChList;	//ArrayList<String> list= new ArrayList<String>();	int mestype=0;	LocalService localService;	
+public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
+	
+	private static final int KEEP_ALIVE = 1000*270;
+
+	private static final String RECONNECT_INTENT = "com.osmodroid.reconnect";
+	
+	private static final String KEEPALIVE_INTENT = "com.osmodroid.keepalive";
+
+	protected  boolean running       = false;	//protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;	String mykey;//	String timestamp=Long.toString(System.currentTimeMillis());String lcursor="";	int pingTimeout=900;	Thread myThread;	private BufferedReader    in      = null;	Context parent;	String myLongPollCh;
+	ArrayList<String[]>  myLongPollChList;	//ArrayList<String> list= new ArrayList<String>();	ConnectionHandler c;
+
+	WampOptions o;	int mestype=0;	LocalService localService;	
 	FileOutputStream fos;
 	ObjectOutputStream output = null;	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		public IM(ArrayList<String[]> longPollChList, Context context,String key,LocalService localService) {
+
+	
+	private  WampConnection mConnection = new WampConnection();
+	final String wsuri = "ws://osmase.com:8080/";
+
+	protected boolean connOpened=false;	public IM(ArrayList<String[]> longPollChList, Context context,String key,final LocalService localService) {
 	
 		this.localService=localService; 
 		parent=context;
+		manager = (AlarmManager)(parent.getSystemService( Context.ALARM_SERVICE ));
+		reconnectPIntent = PendingIntent.getBroadcast( parent, 0, new Intent(RECONNECT_INTENT), 0 );
+		keepAlivePIntent = PendingIntent.getBroadcast( parent, 0, new Intent(KEEPALIVE_INTENT), 0 );
 		myLongPollChList=longPollChList;
 		mykey=key;
-		getadres(longPollChList);
+		//getadres(longPollChList);
 		parent.registerReceiver(bcr, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
+
+		c = new ConnectionHandler() {
+			
+			@Override
+			public void onOpen() {
+				connOpened=true;
+				//ExceptionHandler.reportOnlyHandler(parent.getApplicationContext()).uncaughtException(Thread.currentThread(), new Throwable("websocket onopen"));
+				Log.d(this.getClass().getName(), "websocket onopen, code=");
+				localService.connect=true;
+				localService.refresh();
+				resubscribe();
+				setkeepAliveAlarm();
+			}
+			
+			@Override
+			public void onClose(int code, String reason) {
+				connOpened=false;
+				//ExceptionHandler.reportOnlyHandler(parent.getApplicationContext()).uncaughtException(Thread.currentThread(), new Throwable("websocket onclose, code="+code+" reason="+reason));
+				Log.d(this.getClass().getName(), "websocket onclose, code="+code+" reason="+reason);
+				Log.d(this.getClass().getName(), "websocket onclose, isConnected="+mConnection.isConnected());
+				localService.connect=false;
+				localService.refresh();
+				if(localService.isOnline()&&running){
+					setReconnectAlarm();
+				}
+				disablekeepAliveAlarm();
+				
+			}
+		};
+		o = new WampOptions();
+		o.setReconnectInterval(0);
+		o.setReceiveTextMessagesRaw(true);
 		start();
 	}
+	  BroadcastReceiver reconnectReceiver = new BroadcastReceiver() {
+          @Override public void onReceive( Context context, Intent _ )
+          {
+              start();
+              context.unregisterReceiver( this ); // this == BroadcastReceiver, not Activity
+          }
+      };
+      BroadcastReceiver keepAliveReceiver = new BroadcastReceiver() {
+          @Override public void onReceive( Context context, Intent _ )
+          {
+              if(mConnection!=null&&mConnection.isConnected()){
+            	  Log.d(this.getClass().getName(), "websocket send ping");
+            	  //ExceptionHandler.reportOnlyHandler(parent.getApplicationContext()).uncaughtException(Thread.currentThread(), new Throwable("websocket send ping"));
+            	  mConnection.sendPing();
+              }
+          }
+      };
+      
+      
+      AlarmManager manager;
+      PendingIntent reconnectPIntent;
+      PendingIntent keepAlivePIntent;
+	 
+      public void setkeepAliveAlarm(){
+    	  Log.d(this.getClass().getName(), "void setKeepAliveAlarm");
+    	  parent.registerReceiver(keepAliveReceiver, new IntentFilter(KEEPALIVE_INTENT));
+    	  manager.cancel(keepAlivePIntent);
+    	  manager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, KEEP_ALIVE, KEEP_ALIVE, keepAlivePIntent);
+      }
+      
+      public void disablekeepAliveAlarm(){
+    	  Log.d(this.getClass().getName(), "void disableKeepAliveAlarm");
+    	  try {
+			parent.unregisterReceiver(keepAliveReceiver);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	  manager.cancel(keepAlivePIntent);
+      }
+      
+      public void setReconnectAlarm() 
+	    {	
+    	  Log.d(this.getClass().getName(), "void setReconnectAlarm");
+    	  parent.registerReceiver( reconnectReceiver, new IntentFilter(RECONNECT_INTENT) );
+    	  manager.cancel(reconnectPIntent);
+    	  manager.set( AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + RECONNECT_TIMEOUT, reconnectPIntent );
+	    }
+	
 
 	private void getadres(ArrayList<String[]> longPollChList) {
 		//подключении не вставляется
@@ -56,15 +159,13 @@ public class IM {	protected  boolean running       = false;	protected boolea
 	public void addchannels(ArrayList<String[]> longPollChList){
 		
 		myLongPollChList.addAll(longPollChList);
-		getadres(myLongPollChList);
-		disconnect();
+		//getadres(myLongPollChList);
+		resubscribe();
 		
 		
 	}
 	
 public void removechannels(ArrayList<String[]> longPollChList){
-		
-		//myLongPollChList.removeAll(longPollChList);
 	for (String[] extstr: longPollChList){
 		Log.d(this.getClass().getName(), "extstr="+extstr[0]);
 		 for (Iterator<String[]> iter = myLongPollChList.iterator(); iter.hasNext();) {
@@ -75,17 +176,10 @@ public void removechannels(ArrayList<String[]> longPollChList){
 		        Log.d(this.getClass().getName(), "iter removed");
 		        Log.d(this.getClass().getName(), "myLongPollChList.count="+myLongPollChList.size());
 		      }
-		     
 		    }
-		
-		
 	}
-	
-	
-		getadres(myLongPollChList);
-		disconnect();
-		
-		
+		//getadres(myLongPollChList);
+	resubscribe();
 	}
 	String getMessageType(String ids){
 	for (String[] str: myLongPollChList){
@@ -146,16 +240,31 @@ if (mes.from.equals(localService.settings.getString("device", ""))){
 				e.printStackTrace();
 			}
 			if (u!=-1){
-			Message msg = new Message();			Bundle b = new Bundle();			b.putInt("deviceU", u);			msg.setData(b);			localService.alertHandler.sendMessage(msg);		}			}	private BroadcastReceiver bcr = new BroadcastReceiver() {		@Override		public void onReceive(Context context, Intent intent) {			Log.d(this.getClass().getName(), "BCR"+this);			Log.d(this.getClass().getName(), "BCR"+this+" Intent:"+intent);			if (intent.getAction().equals(android.net.ConnectivityManager.CONNECTIVITY_ACTION)) {				Bundle extras = intent.getExtras();				Log.d(this.getClass().getName(), "BCR"+this+ " "+intent.getExtras());				if(extras.containsKey("networkInfo")) {					NetworkInfo netinfo = (NetworkInfo) extras.get("networkInfo");					Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo);					Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo.getType());					if(netinfo.isConnected()) {						Log.d(this.getClass().getName(), "BCR"+this+" Network is connected");						Log.d(this.getClass().getName(), "BCR"+this+" Running:"+running);						
-						// Network is connected						if(!running ) {							System.out.println("Starting from Reciever"+this.toString());							myThread.interrupt();							start();
-													}					}					else {						System.out.println("Stoping1 from Reciever"+this.toString());						stop();
-						
-											}				}				else if(extras.containsKey("noConnectivity")) {					System.out.println("Stoping2 from Reciever"+this.toString());					stop();
-					
-									}		    }		}	};	 /**
+			Message msg = new Message();			Bundle b = new Bundle();			b.putInt("deviceU", u);			msg.setData(b);			localService.alertHandler.sendMessage(msg);		}			}	private BroadcastReceiver bcr = new BroadcastReceiver() {		@Override		public void onReceive(Context context, Intent intent) {		//	Log.d(this.getClass().getName(), "BCR"+this);		//	Log.d(this.getClass().getName(), "BCR"+this+" Intent:"+intent);			if (intent.getAction().equals(android.net.ConnectivityManager.CONNECTIVITY_ACTION)) {				Bundle extras = intent.getExtras();			//	Log.d(this.getClass().getName(), "BCR"+this+ " "+intent.getExtras());				if(extras.containsKey("networkInfo")) {					NetworkInfo netinfo = (NetworkInfo) extras.get("networkInfo");				//	Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo);				//	Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo.getType());					if(netinfo.isConnected()) {						Log.d(this.getClass().getName(), "BCR Network is connected");						Log.d(this.getClass().getName(), "Running:"+running);						// Network is connected						if(!running ) {							//SetAlarm();
+							start();
+						}											}					else {						Log.d(this.getClass().getName(), "BCR Network is not connected");						Log.d(this.getClass().getName(), "Running:"+running);						if (running)
+						{							
+							stop();
+						}
+											}				}				else if(extras.containsKey("noConnectivity")) {					Log.d(this.getClass().getName(), "BCR Network is noConnectivity");					Log.d(this.getClass().getName(), "Running:"+running);					if (running)
+					{						
+						stop();
+					}
+									}		    }		}	};
+
+		 /**
 	 * Выключает IM
 	 */
-	void close(){		parent.unregisterReceiver(bcr);		stop();	};	 void start(){		this.running = true;		System.out.println("About to notify state from start()");		System.out.println("State notifed of start()");		myThread = new Thread(new IMRunnable());		myThread.start();	}void parseEx (String toParse){
+	void close(){		Log.d(this.getClass().getName(), "void IM.close");
+		try {
+			parent.unregisterReceiver(bcr);
+		} catch (Exception e) {
+		
+			e.printStackTrace();
+		}
+				stop();	};	 void start(){		Log.d(this.getClass().getName(), "void IM.start");
+		running = true;		mConnection.connect(wsuri, c, o);
+				  }void parseEx (String toParse, String topic){
 
 //	[
 //	  {
@@ -166,38 +275,14 @@ if (mes.from.equals(localService.settings.getString("device", ""))){
 	
 	
 	try {
-		Log.d(this.getClass().getName(), "toParse= "+ toParse);
-		
-		
-		//Toast.makeText(LocalService.serContext, toParse, Toast.LENGTH_LONG).show();
-		JSONArray result = new JSONArray(toParse);
-
-		for (int i = 0; i < result.length(); i++) {
-
-		    JSONObject jsonObject = result.getJSONObject(i);
-		    Iterator<String> it = (new JSONObject(jsonObject.optString("ids"))).keys();
-
-			  while (it.hasNext())
-		    
-		    
-
-          	{
-		    	
-		    	String keyname= it.next();
-		    	Log.d(this.getClass().getName(), "keyname="+keyname);
-		    	lcursor = (new JSONObject(jsonObject.optString("ids"))).optString(keyname);
-		    	 Log.d(this.getClass().getName(), "lcursor="+ lcursor);
-		    	 for (String[] str:myLongPollChList){
-		    		 if (str[0].equals(keyname)){
-		    			 str[2]=lcursor;
-		    		 }
-		    	 }
-
-if (getMessageType( keyname).equals("o")){
+		Log.d(this.getClass().getName(), "toParse= "+ toParse+ " topic="+topic);
+	
+		Log.d(this.getClass().getName(), "topic type="+getMessageType( topic));
+if (getMessageType( topic).equals("o")){
 	Log.d(this.getClass().getName(), "type=o");
 	String status = "";
 	String messageText = "";
-    String[] data = jsonObject.optString("data").split("-");
+    String[] data = toParse.split("-");
     Log.d(this.getClass().getName(), "data[0]="+data[0]+" data[1]="+data[1]+" data[2]="+data[2]);
     Log.d(this.getClass().getName(), "LocalService.DeviceList="+LocalService.deviceList.toString());
     final ArrayList<Device> tempdeviceList = new ArrayList<Device>();
@@ -261,11 +346,11 @@ if (getMessageType( keyname).equals("o")){
 
 
 
-if (getMessageType( keyname).equals("m")){
+if (getMessageType( topic).equals("m")){
 	
 	Log.d(this.getClass().getName(), "type=m");
 	
-	  String messageJSONText = jsonObject.optString("data");
+	  String messageJSONText = toParse;
 	  
 	  if (!messageJSONText.equals("")){
 
@@ -274,9 +359,14 @@ if (getMessageType( keyname).equals("m")){
 			}
 }
 
-if (getMessageType( keyname).equals("r")){
+if (getMessageType( topic).equals("r")){
 	Log.d(this.getClass().getName(), "type=r");
-	if (jsonObject.optString("data").equals("start")){
+	if(topic.equals("om_check_"+OsMoDroid.settings.getString("device", ""))){
+		 netutil.newapicommand((ResultsListener)localService, "om_checker:"+toParse);
+		 return;
+	}
+	
+	if (toParse.equals("start")){
         if (!localService.state){
         	localService.alertHandler.post(new Runnable() {
 
@@ -291,7 +381,7 @@ if (getMessageType( keyname).equals("r")){
         }
 }
 
-if (jsonObject.optString("data").equals("stop")){
+if (toParse.equals("stop")){
         if (localService.state){
         	localService.alertHandler.post(new Runnable() {
 
@@ -306,7 +396,7 @@ if (jsonObject.optString("data").equals("stop")){
         }
 }
 
-if (jsonObject.optString("data").equals("ping")){
+if (toParse.equals("ping")){
         try {
             localService.Pong(localService);
         } catch (JSONException e) {
@@ -314,18 +404,18 @@ if (jsonObject.optString("data").equals("ping")){
         }
 }
 
-if (jsonObject.optString("data").length()>7&&jsonObject.optString("data").substring(0, 7).equals("routeto")){
-	int pluspos=jsonObject.optString("data").lastIndexOf("_");
-	localService.informRemoteClientRouteTo(Float.parseFloat(jsonObject.optString("data").substring(8, pluspos)), Float.parseFloat(jsonObject.optString("data").substring(pluspos+1, jsonObject.optString("data").length())));
+if (toParse.length()>7&&toParse.substring(0, 7).equals("routeto")){
+	int pluspos=toParse.lastIndexOf("_");
+	localService.informRemoteClientRouteTo(Float.parseFloat(toParse.substring(8, pluspos)), Float.parseFloat(toParse.substring(pluspos+1, toParse.length())));
 }
 
-if (jsonObject.optString("data").length()>7&&jsonObject.optString("data").substring(0, 7).equals("vibrate")){
-	localService.vibrate( localService, Long.parseLong(jsonObject.optString("data").substring(7, jsonObject.optString("data").length())));
+if (toParse.length()>7&&toParse.substring(0, 7).equals("vibrate")){
+	localService.vibrate( localService, Long.parseLong(toParse.substring(7, toParse.length())));
 }
 
 
 
-if (jsonObject.optString("data").equals("batteryinfo")){
+if (toParse.equals("batteryinfo")){
         try {
             localService.batteryinfo(localService);
         } catch (JSONException e) {
@@ -333,7 +423,7 @@ if (jsonObject.optString("data").equals("batteryinfo")){
         }
 }
 
-if (jsonObject.optString("data").equals("systeminfo")){
+if (toParse.equals("systeminfo")){
     try {
         localService.systeminfo(localService);
     } catch (JSONException e) {
@@ -342,7 +432,7 @@ if (jsonObject.optString("data").equals("systeminfo")){
 }
 
 
-if (jsonObject.optString("data").equals("satellite")){
+if (toParse.equals("satellite")){
     try {
         localService.satelliteinfo(localService);
     } catch (JSONException e) {
@@ -350,7 +440,7 @@ if (jsonObject.optString("data").equals("satellite")){
     }
 }
 
-if (jsonObject.optString("data").equals("wifiinfo")){
+if (toParse.equals("wifiinfo")){
     try {
         localService.wifiinfo(localService);
     } catch (JSONException e) {
@@ -359,7 +449,7 @@ if (jsonObject.optString("data").equals("wifiinfo")){
 }
 
 
-if (jsonObject.optString("data").equals("closeclient")){
+if (toParse.equals("closeclient")){
 	localService.alertHandler.post(new Runnable() {
 
 		public void run() {
@@ -374,43 +464,43 @@ localService.stopSelf();
              
 }
 
-if (jsonObject.optString("data").equals("getpreferences")){
+if (toParse.equals("getpreferences")){
 	try {
 		localService.getpreferences(localService);
 		} catch (JSONException e) {
 			e.printStackTrace();
 			}
 		}
-if (jsonObject.optString("data").equals("wifion")){
+if (toParse.equals("wifion")){
 
 localService.wifion(localService);
 
 }
-if (jsonObject.optString("data").equals("wifioff")){
+if (toParse.equals("wifioff")){
 
 localService.wifioff(localService);
 
 }
 
-if (jsonObject.optString("data").equals("signalon")){
+if (toParse.equals("signalon")){
 
 localService.enableSignalisation(true);
 
 }
 
-if (jsonObject.optString("data").equals("signaloff")){
+if (toParse.equals("signaloff")){
 
 localService.disableSignalisation(true);
 
 }
 
-if (jsonObject.optString("data").equals("alarmon")){
+if (toParse.equals("alarmon")){
 
 localService.playAlarmOn(true);
 
 }
 
-if (jsonObject.optString("data").equals("alarmoff")){
+if (toParse.equals("alarmoff")){
 
 localService.playAlarmOff(true);
 
@@ -420,7 +510,7 @@ localService.playAlarmOff(true);
 
 
 
-if (jsonObject.optString("data").equals("where")){
+if (toParse.equals("where")){
 localService.mayak=true;
 if (!localService.state){
 	localService.alertHandler.post(new Runnable() {
@@ -458,13 +548,13 @@ if (!localService.state){
 
 
 
-	if (jsonObject.optString("data").substring(0, 4).equals("play")){
+	if (toParse.substring(0, 4).equals("play")){
 		 MediaPlayer mp = new MediaPlayer();
 		 String mp3Path = Environment.getExternalStorageDirectory()
 				 .getAbsolutePath()+ "/OsMoDroid/mp3";
-		 Log.d(this.getClass().getName(), "try play:"+(mp3Path+"/"+jsonObject.optString("data").substring(4, jsonObject.optString("data").length())+".mp3"));
+		 Log.d(this.getClass().getName(), "try play:"+(mp3Path+"/"+toParse.substring(4, toParse.length())+".mp3"));
 		    try {
-		        mp.setDataSource(mp3Path+"/"+jsonObject.optString("data").substring(4, jsonObject.optString("data").length())+".mp3");
+		        mp.setDataSource(mp3Path+"/"+toParse.substring(4, toParse.length())+".mp3");
 		    } catch (IllegalArgumentException e) {
 		        // TODO Auto-generated catch block
 		        e.printStackTrace();
@@ -491,7 +581,7 @@ if (!localService.state){
 
 
 
-Object item = jsonObject.get("data");
+Object item = new JSONObject(toParse);
 Log.d(this.getClass().getName(), "item="+item+" "+item.getClass()+ " JSONObject is " + (item instanceof JSONObject) );
 
 if (item instanceof JSONObject){
@@ -541,13 +631,13 @@ try {
 	
 }
 
-if (getMessageType( keyname).equals("ch")){
+if (getMessageType( topic).equals("ch")){
 	Log.d(this.getClass().getName(), "type=ch");
-	Log.d(this.getClass().getName(), "Изменилось состояние в канале " + jsonObject.optString("data"));
+	Log.d(this.getClass().getName(), "Изменилось состояние в канале " + toParse);
 	// 02-24 10:03:31.127: D/IM(562): "data":
 	//  "data": "0|1436|55.307453|39.232767|0"
 	//09-17 17:55:53.122: D/com.OsMoDroid.IM(877):     "data": "0|3084+37.416667+-122.083332+0"
-	String[] data = jsonObject.optString("data").split("\\|");
+	String[] data = toParse.split("\\|");
 	String[] datanew = data[1].split("\\+");
 	//Log.d(this.getClass().getName(), "data[0]=" + data[0] + " data[1]=" + data[1] + " data[2]=" + data[2]+" data[3]="+data[3]+" data[4]="+data[4]);
 	if(data[0].equals("0")){
@@ -590,19 +680,18 @@ if (getMessageType( keyname).equals("ch")){
 	}
 }
 
-if (getMessageType( keyname).equals("chch")){
+if (getMessageType( topic).equals("chch")){
 	Log.d(this.getClass().getName(), "type=chch");
-	Log.d(this.getClass().getName(), "Сообщение в чат канала " + jsonObject.optString("data"));
-//09-16 18:25:41.057: D/com.OsMoDroid.IM(1474):     "data": "0|40+\u041e\u043f\u0430\u0441\u043d\u043e +2013-09-16 22:25:44"
-
+	Log.d(this.getClass().getName(), "Сообщение в чат канала " + toParse);
+	//09-16 18:25:41.057: D/com.OsMoDroid.IM(1474):     "data": "0|40+\u041e\u043f\u0430\u0441\u043d\u043e +2013-09-16 22:25:44"
 	//"data": "0|40|cxbcxvbcxvbcxvb|2013-03-14 22:42:34"
-	String[] data = jsonObject.optString("data").split("\\|");
+	String[] data = toParse.split("\\|");
 	//Log.d(this.getClass().getName(), "data[0]=" + data[0] + " data[1]=" + data[1] + " data[2]=" + data[2]);
 	String[] datanew = data[1].split("\\+");
 	//Log.d(this.getClass().getName(), "datanew[0]=" + datanew[0] + " datanew[1]=" + datanew[1] + " datanew[2]=" + datanew[2]);
 	for (final Channel channel : LocalService.channelList) {
 		Log.d(this.getClass().getName(), "chanal nest" + channel.name);
-		if (keyname.equals(channel.ch+"_chat")){
+		if (topic.equals(channel.ch+"_chat")){
 			
 		
 		
@@ -617,46 +706,47 @@ if (getMessageType( keyname).equals("chch")){
 				localService.alertHandler.post(new Runnable(){
 					public void run() {
 						if (LocalService.channelsmessagesAdapter!=null&& LocalService.currentChannel != null){
-//							LocalService.currentChannel.messagesstringList.clear();
 							LocalService.currentChannel.messagesstringList.addAll(channel.messagesstringList);
-							
 							LocalService.channelsmessagesAdapter.notifyDataSetChanged();
-
-							
 						}
 					}
 				});
-				
-
-			
-
-		
 		}
-
 	}
-
 }
-
-
-}
-		}
+		
 	} catch (JSONException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-	
-	
-}		 void stop (){
-		running = false;		disconnect();				}
+}	 void stop (){
+		 Log.d(this.getClass().getName(), "void IM.stop");
+		 running = false;
+		 manager.cancel(reconnectPIntent);		 if(mConnection.isConnected()){mConnection.disconnect();}
+		//mConnection=null;
+			}
 
-	private void disconnect() {
-		try {			instream.close();			} catch (Exception e) {				Log.d(this.getClass().getName(), "close"+this);
-			}		try {			in.close();			} catch (Exception e) {				Log.d(this.getClass().getName(), "close2"+this);			}		try {			con.disconnect();			} catch (Exception e) {				Log.d(this.getClass().getName(), "close3"+this);			}
-	}	private class IMRunnable implements Runnable {		StringBuilder stringBuilder= new StringBuilder(1024);		private InputStreamReader stream  = null;		private boolean           error   = false;		private int               retries = 0;		int maxRetries = 100;		public void run() {			Log.d(this.getClass().getName(), "run thread instance:"+this.toString());			String response = "";			while (running) {
-				Log.d(this.getClass().getName(), "adr="+adr);				Log.d(this.getClass().getName(), "running thread instance:"+this.toString());				try {					++retries;					int portOfProxy = android.net.Proxy.getDefaultPort();					if (portOfProxy > 0) {						Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(								android.net.Proxy.getDefaultHost(), portOfProxy));						con = (HttpURLConnection) new URL(adr).openConnection(proxy);					} else {						con = (HttpURLConnection) new URL(adr).openConnection();					}					Log.d(this.getClass().getName(), "Set connect timeout thread instance:"+this.toString());					con.setReadTimeout(pingTimeout*1000);					con.setConnectTimeout(10000);					instream=con.getInputStream();					stream = new InputStreamReader(instream);					in   = new BufferedReader(stream, 1024);					if(error){						error = false;					}					// Set a timeout on the socket					// This prevents getting stuck in readline() if the pipe breaks					retries = 0;					connected = true;					Log.d(this.getClass().getName(), "Connected=true thread instance:"+this.toString());				} catch (UnknownHostException e) {					error = true;					//stop();				} catch (Exception e) {					error = true;					//stop();				}				if(retries > maxRetries) {					stop ();					break;				}				if(retries > 0) {					try {						Thread.sleep(1000);					} catch (InterruptedException e) {						// If can't back-off, stop trying						Log.d(this.getClass().getName(), "Interrupted from sleep thread instance:"+this.toString());						//running = false;						break;					}				}				if(!error && running) {					try {						// Wait for a response from the channel						Log.d(this.getClass().getName(), "Waiting responce thread instance:"+this.toString()+ " adr="+adr);						stringBuilder.setLength(0);						    int c = 0;						    int i=0;						    while (!(c==-1) && running) {						    	c = in.read();						        if (!(c==-1))stringBuilder.append((char) c);						        i=i+1;						    }						    parseEx( stringBuilder.toString());
-						    getadres(myLongPollChList);						instream.close();						in.close();						con.disconnect();
-						Log.d(this.getClass().getName(), "Got responce  thread instance:"+this.toString()+ " adr="+adr);					}					catch(Exception e) {						if(e instanceof SocketTimeoutException){
-							
-						}
-						Log.d(this.getClass().getName(), "Exception after read response :"+e.toString());						e.printStackTrace();
-						error = true;						}					}				else {					// An error was encountered when trying to connect					connected = false;				}			}		}	}}
+	 void resubscribe() {
+		 
+		 if(mConnection!=null&&connOpened){
+			 mConnection.unsubscribe();
+			 Log.d(this.getClass().getName(), "websocket unsubscribe all");
+		for (String str[] : myLongPollChList){
+//			if(str[1].equals("r")){
+//				mConnection.publish(str[0], OsMoDroid.settings.getString("hash", ""));
+//			}
+			mConnection.subscribe(str[0], String.class, new EventHandler() {
+				
+				@Override
+				public void onEvent(String topic, Object event) {
+					 Log.d(this.getClass().getName(), "websocket event:"+((String) event)+" topic:"+topic);
+					parseEx((String) event, topic);
+				}
+			});
+			   Log.d(this.getClass().getName(), "websocket subscribe:"+str[0]);
+            }
+		
+				
+		
+		}
+	}}
