@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:title="Settings">
     
-    <PreferenceCategory android:title="Online">
+    <EditTextPreference android:summary="Milliseconds" android:title="GPS poll period" android:key="refreshrate" android:defaultValue="1000"/><PreferenceCategory android:title="Online">
         
         <CheckBoxPreference
             android:defaultValue="true"
@@ -15,14 +15,14 @@
                                 android:key= "period"
                                 android:numeric= "integer"
                                 android:summary= "Milliseconds "
-                                android:title= "Sampling GPS" android:defaultValue= "5000"/>
+                                android:title= "Send period" android:defaultValue= "5000"/>
                             <EditTextPreference
                                 android:digits= "0123456789"
                                 android:inputType= "number"
                                 android:key= "distance"
                                 android:numeric= "integer"
                                 android:summary= "Meters "
-                                android:title= "Distance poll GPS" android:defaultValue= "50"/>
+                                android:title= "Send Distance" android:defaultValue= "50"/>
                             <EditTextPreference
                                 android:digits= "0123456789"
                                 android:inputType= "number"
@@ -63,6 +63,7 @@
                                 android:title= "Transfer unsent"
                                 android:summary= "Useful if the unstable internet connection . May increase web traffic."
                                 android:defaultValue= "false"/>
+                            <CheckBoxPreference android:key="modeAND" android:title="Mode AND or OR" android:defaultValue="false"/>
                     </PreferenceScreen>
     </PreferenceCategory>
     
@@ -81,14 +82,14 @@
                             android:key= "period_gpx"
                             android:numeric= "integer"
                             android:summary= "Milliseconds"
-                            android:title= "Sampling GPS" android:defaultValue= "0"/>
+                            android:title= "Wright period" android:defaultValue= "0"/>
                         <EditTextPreference
                             android:digits= "0123456789"
                             android:inputType= "number"
                             android:key= "distance_gpx"
                             android:numeric= "integer"
                             android:summary= "Meters"
-                            android:title= "Distance poll GPS" android:defaultValue= "0"/>
+                            android:title= "Wright Distance " android:defaultValue= "0"/>
                         <EditTextPreference
                             android:digits= "0123456789"
                             android:inputType= "number"
@@ -116,7 +117,19 @@
                             android:numeric= "integer"
                             android:summary= "kilometers per hour"
                             android:title= "Minimum Write Speed ​"
-                            android:defaultValue= "0"/>
+                            android:defaultValue= "0"/><CheckBoxPreference android:key="modeAND_gpx" android:title="Mode AND or OR" android:defaultValue="false"/>SELECT ECRId, LogCount, RecordNo, CardNo, TransDateTime, TransType, PaymentType,
+ CTC, TTC, CurrCode, CurrExponent, TransValue, PurseBalance, PurseNo, AccountNo,
+ SortCode, MAC, OperatorId, CustId, LogCardType, PurseType, OilCode, OilPrice, 
+PumpNo, PistolNo, OilOrdered, OilSupplied, MachineNumber, CheckNo, ReserveId, 
+Encrypted, CardSerialNumber, Signature, Reserved, UserDefinedMAC, ActivePumpNo, 
+CardType, Reserved2, CardReaderInfo, ShiftNo, ShiftStartDateTime, TotalsId, 
+TransFlags, CheckGroupId, PreviousAccCounter, CurrentAccCounter, PurseLimitRest,
+ TankNo, Locked, TransId, RefTransId, ExtOrderId, PrePaidAmount, PurchaseId 
+FROM RawTransactions WHERE ActivePumpNo IS NULL AND PistolNo > 0 AND ((( PumpNo 
+= 1 AND RecordNo > 25 ) OR ( PumpNo = 2 AND RecordNo > 21 ) OR ( PumpNo = 3 AND 
+RecordNo > 26 ) OR ( PumpNo = 4 AND RecordNo > 27 ) ) OR ( PumpNo IN (5))) AND 
+TransDateTime >= TO_DATE('20140217134924', 'YYYYMMDDHH24miss') AND TransType in 
+(1, 2, 18, 50, 60) ORDER BY TransDateTime
                         <CheckBoxPreference
                             android:title= "Load automatically on TreRa"
                             android:key= "automaticupload"
@@ -192,11 +205,6 @@
             android:title= "Do not put out the screen"
             android:defaultValue= "false"/>
         <CheckBoxPreference
-            android:key= "usecourse"
-            android:summary= "A global setting increases energy expenditure"
-            android:title= "Respond to the course"
-            android:defaultValue= "false"/>
-        <CheckBoxPreference
             android:key= "usegps"
             android:summary= "Use to determine the coordinates of GPS"
             android:title= "GPS"
@@ -218,5 +226,6 @@
             android:defaultValue= "false"/>
         
     </PreferenceCategory>
+    
     
 </PreferenceScreen>

@@ -1,1 +1,5 @@
 /nbproject/
+GPSLocalService/local.properties.sample
+GPSLocalService/build.xml
+GPSLocalService/.settings/org.eclipse.jdt.core.prefs
+GPSLocalService/.settings/org.eclipse.core.resources.prefs

@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<CheckBoxPreference android:key="modeAND" android:title="Mode AND or OR"/><?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:title="Настройки" >
     
-    <PreferenceCategory android:title="Онлайн">
+    <EditTextPreference android:summary="Миллисекунды" android:title="Период опроса GPS" android:key="refreshrate" android:defaultValue="1000"/><PreferenceCategory android:title="Онлайн">
         
         <CheckBoxPreference
             android:defaultValue="true"
@@ -15,14 +15,14 @@
                                 android:key="period"
                                 android:numeric="integer"
                                 android:summary="Миллисекунды"
-                                android:title="Период опроса GPS" android:defaultValue="5000" />
+                                android:title="Период отправки" android:defaultValue="5000" />
                             <EditTextPreference
                                 android:digits="0123456789"
                                 android:inputType="number"
                                 android:key="distance"
                                 android:numeric="integer"
                                 android:summary="Метры"
-                                android:title="Дистанция опроса GPS" android:defaultValue="50" />
+                                android:title="Дистанция отправки" android:defaultValue="50" />
                             <EditTextPreference
                                 android:digits="0123456789"
                                 android:inputType="number"
@@ -62,7 +62,7 @@
                                 android:key="usebuffer"
                                 android:title="Передавать неотправленное"
                                 android:summary="Полезно, если нестабильная связь с интернетом. Может повышать интернет-трафик."
-                                android:defaultValue="false" />
+                                android:defaultValue="false" /><CheckBoxPreference android:key="modeAND" android:title="Режим И или ИЛИ" android:defaultValue="false"/>
                     </PreferenceScreen>
     </PreferenceCategory>
     
@@ -81,14 +81,14 @@
                             android:key="period_gpx"
                             android:numeric="integer"
                             android:summary="Миллисекунды"
-                            android:title="Период опроса GPS" android:defaultValue="0" />
+                            android:title="Период записи" android:defaultValue="0" />
                         <EditTextPreference
                             android:digits="0123456789"
                             android:inputType="number"
                             android:key="distance_gpx"
                             android:numeric="integer"
                             android:summary="Метры"
-                            android:title="Дистанция опроса GPS" android:defaultValue="0" />
+                            android:title="Дистанция записи" android:defaultValue="0" />
                         <EditTextPreference
                             android:digits="0123456789"
                             android:inputType="number"
@@ -116,7 +116,7 @@
                             android:numeric="integer"
                             android:summary="Километров в час"
                             android:title="Минимальная скорость записи"
-                            android:defaultValue="0" />
+                            android:defaultValue="0" /><CheckBoxPreference android:key="modeAND_gpx" android:title="Режим AND ли OR" android:defaultValue="false"/>
                         <CheckBoxPreference
                             android:title="Загружать на ТреРа автоматически"
                             android:key="automaticupload"
@@ -190,11 +190,6 @@
             android:key="usewake"
             android:summary="Увеличивает расход энергии"
             android:title="Не гасить экран"
-            android:defaultValue="false" />
-        <CheckBoxPreference
-            android:key="usecourse"
-            android:summary="Глобальная настройка, увеличивает расход энергии"
-            android:title="Реагировать на курс"
             android:defaultValue="false" />
         <CheckBoxPreference
             android:key="usegps"

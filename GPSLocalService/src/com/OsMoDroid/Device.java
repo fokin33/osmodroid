@@ -18,7 +18,7 @@ public class Device implements Serializable{
 	public String uid;
 	public String speed="";
 	public String color="AAAAAA";
-	
+	public String ch;
 	public Device(){
 		
 	}
@@ -34,6 +34,7 @@ public class Device implements Serializable{
 	 String online,
 	 String state,
 	 String uid
+	 
 	 ){
 		Log.d(getClass().getSimpleName(), "u="+u+" "+"name="+name+"app="+app+" "+"last="
 	 +last+" "+"url="+url+" "+"where="+where+" "+"lat="+lat+" "+"lon="+lon+" "+"online="+state+" "+"uid="+uid+" ");
@@ -67,7 +68,8 @@ public class Device implements Serializable{
 			 String online,
 			 String state,
 			 String uid,
-			 String color){
+			 String color,
+			 String ch){
 				Log.d(getClass().getSimpleName(), "u="+u+" "+"name="+name+"app="+app+" "+"last="
 			 +last+" "+"url="+url+" "+"where="+where+" "+"lat="+lat+" "+"lon="+lon+" "+"online="+state+" "+"uid="+uid+" ");
 				 this.u=Integer.parseInt(u);

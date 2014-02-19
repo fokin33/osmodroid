@@ -112,7 +112,7 @@ public class Channel {
 				jsonObject.getString("lat"),
 				jsonObject.getString("lon"),
 				jsonObject.getString("online"),
-				jsonObject.getString("state"), "", jsonObject.optString("color")
+				jsonObject.getString("state"), "", jsonObject.optString("color"), ch
 				) );}
 	} catch (JSONException e) {
 		// TODO Auto-generated catch block

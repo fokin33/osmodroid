@@ -241,12 +241,12 @@ PowerManager pm;
 
 	String version="Unknown";
 	SharedPreferences settings;
-	ActionBar.Tab mainTab,devicesTab,channelsTab, simLinksTab, trackListTab, mesListTab, statTab;
+	ActionBar.Tab mainTab,devicesTab,channelsTab, simLinksTab, trackListTab, mesListTab, statTab, mapTab;
 	public ActionBar actionBar;
 	
 	enum TabType
 {
-MAIN, DEVICES, CHANNELS, LINKS, NOTIFS, TRACKS, STAT
+MAIN, DEVICES, CHANNELS, LINKS, NOTIFS, TRACKS, STAT, MAP
 }
  
 // Tab back stacks
@@ -438,6 +438,7 @@ private HashMap<TabType, Stack<String>> backStacks;
 	        backStacks.put(TabType.NOTIFS, new Stack<String>());
 	        backStacks.put(TabType.TRACKS, new Stack<String>());
 	        backStacks.put(TabType.STAT, new Stack<String>());
+	        backStacks.put(TabType.MAP, new Stack<String>());
 	        
 	        }
 	        mainTab = actionBar.newTab().setTag(TabType.MAIN).setText(R.string.tracker).setTabListener(this);
@@ -447,6 +448,7 @@ private HashMap<TabType, Stack<String>> backStacks;
 			trackListTab = actionBar.newTab().setTag(TabType.TRACKS).setText(R.string.tracks).setTabListener(this);
 			mesListTab = actionBar.newTab().setTag(TabType.NOTIFS).setText(R.string.notifications).setTabListener(this);
 			statTab =actionBar.newTab().setTag(TabType.STAT).setText(R.string.stat).setTabListener(this);
+			mapTab =actionBar.newTab().setTag(TabType.MAP).setText(R.string.map).setTabListener(this);
 			Log.d(this.getClass().getSimpleName(), "backstack="+backStacks);
 			addTabs();
 		
@@ -464,15 +466,17 @@ private HashMap<TabType, Stack<String>> backStacks;
 		 }
 		
 		if (!settings.getString("key", "").equals("")){
-			
+			if(mapTab.getPosition()==com.actionbarsherlock.app.ActionBar.Tab.INVALID_POSITION)
+				{actionBar.addTab(mapTab, 2);}
 			if(channelsTab.getPosition()==com.actionbarsherlock.app.ActionBar.Tab.INVALID_POSITION)
-				{actionBar.addTab(channelsTab, 2);}
+				{actionBar.addTab(channelsTab, 3);}
 			if(devicesTab.getPosition()==com.actionbarsherlock.app.ActionBar.Tab.INVALID_POSITION)
-				{actionBar.addTab(devicesTab, 3);}
+				{actionBar.addTab(devicesTab, 4);}
 			if(simLinksTab.getPosition()==com.actionbarsherlock.app.ActionBar.Tab.INVALID_POSITION)
 				{actionBar.addTab(simLinksTab);}
 			if(mesListTab.getPosition()==com.actionbarsherlock.app.ActionBar.Tab.INVALID_POSITION)
 				{actionBar.addTab(mesListTab);}
+			
 			}
 		else {
 			if(devicesTab.getPosition()!=com.actionbarsherlock.app.ActionBar.Tab.INVALID_POSITION)
@@ -483,6 +487,8 @@ private HashMap<TabType, Stack<String>> backStacks;
 				{actionBar.removeTab(simLinksTab);}
 			if(mesListTab.getPosition()!=com.actionbarsherlock.app.ActionBar.Tab.INVALID_POSITION)
 				{actionBar.removeTab(mesListTab);}
+			if(mapTab.getPosition()!=com.actionbarsherlock.app.ActionBar.Tab.INVALID_POSITION)
+				{actionBar.removeTab(mapTab);}
 			}
 		}
 	
@@ -1370,6 +1376,9 @@ case NOTIFS:
 break;
 case STAT:
 	fragment = (SherlockFragment) SherlockFragment.instantiate(this, StatFragment.class.getName());
+break;
+case MAP:
+	fragment = (SherlockFragment) SherlockFragment.instantiate(this, MapFragment.class.getName());
 break;
 default:
 throw new java.lang.IllegalArgumentException("Unknown tab");

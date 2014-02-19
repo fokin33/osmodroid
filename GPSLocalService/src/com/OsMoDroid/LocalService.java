@@ -94,6 +94,8 @@ import java.util.concurrent.TimeUnit;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.osmdroid.api.IGeoPoint;
+import org.osmdroid.util.BoundingBoxE6;
 
 
 
@@ -238,12 +240,6 @@ import android.util.Log;
 
 public  class LocalService extends Service implements LocationListener,GpsStatus.Listener, TextToSpeech.OnInitListener,  ResultsListener, SensorEventListener  {
 
-	@Override
-	public boolean onUnbind(Intent intent) {
-		binded=false;
-		disconnectChannels();
-		return super.onUnbind(intent);
-	}
 	boolean binded=false;
 	private SensorManager mSensorManager;
 	private Sensor mAccelerometer;
@@ -390,13 +386,23 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
     public static DeviceChatAdapter chatmessagesAdapter;
     static Context serContext;
 	protected static boolean uploadto=false;
+	public static DeviceChange devlistener;
+	public static int mapZoom;
+	public static IGeoPoint mapCenter;
     final  Handler alertHandler = new Handler() {
 			@Override
 			public void handleMessage(Message message) {
 			Log.d(this.getClass().getName(), "Handle message "+message.toString());
 			Bundle b = message.getData();
 			Log.d(this.getClass().getName(), "deviceU "+b.getInt("deviceU"));
+			
 			if(b.getInt("deviceU") != -1){
+				String fromDevice=getString(R.string.from_undefined);
+				for (Device dev : LocalService.deviceList){
+					if (b.getInt("deviceU")==dev.u){
+						fromDevice=" "+dev.name;
+					}
+				}
 				Intent intent =new Intent(LocalService.this, GPSLocalServiceClient.class).putExtra("deviceU", b.getInt("deviceU" ));
 				intent.setAction("devicechat");
 				PendingIntent contentIntent = PendingIntent.getActivity(serContext,333,intent, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -404,7 +410,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 			 	NotificationCompat.Builder notificationBuilder =new NotificationCompat.Builder(
 						serContext.getApplicationContext())
 				    	.setWhen(when)
-				    	.setContentText(getString(R.string.message))
+				    	.setContentText(getString(R.string.message)+fromDevice)
 				    	.setContentTitle("OsMoDroid")
 				    	.setSmallIcon(android.R.drawable.ic_menu_send)
 				    	.setAutoCancel(true)
@@ -940,6 +946,9 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	private String androidver;
 	private ObjectInputStream input;
 	 boolean connect=false;
+	private boolean bindedremote;
+	private boolean bindedlocaly;
+	private int pollperiod=0;
 	     static String formatInterval(final long l)
 	    {
 	    	return String.format("%02d:%02d:%02d", l/(1000*60*60), (l%(1000*60*60))/(1000*60), ((l%(1000*60*60))%(1000*60))/1000);
@@ -951,26 +960,66 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 
     }
 
-}
+}	
+	@Override
+	public boolean onUnbind(Intent intent) {
+		if (intent.getAction().equals("OsMoDroid.remote")){
+			bindedremote=false;
+		}else
+		{
+			bindedlocaly=false;
+		}
+		if(!bindedremote&&!bindedlocaly){
+			binded=false;
+			disconnectChannels();
+			}
+		Log.d(this.getClass().getName(), "on unbind "+binded + "intent="+intent.getAction()+" bindedremote="+bindedremote+" bindedlocaly="+bindedlocaly);		
+		return true;
+	}
+	
+	
+	@Override
+	public void onRebind(Intent intent) {
+		if (intent.getAction().equals("OsMoDroid.remote")){
+			bindedremote=true;
+			if (!settings.getString("key", "" ).equals("") )
+			{
+				netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
+			}
+		}else
+		{
+			bindedlocaly=true;
+		}
+			binded=true;
+			connectChannels();
+		
+		
+		Log.d(this.getClass().getName(), "on rebind "+binded + "intent="+intent.getAction()+" bindedremote="+bindedremote+" bindedlocaly="+bindedlocaly);
+		super.onRebind(intent);
+	}
+
+
 	@Override
 	 public IBinder onBind(Intent intent) {
-		binded=true;
-		connectChannels();
-		Log.d(getClass().getSimpleName(), "onbind() "+intent.getAction());
-		Log.d(getClass().getSimpleName(), "onbind() localservice");
-		if (intent.getAction().equals("OsMoDroid.remote"))
+		if (intent.getAction().equals("OsMoDroid.remote")){
+			bindedremote=true;
+			if (!settings.getString("key", "" ).equals("") )
 			{
-			Log.d(getClass().getSimpleName(), "binded remote");
-				if (!settings.getString("key", "" ).equals("") )
-				{
-					netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
-				}
-				return rBinder;
+				netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+settings.getString("device", ""));
 			}
-		else {
-		Log.d(getClass().getSimpleName(), "binded localy");
-			}
-		return mBinder;
+			binded=true;
+			connectChannels();
+			Log.d(this.getClass().getName(), "on rebind "+binded + "intent="+intent.getAction()+" bindedremote="+bindedremote+" bindedlocaly="+bindedlocaly);
+			return rBinder;
+		}else
+		{
+			bindedlocaly=true;
+			binded=true;
+			connectChannels();
+			Log.d(this.getClass().getName(), "on rebind "+binded + "intent="+intent.getAction()+" bindedremote="+bindedremote+" bindedlocaly="+bindedlocaly);
+			return mBinder;
+		}
+		
     }
 
 
@@ -1617,73 +1666,36 @@ settings.edit().putBoolean("ondestroy", false).commit();
 
 
 	private void ReadPref() {
-
 			Log.d(getClass().getSimpleName(), "readpref() localserv");
-
-
-
-			speed =  Integer.parseInt(settings.getString("speed", "3").equals(
-
-					"") ? "3" : settings.getString("speed", "3"));
-
+			try {
+				pollperiod = Integer.parseInt(settings.getString("refreshrate", "0").equals("") ? "0" :settings.getString("refreshrate","0"));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
+			speed =  Integer.parseInt(settings.getString("speed", "3").equals("") ? "3" : settings.getString("speed", "3"));
 			period = Integer.parseInt(settings.getString("period", "10000").equals("") ? "10000" : settings.getString("period", "10000") );
-
 			distance = Integer.parseInt(settings.getString("distance", "50").equals("") ? "50" :settings.getString("distance","50"));
-
 			hash = settings.getString("hash", "");
-
 			n = Integer.parseInt(settings.getString("n", "0").equals("") ? "0" :settings.getString("n","0"));
-
-
-
-			speedbearing = Integer
-
-					.parseInt(settings.getString("speedbearing", "2").equals("")? "2" :settings.getString("speedbearing","2"));
-
+			speedbearing = Integer.parseInt(settings.getString("speedbearing", "2").equals("")? "2" :settings.getString("speedbearing","2"));
 			bearing = Integer.parseInt(settings.getString("bearing", "10").equals("") ? "10" :settings.getString("bearing","2"));
-
 			hdop = Integer.parseInt(settings.getString("hdop", "30").equals("") ? "30" :settings.getString("hdop","30"));
-
 			gpx = settings.getBoolean("gpx", false);
-
 			live = settings.getBoolean("live", true);
-
 			vibrate = settings.getBoolean("vibrate", false);
-
 			usecourse = settings.getBoolean("usecourse", false);
-
 			vibratetime = Integer.parseInt(settings.getString("vibratetime", "200").equals("") ? "200" :settings.getString("vibratetime","0"));
-
 			playsound = settings.getBoolean("playsound", false);
-
 			period_gpx = Integer.parseInt(settings.getString("period_gpx", "0").equals("") ? "0" :settings.getString("period_gpx","0"));
-
 			distance_gpx = Integer.parseInt(settings.getString("distance_gpx", "0").equals("") ? "0" :settings.getString("distance_gpx","0"));
-
-			speedbearing_gpx = Integer
-
-					.parseInt(settings.getString("speedbearing_gpx", "0").equals("")? "0" :settings.getString("speedbearing_gpx","0"));
-
+			speedbearing_gpx = Integer.parseInt(settings.getString("speedbearing_gpx", "0").equals("")? "0" :settings.getString("speedbearing_gpx","0"));
 			bearing_gpx = Integer.parseInt(settings.getString("bearing_gpx", "0").equals("") ? "0" :settings.getString("bearing","0"));
-
 			hdop_gpx = Integer.parseInt(settings.getString("hdop_gpx", "30").equals("") ? "30" :settings.getString("hdop_gpx","30"));
-
-			speed_gpx =  Integer.parseInt(settings.getString("speed_gpx", "3").equals(
-
-					"") ? "3" : settings.getString("speed_gpx", "3"));
-
+			speed_gpx =  Integer.parseInt(settings.getString("speed_gpx", "3").equals("") ? "3" : settings.getString("speed_gpx", "3"));
 			usebuffer = settings.getBoolean("usebuffer", false);
-
 			usewake = settings.getBoolean("usewake", false);
-
 			notifyperiod = Integer.parseInt(settings.getString("notifyperiod", "30000").equals("") ? "30000" :settings.getString("notifyperiod","30000"));
-
 			sendsound = settings.getBoolean("sendsound", false);
-
-			//pass = settings.getString("pass", "");
-
-			Log.d(getClass().getSimpleName(), "localserv hash:"+hash);
-
 		}
 
 
@@ -1938,69 +1950,35 @@ private void manageIM(){
 
 
 	public void requestLocationUpdates() {
-		if (usecourse)	{
-		
-			//Log.d(this.getClass().getName(), "Запускаем провайдера 0 0");
-		
-		
-		
-				
-				
-				
-		
-		
-		
-				myManager.removeUpdates(LocalService.this);
-		
-			if (settings.getBoolean("usegps", true))	{myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, LocalService.this);
-			myManager.addGpsStatusListener(LocalService.this);}
-		
-			if (settings.getBoolean("usenetwork", true)){	myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, LocalService.this);}
-		
 			
-		
-				}
-		
-		else	{
-		
-			//Log.d(this.getClass().getName(), "Запускаем провайдера по настройкам");
-		
-		
-		
-			
-		
-		
-		
-			//myManager.removeUpdates(this);
-		
-		
-		
-			if (period>=period_gpx&&gpx){gpsperiod=period_gpx;}else {gpsperiod=period;};
-		
-			if (distance>=distance_gpx&&gpx){gpsdistance=distance_gpx;}else {gpsdistance=distance;};
-		
-			//Log.d(this.getClass().getName(), "период"+gpsperiod+"meters"+gpsdistance);
+			Log.d(this.getClass().getName(), "Запускаем провайдера по настройкам");
+			Log.d(this.getClass().getName(), "Период опроса:"+pollperiod);
 			List<String> list = myManager.getAllProviders();
 			if (settings.getBoolean("usegps", true))
 			{
 				if(list.contains(LocationManager.GPS_PROVIDER))
 				{
-			myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsperiod, 0, LocalService.this);
-			myManager.addGpsStatusListener(LocalService.this);
+					myManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, pollperiod, 0, LocalService.this);
+					myManager.addGpsStatusListener(LocalService.this);
+				}
+				else
+				{
+					Log.d(this.getClass().getName(), "GPS провайдер не обнаружен");
 				}
 			}
 		
-			if (settings.getBoolean("usenetwork", true)){	
-				
+			if (settings.getBoolean("usenetwork", true))
+			{	
 				if(list.contains(LocationManager.NETWORK_PROVIDER))
 				{
-				myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, gpsperiod, gpsdistance, LocalService.this);
+					myManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, pollperiod, 0, LocalService.this);
 				}
+				else
+				{
+					Log.d(this.getClass().getName(), "NETWORK провайдер не обнаружен");
 				}
-		
-			
-		
-		}
+			}
+
 	}
 
 
@@ -2457,399 +2435,200 @@ private void manageIM(){
 		if (!state){
 			myManager.removeUpdates(this);
 		}
-		
 		currentLocation.set(location);
-		
 		if (LocalService.channelsDevicesAdapter!=null&&LocalService.currentChannel!=null)
 		{
 			 Log.d(this.getClass().getName(), "Adapter:"+ LocalService.channelsDevicesAdapter.toString());
-			
-			 for (Channel channel:LocalService.channelList){
-					if(channel.u==LocalService.currentChannel.u){
+			 for (Channel channel:LocalService.channelList)
+			 	{
+					if(channel.u==LocalService.currentChannel.u)
+					{
 						LocalService.currentchanneldeviceList.clear();
 						LocalService.currentchanneldeviceList.addAll(channel.deviceList);
-				 }
-					
+					}
 				}
-			 
-			 
 			 LocalService.channelsDevicesAdapter.notifyDataSetChanged();
 		}
-		
 		accuracy=Float.toString(location.getAccuracy());
-
-		if (System.currentTimeMillis()<lastgpslocationtime+gpsperiod+30000 && location.getProvider().equals(LocationManager.NETWORK_PROVIDER))
-
+		if (System.currentTimeMillis()<lastgpslocationtime+pollperiod+30000 && location.getProvider().equals(LocationManager.NETWORK_PROVIDER))
 		{
-
 			Log.d(this.getClass().getName(),"У нас есть GPS еще");
-
 			return;
-
-
-
 		}
-
-		//LocwakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "LocWakeLock");
-
-		//	LocwakeLock.acquire();
-
-
-
-			//if (prevlocation_gpx==null)prevlocation_gpx.set(location);
-
-			//if (prevlocation==null)prevlocation=location;
-
-			//if (prevlocation_spd==null&&location.getProvider().equals(LocationManager.GPS_PROVIDER))prevlocation_spd=location;
-
-
-
-		//Toast.makeText(getApplicationContext(), location.getProvider(), 1).show();
-
-
-
-		if (System.currentTimeMillis()>lastgpslocationtime+gpsperiod+30000 && location.getProvider().equals(LocationManager.NETWORK_PROVIDER))
-
+		if (System.currentTimeMillis()>lastgpslocationtime+pollperiod+30000 && location.getProvider().equals(LocationManager.NETWORK_PROVIDER))
 		{
-
 			Log.d(this.getClass().getName(),"У нас уже нет GPS");
-
 			if ((location.distanceTo(prevlocation)>distance && System.currentTimeMillis()>(prevnetworklocationtime+period)))
-
 			{
-
 				prevnetworklocationtime=System.currentTimeMillis();
-
 				sendlocation(location);
-
 				return;
-
 			}
-
-
+		}
+		if(firstsend)
+		{
+			Log.d(this.getClass().getName(),"Первая отправка");
+			sendlocation(location);
+			prevlocation.set(location);
+			prevlocation_gpx.set(location);
+			prevlocation_spd.set(location);
+			prevbrng=brng;
+			workmilli= System.currentTimeMillis();
+			firstsend=false;
 
 		}
-
-
-
-
-
-
-
-
-
-		if  (firstsend)
-
+		if (location.getSpeed()>=speed_gpx/3.6 && (int)location.getAccuracy()<hdop_gpx && prevlocation_spd!=null )
 		{
-
-sendlocation(location);
-prevlocation.set(location);
-prevlocation_gpx.set(location);
-prevlocation_spd.set(location);
-
-prevbrng=brng;
-
-workmilli= System.currentTimeMillis();
-
-		//Log.d(this.getClass().getName(),"workmilli="+ Float.toString(workmilli));
-
-		firstsend=false;
-
+			workdistance=workdistance+location.distanceTo(prevlocation_spd);
+			//Log.d(this.getClass().getName(),"Log of Workdistance, Workdistance="+ Float.toString(workdistance)+" location="+location.toString()+" prevlocation_spd="+prevlocation_spd.toString()+" distanceto="+Float.toString(location.distanceTo(prevlocation_spd)));
+			prevlocation_spd.set(location);	
 		}
 		
-
-
-
-
-
-		if (location.getSpeed()>=speed_gpx/3.6 && (int)location.getAccuracy()<hdop_gpx && prevlocation_spd!=null ){
+		if ((int)location.getAccuracy()<hdop_gpx )
+		{
 			currentspeed=location.getSpeed();
-			if (location.getSpeed()>maxspeed){
-
+			if (location.getSpeed()>maxspeed)
+			{
 				maxspeed=location.getSpeed();
-
 			}
-			
-		workdistance=workdistance+location.distanceTo(prevlocation_spd);
-
-		Log.d(this.getClass().getName(),"Log of Workdistance, Workdistance="+ Float.toString(workdistance)+" location="+location.toString()+" prevlocation_spd="+prevlocation_spd.toString()+" distanceto="+Float.toString(location.distanceTo(prevlocation_spd)));
-
-		prevlocation_spd.set(location);
-
 		}
-
 		//Log.d(this.getClass().getName(),"workmilli="+ Float.toString(workmilli)+" gettime="+location.getTime());
-
 		//Log.d(this.getClass().getName(),"diff="+ Float.toString(location.getTime()-workmilli));
-
 		if (( System.currentTimeMillis()-workmilli)>0){
-
 		avgspeed=workdistance/( System.currentTimeMillis()-workmilli);
-
 		//Log.d(this.getClass().getName(),"avgspeed="+ Float.toString(avgspeed));
-
 		}
-
-		//mp.release();
-
-
-
-
-
 		//Log.d(this.getClass().getName(), df0.format(location.getSpeed()*3.6).toString());
-
 		//Log.d(this.getClass().getName(), df0.format(prevlocation.getSpeed()*3.6).toString());
-
 		if (settings.getBoolean("usetts", false)&&tts!=null && !tts.isSpeaking() && !(df0.format(location.getSpeed()*3.6).toString()).equals(lastsay))
-
 		{
-
 			//Log.d(this.getClass().getName(), df0.format(location.getSpeed()*3.6).toString());
-
 			//Log.d(this.getClass().getName(), df0.format(prevlocation.getSpeed()*3.6).toString());
-
 			tts.speak(df0.format(location.getSpeed()*3.6) , TextToSpeech.QUEUE_ADD, null);
-
 			lastsay=df0.format(location.getSpeed()*3.6).toString();
-
 		}
-
 		position = ( df6.format(location.getLatitude())+", "+df6.format( location.getLongitude())+"\nСкорость:" +df1.format(location.getSpeed()*3.6))+" Км/ч";
-
 		//position = ( String.format("%.6f", location.getLatitude())+", "+String.format("%.6f", location.getLongitude())+" = "+String.format("%.1f", location.getSpeed()));
-
-//if (location.getTime()>lastfix+3000)notifygps(false);
-
-//if (location.getTime()<lastfix+3000)notifygps(true);
-
-
-
-timeperiod= System.currentTimeMillis()-workmilli;
-
-refresh();
-
-
-
-
-
-if (location.getProvider().equals(LocationManager.GPS_PROVIDER))
-
-{
-
-
-
-	lastgpslocationtime=System.currentTimeMillis();
-
-
-
-
-
-
-
-if (gpx && fileheaderok) {
-
-
-
-	if (usecourse){
-
-
-
-	double lon1=location.getLongitude();
-
-	double lon2=prevlocation_gpx.getLongitude();
-
-	double lat1=location.getLatitude();
-
-	double lat2=prevlocation_gpx.getLatitude();
-
-	double dLon=lon2-lon1;
-
-	double y = Math.sin(dLon) * Math.cos(lat2);
-
-	double x = Math.cos(lat1)*Math.sin(lat2) -
-
-	Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
-
-	brng_gpx = Math.toDegrees(Math.atan2(y, x)); //.toDeg();
-
-	position=position+"\n"+getString(R.string.TrackCourseChange)+df1.format( Math.abs(brng_gpx-prevbrng_gpx));
-
-	refresh();
-
-		//Log.d(this.getClass().getName(), "Попали в проверку курса для трека");
-
-	if ((int)location.getAccuracy()<hdop_gpx &&(location.distanceTo(prevlocation_gpx)>distance_gpx || location.getTime()>(prevlocation_gpx.getTime()+period_gpx) || (location.getSpeed()>=speedbearing_gpx/3.6 && Math.abs(brng_gpx-prevbrng_gpx)>=bearing_gpx)))
-
+		//if (location.getTime()>lastfix+3000)notifygps(false);
+		//if (location.getTime()<lastfix+3000)notifygps(true);
+		timeperiod= System.currentTimeMillis()-workmilli;
+		refresh();
+		if (location.getProvider().equals(LocationManager.GPS_PROVIDER))
+		{
+			lastgpslocationtime=System.currentTimeMillis();
+			if (gpx && fileheaderok) 
+			{
+				if (bearing_gpx>0)
+				{	
+					//Log.d(this.getClass().getName(), "Пишем трек с курсом");
+					double lon1=location.getLongitude();
+					double lon2=prevlocation_gpx.getLongitude();
+					double lat1=location.getLatitude();
+					double lat2=prevlocation_gpx.getLatitude();
+					double dLon=lon2-lon1;
+					double y = Math.sin(dLon) * Math.cos(lat2);
+					double x = Math.cos(lat1)*Math.sin(lat2) -	Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
+					brng_gpx = Math.toDegrees(Math.atan2(y, x)); //.toDeg();
+					position=position+"\n"+getString(R.string.TrackCourseChange)+df1.format( Math.abs(brng_gpx-prevbrng_gpx));
+					refresh();
+					if (settings.getBoolean("modeAND_gpx", false)&&(int)location.getAccuracy()<hdop_gpx &&location.getSpeed()>=speed_gpx/3.6&&(location.distanceTo(prevlocation_gpx)>distance_gpx || location.getTime()>(prevlocation_gpx.getTime()+period_gpx) || (location.getSpeed()>=speedbearing_gpx/3.6 && Math.abs(brng_gpx-prevbrng_gpx)>=bearing_gpx)))
+					{
+						prevlocation_gpx.set(location);
+						prevbrng_gpx=brng_gpx;
+						writegpx(location);
+					}
+					if (!settings.getBoolean("modeAND_gpx", false)&&(int)location.getAccuracy()<hdop_gpx &&location.getSpeed()>=speed_gpx/3.6&&(location.distanceTo(prevlocation_gpx)>distance_gpx && location.getTime()>(prevlocation_gpx.getTime()+period_gpx) && (location.getSpeed()>=speedbearing_gpx/3.6 && Math.abs(brng_gpx-prevbrng_gpx)>=bearing_gpx)))
+					{
+						prevlocation_gpx.set(location);
+						prevbrng_gpx=brng_gpx;
+						writegpx(location);
+					}
+					
+				}
+				else
+				{
+					//Log.d(this.getClass().getName(), "Пишем трек без курса");
+					if (location.getSpeed()>=speed_gpx/3.6&&(int)location.getAccuracy()<hdop_gpx&&(location.distanceTo(prevlocation_gpx)>distance_gpx || location.getTime()>(prevlocation_gpx.getTime()+period_gpx) ))
+					{	
+						writegpx(location);
+						prevlocation_gpx.set(location);
+					}
+				}
+			}
+			Log.d(this.getClass().getName(), "sessionstarted="+sessionstarted);
+			if (!hash.equals("") && live&&sessionstarted)
+			{
+				if(bearing>0){
+					//Log.d(this.getClass().getName(), "Попали в проверку курса для отправки");
+					//Log.d(this.getClass().getName(), "Accuracey"+location.getAccuracy()+"hdop"+hdop);
+					double lon1=location.getLongitude();
+					double lon2=prevlocation.getLongitude();
+					double lat1=location.getLatitude();
+					double lat2=prevlocation.getLatitude();
+					double dLon=lon2-lon1;
+					double y = Math.sin(dLon) * Math.cos(lat2);
+					double x = Math.cos(lat1)*Math.sin(lat2)-Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
+					brng = Math.toDegrees(Math.atan2(y, x)); //.toDeg();
+					position=position+"\n"+getString(R.string.SendCourseChange)+df1.format( Math.abs(brng-prevbrng));
+					refresh();
+					if (settings.getBoolean("modeAND", false)&&(int)location.getAccuracy()<hdop && location.getSpeed()>=speed/3.6&&(location.distanceTo(prevlocation)>distance && location.getTime()>(prevlocation.getTime()+period) && (location.getSpeed()>=(speedbearing/3.6) && Math.abs(brng-prevbrng)>=bearing)))
+					{
+						prevlocation.set(location);
+						prevbrng=brng;
+						//Log.d(this.getClass().getName(), "send(location)="+location);
+						sendlocation(location);
+					}
+					if (!settings.getBoolean("modeAND", false)&&(int)location.getAccuracy()<hdop && location.getSpeed()>=speed/3.6&&(location.distanceTo(prevlocation)>distance && location.getTime()>(prevlocation.getTime()+period) && (location.getSpeed()>=(speedbearing/3.6) && Math.abs(brng-prevbrng)>=bearing)))
+					{
+						prevlocation.set(location);
+						prevbrng=brng;
+						//Log.d(this.getClass().getName(), "send(location)="+location);
+						sendlocation(location);
+					}
+					
+				}
+				else 
+				{
+					//Log.d(this.getClass().getName(), "Отправляем без курса");
+					if (settings.getBoolean("modeAND", false)&&(int)location.getAccuracy()<hdop &&location.getSpeed()>=speed/3.6 &&(location.distanceTo(prevlocation)>distance && location.getTime()>(prevlocation.getTime()+period)))
+					{
+						//Log.d(this.getClass().getName(), "Accuracey"+location.getAccuracy()+"hdop"+hdop);
+						prevlocation.set(location);
+						//Log.d(this.getClass().getName(), "send(location)="+location);
+						sendlocation(location);
+					}
+					if (!settings.getBoolean("modeAND", false)&&(int)location.getAccuracy()<hdop &&location.getSpeed()>=speed/3.6 &&(location.distanceTo(prevlocation)>distance || location.getTime()>(prevlocation.getTime()+period)))
+					{
+						//Log.d(this.getClass().getName(), "Accuracey"+location.getAccuracy()+"hdop"+hdop);
+						prevlocation.set(location);
+						//Log.d(this.getClass().getName(), "send(location)="+location);
+						sendlocation(location);
+					}
+					
+				}
+			}
+			else
+			{
+				Log.d(this.getClass().getName(), " not !hash.equals() && live&&sessionstarted");	
+			}
+		}
+	}
+	public void onProviderDisabled(String provider) 
 	{
-
-		prevlocation_gpx.set(location);
-
-		prevbrng_gpx=brng_gpx;
-
-		writegpx(location);
-
-	}
-
-	}
-
-	else {
-
-		//Log.d(this.getClass().getName(), "Пишем трек без курса");
-
-		if (location.getSpeed()>=speed_gpx/3.6&&(int)location.getAccuracy()<hdop_gpx&&(location.distanceTo(prevlocation_gpx)>distance_gpx || location.getTime()>(prevlocation_gpx.getTime()+period_gpx) ))
-
-		{	writegpx(location);
-
-		prevlocation_gpx.set(location);
-
-		}
-
-		}
-
-
-
-}
-Log.d(this.getClass().getName(), "sessionstarted="+sessionstarted);
-		if (!hash.equals("") && live&&sessionstarted)
-
-		{
-
-		if(usecourse){
-
-			Log.d(this.getClass().getName(), "Попали в проверку курса для отправки");
-
-			 Log.d(this.getClass().getName(), "Accuracey"+location.getAccuracy()+"hdop"+hdop);
-
-			double lon1=location.getLongitude();
-
-			double lon2=prevlocation.getLongitude();
-
-
-
-			double lat1=location.getLatitude();
-
-			double lat2=prevlocation.getLatitude();
-
-			double dLon=lon2-lon1;
-
-			double y = Math.sin(dLon) * Math.cos(lat2);
-
-			double x = Math.cos(lat1)*Math.sin(lat2) -
-
-			Math.sin(lat1)*Math.cos(lat2)*Math.cos(dLon);
-
-			brng = Math.toDegrees(Math.atan2(y, x)); //.toDeg();
-
-			position=position+"\n"+getString(R.string.SendCourseChange)+df1.format( Math.abs(brng-prevbrng));
-
-			refresh();
-
-
-
-		if (
-
-				(int)location.getAccuracy()<hdop && location.getSpeed()>=speed/3.6 &&
-
-				(location.distanceTo(prevlocation)>distance || location.getTime()>(prevlocation.getTime()+period) || (location.getSpeed()>=(speedbearing/3.6) && Math.abs(brng-prevbrng)>=bearing)))
-
-		{
-
-
-
-
-
-			prevlocation.set(location);
-
-			prevbrng=brng;
-			Log.d(this.getClass().getName(), "send(location)="+location);
-		sendlocation ( location);
-
-
-
-
-
-		}
-else {
-	Log.d(this.getClass().getName(),Float.toString(location.distanceTo(prevlocation)));
-	Log.d(this.getClass().getName(), Integer.toString(distance));
-	Log.d(this.getClass().getName(), Long.toString(location.getTime()));
-	Log.d(this.getClass().getName(), Long.toString(prevlocation.getTime()+period));
-	Log.d(this.getClass().getName(),  Float.toString((location.getSpeed())));
-	Log.d(this.getClass().getName(),  Float.toString((float) ((speedbearing/3.6))));
-	Log.d(this.getClass().getName(), Boolean.toString( ( Math.abs(brng-prevbrng)>=bearing)));
-	Log.d(this.getClass().getName(), "не выдержали проверку на курс");
-}
-
-
-		}
-
-		 else {
-
-			 Log.d(this.getClass().getName(), "Отправляем без курса");
-
-			 if ((int)location.getAccuracy()<hdop &&location.getSpeed()>=speed/3.6 &&(location.distanceTo(prevlocation)>distance || location.getTime()>(prevlocation.getTime()+period)))
-
-			 {
-
-				 //Log.d(this.getClass().getName(), "Accuracey"+location.getAccuracy()+"hdop"+hdop);
-
-				 prevlocation.set(location);
-					Log.d(this.getClass().getName(), "send(location)="+location);
-				 sendlocation (location);
-
-			 } else {
-				 Log.d(this.getClass().getName(), "не отправляем без курса");
-			 }
-
-
-
-		 }
-
-
-
-		}
-		else {
-			Log.d(this.getClass().getName(), " not !hash.equals() && live&&sessionstarted");	
-		}
-
-
-
-}
-
-//LocwakeLock.release();
-
-}
-
-
-
-	public void onProviderDisabled(String provider) {
-
-		// TODO Auto-generated method stub
-
-
-
+		Log.d(this.getClass().getName(), "Выключен провайдер:"+provider);
 	}
 
 
 
-	public void onProviderEnabled(String provider) {
-
-		// TODO Auto-generated method stub
-
-
-
+	public void onProviderEnabled(String provider)
+	{
+		Log.d(this.getClass().getName(), "Включен провайдер:"+provider);
 	}
 
 
 
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-
-
-
-		// TODO Auto-generated method stub
-
-
-
+		Log.d(this.getClass().getName(), "Изменился статус провайдера:"+provider+" статус:"+status+" Бандл:"+extras.getInt("satellites"));
 	}
 
 	 private String getPage(String adr, String buf) throws IOException {

@@ -640,9 +640,12 @@ if (getMessageType( topic).equals("ch")){
 	String[] data = toParse.split("\\|");
 	String[] datanew = data[1].split("\\+");
 	//Log.d(this.getClass().getName(), "data[0]=" + data[0] + " data[1]=" + data[1] + " data[2]=" + data[2]+" data[3]="+data[3]+" data[4]="+data[4]);
-	if(data[0].equals("0")){
+	if(data[0].equals("0"))
+	{
 		for (Channel channel : LocalService.channelList)
 		{
+			if (channel.ch.equals(topic))
+			{
 			Log.d(this.getClass().getName(), "chanal nest" + channel.name);
 			for (Device device : channel.deviceList) {
 				Log.d(this.getClass().getName(), "device nest" + device.name + " " + device.u);
@@ -652,11 +655,14 @@ if (getMessageType( topic).equals("ch")){
 					device.lon = Float.parseFloat(datanew[2]);
 					device.speed= datanew[3];
 					Log.d(this.getClass().getName(), "Изменилось состояние устройства в канале на" + device.toString());
+					if(LocalService.devlistener!=null){LocalService.devlistener.onDeviceChange(device);}
 				}
 
 			}
 
 		}
+	}
+		
 		localService.informRemoteClientChannelUpdate();
 		localService.alertHandler.post(new Runnable() {
 			public void run() {

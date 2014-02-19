@@ -165,4 +165,6 @@
 <string name="ingoing2">Mileage</string>
 <string name="sended">Sended</string><string name="wekksends">Week sends:</string>
 <string name="writen">Recorded</string>
+<string name="from_undefined">from undefined</string>
+<string name="map">Map</string>
 </resources>
