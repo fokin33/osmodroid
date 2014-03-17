@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<string name="app_name"> OsMoDroid </string>
-<string name="start"> Start </string>
-<string name="stop"> Stop </string>
-<string name="serviceStatus"> Status: </string>
-<string name="location">&quot;Location:&quot; </string>
-<string name="sends">Sending: </string>
+<string name="app_name">OsMoDroid</string>
+<string name="start">Start</string>
+<string name="stop">Stop</string>
+<string name="serviceStatus">State: </string>
+<string name="location">Location: </string>
+<string name="sends">Status: </string>
 <string name="url">Address: </string>
 <string name="settings">Settings</string>
 <string name="period">Sampling GPS </string>
 <string name="succes">Successfully</string>
 <string name="error">Error: </string>
 <string name="Sputniki">Satellites: </string>
-<string name="GlonasFindString">&quot; uses Glonass&quot;</string>
+<string name="GlonasFindString"> uses Glonass</string>
 <string name="NoConnection">No connection</string>
 <string name="Unknow">Unknown</string>
 <string name="NotDefined">Undefined</string>
-<string name="Sended">&quot;Sending :&quot;</string>
-<string name="Adres">&quot;Address :&quot; </string>
-<string name="RepeatAuth">Reset hash</string>
+<string name="Sended">Sending:</string>
+<string name="Adres">Address: </string>
+<string name="RepeatAuth">Reset login data</string>
 <string name="Settings">Settings</string>
 <string name="EqualsParameters">Equate settings</string>
 <string name="AgreeRepeatAuth">Confirm re-authorization request</string>
-<string name="ChangeAdresMonitor">This change monitoring address! </string>
+<string name="ChangeAdresMonitor">This change monitoring address!</string>
 <string name="yes">Yes</string>
 <string name="No">No</string>
 <string name="AgreeParameterEqual">Confirm equating transmission parameters and recording</string>
 <string name="TrackRecordParameterChanges">Track recording parameters will change</string>
-<string name="Running">Launched </string>
-<string name="NotRunning">Not started </string>
+<string name="Running">Launched</string>
+<string name="NotRunning">Not launched</string>
 <string name="Status">Status:</string>
 <string name="Sendcount">Sends: </string>
 <string name="ErrorRecieve">Error retrieving</string>
@@ -39,14 +39,14 @@
 <string name="SendCourseChange">Change the transmission rate:</string>
 <string name="TrackCourseChange">Changing course track:</string>
 <string name="ServerError">Server Error</string>
-<string name="buffer">&quot; Buffer :&quot; </string>
-<string name="request">Authorization request , please wait ...</string>
-<string name="noappcode">Not Set password</string>
+<string name="buffer">Buffer: </string>
+<string name="request">Authorization request, please wait ...</string>
+<string name="noappcode">Empty password</string>
 <string name="nokey">Authorize failed</string>
 <string name="getkey">Authorize</string>
 <string name="getadres">Get Address</string>
 <string name="getdevice">Get device</string>
-<string name="enterchanel">Log in channel</string>
+<string name="enterchanel">Enter to channel</string>
 <string name="SimLinkButtonText">Update</string>
 <string name="addsymlink">Add link</string>
 <string name="symlink">My Links</string>
@@ -54,21 +54,31 @@
 <string name="message">Message</string>
 <string name="sendsupport">Report to support</string>
 <string name="about">About</string>
-<string name="abouttext"> OsMoDroid, monitoring client OsMo \n Author : Denis Fokin (c) 2012-2014 \n \n Using this application you accept the Terms of Use : http://esya.ru/om/terms/ \n \n Site OsMoDroid: http://osmodroid.com \nManual on OsMoDroid: http://osmodroid.com/help/ \nLink with OsmAnd: http://osmodroid.com/withosmand.html \n \nManual monitoring : http://esya.ru/om/start/ </string>
+<string name="abouttext">OsMoDroid, monitoring client of OsMo
+Author: Denis Fokin (c) 2012-2014
+
+Using this application you accept the Terms of Use: http://esya.ru/om/terms/ 
+ 
+The OsMoDroid site: http://osmodroid.com 
+Manual of OsMoDroid: http://osmodroid.com/help/
+Link with OsmAnd: http://osmodroid.com/withosmand.html 
+
+Manual about monitoring: http://esya.ru/om/start/</string>
 <string name="send">Send</string>
 <string name="cancel">Cancel</string>
 <string name="speed">Speed: km/h</string>
-<string name="auth">Link to account</string>
+<string name="auth">Authorization</string>
 <string name="warnhash">Identification data ( hash or check number ) is incorrect, you need to reset the hash
-\n or enter it manually in the settings</string>
-<string name="nomapapp">Not installed application like Maps </string>
+
+ or enter it manually in the settings</string>
+<string name="nomapapp">Not installed application like Maps</string>
 <string name="showonmap">Shown on the map</string>
-<string name="chanal">&quot;Channel &quot;</string>
+<string name="chanal">Channel </string>
 <string name="refresh">Update</string>
 <string name="coordinats">Location:</string>
 <string name="Distantion">Range:</string>
-<string name="Km">&quot; Km&quot;</string>
-<string name="m">&quot; m&quot; </string>
+<string name="Km"> Km</string>
+<string name="m"> m </string>
 <string name="chanals">Channels</string>
 <string name="yourmessage">Your message:</string>
 <string name="sendingmessage">Sending a message</string>
@@ -88,7 +98,7 @@
 <string name="noallenter">Does not include all data</string>
 <string name="bindtochanal">Connection to the channel</string>
 <string name="requestdevicebefore">Prior request device</string>
-<string name="chatwith">&quot;Chat with &quot;</string>
+<string name="chatwith">Chat with </string>
 <string name="devices">Devices</string>
 <string name="writemessage">Write message</string>
 <string name="messages">Messages</string>
@@ -96,7 +106,7 @@
 <string name="hash">Hash:</string>
 <string name="controlnumber">Confirmation code:</string>
 <string name="bindapp">Connect app</string>
-<string name="esya_ru_notrespond">Esya.ru not responding. Check the operation of the Internet. </string>
+<string name="esya_ru_notrespond">OsMoDroid can`t access to server</string>
 <string name="tracker">Tracker</string>
 <string name="links">Links</string>
 <string name="tracks">Tracks</string>
@@ -105,7 +115,7 @@
 <string name="login">Login to Esya.ru:</string>
 <string name="password">Password:</string>
 <string name="appauth">Authorization Application</string>
-<string name="inbuffer">&quot; in buffer :&quot;</string>
+<string name="inbuffer"> in buffer :</string>
 <string name="authpleasewait">Authorization request , please wait ...</string>
 <string name="commandpleasewait">Command is executed , please wait ...</string>
 <string name="resultenterchanalnoget">Result entrance to the channel is not received </string>
@@ -116,28 +126,28 @@
 <string name="prefloaded">Settings read from the memory card</string>
 <string name="started">Running</string>
 <string name="stoped">Stopped</string>
-<string name="monitoringondevice">&quot; Monitoring on the device \&quot; &quot;</string>
+<string name="monitoringondevice">Monitoring on the device \"</string>
 <string name="enternet">Entered the network</string>
 <string name="exitnet">Left the network </string>
-<string name="device">&quot; The device \&quot; &quot;</string>
-<string name="accuracy">&quot; Accuracy :&quot;</string>
-<string name="maximal">&quot; Max :&quot; </string>
-<string name="kmch">&quot; km/h \n&quot; </string>
-<string name="average">&quot; Average :&quot;</string>
-<string name="going">&quot; Run :&quot;</string>
-<string name="km">&quot; km&quot; </string>
-<string name="worktime">&quot; Working time :&quot;</string>
+<string name="device"> The device \" </string>
+<string name="accuracy"> Accuracy :</string>
+<string name="maximal"> Max : </string>
+<string name="kmch">km/h</string>
+<string name="average"> Average :</string>
+<string name="going">Mileage:</string>
+<string name="km"> km </string>
+<string name="worktime"> Working time :</string>
 <string name="observers">Observers</string>
 <string name="monitoringstarted">Monitoring started</string>
 <string name="monitoringactive">Monitoring is active</string>
-<string name="tracktoshort">Track is too short ( less than 1 kb) , the file will not be saved or uploaded</string>
+<string name="tracktoshort">Track is too short (less than 1 KB), the file will not be saved or uploaded</string>
 <string name="osmodroiduploadfile">OsMoDroid File upload</string>
-<string name="commansendlocation">&quot; Command: Sending position &quot;</string>
+<string name="commansendlocation"> Command: Sending position </string>
 <string name="letsgo">Lets go!</string>
 <string name="comand">Command:</string>
-<string name="errorcode">&quot; Error code :&quot;</string>
-<string name="detalisation">&quot; Explanation :&quot;</string>
-<string name="query">&quot;Query :&quot;</string>
+<string name="errorcode"> Error code :</string>
+<string name="detalisation"> Explanation :</string>
+<string name="query">Query :</string>
 <string name="versionosmodroid">version OsMoDroid:</string>
 <string name="dayssend">shipments per day:</string>
 <string name="monthsends">shipments per month:</string>
@@ -145,7 +155,7 @@
 <string name="savepref">Save Settings on the SDcard</string>
 <string name="loadpref">Load settings from the SDcard</string>
 <string name="more">More</string>
-<string name="iamhere">&quot; I'm here ! &quot;</string>
+<string name="iamhere"> I'm here ! </string>
 <string name="linkcopied">Link copied to clipboard</string>
 <string name="Stoping">Stop</string>
 <string name="closesession">Close session ?</string>
@@ -163,8 +173,9 @@
 <string name="avg">Average</string>
 <string name="inway">in the way</string>
 <string name="ingoing2">Mileage</string>
-<string name="sended">Sended</string><string name="wekksends">Week sends:</string>
+<string name="sended">Sended</string>
 <string name="writen">Recorded</string>
-<string name="from_undefined">from undefined</string>
+<string name="wekksends">Week sends:</string>
+<string name="from_undefined">from anonymous</string>
 <string name="map">Map</string>
 </resources>
