@@ -38,7 +38,7 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 
 	
 	private  WampConnection mConnection = new WampConnection();
-	final String wsuri = "ws://osmase.com:8080/";
+	final String wsuri = "ws://osmo.mobi:5739/";
 
 	protected boolean connOpened=false;	public IM(ArrayList<String[]> longPollChList, Context context,String key,final LocalService localService) {
 	
