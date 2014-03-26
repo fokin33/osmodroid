@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.OsMoDroid"
     android:versionCode="75"
-    android:versionName="1.0.0.75T" android:installLocation="auto">
+    android:versionName="1.0.0.76" android:installLocation="auto">
 
 
     <uses-sdk android:minSdkVersion="5"  />

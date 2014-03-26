@@ -144,7 +144,7 @@
 <string name="savepref">Save Settings on the SDcard</string>
 <string name="loadpref">Load settings from the SDcard</string>
 <string name="more">More</string>
-<string name="iamhere"> I'm here ! </string>
+<string name="iamhere"> I\'m here ! </string>
 <string name="linkcopied">Link copied to clipboard</string>
 <string name="Stoping">Stop</string>
 <string name="closesession">Close session ?</string>
