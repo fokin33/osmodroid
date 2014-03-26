@@ -243,8 +243,8 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 			ImageButton rotateImageButton = (ImageButton)view.findViewById(R.id.ImageButtonRotate);
 			mMapView.setTileSource(myTileSource);
 			
-			TextView copyrightsTextView = (TextView)view.findViewById(R.id.mapCopyright);
-			copyrightsTextView.setText("Map Data: © OpenStreetMap contributors \n Tiles: © GIScience Heidelberg");
+			//TextView copyrightsTextView = (TextView)view.findViewById(R.id.mapCopyright);
+			//copyrightsTextView.setText("Map Data: © OpenStreetMap contributors \n Tiles: © GIScience Heidelberg");
 			if(myTracePathOverlay==null)
 			{
 				myTracePathOverlay=new PathOverlay(Color.RED, 10, mResourceProxy);

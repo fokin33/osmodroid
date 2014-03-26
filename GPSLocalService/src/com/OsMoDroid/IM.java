@@ -29,7 +29,7 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 	
 	private static final String KEEPALIVE_INTENT = "com.osmodroid.keepalive";
 
-	protected  boolean running       = false;	//protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	private boolean log=false;
+	protected  boolean running       = false;	//protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	private boolean log=true;
 	String adr;	String mykey;//	String timestamp=Long.toString(System.currentTimeMillis());String lcursor="";	int pingTimeout=900;	Thread myThread;	private BufferedReader    in      = null;	Context parent;	String myLongPollCh;
 	ArrayList<String[]>  myLongPollChList;	//ArrayList<String> list= new ArrayList<String>();	ConnectionHandler c;
 	//WebSocketConnectionHandler wsc;
@@ -762,7 +762,10 @@ private void addToChannelChat(String toParse, String topic) {
 				if(log)Log.d(this.getClass().getName(), "Сообщение от устройства в канале " + device.toString());
 				fromDevice = device.name;
 			}
-			
+			if (datanew[0].equals(OsMoDroid.settings.getString("device", ""))){
+				fromDevice="Я";
+				if(log)Log.d(this.getClass().getName(), "Сообщение от устройства в канале от меня ");
+			}
 		}
 		Intent intent =new Intent(localService, GPSLocalServiceClient.class).putExtra("channelpos", channel.u);
 		intent.setAction("channelchat");
@@ -771,7 +774,7 @@ private void addToChannelChat(String toParse, String topic) {
 	 	NotificationCompat.Builder notificationBuilder =new NotificationCompat.Builder(
 				localService.getApplicationContext())
 		    	.setWhen(when)
-		    	.setContentText(localService.getString(R.string.message)+fromDevice)
+		    	.setContentText(localService.getString(R.string.message)+" "+fromDevice+": "+datanew[1])
 		    	.setContentTitle("OsMoDroid")
 		    	.setSmallIcon(android.R.drawable.ic_menu_send)
 		    	.setAutoCancel(true)
@@ -792,7 +795,7 @@ if (!OsMoDroid.settings.getBoolean("silentnotify", false)){
 		
 		
 				channel.messagesstringList.clear();
-				channel.messagesstringList.add(fromDevice + ":"+datanew[1]);
+				channel.messagesstringList.add(fromDevice + ": "+datanew[1]);
 				localService.alertHandler.post(new Runnable(){
 					public void run() {
 						if (LocalService.channelsmessagesAdapter!=null&& LocalService.currentChannel != null&&LocalService.currentChannel.u==channel.u ){
