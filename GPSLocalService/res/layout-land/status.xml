@@ -8,7 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="0dp" android:baselineAligned="false">
+        android:layout_margin="0dp"
+        android:baselineAligned="false" >
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -22,6 +23,7 @@
                 android:id="@+id/TextView01"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
                 android:text="@string/spd"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/sign_text_size" />
@@ -31,18 +33,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_margin="0dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginTop="-15dp"
                 android:text="0"
-                android:textSize="@dimen/speed_text_size"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                 />
+                android:textSize="@dimen/speed_text_size" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="0.50"
             android:gravity="center|right"
             android:orientation="vertical" >
@@ -51,7 +52,6 @@
                 android:id="@+id/TextView03"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="0dp"
                 android:text="@string/max"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/sign_text_size" />
@@ -60,9 +60,7 @@
                 android:id="@+id/MaxSpeedTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="0dp"
-                android:layout_marginBottom="0dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="-10dp"
                 android:text="0"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/all_text_size" />
@@ -71,6 +69,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
                 android:text="@string/avg"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/sign_text_size" />
@@ -79,9 +78,11 @@
                 android:id="@+id/AvgSpeedtextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
                 android:text="0"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/all_text_size" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -92,54 +93,45 @@
             android:gravity="center|right"
             android:orientation="vertical" >
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/TextView07"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.50"
-                android:gravity="right"
-                android:orientation="vertical" >
+                android:text="@string/ingoing2"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="@dimen/sign_text_size" />
 
-                <TextView
-                    android:id="@+id/TextView07"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ingoing2"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="@dimen/sign_text_size" />
-
-                <TextView
-                    android:id="@+id/WorkDistanceTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="@dimen/all_text_size" />
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/WorkDistanceTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
                 android:layout_weight="0.50"
-                android:baselineAligned="false"
-                android:gravity="center|right"
-                android:orientation="vertical" >
+                android:text="0"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="@dimen/all_text_size" />
 
-                <TextView
-                    android:id="@+id/TextView06"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/inway"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="@dimen/sign_text_size" />
+            <TextView
+                android:id="@+id/TextView06"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
+                android:layout_weight="0.50"
+                android:text="@string/inway"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="@dimen/sign_text_size" />
 
-                <TextView
-                    android:id="@+id/timeperiodTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="00:00:00"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="@dimen/all_text_size" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/timeperiodTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
+                android:layout_weight="0.50"
+                android:text="00:00:00"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="@dimen/all_text_size" />
+
         </LinearLayout>
 
     </LinearLayout>
@@ -147,7 +139,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center" android:baselineAligned="false">
+        android:layout_marginTop="-10dp"
+        android:baselineAligned="false"
+        android:gravity="center" >
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -168,6 +162,7 @@
                 android:id="@+id/sendTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
                 android:layout_weight="0.90"
                 android:text="0"
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -195,10 +190,12 @@
                 android:id="@+id/WriteTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
                 android:layout_weight="0.5"
                 android:text="0"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="@dimen/all_text_size" />
+
         </LinearLayout>
 
     </LinearLayout>

@@ -39,7 +39,7 @@ import android.util.Pair;
  */
 public class WebSocketReader extends Thread {
 
-   private static final boolean DEBUG = true;
+   private static final boolean DEBUG = false;
    private static final String TAG = WebSocketReader.class.getName();
 
    private final Handler mMaster;

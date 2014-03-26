@@ -134,6 +134,7 @@ TransDateTime >= TO_DATE('20140217134924', 'YYYYMMDDHH24miss') AND TransType in
                             android:title= "Load automatically on TreRa"
                             android:key= "automaticupload"
                             android:defaultValue= "false"/>
+                        <EditTextPreference android:title="SDcard path" android:key="sdpath"/>
                 </PreferenceScreen>
                     
     </PreferenceCategory>

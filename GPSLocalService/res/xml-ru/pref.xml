@@ -1,4 +1,3 @@
-<CheckBoxPreference android:key="modeAND" android:title="Mode AND or OR"/><?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:title="Настройки" >
     
     <EditTextPreference android:summary="Миллисекунды" android:title="Период опроса GPS" android:key="refreshrate" android:defaultValue="1000"/><PreferenceCategory android:title="Онлайн">
@@ -120,7 +119,7 @@
                         <CheckBoxPreference
                             android:title="Загружать на ТреРа автоматически"
                             android:key="automaticupload"
-                            android:defaultValue="false"/>
+                            android:defaultValue="false"/><EditTextPreference android:title="Путь к SDcard" android:key="sdpath" />
                 </PreferenceScreen>
                     
     </PreferenceCategory>

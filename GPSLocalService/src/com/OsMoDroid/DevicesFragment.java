@@ -43,19 +43,24 @@ public class DevicesFragment extends SherlockFragment implements ResultsListener
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		registerForContextMenu(lv1);
-		globalActivity=(GPSLocalServiceClient) getSherlockActivity();
+		//globalActivity=(GPSLocalServiceClient) getSherlockActivity();
 		super.onActivityCreated(savedInstanceState);
 	}
 	
 	@Override
 	public void onResume() {
-		globalActivity.devicesTab.setText(R.string.devices);
-		if(globalActivity.NeedIntent!=null){
-			if(globalActivity.NeedIntent.getAction().equals("devicechat")){
-			globalActivity.openTabByIntent(globalActivity.NeedIntent);
-			globalActivity.NeedIntent=null;
-			}
-		}
+		Log.d(getClass().getSimpleName(),"devicesfragment Onresume");
+		globalActivity.actionBar.setTitle(R.string.devices);
+if(deviceU!=-1){
+	openDeviceChat(deviceU);
+	
+}
+		//		if(globalActivity.NeedIntent!=null){
+//			if(globalActivity.NeedIntent.getAction().equals("devicechat")){
+//			globalActivity.openTabByIntent(globalActivity.NeedIntent);
+//			globalActivity.NeedIntent=null;
+//			}
+//		}
 		super.onResume();
 	}
 
@@ -178,11 +183,7 @@ public class DevicesFragment extends SherlockFragment implements ResultsListener
 
 
 		  if (item.getItemId() == 2) {
-			  	DeviceChatFragment myDetailFragment = new DeviceChatFragment();
-			    Bundle bundle = new Bundle();
-			    bundle.putInt("deviceU", LocalService.deviceList.get((int) acmi.id).u);
-			    myDetailFragment.setArguments(bundle);
-			    globalActivity.addFragment(myDetailFragment);
+			  	openDeviceChat(LocalService.deviceList.get((int) acmi.id).u);
 			   return true;
 
 	    }
@@ -224,6 +225,22 @@ public class DevicesFragment extends SherlockFragment implements ResultsListener
 		return super.onContextItemSelected(item);
 	}
 
+	void openDeviceChat(int i) {
+		 globalActivity.drawClickListener.devchat = new DeviceChatFragment();
+		Bundle bundle = new Bundle();
+		bundle.putInt("deviceU", i);
+		globalActivity.drawClickListener.devchat.setArguments(bundle);
+		globalActivity.showFragment(globalActivity.drawClickListener.devchat,true);
+	}
+
+	@Override
+	public void onDetach() {
+		globalActivity=null;
+		
+		Log.d(getClass().getSimpleName(),"devicesfragment OnDetach");
+		super.onDetach();
+	}
+
 	/* (non-Javadoc)
 	 * @see android.support.v4.app.Fragment#onCreateContextMenu(android.view.ContextMenu, android.view.View, android.view.ContextMenu.ContextMenuInfo)
 	 */
@@ -242,17 +259,29 @@ public class DevicesFragment extends SherlockFragment implements ResultsListener
 
 	private GPSLocalServiceClient globalActivity;
 	private ListView lv1;
+	 int deviceU=-1;
+	//private boolean openedbynotification=false;
+	
+	
+	public void needToOpenChat(int i)
+	{
+		deviceU=i;
+	}
 	
 	 @Override
      public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
          setHasOptionsMenu(true);
-         setRetainInstance(true);
-         super.onCreate(savedInstanceState);
+         Bundle bundle = getArguments();
+		   
+		   Log.d(getClass().getSimpleName(),"devicesfragment OnCreate bundle="+bundle);
+         //setRetainInstance(true);
+         Log.d(getClass().getSimpleName(),"devicesfragment OnCreate");
      }
 	
 	@Override
 	public void onAttach(Activity activity) {
+		Log.d(getClass().getSimpleName(),"devicesfragment OnAttach");
 		globalActivity = (GPSLocalServiceClient)activity;// TODO Auto-generated method stub
 		super.onAttach(activity);
 	}
@@ -347,6 +376,8 @@ public class DevicesFragment extends SherlockFragment implements ResultsListener
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	
+		
 		View view=inflater.inflate(R.layout.mydevices, container, false);
 		lv1 = (ListView) view.findViewById(R.id.mydeviceslistView);
 
@@ -379,6 +410,14 @@ public class DevicesFragment extends SherlockFragment implements ResultsListener
 
 	}
 	
+	@Override
+	public void onPause() {
+		deviceU=-1;
+		Log.d(getClass().getSimpleName(),"onpause");
+		//openedbynotification=true;
+		super.onPause();
+	}
+
 	static public void getDevices(ResultsListener listener , Context ctx){
 
 		netutil.newapicommand(listener,ctx, "om_device");

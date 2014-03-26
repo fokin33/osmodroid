@@ -24,9 +24,7 @@ public class StatFragment extends SherlockFragment {
 	private BroadcastReceiver receiver;
 	@Override
 	public void onDestroy() {
-		if (receiver != null) {
-			globalActivity.unregisterReceiver(receiver);
-		}
+		
 		super.onDestroy();
 	}
 	@Override
@@ -35,10 +33,23 @@ public class StatFragment extends SherlockFragment {
 		super.onAttach(activity);
 	}
 	 @Override
+	public void onResume() {
+		 globalActivity.actionBar.setTitle(getString(R.string.stat));
+		super.onResume();
+	}
+	@Override
+	public void onDetach() {
+		if (receiver != null) {
+			globalActivity.unregisterReceiver(receiver);
+		}
+		globalActivity=null;
+		super.onDetach();
+	}
+	@Override
      public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
          setHasOptionsMenu(true);
-         setRetainInstance(true);
+         //setRetainInstance(true);
          super.onCreate(savedInstanceState);
      }
 	@Override

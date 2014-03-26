@@ -54,7 +54,7 @@
 <string name="message">Message</string>
 <string name="sendsupport">Report to support</string>
 <string name="about">About</string>
-<string name="abouttext"> OsMoDroid, monitoring client OsMo \n Author : Denis Fokin (c) 2012-2014 \n \n Using this application you accept the Terms of Use : http://esya.ru/om/terms/ \n \n Site OsMoDroid: http://osmodroid.com \nManual on OsMoDroid: http://osmodroid.com/help_android.html \nLink with OsmAnd: http://osmodroid.com/withosmand.html \n \nManual monitoring : http://esya.ru/om/start/ </string>
+<string name="abouttext"> OsMoDroid, monitoring client OsMo \n Author : Denis Fokin (c) 2012-2014 \n \n Using this application you accept the Terms of Use : http://esya.ru/om/terms/ \n \n Site OsMoDroid: http://osmodroid.com \nManual on OsMoDroid: http://osmodroid.com/help/ \nLink with OsmAnd: http://osmodroid.com/withosmand.html \n \nManual monitoring : http://esya.ru/om/start/ </string>
 <string name="send">Send</string>
 <string name="cancel">Cancel</string>
 <string name="speed">Speed: km/h</string>
@@ -73,7 +73,7 @@
 <string name="yourmessage">Your message:</string>
 <string name="sendingmessage">Sending a message</string>
 <string name="sharelink">Share</string>
-<string name="deviceslis">Device List</string>
+<string name="deviceslis">Messages</string>
 <string name="messagetochanal">Message to the channel</string>
 <string name="copylink">Copy this link</string>
 <string name="openinbrowser">Open in Browser</string>
@@ -97,7 +97,7 @@
 <string name="controlnumber">Confirmation code:</string>
 <string name="bindapp">Connect app</string>
 <string name="esya_ru_notrespond">Esya.ru not responding. Check the operation of the Internet. </string>
-<string name="tracker">Tracker</string>
+<string name="tracker">Трекер</string>
 <string name="links">Links</string>
 <string name="tracks">Tracks</string>
 <string name="notifications">Alerts</string>
@@ -105,7 +105,7 @@
 <string name="login">Login to Esya.ru:</string>
 <string name="password">Password:</string>
 <string name="appauth">Authorization Application</string>
-<string name="inbuffer">&quot; in buffer :&quot;</string>
+<string name="inbuffer">&quot;in buffer :&quot;</string>
 <string name="authpleasewait">Authorization request , please wait ...</string>
 <string name="commandpleasewait">Command is executed , please wait ...</string>
 <string name="resultenterchanalnoget">Result entrance to the channel is not received </string>
@@ -167,4 +167,6 @@
 <string name="writen">Recorded</string>
 <string name="from_undefined">from undefined</string>
 <string name="map">Map</string>
+<string name="drawer_open">open</string>
+<string name="drawer_close">close</string>
 </resources>

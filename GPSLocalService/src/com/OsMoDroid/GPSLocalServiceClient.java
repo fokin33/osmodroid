@@ -16,6 +16,7 @@ import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URL;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -53,6 +54,8 @@ import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -62,9 +65,15 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
+import android.provider.Settings.Secure;
 
 
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.telephony.TelephonyManager;
 import android.text.ClipboardManager;
 import android.text.util.Linkify;
 import android.util.Log;
@@ -76,126 +85,50 @@ import android.view.View.OnClickListener;
 
 import android.widget.Button;
 
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
-public class GPSLocalServiceClient extends SherlockFragmentActivity  implements ResultsListener, com.actionbarsherlock.app.ActionBar.TabListener{
+  
+public class GPSLocalServiceClient extends SherlockFragmentActivity  implements ResultsListener{
 	
-	 Intent NeedIntent;
+	 
 
 
-	@Override
-	public void onBackPressed() {
-		Tab tab = getSupportActionBar().getSelectedTab();
-		Stack<String> backStack = backStacks.get(tab.getTag());
-		String tag = backStack.pop();
-		if (backStack.isEmpty())
-		{
-		// Let application finish
-		super.onBackPressed();
+//void showFragment(SherlockFragment fragment)
+//	{
+//		FragmentTransaction ft = fMan.beginTransaction();
+//		ft.replace(R.id.fragment_container, fragment);
+//		ft.commit();
+//	}
+void showFragment(SherlockFragment fragment, boolean backstack) {
+	FragmentTransaction ft = fMan.beginTransaction();
+	
+	if(backstack)
+		{	
+			ft.replace(R.id.fragment_container, fragment);
+			ft.addToBackStack("backstack");
 		}
-		else
-		{
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		SherlockFragment fragment = (SherlockFragment) getSupportFragmentManager().findFragmentByTag(tag);
-		// Animate return to previous fragment
-		//ft.setCustomAnimations(R.anim.slide_from_right, R.anim.slide_to_left);
-		// Remove topmost fragment from back stack and forget it
-		if(fragment!=null){ft.remove(fragment);}
-		showFragment(backStack, ft);
-		ft.commit();
-		}
+	else 
+	{	
+		ft.replace(R.id.fragment_container, fragment);
+		fMan.popBackStack();
 	}
-	private void showFragment(Stack<String> backStack, FragmentTransaction ft)
-{
-// Peek topmost fragment from the stack
-String tag = backStack.peek();
-SherlockFragment fragment = (SherlockFragment) getSupportFragmentManager().findFragmentByTag(tag);
-// and attach it
-if (fragment!=null){ft.attach(fragment);}	
-}
-	
-	void addFragment(SherlockFragment fragment)
-{
-// Select proper stack
-Tab tab = getSupportActionBar().getSelectedTab();
-Stack<String> backStack = backStacks.get(tab.getTag());
- 
-FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-// Animate transfer to new fragment
-//ft.setCustomAnimations(R.anim.slide_from_left, R.anim.slide_to_right);
-// Get topmost fragment
-String tag = backStack.peek();
-SherlockFragment top = (SherlockFragment) getSupportFragmentManager().findFragmentByTag(tag);
-if(top!=null){ft.detach(top);}
-// Add new fragment
-addFragment(fragment, backStack, ft);
-ft.commit();
+	ft.commit();
+
 }
  
-@Override
-	protected void onNewIntent(Intent intent) {
-	if (OsMoDroid.gpslocalserviceclientVisible){
-	
-		if (intent.getAction().equals("devicechat"))
-		{
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		actionBar.selectTab(devicesTab);
-	    ft.commit();
-		}
-		if (intent.getAction().equals("notif"))
-		{
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		actionBar.selectTab(mesListTab);
-	    ft.commit();
-		}
-		if (intent.getAction().equals(Intent.ACTION_MAIN)&&checkStarted()){
-			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-			actionBar.selectTab(statTab);
-		    ft.commit();
-		}
-		NeedIntent=intent;
-	}
-	
-		super.onNewIntent(intent);
-	}
-void openTabByIntent(Intent intent) {
-	SherlockFragment openFragment = null;
-	if (intent.getAction().equals("devicechat"))
-	{
-		openFragment = new DeviceChatFragment();	
-		 Bundle bundle = new Bundle();
-		 bundle.putInt("deviceU", intent.getIntExtra("deviceU", -1));
-		 openFragment.setArguments(bundle);
-	}
-	if (intent.getAction().equals("notif"))
-	{
-		openFragment = new NotifFragment();	
-		
-	}
-	if(openFragment!=null){   
-    addFragment(openFragment);
-	}
-}
-private void addFragment(SherlockFragment fragment, Stack<String> backStack, FragmentTransaction ft)
-{
-// Add fragment to back stack with unique tag
-String tag = UUID.randomUUID().toString();
-ft.add(android.R.id.content, fragment, tag);
-backStack.push(tag);
-}
-	
+
 
 	boolean messageShowed=false;
 	public static String key = "";
 	public String login = "";
-	// private JSONObject commandJSON;
 	private int speed;
 	int speedbearing_gpx;
 	int bearing_gpx;
@@ -228,36 +161,44 @@ backStack.push(tag);
 	private String devicename="";
 	String position;
 	String sendresult;
-	// private Timer timer;
 	BroadcastReceiver receiver;
 	int sendcounter;
 	int buffercounter=0;
 	private boolean usebuffer = false;
 	private boolean usewake = false;
 	File fileName = null;
-PowerManager pm;
+	PowerManager pm;
 	WakeLock	wakeLock;// = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyWakeLock");
-	
-
 	String version="Unknown";
 	SharedPreferences settings;
-	ActionBar.Tab mainTab,devicesTab,channelsTab, simLinksTab, trackListTab, mesListTab, statTab, mapTab;
-	public ActionBar actionBar;
 	
-	enum TabType
-{
-MAIN, DEVICES, CHANNELS, LINKS, NOTIFS, TRACKS, STAT, MAP
-}
- 
-// Tab back stacks
-private HashMap<TabType, Stack<String>> backStacks;
+	public ActionBar actionBar;
+	private ArrayList<String> mDrawerItems=new ArrayList<String>();
+	static DrawerLayout mDrawerLayout;
+	static ListView mDrawerList;
+	private ActionBarDrawerToggle mDrawerToggle;
+	private CharSequence mTitle;
+	private CharSequence mDrawerTitle;
+	static FragmentManager fMan;
+	DrawerItemClickListener drawClickListener = new DrawerItemClickListener(this);
+	upd mainUpdListener;
+	private BroadcastReceiver mIMstatusReciever;
+	//private boolean afterrotate=false;
+	private Intent needIntent;
+	public interface upd {
+		void update();
+	}
+	
+	
 	ServiceConnection conn = new ServiceConnection() {
 
 		public void onServiceConnected(ComponentName className, IBinder service) {
-			 Log.d(this.getClass().getSimpleName(), "onserviceconnected");
+			 Log.d(this.getClass().getSimpleName(), "onserviceconnected gpsclient");
+			
 			LocalBinder binder = (LocalBinder) service;
 			mService = binder.getService();
 			mBound = true;
+			 
 			invokeService();
 			started = true;
 			updateMainUI();
@@ -267,23 +208,21 @@ private HashMap<TabType, Stack<String>> backStacks;
 			if (!settings.getString("key", "" ).equals("") ){
 			netutil.newapicommand((ResultsListener)mService.serContext, "om_device_get:"+settings.getString("device", ""));
 			}
-//						if (started && ( conn == null || mService == null)) {
-//				Log.d(this.getClass().getSimpleName(), "нет бинда с сервисом - startcommand");
-//			} else {
-//				Log.d(this.getClass().getSimpleName(), "вызов startcommand");
-//				mService.startcomand();
-//				Log.d(this.getClass().getSimpleName(), "послек вызова startcomand");
-//			}
-
+			if(needIntent!=null){
+				intentAction(needIntent);
+				needIntent=null;
+			}
 		}
 
 		public void onServiceDisconnected(ComponentName arg0) {
-
 			mBound = false;
-			// Log.d(this.getClass().getSimpleName(), "onservicedisconnected");
+			
+			Log.d(this.getClass().getSimpleName(), "onservicedisconnected gpsclient");
 		}
 	};
-	private boolean SavedInstanceState;
+	private boolean proceednewintent=false;
+	private ArrayAdapter<String> menuAdapter;
+	
 	
 
 	public static String unescape (String s)
@@ -312,25 +251,22 @@ private HashMap<TabType, Stack<String>> backStacks;
 	}
 
 
-	 @Override
+	 protected void updateMainUI() {
+		 Log.d(this.getClass().getSimpleName(), "updateMainUI gpsclient");
+		 if(mainUpdListener!=null){
+			 Log.d(this.getClass().getSimpleName(), "updateMainUI not null gpsclient");
+			mainUpdListener.update();
+		}
+		
+	}
+
+	@Override
 	 protected void onPause(){
 		 Log.d(this.getClass().getSimpleName(), "onPause() gpsclient");
 	 
-	 
+		 
 	 if (!(wakeLock==null) &&wakeLock.isHeld())wakeLock.release();
-//		Tab tab = getSupportActionBar().getSelectedTab();
-//		Stack<String> backStack = backStacks.get(tab.getTag());
-//		if (! backStack.isEmpty())
-//		{
-//		// Detach topmost fragment otherwise it will not be correctly displayed
-//		// after orientation change
-//		String tag = backStack.peek();
-//		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//		SherlockFragment fragment = (SherlockFragment) getSupportFragmentManager().findFragmentByTag(tag);
-//		ft.detach(fragment);
-//		ft.commit();
-		
-//		}
+
 		super.onPause();
 
 	 }
@@ -344,6 +280,13 @@ private HashMap<TabType, Stack<String>> backStacks;
 	}
 
 
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		//outState.putString("currentItem", drawClickListener.currentItemName);
+		Log.d(this.getClass().getSimpleName(), "onsave gpsclient");
+		super.onSaveInstanceState(outState);
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -408,90 +351,132 @@ private HashMap<TabType, Stack<String>> backStacks;
 
 			settings.registerOnSharedPreferenceChangeListener(listener);
 			setContentView(R.layout.activity_main);
+	        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+	        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+		        // Set the adapter for the list view
+		    	setupDrawerList();
+		        mDrawerList.setOnItemClickListener(drawClickListener);
+		        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+		        mDrawerLayout.setBackgroundColor(Color.WHITE);
 			
+		        fMan=getSupportFragmentManager();
 			
 	         actionBar = getSupportActionBar();
-	        actionBar.setDisplayShowHomeEnabled(true);
-	        actionBar.setDisplayShowTitleEnabled(true);
-	        actionBar.setDisplayUseLogoEnabled(true);
-	        actionBar.setLogo(R.drawable.eye);
-	        //actionBar.setDisplayHomeAsUpEnabled(true);
-	        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-	      
-	    	// Set back stacks
-	        if (savedInstanceState != null)
-	        {
-	        // Read back stacks after orientation change
-	        Log.d(this.getClass().getSimpleName(), "savedInstanceState.getSerializable(stack)="+savedInstanceState.getSerializable("stacks"));	
-	        SerializableHolder st = (SerializableHolder) savedInstanceState.getSerializable("stacks");
-	        backStacks = (HashMap<TabType, Stack<String>>) st.get();
-	        //backStacks = (HashMap<TabType, Stack<String>>) savedInstanceState.getSerializable("stacks");
-	        }
-	        else
-	        {
-	        // Initialize back stacks on first run
-	        backStacks = new HashMap<TabType, Stack<String>>();
-	        backStacks.put(TabType.MAIN, new Stack<String>());
-	        backStacks.put(TabType.DEVICES, new Stack<String>());
-	        backStacks.put(TabType.CHANNELS, new Stack<String>());
-	        backStacks.put(TabType.LINKS, new Stack<String>());
-	        backStacks.put(TabType.NOTIFS, new Stack<String>());
-	        backStacks.put(TabType.TRACKS, new Stack<String>());
-	        backStacks.put(TabType.STAT, new Stack<String>());
-	        backStacks.put(TabType.MAP, new Stack<String>());
-	        
-	        }
-	        mainTab = actionBar.newTab().setTag(TabType.MAIN).setText(R.string.tracker).setTabListener(this);
-			devicesTab = actionBar.newTab().setTag(TabType.DEVICES).setText(R.string.devices).setTabListener(this);
-			channelsTab = actionBar.newTab().setTag(TabType.CHANNELS).setText(R.string.chanals).setTabListener(this);
-			simLinksTab = actionBar.newTab().setTag(TabType.LINKS).setText(R.string.links).setTabListener(this);
-			trackListTab = actionBar.newTab().setTag(TabType.TRACKS).setText(R.string.tracks).setTabListener(this);
-			mesListTab = actionBar.newTab().setTag(TabType.NOTIFS).setText(R.string.notifications).setTabListener(this);
-			statTab =actionBar.newTab().setTag(TabType.STAT).setText(R.string.stat).setTabListener(this);
-			mapTab =actionBar.newTab().setTag(TabType.MAP).setText(R.string.map).setTabListener(this);
-			Log.d(this.getClass().getSimpleName(), "backstack="+backStacks);
-			addTabs();
-		
-		//if (hash.equals("") && live){} else { bindService();}
+	         actionBar.setDisplayHomeAsUpEnabled(true);
+	         actionBar.setHomeButtonEnabled(true);
+
+	        mTitle = mDrawerTitle = getTitle();
+	        mDrawerToggle = new ActionBarDrawerToggle(
+	                this,                  /* host Activity */
+	                mDrawerLayout,         /* DrawerLayout object */
+	                R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
+	                R.string.drawer_open,  /* "open drawer" description for accessibility */
+	                R.string.drawer_close  /* "close drawer" description for accessibility */
+	                ) {
+	            public void onDrawerClosed(View view) {
+	            	super.onDrawerClosed(view);
+	            	
+	            }
+
+	            public void onDrawerOpened(View drawerView) {
+	            	  super.onDrawerOpened(drawerView);
+	            	
+	            }
+	        };
+	        mDrawerLayout.setDrawerListener(mDrawerToggle);
 			bindService();
-		 
-	}
-	 void addTabs() {
-		 Log.d(this.getClass().getSimpleName(), "addTabs() gpsclient");
-		 if(mainTab.getPosition()==com.actionbarsherlock.app.ActionBar.Tab.INVALID_POSITION)
-		 {
-				actionBar.addTab(mainTab, 0);
-				actionBar.addTab(statTab);
-				actionBar.addTab(trackListTab);
-		 }
-		
-		if (!settings.getString("key", "").equals("")){
-			if(mapTab.getPosition()==com.actionbarsherlock.app.ActionBar.Tab.INVALID_POSITION)
-				{actionBar.addTab(mapTab, 2);}
-			if(channelsTab.getPosition()==com.actionbarsherlock.app.ActionBar.Tab.INVALID_POSITION)
-				{actionBar.addTab(channelsTab, 3);}
-			if(devicesTab.getPosition()==com.actionbarsherlock.app.ActionBar.Tab.INVALID_POSITION)
-				{actionBar.addTab(devicesTab, 4);}
-			if(simLinksTab.getPosition()==com.actionbarsherlock.app.ActionBar.Tab.INVALID_POSITION)
-				{actionBar.addTab(simLinksTab);}
-			if(mesListTab.getPosition()==com.actionbarsherlock.app.ActionBar.Tab.INVALID_POSITION)
-				{actionBar.addTab(mesListTab);}
-			
+			if(savedInstanceState!=null){
+			//	afterrotate=true;
+				//drawClickListener.selectItem(savedInstanceState.getString("currentItem"));
+			}else
+			{
+				
+				//drawClickListener.selectItem(getString(R.string.tracker));
 			}
-		else {
-			if(devicesTab.getPosition()!=com.actionbarsherlock.app.ActionBar.Tab.INVALID_POSITION)
-				{actionBar.removeTab(devicesTab);}
-			if(channelsTab.getPosition()!=com.actionbarsherlock.app.ActionBar.Tab.INVALID_POSITION)
-				{actionBar.removeTab(channelsTab);}
-			if(simLinksTab.getPosition()!=com.actionbarsherlock.app.ActionBar.Tab.INVALID_POSITION)
-				{actionBar.removeTab(simLinksTab);}
-			if(mesListTab.getPosition()!=com.actionbarsherlock.app.ActionBar.Tab.INVALID_POSITION)
-				{actionBar.removeTab(mesListTab);}
-			if(mapTab.getPosition()!=com.actionbarsherlock.app.ActionBar.Tab.INVALID_POSITION)
-				{actionBar.removeTab(mapTab);}
+			mIMstatusReciever = new BroadcastReceiver(){
+
+				@Override
+				public void onReceive(Context context, Intent intent) {
+					if (intent.hasExtra("connecting")&&intent.hasExtra("connect")&&!OsMoDroid.settings.getString("key", "").equals(""))
+					{
+						
+						if(intent.getBooleanExtra("connect", false)&&!intent.getBooleanExtra("connecting", false))
+							{
+								actionBar.setLogo(R.drawable.eyeo);
+							}
+						else if (intent.getBooleanExtra("connecting", false))
+							{
+								actionBar.setLogo(R.drawable.eyeu);
+							}
+						else	
+							{
+								actionBar.setLogo(R.drawable.eyen);
+							}
+					}
+					
+				}
+				
+			};
+			registerReceiver(mIMstatusReciever, new IntentFilter("OsMoDroid"));
+	}
+
+
+	void setupDrawerList() {
+		mDrawerItems.clear();
+		if (!settings.getString("key", "" ).equals("") ){
+		  
+		 for (String s: new String[] {
+				    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
+				    getString(R.string.chanals),getString(R.string.devices),getString(R.string.links),
+				    getString(R.string.notifications), getString(R.string.tracks) })
+		 {
+		 mDrawerItems.add(s);
+		 
+		 }
+		 }
+		else{
+			for (String s:  new String[] {
+				    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
+				    getString(R.string.tracks)} ){
+				mDrawerItems.add(s);
 			}
 		}
+		
+		menuAdapter=new ArrayAdapter<String>(this,R.layout.drawer_list_item, mDrawerItems);
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item, mDrawerItems));
+	}
+	 
 	
+	 @Override
+		protected void onPostCreate(Bundle savedInstanceState) {
+		 Log.d(this.getClass().getSimpleName(), "onpostcreate gpsclient");	
+		 super.onPostCreate(savedInstanceState);
+			mDrawerToggle.syncState();
+		}
+		
+		@Override
+		public void onConfigurationChanged(Configuration newConfig) {
+			Log.d(this.getClass().getSimpleName(), "onconfigchanged gpsclient");
+			super.onConfigurationChanged(newConfig);
+			mDrawerToggle.onConfigurationChanged(newConfig);
+		}
+		
+		 @Override
+			public boolean onOptionsItemSelected(MenuItem item) {
+			
+				 if(item.getItemId()==android.R.id.home)
+				 {
+					 if(mDrawerLayout.isDrawerOpen(mDrawerList))
+					 {
+						 mDrawerLayout.closeDrawer(mDrawerList);
+					 }
+					 else {
+						mDrawerLayout.openDrawer(mDrawerList);
+					}
+				 }
+				return super.onOptionsItemSelected(item);
+			}	
+	 
 
 	@Override
 	  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -523,6 +508,7 @@ private HashMap<TabType, Stack<String>> backStacks;
 		if (hash.equals("") && live) {
 			RequestAuthTask requestAuthTask = new RequestAuthTask();
 			requestAuthTask.execute();
+			sendid();
 		}
 		
 
@@ -530,84 +516,88 @@ private HashMap<TabType, Stack<String>> backStacks;
 
 
 
-	@Override
-	protected void onPostResume() {
-		Log.d(this.getClass().getSimpleName(), "onPostResume() gpsclient");
-		Tab tab = getSupportActionBar().getSelectedTab();
-		Stack<String> backStack = backStacks.get(tab.getTag());
-		if (! backStack.isEmpty())
-		{
-		// Restore topmost fragment (e.g. after application switch)
-		String tag = backStack.peek();
-		SherlockFragment fragment = (SherlockFragment) getSupportFragmentManager().findFragmentByTag(tag);
-		if (fragment.isDetached()&&fragment!=null)
-		{
-		FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-		if(fragment!=null){ft.attach(fragment);}
-		ft.commit();
-		}
-		}
-		
-		super.onPostResume();
-	}
 	@Override
 	protected void onResumeFragments() {
-		
-		
 		super.onResumeFragments();
+		Log.d(this.getClass().getSimpleName(), "onresumefragments gpsclient");
 		updateMainUI();
-				
+		if(!proceednewintent){
+		if(mBound){
+		intentAction(getIntent());
 		
-		if (getIntent().getAction().equals("devicechat")){
-			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-			actionBar.selectTab(devicesTab);
-		    ft.commit();
-			NeedIntent=getIntent();
-			Log.d(this.getClass().getSimpleName(), "needintent devicechat");
-			
-			} else
-		if (getIntent().getAction().equals("notif")){
-			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-			actionBar.selectTab(mesListTab);
-		    ft.commit();
-		    NeedIntent=null;
-		  
 		}
-//		else 
+		else{
+			needIntent=getIntent();
+		}
+		}
+		proceednewintent=false;
 //		if (getIntent().getAction().equals(Intent.ACTION_MAIN)&&checkStarted()){
-//			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//			actionBar.selectTab(statTab);
-//		    ft.commit();
-//		   
+//			StatFragment stat = new StatFragment();
+//			showFragment(stat);
 //		}
 		
 	}
-	
-	
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		Log.d(this.getClass().getSimpleName(), "onSaveInstanceState() gpsclient");
-		super.onSaveInstanceState(outState);
-		outState.putInt("tab", getSupportActionBar().getSelectedNavigationIndex());
-		SerializableHolder st = new SerializableHolder(backStacks);
-		outState.putSerializable("stacks", st);
-		Log.d(this.getClass().getSimpleName(), "saved stack="+backStacks);
-		Log.d(this.getClass().getSimpleName(), "saved st="+st);
-		SavedInstanceState=true;
-		//outState.putSerializable("stacks", backStacks);
+
+
+	private void intentAction(Intent intent) {
+		Log.d(this.getClass().getSimpleName(), "intentaction ");
+		if(intent.getAction()!=null){
+		if (intent.getAction().equals("devicechat"))
+		{
+			//DeviceChatFragment openFragment = new DeviceChatFragment();	
+			Bundle bundle = new Bundle();
+			bundle.putInt("deviceU", intent.getIntExtra("deviceU", -1));
+			//openFragment.setArguments(bundle);
+			//showFragment(openFragment,true);
+			drawClickListener.selectItem(getString(R.string.devices),bundle);
+			Log.d(this.getClass().getSimpleName(), "on new intent=devicechat");
+		} else
+		if (intent.getAction().equals("notif"))
+		{
+			Log.d(this.getClass().getSimpleName(), "on new intent=notif");
+			NotifFragment notif =new NotifFragment();
+			drawClickListener.selectItem(getString(R.string.notifications),null);
+			//showFragment(notif,false);
+		} else
+		if (intent.getAction().equals("channelchat"))
+		{
+			Log.d(this.getClass().getSimpleName(), "on new intent=channelchat");
+			//ChannelDevicesFragment openFragment = new ChannelDevicesFragment();	
+			Bundle bundle = new Bundle();
+			bundle.putInt("channelpos", intent.getIntExtra("channelpos", -1));
+			//openFragment.setArguments(bundle);
+			//showFragment(openFragment,true);
+			drawClickListener.selectItem(getString(R.string.chanals),bundle);
+		} else
+		if (intent.getAction().equals(Intent.ACTION_MAIN)){
+			if(!LocalService.currentItemName.equals("")){
+				drawClickListener.selectItem(LocalService.currentItemName,null);
+			}else{
+			Log.d(this.getClass().getSimpleName(), "on new intent=MAIN");
+			drawClickListener.selectItem(getString(R.string.tracker),null);
+			}
+		}
+		Intent i = getIntent();
+		i.setAction(null);
+		setIntent(i);
+		
+		}
 	}
-
-
 	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		Log.d(this.getClass().getSimpleName(), "onRestoreInstanceState() gpsclient");
-		super.onRestoreInstanceState(savedInstanceState);
-		int saved = savedInstanceState.getInt("tab", 0);
-		if (saved != getSupportActionBar().getSelectedNavigationIndex())
-		{getSupportActionBar().setSelectedNavigationItem(saved);}
-		SavedInstanceState=false;
+	protected void onNewIntent(Intent intent) {
+	if (OsMoDroid.gpslocalserviceclientVisible){
+		Log.d(this.getClass().getSimpleName(), "on new intent="+intent.getIntExtra("deviceU", -1));
+		intentAction(intent);
 		
 	}
+	proceednewintent=true;
+		super.onNewIntent(intent);
+	}
+	
+	
+
+
+	
 
 
 	void auth() {
@@ -743,11 +733,14 @@ private HashMap<TabType, Stack<String>> backStacks;
 	}
 
 	private void bindService() {
+		Log.d(this.getClass().getSimpleName(), "bindservice gpsclient");
 		Intent i = new Intent("OsMoDroid.local");
+		if(!mBound){
 		bindService(i, conn, Context.BIND_AUTO_CREATE);
-		mBound = true;
+		
 		Intent is = new Intent(this, LocalService.class);
 		startService(is);
+		}
 		//updateServiceStatus();
 	}
 
@@ -760,7 +753,7 @@ private HashMap<TabType, Stack<String>> backStacks;
 	}
 
 	private void invokeService() {
-		// Log.d(this.getClass().getSimpleName(), "invokeservice() gpsclient");
+		Log.d(this.getClass().getSimpleName(), "invokeservice() gpsclient");
 
 		if (conn == null || mService == null) {
 
@@ -772,64 +765,11 @@ private HashMap<TabType, Stack<String>> backStacks;
 		}
 	}
 
-	synchronized void updateMainUI() {
-		// Log.d(this.getClass().getSimpleName(), "updateservicestatus() gpsclient");
-		addTabs();
-		
-		String startStatus =checkStarted() ? getString(R.string.Running)
-				: getString(R.string.NotRunning);
-		String statusText = //getString(R.string.Status) + startStatus+
-				getString(R.string.Sendcount) + sendcounter + getString(R.string.inbuffer)+buffercounter;
-		Tab tab = getSupportActionBar().getSelectedTab();
-		Stack<String> backStack = backStacks.get(tab.getTag());
-		if(tab.getTag().equals(TabType.MAIN)){
-		SherlockFragment fragment = (SherlockFragment) getSupportFragmentManager(). findFragmentByTag(backStack.peek());
-		if (fragment.getView()!=null){
-		TextView t = (TextView) fragment.getView().findViewById(R.id.serviceStatus);
-		t.setText(statusText);
-		if (!settings.getBoolean("usealarm", false) || settings.getString("key", "").equals("")){
-			ToggleButton alarmToggle = (ToggleButton)fragment.getView().findViewById(R.id.alarmButton);
-			alarmToggle.setVisibility(View.GONE);
-		}else{
-			ToggleButton alarmToggle = (ToggleButton)fragment.getView().findViewById(R.id.alarmButton);
-			alarmToggle.setVisibility(View.VISIBLE);
-		}
-		
-		if (settings.getBoolean("usewake", false)){
-			wakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyWakeLock");
-			wakeLock.acquire();
-		}
-		started = checkStarted();
-		
-		if (started) {
-			Button start = (Button) fragment.getView().findViewById(R.id.startButton);
-			Button stop = (Button) fragment.getView().findViewById(R.id.exitButton);
-			start.setEnabled(false);
-			stop.setEnabled(true);
-		} else {
-			Button start = (Button) fragment.getView().findViewById(R.id.startButton);
-			Button stop = (Button) fragment.getView().findViewById(R.id.exitButton);
-			start.setEnabled(true);
-			stop.setEnabled(false);
-		}
-		
-		TextView t2 = (TextView) fragment.getView().findViewById(R.id.URL);
-		t2.setText(settings.getString("devicename", "")+" :\n "+viewurl);
-		Linkify.addLinks(t2, Linkify.ALL);
-		}
-		ToggleButton globalsendToggle = (ToggleButton) fragment.getView().findViewById(R.id.toggleButton1);
-		Button auth = (Button) fragment.getView().findViewById(R.id.authButton);
-		
-		if (settings.getString("key", "").equals("")){
-		globalsendToggle.setVisibility(View.GONE);
-		}
-		else {
-			auth.setVisibility(View.GONE);
-		}
-		
-		}
-	}
+	
 
+	
+	
+	
 	@Override
 	protected void onDestroy() {
 		Log.d(this.getClass().getSimpleName(), "onDestroy() gpsclient");
@@ -849,6 +789,9 @@ if (mBound) {
 		// releaseService();
 		if (receiver != null) {
 			unregisterReceiver(receiver);
+		}
+		if (mIMstatusReciever!=null){
+			unregisterReceiver(mIMstatusReciever);
 		}
 
 
@@ -968,8 +911,34 @@ if (mBound) {
 		void requestHash (){
 			RequestAuthTask requestAuthTask = new RequestAuthTask();
 			requestAuthTask.execute();
+			sendid();
+			
 		}
+		public void sendid()
 
+		{
+			String version = android.os.Build.VERSION.RELEASE;
+			String androidID = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
+			TelephonyManager mngr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
+			String IMEI=mngr.getDeviceId();
+			if(version==null){
+				version="unknown";
+			}
+			if(androidID==null){
+				androidID="unknown";
+			}
+			if(IMEI==null){
+				IMEI="unknown";
+			}
+			 
+	            APIcomParams params = new APIcomParams("http://api.osmo.mobi/auth","android="+version+"&android_id="+androidID+"&imei="+IMEI,"sendid"); 
+	            MyAsyncTask sendidtask = new netutil.MyAsyncTask(this);
+	            sendidtask.execute(params) ;
+	            Log.d(getClass().getSimpleName(), "sendidtask start to execute");
+
+		}
+		
+		
 	 class RequestAuthTask extends AsyncTask<Void, Void, Void> {
 		private String authtext;
 		String adevice;
@@ -1003,13 +972,10 @@ if (mBound) {
 				editor.putString("device", adevice);
 				editor.putString("key", "");
 				editor.commit();
-
-
-
 				ReadPref();
-
+				setupDrawerList();
 				updateMainUI();
-				 Log.d(this.getClass().getName(), "Задание окончило выполнятся.Bind");
+				Log.d(this.getClass().getName(), "Задание окончило выполнятся.Bind");
 				bindService();
 
 			}
@@ -1099,6 +1065,9 @@ editor.remove("laststartcommandtime");
 editor.commit();
 netutil.newapicommand((Context) GPSLocalServiceClient.this, "om_device_bind:"+settings.getString("hash", "")+","+settings.getString("n", ""));
 mService.startcomand();
+//mDrawerItems = ;
+setupDrawerList();
+
 updateMainUI();
 netutil.newapicommand((ResultsListener)mService, "om_device_get:"+settings.getString("device", ""));
 
@@ -1320,6 +1289,7 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 	            }
 	            prefEdit.commit();
 	            Toast.makeText(this, R.string.prefloaded, Toast.LENGTH_SHORT).show();
+	            setupDrawerList();
 	        res = true;         
 	    } catch (FileNotFoundException e) {
 	        e.printStackTrace();
@@ -1340,88 +1310,88 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 	}
 
 
-	@Override
-public void onTabSelected(Tab tab, FragmentTransaction ft)
-{
-// Select proper stack
-		Log.d(this.getClass().getSimpleName(),"tab="+tab);
-		Log.d(this.getClass().getSimpleName(),"tag="+tab.getTag());
-		Log.d(this.getClass().getSimpleName(),"backStacks="+backStacks);
-		
-		Stack<String> backStack = backStacks.get(tab.getTag());
-Log.d(this.getClass().getSimpleName(),"backStack="+backStack);
-if (backStack.isEmpty())
-{
-// If it is empty instantiate and add initial tab fragment
-SherlockFragment fragment;
-switch ((TabType) tab.getTag())
-{
-case MAIN:
-fragment = (SherlockFragment) SherlockFragment.instantiate(this, MainFragment.class.getName());
-break;
-case DEVICES:
-	fragment = (SherlockFragment) SherlockFragment.instantiate(this, DevicesFragment.class.getName());
-break;
-case CHANNELS:
-	fragment = (SherlockFragment) SherlockFragment.instantiate(this, ChannelsFragment.class.getName());
-break;
-case LINKS:
-	fragment = (SherlockFragment) SherlockFragment.instantiate(this, SimLinksFragment.class.getName());
-break;
-case TRACKS:
-	fragment = (SherlockFragment) SherlockFragment.instantiate(this, TracFileListFragment.class.getName());
-break;
-case NOTIFS:
-	fragment = (SherlockFragment) SherlockFragment.instantiate(this, NotifFragment.class.getName());
-break;
-case STAT:
-	fragment = (SherlockFragment) SherlockFragment.instantiate(this, StatFragment.class.getName());
-break;
-case MAP:
-	fragment = (SherlockFragment) SherlockFragment.instantiate(this, MapFragment.class.getName());
-break;
-default:
-throw new java.lang.IllegalArgumentException("Unknown tab");
-}
-addFragment(fragment, backStack, ft);
-}
-else
-{
-// Show topmost fragment
-showFragment(backStack, ft);
-}
-}
+//	@Override
+//public void onTabSelected(Tab tab, FragmentTransaction ft)
+//{
+//// Select proper stack
+//		Log.d(this.getClass().getSimpleName(),"tab="+tab);
+//		Log.d(this.getClass().getSimpleName(),"tag="+tab.getTag());
+//		Log.d(this.getClass().getSimpleName(),"backStacks="+backStacks);
+//		
+//		Stack<String> backStack = backStacks.get(tab.getTag());
+//Log.d(this.getClass().getSimpleName(),"backStack="+backStack);
+//if (backStack.isEmpty())
+//{
+//// If it is empty instantiate and add initial tab fragment
+//SherlockFragment fragment;
+//switch ((TabType) tab.getTag())
+//{
+//case MAIN:
+//fragment = (SherlockFragment) SherlockFragment.instantiate(this, MainFragment.class.getName());
+//break;
+//case DEVICES:
+//	fragment = (SherlockFragment) SherlockFragment.instantiate(this, DevicesFragment.class.getName());
+//break;
+//case CHANNELS:
+//	fragment = (SherlockFragment) SherlockFragment.instantiate(this, ChannelsFragment.class.getName());
+//break;
+//case LINKS:
+//	fragment = (SherlockFragment) SherlockFragment.instantiate(this, SimLinksFragment.class.getName());
+//break;
+//case TRACKS:
+//	fragment = (SherlockFragment) SherlockFragment.instantiate(this, TracFileListFragment.class.getName());
+//break;
+//case NOTIFS:
+//	fragment = (SherlockFragment) SherlockFragment.instantiate(this, NotifFragment.class.getName());
+//break;
+//case STAT:
+//	fragment = (SherlockFragment) SherlockFragment.instantiate(this, StatFragment.class.getName());
+//break;
+//case MAP:
+//	fragment = (SherlockFragment) SherlockFragment.instantiate(this, MapFragment.class.getName());
+//break;
+//default:
+//throw new java.lang.IllegalArgumentException("Unknown tab");
+//}
+//addFragment(fragment, backStack, ft);
+//}
+//else
+//{
+//// Show topmost fragment
+//showFragment(backStack, ft);
+//}
+//}
  
-@Override
-public void onTabUnselected(Tab tab, FragmentTransaction ft)
-{
-// Select proper stack
-Stack<String> backStack = backStacks.get(tab.getTag());
-// Get topmost fragment
-String tag = backStack.peek();
-SherlockFragment fragment = (SherlockFragment) getSupportFragmentManager().findFragmentByTag(tag);
-// Detach it
-ft.detach(fragment);
-}
- 
-@Override
-public void onTabReselected(Tab tab, FragmentTransaction ft)
-{
-// Select proper stack
-Stack<String> backStack = backStacks.get(tab.getTag());
- 
-if (backStack.size() > 1)
-//ft.setCustomAnimations(R.anim.slide_from_right, R.anim.slide_to_left);
-// Clean the stack leaving only initial fragment
-while (backStack.size() > 1)
-{
-// Pop topmost fragment
-String tag = backStack.pop();
-SherlockFragment fragment = (SherlockFragment) getSupportFragmentManager().findFragmentByTag(tag);
-// Remove it
-if(fragment!=null){ft.remove(fragment);}
-}
-showFragment(backStack, ft);
-}
+//@Override
+//public void onTabUnselected(Tab tab, FragmentTransaction ft)
+//{
+//// Select proper stack
+//Stack<String> backStack = backStacks.get(tab.getTag());
+//// Get topmost fragment
+//String tag = backStack.peek();
+//SherlockFragment fragment = (SherlockFragment) getSupportFragmentManager().findFragmentByTag(tag);
+//// Detach it
+//ft.detach(fragment);
+//}
+// 
+//@Override
+//public void onTabReselected(Tab tab, FragmentTransaction ft)
+//{
+//// Select proper stack
+//Stack<String> backStack = backStacks.get(tab.getTag());
+// 
+//if (backStack.size() > 1)
+////ft.setCustomAnimations(R.anim.slide_from_right, R.anim.slide_to_left);
+//// Clean the stack leaving only initial fragment
+//while (backStack.size() > 1)
+//{
+//// Pop topmost fragment
+//String tag = backStack.pop();
+//SherlockFragment fragment = (SherlockFragment) getSupportFragmentManager().findFragmentByTag(tag);
+//// Remove it
+//if(fragment!=null){ft.remove(fragment);}
+//}
+//showFragment(backStack, ft);
+//}
 
 }

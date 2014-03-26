@@ -1,6 +1,7 @@
 package com.OsMoDroid;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 
 import org.json.JSONArray;
@@ -35,19 +36,22 @@ import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.OsMoDroid.netutil.MyAsyncTask;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
 public class DeviceChatFragment extends SherlockFragment implements ResultsListener {
-	ListView lv2;
-	Button sendButton;
-	EditText input;
+	//ListView lv2;
+	//Button sendButton;
+	//EditText input;
 	 int deviceU=-1;
+	 ArrayList<MyAsyncTask> t= new ArrayList<netutil.MyAsyncTask>();
 	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
 	
 	Device getDeviceByU (int u){
+		Log.d(this.getClass().getSimpleName(), " LocalService.deviceList="+ LocalService.deviceList.toString());
 		for (Device dev : LocalService.deviceList){
 			if (dev.u==u){
 				return dev;
@@ -56,6 +60,18 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 		
 		return null;
 		
+	}
+	@Override
+	public void onDestroy() {
+		
+		super.onDestroy();
+	}
+	@Override
+	public void onDestroyView() {
+		for (MyAsyncTask task: t){
+			task.cancel(true);
+		}
+		super.onDestroyView();
 	}
 	String getMyApp (){
 		for (Device dev:LocalService.deviceList ){
@@ -74,37 +90,53 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 	private GPSLocalServiceClient globalActivity;
 	
 	
+	
+	
 	 @Override
      public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
          setHasOptionsMenu(true);
-         setRetainInstance(true);
+         //setRetainInstance(true);
          super.onCreate(savedInstanceState);
      }
 	
 	@Override
 	public void onAttach(Activity activity) {
 		globalActivity = (GPSLocalServiceClient)activity;
+		
 		super.onAttach(activity);
+		
+	}
+	void getDeviceInfo() {
+		int u =getDeviceByU(deviceU).u;
+		t.add( netutil.newapicommand((ResultsListener)DeviceChatFragment.this,globalActivity, "om_device_message_get:"+OsMoDroid.settings.getString("device", "")+","+u));
 	}
 	@Override
 	public void onDetach() {
 		LocalService.chatmessagelist.clear();
-		   
-		 LocalService.currentDevice=null;
+		LocalService.currentDevice=null;
+		globalActivity=null;
 		super.onDetach();
 	}
 	@Override
 	public void onResume() {
-		globalActivity.devicesTab.setText(getString(R.string.chatwith)+getDeviceByU(deviceU).name);
+		globalActivity.actionBar.setTitle(getString(R.string.chatwith)+getDeviceByU(deviceU).name);
 		super.onResume();
 	}
 	
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		globalActivity = (GPSLocalServiceClient) getSherlockActivity();
-		super.onActivityCreated(savedInstanceState);
+@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+	Log.d(this.getClass().getSimpleName(), "deviceU ="+deviceU+ " mBound="+globalActivity.mBound);
+	
+	getDeviceInfo();
+	
+		super.onViewCreated(view, savedInstanceState);
 	}
+	//	@Override
+//	public void onActivityCreated(Bundle savedInstanceState) {
+//		globalActivity = (GPSLocalServiceClient) getSherlockActivity();
+//		super.onActivityCreated(savedInstanceState);
+//	}
 	/* (non-Javadoc)
 	 * @see com.actionbarsherlock.app.SherlockFragment#onCreateOptionsMenu(com.actionbarsherlock.view.Menu, com.actionbarsherlock.view.MenuInflater)
 	 */
@@ -133,7 +165,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
 		if (item.getItemId()==2){
-			netutil.newapicommand((ResultsListener)DeviceChatFragment.this,globalActivity, "om_device_message_get:"+globalActivity.settings.getString("device", "")+","+getDeviceByU(deviceU).u);
+			t.add(netutil.newapicommand((ResultsListener)DeviceChatFragment.this,globalActivity, "om_device_message_get:"+globalActivity.settings.getString("device", "")+","+getDeviceByU(deviceU).u));
 		}
 		
 		return super.onOptionsItemSelected(item);
@@ -158,7 +190,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 		    
 	LocalService.chatmessagesAdapter = new DeviceChatAdapter(globalActivity.getApplicationContext(), R.layout.devicechatitem, LocalService.chatmessagelist);
 
-		    lv2 = (ListView) view.findViewById(R.id.chatmessages);
+		    final ListView lv2 = (ListView) view.findViewById(R.id.chatmessages);
 
 	LocalService.chatmessagesAdapter.registerDataSetObserver(new DataSetObserver() {
 	    @Override
@@ -167,10 +199,10 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 	        lv2.setSelection(LocalService.chatmessagesAdapter.getCount());    
 	    }
 	});
-		    input =(EditText) view.findViewById(R.id.chateditText);
+		    final EditText input = (EditText) view.findViewById(R.id.chateditText);
 		    input.requestFocus();
 		    
-	sendButton= (Button) view.findViewById(R.id.chatsendButton);
+	Button sendButton = (Button) view.findViewById(R.id.chatsendButton);
 	sendButton.setOnClickListener(new OnClickListener() {
 
 		public void onClick(View v) {
@@ -183,7 +215,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 				postjson.put("from", globalActivity.settings.getString("device", ""));
 				postjson.put("to", Integer.toString((getDeviceByU(deviceU)).u));
 				postjson.put("text", input.getText().toString());
-				netutil.newapicommand((ResultsListener) DeviceChatFragment.this, "om_device_message_send","json="+postjson.toString());
+				t.add(netutil.newapicommand((ResultsListener) DeviceChatFragment.this, "om_device_message_send","json="+postjson.toString()));
 
 				} 
 			catch (JSONException e) {
@@ -201,9 +233,12 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 
 		      
 		       lv2.setAdapter(LocalService.chatmessagesAdapter);
-		       if (LocalService.chatmessagesAdapter!=null) {LocalService.chatmessagesAdapter.notifyDataSetChanged();}
-		       Log.d(this.getClass().getSimpleName(),"getSherlockActivity:"+getSherlockActivity()+" deviceU="+deviceU+" getdevicebyU="+getDeviceByU(deviceU).u);
-		    netutil.newapicommand((ResultsListener)DeviceChatFragment.this,getSherlockActivity(), "om_device_message_get:"+OsMoDroid.settings.getString("device", "")+","+getDeviceByU(deviceU).u);
+		       if (LocalService.chatmessagesAdapter!=null)
+		       	{
+		    	   LocalService.chatmessagesAdapter.notifyDataSetChanged();
+		       	}
+		       //Log.d(this.getClass().getSimpleName(),"getSherlockActivity:"+getSherlockActivity()+" deviceU="+deviceU+" getdevicebyU="+getDeviceByU(deviceU).u);
+		    
 
 		
 
@@ -225,7 +260,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 	@Override
 	public void onResultsSucceeded(APIComResult result) {
 
-		Log.d(this.getClass().getSimpleName(),"OnResultListener Command:"+result.Command+",Jo="+result.Jo);
+		//Log.d(this.getClass().getSimpleName(),"OnResultListener Command:"+result.Command+",Jo="+result.Jo);
 		if (!(result.Jo==null)  ) {
 
 			Toast.makeText(getActivity(),result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
@@ -263,5 +298,6 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 		
 		}
 	}
+	
 
 }

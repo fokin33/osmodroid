@@ -93,16 +93,22 @@ public class SimLinksFragment extends SherlockFragment implements ResultsListene
      public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
          setHasOptionsMenu(true);
-         setRetainInstance(true);
+         //setRetainInstance(true);
          super.onCreate(savedInstanceState);
      }
 	
 	@Override
 	public void onResume() {
-		globalActivity.devicesTab.setText(R.string.devices);
+		globalActivity.actionBar.setTitle(R.string.links);
 		
 		super.onResume();
 	}
+	@Override
+	public void onDetach() {
+		globalActivity=null;
+		super.onDetach();
+	}
+
 	@Override
 	public void onAttach(Activity activity) {
 		globalActivity = (GPSLocalServiceClient)activity;// TODO Auto-generated method stub

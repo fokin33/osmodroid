@@ -5,6 +5,7 @@ import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
@@ -45,10 +46,15 @@ public class TracFileListFragment extends SherlockFragment  implements ResultsLi
       public void onCreate(Bundle savedInstanceState) {
           super.onCreate(savedInstanceState);
           setHasOptionsMenu(true);
-          setRetainInstance(true);
+          //setRetainInstance(true);
           super.onCreate(savedInstanceState);
       }
-      private class ReadTrackList extends AsyncTask<Void, TrackFile, Void> {
+      @Override
+	public void onDetach() {
+		globalActivity=null;
+		super.onDetach();
+	}
+	private class ReadTrackList extends AsyncTask<Void, TrackFile, Void> {
               @Override
               protected void onProgressUpdate(TrackFile... values) {
                       
@@ -126,9 +132,11 @@ public class TracFileListFragment extends SherlockFragment  implements ResultsLi
               
               
       }
+      private GPSLocalServiceClient globalActivity;
       @Override
 	public void onResume() {
                getFileList();
+               globalActivity.actionBar.setTitle(getString(R.string.tracks));
               super.onResume();
       }
       
@@ -151,6 +159,12 @@ public class TracFileListFragment extends SherlockFragment  implements ResultsLi
 			break;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		globalActivity = (GPSLocalServiceClient)activity;// TODO Auto-generated method stub
+		super.onAttach(activity);
 	}
 
 	@Override

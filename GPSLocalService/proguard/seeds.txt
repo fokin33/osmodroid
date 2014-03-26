@@ -1402,6 +1402,7 @@ com.OsMoDroid.GPSLocalServiceClient$TabType: com.OsMoDroid.GPSLocalServiceClient
 com.OsMoDroid.LocalService
 com.OsMoDroid.LocalService: LocalService()
 com.OsMoDroid.MainFragment
+com.OsMoDroid.MapFragment
 com.OsMoDroid.NotifFragment
 com.OsMoDroid.OsMoDroid
 com.OsMoDroid.OsMoDroid: OsMoDroid()
@@ -13649,3 +13650,26 @@ org.codehaus.jackson.util.VersionUtil: org.codehaus.jackson.Version versionFor(j
 org.codehaus.jackson.util.VersionUtil: org.codehaus.jackson.Version parseVersion(java.lang.String)
 org.codehaus.jackson.util.VersionUtil: int parseVersionPart(java.lang.String)
 org.codehaus.jackson.util.VersionUtil: void <clinit>()
+org.osmdroid.ResourceProxy$bitmap: org.osmdroid.ResourceProxy$bitmap[] values()
+org.osmdroid.ResourceProxy$bitmap: org.osmdroid.ResourceProxy$bitmap valueOf(java.lang.String)
+org.osmdroid.ResourceProxy$string: org.osmdroid.ResourceProxy$string[] values()
+org.osmdroid.ResourceProxy$string: org.osmdroid.ResourceProxy$string valueOf(java.lang.String)
+org.osmdroid.api.Marker$Anchor: org.osmdroid.api.Marker$Anchor[] values()
+org.osmdroid.api.Marker$Anchor: org.osmdroid.api.Marker$Anchor valueOf(java.lang.String)
+org.osmdroid.contributor.util.RecordedGeoPoint
+org.osmdroid.util.BoundingBoxE6
+org.osmdroid.util.BoundingBoxE6: android.os.Parcelable$Creator CREATOR
+org.osmdroid.util.GeoPoint
+org.osmdroid.util.GeoPoint: android.os.Parcelable$Creator CREATOR
+org.osmdroid.views.MapControllerOld$AnimationType: org.osmdroid.views.MapControllerOld$AnimationType[] values()
+org.osmdroid.views.MapControllerOld$AnimationType: org.osmdroid.views.MapControllerOld$AnimationType valueOf(java.lang.String)
+org.osmdroid.views.MapView
+org.osmdroid.views.MapView: MapView(android.content.Context,int,org.osmdroid.ResourceProxy,org.osmdroid.tileprovider.MapTileProviderBase,android.os.Handler,android.util.AttributeSet)
+org.osmdroid.views.MapView: MapView(android.content.Context,android.util.AttributeSet)
+org.osmdroid.views.MapView: MapView(android.content.Context,int)
+org.osmdroid.views.MapView: MapView(android.content.Context,int,org.osmdroid.ResourceProxy)
+org.osmdroid.views.MapView: MapView(android.content.Context,int,org.osmdroid.ResourceProxy,org.osmdroid.tileprovider.MapTileProviderBase)
+org.osmdroid.views.MapView: MapView(android.content.Context,int,org.osmdroid.ResourceProxy,org.osmdroid.tileprovider.MapTileProviderBase,android.os.Handler)
+org.osmdroid.views.overlay.ItemizedOverlayControlView
+org.osmdroid.views.overlay.OverlayItem$HotspotPlace: org.osmdroid.views.overlay.OverlayItem$HotspotPlace[] values()
+org.osmdroid.views.overlay.OverlayItem$HotspotPlace: org.osmdroid.views.overlay.OverlayItem$HotspotPlace valueOf(java.lang.String)

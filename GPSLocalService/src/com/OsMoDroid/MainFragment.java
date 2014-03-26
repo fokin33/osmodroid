@@ -11,6 +11,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.opengl.Visibility;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.text.ClipboardManager;
 import android.text.util.Linkify;
 import android.util.Log;
@@ -31,28 +32,37 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 
-public class MainFragment extends SherlockFragment implements ResultsListener {
+public class MainFragment extends SherlockFragment implements ResultsListener, GPSLocalServiceClient.upd {
 	
 	private BroadcastReceiver receiver;
 	private GPSLocalServiceClient globalActivity;
 	
 	@Override
 	public void onDestroy() {
-		if (receiver != null) {
-			globalActivity.unregisterReceiver(receiver);
-		}
+		Log.d(getClass().getSimpleName(), "mainfragment onDestroy");
 		super.onDestroy();
 	}
 	@Override
+	public void onDestroyView() {
+		globalActivity.mainUpdListener = null;
+		super.onDestroyView();
+	}
+	@Override
+	public void onStop() {
+		Log.d(getClass().getSimpleName(), "mainfragment onStop");
+		super.onStop();
+	}
+	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		globalActivity = (GPSLocalServiceClient) getSherlockActivity();
+		Log.d(getClass().getSimpleName(), "mainfragment onActivityCreated");
 		super.onActivityCreated(savedInstanceState);
 	}
 	 @Override
      public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
+         Log.d(getClass().getSimpleName(), "mainfragment oncreate");
          setHasOptionsMenu(true);
-         setRetainInstance(true);
+        // setRetainInstance(true);
          super.onCreate(savedInstanceState);
      }
 	
@@ -61,12 +71,66 @@ public class MainFragment extends SherlockFragment implements ResultsListener {
 	 */
 	@Override
 	public void onResume() {
-	//	updateServiceStatus(getView());
-		globalActivity.updateMainUI();
+		Log.d(getClass().getSimpleName(), "mainfragment onresume");
+		globalActivity.actionBar.setTitle(getString(R.string.tracker));
+		updateMainUI();
 		super.onResume();
 	}
 
+	 void updateMainUI() {
+		 Log.d(getClass().getSimpleName(), "mainfragment updateMainUI");
 
+		String startStatus =globalActivity.checkStarted() ? getString(R.string.Running)
+				: getString(R.string.NotRunning);
+		String statusText = //getString(R.string.Status) + startStatus+
+				getString(R.string.Sendcount) + globalActivity.sendcounter+"\n" + getString(R.string.inbuffer)+globalActivity.buffercounter;
+
+		TextView t = (TextView) getView().findViewById(R.id.serviceStatus);
+		t.setText(statusText);
+		if (!OsMoDroid.settings.getBoolean("usealarm", false) || OsMoDroid.settings.getString("key", "").equals("")){
+			ToggleButton alarmToggle = (ToggleButton)getView().findViewById(R.id.alarmButton);
+			alarmToggle.setVisibility(View.GONE);
+		}else{
+			ToggleButton alarmToggle = (ToggleButton)getView().findViewById(R.id.alarmButton);
+			alarmToggle.setVisibility(View.VISIBLE);
+		}
+		
+		if (OsMoDroid.settings.getBoolean("usewake", false)){
+			globalActivity.wakeLock = globalActivity.pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyWakeLock");
+			globalActivity.wakeLock.acquire();
+		}
+		globalActivity.started = globalActivity.checkStarted();
+		
+		if (globalActivity.started) {
+			Button start = (Button) getView().findViewById(R.id.startButton);
+			Button stop = (Button) getView().findViewById(R.id.exitButton);
+			start.setEnabled(false);
+			stop.setEnabled(true);
+		} else {
+			Button start = (Button) getView().findViewById(R.id.startButton);
+			Button stop = (Button) getView().findViewById(R.id.exitButton);
+			start.setEnabled(true);
+			stop.setEnabled(false);
+		}
+		
+		TextView t2 = (TextView) getView().findViewById(R.id.URL);
+		t2.setText(OsMoDroid.settings.getString("devicename", "")+" :\n "+globalActivity.viewurl);
+		Linkify.addLinks(t2, Linkify.ALL);
+		
+		ToggleButton globalsendToggle = (ToggleButton) getView().findViewById(R.id.toggleButton1);
+		Button auth = (Button) getView().findViewById(R.id.authButton);
+		
+		if (OsMoDroid.settings.getString("key", "").equals("")){
+		globalsendToggle.setVisibility(View.GONE);
+		auth.setVisibility(View.VISIBLE);
+		}
+		else {
+			auth.setVisibility(View.GONE);
+			globalsendToggle.setVisibility(View.VISIBLE);
+		}
+		
+		
+}
 	
 
 	/* (non-Javadoc)
@@ -220,7 +284,7 @@ public class MainFragment extends SherlockFragment implements ResultsListener {
 			 if (globalActivity.fileName!=null&&globalActivity.fileName.exists()){
 				 globalActivity.loadSharedPreferencesFromFile(globalActivity.fileName);
 				 globalActivity.ReadPref();
-					globalActivity.updateMainUI();
+					updateMainUI();
 					globalActivity.mService.applyPreference();
 			 
 			 }
@@ -240,7 +304,7 @@ public class MainFragment extends SherlockFragment implements ResultsListener {
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+		Log.d(getClass().getSimpleName(), "mainfragment onCreateView");
 		 
 		
 		final View view =  inflater.inflate(R.layout.main,container, false);
@@ -249,10 +313,15 @@ public class MainFragment extends SherlockFragment implements ResultsListener {
 		if (OsMoDroid.settings.getBoolean("im", false)){
 		
 		 if (globalActivity.mService!=null&&globalActivity.mService.myIM!=null&&!OsMoDroid.settings.getString("key", "").equals("")){
-			 if(globalActivity.mService.myIM.connOpened){
+			 if(globalActivity.mService.myIM.connOpened&&!globalActivity.mService.myIM.connecting){
 		
 				 globalActivity.actionBar.setLogo(R.drawable.eyeo);
-			 } else {
+			 } else if (globalActivity.mService.myIM.connecting) 
+			 {
+				 globalActivity.actionBar.setLogo(R.drawable.eyeu);
+			 }
+			 else
+			 {
 				 globalActivity.actionBar.setLogo(R.drawable.eyen);
 			 }
 				 
@@ -510,18 +579,7 @@ else {
 							globalActivity.started=intent.getBooleanExtra("started", false);
 					}
 					
-					if (intent.hasExtra("connect")&&!OsMoDroid.settings.getString("key", "").equals(""))
-					{
-						
-						if(intent.getBooleanExtra("connect", false))
-							{
-								globalActivity.actionBar.setLogo(R.drawable.eyeo);
-							}
-						else 
-							{
-								globalActivity.actionBar.setLogo(R.drawable.eyen);
-							}
-					}
+				
 
 					if (!(startmessage==null)&&!globalActivity.messageShowed) {
 						TextView t2 = (TextView) view.findViewById(R.id.URL);
@@ -561,7 +619,7 @@ else {
 					TextView t2 = (TextView) view.findViewById(R.id.Send);
 
 					updateServiceStatus(view);
-					if (!(globalActivity.sendresult == null)){t2.setText(getString(R.string.Sended) + (globalActivity.sendresult));}
+					if (!(globalActivity.sendresult == null)){t2.setText(getString(R.string.Sended) +"\n"+ (globalActivity.sendresult));}
 				}
 
 
@@ -577,16 +635,28 @@ else {
 	 */
 	@Override
 	public void onAttach(Activity activity) {
+		Log.d(getClass().getSimpleName(), "mainfragment onAttach");
 		globalActivity = (GPSLocalServiceClient)activity;// TODO Auto-generated method stub
+		globalActivity.mainUpdListener = this;
 		super.onAttach(activity);
+	}
+	@Override
+	public void onDetach() {
+		Log.d(getClass().getSimpleName(), "mainfragment onDetach");
+		if (receiver != null) {
+			globalActivity.unregisterReceiver(receiver);
+		}
+		
+		globalActivity=null;
+		super.onDetach();
 	}
 	
 	private void updateServiceStatus(View view) {
-		// Log.d(getClass().getSimpleName(), "updateservicestatus() gpsclient");
+		Log.d(getClass().getSimpleName(), "mainfragment updateservicestatus() gpsclient");
 		String startStatus =globalActivity.checkStarted() ? getString(R.string.Running)
 				: getString(R.string.NotRunning);
 		String statusText = //getString(R.string.Status) + startStatus+
-				getString(R.string.Sendcount) + globalActivity.sendcounter + getSherlockActivity().getString(R.string.inbuffer)+globalActivity.buffercounter;
+				getString(R.string.Sendcount) + globalActivity.sendcounter +"\n"+ getSherlockActivity().getString(R.string.inbuffer)+globalActivity.buffercounter;
 		TextView t = (TextView) view.findViewById(R.id.serviceStatus);
 		t.setText(statusText);
 	}
@@ -595,6 +665,11 @@ else {
 	@Override
 	public void onResultsSucceeded(APIComResult result) {
 		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void update() {
+		updateMainUI();
 		
 	}
 

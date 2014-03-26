@@ -989,14 +989,16 @@ android.util.Base64$Encoder:
     public static final int LINE_GROUPS
     601:601:public int maxOutputSize(int)
 com.OsMoDroid.BuildConfig
+com.OsMoDroid.Device:
+    public java.lang.String ch
 com.OsMoDroid.DeviceChatFragment:
     61:66:java.lang.String getMyApp()
     218:222:public static void getDevices(com.OsMoDroid.ResultsListener)
 com.OsMoDroid.ExceptionHandler:
     45:45:static com.OsMoDroid.ExceptionHandler reportOnlyHandler(android.content.Context)
 com.OsMoDroid.GPSLocalServiceClient:
-    913:920:public static java.lang.String bytesToHex(byte[])
-    926:937:public static java.lang.String SHA1(java.lang.String)
+    921:928:public static java.lang.String bytesToHex(byte[])
+    934:945:public static java.lang.String SHA1(java.lang.String)
 com.OsMoDroid.IM:
     private static final int RECONNECT_TIMEOUT
     private static final int KEEP_ALIVE
@@ -1055,11 +1057,13 @@ com.OsMoDroid.IRemoteOsMoDroidService$Stub$Proxy
 com.OsMoDroid.LocalService:
     private static final int OSMODROID_ID
     private java.lang.String pass
+    int gpsperiod
+    int gpsdistance
     java.net.SocketAddress sockaddr
     java.lang.String text
-    1085:1087:public java.lang.String getPosition()
-    1092:1092:public java.lang.String getSendResult()
-    1128:1128:public int getSendCounter()
+    1133:1135:public java.lang.String getPosition()
+    1140:1140:public java.lang.String getSendResult()
+    1176:1176:public int getSendCounter()
 com.OsMoDroid.NotifFragment:
     android.widget.EditText toAppText
     android.widget.EditText toUserText
@@ -1220,3 +1224,760 @@ de.tavendo.autobahn.WebSocketReader:
     567:581:private java.util.Map parseHttpHeaders(byte[])
 de.tavendo.autobahn.WebSocketWriter:
     private static final boolean DEBUG
+microsoft.mappoint.TileSystem:
+    private static final double EarthRadius
+    private static final double MinLatitude
+    private static final double MaxLatitude
+    private static final double MinLongitude
+    private static final double MaxLongitude
+    19:19:public TileSystem()
+    92:92:public static double MapScale(double,int,int)
+    189:193:public static android.graphics.Point TileXYToPixelXY(int,int,android.graphics.Point)
+    208:221:public static java.lang.String TileXYToQuadKey(int,int,int)
+    234:263:public static android.graphics.Point QuadKeyToTileXY(java.lang.String,android.graphics.Point)
+org.metalev.multitouch.controller.MultiTouchController:
+    private static final long EVENT_SETTLE_TIME_INTERVAL
+    private static final float MAX_MULTITOUCH_POS_JUMP_SIZE
+    private static final float MAX_MULTITOUCH_DIM_JUMP_SIZE
+    private static final float MIN_MULTITOUCH_SEPARATION
+    public static final int MAX_TOUCH_POINTS
+    public static final boolean DEBUG
+    private static final int MODE_NOTHING
+    private static final int MODE_DRAG
+    private static final int MODE_PINCH
+    160:161:public MultiTouchController(org.metalev.multitouch.controller.MultiTouchController$MultiTouchObjectCanvas)
+    177:178:protected void setHandleSingleTouchEvents(boolean)
+    184:184:protected boolean getHandleSingleTouchEvents()
+org.metalev.multitouch.controller.MultiTouchController$PointInfo:
+    535:557:public void set(org.metalev.multitouch.controller.MultiTouchController$PointInfo)
+    638:638:public int getNumTouchPoints()
+    648:648:public float[] getXs()
+    658:658:public float[] getYs()
+    668:668:public int[] getPointerIds()
+    673:673:public float getPressure()
+    678:678:public float[] getPressures()
+    688:688:public int getAction()
+org.metalev.multitouch.controller.MultiTouchController$PositionAndScale:
+    736:736:public float getXOff()
+    740:740:public float getYOff()
+    749:749:public float getScaleX()
+    754:754:public float getScaleY()
+    758:758:public float getAngle()
+org.osmdroid.DefaultResourceProxyImpl:
+    50:102:public java.lang.String getString(org.osmdroid.ResourceProxy$string)
+    108:108:public varargs java.lang.String getString(org.osmdroid.ResourceProxy$string,java.lang.Object[])
+org.osmdroid.DefaultResourceProxyImpl$1
+org.osmdroid.LocationListenerProxy
+org.osmdroid.ResourceProxy:
+    public abstract java.lang.String getString(org.osmdroid.ResourceProxy$string)
+    public varargs abstract java.lang.String getString(org.osmdroid.ResourceProxy$string,java.lang.Object[])
+org.osmdroid.SensorEventListenerProxy
+org.osmdroid.api.IMap
+org.osmdroid.api.IMapController:
+    public abstract void scrollBy(int,int)
+    public abstract void stopAnimation(boolean)
+    public abstract void stopPanning()
+    public abstract boolean zoomOutFixing(int,int)
+    public abstract void zoomToSpan(int,int)
+org.osmdroid.api.IMapView:
+    public abstract org.osmdroid.api.IMapController getController()
+    public abstract org.osmdroid.api.IProjection getProjection()
+    public abstract int getZoomLevel()
+    public abstract int getMaxZoomLevel()
+    public abstract int getLatitudeSpan()
+    public abstract int getLongitudeSpan()
+    public abstract org.osmdroid.api.IGeoPoint getMapCenter()
+    public abstract void setBackgroundColor(int)
+org.osmdroid.api.IMyLocationOverlay
+org.osmdroid.api.IPosition
+org.osmdroid.api.IProjection
+org.osmdroid.api.Marker
+org.osmdroid.api.Marker$Anchor
+org.osmdroid.api.OnCameraChangeListener
+org.osmdroid.api.Polyline
+org.osmdroid.contributor.GpxToPHPUploader
+org.osmdroid.contributor.GpxToPHPUploader$1
+org.osmdroid.contributor.OSMUploader
+org.osmdroid.contributor.OSMUploader$1
+org.osmdroid.contributor.RouteRecorder
+org.osmdroid.contributor.util.RecordedGeoPoint:
+    private static final long serialVersionUID
+    protected final long mTimeStamp
+    protected final int mNumSatellites
+    32:33:public RecordedGeoPoint(int,int)
+    37:40:public RecordedGeoPoint(int,int,long,int)
+    47:47:public long getTimeStamp()
+    51:51:public double getLatitudeAsDouble()
+    55:55:public double getLongitudeAsDouble()
+    59:59:public int getNumSatellites()
+org.osmdroid.contributor.util.RecordedRouteGPXFormatter
+org.osmdroid.contributor.util.Util
+org.osmdroid.contributor.util.constants.OpenStreetMapContributorConstants
+org.osmdroid.events.DelayedMapListener
+org.osmdroid.events.DelayedMapListener$CallbackTask
+org.osmdroid.events.MapAdapter
+org.osmdroid.events.MapEvent
+org.osmdroid.events.ScrollEvent:
+    25:25:public org.osmdroid.views.MapView getSource()
+    32:32:public int getX()
+    39:39:public int getY()
+org.osmdroid.events.ZoomEvent:
+    23:23:public org.osmdroid.views.MapView getSource()
+    30:30:public int getZoomLevel()
+org.osmdroid.http.HttpClientFactory:
+    23:23:public HttpClientFactory()
+    35:36:public static void setFactoryInstance(org.osmdroid.http.IHttpClientFactory)
+org.osmdroid.tileprovider.BitmapPool:
+    73:79:public void clearBitmapPool()
+org.osmdroid.tileprovider.ExpirableBitmapDrawable:
+    public static final int EXPIRED
+org.osmdroid.tileprovider.IMapTileProviderCallback:
+    public abstract boolean useDataConnection()
+org.osmdroid.tileprovider.LRUMapTileCache:
+    private static final long serialVersionUID
+    88:89:public void setTileRemovedListener(org.osmdroid.tileprovider.LRUMapTileCache$TileRemovedListener)
+org.osmdroid.tileprovider.MapTile:
+    public static final int MAPTILE_SUCCESS_ID
+    public static final int MAPTILE_FAIL_ID
+org.osmdroid.tileprovider.MapTileProviderBase:
+    221:222:public void setUseDataConnection(boolean)
+org.osmdroid.tileprovider.MapTileProviderBase$ZoomOutTileLooper:
+    private static final int MAX_ZOOM_OUT_DIFF
+org.osmdroid.tileprovider.MapTileProviderBasic:
+    31:32:public MapTileProviderBasic(android.content.Context)
+org.osmdroid.tileprovider.MapTileRequestState:
+    34:34:public boolean isEmpty()
+    43:43:public org.osmdroid.tileprovider.modules.MapTileModuleProviderBase getCurrentProvider()
+org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants:
+    public static final boolean DEBUGMODE
+    public static final boolean DEBUG_TILE_PROVIDERS
+    public static final int MINIMUM_ZOOMLEVEL
+    public static final int MAXIMUM_ZOOMLEVEL
+    public static final java.lang.String TILE_PATH_EXTENSION
+    public static final int CACHE_MAPTILECOUNT_DEFAULT
+    public static final int NUMBER_OF_TILE_DOWNLOAD_THREADS
+    public static final int NUMBER_OF_TILE_FILESYSTEM_THREADS
+    public static final long ONE_SECOND
+    public static final long ONE_MINUTE
+    public static final long ONE_HOUR
+    public static final long ONE_DAY
+    public static final long ONE_WEEK
+    public static final long ONE_YEAR
+    public static final long DEFAULT_MAXIMUM_CACHED_FILE_AGE
+    public static final int TILE_DOWNLOAD_MAXIMUM_QUEUE_SIZE
+    public static final int TILE_FILESYSTEM_MAXIMUM_QUEUE_SIZE
+    public static final long TILE_EXPIRY_TIME_MILLISECONDS
+    public static final long TILE_MAX_CACHE_SIZE_BYTES
+    public static final long TILE_TRIM_CACHE_SIZE_BYTES
+org.osmdroid.tileprovider.modules.INetworkAvailablityCheck:
+    public abstract boolean getWiFiNetworkAvailable()
+    public abstract boolean getCellularDataNetworkAvailable()
+    public abstract boolean getRouteToPathExists(int)
+org.osmdroid.tileprovider.modules.MBTilesFileArchive:
+    public static final java.lang.String TABLE_TILES
+    public static final java.lang.String COL_TILES_ZOOM_LEVEL
+    public static final java.lang.String COL_TILES_TILE_COLUMN
+    public static final java.lang.String COL_TILES_TILE_ROW
+    public static final java.lang.String COL_TILES_TILE_DATA
+org.osmdroid.tileprovider.modules.MapTileDownloader:
+    65:66:public MapTileDownloader(org.osmdroid.tileprovider.tilesource.ITileSource)
+    69:70:public MapTileDownloader(org.osmdroid.tileprovider.tilesource.ITileSource,org.osmdroid.tileprovider.modules.IFilesystemCache)
+    95:95:public org.osmdroid.tileprovider.tilesource.ITileSource getTileSource()
+    109:109:protected java.lang.String getName()
+org.osmdroid.tileprovider.modules.MapTileFileArchiveProvider:
+    94:94:protected java.lang.String getName()
+org.osmdroid.tileprovider.modules.MapTileFilesystemProvider:
+    47:48:public MapTileFilesystemProvider(org.osmdroid.tileprovider.IRegisterReceiver)
+    91:91:protected java.lang.String getName()
+org.osmdroid.tileprovider.modules.MapTileModuleProviderBase:
+    protected abstract java.lang.String getName()
+org.osmdroid.tileprovider.modules.MapTileModuleProviderBase$1:
+    private static final long serialVersionUID
+org.osmdroid.tileprovider.modules.MapTileModuleProviderBase$CantContinueException:
+    private static final long serialVersionUID
+    317:319:public MapTileModuleProviderBase$CantContinueException(org.osmdroid.tileprovider.modules.MapTileModuleProviderBase,java.lang.String)
+org.osmdroid.tileprovider.modules.NetworkAvailabliltyCheck:
+    33:34:public boolean getWiFiNetworkAvailable()
+    39:41:public boolean getCellularDataNetworkAvailable()
+    46:46:public boolean getRouteToPathExists(int)
+org.osmdroid.tileprovider.modules.TileWriter:
+    78:78:public static long getUsedCacheSpace()
+org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase:
+    62:62:public int ordinal()
+    95:95:public java.lang.String localizedName(org.osmdroid.ResourceProxy)
+org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase$LowMemoryException:
+    private static final long serialVersionUID
+    159:161:public BitmapTileSourceBase$LowMemoryException(org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase,java.lang.String)
+org.osmdroid.tileprovider.tilesource.CloudmadeTileSource:
+    44:45:public void setStyle(java.lang.Integer)
+    58:58:public java.lang.Integer getStyle()
+    9:9:public bridge synthetic java.lang.Object getStyle()
+    9:9:public bridge synthetic void setStyle(java.lang.Object)
+org.osmdroid.tileprovider.tilesource.IStyledTileSource:
+    public abstract void setStyle(java.lang.Object)
+    public abstract java.lang.Object getStyle()
+org.osmdroid.tileprovider.tilesource.ITileSource:
+    public abstract int ordinal()
+    public abstract java.lang.String localizedName(org.osmdroid.ResourceProxy)
+org.osmdroid.tileprovider.tilesource.MapBoxTileSource
+org.osmdroid.tileprovider.tilesource.QuadTreeTileSource
+org.osmdroid.tileprovider.tilesource.TileSourceFactory:
+    7:7:public TileSourceFactory()
+    30:35:public static boolean containsTileSource(java.lang.String)
+    47:52:public static org.osmdroid.tileprovider.tilesource.ITileSource getTileSource(int)
+    60:61:public static void addTileSource(org.osmdroid.tileprovider.tilesource.ITileSource)
+org.osmdroid.tileprovider.util.CloudmadeUtil:
+    private static final java.lang.String CLOUDMADE_KEY
+    private static final java.lang.String CLOUDMADE_ID
+    private static final java.lang.String CLOUDMADE_TOKEN
+    63:83:public static void retrieveCloudmadeKey(android.content.Context)
+org.osmdroid.tileprovider.util.ManifestUtil
+org.osmdroid.tileprovider.util.StreamUtils:
+    public static final int IO_BUFFER_SIZE
+org.osmdroid.util.BoundingBoxE6:
+    static final long serialVersionUID
+    51:56:public BoundingBoxE6(double,double,double,double)
+    66:66:public org.osmdroid.util.GeoPoint getCenter()
+    71:71:public int getDiagonalLengthInMeters()
+    76:76:public int getLatNorthE6()
+    80:80:public int getLatSouthE6()
+    84:84:public int getLonEastE6()
+    88:88:public int getLonWestE6()
+    92:92:public int getLatitudeSpanE6()
+    96:96:public int getLongitudeSpanE6()
+    110:114:public android.graphics.PointF getRelativePositionOfGeoPointInBoundingBoxWithLinearInterpolation(int,int,android.graphics.PointF)
+    119:123:public android.graphics.PointF getRelativePositionOfGeoPointInBoundingBoxWithExactGudermannInterpolation(int,int,android.graphics.PointF)
+    129:145:public org.osmdroid.util.GeoPoint getGeoPointOfRelativePositionWithLinearInterpolation(float,float)
+    151:170:public org.osmdroid.util.GeoPoint getGeoPointOfRelativePositionWithExactGudermannInterpolation(float,float)
+    174:178:public org.osmdroid.util.BoundingBoxE6 increaseByScale(float)
+    199:199:public org.osmdroid.util.GeoPoint bringToBoundingBox(int,int)
+    204:218:public static org.osmdroid.util.BoundingBoxE6 fromGeoPoints(java.util.ArrayList)
+    222:222:public boolean contains(org.osmdroid.api.IGeoPoint)
+    226:226:public boolean contains(int,int)
+org.osmdroid.util.GEMFFile:
+    private static final long FILE_SIZE_LIMIT
+    private static final int FILE_COPY_BUFFER_SIZE
+    private static final int VERSION
+    private static final int TILE_SIZE
+    private static final int U32_SIZE
+    private static final int U64_SIZE
+    107:404:public GEMFFile(java.lang.String,java.util.List)
+    416:419:public void close()
+    515:515:public java.util.LinkedHashMap getSources()
+    523:527:public void selectSource(int)
+    533:534:public void acceptAnySource()
+    540:546:public java.util.Set getZoomLevels()
+org.osmdroid.util.GeoPoint:
+    static final long serialVersionUID
+    66:70:public GeoPoint(org.osmdroid.util.GeoPoint)
+    73:81:public static org.osmdroid.util.GeoPoint fromDoubleString(java.lang.String,char)
+    89:97:public static org.osmdroid.util.GeoPoint fromInvertedDoubleString(java.lang.String,char)
+    106:114:public static org.osmdroid.util.GeoPoint fromIntString(java.lang.String)
+    147:147:public int getAltitude()
+    159:160:public void setAltitude(int)
+    163:165:public void setCoordsE6(int,int)
+    245:261:public int distanceTo(org.osmdroid.api.IGeoPoint)
+    269:279:public double bearingTo(org.osmdroid.api.IGeoPoint)
+    291:309:public org.osmdroid.util.GeoPoint destinationPoint(double,float)
+    313:313:public static org.osmdroid.util.GeoPoint fromCenterBetween(org.osmdroid.util.GeoPoint,org.osmdroid.util.GeoPoint)
+    318:318:public java.lang.String toDoubleString()
+    323:323:public java.lang.String toInvertedDoubleString()
+org.osmdroid.util.GeometryMath:
+    public static final double DEG2RAD
+    public static final double RAD2DEG
+    11:11:public GeometryMath()
+    17:17:public static final android.graphics.Rect getBoundingBoxForRotatatedRectangle(android.graphics.Rect,float,android.graphics.Rect)
+    23:23:public static final android.graphics.Rect getBoundingBoxForRotatatedRectangle(android.graphics.Rect,android.graphics.Point,float,android.graphics.Rect)
+org.osmdroid.util.LocationUtils
+org.osmdroid.util.MyMath:
+    27:28:private MyMath()
+    43:43:public static double gudermannInverse(double)
+    47:47:public static double gudermann(double)
+org.osmdroid.util.Position
+org.osmdroid.util.ResourceProxyImpl:
+    29:30:public java.lang.String getString(org.osmdroid.ResourceProxy$string)
+    35:36:public varargs java.lang.String getString(org.osmdroid.ResourceProxy$string,java.lang.Object[])
+org.osmdroid.util.TileSystem:
+    16:16:public TileSystem()
+    20:21:public static void setTileSize(int)
+    40:40:public static double MapScale(double,int,int)
+    55:56:public static org.osmdroid.util.GeoPoint PixelXYToLatLong(int,int,int,org.osmdroid.util.GeoPoint)
+    69:69:public static android.graphics.Point TileXYToPixelXY(int,int,android.graphics.Point)
+    74:74:public static java.lang.String TileXYToQuadKey(int,int,int)
+    79:79:public static android.graphics.Point QuadKeyToTileXY(java.lang.String,android.graphics.Point)
+org.osmdroid.util.constants.GeoConstants
+org.osmdroid.util.constants.UtilConstants
+org.osmdroid.views.MapController:
+    77:78:public void zoomToSpan(org.osmdroid.util.BoundingBoxE6)
+    83:104:public void zoomToSpan(int,int)
+    131:132:public void scrollBy(int,int)
+    145:147:public void stopPanning()
+    157:178:public void stopAnimation(boolean)
+org.osmdroid.views.MapControllerOld
+org.osmdroid.views.MapControllerOld$1
+org.osmdroid.views.MapControllerOld$AbstractAnimationRunner
+org.osmdroid.views.MapControllerOld$AnimationType
+org.osmdroid.views.MapControllerOld$CosinusalBasedAnimationRunner
+org.osmdroid.views.MapControllerOld$ExponentialDeceleratingAnimationRunner
+org.osmdroid.views.MapControllerOld$HalfCosinusalDeceleratingAnimationRunner
+org.osmdroid.views.MapControllerOld$LinearAnimationRunner
+org.osmdroid.views.MapControllerOld$MiddlePeakSpeedAnimationRunner
+org.osmdroid.views.MapControllerOld$QuarterCosinusalDeceleratingAnimationRunner
+org.osmdroid.views.MapView:
+    private static final double ZOOM_SENSITIVITY
+    protected org.osmdroid.util.BoundingBoxE6 mScrollableAreaBoundingBox
+    226:226:public org.osmdroid.tileprovider.MapTileProviderBase getTileProvider()
+    234:234:public android.os.Handler getTileRequestCompleteHandler()
+    239:239:public int getLatitudeSpan()
+    244:244:public int getLongitudeSpan()
+    306:307:void setMapCenter(org.osmdroid.api.IGeoPoint)
+    313:314:void setMapCenter(int,int)
+    387:417:public void zoomToBoundingBox(org.osmdroid.util.BoundingBoxE6)
+    466:467:public void setMinZoomLevel(java.lang.Integer)
+    474:475:public void setMaxZoomLevel(java.lang.Integer)
+    497:497:boolean zoomIn()
+    506:506:boolean zoomInFixing(int,int)
+    513:513:boolean zoomOut()
+    517:518:boolean zoomOutFixing(org.osmdroid.api.IGeoPoint)
+    522:522:boolean zoomOutFixing(int,int)
+    540:540:public org.osmdroid.ResourceProxy getResourceProxy()
+    544:546:public void setMapOrientation(float)
+    556:556:public boolean useDataConnection()
+    567:568:public void setUseDataConnection(boolean)
+    580:600:public void setScrollableAreaLimit(org.osmdroid.util.BoundingBoxE6)
+    603:603:public org.osmdroid.util.BoundingBoxE6 getScrollableAreaLimit()
+    610:611:public void invalidateMapCoordinates(android.graphics.Rect)
+    1043:1043:public boolean isUsingSafeCanvas()
+    1052:1053:public void setUseSafeCanvas(boolean)
+    1148:1149:public void setMapListener(org.osmdroid.events.MapListener)
+    65:65:public bridge synthetic org.osmdroid.api.IProjection getProjection()
+org.osmdroid.views.MapView$LayoutParams:
+    public static final int TOP_LEFT
+    public static final int TOP_CENTER
+    public static final int TOP_RIGHT
+    public static final int CENTER_LEFT
+    public static final int CENTER
+    public static final int CENTER_RIGHT
+    public static final int BOTTOM_LEFT
+    public static final int BOTTOM_CENTER
+    public static final int BOTTOM_RIGHT
+org.osmdroid.views.MapView$Projection:
+    1256:1256:public org.osmdroid.util.BoundingBoxE6 getBoundingBox()
+    1268:1268:public float getMapOrientation()
+    1276:1276:public int getTileSizePixels()
+    1286:1287:public android.graphics.Point getCenterMapTileCoords()
+    1297:1298:public android.graphics.Point getUpperLeftCornerOfCenterMapTile()
+    1369:1372:public android.graphics.Point toMapPixelsProjected(int,int,android.graphics.Point)
+    1387:1391:public android.graphics.Point toMapPixelsTranslated(android.graphics.Point,android.graphics.Point)
+    1402:1412:public android.graphics.Rect fromPixelsToProjected(android.graphics.Rect)
+    1420:1420:public android.graphics.Point toPixels(android.graphics.Point,android.graphics.Point)
+    1428:1428:public android.graphics.Point toPixels(int,int,android.graphics.Point)
+    1433:1449:public android.graphics.Rect toPixels(org.osmdroid.util.BoundingBoxE6)
+    1454:1454:public float metersToEquatorPixels(float)
+    1459:1459:public org.osmdroid.api.IGeoPoint getNorthEast()
+    1464:1464:public org.osmdroid.api.IGeoPoint getSouthWest()
+    1474:1474:public org.osmdroid.api.IGeoPoint fromPixels(int,int)
+org.osmdroid.views.overlay.DirectedLocationOverlay
+org.osmdroid.views.overlay.IOverlayMenuProvider
+org.osmdroid.views.overlay.ItemizedIconOverlay:
+    49:51:public ItemizedIconOverlay(android.content.Context,java.util.List,org.osmdroid.views.overlay.ItemizedIconOverlay$OnItemGestureListener)
+    70:72:public boolean addItem(org.osmdroid.views.overlay.OverlayItem)
+    76:78:public void addItem(int,org.osmdroid.views.overlay.OverlayItem)
+    81:83:public boolean addItems(java.util.List)
+    87:88:public void removeAllItems()
+    91:95:public void removeAllItems(boolean)
+    98:100:public boolean removeItem(org.osmdroid.views.overlay.OverlayItem)
+    104:106:public org.osmdroid.views.overlay.OverlayItem removeItem(int)
+    192:192:public int getDrawnItemsLimit()
+    196:197:public void setDrawnItemsLimit(int)
+org.osmdroid.views.overlay.ItemizedOverlay:
+    264:265:public void setDrawFocusedItem(boolean)
+    274:276:public void setFocus(org.osmdroid.views.overlay.OverlayItem)
+    283:283:public org.osmdroid.views.overlay.OverlayItem getFocus()
+    344:345:public void setOnFocusChangeListener(org.osmdroid.views.overlay.ItemizedOverlay$OnFocusChangeListener)
+org.osmdroid.views.overlay.ItemizedOverlayControlView:
+    protected android.widget.ImageButton mPreviousButton
+    protected android.widget.ImageButton mNextButton
+    protected android.widget.ImageButton mCenterToButton
+    protected android.widget.ImageButton mNavToButton
+    protected org.osmdroid.views.overlay.ItemizedOverlayControlView$ItemizedOverlayControlViewListener mLis
+    36:37:public ItemizedOverlayControlView(android.content.Context,android.util.AttributeSet)
+    41:71:public ItemizedOverlayControlView(android.content.Context,android.util.AttributeSet,org.osmdroid.ResourceProxy)
+    78:79:public void setItemizedOverlayControlViewListener(org.osmdroid.views.overlay.ItemizedOverlayControlView$ItemizedOverlayControlViewListener)
+    82:83:public void setNextEnabled(boolean)
+    86:87:public void setPreviousEnabled(boolean)
+    90:91:public void setNavToVisible(int)
+    102:133:private void initViewListeners()
+org.osmdroid.views.overlay.ItemizedOverlayControlView$1
+org.osmdroid.views.overlay.ItemizedOverlayControlView$2
+org.osmdroid.views.overlay.ItemizedOverlayControlView$3
+org.osmdroid.views.overlay.ItemizedOverlayControlView$4
+org.osmdroid.views.overlay.ItemizedOverlayControlView$ItemizedOverlayControlViewListener
+org.osmdroid.views.overlay.ItemizedOverlayWithFocus
+org.osmdroid.views.overlay.MinimapOverlay
+org.osmdroid.views.overlay.MyLocationOverlay
+org.osmdroid.views.overlay.Overlay:
+    protected static final float SHADOW_X_SKEW
+    protected static final float SHADOW_Y_SCALE
+    58:61:public Overlay(android.content.Context)
+    77:78:public void setEnabled(boolean)
+org.osmdroid.views.overlay.OverlayItem:
+    public static final int ITEM_STATE_FOCUSED_MASK
+    public static final int ITEM_STATE_PRESSED_MASK
+    public static final int ITEM_STATE_SELECTED_MASK
+    60:61:public OverlayItem(java.lang.String,java.lang.String,org.osmdroid.util.GeoPoint)
+    79:79:public java.lang.String getTitle()
+    156:156:public int getWidth()
+    160:160:public int getHeight()
+org.osmdroid.views.overlay.OverlayManager:
+    66:73:public void setUseSafeCanvas(boolean)
+    81:81:public org.osmdroid.views.overlay.TilesOverlay getTilesOverlay()
+    304:310:public void setOptionsMenusEnabled(boolean)
+    313:327:public boolean onCreateOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
+    331:344:public boolean onPrepareOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
+    348:364:public boolean onOptionsItemSelected(android.view.MenuItem,int,org.osmdroid.views.MapView)
+org.osmdroid.views.overlay.PathOverlay
+org.osmdroid.views.overlay.SafeDrawOverlay:
+    29:30:public SafeDrawOverlay(android.content.Context)
+org.osmdroid.views.overlay.ScaleBarOverlay
+org.osmdroid.views.overlay.SimpleLocationOverlay
+org.osmdroid.views.overlay.TilesOverlay:
+    69:70:public TilesOverlay(org.osmdroid.tileprovider.MapTileProviderBase,android.content.Context)
+    98:98:public boolean useDataConnection()
+    109:110:public void setUseDataConnection(boolean)
+    218:219:public void setOptionsMenuEnabled(boolean)
+    223:223:public boolean isOptionsMenuEnabled()
+    229:247:public boolean onCreateOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
+    253:264:public boolean onPrepareOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
+    271:283:public boolean onOptionsItemSelected(android.view.MenuItem,int,org.osmdroid.views.MapView)
+    288:288:public int getLoadingBackgroundColor()
+    306:306:public int getLoadingLineColor()
+    310:314:public void setLoadingLineColor(int)
+    363:364:public void setOvershootTileCache(int)
+    372:372:public int getOvershootTileCache()
+org.osmdroid.views.overlay.compass.CompassOverlay
+org.osmdroid.views.overlay.compass.IOrientationConsumer
+org.osmdroid.views.overlay.compass.IOrientationProvider
+org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider
+org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider:
+    29:29:public long getLocationUpdateMinTime()
+    40:41:public void setLocationUpdateMinTime(long)
+    44:44:public float getLocationUpdateMinDistance()
+    55:56:public void setLocationUpdateMinDistance(float)
+org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay:
+    140:141:public void setDrawAccuracyEnabled(boolean)
+    149:149:public boolean isDrawAccuracyEnabled()
+    153:153:public org.osmdroid.views.overlay.mylocation.IMyLocationProvider getMyLocationProvider()
+    168:169:public void setPersonHotspot(float,float)
+    323:323:public boolean isOptionsMenuEnabled()
+    329:334:public boolean onCreateOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
+    340:341:public boolean onPrepareOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
+    347:358:public boolean onOptionsItemSelected(android.view.MenuItem,int,org.osmdroid.views.MapView)
+    370:373:public org.osmdroid.util.GeoPoint getMyLocation()
+    378:378:public android.location.Location getLastFix()
+    476:478:public boolean enableMyLocation(org.osmdroid.views.overlay.mylocation.IMyLocationProvider)
+    541:546:public boolean runOnFirstFix(java.lang.Runnable)
+org.osmdroid.views.safecanvas.ISafeCanvas:
+    public abstract int getXOffset()
+    public abstract int getYOffset()
+    public abstract android.graphics.Canvas getWrappedCanvas()
+    public abstract void setBitmap(android.graphics.Bitmap)
+    public abstract boolean isOpaque()
+    public abstract int getWidth()
+    public abstract int getHeight()
+    public abstract int getDensity()
+    public abstract void setDensity(int)
+    public abstract int save(int)
+    public abstract int saveLayer(android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint,int)
+    public abstract int saveLayer(double,double,double,double,org.osmdroid.views.safecanvas.SafePaint,int)
+    public abstract int saveLayerAlpha(android.graphics.Rect,int,int)
+    public abstract int saveLayerAlpha(double,double,double,double,int,int)
+    public abstract int getSaveCount()
+    public abstract void restoreToCount(int)
+    public abstract void translate(float,float)
+    public abstract void scale(float,float)
+    public abstract void rotate(float)
+    public abstract void skew(float,float)
+    public abstract void concat(android.graphics.Matrix)
+    public abstract void setMatrix(android.graphics.Matrix)
+    public abstract android.graphics.Matrix getMatrix()
+    public abstract boolean clipRect(android.graphics.Rect,android.graphics.Region$Op)
+    public abstract boolean clipRect(android.graphics.Rect)
+    public abstract boolean clipRect(double,double,double,double,android.graphics.Region$Op)
+    public abstract boolean clipRect(double,double,double,double)
+    public abstract boolean clipRect(int,int,int,int)
+    public abstract boolean clipPath(org.osmdroid.views.safecanvas.SafeTranslatedPath,android.graphics.Region$Op)
+    public abstract boolean clipPath(org.osmdroid.views.safecanvas.SafeTranslatedPath)
+    public abstract boolean clipRegion(android.graphics.Region,android.graphics.Region$Op)
+    public abstract boolean clipRegion(android.graphics.Region)
+    public abstract android.graphics.DrawFilter getDrawFilter()
+    public abstract void setDrawFilter(android.graphics.DrawFilter)
+    public abstract boolean quickReject(android.graphics.Rect,android.graphics.Canvas$EdgeType)
+    public abstract boolean quickReject(org.osmdroid.views.safecanvas.SafeTranslatedPath,android.graphics.Canvas$EdgeType)
+    public abstract boolean quickReject(double,double,double,double,android.graphics.Canvas$EdgeType)
+    public abstract boolean getClipBounds(android.graphics.Rect)
+    public abstract android.graphics.Rect getClipBounds()
+    public abstract void drawRGB(int,int,int)
+    public abstract void drawARGB(int,int,int,int)
+    public abstract void drawColor(int)
+    public abstract void drawColor(int,android.graphics.PorterDuff$Mode)
+    public abstract void drawPaint(org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawPoints(double[],int,int,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawPoints(double[],org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawPoint(double,double,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawLine(double,double,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawLines(double[],int,int,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawLines(double[],org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawRect(android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawRect(double,double,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawOval(android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawArc(android.graphics.Rect,float,float,boolean,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawRoundRect(android.graphics.Rect,float,float,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawPath(org.osmdroid.views.safecanvas.SafeTranslatedPath,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawBitmap(android.graphics.Bitmap,android.graphics.Rect,android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawBitmap(int[],int,int,double,double,int,int,boolean,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawBitmap(int[],int,int,int,int,int,int,boolean,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawBitmap(android.graphics.Bitmap,android.graphics.Matrix,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawBitmapMesh(android.graphics.Bitmap,int,int,double[],int,int[],int,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawVertices(android.graphics.Canvas$VertexMode,int,double[],int,float[],int,int[],int,short[],int,int,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawText(char[],int,int,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawText(java.lang.String,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawText(java.lang.String,int,int,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawText(java.lang.CharSequence,int,int,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawPosText(char[],int,int,double[],org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawPosText(java.lang.String,double[],org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawTextOnPath(char[],int,int,org.osmdroid.views.safecanvas.SafeTranslatedPath,float,float,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawTextOnPath(java.lang.String,org.osmdroid.views.safecanvas.SafeTranslatedPath,float,float,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawPicture(android.graphics.Picture)
+    public abstract void drawPicture(android.graphics.Picture,android.graphics.Rect)
+org.osmdroid.views.safecanvas.SafeBitmapShader
+org.osmdroid.views.safecanvas.SafeDashPathEffect
+org.osmdroid.views.safecanvas.SafeTranslatedCanvas:
+    39:41:public SafeTranslatedCanvas(android.graphics.Canvas)
+    50:50:public int getXOffset()
+    55:55:public int getYOffset()
+    80:80:public boolean clipPath(org.osmdroid.views.safecanvas.SafeTranslatedPath,android.graphics.Region$Op)
+    85:85:public boolean clipPath(org.osmdroid.views.safecanvas.SafeTranslatedPath)
+    90:90:public boolean clipRect(double,double,double,double,android.graphics.Region$Op)
+    96:96:public boolean clipRect(double,double,double,double)
+    143:145:public void drawArc(android.graphics.Rect,float,float,boolean,org.osmdroid.views.safecanvas.SafePaint)
+    155:158:public void drawBitmap(android.graphics.Bitmap,android.graphics.Matrix,org.osmdroid.views.safecanvas.SafePaint)
+    162:165:public void drawBitmap(android.graphics.Bitmap,android.graphics.Rect,android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint)
+    178:180:public void drawBitmap(int[],int,int,double,double,int,int,boolean,org.osmdroid.views.safecanvas.SafePaint)
+    185:187:public void drawBitmap(int[],int,int,int,int,int,int,boolean,org.osmdroid.views.safecanvas.SafePaint)
+    192:194:public void drawBitmapMesh(android.graphics.Bitmap,int,int,double[],int,int[],int,org.osmdroid.views.safecanvas.SafePaint)
+    216:222:public void drawLine(double,double,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    226:227:public void drawLines(double[],int,int,org.osmdroid.views.safecanvas.SafePaint)
+    231:232:public void drawLines(double[],org.osmdroid.views.safecanvas.SafePaint)
+    236:237:public void drawOval(android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint)
+    241:242:public void drawPaint(org.osmdroid.views.safecanvas.SafePaint)
+    246:247:public void drawPath(org.osmdroid.views.safecanvas.SafeTranslatedPath,org.osmdroid.views.safecanvas.SafePaint)
+    263:266:public void drawPoint(double,double,org.osmdroid.views.safecanvas.SafePaint)
+    270:271:public void drawPoints(double[],int,int,org.osmdroid.views.safecanvas.SafePaint)
+    275:276:public void drawPoints(double[],org.osmdroid.views.safecanvas.SafePaint)
+    280:282:public void drawPosText(char[],int,int,double[],org.osmdroid.views.safecanvas.SafePaint)
+    286:287:public void drawPosText(java.lang.String,double[],org.osmdroid.views.safecanvas.SafePaint)
+    296:302:public void drawRect(double,double,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    306:309:public void drawRect(android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint)
+    313:314:public void drawRoundRect(android.graphics.Rect,float,float,org.osmdroid.views.safecanvas.SafePaint)
+    318:319:public void drawText(java.lang.String,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    323:325:public void drawText(char[],int,int,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    329:331:public void drawText(java.lang.CharSequence,int,int,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    335:337:public void drawText(java.lang.String,int,int,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    342:343:public void drawTextOnPath(char[],int,int,org.osmdroid.views.safecanvas.SafeTranslatedPath,float,float,org.osmdroid.views.safecanvas.SafePaint)
+    348:349:public void drawTextOnPath(java.lang.String,org.osmdroid.views.safecanvas.SafeTranslatedPath,float,float,org.osmdroid.views.safecanvas.SafePaint)
+    355:358:public void drawVertices(android.graphics.Canvas$VertexMode,int,double[],int,float[],int,int[],int,short[],int,int,org.osmdroid.views.safecanvas.SafePaint)
+    412:416:public boolean quickReject(double,double,double,double,android.graphics.Canvas$EdgeType)
+    422:422:public boolean quickReject(org.osmdroid.views.safecanvas.SafeTranslatedPath,android.graphics.Canvas$EdgeType)
+    428:428:public boolean quickReject(android.graphics.Rect,android.graphics.Canvas$EdgeType)
+    470:470:public int saveLayer(double,double,double,double,org.osmdroid.views.safecanvas.SafePaint,int)
+    476:478:public int saveLayer(android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint,int)
+    484:484:public int saveLayerAlpha(double,double,double,double,int,int)
+    490:490:public int saveLayerAlpha(android.graphics.Rect,int,int)
+    560:565:protected final android.graphics.RectF toOffsetRectF(android.graphics.Rect,android.graphics.RectF)
+    572:578:protected final float[] toOffsetFloatAry(double[],float[])
+org.osmdroid.views.safecanvas.SafeTranslatedPath
+org.osmdroid.views.util.Mercator
+org.osmdroid.views.util.MyMath
+org.osmdroid.views.util.PathProjection
+org.osmdroid.views.util.constants.MapViewConstants
+org.osmdroid.views.util.constants.MathConstants
+org.osmdroid.views.util.constants.OverlayConstants
+org.slf4j.IMarkerFactory
+org.slf4j.Logger:
+    public static final java.lang.String ROOT_LOGGER_NAME
+    public abstract java.lang.String getName()
+    public abstract boolean isTraceEnabled()
+    public abstract void trace(java.lang.String)
+    public abstract void trace(java.lang.String,java.lang.Object)
+    public abstract void trace(java.lang.String,java.lang.Object,java.lang.Object)
+    public abstract void trace(java.lang.String,java.lang.Object[])
+    public abstract void trace(java.lang.String,java.lang.Throwable)
+    public abstract boolean isTraceEnabled(org.slf4j.Marker)
+    public abstract void trace(org.slf4j.Marker,java.lang.String)
+    public abstract void trace(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    public abstract void trace(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    public abstract void trace(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    public abstract void trace(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+    public abstract boolean isDebugEnabled()
+    public abstract void debug(java.lang.String)
+    public abstract void debug(java.lang.String,java.lang.Object)
+    public abstract void debug(java.lang.String,java.lang.Object,java.lang.Object)
+    public abstract void debug(java.lang.String,java.lang.Object[])
+    public abstract void debug(java.lang.String,java.lang.Throwable)
+    public abstract boolean isDebugEnabled(org.slf4j.Marker)
+    public abstract void debug(org.slf4j.Marker,java.lang.String)
+    public abstract void debug(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    public abstract void debug(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    public abstract void debug(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    public abstract void debug(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+    public abstract boolean isInfoEnabled()
+    public abstract void info(java.lang.String,java.lang.Object)
+    public abstract void info(java.lang.String,java.lang.Object,java.lang.Object)
+    public abstract void info(java.lang.String,java.lang.Object[])
+    public abstract boolean isInfoEnabled(org.slf4j.Marker)
+    public abstract void info(org.slf4j.Marker,java.lang.String)
+    public abstract void info(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    public abstract void info(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    public abstract void info(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    public abstract void info(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+    public abstract boolean isWarnEnabled()
+    public abstract void warn(java.lang.String,java.lang.Object)
+    public abstract void warn(java.lang.String,java.lang.Object[])
+    public abstract void warn(java.lang.String,java.lang.Object,java.lang.Object)
+    public abstract boolean isWarnEnabled(org.slf4j.Marker)
+    public abstract void warn(org.slf4j.Marker,java.lang.String)
+    public abstract void warn(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    public abstract void warn(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    public abstract void warn(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    public abstract void warn(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+    public abstract boolean isErrorEnabled()
+    public abstract void error(java.lang.String,java.lang.Object)
+    public abstract void error(java.lang.String,java.lang.Object[])
+    public abstract boolean isErrorEnabled(org.slf4j.Marker)
+    public abstract void error(org.slf4j.Marker,java.lang.String)
+    public abstract void error(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    public abstract void error(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    public abstract void error(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    public abstract void error(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+org.slf4j.LoggerFactory:
+    static final java.lang.String NO_STATICLOGGERBINDER_URL
+    static final java.lang.String MULTIPLE_BINDINGS_URL
+    static final java.lang.String NULL_LF_URL
+    static final java.lang.String VERSION_MISMATCH
+    static final java.lang.String SUBSTITUTE_LOGGER_URL
+    static final java.lang.String UNSUCCESSFUL_INIT_URL
+    static final java.lang.String UNSUCCESSFUL_INIT_MSG
+    static final int UNINITIALIZED
+    static final int ONGOING_INITILIZATION
+    static final int FAILED_INITILIZATION
+    static final int SUCCESSFUL_INITILIZATION
+    static final int GET_SINGLETON_INEXISTENT
+    static final int GET_SINGLETON_EXISTS
+    101:104:static void reset()
+org.slf4j.MDC
+org.slf4j.Marker
+org.slf4j.MarkerFactory
+org.slf4j.helpers.BasicMDCAdapter
+org.slf4j.helpers.BasicMarker
+org.slf4j.helpers.BasicMarkerFactory
+org.slf4j.helpers.MarkerIgnoringBase:
+    42:42:public boolean isTraceEnabled(org.slf4j.Marker)
+    46:47:public void trace(org.slf4j.Marker,java.lang.String)
+    50:51:public void trace(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    54:55:public void trace(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    58:59:public void trace(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    62:63:public void trace(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+    66:66:public boolean isDebugEnabled(org.slf4j.Marker)
+    70:71:public void debug(org.slf4j.Marker,java.lang.String)
+    74:75:public void debug(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    78:79:public void debug(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    82:83:public void debug(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    86:87:public void debug(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+    90:90:public boolean isInfoEnabled(org.slf4j.Marker)
+    94:95:public void info(org.slf4j.Marker,java.lang.String)
+    98:99:public void info(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    102:103:public void info(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    106:107:public void info(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    110:111:public void info(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+    114:114:public boolean isWarnEnabled(org.slf4j.Marker)
+    118:119:public void warn(org.slf4j.Marker,java.lang.String)
+    122:123:public void warn(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    126:127:public void warn(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    130:131:public void warn(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    134:135:public void warn(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+    139:139:public boolean isErrorEnabled(org.slf4j.Marker)
+    143:144:public void error(org.slf4j.Marker,java.lang.String)
+    147:148:public void error(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    151:152:public void error(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    155:156:public void error(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    159:160:public void error(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+org.slf4j.helpers.MessageFormatter:
+    static final char DELIM_START
+    static final char DELIM_STOP
+    static final java.lang.String DELIM_STR
+    private static final char ESCAPE_CHAR
+    87:87:public MessageFormatter()
+    114:114:public static final java.lang.String format(java.lang.String,java.lang.Object)
+org.slf4j.helpers.NOPLogger:
+    private static final long serialVersionUID
+    73:73:public final boolean isTraceEnabled()
+    79:79:public final void trace(java.lang.String)
+    84:84:public final void trace(java.lang.String,java.lang.Object)
+    89:89:public final void trace(java.lang.String,java.lang.Object,java.lang.Object)
+    94:94:public final void trace(java.lang.String,java.lang.Object[])
+    99:99:public final void trace(java.lang.String,java.lang.Throwable)
+    106:106:public final boolean isDebugEnabled()
+    112:112:public final void debug(java.lang.String)
+    117:117:public final void debug(java.lang.String,java.lang.Object)
+    122:122:public final void debug(java.lang.String,java.lang.Object,java.lang.Object)
+    127:127:public final void debug(java.lang.String,java.lang.Object[])
+    134:134:public final void debug(java.lang.String,java.lang.Throwable)
+    142:142:public final boolean isInfoEnabled()
+    154:154:public final void info(java.lang.String,java.lang.Object)
+    159:159:public final void info(java.lang.String,java.lang.Object,java.lang.Object)
+    164:164:public final void info(java.lang.String,java.lang.Object[])
+    178:178:public final boolean isWarnEnabled()
+    189:189:public final void warn(java.lang.String,java.lang.Object)
+    194:194:public final void warn(java.lang.String,java.lang.Object,java.lang.Object)
+    199:199:public final void warn(java.lang.String,java.lang.Object[])
+    210:210:public final boolean isErrorEnabled()
+    221:221:public final void error(java.lang.String,java.lang.Object)
+    231:231:public final void error(java.lang.String,java.lang.Object[])
+org.slf4j.helpers.NOPMakerAdapter
+org.slf4j.helpers.NamedLoggerBase:
+    41:41:protected java.lang.Object readResolve()
+org.slf4j.helpers.Util:
+    34:34:public Util()
+org.slf4j.impl.AndroidLogger:
+    private static final long serialVersionUID
+    73:73:public boolean isTraceEnabled()
+    79:80:public void trace(java.lang.String)
+    85:86:public void trace(java.lang.String,java.lang.Object)
+    91:92:public void trace(java.lang.String,java.lang.Object,java.lang.Object)
+    97:98:public void trace(java.lang.String,java.lang.Object[])
+    103:104:public void trace(java.lang.String,java.lang.Throwable)
+    109:109:public boolean isDebugEnabled()
+    115:116:public void debug(java.lang.String)
+    121:122:public void debug(java.lang.String,java.lang.Object)
+    127:128:public void debug(java.lang.String,java.lang.Object,java.lang.Object)
+    133:134:public void debug(java.lang.String,java.lang.Object[])
+    139:140:public void debug(java.lang.String,java.lang.Throwable)
+    145:145:public boolean isInfoEnabled()
+    157:158:public void info(java.lang.String,java.lang.Object)
+    163:164:public void info(java.lang.String,java.lang.Object,java.lang.Object)
+    169:170:public void info(java.lang.String,java.lang.Object[])
+    181:181:public boolean isWarnEnabled()
+    193:194:public void warn(java.lang.String,java.lang.Object)
+    199:200:public void warn(java.lang.String,java.lang.Object,java.lang.Object)
+    205:206:public void warn(java.lang.String,java.lang.Object[])
+    217:217:public boolean isErrorEnabled()
+    229:230:public void error(java.lang.String,java.lang.Object)
+    241:242:public void error(java.lang.String,java.lang.Object[])
+    270:270:private java.lang.String format(java.lang.String,java.lang.Object[])
+org.slf4j.impl.StaticMDCBinder
+org.slf4j.impl.StaticMarkerBinder
+org.slf4j.spi.LocationAwareLogger
+org.slf4j.spi.LoggerFactoryBinder
+org.slf4j.spi.MDCAdapter
+org.slf4j.spi.MarkerFactoryBinder

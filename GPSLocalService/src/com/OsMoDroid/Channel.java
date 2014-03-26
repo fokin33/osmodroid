@@ -35,6 +35,7 @@ public class Channel {
 					}
 	};
 	ArrayList<Point> pointList= new ArrayList<Channel.Point>();
+	public boolean chatconnected=false;
 	class Point {
 		int u;
 		float lat;
@@ -103,17 +104,25 @@ public class Channel {
 //	 				    name = toxIC jiayu
 //	 				    icon = 1
 		 			
-	if (!jsonObject.getString("u").equals(LocalService.settings.getString("device", ""))){
-		this.deviceList.add(new Device(jsonObject.getString("u")
-				, jsonObject.getString("name"),""
-				,"",
-				"",
-				"",
-				jsonObject.getString("lat"),
-				jsonObject.getString("lon"),
-				jsonObject.getString("online"),
-				jsonObject.getString("state"), "", jsonObject.optString("color"), ch
-				) );}
+	if (!jsonObject.getString("u").equals(LocalService.settings.getString("device", "")))
+		{
+		try {
+			this.deviceList.add(new Device(jsonObject.getString("u")
+					, jsonObject.getString("name"),""
+					,"",
+					"",
+					"",
+					jsonObject.getString("lat"),
+					jsonObject.getString("lon"),
+					jsonObject.getString("online"),
+					jsonObject.getString("state"), "", jsonObject.optString("color"), ch
+					) );
+		} catch (NumberFormatException e) {
+			Log.d(getClass().getSimpleName(),"Wrong device info");
+			e.printStackTrace();
+		}
+	
+		}
 	} catch (JSONException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -147,7 +156,7 @@ public class Channel {
 	//	chanIM= new IM("om_"+this.ch+",om_"+this.ch+"_chat", LocalService.serContext, 2);
 		ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
 		longPollchannels.add(new String[] {this.ch,"ch",""});
-		longPollchannels.add(new String[] {this.ch+"_chat","chch",""});
+		//longPollchannels.add(new String[] {this.ch+"_chat","chch",""});
 		
 		if (LocalService.myIM!=null){
 			LocalService.myIM.removechannels(longPollchannels);
@@ -156,17 +165,43 @@ public class Channel {
 		connected=true;
 		
 	}
+	
+	public void connectchat(){
+		Log.d(getClass().getSimpleName(),"Channel chat connecting");	
+	//	chanIM= new IM("om_"+this.ch+",om_"+this.ch+"_chat", LocalService.serContext, 2);
+		ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
+		//longPollchannels.add(new String[] {this.ch,"ch",""});
+		longPollchannels.add(new String[] {this.ch+"_chat","chch",""});
+		
+		if (LocalService.myIM!=null){
+			LocalService.myIM.removechannels(longPollchannels);
+			LocalService.myIM.addchannels(longPollchannels);	
+	}
+		chatconnected=true;
+		
+	}
 
 	public void disconnect(){
 		Log.d(getClass().getSimpleName(),"Channel disconnecting");	
 		//	chanIM= new IM("om_"+this.ch+",om_"+this.ch+"_chat", LocalService.serContext, 2);
 			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
 			longPollchannels.add(new String[] {this.ch,"ch",""});
-			longPollchannels.add(new String[] {this.ch+"_chat","chch",""});
+			//longPollchannels.add(new String[] {this.ch+"_chat","chch",""});
 			
 			if (LocalService.myIM!=null){
 				LocalService.myIM.removechannels(longPollchannels);	}	
 			connected=false;
+	}
+	public void disconnectchat(){
+		Log.d(getClass().getSimpleName(),"Channel chat disconnecting");	
+		//	chanIM= new IM("om_"+this.ch+",om_"+this.ch+"_chat", LocalService.serContext, 2);
+			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
+			//longPollchannels.add(new String[] {this.ch,"ch",""});
+			longPollchannels.add(new String[] {this.ch+"_chat","chch",""});
+			
+			if (LocalService.myIM!=null){
+				LocalService.myIM.removechannels(longPollchannels);	}	
+			chatconnected=false;
 	}
 	
 	public void downloadgpx(String url, String u, String color){

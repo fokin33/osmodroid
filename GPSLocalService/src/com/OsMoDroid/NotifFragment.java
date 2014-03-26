@@ -19,20 +19,32 @@ public class NotifFragment extends SherlockFragment {
      public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
          setHasOptionsMenu(true);
-         setRetainInstance(true);
+         //setRetainInstance(true);
          super.onCreate(savedInstanceState);
      }
 	private ArrayAdapter<String> adapter;
 	ArrayList<String> list;
-	EditText toAppText;
-	EditText toUserText;
-	EditText sendText;
+	//EditText toAppText;
+	//EditText toUserText;
+	//EditText sendText;
+	private GPSLocalServiceClient globalActivity;
 	
+	@Override
+	public void onResume() {
+		 globalActivity.actionBar.setTitle(getString(R.string.notifications));
+		super.onResume();
+	}
 	
 	@Override
 	public void onAttach(Activity activity) {
-		
+		globalActivity = (GPSLocalServiceClient) activity;
 		super.onAttach(activity);
+	}
+
+	@Override
+	public void onDetach() {
+		globalActivity=null;
+		super.onDetach();
 	}
 
 	@Override
