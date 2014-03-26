@@ -39,11 +39,10 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 	ObjectOutputStream output = null;	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private  WampConnection mWampConnection = new WampConnection();
 	//WebSocketConnection mWebsocketConnection = new WebSocketConnection();
-	final String wsuri = "ws://osmase.com:8080/";
+	final String wsuri = "ws://osmo.mobi:5739/";
 	final String websocketuri = "ws://osmo.mobi:5740/";
 	protected boolean connOpened=false;
 	protected boolean connecting=false;	public IM(ArrayList<String[]> longPollChList, Context context,String key,final LocalService localService) {
-	
 		this.localService=localService; 
 		parent=context;
 		manager = (AlarmManager)(parent.getSystemService( Context.ALARM_SERVICE ));
