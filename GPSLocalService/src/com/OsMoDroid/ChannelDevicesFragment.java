@@ -305,7 +305,7 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 		 				}
 		 			}
 		 			if (jsonObject.optInt("device")==Integer.parseInt(OsMoDroid.settings.getString("device", "0"))){
-		 				fromDevice="Я";
+		 				fromDevice=getSherlockActivity().getString(R.string.iam);
 		 			}
 		 			LocalService.currentChannel.messagesstringList.add( fromDevice+": "+jsonObject.optString("text"));
 		 			//Collections.sort(LocalService.currentChannel.messagesstringList);

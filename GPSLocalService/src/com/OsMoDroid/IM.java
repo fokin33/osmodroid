@@ -744,7 +744,7 @@ if (getMessageType( topic).equals("chch")){
 private void addToChannelChat(String toParse, String topic) {
 	if(log)Log.d(this.getClass().getName(), "type=chch");
 	if(log)Log.d(this.getClass().getName(), "Сообщение в чат канала " + toParse);
-	String fromDevice="Зрители";
+	String fromDevice=localService.getString(R.string.obeservsers);
 	//09-16 18:25:41.057: D/com.OsMoDroid.IM(1474):     "data": "0|40+\u041e\u043f\u0430\u0441\u043d\u043e +2013-09-16 22:25:44"
 	//"data": "0|40|cxbcxvbcxvbcxvb|2013-03-14 22:42:34"
 	String[] data = toParse.split("\\|");
@@ -763,7 +763,7 @@ private void addToChannelChat(String toParse, String topic) {
 				fromDevice = device.name;
 			}
 			if (datanew[0].equals(OsMoDroid.settings.getString("device", ""))){
-				fromDevice="Я";
+				fromDevice=localService.getString(R.string.iam);
 				if(log)Log.d(this.getClass().getName(), "Сообщение от устройства в канале от меня ");
 			}
 		}
@@ -774,7 +774,7 @@ private void addToChannelChat(String toParse, String topic) {
 	 	NotificationCompat.Builder notificationBuilder =new NotificationCompat.Builder(
 				localService.getApplicationContext())
 		    	.setWhen(when)
-		    	.setContentText(localService.getString(R.string.message)+" "+fromDevice+": "+datanew[1])
+		    	.setContentText(channel.name+" "+fromDevice+": "+datanew[1])
 		    	.setContentTitle("OsMoDroid")
 		    	.setSmallIcon(android.R.drawable.ic_menu_send)
 		    	.setAutoCancel(true)
