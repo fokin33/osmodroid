@@ -1371,6 +1371,8 @@ android.support.v4.widget.CursorAdapter: android.widget.FilterQueryProvider getF
 android.support.v4.widget.CursorAdapter: void setFilterQueryProvider(android.widget.FilterQueryProvider)
 android.support.v4.widget.CursorAdapter: void onContentChanged()
 android.support.v4.widget.DrawerLayout
+android.support.v4.widget.DrawerLayout: DrawerLayout(android.content.Context)
+android.support.v4.widget.DrawerLayout: DrawerLayout(android.content.Context,android.util.AttributeSet)
 android.support.v4.widget.DrawerLayout: DrawerLayout(android.content.Context,android.util.AttributeSet,int)
 android.support.v4.widget.DrawerLayout$SavedState
 android.support.v4.widget.DrawerLayout$SavedState: android.os.Parcelable$Creator CREATOR
@@ -1397,8 +1399,6 @@ com.OsMoDroid.DeviceChatFragment
 com.OsMoDroid.DevicesFragment
 com.OsMoDroid.GPSLocalServiceClient
 com.OsMoDroid.GPSLocalServiceClient: GPSLocalServiceClient()
-com.OsMoDroid.GPSLocalServiceClient$TabType: com.OsMoDroid.GPSLocalServiceClient$TabType[] values()
-com.OsMoDroid.GPSLocalServiceClient$TabType: com.OsMoDroid.GPSLocalServiceClient$TabType valueOf(java.lang.String)
 com.OsMoDroid.LocalService
 com.OsMoDroid.LocalService: LocalService()
 com.OsMoDroid.MainFragment
