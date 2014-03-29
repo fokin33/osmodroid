@@ -21,27 +21,27 @@
                                 android:key="distance"
                                 android:numeric="integer"
                                 android:summary="Метры"
-                                android:title="Дистанция отправки" android:defaultValue="50" />
+                                android:title="Дистанция отправки" android:defaultValue="0" />
                             <EditTextPreference
                                 android:digits="0123456789"
                                 android:inputType="number"
                                 android:key="bearing"
                                 android:numeric="integer"
                                 android:summary="Градусы"
-                                android:title="Отклонение курса" android:defaultValue="30" />
+                                android:title="Отклонение курса" android:defaultValue="0" />
                             <EditTextPreference
                                 android:digits="0123456789"
                                 android:inputType="number"
                                 android:key="speedbearing"
                                 android:summary="Километров в час"
-                                android:title="Скорость учета курса" android:defaultValue="10" />
+                                android:title="Скорость учета курса" android:defaultValue="0" />
                             <EditTextPreference
                                 android:digits="0123456789"
                                 android:inputType="number"
                                 android:key="hdop"
                                 android:numeric="integer"
-                                android:summary="Метры"
-                                android:title="Максимальная погрешность HDOP" android:defaultValue="50" />
+                                android:summary="Метры, не учитывается при определении по WiFi"
+                                android:title="Максимальная погрешность HDOP" android:defaultValue="30" />
                             <EditTextPreference
                                 android:key="speed"
                                 android:title="Минимальная скорость отправки"
@@ -49,6 +49,11 @@
                                 android:digits="0123456789"
                                 android:inputType="number"
                                 android:defaultValue="0" />
+                            <CheckBoxPreference
+                                android:key="modeAND"
+                                android:title="Режим параметров И"
+                                android:summary="По умолчанию ИЛИ (или время, или дистанция или курс)"
+                                android:defaultValue="true"/>
                             <PreferenceScreen android:title="Идентификация" >
                                 <EditTextPreference
                                     android:key="hash"
@@ -60,8 +65,8 @@
                             <CheckBoxPreference
                                 android:key="usebuffer"
                                 android:title="Передавать неотправленное"
-                                android:summary="Полезно, если нестабильная связь с интернетом. Может повышать интернет-трафик."
-                                android:defaultValue="false" /><CheckBoxPreference android:key="modeAND" android:title="Режим И или ИЛИ" android:defaultValue="false"/>
+                                android:summary="Рекомендуем, если нестабильная связь с интернетом. Может повышать интернет-трафик."
+                                android:defaultValue="false" />
                     </PreferenceScreen>
     </PreferenceCategory>
     
@@ -70,7 +75,7 @@
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="gpx"
-            android:summary="Треки сохраняются на карте памяти (/sdcard/OsMoDroid/)"
+            android:summary="Треки сохраняются локально (путь настраивается)"
             android:title="Запись трека" />
 
                 <PreferenceScreen android:title="Параметры записи" android:dependency="gpx">
@@ -80,7 +85,7 @@
                             android:key="period_gpx"
                             android:numeric="integer"
                             android:summary="Миллисекунды"
-                            android:title="Период записи" android:defaultValue="0" />
+                            android:title="Период записи" android:defaultValue="2000" />
                         <EditTextPreference
                             android:digits="0123456789"
                             android:inputType="number"
@@ -94,20 +99,20 @@
                             android:key="bearing_gpx"
                             android:numeric="integer"
                             android:summary="Градусы"
-                            android:title="Отклонение курса" android:defaultValue="30" />
+                            android:title="Отклонение курса" android:defaultValue="0" />
                         <EditTextPreference
                             android:digits="0123456789"
                             android:inputType="number"
                             android:key="speedbearing_gpx"
-                            android:summary="километров в час"
-                            android:title="Скорость учета курса" android:defaultValue="10" />
+                            android:summary="Километров в час"
+                            android:title="Скорость учета курса" android:defaultValue="0" />
                         <EditTextPreference
                             android:digits="0123456789"
                             android:inputType="number"
                             android:key="hdop_gpx"
                             android:numeric="integer"
-                            android:summary="Метры"
-                            android:title="Допустимая точность" android:defaultValue="50" />
+                            android:summary="Метры, не учитывается при определении по WiFi"
+                            android:title="Максимальная погрешность HDOP" android:defaultValue="30" />
                         <EditTextPreference
                             android:digits="0123456789"
                             android:inputType="number"
@@ -115,11 +120,17 @@
                             android:numeric="integer"
                             android:summary="Километров в час"
                             android:title="Минимальная скорость записи"
-                            android:defaultValue="0" /><CheckBoxPreference android:key="modeAND_gpx" android:title="Режим AND ли OR" android:defaultValue="false"/>
+                            android:defaultValue="0" />
+                        <CheckBoxPreference
+                            android:key="modeAND_gpx"
+                            android:title="Режим параметров И"
+                            android:summary="По умолчанию ИЛИ (или время, или дистанция или курс)"
+                            android:defaultValue="true"/>
                         <CheckBoxPreference
                             android:title="Загружать на ТреРа автоматически"
                             android:key="automaticupload"
-                            android:defaultValue="false"/><EditTextPreference android:title="Путь к SDcard" android:key="sdpath" />
+                            android:defaultValue="false"/>
+                         <EditTextPreference android:title="Путь к SDcard" android:key="sdpath" />
                 </PreferenceScreen>
                     
     </PreferenceCategory>
@@ -178,6 +189,7 @@
                                 android:summary="Использовать сигнализацию"
                                 android:key="usealarm"
                                 android:title="Сигнализация"
+                                android:summary="Реагирует на движение телефона в пространстве"
                                 android:defaultValue="false" />
                             <EditTextPreference
                                 android:title="Чувствительность"
@@ -192,12 +204,12 @@
             android:defaultValue="false" />
         <CheckBoxPreference
             android:key="usegps"
-            android:summary="Использовать для определения координат GPS"
+            android:summary="Определять местоположение по GPS"
             android:title="GPS"
             android:defaultValue="true" />
         <CheckBoxPreference
             android:key="usenetwork"
-            android:summary="Использовать для определения координат сотовые сети и WiFi (дополнительный интернет-трафик)"
+            android:summary="Определять местоположение по сотовым сетям и WiFi (дополнительный интернет-трафик)"
             android:title="Мобильные сети"
             android:defaultValue="true" />
         <CheckBoxPreference
