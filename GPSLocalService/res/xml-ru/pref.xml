@@ -1,6 +1,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:title="Настройки" >
     
-    <EditTextPreference android:summary="Миллисекунды" android:title="Период опроса GPS" android:key="refreshrate" android:defaultValue="1000"/><PreferenceCategory android:title="Онлайн">
+    <EditTextPreference android:summary="Миллисекунды" android:title="Период опроса GPS" android:key="refreshrate" android:defaultValue="5000"/>
+    
+    <PreferenceCategory android:title="Онлайн">
         
         <CheckBoxPreference
             android:defaultValue="true"
@@ -111,8 +113,8 @@
                             android:inputType="number"
                             android:key="hdop_gpx"
                             android:numeric="integer"
-                            android:summary="Метры, не учитывается при определении по WiFi"
-                            android:title="Максимальная погрешность HDOP" android:defaultValue="30" />
+                            android:summary="Метры"
+                            android:title="Максимальная погрешность HDOP" android:defaultValue="15" />
                         <EditTextPreference
                             android:digits="0123456789"
                             android:inputType="number"
