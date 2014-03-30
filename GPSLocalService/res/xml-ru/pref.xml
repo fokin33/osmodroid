@@ -35,8 +35,8 @@
                                 android:digits="0123456789"
                                 android:inputType="number"
                                 android:key="speedbearing"
-                                android:summary="Километров в час"
-                                android:title="Скорость учета курса" android:defaultValue="0" />
+                                android:summary="Километров в час. Если скорость ниже, на курс трекер не срабатывает."
+                                android:title="Минимальная скорость реакции на курс" android:defaultValue="0" />
                             <EditTextPreference
                                 android:digits="0123456789"
                                 android:inputType="number"
@@ -106,8 +106,8 @@
                             android:digits="0123456789"
                             android:inputType="number"
                             android:key="speedbearing_gpx"
-                            android:summary="Километров в час"
-                            android:title="Скорость учета курса" android:defaultValue="0" />
+                            android:summary="Километров в час. Если скорость ниже, на курс трекер не срабатывает."
+                            android:title="Минимальная скорость реакции на курс" android:defaultValue="0" />
                         <EditTextPreference
                             android:digits="0123456789"
                             android:inputType="number"
