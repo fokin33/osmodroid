@@ -35,7 +35,7 @@
                                 android:inputType= "number"
                                 android:key= "speedbearing"
                                 android:summary= " kilometers per hour"
-                                android:title="Speed ​​accounting course" android:defaultValue="10" />
+                                android:title="Speed Trigger For Course Deviation" android:defaultValue="10" />
                             <EditTextPreference
                                 android:digits= "0123456789"
                                 android:inputType= "number"
@@ -56,12 +56,12 @@
                                     android:title= "Hash"/>
                                 <EditTextPreference
                                     android:key= "n"
-                                    android:title= "Control number"/>
+                                    android:title= "Check number"/>
                             </PreferenceScreen>
                             <CheckBoxPreference
                                 android:key= "usebuffer"
                                 android:title= "Transfer unsent"
-                                android:summary= "Useful if the unstable internet connection . May increase web traffic."
+                                android:summary= "Useful with unstable internet connection. May increase web traffic."
                                 android:defaultValue= "false"/>
                             <CheckBoxPreference android:key="modeAND" android:title="Mode AND or OR" android:defaultValue="false"/>
                     </PreferenceScreen>
@@ -82,14 +82,14 @@
                             android:key= "period_gpx"
                             android:numeric= "integer"
                             android:summary= "Milliseconds"
-                            android:title= "Wright period" android:defaultValue= "0"/>
+                            android:title= "Period to Save" android:defaultValue= "0"/>
                         <EditTextPreference
                             android:digits= "0123456789"
                             android:inputType= "number"
                             android:key= "distance_gpx"
                             android:numeric= "integer"
                             android:summary= "Meters"
-                            android:title= "Wright Distance " android:defaultValue= "0"/>
+                            android:title= "Distance to Save " android:defaultValue= "0"/>
                         <EditTextPreference
                             android:digits= "0123456789"
                             android:inputType= "number"
@@ -102,7 +102,7 @@
                             android:inputType= "number"
                             android:key= "speedbearing_gpx"
                             android:summary= "kilometer per hour"
-                            android:title= "Speed accounting course" android:defaultValue= "10"/>
+                            android:title= "Speed Trigger for Course Deviation" android:defaultValue= "10"/>
                         <EditTextPreference
                             android:digits= "0123456789"
                             android:inputType= "number"
@@ -116,7 +116,7 @@
                             android:key= "speed_gpx"
                             android:numeric= "integer"
                             android:summary= "kilometers per hour"
-                            android:title= "Minimum Write Speed ​"
+                            android:title= "Minimum Speed To Save ​"
                             android:defaultValue= "0"/><CheckBoxPreference android:key="modeAND_gpx" android:title="Mode AND or OR" android:defaultValue="false"/>SELECT ECRId, LogCount, RecordNo, CardNo, TransDateTime, TransType, PaymentType,
  CTC, TTC, CurrCode, CurrExponent, TransValue, PurseBalance, PurseNo, AccountNo,
  SortCode, MAC, OperatorId, CustId, LogCardType, PurseType, OilCode, OilPrice, 
@@ -152,7 +152,7 @@ TransDateTime >= TO_DATE('20140217134924', 'YYYYMMDDHH24miss') AND TransType in
                                 android:key= "vibratetime"
                                 android:numeric= "integer"
                                 android:summary= "Milliseconds"
-                                android:title= "The period of vibration"
+                                android:title= "Vibration time interval"
                                 android:defaultValue= "500"/>
                             <CheckBoxPreference
                                 android:key= "playsound"
@@ -173,11 +173,11 @@ TransDateTime >= TO_DATE('20140217134924', 'YYYYMMDDHH24miss') AND TransType in
                             <CheckBoxPreference
                                 android:key= "usetts"
                                 android:summary= "Use text-to-speech"
-                                android:title= "Speak speed"
+                                android:title= "Pronounce speed"
                                 android:defaultValue= "false"/>
                             <CheckBoxPreference
                                 android:key= "silentnotify"
-                                android:title= "Without a sound notification"
+                                android:title= "Without a notification"
                                 android:defaultValue= "false"/>
                             <CheckBoxPreference
                                 android:key= "onlinenotify"
@@ -186,7 +186,7 @@ TransDateTime >= TO_DATE('20140217134924', 'YYYYMMDDHH24miss') AND TransType in
                                 android:summary= "Notification of change online status of your devices"/>
                             <CheckBoxPreference
                                 android:key= "statenotify"
-                                android:title= "Notify the monitoring"
+                                android:title= "Notify with monitoring"
                                 android:defaultValue= "false"
                                 android:summary= "status notification for monitoring your devices"/>
                             <CheckBoxPreference
@@ -222,7 +222,7 @@ TransDateTime >= TO_DATE('20140217134924', 'YYYYMMDDHH24miss') AND TransType in
             android:defaultValue= "true"/>
         <CheckBoxPreference
             android:key= "autostart"
-            android:summary= "Launch background service when the phone boot"
+            android:summary= "Launch background service when the phone starts up."
             android:title= "Startup at boot"
             android:defaultValue= "false"/>
         
