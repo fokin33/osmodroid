@@ -15,39 +15,39 @@
                                 android:inputType="number"
                                 android:key="period"
                                 android:numeric="integer"
-                                android:summary="Миллисекунды"
+                                android:summary="Миллисекунды. Задержка между отправкой данных"
                                 android:title="Период отправки" android:defaultValue="5000" />
                             <EditTextPreference
                                 android:digits="0123456789"
                                 android:inputType="number"
                                 android:key="distance"
                                 android:numeric="integer"
-                                android:summary="Метры"
+                                android:summary="Метры. Минимальное расстояние между отправкой данных"
                                 android:title="Дистанция отправки" android:defaultValue="0" />
                             <EditTextPreference
                                 android:digits="0123456789"
                                 android:inputType="number"
                                 android:key="bearing"
                                 android:numeric="integer"
-                                android:summary="Градусы"
-                                android:title="Отклонение курса" android:defaultValue="0" />
+                                android:summary="Градусы. Порог азимута между текущей и предыдущей точкой, где азимут последний раз менялся"
+                                android:title="Порог курса" android:defaultValue="0" />
                             <EditTextPreference
                                 android:digits="0123456789"
                                 android:inputType="number"
                                 android:key="speedbearing"
-                                android:summary="Километров в час. Если скорость ниже, на курс трекер не срабатывает."
+                                android:summary="км/ч. Если скорость ниже, то параметр `отклонение курса` не обрабатывается"
                                 android:title="Минимальная скорость реакции на курс" android:defaultValue="0" />
                             <EditTextPreference
                                 android:digits="0123456789"
                                 android:inputType="number"
                                 android:key="hdop"
                                 android:numeric="integer"
-                                android:summary="Метры, не учитывается при определении по WiFi"
+                                android:summary="Метры. Если погрешность выше, то данные не отправляются"
                                 android:title="Максимальная погрешность HDOP" android:defaultValue="30" />
                             <EditTextPreference
                                 android:key="speed"
                                 android:title="Минимальная скорость отправки"
-                                android:summary="Километров в час"
+                                android:summary="км/ч. Если скорость ниже, то данные не отправляются"
                                 android:digits="0123456789"
                                 android:inputType="number"
                                 android:defaultValue="0" />
