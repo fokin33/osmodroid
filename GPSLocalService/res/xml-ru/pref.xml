@@ -86,41 +86,41 @@
                             android:inputType="number"
                             android:key="period_gpx"
                             android:numeric="integer"
-                            android:summary="Миллисекунды"
-                            android:title="Период записи" android:defaultValue="2000" />
+                            android:summary="Миллисекунды. Задержка между записью точек"
+                            android:title="Период записи" android:defaultValue="1000" />
                         <EditTextPreference
                             android:digits="0123456789"
                             android:inputType="number"
                             android:key="distance_gpx"
                             android:numeric="integer"
-                            android:summary="Метры"
+                            android:summary="Метры. Минимальное расстояние между записью точек"
                             android:title="Дистанция записи" android:defaultValue="0" />
                         <EditTextPreference
                             android:digits="0123456789"
                             android:inputType="number"
                             android:key="bearing_gpx"
                             android:numeric="integer"
-                            android:summary="Градусы"
-                            android:title="Отклонение курса" android:defaultValue="0" />
+                            android:summary="Градусы. Порог азимута между текущей и предыдущей точкой, где азимут последний раз менялся"
+                            android:title="Порог курса" android:defaultValue="0" />
                         <EditTextPreference
                             android:digits="0123456789"
                             android:inputType="number"
                             android:key="speedbearing_gpx"
-                            android:summary="Километров в час. Если скорость ниже, на курс трекер не срабатывает."
+                            android:summary="км/ч. Если скорость ниже, то параметр `отклонение курса` не обрабатывается"
                             android:title="Минимальная скорость реакции на курс" android:defaultValue="0" />
                         <EditTextPreference
                             android:digits="0123456789"
                             android:inputType="number"
                             android:key="hdop_gpx"
                             android:numeric="integer"
-                            android:summary="Метры"
+                            android:summary="Метры. Если погрешность выше, то точка не записывается"
                             android:title="Максимальная погрешность HDOP" android:defaultValue="15" />
                         <EditTextPreference
                             android:digits="0123456789"
                             android:inputType="number"
                             android:key="speed_gpx"
                             android:numeric="integer"
-                            android:summary="Километров в час"
+                            android:summary="км/ч. Если скорость ниже, то точка не записывается"
                             android:title="Минимальная скорость записи"
                             android:defaultValue="0" />
                         <CheckBoxPreference
