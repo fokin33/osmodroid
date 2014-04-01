@@ -58,7 +58,7 @@
 <string name="send">Отправить</string>
 <string name="cancel">Отмена</string>
 <string name="speed">Скорость: км/ч</string>
-<string name="auth">Привязать к аккаунту</string>
+<string name="auth">Авторизоваться</string>
 <string name="warnhash">Идентификационные данные(хеш или контрольное число) неправильные, нужно сбросить хеш 
 \n или ввести его в настройках вручную</string>
 <string name="nomapapp">Не установленно ни одного приложения типа Карты</string>
