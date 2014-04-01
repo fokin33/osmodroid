@@ -173,6 +173,7 @@ import android.os.RemoteException;
 import android.os.SystemClock;
 
 import android.preference.PreferenceManager;
+import android.provider.Settings.Secure;
 
 import android.speech.tts.TextToSpeech;
 
@@ -238,6 +239,7 @@ import android.media.SoundPool;
 
 
 import android.support.v4.app.NotificationCompat;
+import android.telephony.TelephonyManager;
 
 import android.util.Log;
 
@@ -1314,6 +1316,10 @@ public void stopcomand()
 		
 //sockaddr = new InetSocketAddress("esya.ru", 2145);
 ///////////////////////
+		if(OsMoDroid.settings.getString("newkey", "").equals("")){
+			if(log)Log.d(this.getClass().getName(), "try sendid");
+			sendid();
+		}
 if (live&&!settings.getString("hash", "" ).equals(""))
 {
 	if (isOnline())
@@ -1945,7 +1951,29 @@ private void manageIM(){
 		
 	
 }
+public void sendid()
 
+{
+	String version = android.os.Build.VERSION.RELEASE;
+	String androidID = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
+	TelephonyManager mngr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
+	String IMEI=mngr.getDeviceId();
+	if(version==null){
+		version="unknown";
+	}
+	if(androidID==null){
+		androidID="unknown";
+	}
+	if(IMEI==null){
+		IMEI="unknown";
+	}
+	 
+        APIcomParams params = new APIcomParams("http://api.osmo.mobi/auth","android="+version+"&android_id="+androidID+"&imei="+IMEI,"sendid"); 
+        MyAsyncTask sendidtask = new netutil.MyAsyncTask(this);
+        sendidtask.execute(params) ;
+        Log.d(getClass().getSimpleName(), "sendidtask start to execute");
+
+}
 
 
 
@@ -3518,8 +3546,10 @@ public void onResultsSucceeded(APIComResult result) {
 		if(log)Log.d(getClass().getSimpleName(),"notifwar1 Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ getString(R.string.query)+result.url);
 
 	//		notifywarnactivity("Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ " Запрос:"+result.url);
+		if(OsMoDroid.gpslocalserviceclientVisible)
+		{
 		Toast.makeText(LocalService.this, R.string.esya_ru_notrespond , Toast.LENGTH_LONG).show();
-
+		}
 		}
 
 	if (!(result.Jo==null)) {
@@ -3609,7 +3639,18 @@ public void onResultsSucceeded(APIComResult result) {
 			}
 
 	}
-
+	if(result.Command.equals("sendid")&&!(result.Jo==null)){
+		Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
+		if(result.Jo.has("key")){
+			try {
+				OsMoDroid.editor.putString("newkey", result.Jo.getString("key"));
+				OsMoDroid.editor.commit();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 	if (result.Command.equals("APIM")&& !(result.Jo==null))
 
 

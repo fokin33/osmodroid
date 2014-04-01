@@ -1,6 +1,12 @@
 package com.OsMoDroid;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.osmdroid.api.IGeoPoint;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.overlay.PathOverlay;
 
 import android.util.Log;
 
@@ -19,6 +25,8 @@ public class Device implements Serializable{
 	public String speed="";
 	public String color="AAAAAA";
 	public String ch;
+	public List<IGeoPoint> devicePath= new ArrayList<IGeoPoint>();
+	public PathOverlay p;
 	public Device(){
 		
 	}

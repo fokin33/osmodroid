@@ -1,6 +1,6 @@
 package com.OsMoDroid;
 
-import java.io.BufferedReader;import java.io.DataOutputStream;import java.io.File;import java.io.FileInputStream;import java.io.FileOutputStream;
+import java.io.BufferedReader;import java.io.DataOutputStream;import java.io.File;import java.io.FileInputStream;import java.io.FileNotFoundException;import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,11 +9,11 @@ import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URL;
-import java.security.MessageDigest;
+import java.security.MessageDigest;import java.text.ParseException;import java.text.SimpleDateFormat;import java.util.ArrayList;import java.util.List;import javax.xml.parsers.DocumentBuilder;import javax.xml.parsers.DocumentBuilderFactory;import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.http.util.ByteArrayBuffer;import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
+import org.json.JSONObject;import org.osmdroid.api.IGeoPoint;import org.osmdroid.util.GeoPoint;import org.osmdroid.views.overlay.PathOverlay;import org.w3c.dom.Document;import org.w3c.dom.Element;import org.w3c.dom.NamedNodeMap;import org.w3c.dom.Node;import org.w3c.dom.NodeList;import org.xml.sax.SAXException;
 
 import android.app.Application;
 import android.app.ProgressDialog;
@@ -51,7 +51,7 @@ public class netutil {	public static class MyAsyncTask extends AsyncTask<APIcom
 	public static String bytesToHex(byte[] b) {		char hexDigit[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9','a', 'b', 'c', 'd', 'e', 'f' };		StringBuffer buf = new StringBuffer();		for (int j = 0; j < b.length; j++) {			buf.append(hexDigit[(b[j] >> 4) & 0x0f]);			buf.append(hexDigit[b[j] & 0x0f]);		}		return buf.toString();	}
 
 	public static String SHA1(String text) {		MessageDigest md;		byte[] sha1hash = new byte[40];		try {			md = MessageDigest.getInstance("SHA-1");			sha1hash = md.digest(text.getBytes());		} catch (Exception e) {			e.printStackTrace();		}		return bytesToHex(sha1hash);
-	}	
+	}	public static List<IGeoPoint> getGPXPoints(InputStream gpxFile)    {        List<IGeoPoint> points = null;        try        {            /* split document into xml elements */            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();            DocumentBuilder builder = dbFactory.newDocumentBuilder();            InputStream is = gpxFile;            Document dom = builder.parse(is);            Element root = dom.getDocumentElement();            NodeList nodes = root.getElementsByTagName("trkpt");            /* store points in each node */            points = new ArrayList<IGeoPoint>();            for(int i = 0; i < nodes.getLength(); i++)            {                Node item = nodes.item(i);                NamedNodeMap attrs = item.getAttributes();                NodeList props = item.getChildNodes();                GeoPoint pt = new GeoPoint(Double.parseDouble(attrs.getNamedItem("lat").getNodeValue()), Double.parseDouble(attrs.getNamedItem("lon").getNodeValue()));                points.add(pt);            }            is.close();        }catch(FileNotFoundException e){            e.printStackTrace();        }catch (IOException e) {            e.printStackTrace();        }catch(ParserConfigurationException e){            e.printStackTrace();        }catch (SAXException e) {            e.printStackTrace();        }        return points;    }	public static class InitTask extends AsyncTask<InputStream, Void, List<IGeoPoint>>{		ColoredGPX cg;		public InitTask(ColoredGPX cg) {			this.cg=cg;		}				@Override		protected void onPostExecute(List<IGeoPoint> result) {			Log.d(this.getClass().getName(), "InitTask onpostexecute numpoints="+result.size());			cg.points.addAll(result);			if(GPSLocalServiceClient.drawClickListener.map!=null&&GPSLocalServiceClient.drawClickListener.map.mResourceProxy!=null){//				if(load.path==null){					//load.path = new PathOverlay(load.color,10,GPSLocalServiceClient.drawClickListener.map.mResourceProxy);								GPSLocalServiceClient.drawClickListener.map.showChannelTracks();							}			super.onPostExecute(result);		}		@Override		protected List<IGeoPoint> doInBackground(InputStream... params) {			if(cg.points.size()==0){			return getGPXPoints(params[0]);}			return new ArrayList<IGeoPoint>();		}			}	
 
 
 	

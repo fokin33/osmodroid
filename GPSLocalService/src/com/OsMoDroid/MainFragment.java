@@ -116,7 +116,6 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 		TextView t2 = (TextView) getView().findViewById(R.id.URL);
 		t2.setText(OsMoDroid.settings.getString("devicename", "")+" :\n "+globalActivity.viewurl);
 		Linkify.addLinks(t2, Linkify.ALL);
-		
 		ToggleButton globalsendToggle = (ToggleButton) getView().findViewById(R.id.toggleButton1);
 		Button auth = (Button) getView().findViewById(R.id.authButton);
 		
@@ -158,7 +157,7 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 		MenuItem exit = menu.add(0, 14, 0, R.string.exit);
 		MenuItem save =menu2.add(0, 18, 0, R.string.savepref);
         MenuItem load =menu2.add(0, 19, 0, R.string.loadpref);
-              
+        //MenuItem changeName = menu.add(0, 20, 0, R.string.changename);
 
                  super.onCreateOptionsMenu(menu, inflater);
 	}
@@ -541,7 +540,7 @@ else {
 					dt.setText(globalActivity.settings.getString("devicename", "")+" :\n "+globalActivity.viewurl);
 
 					Linkify.addLinks(dt, Linkify.ALL);
-					TextView t = (TextView) view.findViewById(R.id.Location);
+					//TextView t = (TextView) view.findViewById(R.id.Location);
 					globalActivity.sendcounter = intent.getIntExtra("sendcounter", 0);
 					globalActivity.buffercounter = intent.getIntExtra("buffercounter", 0);
 					globalActivity.position = intent.getStringExtra("position");
@@ -585,39 +584,20 @@ else {
 						TextView t2 = (TextView) view.findViewById(R.id.URL);
 						t2.setText(globalActivity.settings.getString("devicename", "")+" :\n "+globalActivity.viewurl);
 						Linkify.addLinks(t2, Linkify.ALL);
-						
+						TextView tt = (TextView) view.findViewById(R.id.Location);
+						tt.setText(R.string.servermessage+'\n'+startmessage);
 						globalActivity.messageShowed=true;
-						AlertDialog alertdialog = new AlertDialog.Builder(
-								globalActivity).create();
-						alertdialog.setTitle(context.getString(R.string.servermessage));
-
-						alertdialog.setMessage(startmessage);
-
-
-
-						alertdialog.setButton(getString(R.string.yes),
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog, int which) {
-
-										return;
-									}
-								});
-
-						alertdialog.show();
+						
 
 					}
 
 
 
-					if (globalActivity.position == null){globalActivity.position = context.getString(R.string.NotDefined);}
+					//if (globalActivity.position == null){globalActivity.position = context.getString(R.string.NotDefined);}
 
 
 					if (globalActivity.sendresult == null){	globalActivity.sendresult = "";}
-					t.setText(
-
-							globalActivity.position+"\n"+stat);
 					TextView t2 = (TextView) view.findViewById(R.id.Send);
-
 					updateServiceStatus(view);
 					if (!(globalActivity.sendresult == null)){t2.setText(getString(R.string.Sended) +"\n"+ (globalActivity.sendresult));}
 				}

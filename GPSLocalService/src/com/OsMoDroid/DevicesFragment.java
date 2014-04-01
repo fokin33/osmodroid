@@ -442,8 +442,10 @@ if(deviceU!=-1){
 			Log.d(getClass().getSimpleName(),"notifwar1 Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ " Запрос:"+result.url);
 
 		//		notifywarnactivity("Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ " Запрос:"+result.url);
-			Toast.makeText(LocalService.serContext, R.string.esya_ru_notrespond , Toast.LENGTH_LONG).show();
-
+			if(OsMoDroid.gpslocalserviceclientVisible)
+			{
+				Toast.makeText(LocalService.serContext, R.string.esya_ru_notrespond , Toast.LENGTH_LONG).show();
+			}
 			}
 		
 		if (!(result.Jo==null)  ) {

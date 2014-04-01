@@ -195,8 +195,10 @@ public class SimLinksFragment extends SherlockFragment implements ResultsListene
 		if (result.Jo==null&&result.ja==null)
 
 		{
-			Toast.makeText(LocalService.serContext, R.string.esya_ru_notrespond , Toast.LENGTH_LONG).show();
-
+			if(OsMoDroid.gpslocalserviceclientVisible)
+			{
+				Toast.makeText(LocalService.serContext, R.string.esya_ru_notrespond , Toast.LENGTH_LONG).show();
+			}
 			}
 		
 		

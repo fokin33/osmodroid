@@ -3,6 +3,7 @@ package com.OsMoDroid;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
 public class OsMoDroid extends Application {
@@ -24,10 +25,12 @@ public class OsMoDroid extends Application {
 	}
 
 	public static Context context;
+	public static Editor editor;
 
 	@Override
 	public void onCreate() {
 		settings =  PreferenceManager.getDefaultSharedPreferences(this);
+		editor=settings.edit();
 		context = getApplicationContext();
 		Thread.setDefaultUncaughtExceptionHandler(ExceptionHandler.inContext(context));
 		super.onCreate();

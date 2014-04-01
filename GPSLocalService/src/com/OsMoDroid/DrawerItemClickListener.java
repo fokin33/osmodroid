@@ -4,6 +4,7 @@ package com.OsMoDroid;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,10 +24,10 @@ public class DrawerItemClickListener implements OnItemClickListener {
 	 ChannelDevicesFragment chandev;
 	 int currentItem=0;
 	 
-	private Context context;
-	 DrawerItemClickListener(Context ctx){
-		 this.context=ctx;
-	 }
+//	private Context context;
+//	 DrawerItemClickListener(Context ctx){
+//		 this.context=ctx;
+//	 }
 	 
 	 
 	 @Override
@@ -37,13 +38,13 @@ public class DrawerItemClickListener implements OnItemClickListener {
 	}
 	public void selectItem(String name, Bundle bundle) {
 		 
-        FragmentTransaction ft = GPSLocalServiceClient.fMan.beginTransaction();
+        final FragmentTransaction ft = GPSLocalServiceClient.fMan.beginTransaction();
       
 //getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),getString(R.string.chanals)
 //getString(R.string.devices),getString(R.string.links), getString(R.string.notifications), getString(R.string.tracks)            
 	 
         // Locate Position
-       if(name.equals( context.getString(R.string.tracker))){
+       if(name.equals(OsMoDroid.context.getString(R.string.tracker))){
     	   if(main==null){ 
            	main=new MainFragment();
            	}
@@ -51,7 +52,7 @@ public class DrawerItemClickListener implements OnItemClickListener {
                currentItem=0;
        }
        
-       else if(name.equals( context.getString(R.string.stat))){
+       else if(name.equals( OsMoDroid.context.getString(R.string.stat))){
     	   if(stat==null){ 
            	stat=new StatFragment();
            	}
@@ -59,7 +60,7 @@ public class DrawerItemClickListener implements OnItemClickListener {
                currentItem=1;
        }
        
-       else if(name.equals( context.getString(R.string.map))){
+       else if(name.equals( OsMoDroid.context.getString(R.string.map))){
     	   if(map==null){
       		 map=new MapFragment();
       	 }
@@ -67,7 +68,7 @@ public class DrawerItemClickListener implements OnItemClickListener {
           currentItem=2;
        }
        
-       else if(name.equals( context.getString(R.string.chanals))){
+       else if(name.equals( OsMoDroid.context.getString(R.string.chanals))){
     	   if(chans==null){ 
            	chans=new ChannelsFragment();
            	}
@@ -79,7 +80,7 @@ public class DrawerItemClickListener implements OnItemClickListener {
                currentItem=3;
        }
        
-       else if(name.equals( context.getString(R.string.devices))){
+       else if(name.equals( OsMoDroid.context.getString(R.string.devices))){
     	   if(devs==null){ 
            	devs=new DevicesFragment();
            	}
@@ -92,7 +93,7 @@ public class DrawerItemClickListener implements OnItemClickListener {
                currentItem=4;
        }
        
-       else if(name.equals( context.getString(R.string.links))){
+       else if(name.equals( OsMoDroid.context.getString(R.string.links))){
     	   if(links==null){ 
            	links=new SimLinksFragment();
            	}
@@ -100,7 +101,7 @@ public class DrawerItemClickListener implements OnItemClickListener {
                currentItem=5;
        }
 
-       else if(name.equals( context.getString(R.string.notifications))){
+       else if(name.equals( OsMoDroid.context.getString(R.string.notifications))){
     	   if(notif==null){
            	notif=new NotifFragment();
            	}
@@ -108,7 +109,7 @@ public class DrawerItemClickListener implements OnItemClickListener {
                currentItem=6;
        }
 
-       else if(name.equals( context.getString(R.string.tracks))){
+       else if(name.equals( OsMoDroid.context.getString(R.string.tracks))){
     	   if(trac==null){ 
            	trac=new TracFileListFragment();
            	}
@@ -121,10 +122,18 @@ public class DrawerItemClickListener implements OnItemClickListener {
         
         GPSLocalServiceClient.fMan.popBackStack();
         //ft.addToBackStack("").commit();
-        ft.commit();
         GPSLocalServiceClient.mDrawerList.setItemChecked(currentItem, true);
-        //setTitle(myfriendname[position]);
         GPSLocalServiceClient.mDrawerLayout.closeDrawer(GPSLocalServiceClient.mDrawerList);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+            	 ft.commit();
+            }
+        }, 100);
+       
+        
+        //setTitle(myfriendname[position]);
+       
     }
 
 }

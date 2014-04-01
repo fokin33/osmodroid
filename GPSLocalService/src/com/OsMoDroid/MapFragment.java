@@ -54,10 +54,8 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 
 public class MapFragment extends SherlockFragment implements DeviceChange, IMyLocationProvider,LocationListener {
-	 	private ResourceProxyImpl mResourceProxy;
-	    private ItemizedOverlay<OverlayItem> mOverlay;
-		ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();;
-		private MapView mMapView;
+	 	ResourceProxyImpl mResourceProxy;
+		MapView mMapView;
 		private IMapController mController;
 		private MyLocationNewOverlay myLoc;
 		private PathOverlay myTracePathOverlay;
@@ -65,7 +63,7 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 		//private View view;
 		boolean rotate=false;
 		//private Context context;
-		
+		ArrayList<PathOverlay> paths = new ArrayList<PathOverlay>();
 		private IMyLocationConsumer myLocationConumer;
 		private long lastgpslocation=0;
 		@Override
@@ -102,8 +100,6 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 	public void onDetach() {
 		LocalService.devlistener=null;
 		mResourceProxy=null;
-	    mOverlay=null;
-		
 		mMapView=null;
 		mController=null;
 		myLoc.disableMyLocation();
@@ -122,6 +118,8 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 		editor.putInt("zoom", mMapView.getZoomLevel());
 		editor.putBoolean("isfollow", myLoc.isFollowLocationEnabled());
 		editor.commit();
+		//ch.map=null;
+	
 		super.onDestroyView();
 	}
 	class MAPSurferTileSource extends OnlineTileSourceBase {
@@ -210,6 +208,7 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 			Log.d(getClass().getSimpleName(), "map request channels");
 			netutil.newapicommand((ResultsListener)LocalService.serContext, (Context)getSherlockActivity(), "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 		}
+		
 		super.onViewCreated(view, savedInstanceState);
 	}
 
@@ -242,9 +241,6 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 			ImageButton centerImageButton = (ImageButton)view.findViewById(R.id.imageButtonCenter);
 			ImageButton rotateImageButton = (ImageButton)view.findViewById(R.id.ImageButtonRotate);
 			mMapView.setTileSource(myTileSource);
-			
-			//TextView copyrightsTextView = (TextView)view.findViewById(R.id.mapCopyright);
-			//copyrightsTextView.setText("Map Data: © OpenStreetMap contributors \n Tiles: © GIScience Heidelberg");
 			if(myTracePathOverlay==null)
 			{
 				myTracePathOverlay=new PathOverlay(Color.RED, 10, mResourceProxy);
@@ -254,28 +250,33 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 				myTracePathOverlay.clearPath();
 				myTracePathOverlay.addPoints(LocalService.traceList);
 			}
+			showChannelTracks();
+			for (Channel ch: LocalService.channelList){
+//				//ch.map=this;
+//				for(ColoredGPX cg:ch.gpxList){
+//					if(cg.path==null){
+//						cg.path = new PathOverlay(cg.color,10,mResourceProxy);
+//					}
+//					mMapView.getOverlayManager().add(cg.path);
+//					cg.initPathOverlay();
+//				}
+				//mMapView.getOverlayManager().addAll(ch.paths);
+				for(Device dev: ch.deviceList){
+					if(dev.p==null){
+						dev.p =new PathOverlay(Color.parseColor("#" + dev.color), 10, mResourceProxy);
+					}
+					dev.p.addPoints(dev.devicePath);
+					mMapView.getOverlayManager().add(dev.p);
+				}
+			}
 			
-	        //for (Device dev : LocalService.deviceList){
-	        //		addpoint(dev);
-	        //}
-			items.clear();
 			
-	        for (Channel ch: LocalService.channelList){
-	        	for (Device dev: ch.deviceList){
-	        		addpoint(dev);
-	        	}
-	        }
-			
-           
-	        getmOverlay();
-            
-            mMapView.getOverlays().add(mOverlay);
             mMapView.getOverlays().add(myTracePathOverlay);
             
             myLoc = new MyLocationNewOverlay (getSherlockActivity(),this, mMapView);
-            myLoc.enableMyLocation();
+            
             myLoc.setOptionsMenuEnabled(true);
-            if(OsMoDroid.settings.getBoolean("isfollow", true));
+            if(OsMoDroid.settings.getBoolean("isfollow", true))
             {
             myLoc.enableFollowLocation();
             }
@@ -321,135 +322,30 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 			});
 			
 			CompassOverlay compas = new CompassOverlay(getSherlockActivity(), mMapView);
-			
+			ChannelsOverlay choverlay = new ChannelsOverlay(mResourceProxy);
+			mMapView.getOverlays().add(choverlay);
 			mMapView.getOverlays().add(compas);
 			compas.enableCompass();
 			mMapView.setKeepScreenOn(true);
-			
-		
-			
-
 			return view;
 	}
-
-
-
-	
-
-
-
-
-
-
-
-	private void addpoint(Device dev) {
-		BitmapDrawable bd = getPointBitmapDrawable(dev);
-		OverlayItem o=new OverlayItem(Integer.toString(dev.u), dev.name, dev.where, new GeoPoint(dev.lat, dev.lon));
-		o.setMarker(bd);
-		o.setMarkerHotspot(HotspotPlace.CENTER);		
-		items.add(o);
-	}
-
-
-
-	private BitmapDrawable getPointBitmapDrawable(Device dev) {
-		int w =300;
-		int h =100;
-		int radius=10;
-		Bitmap b = Bitmap.createBitmap(w, h,  Bitmap.Config.ARGB_4444);
-		Canvas c = new Canvas(b);
-		Paint paint= new Paint();
-		paint.setDither(true);
-		paint.setAntiAlias(true);
-		paint.setFilterBitmap(true);
-		paint.setTextSize(22f);
-		paint.setTypeface(Typeface.DEFAULT_BOLD);
-		paint.setTextAlign(Paint.Align.CENTER);
-		paint.setColor(Color.parseColor("#013220"));
-		c.drawText(dev.name, w/2, h/2-radius, paint);
-		c.drawText(dev.speed, w/2,h/2-2*radius, paint);
-		paint.setColor(Color.parseColor("#" + dev.color));
-		paint.setShadowLayer(radius, 0, 0, Color.GRAY);
-		c.drawCircle(w/2, h/2, radius, paint);
-		BitmapDrawable bd = new BitmapDrawable(this.getResources(),b);
-		return bd;
-	}
-
-
 
 	@Override
 	public void onDeviceChange(Device dev) {
 		 Log.d(getClass().getSimpleName(), "ondevicechange");
-		if (items!=null)
-		{
-		 for (OverlayItem o: items)
-		 {
-			if (o.getUid().equals(Integer.toString(dev.u)))
-			{
-				if(isAdded()){
-				BitmapDrawable bd = getPointBitmapDrawable(dev);
-				((BitmapDrawable)o.getDrawable()).getBitmap().recycle();
-				o.setMarker(bd);
-				o.getPoint().setLatitudeE6( (int) (dev.lat * 1E6));
-				o.getPoint().setLongitudeE6( (int) (dev.lon * 1E6));
-				}
-			}
-		 }	
+	
 		 mMapView.invalidate();
-		}	
+			
 	}
-
-
-
 
 
 	@Override
 	public void onChannelListChange() {
-		Log.d(getClass().getSimpleName(), "map onchannelschange");
-		Log.d(getClass().getSimpleName(), "onchannellistchange");
-		Log.d(getClass().getSimpleName(), "items.count="+items.size());
-		items.clear(); 
-		for (Channel ch: LocalService.channelList){
-	        	for (Device dev: ch.deviceList){
-	        		if(isAdded()){addpoint(dev);}
-	        	}
-	        }
-		mMapView.getOverlays().remove(mOverlay);
-		getmOverlay();
-		mMapView.getOverlays().add(mOverlay);
-		Log.d(getClass().getSimpleName(), "items.count="+items.size());
+		
 		mMapView.invalidate();
 		LocalService.channelsupdated=true;
 		
 	}
-
-
-
-
-
-	void getmOverlay() {
-		mOverlay = new ItemizedIconOverlay<OverlayItem>(items,
-                new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
-                        @Override
-                        public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
-                            if (item.getSnippet().length()>0)
-                            {    
-                            	Toast.makeText(getSherlockActivity(),item.getSnippet(), Toast.LENGTH_LONG).show();
-                        	}
-                                return false; 
-                        }
-
-                        @Override
-                        public boolean onItemLongPress(final int index, final OverlayItem item) {
-                        	if (item.getSnippet().length()>0)
-                        	{	
-                        		Toast.makeText(getSherlockActivity(),item.getSnippet(), Toast.LENGTH_LONG).show();
-                        	}
-                        	return false;
-                        }
-                }, mResourceProxy);
-	}
-
 
 
 	@Override
@@ -502,9 +398,9 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 		if(location.getProvider().equals(LocationManager.GPS_PROVIDER)){
 			lastgpslocation=System.currentTimeMillis();
 		} 
-		Log.d(getClass().getSimpleName(), "onlocchange mapfrag rotate="+rotate);
-		Log.d(getClass().getSimpleName(), "onlocchange mapfrag bearing="+Float.toString(location.getBearing()));
-		Log.d(getClass().getSimpleName(), "onlocchange mapfrag hasbearing="+location.hasBearing());
+		//Log.d(getClass().getSimpleName(), "onlocchange mapfrag rotate="+rotate);
+		//Log.d(getClass().getSimpleName(), "onlocchange mapfrag bearing="+Float.toString(location.getBearing()));
+		//Log.d(getClass().getSimpleName(), "onlocchange mapfrag hasbearing="+location.hasBearing());
 		if (myLocationConumer != null){
 			if(location.getProvider().equals(LocationManager.NETWORK_PROVIDER)){
 				if(System.currentTimeMillis()>lastgpslocation+30000){
@@ -559,4 +455,24 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 		myTracePathOverlay.addPoint(geopoint);
 		
 	}
-}
+
+
+
+
+
+	public void showChannelTracks() {
+		paths.clear();
+		for (Channel ch: LocalService.channelList){
+			//ch.map=this;
+			for(ColoredGPX cg:ch.gpxList){
+				if(cg.points.size()!=0)
+					{
+						PathOverlay p =new PathOverlay(cg.color,10,mResourceProxy);
+						p.addPoints(cg.points);
+						paths.add(p);
+						mMapView.getOverlayManager().add(p);
+					}
+				}
+			}
+		}
+	}

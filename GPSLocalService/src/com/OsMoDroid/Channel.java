@@ -2,6 +2,9 @@ package com.OsMoDroid;
 
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,11 +12,19 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.osmdroid.util.ResourceProxyImpl;
+import org.osmdroid.views.overlay.PathOverlay;
 
+import com.OsMoDroid.netutil.InitTask;
+
+import android.graphics.Color;
 import android.location.Address;
+import android.os.AsyncTask;
+import android.provider.Settings.Global;
 import android.util.Log;
 
 public class Channel {
+	
 	public ArrayList<ColoredGPX> gpxList = new ArrayList<ColoredGPX>();
 	public String name;
 	public int u;
@@ -22,19 +33,22 @@ public class Channel {
 	public String url;
 	public List<Device> deviceList= new ArrayList<Device>();
 	public List<String> messagesstringList= new ArrayList<String>();
+	//public List<PathOverlay> paths = new ArrayList<PathOverlay>();
+	ArrayList<Point> pointList= new ArrayList<Channel.Point>();
 	public Boolean connected=false;
 	public Boolean send=false;
 	LocalService localService;
 	ResultsListener gpxdownloadListener = new ResultsListener() {
-		
+	
 		@Override
 		public void onResultsSucceeded(APIComResult result) {
 			Log.d(getClass().getSimpleName(),"download result="+result.load);
 			addtrack(result.load);
 			localService.informRemoteClientChannelsListUpdate();
+			
 					}
 	};
-	ArrayList<Point> pointList= new ArrayList<Channel.Point>();
+	
 	public boolean chatconnected=false;
 	class Point {
 		int u;
@@ -56,9 +70,12 @@ public class Channel {
 		
 	}
 	
+	
 	public void addtrack(ColoredGPX load){
 		if (!gpxList.contains(load)){
 			gpxList.add(load);
+			load.initPathOverlay();
+			
 			Log.d(getClass().getSimpleName(),"add download result to gpxlist="+gpxList.size());
 		}
 	}

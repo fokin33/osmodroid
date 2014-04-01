@@ -180,7 +180,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	private CharSequence mTitle;
 	private CharSequence mDrawerTitle;
 	static FragmentManager fMan;
-	DrawerItemClickListener drawClickListener = new DrawerItemClickListener(this);
+	static DrawerItemClickListener drawClickListener = new DrawerItemClickListener();
 	upd mainUpdListener;
 	private BroadcastReceiver mIMstatusReciever;
 	//private boolean afterrotate=false;
@@ -508,7 +508,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 		if (hash.equals("") && live) {
 			RequestAuthTask requestAuthTask = new RequestAuthTask();
 			requestAuthTask.execute();
-			sendid();
+			
 		}
 		
 
@@ -911,34 +911,10 @@ if (mBound) {
 		void requestHash (){
 			RequestAuthTask requestAuthTask = new RequestAuthTask();
 			requestAuthTask.execute();
-			sendid();
+			
 			
 		}
-		public void sendid()
-
-		{
-			String version = android.os.Build.VERSION.RELEASE;
-			String androidID = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
-			TelephonyManager mngr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); 
-			String IMEI=mngr.getDeviceId();
-			if(version==null){
-				version="unknown";
-			}
-			if(androidID==null){
-				androidID="unknown";
-			}
-			if(IMEI==null){
-				IMEI="unknown";
-			}
-			 
-	            APIcomParams params = new APIcomParams("http://api.osmo.mobi/auth","android="+version+"&android_id="+androidID+"&imei="+IMEI,"sendid"); 
-	            MyAsyncTask sendidtask = new netutil.MyAsyncTask(this);
-	            sendidtask.execute(params) ;
-	            Log.d(getClass().getSimpleName(), "sendidtask start to execute");
-
-		}
-		
-		
+				
 	 class RequestAuthTask extends AsyncTask<Void, Void, Void> {
 		private String authtext;
 		String adevice;
