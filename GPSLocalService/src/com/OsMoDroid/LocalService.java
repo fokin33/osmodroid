@@ -1353,6 +1353,7 @@ if (live&&!settings.getString("hash", "" ).equals(""))
 					} else
 					{
 						globalsend=settings.getBoolean("globalsend", false);
+						refresh();
 					}
 					if (om_device.equals(""))
 					{
@@ -1810,7 +1811,7 @@ settings.edit().putBoolean("ondestroy", false).commit();
 
 		//sendbuffer="";
 
-		if (settings.getBoolean("sendsound", false)){
+		if (settings.getBoolean("playsound", false)){
 			 soundPool.play(startsound, 1f, 1f, 1, 0, 1f);
 		}
 
@@ -2140,7 +2141,7 @@ public void sendid()
         }
         
         
-		if (settings.getBoolean("sendsound", false)){
+		if (settings.getBoolean("playsound", false)){
 			 soundPool.play(stopsound, 1f, 1f, 1, 0, 1f);
 		}
 		

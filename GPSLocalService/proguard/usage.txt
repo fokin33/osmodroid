@@ -1059,9 +1059,9 @@ com.OsMoDroid.LocalService:
     java.lang.String text
     private de.tavendo.autobahn.WebSocket$ConnectionHandler c
     private de.tavendo.autobahn.WebSocketOptions o
-====    1147:1149:public java.lang.String getPosition()
-====    1154:1154:public java.lang.String getSendResult()
-====    1190:1190:public int getSendCounter()
+====    1149:1151:public java.lang.String getPosition()
+====    1156:1156:public java.lang.String getSendResult()
+====    1192:1192:public int getSendCounter()
 com.OsMoDroid.OsMoDroid:
     private static final int MIN_UPLOAD_ID
     private static final int MAX_UPLOAD_ID
@@ -1085,10 +1085,10 @@ com.OsMoDroid.R$styleable
 com.OsMoDroid.R$xml
 com.OsMoDroid.SerializableHolder
 com.OsMoDroid.netutil:
-====    65:65:public netutil()
-====    299:302:public static com.OsMoDroid.netutil$MyAsyncTask newapicommand(android.content.Context,java.lang.String,java.lang.String)
-====    350:356:public static java.lang.String bytesToHex(byte[])
-====    362:369:public static java.lang.String SHA1(java.lang.String)
+====    54:54:public netutil()
+====    281:284:public static com.OsMoDroid.netutil$MyAsyncTask newapicommand(android.content.Context,java.lang.String,java.lang.String)
+====    329:335:public static java.lang.String bytesToHex(byte[])
+====    340:347:public static java.lang.String SHA1(java.lang.String)
 de.tavendo.autobahn.ByteBufferInputStream
 de.tavendo.autobahn.Doxygen
 de.tavendo.autobahn.NoCopyByteArrayOutputStream:
@@ -1261,11 +1261,13 @@ org.metalev.multitouch.controller.MultiTouchController$PositionAndScale:
 org.osmdroid.DefaultResourceProxyImpl:
 ====    50:102:public java.lang.String getString(org.osmdroid.ResourceProxy$string)
 ====    108:108:public varargs java.lang.String getString(org.osmdroid.ResourceProxy$string,java.lang.Object[])
+====    163:163:public android.graphics.drawable.Drawable getDrawable(org.osmdroid.ResourceProxy$bitmap)
 org.osmdroid.DefaultResourceProxyImpl$1
 org.osmdroid.LocationListenerProxy
 org.osmdroid.ResourceProxy:
 ====    public abstract java.lang.String getString(org.osmdroid.ResourceProxy$string)
 ====    public varargs abstract java.lang.String getString(org.osmdroid.ResourceProxy$string,java.lang.Object[])
+====    public abstract android.graphics.drawable.Drawable getDrawable(org.osmdroid.ResourceProxy$bitmap)
 org.osmdroid.SensorEventListenerProxy
 org.osmdroid.api.IMap
 org.osmdroid.api.IMapController:
@@ -1447,8 +1449,6 @@ org.osmdroid.util.BoundingBoxE6:
 ====    174:178:public org.osmdroid.util.BoundingBoxE6 increaseByScale(float)
 ====    199:199:public org.osmdroid.util.GeoPoint bringToBoundingBox(int,int)
 ====    204:218:public static org.osmdroid.util.BoundingBoxE6 fromGeoPoints(java.util.ArrayList)
-====    222:222:public boolean contains(org.osmdroid.api.IGeoPoint)
-====    226:226:public boolean contains(int,int)
 org.osmdroid.util.GEMFFile:
     private static final long FILE_SIZE_LIMIT
     private static final int FILE_COPY_BUFFER_SIZE
@@ -1493,6 +1493,8 @@ org.osmdroid.util.Position
 org.osmdroid.util.ResourceProxyImpl:
 ====    29:30:public java.lang.String getString(org.osmdroid.ResourceProxy$string)
 ====    35:36:public varargs java.lang.String getString(org.osmdroid.ResourceProxy$string,java.lang.Object[])
+====    41:42:public android.graphics.drawable.Drawable getDrawable(org.osmdroid.ResourceProxy$bitmap)
+====    47:51:private int getId(java.lang.String,java.lang.String)
 org.osmdroid.util.TileSystem:
 ====    16:16:public TileSystem()
 ====    20:21:public static void setTileSize(int)
@@ -1562,31 +1564,26 @@ org.osmdroid.views.MapView$Projection:
 ====    1276:1276:public int getTileSizePixels()
 ====    1286:1287:public android.graphics.Point getCenterMapTileCoords()
 ====    1297:1298:public android.graphics.Point getUpperLeftCornerOfCenterMapTile()
+====    1315:1318:public android.graphics.Point fromMapPixels(int,int,android.graphics.Point)
 ====    1420:1420:public android.graphics.Point toPixels(android.graphics.Point,android.graphics.Point)
 ====    1428:1428:public android.graphics.Point toPixels(int,int,android.graphics.Point)
 ====    1433:1449:public android.graphics.Rect toPixels(org.osmdroid.util.BoundingBoxE6)
 ====    1454:1454:public float metersToEquatorPixels(float)
 ====    1459:1459:public org.osmdroid.api.IGeoPoint getNorthEast()
 ====    1464:1464:public org.osmdroid.api.IGeoPoint getSouthWest()
+====    1469:1469:public android.graphics.Point toPixels(org.osmdroid.api.IGeoPoint,android.graphics.Point)
 ====    1474:1474:public org.osmdroid.api.IGeoPoint fromPixels(int,int)
 org.osmdroid.views.overlay.DirectedLocationOverlay
 org.osmdroid.views.overlay.IOverlayMenuProvider
-org.osmdroid.views.overlay.ItemizedIconOverlay:
-====    49:51:public ItemizedIconOverlay(android.content.Context,java.util.List,org.osmdroid.views.overlay.ItemizedIconOverlay$OnItemGestureListener)
-====    70:72:public boolean addItem(org.osmdroid.views.overlay.OverlayItem)
-====    76:78:public void addItem(int,org.osmdroid.views.overlay.OverlayItem)
-====    81:83:public boolean addItems(java.util.List)
-====    87:88:public void removeAllItems()
-====    91:95:public void removeAllItems(boolean)
-====    98:100:public boolean removeItem(org.osmdroid.views.overlay.OverlayItem)
-====    104:106:public org.osmdroid.views.overlay.OverlayItem removeItem(int)
-====    192:192:public int getDrawnItemsLimit()
-====    196:197:public void setDrawnItemsLimit(int)
-org.osmdroid.views.overlay.ItemizedOverlay:
-====    264:265:public void setDrawFocusedItem(boolean)
-====    274:276:public void setFocus(org.osmdroid.views.overlay.OverlayItem)
-====    283:283:public org.osmdroid.views.overlay.OverlayItem getFocus()
-====    344:345:public void setOnFocusChangeListener(org.osmdroid.views.overlay.ItemizedOverlay$OnFocusChangeListener)
+org.osmdroid.views.overlay.ItemizedIconOverlay
+org.osmdroid.views.overlay.ItemizedIconOverlay$1
+org.osmdroid.views.overlay.ItemizedIconOverlay$2
+org.osmdroid.views.overlay.ItemizedIconOverlay$ActiveItem
+org.osmdroid.views.overlay.ItemizedIconOverlay$OnItemGestureListener
+org.osmdroid.views.overlay.ItemizedOverlay
+org.osmdroid.views.overlay.ItemizedOverlay$1
+org.osmdroid.views.overlay.ItemizedOverlay$2
+org.osmdroid.views.overlay.ItemizedOverlay$OnFocusChangeListener
 org.osmdroid.views.overlay.ItemizedOverlayControlView:
     protected android.widget.ImageButton mPreviousButton
     protected android.widget.ImageButton mNextButton
@@ -1613,14 +1610,9 @@ org.osmdroid.views.overlay.Overlay:
     protected static final float SHADOW_Y_SCALE
 ====    52:61:public Overlay(android.content.Context)
 ====    77:78:public void setEnabled(boolean)
-org.osmdroid.views.overlay.OverlayItem:
-    public static final int ITEM_STATE_FOCUSED_MASK
-    public static final int ITEM_STATE_PRESSED_MASK
-    public static final int ITEM_STATE_SELECTED_MASK
-====    60:61:public OverlayItem(java.lang.String,java.lang.String,org.osmdroid.util.GeoPoint)
-====    79:79:public java.lang.String getTitle()
-====    156:156:public int getWidth()
-====    160:160:public int getHeight()
+====    275:282:protected static synchronized void drawAt(android.graphics.Canvas,android.graphics.drawable.Drawable,int,int,boolean,float)
+org.osmdroid.views.overlay.OverlayItem
+org.osmdroid.views.overlay.OverlayItem$HotspotPlace
 org.osmdroid.views.overlay.OverlayManager:
 ====    66:73:public void setUseSafeCanvas(boolean)
 ====    81:81:public org.osmdroid.views.overlay.TilesOverlay getTilesOverlay()
@@ -1689,6 +1681,7 @@ org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay:
 org.osmdroid.views.safecanvas.ISafeCanvas:
 ====    public abstract int getXOffset()
 ====    public abstract int getYOffset()
+====    public abstract void getUnsafeCanvas(org.osmdroid.views.safecanvas.ISafeCanvas$UnsafeCanvasHandler)
 ====    public abstract android.graphics.Canvas getWrappedCanvas()
 ====    public abstract void setBitmap(android.graphics.Bitmap)
 ====    public abstract boolean isOpaque()
@@ -1756,12 +1749,15 @@ org.osmdroid.views.safecanvas.ISafeCanvas:
 ====    public abstract void drawTextOnPath(char[],int,int,org.osmdroid.views.safecanvas.SafeTranslatedPath,float,float,org.osmdroid.views.safecanvas.SafePaint)
 ====    public abstract void drawTextOnPath(java.lang.String,org.osmdroid.views.safecanvas.SafeTranslatedPath,float,float,org.osmdroid.views.safecanvas.SafePaint)
 ====    public abstract void drawPicture(android.graphics.Picture,android.graphics.Rect)
+org.osmdroid.views.safecanvas.ISafeCanvas$UnsafeCanvasHandler
 org.osmdroid.views.safecanvas.SafeBitmapShader
 org.osmdroid.views.safecanvas.SafeDashPathEffect
 org.osmdroid.views.safecanvas.SafeTranslatedCanvas:
 ====    31:41:public SafeTranslatedCanvas(android.graphics.Canvas)
 ====    50:50:public int getXOffset()
 ====    55:55:public int getYOffset()
+====    64:68:public void getUnsafeCanvas(org.osmdroid.views.safecanvas.ISafeCanvas$UnsafeCanvasHandler)
+====    75:75:public android.graphics.Matrix getOriginalMatrix()
 ====    80:80:public boolean clipPath(org.osmdroid.views.safecanvas.SafeTranslatedPath,android.graphics.Region$Op)
 ====    85:85:public boolean clipPath(org.osmdroid.views.safecanvas.SafeTranslatedPath)
 ====    90:90:public boolean clipRect(double,double,double,double,android.graphics.Region$Op)

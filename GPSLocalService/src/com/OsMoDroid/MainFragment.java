@@ -580,12 +580,13 @@ else {
 					
 				
 
-					if (!(startmessage==null)&&!globalActivity.messageShowed) {
+//					if (!(startmessage==null)&&!globalActivity.messageShowed) {
+					if (!(startmessage==null)) {
 						TextView t2 = (TextView) view.findViewById(R.id.URL);
 						t2.setText(globalActivity.settings.getString("devicename", "")+" :\n "+globalActivity.viewurl);
 						Linkify.addLinks(t2, Linkify.ALL);
 						TextView tt = (TextView) view.findViewById(R.id.Location);
-						tt.setText(R.string.servermessage+'\n'+startmessage);
+						tt.setText(getString(R.string.servermessage)+'\n'+startmessage);
 						globalActivity.messageShowed=true;
 						
 
@@ -642,6 +643,11 @@ else {
 	}
 	
 	
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		globalActivity.mService.refresh();
+		super.onViewCreated(view, savedInstanceState);
+	}
 	@Override
 	public void onResultsSucceeded(APIComResult result) {
 		// TODO Auto-generated method stub

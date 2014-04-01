@@ -90,10 +90,9 @@
 	    android:text="@string/auth" />
 
 	<TextView
-		android:id="@+id/Location"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/location"
-		android:textSize="22sp" />
+	    android:id="@+id/Location"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:textSize="22sp" />
 
 </LinearLayout>
