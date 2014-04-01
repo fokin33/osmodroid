@@ -22,27 +22,27 @@
                                 android:key= "distance"
                                 android:numeric= "integer"
                                 android:summary= "Meters "
-                                android:title= "Send Distance" android:defaultValue= "50"/>
+                                android:title= "Send Distance" android:defaultValue= "0"/>
                             <EditTextPreference
                                 android:digits= "0123456789"
                                 android:inputType= "number"
                                 android:key= "bearing"
                                 android:numeric= "integer"
                                 android:summary= "Degrees "
-                                android:title= "Course Deviation" android:defaultValue= "30"/>
+                                android:title= "Course Deviation" android:defaultValue= "0"/>
                             <EditTextPreference
                                 android:digits= "0123456789"
                                 android:inputType= "number"
                                 android:key= "speedbearing"
                                 android:summary= " kilometers per hour"
-                                android:title="Speed Trigger For Course Deviation" android:defaultValue="10" />
+                                android:title="Speed Trigger For Course Deviation" android:defaultValue="5" />
                             <EditTextPreference
                                 android:digits= "0123456789"
                                 android:inputType= "number"
                                 android:key= "hdop"
                                 android:numeric= "integer"
                                 android:summary= "Meters"
-                                android:title= "The maximum error HDOP" android:defaultValue= "50"/>
+                                android:title= "The maximum error HDOP" android:defaultValue= "30"/>
                             <EditTextPreference
                                 android:key= "speed"
                                 android:title= "The minimum send speed "
@@ -50,7 +50,7 @@
                                 android:digits= "0123456789"
                                 android:inputType= "number"
                                 android:defaultValue= "0"/>
-                            <PreferenceScreen android:title="Identification" >
+                            <CheckBoxPreference android:key="modeAND" android:title="Mode AND" android:defaultValue="false" android:summary="Mode OR by default"/><PreferenceScreen android:title="Identification" >
                                 <EditTextPreference
                                     android:key= "hash"
                                     android:title= "Hash"/>
@@ -63,7 +63,7 @@
                                 android:title= "Transfer unsent"
                                 android:summary= "Useful with unstable internet connection. May increase web traffic."
                                 android:defaultValue= "false"/>
-                            <CheckBoxPreference android:key="modeAND" android:title="Mode AND or OR" android:defaultValue="false"/>
+                            
                     </PreferenceScreen>
     </PreferenceCategory>
     
@@ -82,7 +82,7 @@
                             android:key= "period_gpx"
                             android:numeric= "integer"
                             android:summary= "Milliseconds"
-                            android:title= "Period to Save" android:defaultValue= "0"/>
+                            android:title= "Period to Save" android:defaultValue= "1000"/>
                         <EditTextPreference
                             android:digits= "0123456789"
                             android:inputType= "number"
@@ -96,20 +96,20 @@
                             android:key= "bearing_gpx"
                             android:numeric= "integer"
                             android:summary= "Degrees"
-                            android:title= "Course Deviation" android:defaultValue= "30"/>
+                            android:title= "Course Deviation" android:defaultValue= "0"/>
                         <EditTextPreference
                             android:digits= "0123456789"
                             android:inputType= "number"
                             android:key= "speedbearing_gpx"
                             android:summary= "kilometer per hour"
-                            android:title= "Speed Trigger for Course Deviation" android:defaultValue= "10"/>
+                            android:title= "Speed Trigger for Course Deviation" android:defaultValue= "0"/>
                         <EditTextPreference
                             android:digits= "0123456789"
                             android:inputType= "number"
                             android:key= "hdop_gpx"
                             android:numeric= "integer"
                             android:summary= "Meters"
-                            android:title= "Acceptable accuracy" android:defaultValue= "50"/>
+                            android:title= "Acceptable accuracy" android:defaultValue= "30"/>
                         <EditTextPreference
                             android:digits= "0123456789"
                             android:inputType= "number"
@@ -117,19 +117,7 @@
                             android:numeric= "integer"
                             android:summary= "kilometers per hour"
                             android:title= "Minimum Speed To Save ​"
-                            android:defaultValue= "0"/><CheckBoxPreference android:key="modeAND_gpx" android:title="Mode AND or OR" android:defaultValue="false"/>SELECT ECRId, LogCount, RecordNo, CardNo, TransDateTime, TransType, PaymentType,
- CTC, TTC, CurrCode, CurrExponent, TransValue, PurseBalance, PurseNo, AccountNo,
- SortCode, MAC, OperatorId, CustId, LogCardType, PurseType, OilCode, OilPrice, 
-PumpNo, PistolNo, OilOrdered, OilSupplied, MachineNumber, CheckNo, ReserveId, 
-Encrypted, CardSerialNumber, Signature, Reserved, UserDefinedMAC, ActivePumpNo, 
-CardType, Reserved2, CardReaderInfo, ShiftNo, ShiftStartDateTime, TotalsId, 
-TransFlags, CheckGroupId, PreviousAccCounter, CurrentAccCounter, PurseLimitRest,
- TankNo, Locked, TransId, RefTransId, ExtOrderId, PrePaidAmount, PurchaseId 
-FROM RawTransactions WHERE ActivePumpNo IS NULL AND PistolNo > 0 AND ((( PumpNo 
-= 1 AND RecordNo > 25 ) OR ( PumpNo = 2 AND RecordNo > 21 ) OR ( PumpNo = 3 AND 
-RecordNo > 26 ) OR ( PumpNo = 4 AND RecordNo > 27 ) ) OR ( PumpNo IN (5))) AND 
-TransDateTime >= TO_DATE('20140217134924', 'YYYYMMDDHH24miss') AND TransType in 
-(1, 2, 18, 50, 60) ORDER BY TransDateTime
+                            android:defaultValue= "0"/><CheckBoxPreference android:key="modeAND_gpx" android:title="Mode AND or OR" android:defaultValue="false"/>
                         <CheckBoxPreference
                             android:title= "Load automatically on TreRa"
                             android:key= "automaticupload"

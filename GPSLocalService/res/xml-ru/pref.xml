@@ -188,7 +188,6 @@
                                 android:defaultValue="false"
                                 android:summary="Оповещение о смене статуса мониторинга ваших устройств"/>
                             <CheckBoxPreference
-                                android:summary="Использовать сигнализацию"
                                 android:key="usealarm"
                                 android:title="Сигнализация"
                                 android:summary="Реагирует на движение телефона в пространстве"
