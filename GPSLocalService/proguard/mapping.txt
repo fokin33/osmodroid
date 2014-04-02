@@ -2771,7 +2771,7 @@ com.OsMoDroid.Device -> com.OsMoDroid.i:
     java.lang.String color -> m
     java.util.List devicePath -> n
     org.osmdroid.views.overlay.PathOverlay p -> o
-    115:116:java.lang.String toString() -> toString
+    115:115:java.lang.String toString() -> toString
 com.OsMoDroid.DeviceAdapter -> com.OsMoDroid.j:
     android.widget.TextView deviceName -> a
     android.widget.TextView deviceWhere -> b
@@ -2966,7 +2966,7 @@ com.OsMoDroid.GPSLocalServiceClient -> com.OsMoDroid.GPSLocalServiceClient:
     736:745:void bindService() -> i
     748:753:void stop(java.lang.Boolean) -> a
     775:800:void onDestroy() -> onDestroy
-    805:834:java.lang.String getPage(java.lang.String,boolean,java.lang.String) -> a
+    805:833:java.lang.String getPage(java.lang.String,boolean,java.lang.String) -> a
     845:858:java.lang.String inputStreamToString(java.io.InputStream) -> a
     890:895:java.lang.String getDeviceName() -> g
     901:908:java.lang.String capitalize(java.lang.String) -> b
@@ -3626,7 +3626,7 @@ com.OsMoDroid.MapFragment$2 -> com.OsMoDroid.MapFragment$2:
     311:321:void onClick(android.view.View) -> onClick
 com.OsMoDroid.MapFragment$MAPSurferTileSource -> com.OsMoDroid.z:
     com.OsMoDroid.MapFragment this$0 -> a
-    136:137:java.lang.String getTileURLString(org.osmdroid.tileprovider.MapTile) -> a
+    136:136:java.lang.String getTileURLString(org.osmdroid.tileprovider.MapTile) -> a
 com.OsMoDroid.MyMessage -> com.OsMoDroid.aa:
     int u -> a
     java.lang.String from -> b
@@ -3809,7 +3809,7 @@ com.actionbarsherlock.ActionBarSherlock -> com.actionbarsherlock.ActionBarSherlo
     123:133:void registerImplementation(java.lang.Class) -> registerImplementation
     144:144:boolean unregisterImplementation(java.lang.Class) -> unregisterImplementation
     156:156:com.actionbarsherlock.ActionBarSherlock wrap(android.app.Activity) -> wrap
-    170:241:com.actionbarsherlock.ActionBarSherlock wrap(android.app.Activity,int) -> wrap
+    171:241:com.actionbarsherlock.ActionBarSherlock wrap(android.app.Activity,int) -> wrap
     com.actionbarsherlock.app.ActionBar getActionBar() -> getActionBar
     290:290:void dispatchConfigurationChanged(android.content.res.Configuration) -> dispatchConfigurationChanged
     304:304:void dispatchPostResume() -> dispatchPostResume
@@ -5004,7 +5004,7 @@ com.actionbarsherlock.internal.app.ActionBarImpl -> com.actionbarsherlock.intern
     306:307:void setHomeButtonEnabled(boolean) -> setHomeButtonEnabled
     311:312:void setTitle(int) -> setTitle
     316:317:void setSubtitle(int) -> setSubtitle
-    320:329:void setSelectedNavigationItem(int) -> setSelectedNavigationItem
+    320:328:void setSelectedNavigationItem(int) -> setSelectedNavigationItem
     334:335:void removeAllTabs() -> removeAllTabs
     338:346:void cleanupTabs() -> cleanupTabs
     349:350:void setTitle(java.lang.CharSequence) -> setTitle
@@ -5102,7 +5102,7 @@ com.actionbarsherlock.internal.app.ActionBarImpl$TabImpl -> com.actionbarsherloc
     839:840:com.actionbarsherlock.app.ActionBar$Tab setTabListener(com.actionbarsherlock.app.ActionBar$TabListener) -> setTabListener
     845:845:android.view.View getCustomView() -> getCustomView
     850:854:com.actionbarsherlock.app.ActionBar$Tab setCustomView(android.view.View) -> setCustomView
-    859:860:com.actionbarsherlock.app.ActionBar$Tab setCustomView(int) -> setCustomView
+    859:859:com.actionbarsherlock.app.ActionBar$Tab setCustomView(int) -> setCustomView
     865:865:android.graphics.drawable.Drawable getIcon() -> getIcon
     870:870:int getPosition() -> getPosition
     874:875:void setPosition(int) -> setPosition
@@ -6203,7 +6203,7 @@ com.actionbarsherlock.internal.view.menu.MenuItemImpl -> com.actionbarsherlock.i
     318:318:boolean hasSubMenu() -> hasSubMenu
     322:325:void setSubMenu(com.actionbarsherlock.internal.view.menu.SubMenuBuilder) -> setSubMenu
     329:329:java.lang.CharSequence getTitle() -> getTitle
-    340:342:java.lang.CharSequence getTitleForItemView(com.actionbarsherlock.internal.view.menu.MenuView$ItemView) -> getTitleForItemView
+    340:340:java.lang.CharSequence getTitleForItemView(com.actionbarsherlock.internal.view.menu.MenuView$ItemView) -> getTitleForItemView
     346:354:com.actionbarsherlock.view.MenuItem setTitle(java.lang.CharSequence) -> setTitle
     358:358:com.actionbarsherlock.view.MenuItem setTitle(int) -> setTitle
     362:362:java.lang.CharSequence getTitleCondensed() -> getTitleCondensed
@@ -6428,7 +6428,7 @@ com.actionbarsherlock.internal.view.menu.SubMenuBuilder -> com.actionbarsherlock
     67:67:com.actionbarsherlock.view.MenuItem getItem() -> getItem
     72:73:void setCallback(com.actionbarsherlock.internal.view.menu.MenuBuilder$Callback) -> setCallback
     77:77:com.actionbarsherlock.internal.view.menu.MenuBuilder getRootMenu() -> getRootMenu
-    82:83:boolean dispatchMenuItemSelected(com.actionbarsherlock.internal.view.menu.MenuBuilder,com.actionbarsherlock.view.MenuItem) -> dispatchMenuItemSelected
+    82:82:boolean dispatchMenuItemSelected(com.actionbarsherlock.internal.view.menu.MenuBuilder,com.actionbarsherlock.view.MenuItem) -> dispatchMenuItemSelected
     87:88:com.actionbarsherlock.view.SubMenu setIcon(android.graphics.drawable.Drawable) -> setIcon
     92:93:com.actionbarsherlock.view.SubMenu setIcon(int) -> setIcon
     97:97:com.actionbarsherlock.view.SubMenu setHeaderIcon(android.graphics.drawable.Drawable) -> setHeaderIcon
@@ -6621,7 +6621,7 @@ com.actionbarsherlock.internal.widget.ActionBarView -> com.actionbarsherlock.int
     375:376:void setCallback(com.actionbarsherlock.app.ActionBar$OnNavigationListener) -> setCallback
     379:439:void setMenu(com.actionbarsherlock.view.Menu,com.actionbarsherlock.internal.view.menu.MenuPresenter$Callback) -> setMenu
     442:451:void configPresenters(com.actionbarsherlock.internal.view.menu.MenuBuilder) -> configPresenters
-    454:455:boolean hasExpandedActionView() -> hasExpandedActionView
+    454:454:boolean hasExpandedActionView() -> hasExpandedActionView
     459:464:void collapseActionView() -> collapseActionView
     467:475:void setCustomNavigationView(android.view.View) -> setCustomNavigationView
     478:478:java.lang.CharSequence getTitle() -> getTitle
@@ -6759,7 +6759,7 @@ com.actionbarsherlock.internal.widget.IcsAbsSpinner -> com.actionbarsherlock.int
     168:245:void onMeasure(int,int) -> onMeasure
     248:248:int getChildHeight(android.view.View) -> getChildHeight
     252:252:int getChildWidth(android.view.View) -> getChildWidth
-    257:259:android.view.ViewGroup$LayoutParams generateDefaultLayoutParams() -> generateDefaultLayoutParams
+    257:257:android.view.ViewGroup$LayoutParams generateDefaultLayoutParams() -> generateDefaultLayoutParams
     263:273:void recycleAllViews() -> recycleAllViews
     280:283:void setSelection(int,boolean) -> setSelection
     287:290:void setSelection(int) -> setSelection
@@ -6786,7 +6786,7 @@ com.actionbarsherlock.internal.widget.IcsAbsSpinner$SavedState -> com.actionbars
     int position -> position
     android.os.Parcelable$Creator CREATOR -> CREATOR
     394:397:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    401:404:java.lang.String toString() -> toString
+    401:401:java.lang.String toString() -> toString
 com.actionbarsherlock.internal.widget.IcsAbsSpinner$SavedState$1 -> com.actionbarsherlock.internal.widget.IcsAbsSpinner$SavedState$1:
     410:410:com.actionbarsherlock.internal.widget.IcsAbsSpinner$SavedState createFromParcel(android.os.Parcel) -> createFromParcel
     414:414:com.actionbarsherlock.internal.widget.IcsAbsSpinner$SavedState[] newArray(int) -> newArray
@@ -7081,7 +7081,7 @@ com.actionbarsherlock.internal.widget.IcsProgressBar -> com.actionbarsherlock.in
     528:528:android.graphics.drawable.Drawable getProgressDrawable() -> getProgressDrawable
     542:571:void setProgressDrawable(android.graphics.drawable.Drawable) -> setProgressDrawable
     577:577:android.graphics.drawable.Drawable getCurrentDrawable() -> getCurrentDrawable
-    582:583:boolean verifyDrawable(android.graphics.drawable.Drawable) -> verifyDrawable
+    582:582:boolean verifyDrawable(android.graphics.drawable.Drawable) -> verifyDrawable
     588:591:void jumpDrawablesToCurrentState() -> jumpDrawablesToCurrentState
     595:598:void postInvalidate() -> postInvalidate
     628:646:void doRefreshProgress(int,int,boolean,boolean) -> doRefreshProgress
@@ -7172,7 +7172,7 @@ com.actionbarsherlock.internal.widget.IcsSpinner$DropDownAdapter -> com.actionba
     495:495:java.lang.Object getItem(int) -> getItem
     499:499:long getItemId(int) -> getItemId
     503:503:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-    507:508:android.view.View getDropDownView(int,android.view.View,android.view.ViewGroup) -> getDropDownView
+    507:507:android.view.View getDropDownView(int,android.view.View,android.view.ViewGroup) -> getDropDownView
     512:512:boolean hasStableIds() -> hasStableIds
     516:519:void registerDataSetObserver(android.database.DataSetObserver) -> registerDataSetObserver
     522:525:void unregisterDataSetObserver(android.database.DataSetObserver) -> unregisterDataSetObserver
@@ -7208,7 +7208,7 @@ com.actionbarsherlock.internal.widget.IcsToast -> com.actionbarsherlock.internal
     38:38:android.widget.Toast makeText(android.content.Context,int,int) -> makeText
     47:59:void setText(java.lang.CharSequence) -> setText
 com.actionbarsherlock.internal.widget.IcsView -> com.actionbarsherlock.internal.widget.IcsView:
-    17:19:int getMeasuredStateInt(android.view.View) -> getMeasuredStateInt
+    17:17:int getMeasuredStateInt(android.view.View) -> getMeasuredStateInt
 com.actionbarsherlock.internal.widget.PopupWindowCompat -> com.actionbarsherlock.internal.widget.PopupWindowCompat:
     java.lang.reflect.Field superListenerField -> superListenerField
     android.view.ViewTreeObserver$OnScrollChangedListener NOP -> NOP
@@ -7547,24 +7547,24 @@ com.actionbarsherlock.widget.ActivityChooserModel -> com.actionbarsherlock.widge
     android.os.Handler mHandler -> mHandler
     com.actionbarsherlock.widget.ActivityChooserModel$OnChooseActivityListener mActivityChoserModelPolicy -> mActivityChoserModelPolicy
     java.util.concurrent.Executor SERIAL_EXECUTOR -> SERIAL_EXECUTOR
-    335:342:com.actionbarsherlock.widget.ActivityChooserModel get(android.content.Context,java.lang.String) -> get
-    372:377:void setIntent(android.content.Intent) -> setIntent
-    387:388:android.content.Intent getIntent() -> getIntent
-    400:401:int getActivityCount() -> getActivityCount
-    414:415:android.content.pm.ResolveInfo getActivity(int) -> getActivity
+    335:335:com.actionbarsherlock.widget.ActivityChooserModel get(android.content.Context,java.lang.String) -> get
+    372:372:void setIntent(android.content.Intent) -> setIntent
+    387:387:android.content.Intent getIntent() -> getIntent
+    400:400:int getActivityCount() -> getActivityCount
+    414:414:android.content.pm.ResolveInfo getActivity(int) -> getActivity
     427:435:int getActivityIndex(android.content.pm.ResolveInfo) -> getActivityIndex
     456:479:android.content.Intent chooseActivity(int) -> chooseActivity
     488:489:void setOnChooseActivityListener(com.actionbarsherlock.widget.ActivityChooserModel$OnChooseActivityListener) -> setOnChooseActivityListener
     501:506:android.content.pm.ResolveInfo getDefaultActivity() -> getDefaultActivity
     520:538:void setDefaultActivity(int) -> setDefaultActivity
-    552:559:void readHistoricalData() -> readHistoricalData
-    576:586:void persistHistoricalData() -> persistHistoricalData
-    599:604:void setActivitySorter(com.actionbarsherlock.widget.ActivityChooserModel$ActivitySorter) -> setActivitySorter
-    615:619:void sortActivities() -> sortActivities
-    638:644:void setHistoryMaxSize(int) -> setHistoryMaxSize
-    654:655:int getHistoryMaxSize() -> getHistoryMaxSize
-    665:666:int getHistorySize() -> getHistorySize
-    677:685:boolean addHisoricalRecord(com.actionbarsherlock.widget.ActivityChooserModel$HistoricalRecord) -> addHisoricalRecord
+    552:552:void readHistoricalData() -> readHistoricalData
+    576:576:void persistHistoricalData() -> persistHistoricalData
+    599:599:void setActivitySorter(com.actionbarsherlock.widget.ActivityChooserModel$ActivitySorter) -> setActivitySorter
+    615:615:void sortActivities() -> sortActivities
+    638:638:void setHistoryMaxSize(int) -> setHistoryMaxSize
+    654:654:int getHistoryMaxSize() -> getHistoryMaxSize
+    665:665:int getHistorySize() -> getHistorySize
+    677:677:boolean addHisoricalRecord(com.actionbarsherlock.widget.ActivityChooserModel$HistoricalRecord) -> addHisoricalRecord
     693:705:void pruneExcessiveHistoricalRecordsLocked() -> pruneExcessiveHistoricalRecordsLocked
     711:724:void loadActivitiesLocked() -> loadActivitiesLocked
     249:249:android.content.Context access$0(com.actionbarsherlock.widget.ActivityChooserModel) -> access$0
@@ -7593,7 +7593,7 @@ com.actionbarsherlock.widget.ActivityChooserModel$DefaultSorter -> com.actionbar
     float WEIGHT_DECAY_COEFFICIENT -> WEIGHT_DECAY_COEFFICIENT
     java.util.Map mPackageNameToActivityMap -> mPackageNameToActivityMap
     com.actionbarsherlock.widget.ActivityChooserModel this$0 -> this$0
-    893:924:void sort(android.content.Intent,java.util.List,java.util.List) -> sort
+    894:924:void sort(android.content.Intent,java.util.List,java.util.List) -> sort
 com.actionbarsherlock.widget.ActivityChooserModel$HistoricalRecord -> com.actionbarsherlock.widget.ActivityChooserModel$HistoricalRecord:
     android.content.ComponentName activity -> activity
     long time -> time
@@ -7789,7 +7789,7 @@ com.actionbarsherlock.widget.SearchView -> com.actionbarsherlock.widget.SearchVi
     714:717:void setMaxWidth(int) -> setMaxWidth
     727:727:int getMaxWidth() -> getMaxWidth
     733:763:void onMeasure(int,int) -> onMeasure
-    766:767:int getPreferredWidth() -> getPreferredWidth
+    766:766:int getPreferredWidth() -> getPreferredWidth
     771:784:void updateViewsVisibility(boolean) -> updateViewsVisibility
     787:800:boolean hasVoiceSearch() -> hasVoiceSearch
     804:804:boolean isSubmitAreaEnabled() -> isSubmitAreaEnabled
@@ -7833,7 +7833,7 @@ com.actionbarsherlock.widget.SearchView -> com.actionbarsherlock.widget.SearchVi
     1514:1565:android.content.Intent createVoiceAppSearchIntent(android.content.Intent,android.app.SearchableInfo) -> createVoiceAppSearchIntent
     1584:1620:android.content.Intent createIntentFromSuggestion(android.database.Cursor,int,java.lang.String) -> createIntentFromSuggestion
     1626:1635:void forceSuggestionQuery() -> forceSuggestionQuery
-    1638:1639:boolean isLandscapeMode(android.content.Context) -> isLandscapeMode
+    1638:1638:boolean isLandscapeMode(android.content.Context) -> isLandscapeMode
     1782:1788:void ensureImeVisible(android.widget.AutoCompleteTextView,boolean) -> ensureImeVisible
     1792:1799:void showSoftInputUnchecked(android.view.View,android.view.inputmethod.InputMethodManager,int) -> showSoftInputUnchecked
     1803:1810:void setText(android.widget.AutoCompleteTextView,java.lang.CharSequence,boolean) -> setText
@@ -7862,7 +7862,7 @@ com.actionbarsherlock.widget.SearchView -> com.actionbarsherlock.widget.SearchVi
     1305:1305:void access$22(com.actionbarsherlock.widget.SearchView) -> access$22
 com.actionbarsherlock.widget.SearchView$1 -> com.actionbarsherlock.widget.SearchView$1:
     com.actionbarsherlock.widget.SearchView this$0 -> this$0
-    152:158:void run() -> run
+    153:158:void run() -> run
 com.actionbarsherlock.widget.SearchView$10 -> com.actionbarsherlock.widget.SearchView$10:
     com.actionbarsherlock.widget.SearchView this$0 -> this$0
     293:296:void onFocusChange(android.view.View,boolean) -> onFocusChange
@@ -12093,7 +12093,7 @@ org.codehaus.jackson.map.introspect.AnnotatedField -> org.codehaus.jackson.map.i
     74:74:java.lang.Class getRawType() -> getRawType
     84:84:java.lang.Class getDeclaringClass() -> getDeclaringClass
     87:87:java.lang.reflect.Member getMember() -> getMember
-    94:98:void setValue(java.lang.Object,java.lang.Object) -> setValue
+    94:96:void setValue(java.lang.Object,java.lang.Object) -> setValue
     108:108:java.lang.String getFullName() -> getFullName
     111:111:int getAnnotationCount() -> getAnnotationCount
     116:116:java.lang.String toString() -> toString
@@ -12122,7 +12122,7 @@ org.codehaus.jackson.map.introspect.AnnotatedMethod -> org.codehaus.jackson.map.
     101:101:java.lang.Object call1(java.lang.Object) -> call1
     111:111:java.lang.Class getDeclaringClass() -> getDeclaringClass
     114:114:java.lang.reflect.Member getMember() -> getMember
-    121:128:void setValue(java.lang.Object,java.lang.Object) -> setValue
+    121:126:void setValue(java.lang.Object,java.lang.Object) -> setValue
     139:139:int getParameterCount() -> getParameterCount
     143:143:java.lang.reflect.Type[] getParameterTypes() -> getParameterTypes
     149:150:java.lang.Class getParameterClass(int) -> getParameterClass
@@ -13007,8 +13007,8 @@ org.codehaus.jackson.map.ser.StdSerializerProvider -> org.codehaus.jackson.map.s
     535:545:void defaultSerializeDateValue(java.util.Date,org.codehaus.jackson.JsonGenerator) -> defaultSerializeDateValue
     551:561:void defaultSerializeDateKey(long,org.codehaus.jackson.JsonGenerator) -> defaultSerializeDateKey
     567:577:void defaultSerializeDateKey(java.util.Date,org.codehaus.jackson.JsonGenerator) -> defaultSerializeDateKey
-    595:626:void _serializeValue(org.codehaus.jackson.JsonGenerator,java.lang.Object) -> _serializeValue
-    641:671:void _serializeValue(org.codehaus.jackson.JsonGenerator,java.lang.Object,org.codehaus.jackson.type.JavaType) -> _serializeValue
+    595:625:void _serializeValue(org.codehaus.jackson.JsonGenerator,java.lang.Object) -> _serializeValue
+    641:670:void _serializeValue(org.codehaus.jackson.JsonGenerator,java.lang.Object,org.codehaus.jackson.type.JavaType) -> _serializeValue
     680:687:void _reportIncompatibleRootType(java.lang.Object,org.codehaus.jackson.type.JavaType) -> _reportIncompatibleRootType
     702:714:org.codehaus.jackson.map.JsonSerializer _findExplicitUntypedSerializer(java.lang.Class,org.codehaus.jackson.map.BeanProperty) -> _findExplicitUntypedSerializer
     735:746:org.codehaus.jackson.map.JsonSerializer _createAndCacheUntypedSerializer(java.lang.Class,org.codehaus.jackson.map.BeanProperty) -> _createAndCacheUntypedSerializer
@@ -13216,8 +13216,8 @@ org.codehaus.jackson.map.ser.std.BeanSerializerBase -> org.codehaus.jackson.map.
     java.lang.Object _propertyFilterId -> _propertyFilterId
     void serialize(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serialize
     121:128:void serializeWithType(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider,org.codehaus.jackson.map.TypeSerializer) -> serializeWithType
-    140:168:void serializeFields(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serializeFields
-    186:217:void serializeFieldsFiltered(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serializeFieldsFiltered
+    140:167:void serializeFields(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serializeFields
+    186:216:void serializeFieldsFiltered(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serializeFieldsFiltered
     229:237:org.codehaus.jackson.map.ser.BeanPropertyFilter findFilter(org.codehaus.jackson.map.SerializerProvider) -> findFilter
     244:268:org.codehaus.jackson.JsonNode getSchema(org.codehaus.jackson.map.SerializerProvider,java.lang.reflect.Type) -> getSchema
     281:338:void resolve(org.codehaus.jackson.map.SerializerProvider) -> resolve
@@ -13291,8 +13291,8 @@ org.codehaus.jackson.map.ser.std.JsonValueSerializer -> org.codehaus.jackson.map
     org.codehaus.jackson.map.JsonSerializer _valueSerializer -> _valueSerializer
     org.codehaus.jackson.map.BeanProperty _property -> _property
     boolean _forceTypeInformation -> _forceTypeInformation
-    72:103:void serialize(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serialize
-    112:154:void serializeWithType(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider,org.codehaus.jackson.map.TypeSerializer) -> serializeWithType
+    72:102:void serialize(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serialize
+    112:153:void serializeWithType(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider,org.codehaus.jackson.map.TypeSerializer) -> serializeWithType
     161:161:org.codehaus.jackson.JsonNode getSchema(org.codehaus.jackson.map.SerializerProvider,java.lang.reflect.Type) -> getSchema
     180:202:void resolve(org.codehaus.jackson.map.SerializerProvider) -> resolve
     206:219:boolean isNaturalTypeWithStdHandling(org.codehaus.jackson.type.JavaType,org.codehaus.jackson.map.JsonSerializer) -> isNaturalTypeWithStdHandling
@@ -13335,9 +13335,9 @@ org.codehaus.jackson.map.ser.std.ObjectArraySerializer -> org.codehaus.jackson.m
     org.codehaus.jackson.map.JsonSerializer _elementSerializer -> _elementSerializer
     org.codehaus.jackson.map.ser.impl.PropertySerializerMap _dynamicSerializers -> _dynamicSerializers
     83:83:org.codehaus.jackson.map.ser.std.ContainerSerializerBase _withValueTypeSerializer(org.codehaus.jackson.map.TypeSerializer) -> _withValueTypeSerializer
-    90:141:void serializeContents(java.lang.Object[],org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serializeContents
-    148:177:void serializeContentsUsing(java.lang.Object[],org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider,org.codehaus.jackson.map.JsonSerializer) -> serializeContentsUsing
-    183:213:void serializeTypedContents(java.lang.Object[],org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serializeTypedContents
+    90:140:void serializeContents(java.lang.Object[],org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serializeContents
+    148:176:void serializeContentsUsing(java.lang.Object[],org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider,org.codehaus.jackson.map.JsonSerializer) -> serializeContentsUsing
+    183:212:void serializeTypedContents(java.lang.Object[],org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serializeTypedContents
     220:237:org.codehaus.jackson.JsonNode getSchema(org.codehaus.jackson.map.SerializerProvider,java.lang.reflect.Type) -> getSchema
     248:251:void resolve(org.codehaus.jackson.map.SerializerProvider) -> resolve
     259:264:org.codehaus.jackson.map.JsonSerializer _findAndAddDynamic(org.codehaus.jackson.map.ser.impl.PropertySerializerMap,java.lang.Class,org.codehaus.jackson.map.SerializerProvider) -> _findAndAddDynamic
