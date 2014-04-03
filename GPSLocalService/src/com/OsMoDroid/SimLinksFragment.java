@@ -220,7 +220,7 @@ public class SimLinksFragment extends SherlockFragment implements ResultsListene
 					JSONArray ar = new JSONArray(result.Jo.getString("om_link"));
 					for (int i = 0; i < ar.length(); i++) {
 			 			JSONObject jsonObject = ar.getJSONObject(i);
-				if (jsonObject.getString("device").equals(LocalService.settings.getString("device", ""))){
+				if (jsonObject.getString("device").equals(OsMoDroid.settings.getString("device", ""))){
 					list.add("http://m.esya.ru/"+jsonObject.getString("url"));
 					listids.add(jsonObject.getString("u"));
 				}

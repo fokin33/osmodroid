@@ -231,7 +231,7 @@ public void removechannels(ArrayList<String[]> longPollChList){
 				MyMessage mes =new MyMessage( new JSONObject(message));
 				if(log)Log.d(this.getClass().getName(), "MyMessage,from "+mes.from);
 				if(log)Log.d(this.getClass().getName(), "DeviceList= "+LocalService.deviceList);
-if (mes.from.equals(localService.settings.getString("device", ""))){
+if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	for (Device dev : LocalService.deviceList){
 		if(Integer.toString(dev.u).equals(mes.to)){
 			u=dev.u;
@@ -334,23 +334,23 @@ if (getMessageType( topic).equals("o")){
     tempdeviceList.addAll(LocalService.deviceList);
     
     for (Device device : tempdeviceList){
-        if (data[1].equals(Integer.toString(device.u))&&device.u!=(Integer.parseInt(LocalService.settings.getString("device", ""))) ){
+        if (data[1].equals(Integer.toString(device.u))&&device.u!=(Integer.parseInt(OsMoDroid.settings.getString("device", ""))) ){
         	//LocalService.deviceList.remove(device);
         	int idx=LocalService.deviceList.indexOf(device);
-            if (LocalService.settings.getBoolean("statenotify", true)&&data[0].equals("state")) {
+            if (OsMoDroid.settings.getBoolean("statenotify", true)&&data[0].equals("state")) {
                 if (data[2].equals("1")) { status=localService.getString(R.string.started);device.state = "1"; } else { status=localService.getString(R.string.stoped);device.state = "0"; }
                 messageText = messageText+localService.getString(R.string.monitoringondevice)+device.name+"\" "+status;
                 if(log)Log.d(this.getClass().getName(), "DeviceState="+messageText);
                 
             }
-            if (LocalService.settings.getBoolean("onlinenotify", false)&&data[0].equals("online")&&device.u!=(Integer.parseInt(LocalService.settings.getString("device", ""))) ){
+            if (OsMoDroid.settings.getBoolean("onlinenotify", false)&&data[0].equals("online")&&device.u!=(Integer.parseInt(OsMoDroid.settings.getString("device", ""))) ){
                 if (data[2].equals("1")&&device.online.equals("0")) { status=localService.getString(R.string.enternet);  device.online = "1";}
                 if (data[2].equals("0")&&device.online.equals("1")) { status=localService.getString(R.string.exitnet); device.online = "0"; }
                
                 messageText = messageText+localService.getString(R.string.device)+device.name+"\" "+status;
                 if(log)Log.d(this.getClass().getName(), "DeviceOnline="+messageText);
             }
-            if (data[0].equals("geozone")&&device.u!=(Integer.parseInt(LocalService.settings.getString("device", ""))) ){
+            if (data[0].equals("geozone")&&device.u!=(Integer.parseInt(OsMoDroid.settings.getString("device", ""))) ){
                 messageText = messageText+localService.getString(R.string.device)+device.name+"\" "+data[2];
                 if(log)Log.d(this.getClass().getName(), "DeviceGeoZone="+messageText);
             }
@@ -634,8 +634,8 @@ if (item instanceof JSONObject){
 if(log)Log.d(this.getClass().getName(), "set preference");
 JSONObject jo = (JSONObject)item;
 Iterator<String> locIt = jo.keys();
-SharedPreferences.Editor editor = LocalService.settings.edit();
-Map<String, ?> entries = LocalService.settings.getAll();
+SharedPreferences.Editor editor = OsMoDroid.settings.edit();
+Map<String, ?> entries = OsMoDroid.settings.getAll();
 while (locIt.hasNext()){
 	String lockeyname= locIt.next();
 	 for (Entry<String, ?> entry : entries.entrySet()) {
@@ -727,7 +727,7 @@ if (getMessageType( topic).equals("ch")){
 		});
 	}
 	else {
-		netutil.newapicommand((ResultsListener)localService, "om_device_channel_adaptive:"+localService.settings.getString("device", ""));
+		netutil.newapicommand((ResultsListener)localService, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 	}
 }
 

@@ -61,7 +61,7 @@ public class DeviceChatAdapter extends ArrayAdapter<MyMessage> {
 		        txtText.setText(message.text);
 		        txtTime.setText(message.time);
 		        txtText.setTextColor(Color.BLACK);
-		        if (message.from.equals(LocalService.settings.getString("uid", ""))){
+		        if (message.from.equals(OsMoDroid.settings.getString("uid", ""))){
 		        	 
 		        	txtFromName.setTextColor(Color.GREEN);
 		        }

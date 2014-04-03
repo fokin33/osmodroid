@@ -122,7 +122,7 @@ if(deviceU!=-1){
 
 											//netutil.newapicommand((ResultsListener) MyDevices.this, "im_send:"+LocalService.deviceList.get((int) acmi.id).uid+","+LocalService.deviceList.get((int) acmi.id).app,"json="+postjson.toString());
 										
-											postjson.put("from", globalActivity.settings.getString("device", ""));
+											postjson.put("from", OsMoDroid.settings.getString("device", ""));
 											postjson.put("to", Integer.toString(LocalService.deviceList.get((int) acmi.id).u));
 											postjson.put("text", input.getText().toString());
 											netutil.newapicommand((ResultsListener) DevicesFragment.this, "om_device_message_send","json="+postjson.toString());

@@ -65,6 +65,7 @@ import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
+import android.provider.Settings.Global;
 import android.provider.Settings.Secure;
 
 
@@ -170,7 +171,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	PowerManager pm;
 	WakeLock	wakeLock;// = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyWakeLock");
 	String version="Unknown";
-	SharedPreferences settings;
+	//SharedPreferences OsMoDroid.settings;
 	
 	public ActionBar actionBar;
 	private ArrayList<String> mDrawerItems=new ArrayList<String>();
@@ -202,11 +203,11 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 			invokeService();
 			started = true;
 			updateMainUI();
-			if (live&&!settings.getString("hash", "" ).equals("")&&settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-14400000){
+			if (live&&!OsMoDroid.settings.getString("hash", "" ).equals("")&&OsMoDroid.settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-14400000){
 				mService.startcomand();
 				}
-			if (!settings.getString("key", "" ).equals("") ){
-			netutil.newapicommand((ResultsListener)mService.serContext, "om_device_get:"+settings.getString("device", ""));
+			if (!OsMoDroid.settings.getString("key", "" ).equals("") ){
+			netutil.newapicommand((ResultsListener)mService.serContext, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
 			}
 			if(needIntent!=null){
 				intentAction(needIntent);
@@ -292,11 +293,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	public void onCreate(Bundle savedInstanceState) {
 		Log.d(this.getClass().getSimpleName(), "onCreate() gpsclient");
 		super.onCreate(savedInstanceState);
-
-
 		PreferenceManager.setDefaultValues(this, R.xml.pref, true);
-		settings = PreferenceManager
-				.getDefaultSharedPreferences(this);
 		ReadPref();
 		String sdState = android.os.Environment.getExternalStorageState();
 
@@ -309,7 +306,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 
 		 fileName.mkdirs();
 
-		 fileName = new File(sdDir, "OsMoDroid/settings.dat");
+		 fileName = new File(sdDir, "OsMoDroid/OsMoDroid.settings.dat");
 
 		 }
 		
@@ -335,10 +332,10 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 			    	device="";
 			    	devicename="";
 
-			    SharedPreferences.Editor editor = settings.edit();
-			    editor.remove("device");
-			    editor.remove("devicename");
-			    editor.commit();
+			    
+			    	OsMoDroid.editor.remove("device");
+			    	OsMoDroid.editor.remove("devicename");
+			    	OsMoDroid.editor.commit();
 
 
 
@@ -349,12 +346,13 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 			};
 
 
-			settings.registerOnSharedPreferenceChangeListener(listener);
+			OsMoDroid.settings.registerOnSharedPreferenceChangeListener(listener);
 			setContentView(R.layout.activity_main);
 	        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 	        mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		        // Set the adapter for the list view
 		    	setupDrawerList();
+		    	drawClickListener.globalActivity=this;
 		        mDrawerList.setOnItemClickListener(drawClickListener);
 		        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		        mDrawerLayout.setBackgroundColor(Color.WHITE);
@@ -423,12 +421,12 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 
 	void setupDrawerList() {
 		mDrawerItems.clear();
-		if (!settings.getString("key", "" ).equals("") ){
+		if (!OsMoDroid.settings.getString("key", "" ).equals("") ){
 		  
 		 for (String s: new String[] {
 				    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
 				    getString(R.string.chanals),getString(R.string.devices),getString(R.string.links),
-				    getString(R.string.notifications), getString(R.string.tracks) })
+				    getString(R.string.notifications), getString(R.string.tracks) , getString(R.string.exit)})
 		 {
 		 mDrawerItems.add(s);
 		 
@@ -437,7 +435,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 		else{
 			for (String s:  new String[] {
 				    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
-				    getString(R.string.tracks)} ){
+				    getString(R.string.tracks),getString(R.string.exit)} ){
 				mDrawerItems.add(s);
 			}
 		}
@@ -666,7 +664,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	boolean checkStarted() {
 
 		// Log.d(this.getClass().getSimpleName(), "oncheckstartedy() gpsclient");
-		return settings.getBoolean("started", false);
+		return OsMoDroid.settings.getBoolean("started", false);
 
 	}
 
@@ -674,53 +672,53 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 		 Log.d(this.getClass().getSimpleName(), "readpref() gpsclient");
 
 
-		speed =  Integer.parseInt(settings.getString("speed", "3").equals(
-				"") ? "3" : settings.getString("speed", "3"));
-		period = Integer.parseInt(settings.getString("period", "10000").equals(
-				"") ? "10000" : settings.getString("period", "10000"));
-		distance = Integer.parseInt(settings.getString("distance", "50")
-				.equals("") ? "50" : settings.getString("distance", "50"));
-		hash = settings.getString("hash", "");
-		n = Integer.parseInt(settings.getString("n", "0").equals("") ? "0"
-				: settings.getString("n", "0"));
-		submiturl = settings.getString("submit-url", "");
-		viewurl = settings.getString("view-url", "");
-		pdaviewurl = settings.getString("pda-view-url", "");
-		speedbearing = Integer.parseInt(settings.getString("speedbearing", "2")
-				.equals("") ? "2" : settings.getString("speedbearing", "2"));
-		bearing = Integer.parseInt(settings.getString("bearing", "10").equals(
-				"") ? "10" : settings.getString("bearing", "2"));
+		speed =  Integer.parseInt(OsMoDroid.settings.getString("speed", "3").equals(
+				"") ? "3" : OsMoDroid.settings.getString("speed", "3"));
+		period = Integer.parseInt(OsMoDroid.settings.getString("period", "10000").equals(
+				"") ? "10000" : OsMoDroid.settings.getString("period", "10000"));
+		distance = Integer.parseInt(OsMoDroid.settings.getString("distance", "50")
+				.equals("") ? "50" : OsMoDroid.settings.getString("distance", "50"));
+		hash = OsMoDroid.settings.getString("hash", "");
+		n = Integer.parseInt(OsMoDroid.settings.getString("n", "0").equals("") ? "0"
+				: OsMoDroid.settings.getString("n", "0"));
+		submiturl = OsMoDroid.settings.getString("submit-url", "");
+		viewurl = OsMoDroid.settings.getString("view-url", "");
+		pdaviewurl = OsMoDroid.settings.getString("pda-view-url", "");
+		speedbearing = Integer.parseInt(OsMoDroid.settings.getString("speedbearing", "2")
+				.equals("") ? "2" : OsMoDroid.settings.getString("speedbearing", "2"));
+		bearing = Integer.parseInt(OsMoDroid.settings.getString("bearing", "10").equals(
+				"") ? "10" : OsMoDroid.settings.getString("bearing", "2"));
 		hdop = Integer
-				.parseInt(settings.getString("hdop", "30").equals("") ? "30"
-						: settings.getString("hdop", "30"));
-		gpx = settings.getBoolean("gpx", false);
-		live = settings.getBoolean("live", true);
-		vibrate = settings.getBoolean("vibrate", false);
-		usecourse = settings.getBoolean("usecourse", false);
-		vibratetime = Integer.parseInt(settings.getString("vibratetime", "200")
-				.equals("") ? "200" : settings.getString("vibratetime", "0"));
-		playsound = settings.getBoolean("playsound", false);
-		period_gpx = Integer.parseInt(settings.getString("period_gpx", "0")
-				.equals("") ? "0" : settings.getString("period_gpx", "0"));
-		distance_gpx = Integer.parseInt(settings.getString("distance_gpx", "0")
-				.equals("") ? "0" : settings.getString("distance_gpx", "0"));
-		speedbearing_gpx = Integer.parseInt(settings.getString(
-				"speedbearing_gpx", "0").equals("") ? "0" : settings.getString(
+				.parseInt(OsMoDroid.settings.getString("hdop", "30").equals("") ? "30"
+						: OsMoDroid.settings.getString("hdop", "30"));
+		gpx = OsMoDroid.settings.getBoolean("gpx", false);
+		live = OsMoDroid.settings.getBoolean("live", true);
+		vibrate = OsMoDroid.settings.getBoolean("vibrate", false);
+		usecourse = OsMoDroid.settings.getBoolean("usecourse", false);
+		vibratetime = Integer.parseInt(OsMoDroid.settings.getString("vibratetime", "200")
+				.equals("") ? "200" : OsMoDroid.settings.getString("vibratetime", "0"));
+		playsound = OsMoDroid.settings.getBoolean("playsound", false);
+		period_gpx = Integer.parseInt(OsMoDroid.settings.getString("period_gpx", "0")
+				.equals("") ? "0" : OsMoDroid.settings.getString("period_gpx", "0"));
+		distance_gpx = Integer.parseInt(OsMoDroid.settings.getString("distance_gpx", "0")
+				.equals("") ? "0" : OsMoDroid.settings.getString("distance_gpx", "0"));
+		speedbearing_gpx = Integer.parseInt(OsMoDroid.settings.getString(
+				"speedbearing_gpx", "0").equals("") ? "0" : OsMoDroid.settings.getString(
 				"speedbearing_gpx", "0"));
-		bearing_gpx = Integer.parseInt(settings.getString("bearing_gpx", "0")
-				.equals("") ? "0" : settings.getString("bearing", "0"));
-		hdop_gpx = Integer.parseInt(settings.getString("hdop_gpx", "30")
-				.equals("") ? "30" : settings.getString("hdop_gpx", "30"));
-		usebuffer = settings.getBoolean("usebuffer", false);
-		usewake = settings.getBoolean("usewake", false);
-		notifyperiod = Integer.parseInt(settings.getString("notifyperiod",
-				"30000").equals("") ? "30000" : settings.getString(
+		bearing_gpx = Integer.parseInt(OsMoDroid.settings.getString("bearing_gpx", "0")
+				.equals("") ? "0" : OsMoDroid.settings.getString("bearing", "0"));
+		hdop_gpx = Integer.parseInt(OsMoDroid.settings.getString("hdop_gpx", "30")
+				.equals("") ? "30" : OsMoDroid.settings.getString("hdop_gpx", "30"));
+		usebuffer = OsMoDroid.settings.getBoolean("usebuffer", false);
+		usewake = OsMoDroid.settings.getBoolean("usewake", false);
+		notifyperiod = Integer.parseInt(OsMoDroid.settings.getString("notifyperiod",
+				"30000").equals("") ? "30000" : OsMoDroid.settings.getString(
 				"notifyperiod", "30000"));
-		sendsound = settings.getBoolean("sendsound", false);
-		// pass = settings.getString("pass", "");
-		login = settings.getString("login", "");
-		key = settings.getString("key", "");
-		device = settings.getString("device", "");
+		sendsound = OsMoDroid.settings.getBoolean("sendsound", false);
+		// pass = OsMoDroid.settings.getString("pass", "");
+		login = OsMoDroid.settings.getString("login", "");
+		key = OsMoDroid.settings.getString("key", "");
+		device = OsMoDroid.settings.getString("device", "");
 		Log.d(this.getClass().getSimpleName(), "readpref() hash:"+hash);
 	}
 
@@ -939,15 +937,15 @@ if (mBound) {
 
 
 				//WritePref();
-				SharedPreferences.Editor editor = settings.edit();
-				editor.putString("hash", hash);
-				editor.putString("n", Integer.toString(n));
-				editor.putString("submit-url", submiturl);
-				editor.putString("view-url", viewurl);
-				editor.putString("pda-view-url", pdaviewurl);
-				editor.putString("device", adevice);
-				editor.putString("key", "");
-				editor.commit();
+				
+				OsMoDroid.editor.putString("hash", hash);
+				OsMoDroid.editor.putString("n", Integer.toString(n));
+				OsMoDroid.editor.putString("submit-url", submiturl);
+				OsMoDroid.editor.putString("view-url", viewurl);
+				OsMoDroid.editor.putString("pda-view-url", pdaviewurl);
+				OsMoDroid.editor.putString("device", adevice);
+				OsMoDroid.editor.putString("key", "");
+				OsMoDroid.editor.commit();
 				ReadPref();
 				setupDrawerList();
 				updateMainUI();
@@ -1024,28 +1022,26 @@ if (mBound) {
 			} else {
 				// commandJSON=resultJSON;
 if (!(adevice==null)){device=adevice;
-SharedPreferences.Editor editor = settings.edit();
-editor.putString("device", adevice);
-editor.commit();}
+
+OsMoDroid.editor.putString("device", adevice);
+OsMoDroid.editor.commit();}
 if (!(adevicename==null)){devicename=unescape(adevicename);
-SharedPreferences.Editor editor = settings.edit();
-editor.putString("devicename", unescape(adevicename));
-editor.commit();
+OsMoDroid.editor.putString("devicename", unescape(adevicename));
+OsMoDroid.editor.commit();
 
 }
 if (!(akey==null))
 {key=akey;
-SharedPreferences.Editor editor = settings.edit();
-editor.putString("key", key);
-editor.remove("laststartcommandtime");
-editor.commit();
-netutil.newapicommand((Context) GPSLocalServiceClient.this, "om_device_bind:"+settings.getString("hash", "")+","+settings.getString("n", ""));
+OsMoDroid.editor.putString("key", key);
+OsMoDroid.editor.remove("laststartcommandtime");
+OsMoDroid.editor.commit();
+netutil.newapicommand((Context) GPSLocalServiceClient.this, "om_device_bind:"+OsMoDroid.settings.getString("hash", "")+","+OsMoDroid.settings.getString("n", ""));
 mService.startcomand();
 //mDrawerItems = ;
 setupDrawerList();
 
 updateMainUI();
-netutil.newapicommand((ResultsListener)mService, "om_device_get:"+settings.getString("device", ""));
+netutil.newapicommand((ResultsListener)mService, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
 
 
 }
@@ -1053,12 +1049,12 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 
 				updateMainUI();
 
-				SharedPreferences.Editor editor = settings.edit();
+				
 
-				editor.putString("view-url", viewurl);
+				OsMoDroid.editor.putString("view-url", viewurl);
 
 
-				editor.commit();
+				OsMoDroid.editor.commit();
 
 				ReadPref();
 				Toast.makeText(GPSLocalServiceClient.this,
@@ -1193,12 +1189,12 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 				viewurl = result.Jo.optString("url");
 				updateMainUI();
 
-				SharedPreferences.Editor editor = settings.edit();
+				
 
-				editor.putString("view-url", viewurl);
+				OsMoDroid.editor.putString("view-url", viewurl);
 
 
-				editor.commit();
+				OsMoDroid.editor.commit();
 
 				//returnstr = "URL найден";
 			} else {
@@ -1245,25 +1241,24 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 	    ObjectInputStream input = null;
 	    try {
 	        input = new ObjectInputStream(new FileInputStream(src));
-	            Editor prefEdit =  PreferenceManager.getDefaultSharedPreferences(this).edit();
-	            prefEdit.clear();
+	        OsMoDroid.editor.clear();
 	            Map<String, ?> entries = (Map<String, ?>) input.readObject();
 	            for (Entry<String, ?> entry : entries.entrySet()) {
 	                Object v = entry.getValue();
 	                String key = entry.getKey();
 
 	                if (v instanceof Boolean)
-	                    prefEdit.putBoolean(key, ((Boolean) v).booleanValue());
+	                	OsMoDroid.editor.putBoolean(key, ((Boolean) v).booleanValue());
 	                else if (v instanceof Float)
-	                    prefEdit.putFloat(key, ((Float) v).floatValue());
+	                	OsMoDroid.editor.putFloat(key, ((Float) v).floatValue());
 	                else if (v instanceof Integer)
-	                    prefEdit.putInt(key, ((Integer) v).intValue());
+	                	OsMoDroid.editor.putInt(key, ((Integer) v).intValue());
 	                else if (v instanceof Long)
-	                    prefEdit.putLong(key, ((Long) v).longValue());
+	                	OsMoDroid.editor.putLong(key, ((Long) v).longValue());
 	                else if (v instanceof String)
-	                    prefEdit.putString(key, ((String) v));
+	                	OsMoDroid.editor.putString(key, ((String) v));
 	            }
-	            prefEdit.commit();
+	            OsMoDroid.editor.commit();
 	            Toast.makeText(this, R.string.prefloaded, Toast.LENGTH_SHORT).show();
 	            setupDrawerList();
 	        res = true;         

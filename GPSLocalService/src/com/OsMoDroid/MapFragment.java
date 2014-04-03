@@ -461,6 +461,7 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 
 
 	public void showChannelTracks() {
+		mMapView.getOverlayManager().removeAll(paths);
 		paths.clear();
 		for (Channel ch: LocalService.channelList){
 			//ch.map=this;
@@ -470,9 +471,11 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 						PathOverlay p =new PathOverlay(cg.color,10,mResourceProxy);
 						p.addPoints(cg.points);
 						paths.add(p);
-						mMapView.getOverlayManager().add(p);
+						mMapView.getOverlayManager().add(0,p);
 					}
 				}
 			}
+		Log.d(getClass().getSimpleName(), "Count of overlays="+mMapView.getOverlayManager().size());
 		}
+	
 	}

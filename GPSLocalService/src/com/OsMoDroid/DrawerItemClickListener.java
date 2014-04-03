@@ -3,6 +3,7 @@ package com.OsMoDroid;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
@@ -24,10 +25,8 @@ public class DrawerItemClickListener implements OnItemClickListener {
 	 ChannelDevicesFragment chandev;
 	 int currentItem=0;
 	 
-//	private Context context;
-//	 DrawerItemClickListener(Context ctx){
-//		 this.context=ctx;
-//	 }
+	 GPSLocalServiceClient globalActivity;
+	
 	 
 	 
 	 @Override
@@ -116,7 +115,11 @@ public class DrawerItemClickListener implements OnItemClickListener {
                ft.replace(R.id.fragment_container, trac);
                currentItem=7;
        }
-        
+       else if(name.equals( OsMoDroid.context.getString(R.string.exit))){
+    	   Intent i = new Intent(globalActivity, LocalService.class);
+           globalActivity.stopService(i);
+           globalActivity.finish();
+       } 
         
        
         

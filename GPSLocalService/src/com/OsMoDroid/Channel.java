@@ -121,7 +121,7 @@ public class Channel {
 //	 				    name = toxIC jiayu
 //	 				    icon = 1
 		 			
-	if (!jsonObject.getString("u").equals(LocalService.settings.getString("device", "")))
+	if (!jsonObject.getString("u").equals(OsMoDroid.settings.getString("device", "")))
 		{
 		try {
 			this.deviceList.add(new Device(jsonObject.getString("u")

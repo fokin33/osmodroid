@@ -75,7 +75,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 	}
 	String getMyApp (){
 		for (Device dev:LocalService.deviceList ){
-			if (dev.u==Integer.parseInt(LocalService.settings.getString("device", "-1"))){
+			if (dev.u==Integer.parseInt(OsMoDroid.settings.getString("device", "-1"))){
 				return dev.app;
 			}
 		}
@@ -165,7 +165,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
 		if (item.getItemId()==2){
-			t.add(netutil.newapicommand((ResultsListener)DeviceChatFragment.this,globalActivity, "om_device_message_get:"+globalActivity.settings.getString("device", "")+","+getDeviceByU(deviceU).u));
+			t.add(netutil.newapicommand((ResultsListener)DeviceChatFragment.this,globalActivity, "om_device_message_get:"+OsMoDroid.settings.getString("device", "")+","+getDeviceByU(deviceU).u));
 		}
 		
 		return super.onOptionsItemSelected(item);
@@ -212,7 +212,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 				JSONObject postjson = new JSONObject();
 			try {
 
-				postjson.put("from", globalActivity.settings.getString("device", ""));
+				postjson.put("from", OsMoDroid.settings.getString("device", ""));
 				postjson.put("to", Integer.toString((getDeviceByU(deviceU)).u));
 				postjson.put("text", input.getText().toString());
 				t.add(netutil.newapicommand((ResultsListener) DeviceChatFragment.this, "om_device_message_send","json="+postjson.toString()));
@@ -268,7 +268,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 		
 		
 		
-		if (result.Jo.has("om_device_message_get:"+globalActivity.settings.getString("device", "")+","+getDeviceByU(deviceU).u)){
+		if (result.Jo.has("om_device_message_get:"+OsMoDroid.settings.getString("device", "")+","+getDeviceByU(deviceU).u)){
 			
 			LocalService.chatmessagelist.clear();
 
@@ -276,7 +276,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 			
 			
 			try {
-				  JSONArray a = result.Jo.getJSONArray("om_device_message_get:"+globalActivity.settings.getString("device", "")+","+getDeviceByU(deviceU).u );
+				  JSONArray a = result.Jo.getJSONArray("om_device_message_get:"+OsMoDroid.settings.getString("device", "")+","+getDeviceByU(deviceU).u );
 				  for (int i = 0; i < a.length(); i++) {
 			 			JSONObject jsonObject = a.getJSONObject(i);
 	          	{

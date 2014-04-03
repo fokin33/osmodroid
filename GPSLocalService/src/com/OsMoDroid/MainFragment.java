@@ -154,7 +154,7 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 		MenuItem about = menu.add(0, 12, 0, R.string.about);
 		about.setIcon(android.R.drawable.ic_menu_info_details);
 		about.setIntent(new Intent(getSherlockActivity(), aboutActivity.class));
-		MenuItem exit = menu.add(0, 14, 0, R.string.exit);
+//		MenuItem exit = menu.add(0, 14, 0, R.string.exit);
 		MenuItem save =menu2.add(0, 18, 0, R.string.savepref);
         MenuItem load =menu2.add(0, 19, 0, R.string.loadpref);
         //MenuItem changeName = menu.add(0, 20, 0, R.string.changename);
@@ -216,14 +216,12 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 							globalActivity.hdop_gpx = globalActivity.hdop;
 							globalActivity.period_gpx = globalActivity.period;
 							globalActivity.distance_gpx = globalActivity.distance;
-
-							SharedPreferences.Editor editor = globalActivity.settings.edit();
-							editor.putString("period_gpx", Integer.toString(globalActivity.period_gpx));
-							editor.putString("distance_gpx", Integer.toString(globalActivity.distance_gpx));
-							editor.putString("speedbearing_gpx", Integer.toString(globalActivity.speedbearing_gpx));
-							editor.putString("bearing_gpx", Integer.toString(globalActivity.bearing_gpx));
-							editor.putString("hdop_gpx", Integer.toString(globalActivity.hdop_gpx));
-							editor.commit();
+							OsMoDroid.editor.putString("period_gpx", Integer.toString(globalActivity.period_gpx));
+							OsMoDroid.editor.putString("distance_gpx", Integer.toString(globalActivity.distance_gpx));
+							OsMoDroid.editor.putString("speedbearing_gpx", Integer.toString(globalActivity.speedbearing_gpx));
+							OsMoDroid.editor.putString("bearing_gpx", Integer.toString(globalActivity.bearing_gpx));
+							OsMoDroid.editor.putString("hdop_gpx", Integer.toString(globalActivity.hdop_gpx));
+							OsMoDroid.editor.commit();
 						//	WritePref();
 							return;
 						}
@@ -270,11 +268,11 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
                     clipboard.setText(globalActivity.viewurl);
                     Toast.makeText(getSherlockActivity(), R.string.linkcopied, Toast.LENGTH_SHORT).show();
 		}
-		if (item.getItemId() == 14) {
-                    Intent i = new Intent(getSherlockActivity(), LocalService.class);
-                    globalActivity.stopService(i);
-                    globalActivity.finish();
-		}
+//		if (item.getItemId() == 14) {
+//                    Intent i = new Intent(getSherlockActivity(), LocalService.class);
+//                    globalActivity.stopService(i);
+//                    globalActivity.finish();
+//		}
 		if (item.getItemId() == 18) {
           if (globalActivity.fileName!=null){
         	  globalActivity.saveSharedPreferencesToFile(globalActivity.fileName);}
@@ -328,7 +326,7 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 		}
 		
 			final ToggleButton alarmToggle = (ToggleButton) view.findViewById(R.id.alarmButton);
-			if(globalActivity.settings.contains("signalisation")){
+			if(OsMoDroid.settings.contains("signalisation")){
 				alarmToggle.setChecked(true);
 			} else 
 			{
@@ -363,7 +361,7 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 					
 				}
 			});
-			if (globalActivity.settings.getString("key", "").equals("")){
+			if (OsMoDroid.settings.getString("key", "").equals("")){
 			globalsendToggle.setVisibility(View.GONE);
 			}
 			else {
@@ -537,7 +535,7 @@ else {
 				@Override
 				public void onReceive(Context context, final Intent intent) {
 					TextView dt = (TextView) view.findViewById(R.id.URL);
-					dt.setText(globalActivity.settings.getString("devicename", "")+" :\n "+globalActivity.viewurl);
+					dt.setText(OsMoDroid.settings.getString("devicename", "")+" :\n "+globalActivity.viewurl);
 
 					Linkify.addLinks(dt, Linkify.ALL);
 					//TextView t = (TextView) view.findViewById(R.id.Location);
@@ -554,7 +552,7 @@ else {
 							public void onClick(View v) {
 	globalsendToggle.toggle();
 	String boolglobalsend =intent.getBooleanExtra("globalsend", false) ? "0" : "1";
-	netutil.newapicommand((ResultsListener)globalActivity.mService,(Context)globalActivity, "om_device_channel_active:"+globalActivity.settings.getString("device", "")+",0,"+boolglobalsend);
+	netutil.newapicommand((ResultsListener)globalActivity.mService,(Context)globalActivity, "om_device_channel_active:"+OsMoDroid.settings.getString("device", "")+",0,"+boolglobalsend);
 
 							}
 						});
@@ -583,7 +581,7 @@ else {
 //					if (!(startmessage==null)&&!globalActivity.messageShowed) {
 					if (!(startmessage==null)) {
 						TextView t2 = (TextView) view.findViewById(R.id.URL);
-						t2.setText(globalActivity.settings.getString("devicename", "")+" :\n "+globalActivity.viewurl);
+						t2.setText(OsMoDroid.settings.getString("devicename", "")+" :\n "+globalActivity.viewurl);
 						Linkify.addLinks(t2, Linkify.ALL);
 						TextView tt = (TextView) view.findViewById(R.id.Location);
 						tt.setText(getString(R.string.servermessage)+'\n'+startmessage);
