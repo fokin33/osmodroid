@@ -2618,6 +2618,11 @@ com.OsMoDroid.APIcomParams -> com.OsMoDroid.b:
     android.support.v4.app.NotificationCompat$Builder notificationBuilder -> e
     int notification -> f
     com.OsMoDroid.ColoredGPX load -> g
+com.OsMoDroid.AboutActivity -> com.OsMoDroid.AboutActivity:
+    21:25:void onCreate(android.os.Bundle) -> onCreate
+    30:31:void onDestroy() -> onDestroy
+    37:38:void onPause() -> onPause
+    45:46:void onResume() -> onResume
 com.OsMoDroid.BootComplitedReceiver -> com.OsMoDroid.BootComplitedReceiver:
     13:21:void onReceive(android.content.Context,android.content.Intent) -> onReceive
 com.OsMoDroid.Channel -> com.OsMoDroid.c:
@@ -2771,7 +2776,7 @@ com.OsMoDroid.Device -> com.OsMoDroid.i:
     java.lang.String color -> m
     java.util.List devicePath -> n
     org.osmdroid.views.overlay.PathOverlay p -> o
-    115:115:java.lang.String toString() -> toString
+    115:116:java.lang.String toString() -> toString
 com.OsMoDroid.DeviceAdapter -> com.OsMoDroid.j:
     android.widget.TextView deviceName -> a
     android.widget.TextView deviceWhere -> b
@@ -2806,7 +2811,6 @@ com.OsMoDroid.DeviceChatFragment -> com.OsMoDroid.DeviceChatFragment:
     167:171:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
     179:247:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
     264:300:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
-    90:90:com.OsMoDroid.GPSLocalServiceClient access$0(com.OsMoDroid.DeviceChatFragment) -> a
 com.OsMoDroid.DeviceChatFragment$1 -> com.OsMoDroid.DeviceChatFragment$1:
     com.OsMoDroid.DeviceChatFragment this$0 -> a
     android.widget.ListView val$lv2 -> b
@@ -2834,7 +2838,6 @@ com.OsMoDroid.DevicesFragment -> com.OsMoDroid.DevicesFragment:
     415:419:void onPause() -> onPause
     423:427:void getDevices(com.OsMoDroid.ResultsListener,android.content.Context) -> a
     432:481:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
-    260:260:com.OsMoDroid.GPSLocalServiceClient access$0(com.OsMoDroid.DevicesFragment) -> a
 com.OsMoDroid.DevicesFragment$1 -> com.OsMoDroid.DevicesFragment$1:
     com.OsMoDroid.DevicesFragment this$0 -> a
     android.widget.EditText val$input -> b
@@ -2866,12 +2869,13 @@ com.OsMoDroid.DrawerItemClickListener -> com.OsMoDroid.m:
     com.OsMoDroid.DeviceChatFragment devchat -> i
     com.OsMoDroid.ChannelDevicesFragment chandev -> j
     int currentItem -> k
-    36:38:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-    41:137:void selectItem(java.lang.String,android.os.Bundle) -> a
+    com.OsMoDroid.GPSLocalServiceClient globalActivity -> l
+    35:37:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+    40:141:void selectItem(java.lang.String,android.os.Bundle) -> a
 com.OsMoDroid.DrawerItemClickListener$1 -> com.OsMoDroid.m$1:
     com.OsMoDroid.DrawerItemClickListener this$0 -> a
     android.support.v4.app.FragmentTransaction val$ft -> b
-    130:131:void run() -> run
+    134:135:void run() -> run
 com.OsMoDroid.ExceptionHandler -> com.OsMoDroid.n:
     java.text.DateFormat formatter -> a
     java.text.DateFormat fileFormatter -> b
@@ -2886,141 +2890,140 @@ com.OsMoDroid.GPSLocalServiceClient -> com.OsMoDroid.GPSLocalServiceClient:
     boolean messageShowed -> a
     java.lang.String key -> b
     java.lang.String login -> c
-    int speed -> J
+    int speed -> I
     int speedbearing_gpx -> d
     int bearing_gpx -> e
-    long notifyperiod -> K
+    long notifyperiod -> J
     int hdop_gpx -> f
     int period_gpx -> g
     int distance_gpx -> h
-    boolean sendsound -> L
-    boolean playsound -> M
+    boolean sendsound -> K
+    boolean playsound -> L
     boolean started -> i
-    boolean vibrate -> N
-    boolean usecourse -> O
-    int vibratetime -> P
+    boolean vibrate -> M
+    boolean usecourse -> N
+    int vibratetime -> O
     com.OsMoDroid.LocalService mService -> j
     boolean mBound -> k
     int speedbearing -> l
     int bearing -> m
-    boolean gpx -> Q
+    boolean gpx -> P
     boolean live -> n
     int hdop -> o
     int period -> p
     int distance -> q
-    java.lang.String pass -> R
-    java.lang.String hash -> S
-    int n -> T
-    java.lang.String submiturl -> U
+    java.lang.String pass -> Q
+    java.lang.String hash -> R
+    int n -> S
+    java.lang.String submiturl -> T
     java.lang.String viewurl -> r
-    java.lang.String pdaviewurl -> V
-    java.lang.String device -> W
-    java.lang.String devicename -> X
+    java.lang.String pdaviewurl -> U
+    java.lang.String device -> V
+    java.lang.String devicename -> W
     java.lang.String position -> s
     java.lang.String sendresult -> t
     android.content.BroadcastReceiver receiver -> u
     int sendcounter -> v
     int buffercounter -> w
-    boolean usebuffer -> Y
-    boolean usewake -> Z
+    boolean usebuffer -> X
+    boolean usewake -> Y
     java.io.File fileName -> x
     android.os.PowerManager pm -> y
     android.os.PowerManager$WakeLock wakeLock -> z
     java.lang.String version -> A
-    android.content.SharedPreferences settings -> B
-    com.actionbarsherlock.app.ActionBar actionBar -> C
-    java.util.ArrayList mDrawerItems -> aa
-    android.support.v4.widget.DrawerLayout mDrawerLayout -> D
-    android.widget.ListView mDrawerList -> E
-    android.support.v4.app.ActionBarDrawerToggle mDrawerToggle -> ab
-    java.lang.CharSequence mTitle -> ac
-    java.lang.CharSequence mDrawerTitle -> ad
-    android.support.v4.app.FragmentManager fMan -> F
-    com.OsMoDroid.DrawerItemClickListener drawClickListener -> G
-    com.OsMoDroid.GPSLocalServiceClient$upd mainUpdListener -> H
-    android.content.BroadcastReceiver mIMstatusReciever -> ae
-    android.content.Intent needIntent -> af
-    android.content.ServiceConnection conn -> I
-    boolean proceednewintent -> ag
-    android.widget.ArrayAdapter menuAdapter -> ah
-    111:125:void showFragment$76814ff2(com.actionbarsherlock.app.SherlockFragment) -> a
-    232:250:java.lang.String unescape(java.lang.String) -> a
-    255:261:void updateMainUI() -> a
-    265:272:void onPause() -> onPause
-    276:280:void onStop() -> onStop
-    287:289:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
-    293:421:void onCreate(android.os.Bundle) -> onCreate
-    425:447:void setupDrawerList() -> b
-    452:455:void onPostCreate(android.os.Bundle) -> onPostCreate
-    459:462:void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
-    467:477:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
-    484:495:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
-    500:515:void onResume() -> onResume
-    521:539:void onResumeFragments() -> onResumeFragments
-    543:585:void intentAction(android.content.Intent) -> a
-    588:595:void onNewIntent(android.content.Intent) -> onNewIntent
-    606:663:void auth() -> c
-    669:669:boolean checkStarted() -> d
-    674:725:void ReadPref() -> e
-    730:733:void startlocalservice() -> f
-    736:745:void bindService() -> i
-    748:753:void stop(java.lang.Boolean) -> a
-    775:800:void onDestroy() -> onDestroy
-    805:833:java.lang.String getPage(java.lang.String,boolean,java.lang.String) -> a
-    845:858:java.lang.String inputStreamToString(java.io.InputStream) -> a
-    890:895:java.lang.String getDeviceName() -> g
-    901:908:java.lang.String capitalize(java.lang.String) -> b
-    912:916:void requestHash() -> h
-    1182:1215:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
-    1218:1240:boolean saveSharedPreferencesToFile(java.io.File) -> a
-    1244:1285:boolean loadSharedPreferencesFromFile(java.io.File) -> b
-    755:755:void access$0(com.OsMoDroid.GPSLocalServiceClient) -> a
-    187:187:android.content.Intent access$1(com.OsMoDroid.GPSLocalServiceClient) -> b
-    542:542:void access$2(com.OsMoDroid.GPSLocalServiceClient,android.content.Intent) -> a
-    187:187:void access$3$1b30c8d1(com.OsMoDroid.GPSLocalServiceClient) -> c
-    155:155:java.lang.String access$4(com.OsMoDroid.GPSLocalServiceClient) -> d
-    156:156:int access$5(com.OsMoDroid.GPSLocalServiceClient) -> e
-    157:157:java.lang.String access$6(com.OsMoDroid.GPSLocalServiceClient) -> f
-    159:159:java.lang.String access$7(com.OsMoDroid.GPSLocalServiceClient) -> g
-    735:735:void access$8(com.OsMoDroid.GPSLocalServiceClient) -> h
-    155:155:void access$9(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> a
-    156:156:void access$10(com.OsMoDroid.GPSLocalServiceClient,int) -> a
-    157:157:void access$11(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> b
-    159:159:void access$12(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> c
-    160:160:void access$13(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> d
-    161:161:void access$14(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> e
-    154:154:void access$15(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> f
-    154:154:java.lang.String access$16(com.OsMoDroid.GPSLocalServiceClient) -> i
+    com.actionbarsherlock.app.ActionBar actionBar -> B
+    java.util.ArrayList mDrawerItems -> Z
+    android.support.v4.widget.DrawerLayout mDrawerLayout -> C
+    android.widget.ListView mDrawerList -> D
+    android.support.v4.app.ActionBarDrawerToggle mDrawerToggle -> aa
+    java.lang.CharSequence mTitle -> ab
+    java.lang.CharSequence mDrawerTitle -> ac
+    android.support.v4.app.FragmentManager fMan -> E
+    com.OsMoDroid.DrawerItemClickListener drawClickListener -> F
+    com.OsMoDroid.GPSLocalServiceClient$upd mainUpdListener -> G
+    android.content.BroadcastReceiver mIMstatusReciever -> ad
+    android.content.Intent needIntent -> ae
+    android.content.ServiceConnection conn -> H
+    boolean proceednewintent -> af
+    android.widget.ArrayAdapter menuAdapter -> ag
+    112:126:void showFragment$76814ff2(com.actionbarsherlock.app.SherlockFragment) -> a
+    233:251:java.lang.String unescape(java.lang.String) -> a
+    256:262:void updateMainUI() -> a
+    266:273:void onPause() -> onPause
+    277:281:void onStop() -> onStop
+    288:290:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
+    294:420:void onCreate(android.os.Bundle) -> onCreate
+    424:446:void setupDrawerList() -> b
+    451:454:void onPostCreate(android.os.Bundle) -> onPostCreate
+    458:461:void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
+    466:476:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
+    483:494:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    499:514:void onResume() -> onResume
+    520:538:void onResumeFragments() -> onResumeFragments
+    542:584:void intentAction(android.content.Intent) -> a
+    587:594:void onNewIntent(android.content.Intent) -> onNewIntent
+    605:662:void auth() -> c
+    668:668:boolean checkStarted() -> d
+    673:724:void ReadPref() -> e
+    729:732:void startlocalservice() -> f
+    735:744:void bindService() -> i
+    747:752:void stop(java.lang.Boolean) -> a
+    774:799:void onDestroy() -> onDestroy
+    804:833:java.lang.String getPage(java.lang.String,boolean,java.lang.String) -> a
+    844:857:java.lang.String inputStreamToString(java.io.InputStream) -> a
+    889:894:java.lang.String getDeviceName() -> g
+    900:907:java.lang.String capitalize(java.lang.String) -> b
+    911:915:void requestHash() -> h
+    1179:1212:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+    1215:1237:boolean saveSharedPreferencesToFile(java.io.File) -> a
+    1241:1281:boolean loadSharedPreferencesFromFile(java.io.File) -> b
+    754:754:void access$0(com.OsMoDroid.GPSLocalServiceClient) -> a
+    188:188:android.content.Intent access$1(com.OsMoDroid.GPSLocalServiceClient) -> b
+    541:541:void access$2(com.OsMoDroid.GPSLocalServiceClient,android.content.Intent) -> a
+    188:188:void access$3$1b30c8d1(com.OsMoDroid.GPSLocalServiceClient) -> c
+    156:156:java.lang.String access$4(com.OsMoDroid.GPSLocalServiceClient) -> d
+    157:157:int access$5(com.OsMoDroid.GPSLocalServiceClient) -> e
+    158:158:java.lang.String access$6(com.OsMoDroid.GPSLocalServiceClient) -> f
+    160:160:java.lang.String access$7(com.OsMoDroid.GPSLocalServiceClient) -> g
+    734:734:void access$8(com.OsMoDroid.GPSLocalServiceClient) -> h
+    156:156:void access$9(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> a
+    157:157:void access$10(com.OsMoDroid.GPSLocalServiceClient,int) -> a
+    158:158:void access$11(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> b
+    160:160:void access$12(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> c
+    161:161:void access$13(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> d
+    162:162:void access$14(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> e
+    155:155:void access$15(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> f
+    155:155:java.lang.String access$16(com.OsMoDroid.GPSLocalServiceClient) -> i
 com.OsMoDroid.GPSLocalServiceClient$1 -> com.OsMoDroid.GPSLocalServiceClient$1:
     com.OsMoDroid.GPSLocalServiceClient this$0 -> a
-    196:215:void onServiceConnected(android.content.ComponentName,android.os.IBinder) -> onServiceConnected
-    218:221:void onServiceDisconnected(android.content.ComponentName) -> onServiceDisconnected
+    197:216:void onServiceConnected(android.content.ComponentName,android.os.IBinder) -> onServiceConnected
+    219:222:void onServiceDisconnected(android.content.ComponentName) -> onServiceDisconnected
 com.OsMoDroid.GPSLocalServiceClient$2 -> com.OsMoDroid.GPSLocalServiceClient$2:
     com.OsMoDroid.GPSLocalServiceClient this$0 -> a
-    333:348:void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
+    331:346:void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
 com.OsMoDroid.GPSLocalServiceClient$3 -> com.OsMoDroid.GPSLocalServiceClient$3:
     com.OsMoDroid.GPSLocalServiceClient this$0 -> a
-    377:379:void onDrawerClosed(android.view.View) -> onDrawerClosed
-    382:384:void onDrawerOpened(android.view.View) -> onDrawerOpened
+    376:378:void onDrawerClosed(android.view.View) -> onDrawerClosed
+    381:383:void onDrawerOpened(android.view.View) -> onDrawerOpened
 com.OsMoDroid.GPSLocalServiceClient$4 -> com.OsMoDroid.GPSLocalServiceClient$4:
     com.OsMoDroid.GPSLocalServiceClient this$0 -> a
-    400:417:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    399:416:void onReceive(android.content.Context,android.content.Intent) -> onReceive
 com.OsMoDroid.GPSLocalServiceClient$5 -> com.OsMoDroid.GPSLocalServiceClient$5:
     com.OsMoDroid.GPSLocalServiceClient this$0 -> a
     android.widget.EditText val$input -> b
     android.widget.EditText val$inputlogin -> c
-    636:651:void onClick(android.content.DialogInterface,int) -> onClick
+    635:650:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.GPSLocalServiceClient$6 -> com.OsMoDroid.GPSLocalServiceClient$6:
     com.OsMoDroid.GPSLocalServiceClient this$0 -> a
-    659:659:void onClick(android.content.DialogInterface,int) -> onClick
+    658:658:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.GPSLocalServiceClient$RequestAuthTask -> com.OsMoDroid.o:
     java.lang.String authtext -> d
     java.lang.String adevice -> a
     java.lang.Boolean Err -> e
     android.app.ProgressDialog dialog -> b
     com.OsMoDroid.GPSLocalServiceClient this$0 -> c
-    929:930:void onPreExecute() -> onPreExecute
-    967:996:java.lang.Void doInBackground$10299ca() -> a
+    928:929:void onPreExecute() -> onPreExecute
+    966:995:java.lang.Void doInBackground$10299ca() -> a
     1:1:void onPostExecute(java.lang.Object) -> onPostExecute
     1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.OsMoDroid.GPSLocalServiceClient$RequestCommandTask -> com.OsMoDroid.p:
@@ -3031,8 +3034,8 @@ com.OsMoDroid.GPSLocalServiceClient$RequestCommandTask -> com.OsMoDroid.p:
     java.lang.String adevicename -> g
     android.app.ProgressDialog dialog -> a
     com.OsMoDroid.GPSLocalServiceClient this$0 -> b
-    1014:1015:void onPreExecute() -> onPreExecute
-    1072:1172:java.lang.String doInBackground(java.lang.String[]) -> a
+    1013:1014:void onPreExecute() -> onPreExecute
+    1069:1169:java.lang.String doInBackground(java.lang.String[]) -> a
     1:1:void onPostExecute(java.lang.Object) -> onPostExecute
     1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.OsMoDroid.GPSLocalServiceClient$upd -> com.OsMoDroid.q:
@@ -3180,8 +3183,8 @@ com.OsMoDroid.IRemoteOsMoDroidService$Stub -> com.OsMoDroid.w:
 com.OsMoDroid.LocalService -> com.OsMoDroid.LocalService:
     java.util.List traceList -> a
     boolean binded -> b
-    android.hardware.SensorManager mSensorManager -> at
-    android.hardware.Sensor mAccelerometer -> au
+    android.hardware.SensorManager mSensorManager -> ar
+    android.hardware.Sensor mAccelerometer -> as
     double calibration -> c
     float currentAcceleration -> d
     java.lang.Boolean sessionstarted -> e
@@ -3197,298 +3200,296 @@ com.OsMoDroid.LocalService -> com.OsMoDroid.LocalService:
     int stopsound -> o
     int alarmsound -> p
     int signalonoff -> q
-    android.media.SoundPool soundPool -> av
-    com.OsMoDroid.netutil$MyAsyncTask starttask -> aw
-    android.content.Intent in -> ax
+    android.media.SoundPool soundPool -> at
+    com.OsMoDroid.Netutil$MyAsyncTask starttask -> au
+    android.content.Intent in -> av
     boolean mayak -> r
-    boolean glonas -> ay
-    boolean playsound -> az
-    boolean sendsound -> aA
-    boolean vibrate -> aB
-    boolean usecourse -> aC
-    int vibratetime -> aD
-    double brng -> aE
-    double brng_gpx -> aF
-    double prevbrng -> aG
-    double prevbrng_gpx -> aH
-    float speedbearing -> aI
-    float bearing -> aJ
-    int speed -> aK
-    boolean beepedon -> aL
-    boolean beepedoff -> aM
-    boolean gpsbeepedon -> aN
-    boolean gpsbeepedoff -> aO
+    boolean glonas -> aw
+    boolean playsound -> ax
+    boolean sendsound -> ay
+    boolean vibrate -> az
+    boolean usecourse -> aA
+    int vibratetime -> aB
+    double brng -> aC
+    double brng_gpx -> aD
+    double prevbrng -> aE
+    double prevbrng_gpx -> aF
+    float speedbearing -> aG
+    float bearing -> aH
+    int speed -> aI
+    boolean beepedon -> aJ
+    boolean beepedoff -> aK
+    boolean gpsbeepedon -> aL
+    boolean gpsbeepedoff -> aM
     float maxspeed -> s
     float avgspeed -> t
     float currentspeed -> u
     long timeperiod -> v
     float workdistance -> w
-    long workmilli -> aP
-    boolean firstsend -> aQ
-    boolean sended -> aR
-    boolean gpx -> aS
-    boolean live -> aT
-    int hdop -> aU
-    boolean fileheaderok -> aV
-    java.io.File fileName -> aW
-    int period -> aX
-    int distance -> aY
-    java.lang.String hash -> aZ
-    int n -> ba
-    java.lang.String position -> bb
-    java.lang.String sendresult -> bc
+    long workmilli -> aN
+    boolean firstsend -> aO
+    boolean sended -> aP
+    boolean gpx -> aQ
+    boolean live -> aR
+    int hdop -> aS
+    boolean fileheaderok -> aT
+    java.io.File fileName -> aU
+    int period -> aV
+    int distance -> aW
+    java.lang.String hash -> aX
+    int n -> aY
+    java.lang.String position -> aZ
+    java.lang.String sendresult -> ba
     android.location.LocationManager myManager -> x
-    android.location.Location prevlocation -> bd
+    android.location.Location prevlocation -> bb
     android.location.Location currentLocation -> y
-    android.location.Location prevlocation_gpx -> be
-    android.location.Location prevlocation_spd -> bf
-    java.lang.String URLadr -> bg
-    android.os.Vibrator vibrator -> bh
-    android.os.PowerManager pm -> bi
-    android.os.PowerManager$WakeLock wakeLock -> bj
-    android.os.PowerManager$WakeLock LocwakeLock -> bk
-    android.os.PowerManager$WakeLock SendwakeLock -> bl
-    com.OsMoDroid.LocalService$SendCoor send -> bm
-    int speedbearing_gpx -> bn
-    int bearing_gpx -> bo
-    long lastgpslocationtime -> bp
-    int hdop_gpx -> bq
-    int period_gpx -> br
-    int distance_gpx -> bs
-    int speed_gpx -> bt
+    android.location.Location prevlocation_gpx -> bc
+    android.location.Location prevlocation_spd -> bd
+    java.lang.String URLadr -> be
+    android.os.Vibrator vibrator -> bf
+    android.os.PowerManager pm -> bg
+    android.os.PowerManager$WakeLock wakeLock -> bh
+    android.os.PowerManager$WakeLock LocwakeLock -> bi
+    android.os.PowerManager$WakeLock SendwakeLock -> bj
+    com.OsMoDroid.LocalService$SendCoor send -> bk
+    int speedbearing_gpx -> bl
+    int bearing_gpx -> bm
+    long lastgpslocationtime -> bn
+    int hdop_gpx -> bo
+    int period_gpx -> bp
+    int distance_gpx -> bq
+    int speed_gpx -> br
     int sendcounter -> z
     int writecounter -> A
-    int buffercounter -> bu
+    int buffercounter -> bs
     android.content.BroadcastReceiver receiver -> B
     android.content.BroadcastReceiver checkreceiver -> C
     android.content.BroadcastReceiver onlinePauseforStartReciever -> D
     android.content.BroadcastReceiver batteryReciever -> E
-    android.os.IBinder mBinder -> bv
-    java.lang.String gpxbuffer -> bw
-    java.lang.String satellite -> bx
-    java.lang.String accuracy -> by
-    boolean usebuffer -> bz
-    boolean usewake -> bA
+    android.os.IBinder mBinder -> bt
+    java.lang.String gpxbuffer -> bu
+    java.lang.String satellite -> bv
+    java.lang.String accuracy -> bw
+    boolean usebuffer -> bx
+    boolean usewake -> by
     android.app.NotificationManager mNotificationManager -> F
-    java.lang.String lastsendforbuffer -> bB
-    long lastgpsontime -> bC
-    long lastgpsofftime -> bD
-    long notifyperiod -> bE
-    android.app.AlarmManager am -> bF
+    java.lang.String lastsendforbuffer -> bz
+    long lastgpsontime -> bA
+    long lastgpsofftime -> bB
+    long notifyperiod -> bC
+    android.app.AlarmManager am -> bD
     java.lang.StringBuilder stringBuilder -> G
     android.app.PendingIntent pi -> H
-    java.lang.Object[] mStartForegroundArgs -> bG
-    java.lang.Object[] mStopForegroundArgs -> bH
-    java.lang.String lastsay -> bI
+    java.lang.Object[] mStartForegroundArgs -> bE
+    java.lang.Object[] mStopForegroundArgs -> bF
+    java.lang.String lastsay -> bG
     java.lang.Boolean state -> I
     long prevnetworklocationtime -> J
     java.lang.StringBuilder buffersb -> K
     java.lang.StringBuilder lastbuffersb -> L
     java.lang.StringBuilder sendedsb -> M
-    int lcounter -> bJ
-    int scounter -> bK
-    java.text.DecimalFormat df6 -> bL
+    int lcounter -> bH
+    int scounter -> bI
+    java.text.DecimalFormat df6 -> bJ
     java.text.DecimalFormat df1 -> N
     java.text.DecimalFormat df2 -> O
     java.text.DecimalFormat df0 -> P
-    java.text.SimpleDateFormat sdf1 -> bM
-    java.text.SimpleDateFormat sdf2 -> bN
-    java.text.SimpleDateFormat sdf3 -> bO
-    java.text.DecimalFormatSymbols dot -> bP
+    java.text.SimpleDateFormat sdf1 -> bK
+    java.text.SimpleDateFormat sdf2 -> bL
+    java.text.SimpleDateFormat sdf3 -> bM
+    java.text.DecimalFormatSymbols dot -> bN
     boolean firstgpsbeepedon -> Q
     com.OsMoDroid.IM myIM -> R
     android.speech.tts.TextToSpeech tts -> S
-    int _langTTSavailable -> bQ
-    android.content.SharedPreferences settings -> T
-    int batteryprocent -> U
-    int plugged -> V
-    int temperature -> W
-    int voltage -> X
-    java.util.List channelList -> Y
-    java.util.List deviceList -> Z
-    com.OsMoDroid.Channel currentChannel -> aa
-    java.util.List currentchanneldeviceList -> ab
-    java.util.ArrayList messagelist -> ac
-    java.util.List chatmessagelist -> ad
-    com.OsMoDroid.Device currentDevice -> ae
-    com.OsMoDroid.DeviceAdapter deviceAdapter -> af
-    com.OsMoDroid.ChannelsAdapter channelsAdapter -> ag
-    com.OsMoDroid.ChannelsDevicesAdapter channelsDevicesAdapter -> ah
-    android.widget.ArrayAdapter channelsmessagesAdapter -> ai
-    com.OsMoDroid.DeviceChatAdapter chatmessagesAdapter -> aj
-    android.content.Context serContext -> ak
-    boolean uploadto -> al
-    com.OsMoDroid.DeviceChange devlistener -> am
-    boolean channelsupdated -> an
-    boolean chatVisible -> ao
-    java.lang.String currentItemName -> ap
-    android.os.Handler alertHandler -> aq
-    android.os.RemoteCallbackList remoteListenerCallBackList -> ar
-    com.OsMoDroid.IRemoteOsMoDroidService$Stub rBinder -> bR
-    android.content.SharedPreferences$Editor editor -> as
-    java.lang.Float sensivity -> bS
-    int alarmStreamId -> bT
-    int count -> bU
-    int countFix -> bV
-    android.app.Notification notification -> bW
-    android.app.PendingIntent osmodroidLaunchIntent -> bX
-    java.lang.String strVersionName -> bY
-    java.lang.String androidver -> bZ
-    java.io.ObjectInputStream input -> ca
-    boolean bindedremote -> cb
-    boolean bindedlocaly -> cc
-    int pollperiod -> cd
-    boolean log -> ce
-    966:966:java.lang.String formatInterval(long) -> a
-    978:989:boolean onUnbind(android.content.Intent) -> onUnbind
-    995:1011:void onRebind(android.content.Intent) -> onRebind
-    1016:1032:android.os.IBinder onBind(android.content.Intent) -> onBind
-    1039:1050:void informRemoteClientChannelUpdate() -> a
-    1053:1064:void informRemoteClientChannelsListUpdate() -> b
-    1067:1078:void informRemoteClientRouteTo(float,float) -> a
-    1084:1105:void refresh() -> c
-    1112:1118:void startcomand() -> d
-    1122:1135:java.lang.String getversion() -> l
-    1162:1189:void sendPosition() -> e
-    1197:1204:void invokeMethod(java.lang.reflect.Method,java.lang.Object[]) -> a
-    1207:1529:void onCreate() -> onCreate
-    1532:1533:void Pong(android.content.Context) -> a
-    1536:1542:void batteryinfo(android.content.Context) -> b
-    1544:1551:java.lang.String capitalize(java.lang.String) -> a
-    1564:1574:void systeminfo(android.content.Context) -> c
-    1577:1578:void vibrate$1a54e731(long) -> b
-    1582:1587:void satelliteinfo(android.content.Context) -> d
-    1590:1616:void getpreferences(android.content.Context) -> e
-    1619:1622:void wifion(android.content.Context) -> f
-    1624:1627:void wifioff(android.content.Context) -> g
-    1630:1649:void wifiinfo(android.content.Context) -> h
-    1656:1696:void onDestroy() -> onDestroy
-    1701:1731:void ReadPref() -> m
-    1740:1748:void onStart(android.content.Intent,int) -> onStart
-    1751:1753:int onStartCommand(android.content.Intent,int,int) -> onStartCommand
-    1758:1775:void applyPreference() -> f
-    1780:1910:void startServiceWork() -> g
-    1919:1930:void manageGPSFixAlarm() -> n
-    1983:2000:void ttsManage() -> o
-    2010:2038:void requestLocationUpdates() -> h
-    2051:2116:void openGPX() -> p
-    2130:2221:void stopServiceWork(java.lang.Boolean) -> a
-    2235:2269:void closeGPX() -> q
-    2306:2314:void setstarted(boolean) -> a
-    2457:2645:void onLocationChanged(android.location.Location) -> onLocationChanged
-    2648:2649:void onProviderDisabled(java.lang.String) -> onProviderDisabled
-    2655:2656:void onProviderEnabled(java.lang.String) -> onProviderEnabled
-    2661:2662:void onStatusChanged(java.lang.String,int,android.os.Bundle) -> onStatusChanged
-    2802:2838:java.lang.String inputStreamToString(java.io.InputStream) -> a
-    2911:2947:java.lang.String unescape(java.lang.String) -> b
-    2961:3049:java.lang.String decodesendresult(java.lang.String) -> c
-    3061:3111:void writegpx(android.location.Location) -> a
-    3115:3303:void sendlocation(android.location.Location) -> b
-    3306:3337:void onGpsStatusChanged(int) -> onGpsStatusChanged
-    3343:3379:void onInit(int) -> onInit
-    3383:3397:boolean isOnline() -> i
-    3406:3419:void warnwronghash() -> r
-    3425:3489:void notifywarnactivity(java.lang.String,boolean) -> a
-    3493:3500:void connectChannels() -> s
-    3502:3509:void connectChannelsChats() -> t
-    3511:3518:void disconnectChannelsChats() -> u
-    3521:3526:void disconnectChannels() -> v
-    3536:3799:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
-    3803:3820:void deviceListFromJSONArray(org.json.JSONArray) -> a
-    3824:3838:void channelListFromJSONArray(org.json.JSONArray) -> b
-    3841:3855:void playAlarmOn(java.lang.Boolean) -> b
-    3858:3873:void playAlarmOff(java.lang.Boolean) -> c
-    3877:3896:void enableSignalisation(java.lang.Boolean) -> d
-    3901:3922:void disableSignalisation(java.lang.Boolean) -> e
-    3927:3927:void onAccuracyChanged(android.hardware.Sensor,int) -> onAccuracyChanged
-    3932:3956:void onSensorChanged(android.hardware.SensorEvent) -> onSensorChanged
-    3961:3970:void saveObject(java.lang.Object,java.lang.String) -> a
-    3974:3987:java.lang.Object loadObject(java.lang.String,java.lang.Class) -> a
-    962:962:boolean access$0(com.OsMoDroid.LocalService) -> a
-    310:310:void access$1(com.OsMoDroid.LocalService,java.lang.String) -> a
-    2842:2842:void access$2(com.OsMoDroid.LocalService,boolean) -> a
-    370:370:java.text.SimpleDateFormat access$3() -> j
-    2957:2957:java.lang.String access$4(com.OsMoDroid.LocalService,java.lang.String) -> b
-    299:299:boolean access$5(com.OsMoDroid.LocalService) -> b
-    277:277:boolean access$6(com.OsMoDroid.LocalService) -> c
-    271:271:android.media.SoundPool access$7() -> k
-    310:310:java.lang.String access$8(com.OsMoDroid.LocalService) -> d
-    951:951:android.app.Notification access$9(com.OsMoDroid.LocalService) -> e
-    952:952:android.app.PendingIntent access$10(com.OsMoDroid.LocalService) -> f
-    2664:2664:java.lang.String access$11(com.OsMoDroid.LocalService,java.lang.String,java.lang.String) -> a
-    299:299:void access$12$32c62201(com.OsMoDroid.LocalService) -> g
-    345:345:long access$13(com.OsMoDroid.LocalService) -> h
-    347:347:long access$14(com.OsMoDroid.LocalService) -> i
-    290:290:boolean access$15(com.OsMoDroid.LocalService) -> j
-    278:278:boolean access$16(com.OsMoDroid.LocalService) -> k
-    317:317:android.os.Vibrator access$17(com.OsMoDroid.LocalService) -> l
-    280:280:int access$18(com.OsMoDroid.LocalService) -> m
-    276:276:boolean access$19(com.OsMoDroid.LocalService) -> n
-    290:290:void access$20(com.OsMoDroid.LocalService,boolean) -> b
-    346:346:long access$21(com.OsMoDroid.LocalService) -> o
-    291:291:boolean access$22(com.OsMoDroid.LocalService) -> p
-    291:291:void access$23(com.OsMoDroid.LocalService,boolean) -> c
-    345:345:void access$24(com.OsMoDroid.LocalService,long) -> a
-    346:346:void access$25(com.OsMoDroid.LocalService,long) -> b
+    int _langTTSavailable -> bO
+    int batteryprocent -> T
+    int plugged -> U
+    int temperature -> V
+    int voltage -> W
+    java.util.List channelList -> X
+    java.util.List deviceList -> Y
+    com.OsMoDroid.Channel currentChannel -> Z
+    java.util.List currentchanneldeviceList -> aa
+    java.util.ArrayList messagelist -> ab
+    java.util.List chatmessagelist -> ac
+    com.OsMoDroid.Device currentDevice -> ad
+    com.OsMoDroid.DeviceAdapter deviceAdapter -> ae
+    com.OsMoDroid.ChannelsAdapter channelsAdapter -> af
+    com.OsMoDroid.ChannelsDevicesAdapter channelsDevicesAdapter -> ag
+    android.widget.ArrayAdapter channelsmessagesAdapter -> ah
+    com.OsMoDroid.DeviceChatAdapter chatmessagesAdapter -> ai
+    android.content.Context serContext -> aj
+    boolean uploadto -> ak
+    com.OsMoDroid.DeviceChange devlistener -> al
+    boolean channelsupdated -> am
+    boolean chatVisible -> an
+    java.lang.String currentItemName -> ao
+    android.os.Handler alertHandler -> ap
+    android.os.RemoteCallbackList remoteListenerCallBackList -> aq
+    com.OsMoDroid.IRemoteOsMoDroidService$Stub rBinder -> bP
+    java.lang.Float sensivity -> bQ
+    int alarmStreamId -> bR
+    int count -> bS
+    int countFix -> bT
+    android.app.Notification notification -> bU
+    android.app.PendingIntent osmodroidLaunchIntent -> bV
+    java.lang.String strVersionName -> bW
+    java.lang.String androidver -> bX
+    java.io.ObjectInputStream input -> bY
+    boolean bindedremote -> bZ
+    boolean bindedlocaly -> ca
+    int pollperiod -> cb
+    boolean log -> cc
+    967:967:java.lang.String formatInterval(long) -> a
+    979:990:boolean onUnbind(android.content.Intent) -> onUnbind
+    996:1012:void onRebind(android.content.Intent) -> onRebind
+    1017:1033:android.os.IBinder onBind(android.content.Intent) -> onBind
+    1040:1051:void informRemoteClientChannelUpdate() -> a
+    1054:1065:void informRemoteClientChannelsListUpdate() -> b
+    1068:1079:void informRemoteClientRouteTo(float,float) -> a
+    1085:1106:void refresh() -> c
+    1113:1119:void startcomand() -> d
+    1123:1136:java.lang.String getversion() -> l
+    1163:1190:void sendPosition() -> e
+    1198:1205:void invokeMethod(java.lang.reflect.Method,java.lang.Object[]) -> a
+    1208:1528:void onCreate() -> onCreate
+    1531:1532:void Pong(android.content.Context) -> a
+    1535:1541:void batteryinfo(android.content.Context) -> b
+    1543:1550:java.lang.String capitalize(java.lang.String) -> a
+    1563:1573:void systeminfo(android.content.Context) -> c
+    1576:1577:void vibrate$1a54e731(long) -> b
+    1581:1586:void satelliteinfo(android.content.Context) -> d
+    1589:1615:void getpreferences(android.content.Context) -> e
+    1618:1621:void wifion(android.content.Context) -> f
+    1623:1626:void wifioff(android.content.Context) -> g
+    1629:1648:void wifiinfo(android.content.Context) -> h
+    1655:1695:void onDestroy() -> onDestroy
+    1700:1730:void ReadPref() -> m
+    1739:1747:void onStart(android.content.Intent,int) -> onStart
+    1750:1752:int onStartCommand(android.content.Intent,int,int) -> onStartCommand
+    1757:1774:void applyPreference() -> f
+    1779:1909:void startServiceWork() -> g
+    1918:1929:void manageGPSFixAlarm() -> n
+    1982:1999:void ttsManage() -> o
+    2009:2037:void requestLocationUpdates() -> h
+    2050:2115:void openGPX() -> p
+    2129:2220:void stopServiceWork(java.lang.Boolean) -> a
+    2234:2268:void closeGPX() -> q
+    2305:2313:void setstarted(boolean) -> a
+    2456:2644:void onLocationChanged(android.location.Location) -> onLocationChanged
+    2647:2648:void onProviderDisabled(java.lang.String) -> onProviderDisabled
+    2654:2655:void onProviderEnabled(java.lang.String) -> onProviderEnabled
+    2660:2661:void onStatusChanged(java.lang.String,int,android.os.Bundle) -> onStatusChanged
+    2801:2837:java.lang.String inputStreamToString(java.io.InputStream) -> a
+    2910:2946:java.lang.String unescape(java.lang.String) -> b
+    2960:3048:java.lang.String decodesendresult(java.lang.String) -> c
+    3060:3110:void writegpx(android.location.Location) -> a
+    3114:3302:void sendlocation(android.location.Location) -> b
+    3305:3336:void onGpsStatusChanged(int) -> onGpsStatusChanged
+    3342:3378:void onInit(int) -> onInit
+    3382:3396:boolean isOnline() -> i
+    3405:3418:void warnwronghash() -> r
+    3424:3488:void notifywarnactivity(java.lang.String,boolean) -> a
+    3492:3499:void connectChannels() -> s
+    3501:3508:void connectChannelsChats() -> t
+    3510:3517:void disconnectChannelsChats() -> u
+    3520:3525:void disconnectChannels() -> v
+    3535:3797:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+    3801:3818:void deviceListFromJSONArray(org.json.JSONArray) -> a
+    3822:3836:void channelListFromJSONArray(org.json.JSONArray) -> b
+    3839:3853:void playAlarmOn(java.lang.Boolean) -> b
+    3856:3871:void playAlarmOff(java.lang.Boolean) -> c
+    3875:3894:void enableSignalisation(java.lang.Boolean) -> d
+    3899:3920:void disableSignalisation(java.lang.Boolean) -> e
+    3925:3925:void onAccuracyChanged(android.hardware.Sensor,int) -> onAccuracyChanged
+    3930:3954:void onSensorChanged(android.hardware.SensorEvent) -> onSensorChanged
+    3959:3968:void saveObject(java.lang.Object,java.lang.String) -> a
+    3972:3985:java.lang.Object loadObject(java.lang.String,java.lang.Class) -> a
+    963:963:boolean access$0(com.OsMoDroid.LocalService) -> a
+    311:311:void access$1(com.OsMoDroid.LocalService,java.lang.String) -> a
+    2841:2841:void access$2(com.OsMoDroid.LocalService,boolean) -> a
+    371:371:java.text.SimpleDateFormat access$3() -> j
+    2956:2956:java.lang.String access$4(com.OsMoDroid.LocalService,java.lang.String) -> b
+    300:300:boolean access$5(com.OsMoDroid.LocalService) -> b
+    278:278:boolean access$6(com.OsMoDroid.LocalService) -> c
+    272:272:android.media.SoundPool access$7() -> k
+    311:311:java.lang.String access$8(com.OsMoDroid.LocalService) -> d
+    952:952:android.app.Notification access$9(com.OsMoDroid.LocalService) -> e
+    953:953:android.app.PendingIntent access$10(com.OsMoDroid.LocalService) -> f
+    2663:2663:java.lang.String access$11(com.OsMoDroid.LocalService,java.lang.String,java.lang.String) -> a
+    300:300:void access$12$32c62201(com.OsMoDroid.LocalService) -> g
+    346:346:long access$13(com.OsMoDroid.LocalService) -> h
+    348:348:long access$14(com.OsMoDroid.LocalService) -> i
+    291:291:boolean access$15(com.OsMoDroid.LocalService) -> j
+    279:279:boolean access$16(com.OsMoDroid.LocalService) -> k
+    318:318:android.os.Vibrator access$17(com.OsMoDroid.LocalService) -> l
+    281:281:int access$18(com.OsMoDroid.LocalService) -> m
+    277:277:boolean access$19(com.OsMoDroid.LocalService) -> n
+    291:291:void access$20(com.OsMoDroid.LocalService,boolean) -> b
+    347:347:long access$21(com.OsMoDroid.LocalService) -> o
+    292:292:boolean access$22(com.OsMoDroid.LocalService) -> p
+    292:292:void access$23(com.OsMoDroid.LocalService,boolean) -> c
+    346:346:void access$24(com.OsMoDroid.LocalService,long) -> a
+    347:347:void access$25(com.OsMoDroid.LocalService,long) -> b
 com.OsMoDroid.LocalService$1 -> com.OsMoDroid.LocalService$1:
     com.OsMoDroid.LocalService this$0 -> a
-    403:482:void handleMessage(android.os.Message) -> handleMessage
+    404:483:void handleMessage(android.os.Message) -> handleMessage
 com.OsMoDroid.LocalService$2 -> com.OsMoDroid.LocalService$2:
     com.OsMoDroid.LocalService this$0 -> a
-    494:500:void Deactivate() -> a
-    503:503:boolean isActive() -> c
-    506:512:void Activate() -> b
-    517:521:int getNumberOfLayers() -> d
-    528:532:int getLayerId(int) -> a
-    537:547:java.lang.String getLayerName(int) -> b
-    553:563:java.lang.String getLayerDescription(int) -> c
-    570:580:int getNumberOfObjects(int) -> d
-    587:597:int getObjectId(int,int) -> a
-    602:616:float getObjectLat(int,int) -> b
-    624:638:float getObjectLon(int,int) -> c
-    646:660:java.lang.String getObjectName(int,int) -> e
-    668:684:java.lang.String getObjectDescription(int,int) -> f
-    691:695:void registerListener(com.OsMoDroid.IRemoteOsMoDroidListener) -> a
-    701:705:void unregisterListener(com.OsMoDroid.IRemoteOsMoDroidListener) -> b
-    712:726:java.lang.String getObjectSpeed(int,int) -> d
-    734:746:java.lang.String getObjectColor(int,int) -> g
-    753:754:void refreshChannels() -> e
-    758:768:int getNumberOfGpx(int) -> e
-    777:787:java.lang.String getGpxFile(int,int) -> h
-    793:803:int getGpxColor(int,int) -> i
-    809:819:int getNumberOfPoints(int) -> f
-    827:837:int getPointId(int,int) -> j
-    846:858:float getPointLat(int,int) -> k
-    867:879:float getPointLon(int,int) -> l
-    888:900:java.lang.String getPointName(int,int) -> m
-    909:921:java.lang.String getPointDescription(int,int) -> n
-    930:942:java.lang.String getPointColor(int,int) -> o
-    486:486:com.OsMoDroid.LocalService access$0(com.OsMoDroid.LocalService$2) -> a
+    495:501:void Deactivate() -> a
+    504:504:boolean isActive() -> c
+    507:513:void Activate() -> b
+    518:522:int getNumberOfLayers() -> d
+    529:533:int getLayerId(int) -> a
+    538:548:java.lang.String getLayerName(int) -> b
+    554:564:java.lang.String getLayerDescription(int) -> c
+    571:581:int getNumberOfObjects(int) -> d
+    588:598:int getObjectId(int,int) -> a
+    603:617:float getObjectLat(int,int) -> b
+    625:639:float getObjectLon(int,int) -> c
+    647:661:java.lang.String getObjectName(int,int) -> e
+    669:685:java.lang.String getObjectDescription(int,int) -> f
+    692:696:void registerListener(com.OsMoDroid.IRemoteOsMoDroidListener) -> a
+    702:706:void unregisterListener(com.OsMoDroid.IRemoteOsMoDroidListener) -> b
+    713:727:java.lang.String getObjectSpeed(int,int) -> d
+    735:747:java.lang.String getObjectColor(int,int) -> g
+    754:755:void refreshChannels() -> e
+    759:769:int getNumberOfGpx(int) -> e
+    778:788:java.lang.String getGpxFile(int,int) -> h
+    794:804:int getGpxColor(int,int) -> i
+    810:820:int getNumberOfPoints(int) -> f
+    828:838:int getPointId(int,int) -> j
+    847:859:float getPointLat(int,int) -> k
+    868:880:float getPointLon(int,int) -> l
+    889:901:java.lang.String getPointName(int,int) -> m
+    910:922:java.lang.String getPointDescription(int,int) -> n
+    931:943:java.lang.String getPointColor(int,int) -> o
+    487:487:com.OsMoDroid.LocalService access$0(com.OsMoDroid.LocalService$2) -> a
 com.OsMoDroid.LocalService$2$1 -> com.OsMoDroid.LocalService$2$1:
     com.OsMoDroid.LocalService$2 this$1 -> a
-    497:498:void run() -> run
+    498:499:void run() -> run
 com.OsMoDroid.LocalService$2$2 -> com.OsMoDroid.LocalService$2$2:
     com.OsMoDroid.LocalService$2 this$1 -> a
-    509:510:void run() -> run
+    510:511:void run() -> run
 com.OsMoDroid.LocalService$3 -> com.OsMoDroid.LocalService$3:
     com.OsMoDroid.LocalService this$0 -> a
-    1244:1254:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    1243:1253:void onReceive(android.content.Context,android.content.Intent) -> onReceive
 com.OsMoDroid.LocalService$4 -> com.OsMoDroid.LocalService$4:
     com.OsMoDroid.LocalService this$0 -> a
-    1262:1275:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    1261:1274:void onReceive(android.content.Context,android.content.Intent) -> onReceive
 com.OsMoDroid.LocalService$5 -> com.OsMoDroid.LocalService$5:
     com.OsMoDroid.LocalService this$0 -> a
-    1281:1299:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    1280:1298:void onReceive(android.content.Context,android.content.Intent) -> onReceive
 com.OsMoDroid.LocalService$6 -> com.OsMoDroid.LocalService$6:
     com.OsMoDroid.LocalService this$0 -> a
-    1399:1478:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    1398:1477:void onReceive(android.content.Context,android.content.Intent) -> onReceive
 com.OsMoDroid.LocalService$LocalBinder -> com.OsMoDroid.x:
     com.OsMoDroid.LocalService this$0 -> a
-    971:971:com.OsMoDroid.LocalService getService() -> a
+    972:972:com.OsMoDroid.LocalService getService() -> a
 com.OsMoDroid.LocalService$SendCoor -> com.OsMoDroid.y:
     java.lang.String tmp -> b
     com.OsMoDroid.LocalService this$0 -> a
-    2376:2447:java.lang.String doInBackground(java.lang.String[]) -> a
+    2375:2446:java.lang.String doInBackground(java.lang.String[]) -> a
     1:1:void onPostExecute(java.lang.Object) -> onPostExecute
     1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.OsMoDroid.MainFragment -> com.OsMoDroid.MainFragment:
@@ -3503,15 +3504,15 @@ com.OsMoDroid.MainFragment -> com.OsMoDroid.MainFragment:
     81:132:void updateMainUI() -> b
     140:163:void onCreateOptionsMenu(com.actionbarsherlock.view.Menu,com.actionbarsherlock.view.MenuInflater) -> onCreateOptionsMenu
     167:167:void onPrepareOptionsMenu(com.actionbarsherlock.view.Menu) -> onPrepareOptionsMenu
-    171:294:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
-    306:610:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
-    619:623:void onAttach(android.app.Activity) -> onAttach
-    626:633:void onDetach() -> onDetach
-    648:650:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
-    655:655:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
-    658:660:void update() -> a
+    171:292:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
+    304:608:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    617:621:void onAttach(android.app.Activity) -> onAttach
+    624:631:void onDetach() -> onDetach
+    646:648:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
+    653:653:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+    656:658:void update() -> a
     38:38:com.OsMoDroid.GPSLocalServiceClient access$0(com.OsMoDroid.MainFragment) -> a
-    635:635:void access$1(com.OsMoDroid.MainFragment,android.view.View) -> a
+    633:633:void access$1(com.OsMoDroid.MainFragment,android.view.View) -> a
 com.OsMoDroid.MainFragment$1 -> com.OsMoDroid.MainFragment$1:
     com.OsMoDroid.MainFragment this$0 -> a
     182:183:void onClick(android.content.DialogInterface,int) -> onClick
@@ -3520,68 +3521,68 @@ com.OsMoDroid.MainFragment$2 -> com.OsMoDroid.MainFragment$2:
     190:190:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$3 -> com.OsMoDroid.MainFragment$3:
     com.OsMoDroid.MainFragment this$0 -> a
-    214:228:void onClick(android.content.DialogInterface,int) -> onClick
+    214:226:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$4 -> com.OsMoDroid.MainFragment$4:
     com.OsMoDroid.MainFragment this$0 -> a
-    236:236:void onClick(android.content.DialogInterface,int) -> onClick
+    234:234:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$5 -> com.OsMoDroid.MainFragment$5:
     com.OsMoDroid.MainFragment this$0 -> a
     android.widget.ToggleButton val$alarmToggle -> b
-    342:354:void onClick(android.view.View) -> onClick
+    340:352:void onClick(android.view.View) -> onClick
 com.OsMoDroid.MainFragment$6 -> com.OsMoDroid.MainFragment$6:
     com.OsMoDroid.MainFragment this$0 -> a
-    362:364:void onClick(android.view.View) -> onClick
+    360:362:void onClick(android.view.View) -> onClick
 com.OsMoDroid.MainFragment$7 -> com.OsMoDroid.MainFragment$7:
     java.lang.Boolean stopsession -> a
     com.OsMoDroid.MainFragment this$0 -> b
     android.view.View val$view -> c
-    384:526:void onClick(android.view.View) -> onClick
-    378:378:com.OsMoDroid.MainFragment access$0(com.OsMoDroid.MainFragment$7) -> a
+    382:524:void onClick(android.view.View) -> onClick
+    376:376:com.OsMoDroid.MainFragment access$0(com.OsMoDroid.MainFragment$7) -> a
 com.OsMoDroid.MainFragment$7$1 -> com.OsMoDroid.MainFragment$7$1:
     com.OsMoDroid.MainFragment$7 this$1 -> a
     android.view.View val$view -> b
-    395:434:void onClick(android.content.DialogInterface,int) -> onClick
+    393:432:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$1$1 -> com.OsMoDroid.MainFragment$7$1$1:
     com.OsMoDroid.MainFragment$7$1 this$2 -> a
     android.view.View val$view -> b
-    410:413:void onClick(android.content.DialogInterface,int) -> onClick
+    408:411:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$1$2 -> com.OsMoDroid.MainFragment$7$1$2:
     com.OsMoDroid.MainFragment$7$1 this$2 -> a
     android.view.View val$view -> b
-    419:422:void onClick(android.content.DialogInterface,int) -> onClick
+    417:420:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$2 -> com.OsMoDroid.MainFragment$7$2:
     com.OsMoDroid.MainFragment$7 this$1 -> a
     android.view.View val$view -> b
-    440:479:void onClick(android.content.DialogInterface,int) -> onClick
+    438:477:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$2$1 -> com.OsMoDroid.MainFragment$7$2$1:
     com.OsMoDroid.MainFragment$7$2 this$2 -> a
     android.view.View val$view -> b
-    455:458:void onClick(android.content.DialogInterface,int) -> onClick
+    453:456:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$2$2 -> com.OsMoDroid.MainFragment$7$2$2:
     com.OsMoDroid.MainFragment$7$2 this$2 -> a
     android.view.View val$view -> b
-    464:467:void onClick(android.content.DialogInterface,int) -> onClick
+    462:465:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$3 -> com.OsMoDroid.MainFragment$7$3:
     com.OsMoDroid.MainFragment$7 this$1 -> a
     android.view.View val$view -> b
-    497:500:void onClick(android.content.DialogInterface,int) -> onClick
+    495:498:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$4 -> com.OsMoDroid.MainFragment$7$4:
     com.OsMoDroid.MainFragment$7 this$1 -> a
     android.view.View val$view -> b
-    506:509:void onClick(android.content.DialogInterface,int) -> onClick
+    504:507:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$8 -> com.OsMoDroid.MainFragment$8:
     com.OsMoDroid.MainFragment this$0 -> a
-    531:533:void onClick(android.view.View) -> onClick
+    529:531:void onClick(android.view.View) -> onClick
 com.OsMoDroid.MainFragment$9 -> com.OsMoDroid.MainFragment$9:
     com.OsMoDroid.MainFragment this$0 -> a
     android.view.View val$view -> b
-    539:604:void onReceive(android.content.Context,android.content.Intent) -> onReceive
-    536:536:com.OsMoDroid.MainFragment access$0(com.OsMoDroid.MainFragment$9) -> a
+    537:602:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    534:534:com.OsMoDroid.MainFragment access$0(com.OsMoDroid.MainFragment$9) -> a
 com.OsMoDroid.MainFragment$9$1 -> com.OsMoDroid.MainFragment$9$1:
     com.OsMoDroid.MainFragment$9 this$1 -> a
     android.widget.ToggleButton val$globalsendToggle -> b
     android.content.Intent val$intent -> c
-    555:559:void onClick(android.view.View) -> onClick
+    553:557:void onClick(android.view.View) -> onClick
 com.OsMoDroid.MapFragment -> com.OsMoDroid.MapFragment:
     org.osmdroid.util.ResourceProxyImpl mResourceProxy -> a
     org.osmdroid.views.MapView mMapView -> b
@@ -3615,7 +3616,7 @@ com.OsMoDroid.MapFragment -> com.OsMoDroid.MapFragment:
     436:436:void onProviderEnabled(java.lang.String) -> onProviderEnabled
     446:446:void onStatusChanged(java.lang.String,int,android.os.Bundle) -> onStatusChanged
     454:457:void onNewPoint(org.osmdroid.util.GeoPoint) -> a
-    464:477:void showChannelTracks() -> d
+    464:479:void showChannelTracks() -> d
     59:59:org.osmdroid.api.IMapController access$0(com.OsMoDroid.MapFragment) -> a
     60:60:org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay access$1(com.OsMoDroid.MapFragment) -> b
 com.OsMoDroid.MapFragment$1 -> com.OsMoDroid.MapFragment$1:
@@ -3626,7 +3627,7 @@ com.OsMoDroid.MapFragment$2 -> com.OsMoDroid.MapFragment$2:
     311:321:void onClick(android.view.View) -> onClick
 com.OsMoDroid.MapFragment$MAPSurferTileSource -> com.OsMoDroid.z:
     com.OsMoDroid.MapFragment this$0 -> a
-    136:136:java.lang.String getTileURLString(org.osmdroid.tileprovider.MapTile) -> a
+    136:137:java.lang.String getTileURLString(org.osmdroid.tileprovider.MapTile) -> a
 com.OsMoDroid.MyMessage -> com.OsMoDroid.aa:
     int u -> a
     java.lang.String from -> b
@@ -3642,6 +3643,33 @@ com.OsMoDroid.MyMessage -> com.OsMoDroid.aa:
     java.lang.String from_addr -> l
     java.lang.String to -> m
     1:1:int compareTo(java.lang.Object) -> compareTo
+com.OsMoDroid.Netutil -> com.OsMoDroid.ab:
+    250:253:com.OsMoDroid.Netutil$MyAsyncTask newapicommand(com.OsMoDroid.ResultsListener,java.lang.String) -> a
+    257:272:java.lang.String inputStreamToFile(java.io.InputStream,java.io.File) -> a
+    289:292:com.OsMoDroid.Netutil$MyAsyncTask newapicommand(com.OsMoDroid.ResultsListener,android.content.Context,java.lang.String,java.lang.String) -> a
+    297:300:com.OsMoDroid.Netutil$MyAsyncTask newapicommand(com.OsMoDroid.ResultsListener,java.lang.String,java.lang.String) -> a
+    304:307:com.OsMoDroid.Netutil$MyAsyncTask newapicommand(com.OsMoDroid.ResultsListener,android.content.Context,java.lang.String) -> a
+    311:314:com.OsMoDroid.Netutil$MyAsyncTask newapicommand(com.OsMoDroid.ResultsListener,java.lang.String,java.io.File,android.support.v4.app.NotificationCompat$Builder,int) -> a
+    318:326:java.lang.String inputStreamToString(java.io.InputStream) -> a
+    355:387:java.util.List getGPXPoints(java.io.InputStream) -> b
+com.OsMoDroid.Netutil$InitTask -> com.OsMoDroid.ac:
+    com.OsMoDroid.ColoredGPX cg -> a
+    1:1:void onPostExecute(java.lang.Object) -> onPostExecute
+    1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+com.OsMoDroid.Netutil$MyAsyncTask -> com.OsMoDroid.ad:
+    android.content.Context mContext -> e
+    com.OsMoDroid.ResultsListener listener -> a
+    java.net.HttpURLConnection con -> b
+    java.io.InputStream in -> c
+    android.app.ProgressDialog dialog -> d
+    72:77:void onPreExecute() -> onPreExecute
+    81:90:void Close() -> a
+    94:169:java.lang.String getPage(java.lang.String,java.lang.String,java.io.File,android.support.v4.app.NotificationCompat$Builder,int,com.OsMoDroid.ColoredGPX) -> a
+    180:221:com.OsMoDroid.APIComResult doInBackground(com.OsMoDroid.APIcomParams[]) -> a
+    239:241:void onCancelled() -> onCancelled
+    1:1:void onPostExecute(java.lang.Object) -> onPostExecute
+    1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
+    1:1:void onProgressUpdate(java.lang.Object[]) -> onProgressUpdate
 com.OsMoDroid.NotifFragment -> com.OsMoDroid.NotifFragment:
     android.widget.ArrayAdapter adapter -> b
     java.util.ArrayList list -> a
@@ -3666,7 +3694,7 @@ com.OsMoDroid.OsMoDroid -> com.OsMoDroid.OsMoDroid:
 com.OsMoDroid.PrefActivity -> com.OsMoDroid.PrefActivity:
     14:18:void onCreate(android.os.Bundle) -> onCreate
     26:29:void onDestroy() -> onDestroy
-com.OsMoDroid.ResultsListener -> com.OsMoDroid.ab:
+com.OsMoDroid.ResultsListener -> com.OsMoDroid.ae:
     void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
 com.OsMoDroid.SimLinksFragment -> com.OsMoDroid.SimLinksFragment:
     com.OsMoDroid.GPSLocalServiceClient globalActivity -> c
@@ -3730,23 +3758,23 @@ com.OsMoDroid.TracFileListFragment -> com.OsMoDroid.TracFileListFragment:
 com.OsMoDroid.TracFileListFragment$1 -> com.OsMoDroid.TracFileListFragment$1:
     com.OsMoDroid.TracFileListFragment this$0 -> a
     242:244:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.OsMoDroid.TracFileListFragment$ReadTrackList -> com.OsMoDroid.ac:
+com.OsMoDroid.TracFileListFragment$ReadTrackList -> com.OsMoDroid.af:
     java.util.ArrayList tempTrackFileList -> b
     com.OsMoDroid.TracFileListFragment this$0 -> a
     122:127:void onPreExecute() -> onPreExecute
     1:1:void onPostExecute(java.lang.Object) -> onPostExecute
     1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
     1:1:void onProgressUpdate(java.lang.Object[]) -> onProgressUpdate
-com.OsMoDroid.TracFileListFragment$ReadTrackList$1 -> com.OsMoDroid.ac$1:
+com.OsMoDroid.TracFileListFragment$ReadTrackList$1 -> com.OsMoDroid.af$1:
     com.OsMoDroid.TracFileListFragment$ReadTrackList this$1 -> a
     89:89:boolean accept(java.io.File,java.lang.String) -> accept
-com.OsMoDroid.TrackFile -> com.OsMoDroid.ad:
+com.OsMoDroid.TrackFile -> com.OsMoDroid.ag:
     java.text.SimpleDateFormat sdf1 -> d
     java.lang.String fileName -> a
     java.lang.String fileDate -> b
     java.lang.String fileSize -> c
     1:1:int compareTo(java.lang.Object) -> compareTo
-com.OsMoDroid.TrackFileAdapter -> com.OsMoDroid.ae:
+com.OsMoDroid.TrackFileAdapter -> com.OsMoDroid.ah:
     android.widget.TextView fileName -> a
     android.widget.TextView fileDate -> b
     android.widget.TextView fileSize -> c
@@ -3756,47 +3784,15 @@ com.OsMoDroid.WarnActivity -> com.OsMoDroid.WarnActivity:
     56:62:void onCreate(android.os.Bundle) -> onCreate
     72:74:void onDestroy() -> onDestroy
     86:92:void onPause() -> onPause
-    102:161:void onResume() -> onResume
+    102:163:void onResume() -> onResume
 com.OsMoDroid.WarnActivity$1 -> com.OsMoDroid.WarnActivity$1:
     com.OsMoDroid.WarnActivity this$0 -> a
     android.content.SharedPreferences val$settings -> b
-    124:133:void onClick(android.view.View) -> onClick
+    124:135:void onClick(android.view.View) -> onClick
 com.OsMoDroid.WarnActivity$2 -> com.OsMoDroid.WarnActivity$2:
     com.OsMoDroid.WarnActivity this$0 -> a
     android.content.SharedPreferences val$settings -> b
-    143:157:void onClick(android.view.View) -> onClick
-com.OsMoDroid.aboutActivity -> com.OsMoDroid.aboutActivity:
-    39:47:void onCreate(android.os.Bundle) -> onCreate
-    57:59:void onDestroy() -> onDestroy
-    71:73:void onPause() -> onPause
-    87:89:void onResume() -> onResume
-com.OsMoDroid.netutil -> com.OsMoDroid.af:
-    249:252:com.OsMoDroid.netutil$MyAsyncTask newapicommand(com.OsMoDroid.ResultsListener,java.lang.String) -> a
-    256:271:java.lang.String inputStreamToFile(java.io.InputStream,java.io.File) -> a
-    288:291:com.OsMoDroid.netutil$MyAsyncTask newapicommand(com.OsMoDroid.ResultsListener,android.content.Context,java.lang.String,java.lang.String) -> a
-    296:299:com.OsMoDroid.netutil$MyAsyncTask newapicommand(com.OsMoDroid.ResultsListener,java.lang.String,java.lang.String) -> a
-    303:306:com.OsMoDroid.netutil$MyAsyncTask newapicommand(com.OsMoDroid.ResultsListener,android.content.Context,java.lang.String) -> a
-    310:313:com.OsMoDroid.netutil$MyAsyncTask newapicommand(com.OsMoDroid.ResultsListener,java.lang.String,java.io.File,android.support.v4.app.NotificationCompat$Builder,int) -> a
-    317:325:java.lang.String inputStreamToString(java.io.InputStream) -> a
-    354:386:java.util.List getGPXPoints(java.io.InputStream) -> b
-com.OsMoDroid.netutil$InitTask -> com.OsMoDroid.ag:
-    com.OsMoDroid.ColoredGPX cg -> a
-    1:1:void onPostExecute(java.lang.Object) -> onPostExecute
-    1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.OsMoDroid.netutil$MyAsyncTask -> com.OsMoDroid.ah:
-    android.content.Context mContext -> e
-    com.OsMoDroid.ResultsListener listener -> a
-    java.net.HttpURLConnection con -> b
-    java.io.InputStream in -> c
-    android.app.ProgressDialog dialog -> d
-    71:76:void onPreExecute() -> onPreExecute
-    80:89:void Close() -> a
-    93:168:java.lang.String getPage(java.lang.String,java.lang.String,java.io.File,android.support.v4.app.NotificationCompat$Builder,int,com.OsMoDroid.ColoredGPX) -> a
-    179:220:com.OsMoDroid.APIComResult doInBackground(com.OsMoDroid.APIcomParams[]) -> a
-    238:240:void onCancelled() -> onCancelled
-    1:1:void onPostExecute(java.lang.Object) -> onPostExecute
-    1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-    1:1:void onProgressUpdate(java.lang.Object[]) -> onProgressUpdate
+    145:159:void onClick(android.view.View) -> onClick
 com.actionbarsherlock.ActionBarSherlock -> com.actionbarsherlock.ActionBarSherlock:
     java.lang.String TAG -> TAG
     boolean DEBUG -> DEBUG
@@ -3809,7 +3805,7 @@ com.actionbarsherlock.ActionBarSherlock -> com.actionbarsherlock.ActionBarSherlo
     123:133:void registerImplementation(java.lang.Class) -> registerImplementation
     144:144:boolean unregisterImplementation(java.lang.Class) -> unregisterImplementation
     156:156:com.actionbarsherlock.ActionBarSherlock wrap(android.app.Activity) -> wrap
-    171:241:com.actionbarsherlock.ActionBarSherlock wrap(android.app.Activity,int) -> wrap
+    170:241:com.actionbarsherlock.ActionBarSherlock wrap(android.app.Activity,int) -> wrap
     com.actionbarsherlock.app.ActionBar getActionBar() -> getActionBar
     290:290:void dispatchConfigurationChanged(android.content.res.Configuration) -> dispatchConfigurationChanged
     304:304:void dispatchPostResume() -> dispatchPostResume
@@ -4833,7 +4829,7 @@ com.actionbarsherlock.internal.ActionBarSherlockCompat -> com.actionbarsherlock.
     273:277:boolean dispatchOpenOptionsMenu() -> dispatchOpenOptionsMenu
     284:291:boolean dispatchCloseOptionsMenu() -> dispatchCloseOptionsMenu
     298:305:void dispatchPostCreate(android.os.Bundle) -> dispatchPostCreate
-    313:313:boolean dispatchCreateOptionsMenu(android.view.Menu) -> dispatchCreateOptionsMenu
+    310:311:boolean dispatchCreateOptionsMenu(android.view.Menu) -> dispatchCreateOptionsMenu
     320:345:boolean dispatchPrepareOptionsMenu(android.view.Menu) -> dispatchPrepareOptionsMenu
     350:350:boolean dispatchOptionsItemSelected(android.view.MenuItem) -> dispatchOptionsItemSelected
     357:364:boolean dispatchMenuOpened(int,android.view.Menu) -> dispatchMenuOpened
@@ -5004,7 +5000,7 @@ com.actionbarsherlock.internal.app.ActionBarImpl -> com.actionbarsherlock.intern
     306:307:void setHomeButtonEnabled(boolean) -> setHomeButtonEnabled
     311:312:void setTitle(int) -> setTitle
     316:317:void setSubtitle(int) -> setSubtitle
-    320:328:void setSelectedNavigationItem(int) -> setSelectedNavigationItem
+    320:329:void setSelectedNavigationItem(int) -> setSelectedNavigationItem
     334:335:void removeAllTabs() -> removeAllTabs
     338:346:void cleanupTabs() -> cleanupTabs
     349:350:void setTitle(java.lang.CharSequence) -> setTitle
@@ -5102,7 +5098,7 @@ com.actionbarsherlock.internal.app.ActionBarImpl$TabImpl -> com.actionbarsherloc
     839:840:com.actionbarsherlock.app.ActionBar$Tab setTabListener(com.actionbarsherlock.app.ActionBar$TabListener) -> setTabListener
     845:845:android.view.View getCustomView() -> getCustomView
     850:854:com.actionbarsherlock.app.ActionBar$Tab setCustomView(android.view.View) -> setCustomView
-    859:859:com.actionbarsherlock.app.ActionBar$Tab setCustomView(int) -> setCustomView
+    859:860:com.actionbarsherlock.app.ActionBar$Tab setCustomView(int) -> setCustomView
     865:865:android.graphics.drawable.Drawable getIcon() -> getIcon
     870:870:int getPosition() -> getPosition
     874:875:void setPosition(int) -> setPosition
@@ -6203,7 +6199,7 @@ com.actionbarsherlock.internal.view.menu.MenuItemImpl -> com.actionbarsherlock.i
     318:318:boolean hasSubMenu() -> hasSubMenu
     322:325:void setSubMenu(com.actionbarsherlock.internal.view.menu.SubMenuBuilder) -> setSubMenu
     329:329:java.lang.CharSequence getTitle() -> getTitle
-    340:340:java.lang.CharSequence getTitleForItemView(com.actionbarsherlock.internal.view.menu.MenuView$ItemView) -> getTitleForItemView
+    340:342:java.lang.CharSequence getTitleForItemView(com.actionbarsherlock.internal.view.menu.MenuView$ItemView) -> getTitleForItemView
     346:354:com.actionbarsherlock.view.MenuItem setTitle(java.lang.CharSequence) -> setTitle
     358:358:com.actionbarsherlock.view.MenuItem setTitle(int) -> setTitle
     362:362:java.lang.CharSequence getTitleCondensed() -> getTitleCondensed
@@ -6428,7 +6424,7 @@ com.actionbarsherlock.internal.view.menu.SubMenuBuilder -> com.actionbarsherlock
     67:67:com.actionbarsherlock.view.MenuItem getItem() -> getItem
     72:73:void setCallback(com.actionbarsherlock.internal.view.menu.MenuBuilder$Callback) -> setCallback
     77:77:com.actionbarsherlock.internal.view.menu.MenuBuilder getRootMenu() -> getRootMenu
-    82:82:boolean dispatchMenuItemSelected(com.actionbarsherlock.internal.view.menu.MenuBuilder,com.actionbarsherlock.view.MenuItem) -> dispatchMenuItemSelected
+    82:83:boolean dispatchMenuItemSelected(com.actionbarsherlock.internal.view.menu.MenuBuilder,com.actionbarsherlock.view.MenuItem) -> dispatchMenuItemSelected
     87:88:com.actionbarsherlock.view.SubMenu setIcon(android.graphics.drawable.Drawable) -> setIcon
     92:93:com.actionbarsherlock.view.SubMenu setIcon(int) -> setIcon
     97:97:com.actionbarsherlock.view.SubMenu setHeaderIcon(android.graphics.drawable.Drawable) -> setHeaderIcon
@@ -6621,7 +6617,7 @@ com.actionbarsherlock.internal.widget.ActionBarView -> com.actionbarsherlock.int
     375:376:void setCallback(com.actionbarsherlock.app.ActionBar$OnNavigationListener) -> setCallback
     379:439:void setMenu(com.actionbarsherlock.view.Menu,com.actionbarsherlock.internal.view.menu.MenuPresenter$Callback) -> setMenu
     442:451:void configPresenters(com.actionbarsherlock.internal.view.menu.MenuBuilder) -> configPresenters
-    454:454:boolean hasExpandedActionView() -> hasExpandedActionView
+    454:455:boolean hasExpandedActionView() -> hasExpandedActionView
     459:464:void collapseActionView() -> collapseActionView
     467:475:void setCustomNavigationView(android.view.View) -> setCustomNavigationView
     478:478:java.lang.CharSequence getTitle() -> getTitle
@@ -6759,7 +6755,7 @@ com.actionbarsherlock.internal.widget.IcsAbsSpinner -> com.actionbarsherlock.int
     168:245:void onMeasure(int,int) -> onMeasure
     248:248:int getChildHeight(android.view.View) -> getChildHeight
     252:252:int getChildWidth(android.view.View) -> getChildWidth
-    257:257:android.view.ViewGroup$LayoutParams generateDefaultLayoutParams() -> generateDefaultLayoutParams
+    257:259:android.view.ViewGroup$LayoutParams generateDefaultLayoutParams() -> generateDefaultLayoutParams
     263:273:void recycleAllViews() -> recycleAllViews
     280:283:void setSelection(int,boolean) -> setSelection
     287:290:void setSelection(int) -> setSelection
@@ -6786,7 +6782,7 @@ com.actionbarsherlock.internal.widget.IcsAbsSpinner$SavedState -> com.actionbars
     int position -> position
     android.os.Parcelable$Creator CREATOR -> CREATOR
     394:397:void writeToParcel(android.os.Parcel,int) -> writeToParcel
-    401:401:java.lang.String toString() -> toString
+    401:404:java.lang.String toString() -> toString
 com.actionbarsherlock.internal.widget.IcsAbsSpinner$SavedState$1 -> com.actionbarsherlock.internal.widget.IcsAbsSpinner$SavedState$1:
     410:410:com.actionbarsherlock.internal.widget.IcsAbsSpinner$SavedState createFromParcel(android.os.Parcel) -> createFromParcel
     414:414:com.actionbarsherlock.internal.widget.IcsAbsSpinner$SavedState[] newArray(int) -> newArray
@@ -7081,7 +7077,7 @@ com.actionbarsherlock.internal.widget.IcsProgressBar -> com.actionbarsherlock.in
     528:528:android.graphics.drawable.Drawable getProgressDrawable() -> getProgressDrawable
     542:571:void setProgressDrawable(android.graphics.drawable.Drawable) -> setProgressDrawable
     577:577:android.graphics.drawable.Drawable getCurrentDrawable() -> getCurrentDrawable
-    582:582:boolean verifyDrawable(android.graphics.drawable.Drawable) -> verifyDrawable
+    582:583:boolean verifyDrawable(android.graphics.drawable.Drawable) -> verifyDrawable
     588:591:void jumpDrawablesToCurrentState() -> jumpDrawablesToCurrentState
     595:598:void postInvalidate() -> postInvalidate
     628:646:void doRefreshProgress(int,int,boolean,boolean) -> doRefreshProgress
@@ -7172,7 +7168,7 @@ com.actionbarsherlock.internal.widget.IcsSpinner$DropDownAdapter -> com.actionba
     495:495:java.lang.Object getItem(int) -> getItem
     499:499:long getItemId(int) -> getItemId
     503:503:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-    507:507:android.view.View getDropDownView(int,android.view.View,android.view.ViewGroup) -> getDropDownView
+    507:508:android.view.View getDropDownView(int,android.view.View,android.view.ViewGroup) -> getDropDownView
     512:512:boolean hasStableIds() -> hasStableIds
     516:519:void registerDataSetObserver(android.database.DataSetObserver) -> registerDataSetObserver
     522:525:void unregisterDataSetObserver(android.database.DataSetObserver) -> unregisterDataSetObserver
@@ -7208,7 +7204,7 @@ com.actionbarsherlock.internal.widget.IcsToast -> com.actionbarsherlock.internal
     38:38:android.widget.Toast makeText(android.content.Context,int,int) -> makeText
     47:59:void setText(java.lang.CharSequence) -> setText
 com.actionbarsherlock.internal.widget.IcsView -> com.actionbarsherlock.internal.widget.IcsView:
-    17:17:int getMeasuredStateInt(android.view.View) -> getMeasuredStateInt
+    17:19:int getMeasuredStateInt(android.view.View) -> getMeasuredStateInt
 com.actionbarsherlock.internal.widget.PopupWindowCompat -> com.actionbarsherlock.internal.widget.PopupWindowCompat:
     java.lang.reflect.Field superListenerField -> superListenerField
     android.view.ViewTreeObserver$OnScrollChangedListener NOP -> NOP
@@ -7547,24 +7543,24 @@ com.actionbarsherlock.widget.ActivityChooserModel -> com.actionbarsherlock.widge
     android.os.Handler mHandler -> mHandler
     com.actionbarsherlock.widget.ActivityChooserModel$OnChooseActivityListener mActivityChoserModelPolicy -> mActivityChoserModelPolicy
     java.util.concurrent.Executor SERIAL_EXECUTOR -> SERIAL_EXECUTOR
-    335:335:com.actionbarsherlock.widget.ActivityChooserModel get(android.content.Context,java.lang.String) -> get
-    372:372:void setIntent(android.content.Intent) -> setIntent
-    387:387:android.content.Intent getIntent() -> getIntent
-    400:400:int getActivityCount() -> getActivityCount
-    414:414:android.content.pm.ResolveInfo getActivity(int) -> getActivity
+    335:342:com.actionbarsherlock.widget.ActivityChooserModel get(android.content.Context,java.lang.String) -> get
+    372:377:void setIntent(android.content.Intent) -> setIntent
+    387:388:android.content.Intent getIntent() -> getIntent
+    400:401:int getActivityCount() -> getActivityCount
+    414:415:android.content.pm.ResolveInfo getActivity(int) -> getActivity
     427:435:int getActivityIndex(android.content.pm.ResolveInfo) -> getActivityIndex
     456:479:android.content.Intent chooseActivity(int) -> chooseActivity
     488:489:void setOnChooseActivityListener(com.actionbarsherlock.widget.ActivityChooserModel$OnChooseActivityListener) -> setOnChooseActivityListener
     501:506:android.content.pm.ResolveInfo getDefaultActivity() -> getDefaultActivity
     520:538:void setDefaultActivity(int) -> setDefaultActivity
-    552:552:void readHistoricalData() -> readHistoricalData
-    576:576:void persistHistoricalData() -> persistHistoricalData
-    599:599:void setActivitySorter(com.actionbarsherlock.widget.ActivityChooserModel$ActivitySorter) -> setActivitySorter
-    615:615:void sortActivities() -> sortActivities
-    638:638:void setHistoryMaxSize(int) -> setHistoryMaxSize
-    654:654:int getHistoryMaxSize() -> getHistoryMaxSize
-    665:665:int getHistorySize() -> getHistorySize
-    677:677:boolean addHisoricalRecord(com.actionbarsherlock.widget.ActivityChooserModel$HistoricalRecord) -> addHisoricalRecord
+    552:559:void readHistoricalData() -> readHistoricalData
+    576:586:void persistHistoricalData() -> persistHistoricalData
+    599:604:void setActivitySorter(com.actionbarsherlock.widget.ActivityChooserModel$ActivitySorter) -> setActivitySorter
+    615:619:void sortActivities() -> sortActivities
+    638:644:void setHistoryMaxSize(int) -> setHistoryMaxSize
+    654:655:int getHistoryMaxSize() -> getHistoryMaxSize
+    665:666:int getHistorySize() -> getHistorySize
+    677:685:boolean addHisoricalRecord(com.actionbarsherlock.widget.ActivityChooserModel$HistoricalRecord) -> addHisoricalRecord
     693:705:void pruneExcessiveHistoricalRecordsLocked() -> pruneExcessiveHistoricalRecordsLocked
     711:724:void loadActivitiesLocked() -> loadActivitiesLocked
     249:249:android.content.Context access$0(com.actionbarsherlock.widget.ActivityChooserModel) -> access$0
@@ -7593,7 +7589,7 @@ com.actionbarsherlock.widget.ActivityChooserModel$DefaultSorter -> com.actionbar
     float WEIGHT_DECAY_COEFFICIENT -> WEIGHT_DECAY_COEFFICIENT
     java.util.Map mPackageNameToActivityMap -> mPackageNameToActivityMap
     com.actionbarsherlock.widget.ActivityChooserModel this$0 -> this$0
-    894:924:void sort(android.content.Intent,java.util.List,java.util.List) -> sort
+    893:924:void sort(android.content.Intent,java.util.List,java.util.List) -> sort
 com.actionbarsherlock.widget.ActivityChooserModel$HistoricalRecord -> com.actionbarsherlock.widget.ActivityChooserModel$HistoricalRecord:
     android.content.ComponentName activity -> activity
     long time -> time
@@ -7789,7 +7785,7 @@ com.actionbarsherlock.widget.SearchView -> com.actionbarsherlock.widget.SearchVi
     714:717:void setMaxWidth(int) -> setMaxWidth
     727:727:int getMaxWidth() -> getMaxWidth
     733:763:void onMeasure(int,int) -> onMeasure
-    766:766:int getPreferredWidth() -> getPreferredWidth
+    766:767:int getPreferredWidth() -> getPreferredWidth
     771:784:void updateViewsVisibility(boolean) -> updateViewsVisibility
     787:800:boolean hasVoiceSearch() -> hasVoiceSearch
     804:804:boolean isSubmitAreaEnabled() -> isSubmitAreaEnabled
@@ -7833,7 +7829,7 @@ com.actionbarsherlock.widget.SearchView -> com.actionbarsherlock.widget.SearchVi
     1514:1565:android.content.Intent createVoiceAppSearchIntent(android.content.Intent,android.app.SearchableInfo) -> createVoiceAppSearchIntent
     1584:1620:android.content.Intent createIntentFromSuggestion(android.database.Cursor,int,java.lang.String) -> createIntentFromSuggestion
     1626:1635:void forceSuggestionQuery() -> forceSuggestionQuery
-    1638:1638:boolean isLandscapeMode(android.content.Context) -> isLandscapeMode
+    1638:1639:boolean isLandscapeMode(android.content.Context) -> isLandscapeMode
     1782:1788:void ensureImeVisible(android.widget.AutoCompleteTextView,boolean) -> ensureImeVisible
     1792:1799:void showSoftInputUnchecked(android.view.View,android.view.inputmethod.InputMethodManager,int) -> showSoftInputUnchecked
     1803:1810:void setText(android.widget.AutoCompleteTextView,java.lang.CharSequence,boolean) -> setText
@@ -7862,7 +7858,7 @@ com.actionbarsherlock.widget.SearchView -> com.actionbarsherlock.widget.SearchVi
     1305:1305:void access$22(com.actionbarsherlock.widget.SearchView) -> access$22
 com.actionbarsherlock.widget.SearchView$1 -> com.actionbarsherlock.widget.SearchView$1:
     com.actionbarsherlock.widget.SearchView this$0 -> this$0
-    153:158:void run() -> run
+    152:158:void run() -> run
 com.actionbarsherlock.widget.SearchView$10 -> com.actionbarsherlock.widget.SearchView$10:
     com.actionbarsherlock.widget.SearchView this$0 -> this$0
     293:296:void onFocusChange(android.view.View,boolean) -> onFocusChange
@@ -12093,7 +12089,7 @@ org.codehaus.jackson.map.introspect.AnnotatedField -> org.codehaus.jackson.map.i
     74:74:java.lang.Class getRawType() -> getRawType
     84:84:java.lang.Class getDeclaringClass() -> getDeclaringClass
     87:87:java.lang.reflect.Member getMember() -> getMember
-    94:96:void setValue(java.lang.Object,java.lang.Object) -> setValue
+    94:98:void setValue(java.lang.Object,java.lang.Object) -> setValue
     108:108:java.lang.String getFullName() -> getFullName
     111:111:int getAnnotationCount() -> getAnnotationCount
     116:116:java.lang.String toString() -> toString
@@ -12122,7 +12118,7 @@ org.codehaus.jackson.map.introspect.AnnotatedMethod -> org.codehaus.jackson.map.
     101:101:java.lang.Object call1(java.lang.Object) -> call1
     111:111:java.lang.Class getDeclaringClass() -> getDeclaringClass
     114:114:java.lang.reflect.Member getMember() -> getMember
-    121:126:void setValue(java.lang.Object,java.lang.Object) -> setValue
+    121:128:void setValue(java.lang.Object,java.lang.Object) -> setValue
     139:139:int getParameterCount() -> getParameterCount
     143:143:java.lang.reflect.Type[] getParameterTypes() -> getParameterTypes
     149:150:java.lang.Class getParameterClass(int) -> getParameterClass
@@ -13007,8 +13003,8 @@ org.codehaus.jackson.map.ser.StdSerializerProvider -> org.codehaus.jackson.map.s
     535:545:void defaultSerializeDateValue(java.util.Date,org.codehaus.jackson.JsonGenerator) -> defaultSerializeDateValue
     551:561:void defaultSerializeDateKey(long,org.codehaus.jackson.JsonGenerator) -> defaultSerializeDateKey
     567:577:void defaultSerializeDateKey(java.util.Date,org.codehaus.jackson.JsonGenerator) -> defaultSerializeDateKey
-    595:625:void _serializeValue(org.codehaus.jackson.JsonGenerator,java.lang.Object) -> _serializeValue
-    641:670:void _serializeValue(org.codehaus.jackson.JsonGenerator,java.lang.Object,org.codehaus.jackson.type.JavaType) -> _serializeValue
+    595:626:void _serializeValue(org.codehaus.jackson.JsonGenerator,java.lang.Object) -> _serializeValue
+    641:671:void _serializeValue(org.codehaus.jackson.JsonGenerator,java.lang.Object,org.codehaus.jackson.type.JavaType) -> _serializeValue
     680:687:void _reportIncompatibleRootType(java.lang.Object,org.codehaus.jackson.type.JavaType) -> _reportIncompatibleRootType
     702:714:org.codehaus.jackson.map.JsonSerializer _findExplicitUntypedSerializer(java.lang.Class,org.codehaus.jackson.map.BeanProperty) -> _findExplicitUntypedSerializer
     735:746:org.codehaus.jackson.map.JsonSerializer _createAndCacheUntypedSerializer(java.lang.Class,org.codehaus.jackson.map.BeanProperty) -> _createAndCacheUntypedSerializer
@@ -13216,8 +13212,8 @@ org.codehaus.jackson.map.ser.std.BeanSerializerBase -> org.codehaus.jackson.map.
     java.lang.Object _propertyFilterId -> _propertyFilterId
     void serialize(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serialize
     121:128:void serializeWithType(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider,org.codehaus.jackson.map.TypeSerializer) -> serializeWithType
-    140:167:void serializeFields(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serializeFields
-    186:216:void serializeFieldsFiltered(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serializeFieldsFiltered
+    140:168:void serializeFields(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serializeFields
+    186:217:void serializeFieldsFiltered(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serializeFieldsFiltered
     229:237:org.codehaus.jackson.map.ser.BeanPropertyFilter findFilter(org.codehaus.jackson.map.SerializerProvider) -> findFilter
     244:268:org.codehaus.jackson.JsonNode getSchema(org.codehaus.jackson.map.SerializerProvider,java.lang.reflect.Type) -> getSchema
     281:338:void resolve(org.codehaus.jackson.map.SerializerProvider) -> resolve
@@ -13291,8 +13287,8 @@ org.codehaus.jackson.map.ser.std.JsonValueSerializer -> org.codehaus.jackson.map
     org.codehaus.jackson.map.JsonSerializer _valueSerializer -> _valueSerializer
     org.codehaus.jackson.map.BeanProperty _property -> _property
     boolean _forceTypeInformation -> _forceTypeInformation
-    72:102:void serialize(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serialize
-    112:153:void serializeWithType(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider,org.codehaus.jackson.map.TypeSerializer) -> serializeWithType
+    72:103:void serialize(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serialize
+    112:154:void serializeWithType(java.lang.Object,org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider,org.codehaus.jackson.map.TypeSerializer) -> serializeWithType
     161:161:org.codehaus.jackson.JsonNode getSchema(org.codehaus.jackson.map.SerializerProvider,java.lang.reflect.Type) -> getSchema
     180:202:void resolve(org.codehaus.jackson.map.SerializerProvider) -> resolve
     206:219:boolean isNaturalTypeWithStdHandling(org.codehaus.jackson.type.JavaType,org.codehaus.jackson.map.JsonSerializer) -> isNaturalTypeWithStdHandling
@@ -13335,9 +13331,9 @@ org.codehaus.jackson.map.ser.std.ObjectArraySerializer -> org.codehaus.jackson.m
     org.codehaus.jackson.map.JsonSerializer _elementSerializer -> _elementSerializer
     org.codehaus.jackson.map.ser.impl.PropertySerializerMap _dynamicSerializers -> _dynamicSerializers
     83:83:org.codehaus.jackson.map.ser.std.ContainerSerializerBase _withValueTypeSerializer(org.codehaus.jackson.map.TypeSerializer) -> _withValueTypeSerializer
-    90:140:void serializeContents(java.lang.Object[],org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serializeContents
-    148:176:void serializeContentsUsing(java.lang.Object[],org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider,org.codehaus.jackson.map.JsonSerializer) -> serializeContentsUsing
-    183:212:void serializeTypedContents(java.lang.Object[],org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serializeTypedContents
+    90:141:void serializeContents(java.lang.Object[],org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serializeContents
+    148:177:void serializeContentsUsing(java.lang.Object[],org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider,org.codehaus.jackson.map.JsonSerializer) -> serializeContentsUsing
+    183:213:void serializeTypedContents(java.lang.Object[],org.codehaus.jackson.JsonGenerator,org.codehaus.jackson.map.SerializerProvider) -> serializeTypedContents
     220:237:org.codehaus.jackson.JsonNode getSchema(org.codehaus.jackson.map.SerializerProvider,java.lang.reflect.Type) -> getSchema
     248:251:void resolve(org.codehaus.jackson.map.SerializerProvider) -> resolve
     259:264:org.codehaus.jackson.map.JsonSerializer _findAndAddDynamic(org.codehaus.jackson.map.ser.impl.PropertySerializerMap,java.lang.Class,org.codehaus.jackson.map.SerializerProvider) -> _findAndAddDynamic
@@ -15979,6 +15975,7 @@ org.osmdroid.views.overlay.OverlayManager -> org.osmdroid.views.overlay.c:
     boolean mUseSafeCanvas -> b
     java.util.concurrent.CopyOnWriteArrayList mOverlayList -> c
     38:38:int size() -> size
+    43:46:void add(int,org.osmdroid.views.overlay.Overlay) -> a
     99:99:java.lang.Iterable overlaysReversed() -> m
     125:145:void onDraw(android.graphics.Canvas,org.osmdroid.views.MapView) -> a
     148:155:void onDetach(org.osmdroid.views.MapView) -> a

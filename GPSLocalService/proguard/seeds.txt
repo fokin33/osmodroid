@@ -1391,6 +1391,7 @@ android.support.v4.widget.SlidingPaneLayout
 android.support.v4.widget.SlidingPaneLayout: SlidingPaneLayout(android.content.Context,android.util.AttributeSet,int)
 android.support.v4.widget.SlidingPaneLayout$SavedState
 android.support.v4.widget.SlidingPaneLayout$SavedState: android.os.Parcelable$Creator CREATOR
+com.OsMoDroid.AboutActivity
 com.OsMoDroid.BootComplitedReceiver
 com.OsMoDroid.BootComplitedReceiver: BootComplitedReceiver()
 com.OsMoDroid.ChannelDevicesFragment
@@ -1413,8 +1414,6 @@ com.OsMoDroid.StatFragment
 com.OsMoDroid.TracFileListFragment
 com.OsMoDroid.WarnActivity
 com.OsMoDroid.WarnActivity: WarnActivity()
-com.OsMoDroid.aboutActivity
-com.OsMoDroid.aboutActivity: aboutActivity()
 com.actionbarsherlock.ActionBarSherlock
 com.actionbarsherlock.ActionBarSherlock: java.lang.String TAG
 com.actionbarsherlock.ActionBarSherlock: boolean DEBUG
