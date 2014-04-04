@@ -291,6 +291,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		drawClickListener = new DrawerItemClickListener();
 		Log.d(this.getClass().getSimpleName(), "onCreate() gpsclient");
 		super.onCreate(savedInstanceState);
 		PreferenceManager.setDefaultValues(this, R.xml.pref, true);
