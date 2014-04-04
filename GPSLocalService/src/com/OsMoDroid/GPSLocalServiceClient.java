@@ -28,7 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.OsMoDroid.LocalService.LocalBinder;
-import com.OsMoDroid.netutil.MyAsyncTask;
+import com.OsMoDroid.Netutil.MyAsyncTask;
 import com.OsMoDroid.R;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -207,7 +207,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 				mService.startcomand();
 				}
 			if (!OsMoDroid.settings.getString("key", "" ).equals("") ){
-			netutil.newapicommand((ResultsListener)mService.serContext, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
+			Netutil.newapicommand((ResultsListener)mService.serContext, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
 			}
 			if(needIntent!=null){
 				intentAction(needIntent);
@@ -306,7 +306,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 
 		 fileName.mkdirs();
 
-		 fileName = new File(sdDir, "OsMoDroid/OsMoDroid.settings.dat");
+		 fileName = new File(sdDir, "OsMoDroid/settings.dat");
 
 		 }
 		
@@ -1035,13 +1035,13 @@ if (!(akey==null))
 OsMoDroid.editor.putString("key", key);
 OsMoDroid.editor.remove("laststartcommandtime");
 OsMoDroid.editor.commit();
-netutil.newapicommand((Context) GPSLocalServiceClient.this, "om_device_bind:"+OsMoDroid.settings.getString("hash", "")+","+OsMoDroid.settings.getString("n", ""));
+Netutil.newapicommand((Context) GPSLocalServiceClient.this, "om_device_bind:"+OsMoDroid.settings.getString("hash", "")+","+OsMoDroid.settings.getString("n", ""));
 mService.startcomand();
 //mDrawerItems = ;
 setupDrawerList();
 
 updateMainUI();
-netutil.newapicommand((ResultsListener)mService, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
+Netutil.newapicommand((ResultsListener)mService, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
 
 
 }

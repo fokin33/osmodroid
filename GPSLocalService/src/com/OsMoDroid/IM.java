@@ -407,7 +407,7 @@ if (getMessageType( topic).equals("m")){
 if (getMessageType( topic).equals("r")){
 	if(log)Log.d(this.getClass().getName(), "type=r");
 	if(topic.equals("om_check_"+OsMoDroid.settings.getString("device", ""))){
-		 netutil.newapicommand((ResultsListener)localService, "om_checker:"+toParse);
+		 Netutil.newapicommand((ResultsListener)localService, "om_checker:"+toParse);
 		 return;
 	}
 	
@@ -727,7 +727,7 @@ if (getMessageType( topic).equals("ch")){
 		});
 	}
 	else {
-		netutil.newapicommand((ResultsListener)localService, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
+		Netutil.newapicommand((ResultsListener)localService, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 	}
 }
 

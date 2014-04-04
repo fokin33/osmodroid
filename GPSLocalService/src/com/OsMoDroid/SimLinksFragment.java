@@ -50,17 +50,17 @@ public class SimLinksFragment extends SherlockFragment implements ResultsListene
 		postjson.put("device", OsMoDroid.settings.getString("device", ""));
 		postjson.put("random", "1");
 		postjson.put("until", "-1");
-		netutil.newapicommand((ResultsListener)SimLinksFragment.this,getSherlockActivity(), "om_link_add","json="+postjson.toString());
+		Netutil.newapicommand((ResultsListener)SimLinksFragment.this,getSherlockActivity(), "om_link_add","json="+postjson.toString());
 	}
 	
 	void reflinks()
 	{
-		netutil.newapicommand((ResultsListener)SimLinksFragment.this,getSherlockActivity(), "om_link");
+		Netutil.newapicommand((ResultsListener)SimLinksFragment.this,getSherlockActivity(), "om_link");
 	}	
 
 	void dellink(String linkid)
 	{
-		netutil.newapicommand((ResultsListener)SimLinksFragment.this,getSherlockActivity(), "om_link_delete:"+linkid);
+		Netutil.newapicommand((ResultsListener)SimLinksFragment.this,getSherlockActivity(), "om_link_delete:"+linkid);
 	}
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view=inflater.inflate(R.layout.simlinks, container, false);

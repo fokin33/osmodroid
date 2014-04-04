@@ -104,7 +104,7 @@ import org.osmdroid.views.overlay.PathOverlay;
 import com.OsMoDroid.Channel.Point;
 import com.OsMoDroid.LocalService.SendCoor;
 
-import com.OsMoDroid.netutil.MyAsyncTask;
+import com.OsMoDroid.Netutil.MyAsyncTask;
 
 import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketException;
@@ -270,7 +270,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	int alarmsound;
 	int signalonoff;
 	private static SoundPool soundPool;
-	private netutil.MyAsyncTask starttask;
+	private Netutil.MyAsyncTask starttask;
 	private Intent in;
 	public boolean mayak=false;
 	private boolean glonas=false;
@@ -751,7 +751,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 
 			@Override
 			public void refreshChannels() throws RemoteException {
-				netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
+				Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 							}
 			@Override
 			public int getNumberOfGpx(int layerId) throws RemoteException {
@@ -997,7 +997,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 			bindedremote=true;
 			if (!OsMoDroid.settings.getString("key", "" ).equals("") )
 			{
-				netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
+				Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 			}
 		}else
 		{
@@ -1018,7 +1018,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 			bindedremote=true;
 			if (!OsMoDroid.settings.getString("key", "" ).equals("") )
 			{
-				netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
+				Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 			}
 			binded=true;
 			connectChannels();
@@ -1112,7 +1112,7 @@ public void startcomand()
 {
 	String version = getversion();
 	APIcomParams params = new APIcomParams("http://a.t.esya.ru/?act=start&hash="+OsMoDroid.settings.getString("hash", "")+"&n="+OsMoDroid.settings.getString("n", "")+"&c=OsMoDroid&v="+version.replace(".", "")+"&key="+OsMoDroid.settings.getString("key", ""),null,"start"); 
-	starttask=	new netutil.MyAsyncTask(this);
+	starttask=	new Netutil.MyAsyncTask(this);
 	starttask.execute(params) ;
 	if(log)Log.d(getClass().getSimpleName(), "startcommand");
 
@@ -1337,9 +1337,9 @@ if (live&&!OsMoDroid.settings.getString("hash", "" ).equals(""))
 				if(OsMoDroid.settings.getBoolean("ondestroy", false))
 				{
 					if(log)Log.d(this.getClass().getName(), "oncreate was after ondestroy ");
-					netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
-					netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
-					netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
+					Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
+					Netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
+					Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 				}
 				else
 				{
@@ -1348,7 +1348,7 @@ if (live&&!OsMoDroid.settings.getString("hash", "" ).equals(""))
 			    
 					if (om_device_get.equals(""))
 					{
-						netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
+						Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
 					} else
 					{
 						globalsend=OsMoDroid.settings.getBoolean("globalsend", false);
@@ -1357,7 +1357,7 @@ if (live&&!OsMoDroid.settings.getString("hash", "" ).equals(""))
 					if (om_device.equals(""))
 					{
 						Log.d(this.getClass().getName(), "om_device is empty");
-						netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
+						Netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
 					} else
 					{
 						List<Device> loaded=(List<Device>) loadObject(OsMoDroid.DEVLIST, deviceList.getClass());
@@ -1371,7 +1371,7 @@ if (live&&!OsMoDroid.settings.getString("hash", "" ).equals(""))
 					if (om_device_channel_adaptive.equals(""))
 					{
 						if(log)Log.d(this.getClass().getName(), "(om_device_channel_adaptive is empty");
-						netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
+						Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 					} else
 					{
 						try {
@@ -1381,7 +1381,7 @@ if (live&&!OsMoDroid.settings.getString("hash", "" ).equals(""))
 							//connectChannelsChats();
 						} catch (JSONException e) {
 							if(log)Log.d(this.getClass().getName(), "try get channesllist from settings failed");
-							netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
+							Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 							e.printStackTrace();
 						}
 					}
@@ -1421,22 +1421,22 @@ if (live&&!OsMoDroid.settings.getString("hash", "" ).equals(""))
 								
 								if(OsMoDroid.settings.getBoolean("ondestroy", false))
 								{
-									netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
-									netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
-									netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
+									Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
+									Netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
+									Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 								}
 								else
 								{
 									if (om_device_get.equals(""))
 									{
-										netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
+										Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
 									} else
 									{
 										globalsend=OsMoDroid.settings.getBoolean("globalsend", false);
 									}
 									if (om_device.equals(""))
 									{
-										netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
+										Netutil.newapicommand((ResultsListener)LocalService.this, "om_device");
 									} else
 									{
 										List loaded=(List<Device>) loadObject(OsMoDroid.DEVLIST, deviceList.getClass());
@@ -1448,7 +1448,7 @@ if (live&&!OsMoDroid.settings.getString("hash", "" ).equals(""))
 									}
 									if (om_device_channel_adaptive.equals(""))
 									{
-										netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
+										Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 									} else
 									{
 										try {
@@ -1456,7 +1456,7 @@ if (live&&!OsMoDroid.settings.getString("hash", "" ).equals(""))
 											//disconnectChannelsChats();
 											//connectChannelsChats();
 										} catch (JSONException e) {
-											netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
+											Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 											e.printStackTrace();
 										}
 									}
@@ -1528,7 +1528,7 @@ OsMoDroid.settings.edit().putBoolean("ondestroy", false).commit();
 	}
 
 	void Pong(Context context) throws JSONException{
-            netutil.newapicommand((ResultsListener)context, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
+            Netutil.newapicommand((ResultsListener)context, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
 	}
 
 	void batteryinfo(Context context) throws JSONException{
@@ -1537,7 +1537,7 @@ OsMoDroid.settings.edit().putBoolean("ondestroy", false).commit();
             postjson.put("temperature", temperature);
             postjson.put("voltage", voltage);
             postjson.put("plugged", plugged);
-            netutil.newapicommand((ResultsListener)context, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+            Netutil.newapicommand((ResultsListener)context, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 	}
 	private String capitalize(String s) {
 		  if (s == null || s.length() == 0) {
@@ -1569,7 +1569,7 @@ OsMoDroid.settings.edit().putBoolean("ondestroy", false).commit();
         postjson.put("androidversion", androidver);
         postjson.put("devicename", getDeviceName());
         postjson.put("display", Integer.toString(width)+"x"+Integer.toString(height));
-        netutil.newapicommand((ResultsListener)context, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+        Netutil.newapicommand((ResultsListener)context, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 }
 	
 	void vibrate (Context context,long milliseconds) {
@@ -1582,7 +1582,7 @@ OsMoDroid.settings.edit().putBoolean("ondestroy", false).commit();
         postjson.put("view", count);
         postjson.put("active", countFix);
         postjson.put("accuracy", accuracy);
-        netutil.newapicommand((ResultsListener)context, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+        Netutil.newapicommand((ResultsListener)context, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 }
 	
 	void getpreferences(Context context) throws JSONException{
@@ -1611,18 +1611,18 @@ OsMoDroid.settings.edit().putBoolean("ondestroy", false).commit();
         postjson.put("usewake",usewake); 
         postjson.put("notifyperiod",notifyperiod); 
         postjson.put("sendsound",sendsound); 
-        netutil.newapicommand((ResultsListener)context, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+        Netutil.newapicommand((ResultsListener)context, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 }
 
 	void wifion(Context context) {
 		WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		wifi.setWifiEnabled(true);
-        netutil.newapicommand((ResultsListener)context, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
+        Netutil.newapicommand((ResultsListener)context, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
 	}
 	void wifioff(Context context) {
 		WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		wifi.setWifiEnabled(false);
-        netutil.newapicommand((ResultsListener)context, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
+        Netutil.newapicommand((ResultsListener)context, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));
 	}
 	
 	void wifiinfo(Context context) throws JSONException {
@@ -1644,7 +1644,7 @@ OsMoDroid.settings.edit().putBoolean("ondestroy", false).commit();
 		{
 			postjson.put("state", "noconnect");
 		}
-	         netutil.newapicommand((ResultsListener)context, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+	         Netutil.newapicommand((ResultsListener)context, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 	}
 	
 	
@@ -1896,7 +1896,7 @@ if (live){
 
 //String[] params = {"http://a.t.esya.ru/?act=session_start&hash="+OsMoDroid.settings.getString("hash", "")+"&n="+OsMoDroid.settings.getString("n", "")+"&ttl="+OsMoDroid.settings.getString("session_ttl", "30"),"false","","session_start"};
 APIcomParams params = new APIcomParams("http://a.t.esya.ru/?act=session_start&hash="+OsMoDroid.settings.getString("hash", "")+"&n="+OsMoDroid.settings.getString("n", "")+"&ttl="+OsMoDroid.settings.getString("session_ttl", "30"),null,"session_start"); 
-new netutil.MyAsyncTask(this).execute(params);}
+new Netutil.MyAsyncTask(this).execute(params);}
 
 		if(log)Log.d(getClass().getSimpleName(), "notify:"+notification.toString());
 
@@ -1941,7 +1941,7 @@ private void manageIM(){
 			}
 			myIM = new IM( longPollchannels ,this,OsMoDroid.settings.getString("key", ""), this);	
 			if(log)Log.d(getClass().getSimpleName(), "om_device_channel_adaptive from manageim");
-			netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
+			Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 		}
 	if (!OsMoDroid.settings.getBoolean("im", false) && myIM!=null){
 		myIM.close();
@@ -1969,7 +1969,7 @@ public void sendid()
 	}
 	 
         APIcomParams params = new APIcomParams("http://api.osmo.mobi/auth","android="+version+"&android_id="+androidID+"&imei="+IMEI,"sendid"); 
-        MyAsyncTask sendidtask = new netutil.MyAsyncTask(this);
+        MyAsyncTask sendidtask = new Netutil.MyAsyncTask(this);
         sendidtask.execute(params) ;
         Log.d(getClass().getSimpleName(), "sendidtask start to execute");
 
@@ -2149,7 +2149,7 @@ public void sendid()
 		if (live&&stopsession){
                     //String[] params = {"http://a.t.esya.ru/?act=session_stop&hash="+OsMoDroid.settings.getString("hash", "")+"&n="+OsMoDroid.settings.getString("n", ""),"false","","session_stop"};
                     APIcomParams params = new APIcomParams("http://a.t.esya.ru/?act=session_stop&hash="+OsMoDroid.settings.getString("hash", "")+"&n="+OsMoDroid.settings.getString("n", "")+"&ttl="+OsMoDroid.settings.getString("session_ttl", "30"),null,"session_stop");
-                    new netutil.MyAsyncTask(this).execute(params);
+                    new Netutil.MyAsyncTask(this).execute(params);
 
                 
 		}
@@ -2294,7 +2294,7 @@ public void sendid()
 			LocalService.mNotificationManager.notify(uploadid, notification);
 		
 		
-		netutil.newapicommand((ResultsListener)LocalService.this,  "tr_track_upload:1", file,notificationBuilder,uploadid);
+		Netutil.newapicommand((ResultsListener)LocalService.this,  "tr_track_upload:1", file,notificationBuilder,uploadid);
 	}
 
 
@@ -3670,8 +3670,8 @@ public void onResultsSucceeded(APIComResult result) {
 		    	
 		    	String keyname= it.next();
 		    	if(keyname.contains("om_device_channel_active")){
-		    		netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
-		    		netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
+		    		Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
+		    		Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 		    	 }
 		    	if(keyname.contains("om_channel_overlay_get")){
 		    		for (Channel ch : channelList){
@@ -3781,8 +3781,8 @@ public void onResultsSucceeded(APIComResult result) {
 			 disconnectChannelsChats();
 			 connectChannelsChats();
 			for (Channel channel : channelList){
-				netutil.newapicommand((ResultsListener)this, "om_channel_overlay_get:"+channel.u);
-				netutil.newapicommand((ResultsListener)this, "om_channel_point_list:"+channel.u);
+				Netutil.newapicommand((ResultsListener)this, "om_channel_overlay_get:"+channel.u);
+				Netutil.newapicommand((ResultsListener)this, "om_channel_point_list:"+channel.u);
 			}
 			
 		}
@@ -3837,7 +3837,7 @@ if(chanitem.u==currentChannel.u){
 
 public void playAlarmOn (Boolean remote){
 	if (alarmStreamId==0){alarmStreamId = soundPool.play(alarmsound, 1f, 1f, 1, -1, 1f);}
-	if (remote){netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
+	if (remote){Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
 	else{
 		  JSONObject postjson = new JSONObject();
         try {
@@ -3845,7 +3845,7 @@ public void playAlarmOn (Boolean remote){
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-        netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+        Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 	
 	}
 	if(log)Log.d(this.getClass().getName(), "play alarm on ");
@@ -3855,7 +3855,7 @@ public void playAlarmOn (Boolean remote){
 public void playAlarmOff (Boolean remote){
 	soundPool.stop(alarmStreamId);
 	alarmStreamId=0;
-	if (remote){netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
+	if (remote){Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
 	else{
 		  JSONObject postjson = new JSONObject();
           try {
@@ -3863,7 +3863,7 @@ public void playAlarmOff (Boolean remote){
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-          netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+          Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 	
 	}
 	if(log)Log.d(this.getClass().getName(), "play alarm off ");
@@ -3880,7 +3880,7 @@ public void enableSignalisation (Boolean remote){
 	signalisationOn=true;
 	
 	if (remote){refresh();
-		netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
+		Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
 	else{
 		  JSONObject postjson = new JSONObject();
         try {
@@ -3888,7 +3888,7 @@ public void enableSignalisation (Boolean remote){
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-        netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+        Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 	
 	}
 	}
@@ -3905,7 +3905,7 @@ public void disableSignalisation (Boolean remote){
 	signalisationOn=false;
 	
 	if (remote){refresh();
-	netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
+	Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
 	else{
 		  JSONObject postjson = new JSONObject();
         try {
@@ -3913,7 +3913,7 @@ public void disableSignalisation (Boolean remote){
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-        netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
+        Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
 	
 	}
 	
@@ -3946,7 +3946,7 @@ public void onSensorChanged(SensorEvent event) {
     if(OsMoDroid.settings.contains("signalisation")&& OsMoDroid.settings.getLong("signalisation", 0)+10000<System.currentTimeMillis()&&currentAcceleration>sensivity){
     	OsMoDroid.editor.putLong("signalisation", System.currentTimeMillis());
     	OsMoDroid.editor.commit();
-    	netutil.newapicommand((ResultsListener)LocalService.this, "om_device_alarm");
+    	Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_alarm");
     	if(log)Log.d(this.getClass().getName(), "Alarm Alarm Alarm "+Float.toString(currentAcceleration));
     }
 

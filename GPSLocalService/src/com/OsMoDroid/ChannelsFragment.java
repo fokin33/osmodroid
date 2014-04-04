@@ -106,7 +106,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 											postjson.put("text", input.getText().toString());
 											postjson.put("channel", LocalService.channelList.get((int) acmi.id).u);
 											postjson.put("device", OsMoDroid.settings.getString("device", ""));
-											netutil.newapicommand(ChannelsFragment.this, "om_channel_chat_post","json="+postjson.toString());
+											Netutil.newapicommand(ChannelsFragment.this, "om_channel_chat_post","json="+postjson.toString());
 											} catch (JSONException e) {
 												e.printStackTrace();
 											}
@@ -150,7 +150,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 		  }
 		  if (item.getItemId() == 6) {
 			  Intent browseIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(LocalService.channelList.get((int) acmi.id).url));
-			  netutil.newapicommand(ChannelsFragment.this, "om_channel_out:"+OsMoDroid.settings.getString("device", "")+","+LocalService.channelList.get((int) acmi.id).u);
+			  Netutil.newapicommand(ChannelsFragment.this, "om_channel_out:"+OsMoDroid.settings.getString("device", "")+","+LocalService.channelList.get((int) acmi.id).u);
 			  u=Integer.toString(LocalService.channelList.get((int) acmi.id).u);
 			  return true;
 		  }
@@ -281,7 +281,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 										postjson.put("name", Uri.encode(input2.getText().toString()));
 										postjson.put("code", Uri.encode(input.getText().toString()));
 										postjson.put("private", chb1.isChecked() ? "1":"0");
-										netutil.newapicommand(ChannelsFragment.this, "om_channel_add","json="+postjson.toString());
+										Netutil.newapicommand(ChannelsFragment.this, "om_channel_add","json="+postjson.toString());
 										}
 										catch (Exception e) {
 											e.printStackTrace();
@@ -321,7 +321,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 									if (!(canalid.equals("")))
 									{
 										
-										netutil.newapicommand((ResultsListener)ChannelsFragment.this,(Context)getSherlockActivity(), "om_channel_enter:"+OsMoDroid.settings.getString("device", "")+","+canalid);
+										Netutil.newapicommand((ResultsListener)ChannelsFragment.this,(Context)getSherlockActivity(), "om_channel_enter:"+OsMoDroid.settings.getString("device", "")+","+canalid);
 									} else {
 											Toast.makeText(
 											globalActivity,
@@ -343,7 +343,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
         	}
         if (item.getItemId() == 3) 
         	{
-        		netutil.newapicommand((ResultsListener)LocalService.serContext, (Context)getSherlockActivity(), "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
+        		Netutil.newapicommand((ResultsListener)LocalService.serContext, (Context)getSherlockActivity(), "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
         	}
         return super.onOptionsItemSelected(item);
 	}
@@ -376,7 +376,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 	    	});
 	    	if(LocalService.channelList.size()==0)
 	    	{
-	    		netutil.newapicommand((ResultsListener)LocalService.serContext,(Context)getSherlockActivity(), "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
+	    		Netutil.newapicommand((ResultsListener)LocalService.serContext,(Context)getSherlockActivity(), "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 	    	}
 	    	return view;
 		}
@@ -389,18 +389,18 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 			{	
 			try {
 					JSONObject js = new JSONObject(result.post.replace("json=", ""));
-					netutil.newapicommand((ResultsListener)ChannelsFragment.this,(Context)getSherlockActivity(), "om_channel_find:"+js.getString("code"));
+					Netutil.newapicommand((ResultsListener)ChannelsFragment.this,(Context)getSherlockActivity(), "om_channel_find:"+js.getString("code"));
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
 			}
 		if (result.Jo.has("om_channel_enter:"+OsMoDroid.settings.getString("device", "")+","+canalid))
 		{
-			netutil.newapicommand((ResultsListener)LocalService.serContext,(Context)getSherlockActivity(), "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
+			Netutil.newapicommand((ResultsListener)LocalService.serContext,(Context)getSherlockActivity(), "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 		}
 		if (result.Jo.has("om_channel_out:"+OsMoDroid.settings.getString("device", "")+","+u))
 		{
-			netutil.newapicommand((ResultsListener)LocalService.serContext,(Context)getSherlockActivity(), "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
+			Netutil.newapicommand((ResultsListener)LocalService.serContext,(Context)getSherlockActivity(), "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 		}
 		}
 	}

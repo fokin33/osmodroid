@@ -9,7 +9,7 @@ import java.util.List;
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.views.overlay.PathOverlay;
 
-import com.OsMoDroid.netutil.InitTask;
+import com.OsMoDroid.Netutil.InitTask;
 
 import android.graphics.Color;
 import android.util.Log;
@@ -36,7 +36,7 @@ public class ColoredGPX {
 //				PathOverlay path = new PathOverlay(cg.color, 10, mResourceProxy);
 //				paths.add(path);
 				FileInputStream is = new FileInputStream(this.gpxfile);
-				netutil.InitTask initTask = new InitTask(this);
+				Netutil.InitTask initTask = new InitTask(this);
 				initTask.execute(is);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block

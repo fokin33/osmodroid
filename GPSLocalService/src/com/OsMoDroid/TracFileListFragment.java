@@ -201,7 +201,7 @@ public class TracFileListFragment extends SherlockFragment  implements ResultsLi
                                 LocalService.mNotificationManager.notify(uploadid, notification);
                         
                         
-                        netutil.newapicommand((ResultsListener)TracFileListFragment.this, "tr_track_upload:1", file,notificationBuilder,uploadid);
+                        Netutil.newapicommand((ResultsListener)TracFileListFragment.this, "tr_track_upload:1", file,notificationBuilder,uploadid);
                 
          }
         

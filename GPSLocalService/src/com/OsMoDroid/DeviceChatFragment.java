@@ -36,7 +36,7 @@ import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.OsMoDroid.netutil.MyAsyncTask;
+import com.OsMoDroid.Netutil.MyAsyncTask;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -47,7 +47,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 	//Button sendButton;
 	//EditText input;
 	 int deviceU=-1;
-	 ArrayList<MyAsyncTask> t= new ArrayList<netutil.MyAsyncTask>();
+	 ArrayList<MyAsyncTask> t= new ArrayList<Netutil.MyAsyncTask>();
 	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
 	
 	Device getDeviceByU (int u){
@@ -109,7 +109,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 	}
 	void getDeviceInfo() {
 		int u =getDeviceByU(deviceU).u;
-		t.add( netutil.newapicommand((ResultsListener)DeviceChatFragment.this,globalActivity, "om_device_message_get:"+OsMoDroid.settings.getString("device", "")+","+u));
+		t.add( Netutil.newapicommand((ResultsListener)DeviceChatFragment.this,globalActivity, "om_device_message_get:"+OsMoDroid.settings.getString("device", "")+","+u));
 	}
 	@Override
 	public void onDetach() {
@@ -165,7 +165,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
 		if (item.getItemId()==2){
-			t.add(netutil.newapicommand((ResultsListener)DeviceChatFragment.this,globalActivity, "om_device_message_get:"+OsMoDroid.settings.getString("device", "")+","+getDeviceByU(deviceU).u));
+			t.add(Netutil.newapicommand((ResultsListener)DeviceChatFragment.this,globalActivity, "om_device_message_get:"+OsMoDroid.settings.getString("device", "")+","+getDeviceByU(deviceU).u));
 		}
 		
 		return super.onOptionsItemSelected(item);
@@ -215,7 +215,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 				postjson.put("from", OsMoDroid.settings.getString("device", ""));
 				postjson.put("to", Integer.toString((getDeviceByU(deviceU)).u));
 				postjson.put("text", input.getText().toString());
-				t.add(netutil.newapicommand((ResultsListener) DeviceChatFragment.this, "om_device_message_send","json="+postjson.toString()));
+				t.add(Netutil.newapicommand((ResultsListener) DeviceChatFragment.this, "om_device_message_send","json="+postjson.toString()));
 
 				} 
 			catch (JSONException e) {
@@ -250,7 +250,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 	
 	static public void getDevices(ResultsListener listener){
 
-		netutil.newapicommand(listener, "om_device");
+		Netutil.newapicommand(listener, "om_device");
 
 
 

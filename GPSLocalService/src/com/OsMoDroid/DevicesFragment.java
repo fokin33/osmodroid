@@ -125,7 +125,7 @@ if(deviceU!=-1){
 											postjson.put("from", OsMoDroid.settings.getString("device", ""));
 											postjson.put("to", Integer.toString(LocalService.deviceList.get((int) acmi.id).u));
 											postjson.put("text", input.getText().toString());
-											netutil.newapicommand((ResultsListener) DevicesFragment.this, "om_device_message_send","json="+postjson.toString());
+											Netutil.newapicommand((ResultsListener) DevicesFragment.this, "om_device_message_send","json="+postjson.toString());
 											} catch (JSONException e) {
 
 												// TODO Auto-generated catch block
@@ -346,7 +346,7 @@ if(deviceU!=-1){
 										int whichButton) {
 									 
 									if (!( inputhash.getText().toString().equals(""))&&!( inputN.getText().toString().equals(""))) {
-										netutil.newapicommand(DevicesFragment.this,getSherlockActivity() , "om_device_bind:"+ inputhash.getText().toString()+","+ inputN.getText().toString());
+										Netutil.newapicommand(DevicesFragment.this,getSherlockActivity() , "om_device_bind:"+ inputhash.getText().toString()+","+ inputN.getText().toString());
 									} 
 								}
 							})
@@ -420,7 +420,7 @@ if(deviceU!=-1){
 
 	static public void getDevices(ResultsListener listener , Context ctx){
 
-		netutil.newapicommand(listener,ctx, "om_device");
+		Netutil.newapicommand(listener,ctx, "om_device");
 
 
 

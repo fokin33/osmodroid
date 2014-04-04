@@ -153,7 +153,7 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 		copyadress.setIcon(android.R.drawable.ic_menu_edit);
 		MenuItem about = menu.add(0, 12, 0, R.string.about);
 		about.setIcon(android.R.drawable.ic_menu_info_details);
-		about.setIntent(new Intent(getSherlockActivity(), aboutActivity.class));
+		about.setIntent(new Intent(getSherlockActivity(), AboutActivity.class));
 //		MenuItem exit = menu.add(0, 14, 0, R.string.exit);
 		MenuItem save =menu2.add(0, 18, 0, R.string.savepref);
         MenuItem load =menu2.add(0, 19, 0, R.string.loadpref);
@@ -552,7 +552,7 @@ else {
 							public void onClick(View v) {
 	globalsendToggle.toggle();
 	String boolglobalsend =intent.getBooleanExtra("globalsend", false) ? "0" : "1";
-	netutil.newapicommand((ResultsListener)globalActivity.mService,(Context)globalActivity, "om_device_channel_active:"+OsMoDroid.settings.getString("device", "")+",0,"+boolglobalsend);
+	Netutil.newapicommand((ResultsListener)globalActivity.mService,(Context)globalActivity, "om_device_channel_active:"+OsMoDroid.settings.getString("device", "")+",0,"+boolglobalsend);
 
 							}
 						});
@@ -643,7 +643,7 @@ else {
 	
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		globalActivity.mService.refresh();
+		if(globalActivity!=null&&globalActivity.mService!=null){globalActivity.mService.refresh();}
 		super.onViewCreated(view, savedInstanceState);
 	}
 	@Override

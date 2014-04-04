@@ -15,7 +15,7 @@ import org.json.JSONObject;
 import org.osmdroid.util.ResourceProxyImpl;
 import org.osmdroid.views.overlay.PathOverlay;
 
-import com.OsMoDroid.netutil.InitTask;
+import com.OsMoDroid.Netutil.InitTask;
 
 import android.graphics.Color;
 import android.location.Address;
@@ -230,7 +230,7 @@ public class Channel {
 			 ColoredGPX load = new ColoredGPX(fileName,color);
 			 if(!fileName.exists())
 			 	{
-				 netutil.downloadfile(gpxdownloadListener, url, load);
+				 Netutil.downloadfile(gpxdownloadListener, url, load);
 			 	}	else
 			 	{
 			 		addtrack(load);

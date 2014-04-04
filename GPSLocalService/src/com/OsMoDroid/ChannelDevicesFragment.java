@@ -37,7 +37,7 @@ import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.OsMoDroid.netutil.MyAsyncTask;
+import com.OsMoDroid.Netutil.MyAsyncTask;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -45,7 +45,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class ChannelDevicesFragment extends SherlockFragment implements ResultsListener {
 	
-	ArrayList<MyAsyncTask> t= new ArrayList<netutil.MyAsyncTask>();
+	ArrayList<MyAsyncTask> t= new ArrayList<Netutil.MyAsyncTask>();
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		globalActivity = (GPSLocalServiceClient) getSherlockActivity();
@@ -165,8 +165,8 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId()==3){
-			t.add(netutil.newapicommand((ResultsListener)LocalService.serContext, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", "")));
-			t.add(netutil.newapicommand((ResultsListener)ChannelDevicesFragment.this,getSherlockActivity(), "om_channel_chat_get:"+LocalService.currentChannel.u));
+			t.add(Netutil.newapicommand((ResultsListener)LocalService.serContext, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", "")));
+			t.add(Netutil.newapicommand((ResultsListener)ChannelDevicesFragment.this,getSherlockActivity(), "om_channel_chat_get:"+LocalService.currentChannel.u));
 
 		}
 		return super.onOptionsItemSelected(item);
@@ -222,7 +222,7 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 				postjson.put("device", OsMoDroid.settings.getString("device", ""));
 				//http://apim.esya.ru/?key=H8&query=om_channel_chat_post&format=jsonp
 				//json={"channel":"51","device":"40","text":"789"}
-				t.add(netutil.newapicommand((ResultsListener)ChannelDevicesFragment.this,(Context)getSherlockActivity(), "om_channel_chat_post","json="+postjson.toString()));
+				t.add(Netutil.newapicommand((ResultsListener)ChannelDevicesFragment.this,(Context)getSherlockActivity(), "om_channel_chat_post","json="+postjson.toString()));
 				input.setText("");
 				} catch (JSONException e) {
 
@@ -261,8 +261,8 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 
 
 		  
-		t.add(netutil.newapicommand((ResultsListener)LocalService.serContext, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", "")));
-		t.add(netutil.newapicommand((ResultsListener)ChannelDevicesFragment.this,getSherlockActivity(), "om_channel_chat_get:"+LocalService.currentChannel.u));
+		t.add(Netutil.newapicommand((ResultsListener)LocalService.serContext, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", "")));
+		t.add(Netutil.newapicommand((ResultsListener)ChannelDevicesFragment.this,getSherlockActivity(), "om_channel_chat_get:"+LocalService.currentChannel.u));
 
 		
 		return view;
