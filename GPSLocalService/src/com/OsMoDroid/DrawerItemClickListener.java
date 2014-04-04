@@ -116,6 +116,7 @@ public class DrawerItemClickListener implements OnItemClickListener {
                currentItem=7;
        }
        else if(name.equals( OsMoDroid.context.getString(R.string.exit))){
+    	   name="";
     	   Intent i = new Intent(globalActivity, LocalService.class);
            globalActivity.stopService(i);
            globalActivity.finish();
