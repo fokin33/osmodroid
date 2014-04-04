@@ -389,7 +389,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 			{	
 			try {
 					JSONObject js = new JSONObject(result.post.replace("json=", ""));
-					Netutil.newapicommand((ResultsListener)ChannelsFragment.this,(Context)getSherlockActivity(), "om_channel_find:"+js.getString("code"));
+					Netutil.newapicommand((ResultsListener)ChannelsFragment.this,(Context)getSherlockActivity(),"om_channel_enter:"+OsMoDroid.settings.getString("device", "")+","+js.getString("code"));
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
