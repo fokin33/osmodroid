@@ -11,14 +11,22 @@ import org.osmdroid.views.overlay.PathOverlay;
 
 import com.OsMoDroid.Netutil.InitTask;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Path;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.util.Log;
 
 public class ColoredGPX {
 	File gpxfile;
 	int color;
 	//PathOverlay path;
-	List<IGeoPoint> points = new ArrayList<IGeoPoint>();
+	List<Point> points = new ArrayList<Point>();
+	public int mPointsPrecomputed;
+	public Path mPath = new Path();
+	Rect mLineBounds = new Rect();
+	
 	public ColoredGPX(File fileName, String scolor) {
 		gpxfile=fileName;
 		try {
@@ -38,6 +46,7 @@ public class ColoredGPX {
 				FileInputStream is = new FileInputStream(this.gpxfile);
 				Netutil.InitTask initTask = new InitTask(this);
 				initTask.execute(is);
+				
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

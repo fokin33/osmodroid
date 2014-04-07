@@ -7,7 +7,8 @@ import java.net.SocketTimeoutException;
 import java.net.InetSocketAddress;import java.net.Proxy;import java.net.URL;import java.net.UnknownHostException;import java.text.SimpleDateFormat;import java.util.ArrayList;import java.util.Collections;
 import java.util.Map;
 import java.util.Date;import java.util.Iterator;import java.util.Map.Entry;
-import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import com.OsMoDroid.LocalService.SendCoor;import android.app.AlarmManager;
+import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import org.osmdroid.util.GeoPoint;
+import com.OsMoDroid.LocalService.SendCoor;import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Notification;import android.app.PendingIntent;import android.app.PendingIntent.CanceledException;import android.content.BroadcastReceiver;import android.content.SharedPreferences;
 import android.content.Context;import android.content.Intent;import android.content.IntentFilter;import android.location.LocationManager;
@@ -699,6 +700,9 @@ if (getMessageType( topic).equals("ch")){
 					device.lat = Float.parseFloat(datanew[1]);
 					device.lon = Float.parseFloat(datanew[2]);
 					device.speed= datanew[3];
+					if(device.devicePath!=null){
+					device.devicePath.add(new GeoPoint(device.lat, device.lon));
+					}
 					if(log)Log.d(this.getClass().getName(), "Изменилось состояние устройства в канале на" + device.toString());
 					if(LocalService.devlistener!=null){LocalService.devlistener.onDeviceChange(device);}
 				}

@@ -63,7 +63,7 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 		//private View view;
 		boolean rotate=false;
 		//private Context context;
-		ArrayList<PathOverlay> paths = new ArrayList<PathOverlay>();
+		//ArrayList<PathOverlay> paths = new ArrayList<PathOverlay>();
 		private IMyLocationConsumer myLocationConumer;
 		private long lastgpslocation=0;
 		@Override
@@ -112,12 +112,11 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 	@Override
 	public void onDestroyView() {
 		Log.d(getClass().getSimpleName(), "map ondestroyview");
-		Editor editor = OsMoDroid.settings.edit();
-		editor.putInt("centerlat", mMapView.getMapCenter().getLatitudeE6());
-		editor.putInt("centerlon", mMapView.getMapCenter().getLongitudeE6());
-		editor.putInt("zoom", mMapView.getZoomLevel());
-		editor.putBoolean("isfollow", myLoc.isFollowLocationEnabled());
-		editor.commit();
+		OsMoDroid.editor.putInt("centerlat", mMapView.getMapCenter().getLatitudeE6());
+		OsMoDroid.editor.putInt("centerlon", mMapView.getMapCenter().getLongitudeE6());
+		OsMoDroid.editor.putInt("zoom", mMapView.getZoomLevel());
+		OsMoDroid.editor.putBoolean("isfollow", myLoc.isFollowLocationEnabled());
+		OsMoDroid.editor.commit();
 		//ch.map=null;
 	
 		super.onDestroyView();
@@ -226,7 +225,6 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 			//SherlockFragmentActivity context = getSherlockActivity();
-
 			Log.d(getClass().getSimpleName(), "map oncreateview");
 			mResourceProxy = new ResourceProxyImpl(inflater.getContext().getApplicationContext());
 			final String name = "MapSurfer";
@@ -250,25 +248,8 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 				myTracePathOverlay.clearPath();
 				myTracePathOverlay.addPoints(LocalService.traceList);
 			}
-			showChannelTracks();
-			for (Channel ch: LocalService.channelList){
-//				//ch.map=this;
-//				for(ColoredGPX cg:ch.gpxList){
-//					if(cg.path==null){
-//						cg.path = new PathOverlay(cg.color,10,mResourceProxy);
-//					}
-//					mMapView.getOverlayManager().add(cg.path);
-//					cg.initPathOverlay();
-//				}
-				//mMapView.getOverlayManager().addAll(ch.paths);
-				for(Device dev: ch.deviceList){
-					if(dev.p==null){
-						dev.p =new PathOverlay(Color.parseColor("#" + dev.color), 10, mResourceProxy);
-					}
-					dev.p.addPoints(dev.devicePath);
-					mMapView.getOverlayManager().add(dev.p);
-				}
-			}
+	
+			
 			
 			
             mMapView.getOverlays().add(myTracePathOverlay);
@@ -322,7 +303,7 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 			});
 			
 			CompassOverlay compas = new CompassOverlay(getSherlockActivity(), mMapView);
-			ChannelsOverlay choverlay = new ChannelsOverlay(mResourceProxy);
+			ChannelsOverlay choverlay = new ChannelsOverlay(mResourceProxy, mMapView);
 			mMapView.getOverlays().add(choverlay);
 			mMapView.getOverlays().add(compas);
 			compas.enableCompass();
@@ -330,10 +311,14 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 			return view;
 	}
 
+
+
+	
+
 	@Override
 	public void onDeviceChange(Device dev) {
 		 Log.d(getClass().getSimpleName(), "ondevicechange");
-	
+		 
 		 mMapView.invalidate();
 			
 	}
@@ -455,27 +440,6 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 		myTracePathOverlay.addPoint(geopoint);
 		
 	}
-
-
-
-
-
-	public void showChannelTracks() {
-		mMapView.getOverlayManager().removeAll(paths);
-		paths.clear();
-		for (Channel ch: LocalService.channelList){
-			//ch.map=this;
-			for(ColoredGPX cg:ch.gpxList){
-				if(cg.points.size()!=0)
-					{
-						PathOverlay p =new PathOverlay(cg.color,10,mResourceProxy);
-						p.addPoints(cg.points);
-						paths.add(p);
-						mMapView.getOverlayManager().add(0,p);
-					}
-				}
-			}
-		Log.d(getClass().getSimpleName(), "Count of overlays="+mMapView.getOverlayManager().size());
-		}
+	
 	
 	}

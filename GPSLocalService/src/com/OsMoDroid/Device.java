@@ -26,7 +26,7 @@ public class Device implements Serializable{
 	public String color="AAAAAA";
 	public String ch;
 	public List<IGeoPoint> devicePath= new ArrayList<IGeoPoint>();
-	public PathOverlay p;
+	//public PathOverlay p;
 	public Device(){
 		
 	}

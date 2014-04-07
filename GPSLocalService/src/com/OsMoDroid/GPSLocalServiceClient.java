@@ -175,13 +175,13 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	
 	public ActionBar actionBar;
 	private ArrayList<String> mDrawerItems=new ArrayList<String>();
-	static DrawerLayout mDrawerLayout;
-	static ListView mDrawerList;
+	 DrawerLayout mDrawerLayout;
+	 ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private CharSequence mTitle;
 	private CharSequence mDrawerTitle;
-	static FragmentManager fMan;
-	static DrawerItemClickListener drawClickListener = new DrawerItemClickListener();
+	FragmentManager fMan;
+	DrawerItemClickListener drawClickListener;
 	upd mainUpdListener;
 	private BroadcastReceiver mIMstatusReciever;
 	//private boolean afterrotate=false;
@@ -291,9 +291,10 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		drawClickListener = new DrawerItemClickListener();
-		Log.d(this.getClass().getSimpleName(), "onCreate() gpsclient");
+		Log.d(this.getClass().getSimpleName(), "onCreate() gpsclient"); 
+		
 		super.onCreate(savedInstanceState);
+		OsMoDroid.activity=this;
 		PreferenceManager.setDefaultValues(this, R.xml.pref, true);
 		ReadPref();
 		String sdState = android.os.Environment.getExternalStorageState();
@@ -353,12 +354,12 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	        mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		        // Set the adapter for the list view
 		    	setupDrawerList();
-		    	drawClickListener.globalActivity=this;
-		        mDrawerList.setOnItemClickListener(drawClickListener);
+
+		     
 		        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		        mDrawerLayout.setBackgroundColor(Color.WHITE);
 			
-		        fMan=getSupportFragmentManager();
+		       
 			
 	         actionBar = getSupportActionBar();
 	         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -383,6 +384,10 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	            }
 	        };
 	        mDrawerLayout.setDrawerListener(mDrawerToggle);
+	        fMan=getSupportFragmentManager();
+			drawClickListener = new DrawerItemClickListener(fMan, mDrawerList, mDrawerLayout, this);
+			   mDrawerList.setOnItemClickListener(drawClickListener);
+			
 			bindService();
 			if(savedInstanceState!=null){
 			//	afterrotate=true;
@@ -772,7 +777,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	@Override
 	protected void onDestroy() {
 		Log.d(this.getClass().getSimpleName(), "onDestroy() gpsclient");
-		
+		OsMoDroid.activity=null;
 if (mBound) {
 
 			try {
