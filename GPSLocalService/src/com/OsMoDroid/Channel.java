@@ -38,6 +38,7 @@ public class Channel {
 	public Boolean connected=false;
 	public Boolean send=false;
 	LocalService localService;
+	//MapFragment map;
 	ResultsListener gpxdownloadListener = new ResultsListener() {
 	
 		@Override

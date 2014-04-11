@@ -192,6 +192,12 @@ public class WampConnection extends WebSocketConnection implements Wamp {
          connect(wsUri, new String[] {"wamp"}, new WebSocketConnectionHandler() {
 
             @Override
+			public void onPong() {
+				mSessionHandler.onPong();
+				super.onPong();
+			}
+
+			@Override
             public void onOpen() {
                if (mSessionHandler != null) {
                   mSessionHandler.onOpen();

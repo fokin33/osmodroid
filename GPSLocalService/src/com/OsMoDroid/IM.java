@@ -7,7 +7,8 @@ import java.net.SocketTimeoutException;
 import java.net.InetSocketAddress;import java.net.Proxy;import java.net.URL;import java.net.UnknownHostException;import java.text.SimpleDateFormat;import java.util.ArrayList;import java.util.Collections;
 import java.util.Map;
 import java.util.Date;import java.util.Iterator;import java.util.Map.Entry;
-import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import com.OsMoDroid.LocalService.SendCoor;import android.app.AlarmManager;
+import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import org.osmdroid.util.GeoPoint;
+import com.OsMoDroid.LocalService.SendCoor;import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Notification;import android.app.PendingIntent;import android.app.PendingIntent.CanceledException;import android.content.BroadcastReceiver;import android.content.SharedPreferences;
 import android.content.Context;import android.content.Intent;import android.content.IntentFilter;import android.location.LocationManager;
@@ -29,8 +30,7 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 	
 	private static final String KEEPALIVE_INTENT = "com.osmodroid.keepalive";
 
-	protected  boolean running       = false;	//protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	private boolean log=true;
-	String adr;	String mykey;//	String timestamp=Long.toString(System.currentTimeMillis());String lcursor="";	int pingTimeout=900;	Thread myThread;	private BufferedReader    in      = null;	Context parent;	String myLongPollCh;
+	protected  boolean running       = false;	//protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;	String mykey;//	String timestamp=Long.toString(System.currentTimeMillis());	String lcursor="";	int pingTimeout=900;	Thread myThread;	private BufferedReader    in      = null;	Context parent;	String myLongPollCh;
 	ArrayList<String[]>  myLongPollChList;	//ArrayList<String> list= new ArrayList<String>();	ConnectionHandler c;
 	//WebSocketConnectionHandler wsc;
 
@@ -39,10 +39,11 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 	ObjectOutputStream output = null;	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private  WampConnection mWampConnection = new WampConnection();
 	//WebSocketConnection mWebsocketConnection = new WebSocketConnection();
-	final String wsuri = "ws://osmo.mobi:5739/";
-	final String websocketuri = "ws://osmo.mobi:5740/";
+	final String wsuri = "ws://push.osmo.mobi/";
+	final String websocketuri = "ws://srv.osmo.mobi/";
 	protected boolean connOpened=false;
-	protected boolean connecting=false;	public IM(ArrayList<String[]> longPollChList, Context context,String key,final LocalService localService) {
+	protected boolean connecting=false;
+	final boolean  log=true;	public IM(ArrayList<String[]> longPollChList, Context context,String key,final LocalService localService) {
 		this.localService=localService; 
 		parent=context;
 		manager = (AlarmManager)(parent.getSystemService( Context.ALARM_SERVICE ));
@@ -57,7 +58,7 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 			public void onOpen() {
 				connOpened=true;
 				connecting=false;
-				//ExceptionHandler.reportOnlyHandler(parent.getApplicationContext()).uncaughtException(Thread.currentThread(), new Throwable("websocket onopen"));
+				addlog("websocket onopen");
 				if(log)Log.d(this.getClass().getName(), "websocket onopen, code=");
 				localService.refresh();
 				resubscribe();
@@ -68,14 +69,24 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 			public void onClose(int code, String reason) {
 				connOpened=false;
 				connecting=false;
-				//ExceptionHandler.reportOnlyHandler(parent.getApplicationContext()).uncaughtException(Thread.currentThread(), new Throwable("websocket onclose, code="+code+" reason="+reason));
+				addlog("websocket onclose, code="+code+" reason="+reason+" isconnected="+mWampConnection.isConnected());
 				if(log)Log.d(this.getClass().getName(), "websocket onclose, code="+code+" reason="+reason);
 				if(log)Log.d(this.getClass().getName(), "websocket onclose, isConnected="+mWampConnection.isConnected());
 				localService.refresh();
 				if(localService.isOnline()&&running){
 					setReconnectAlarm();
+				}else 
+				{
+					stop();
 				}
+				
 				disablekeepAliveAlarm();
+				
+			}
+
+			@Override
+			public void onPong() {
+				addlog("websocket Pong Recieved");
 				
 			}
 		};
@@ -122,7 +133,8 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 	  BroadcastReceiver reconnectReceiver = new BroadcastReceiver() {
           @Override public void onReceive( Context context, Intent _ )
           {
-              start();
+        	  addlog("websocket reconnect reciever trigged");
+        	  start();
               context.unregisterReceiver( this ); // this == BroadcastReceiver, not Activity
           }
       };
@@ -130,6 +142,7 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
           @Override public void onReceive( Context context, Intent _ )
           {
               if(mWampConnection!=null&&mWampConnection.isConnected()){
+            	  addlog("websocket sendPing");
             	  if(log)Log.d(this.getClass().getName(), "websocket send ping");
             	  mWampConnection.sendPing();
               }
@@ -140,6 +153,13 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
           }
       };
       
+      void addlog(String str){
+    	  	if(OsMoDroid.debug)ExceptionHandler.reportOnlyHandler(parent.getApplicationContext()).uncaughtException(Thread.currentThread(), new Throwable(str));
+    	  	if(OsMoDroid.debug)LocalService.debuglist.add( sdf1.format(new Date(System.currentTimeMillis()))+" "+str);
+  			if(LocalService.debugAdapter!=null){LocalService.debugAdapter.notifyDataSetChanged();}
+    	  
+      }
+      
       
       AlarmManager manager;
       PendingIntent reconnectPIntent;
@@ -147,6 +167,7 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 	 
       public void setkeepAliveAlarm(){
     	  if(log)Log.d(this.getClass().getName(), "void setKeepAliveAlarm");
+    	  addlog("websocket void setkeepalive");
     	  parent.registerReceiver(keepAliveReceiver, new IntentFilter(KEEPALIVE_INTENT));
     	  manager.cancel(keepAlivePIntent);
     	  manager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, KEEP_ALIVE, KEEP_ALIVE, keepAlivePIntent);
@@ -154,6 +175,7 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
       
       public void disablekeepAliveAlarm(){
     	  if(log)Log.d(this.getClass().getName(), "void disableKeepAliveAlarm");
+    	  addlog("websocket void disablekeepalive");
     	  try {
 			parent.unregisterReceiver(keepAliveReceiver);
 		} catch (Exception e) {
@@ -165,6 +187,7 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
       public void setReconnectAlarm() 
 	    {	
     	  if(log)Log.d(this.getClass().getName(), "void setReconnectAlarm");
+    	  addlog("websocket setReconnectAlarn");
     	  parent.registerReceiver( reconnectReceiver, new IntentFilter(RECONNECT_INTENT) );
     	  manager.cancel(reconnectPIntent);
     	  manager.set( AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + RECONNECT_TIMEOUT, reconnectPIntent );
@@ -277,14 +300,18 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 				e.printStackTrace();
 			}
 			if (u!=-1){
-			Message msg = new Message();			Bundle b = new Bundle();			b.putInt("deviceU", u);			msg.setData(b);			localService.alertHandler.sendMessage(msg);		}			}	private BroadcastReceiver bcr = new BroadcastReceiver() {		@Override		public void onReceive(Context context, Intent intent) {		//	if(log)Log.d(this.getClass().getName(), "BCR"+this);		//	if(log)Log.d(this.getClass().getName(), "BCR"+this+" Intent:"+intent);			if (intent.getAction().equals(android.net.ConnectivityManager.CONNECTIVITY_ACTION)) {				Bundle extras = intent.getExtras();			//	if(log)Log.d(this.getClass().getName(), "BCR"+this+ " "+intent.getExtras());				if(extras.containsKey("networkInfo")) {					NetworkInfo netinfo = (NetworkInfo) extras.get("networkInfo");				//	if(log)Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo);				//	if(log)Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo.getType());					if(netinfo.isConnected()) {						if(log)Log.d(this.getClass().getName(), "BCR Network is connected");						if(log)Log.d(this.getClass().getName(), "Running:"+running);						// Network is connected						if(!running ) {							//SetAlarm();
+			Message msg = new Message();			Bundle b = new Bundle();			b.putInt("deviceU", u);			msg.setData(b);			localService.alertHandler.sendMessage(msg);		}			}	private BroadcastReceiver bcr = new BroadcastReceiver() {		@Override		public void onReceive(Context context, Intent intent) {			addlog("network broadcast recive");		//	if(log)Log.d(this.getClass().getName(), "BCR"+this);		//	if(log)Log.d(this.getClass().getName(), "BCR"+this+" Intent:"+intent);			if (intent.getAction().equals(android.net.ConnectivityManager.CONNECTIVITY_ACTION)) {				Bundle extras = intent.getExtras();			//	if(log)Log.d(this.getClass().getName(), "BCR"+this+ " "+intent.getExtras());				if(extras.containsKey("networkInfo")) {					NetworkInfo netinfo = (NetworkInfo) extras.get("networkInfo");				//	if(log)Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo);				//	if(log)Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo.getType());					if(netinfo.isConnected()) {						if(log)Log.d(this.getClass().getName(), "BCR Network is connected");						if(log)Log.d(this.getClass().getName(), "Running:"+running);						// Network is connected
+						addlog("webcoket Network is connected, running="+running);						if(!running ) {							//SetAlarm();
 							start();
-						}											}					else {						if(log)Log.d(this.getClass().getName(), "BCR Network is not connected");						if(log)Log.d(this.getClass().getName(), "Running:"+running);						if (running)
-						{							
+							addlog("webcoket start by broadcast because no running");
+						}											}					else {						if(log)Log.d(this.getClass().getName(), "BCR Network is not connected");						if(log)Log.d(this.getClass().getName(), "Running:"+running);
+						addlog("webcoket Network is not connected, running="+running);						if (running)
+						{							addlog("webcoket stop by broadcast because running");
 							stop();
 						}
-											}				}				else if(extras.containsKey("noConnectivity")) {					if(log)Log.d(this.getClass().getName(), "BCR Network is noConnectivity");					if(log)Log.d(this.getClass().getName(), "Running:"+running);					if (running)
-					{						
+											}				}				else if(extras.containsKey("noConnectivity")) {					if(log)Log.d(this.getClass().getName(), "BCR Network is noConnectivity");					if(log)Log.d(this.getClass().getName(), "Running:"+running);
+					addlog("webcoket Network is not connected, running="+running);					if (running)
+					{						addlog("webcoket stop by broadcast because running");
 						stop();
 					}
 									}		    }		}	};
@@ -294,6 +321,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	 * Выключает IM
 	 */
 	void close(){		if(log)Log.d(this.getClass().getName(), "void IM.close");
+		addlog("webcoket void close");
 		try {
 			parent.unregisterReceiver(bcr);
 		} catch (Exception e) {
@@ -301,6 +329,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			e.printStackTrace();
 		}
 				stop();	};	 void start(){		if(log)Log.d(this.getClass().getName(), "void IM.start");
+		addlog("webcoket void start");
 		running = true;		mWampConnection.connect(wsuri, c, o);
 //		try {
 //			mWebsocketConnection.connect(websocketuri, wsc);
@@ -310,7 +339,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 //		}
 		connecting=true;
 		localService.refresh();		  }void parseEx (String toParse, String topic){
-
+	addlog("webcoket void parseEx");
 //	[
 //	  {
 //	    "ids": { "om_omc_RAzHkQ9JzY5_chat": "1364554177.56155052100000" },
@@ -699,6 +728,9 @@ if (getMessageType( topic).equals("ch")){
 					device.lat = Float.parseFloat(datanew[1]);
 					device.lon = Float.parseFloat(datanew[2]);
 					device.speed= datanew[3];
+					if(device.devicePath!=null){
+					device.devicePath.add(new GeoPoint(device.lat, device.lon));
+					}
 					if(log)Log.d(this.getClass().getName(), "Изменилось состояние устройства в канале на" + device.toString());
 					if(LocalService.devlistener!=null){LocalService.devlistener.onDeviceChange(device);}
 				}
@@ -744,7 +776,7 @@ if (getMessageType( topic).equals("chch")){
 private void addToChannelChat(String toParse, String topic) {
 	if(log)Log.d(this.getClass().getName(), "type=chch");
 	if(log)Log.d(this.getClass().getName(), "Сообщение в чат канала " + toParse);
-	String fromDevice=localService.getString(R.string.obeservsers);
+	String fromDevice="Незнамо кто";
 	//09-16 18:25:41.057: D/com.OsMoDroid.IM(1474):     "data": "0|40+\u041e\u043f\u0430\u0441\u043d\u043e +2013-09-16 22:25:44"
 	//"data": "0|40|cxbcxvbcxvbcxvb|2013-03-14 22:42:34"
 	String[] data = toParse.split("\\|");
@@ -766,6 +798,9 @@ private void addToChannelChat(String toParse, String topic) {
 				fromDevice=localService.getString(R.string.iam);
 				if(log)Log.d(this.getClass().getName(), "Сообщение от устройства в канале от меня ");
 			}
+			if (datanew[0].equals("0")){
+			fromDevice=localService.getString(R.string.observers);
+			}
 		}
 		Intent intent =new Intent(localService, GPSLocalServiceClient.class).putExtra("channelpos", channel.u);
 		intent.setAction("channelchat");
@@ -774,7 +809,7 @@ private void addToChannelChat(String toParse, String topic) {
 	 	NotificationCompat.Builder notificationBuilder =new NotificationCompat.Builder(
 				localService.getApplicationContext())
 		    	.setWhen(when)
-		    	.setContentText(channel.name+" "+fromDevice+": "+datanew[1])
+		    	.setContentText(channel.name+" "+fromDevice+": "+Netutil.unescape(datanew[1]))
 		    	.setContentTitle("OsMoDroid")
 		    	.setSmallIcon(android.R.drawable.ic_menu_send)
 		    	.setAutoCancel(true)
@@ -795,7 +830,7 @@ if (!OsMoDroid.settings.getBoolean("silentnotify", false)){
 		
 		
 				channel.messagesstringList.clear();
-				channel.messagesstringList.add(fromDevice + ": "+datanew[1]);
+				channel.messagesstringList.add(fromDevice + ": "+Netutil.unescape(datanew[1]));
 				localService.alertHandler.post(new Runnable(){
 					public void run() {
 						if (LocalService.channelsmessagesAdapter!=null&& LocalService.currentChannel != null&&LocalService.currentChannel.u==channel.u ){
@@ -808,6 +843,7 @@ if (!OsMoDroid.settings.getBoolean("silentnotify", false)){
 	}
 }	 void stop (){
 		 if(log)Log.d(this.getClass().getName(), "void IM.stop");
+		 addlog("webcoket void stop");
 		 running = false;
 		 manager.cancel(reconnectPIntent);		 if(mWampConnection.isConnected()){mWampConnection.disconnect();}
 		 //if(mWebsocketConnection.isConnected()){mWampConnection.disconnect();}
@@ -815,7 +851,7 @@ if (!OsMoDroid.settings.getBoolean("silentnotify", false)){
 			}
 
 	 void resubscribe() {
-		 
+		 addlog("webcoket resubscribe");
 		 if(mWampConnection!=null&&connOpened){
 			 mWampConnection.unsubscribe();
 			 if(log)Log.d(this.getClass().getName(), "websocket unsubscribe all");

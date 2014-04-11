@@ -6,10 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 
 public class DrawerItemClickListener implements OnItemClickListener {
 
@@ -23,13 +26,22 @@ public class DrawerItemClickListener implements OnItemClickListener {
 	 TracFileListFragment trac;
 	 DeviceChatFragment devchat;
 	 ChannelDevicesFragment chandev;
+	 DebugFragment debug;
 	 int currentItem=0;
-	 
-	 GPSLocalServiceClient globalActivity;
+	private FragmentManager fMan;
+	ListView mDrawerList;
+	DrawerLayout mDrawerLayout;
+	private GPSLocalServiceClient activity;
 	
 	 
 	 
-	 @Override
+	 public DrawerItemClickListener(FragmentManager fMan, ListView mDrawerList, DrawerLayout mDrawerLayout , GPSLocalServiceClient activity) {
+		this.fMan=fMan;
+		this.mDrawerList=mDrawerList;
+		this.mDrawerLayout=mDrawerLayout;
+		this.activity=activity;
+	}
+	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		//selectItem(arg2);
 		LocalService.currentItemName=(String)arg0.getAdapter().getItem(arg2);
@@ -37,7 +49,7 @@ public class DrawerItemClickListener implements OnItemClickListener {
 	}
 	public void selectItem(String name, Bundle bundle) {
 		 
-        final FragmentTransaction ft = GPSLocalServiceClient.fMan.beginTransaction();
+        final FragmentTransaction ft = fMan.beginTransaction();
       
 //getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),getString(R.string.chanals)
 //getString(R.string.devices),getString(R.string.links), getString(R.string.notifications), getString(R.string.tracks)            
@@ -116,24 +128,33 @@ public class DrawerItemClickListener implements OnItemClickListener {
                currentItem=7;
        }
        else if(name.equals( OsMoDroid.context.getString(R.string.exit))){
-    	   android.os.Process.killProcess(android.os.Process.myPid());
-//    	   Intent i = new Intent(globalActivity, LocalService.class);
-//           globalActivity.stopService(i);
-//           globalActivity.finish();
-       } 
+    	//   android.os.Process.killProcess(android.os.Process.myPid());
+    	   LocalService.currentItemName="";
+    	   Intent i = new Intent(activity, LocalService.class);
+           activity.stopService(i);
+           activity.finish();
+       }
+       else if(name.equals( "debug")){
+    	   if(debug==null){ 
+           	debug=new DebugFragment();
+           	}
+               ft.replace(R.id.fragment_container, debug);
+               currentItem=8;
+       }
         
        
         
-        GPSLocalServiceClient.fMan.popBackStack();
+        fMan.popBackStack();
         //ft.addToBackStack("").commit();
-        GPSLocalServiceClient.mDrawerList.setItemChecked(currentItem, true);
-        GPSLocalServiceClient.mDrawerLayout.closeDrawer(GPSLocalServiceClient.mDrawerList);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-            	 ft.commit();
-            }
-        }, 100);
+        //GPSLocalServiceClient.mDrawerList.setItemChecked(currentItem, true);
+        ft.commit();
+        mDrawerLayout.closeDrawer(mDrawerList);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//            	
+//            }
+//        }, 100);
        
         
         //setTitle(myfriendname[position]);

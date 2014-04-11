@@ -67,4 +67,10 @@ public class WebSocketConnectionHandler implements WebSocket.ConnectionHandler {
    public void onBinaryMessage(byte[] payload) {
    }
 
+@Override
+public void onPong() {
+	// TODO Auto-generated method stub
+	
+}
+
 }

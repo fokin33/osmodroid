@@ -1,6 +1,9 @@
 package com.OsMoDroid;
 
+import java.util.ArrayList;
+
 import org.osmdroid.ResourceProxy;
+import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapView;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
@@ -13,35 +16,141 @@ import org.osmdroid.views.overlay.OverlayItem;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Cap;
+import android.graphics.Paint.Join;
+import android.graphics.Paint.Style;
+import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.view.MotionEvent;
 
-public class ChannelsOverlay extends Overlay {
+public class ChannelsOverlay extends Overlay implements RotationGestureDetector.OnRotationGestureListener {
 	//private final float mScale;
 	Paint paint=new Paint();
-	
-	public ChannelsOverlay(ResourceProxy pResourceProxy) {
+	private Paint pathpaint;
+	private final Point mTempPoint1 = new Point();
+	private final Point mTempPoint2 = new Point();
+	MapView map;
+	private RotationGestureDetector mRotationDetector;
+	public ChannelsOverlay(ResourceProxy pResourceProxy, MapView map) {
 		super(pResourceProxy);
 		// mScale = OsMoDroid.context.getResources().getDisplayMetrics().density;
-		
+		pathpaint = new Paint();
+		pathpaint.setStyle(Style.STROKE);
+		pathpaint.setStrokeWidth(14);
+		pathpaint.setAntiAlias(true);
+		pathpaint.setStrokeCap(Cap.ROUND);
+		pathpaint.setStrokeJoin(Join.ROUND);
+		this.map=map;
+		mRotationDetector = new RotationGestureDetector(this);
 
 		// TODO Auto-generated constructor stub
 	}
 	
-	
+	@Override
+    public boolean onTouchEvent(MotionEvent event, MapView mapView)
+    {
+        if (this.isEnabled()) {
+            mRotationDetector.onTouchEvent(event);
+        }
+        return super.onTouchEvent(event, mapView);
+    }
+
 	
 
 	@Override
 	protected void draw(Canvas canvas, MapView mapView, boolean shadow) {
+		if(shadow){return;}
 		final BoundingBoxE6 theBoundingBox = mapView.getBoundingBox();
 		final Projection pj = mapView.getProjection();
-        final Point curScreenCoords = new Point();
+        final Point scrPoint = new Point();
 		for (Channel ch :LocalService.channelList){
-			for(Device dev:ch.deviceList){
+			for (ColoredGPX gpx :ch.gpxList){
+				int size=gpx.points.size();
+				if(size>2)
+				{
+					//
+					
+			
+					// precompute new points to the intermediate projection.
+					while (gpx.mPointsPrecomputed < size) {
+						final Point pt = gpx.points.get(gpx.mPointsPrecomputed);
+						pj.toMapPixelsProjected(pt.x, pt.y, pt);
+
+						gpx.mPointsPrecomputed++;
+					}
+
+					Point screenPoint0 = null; // points on screen
+					Point screenPoint1;
+					Point projectedPoint0; // points from the points list
+					Point projectedPoint1;
+
+					// clipping rectangle in the intermediate projection, to avoid performing projection.
+					final Rect clipBounds = pj.fromPixelsToProjected(pj.getScreenRect());
+
+					gpx.mPath.rewind();
+					projectedPoint0 = gpx.points.get(size - 1);
+					gpx.mLineBounds.set(projectedPoint0.x, projectedPoint0.y, projectedPoint0.x, projectedPoint0.y);
+
+					for (int i = size - 2; i >= 0; i--) {
+						// compute next points
+						projectedPoint1 = gpx.points.get(i);
+						gpx.mLineBounds.union(projectedPoint1.x, projectedPoint1.y);
+
+						if (!Rect.intersects(clipBounds, gpx.mLineBounds)) {
+							// skip this line, move to next point
+							projectedPoint0 = projectedPoint1;
+							screenPoint0 = null;
+							continue;
+						}
+
+						// the starting point may be not calculated, because previous segment was out of clip
+						// bounds
+						if (screenPoint0 == null) {
+							screenPoint0 = pj.toMapPixelsTranslated(projectedPoint0, this.mTempPoint1);
+							gpx.mPath.moveTo(screenPoint0.x, screenPoint0.y);
+						}
+
+						screenPoint1 = pj.toMapPixelsTranslated(projectedPoint1, this.mTempPoint2);
+
+						// skip this point, too close to previous point
+						if (Math.abs(screenPoint1.x - screenPoint0.x) + Math.abs(screenPoint1.y - screenPoint0.y) <= 1) {
+							continue;
+						}
+
+						gpx.mPath.lineTo(screenPoint1.x, screenPoint1.y);
+
+						// update starting point to next position
+						projectedPoint0 = projectedPoint1;
+						screenPoint0.x = screenPoint1.x;
+						screenPoint0.y = screenPoint1.y;
+						gpx.mLineBounds.set(projectedPoint0.x, projectedPoint0.y, projectedPoint0.x, projectedPoint0.y);
+					}
+					pathpaint.setColor(gpx.color);
+					canvas.drawPath(gpx.mPath, this.pathpaint);
+					
+					///
+					
+//					Path path = new Path();
+//					pj.toMapPixels(gpx.points.get(0), scrPoint);
+//					path.moveTo(scrPoint.x, scrPoint.y);
+//					for (IGeoPoint geo: gpx.points)
+//				 		{
+//							pj.toMapPixels(geo, scrPoint);
+//							path.lineTo(scrPoint.x, scrPoint.y);
+//							path.moveTo(scrPoint.x, scrPoint.y);
+//				 		}
+//				 	canvas.drawPath(path, pathpaint);
+				}
+			}
+			
+			for(Device dev:ch.deviceList)
+			{
 				 if (theBoundingBox.contains(new GeoPoint(dev.lat, dev.lon))) 
 				 {
-					pj.toMapPixels(new GeoPoint(dev.lat, dev.lon), curScreenCoords);
+					pj.toMapPixels(new GeoPoint(dev.lat, dev.lon), scrPoint);
 				  	paint.setDither(true);
 					paint.setAntiAlias(true);
 					paint.setTextSize(22f);
@@ -49,18 +158,32 @@ public class ChannelsOverlay extends Overlay {
 					paint.setTextAlign(Paint.Align.CENTER);
 					paint.setColor(Color.parseColor("#013220"));
 					canvas.save();
-			        canvas.rotate(-mapView.getMapOrientation(), curScreenCoords.x, curScreenCoords.y);
-					canvas.drawText(dev.name, curScreenCoords.x, curScreenCoords.y-10, paint);
-					canvas.drawText(dev.speed, curScreenCoords.x,curScreenCoords.y-2*10, paint);
+			        canvas.rotate(-mapView.getMapOrientation(), scrPoint.x, scrPoint.y);
+					canvas.drawText(dev.name, scrPoint.x, scrPoint.y-10, paint);
+					canvas.drawText(dev.speed, scrPoint.x,scrPoint.y-2*10, paint);
 					paint.setColor(Color.parseColor("#" + dev.color));
-					canvas.drawCircle(curScreenCoords.x, curScreenCoords.y, 10, paint);
+					canvas.drawCircle(scrPoint.x, scrPoint.y, 10, paint);
 					canvas.restore();
 				 }
+				 if(dev.devicePath.size()>2)
+				 	{
+					 pathpaint.setColor(Color.parseColor("#" + dev.color));
+					 Path path = new Path();
+					 pj.toMapPixels(dev.devicePath.get(0), scrPoint);
+					 path.moveTo(scrPoint.x, scrPoint.y);
+					 for (IGeoPoint geo: dev.devicePath)
+					 	{
+						 pj.toMapPixels(geo, scrPoint);
+						 path.lineTo(scrPoint.x, scrPoint.y);
+						 path.moveTo(scrPoint.x, scrPoint.y);
+					 	}
+					 	canvas.drawPath(path, pathpaint);
+				 	}
 			}
 			for(com.OsMoDroid.Channel.Point p: ch.pointList){
 				if (theBoundingBox.contains(new GeoPoint(p.lat, p.lon))) 
 				 {
-					pj.toMapPixels(new GeoPoint(p.lat, p.lon), curScreenCoords);
+					pj.toMapPixels(new GeoPoint(p.lat, p.lon), scrPoint);
 				  	paint.setDither(true);
 					paint.setAntiAlias(true);
 					paint.setTextSize(22f);
@@ -68,16 +191,25 @@ public class ChannelsOverlay extends Overlay {
 					paint.setTextAlign(Paint.Align.CENTER);
 					paint.setColor(Color.parseColor("#013220"));
 					canvas.save();
-			        canvas.rotate(-mapView.getMapOrientation(), curScreenCoords.x, curScreenCoords.y);
-					canvas.drawText(p.name, curScreenCoords.x, curScreenCoords.y-10, paint);
+			        canvas.rotate(-mapView.getMapOrientation(), scrPoint.x, scrPoint.y);
+					canvas.drawText(p.name, scrPoint.x, scrPoint.y-10, paint);
 					paint.setColor(Color.parseColor("#" + p.color));
-					canvas.drawRect(curScreenCoords.x-10, curScreenCoords.y-10, curScreenCoords.x+10, curScreenCoords.y+10, paint);
+					canvas.drawRect(scrPoint.x-10, scrPoint.y-10, scrPoint.x+10, scrPoint.y+10, paint);
 					canvas.restore();
 				 }
 			}
+			
 		}
 		
 	}
 
+
+	@Override
+	public boolean OnRotation(RotationGestureDetector rotationDetector) {
+		map.setMapOrientation(map.getMapOrientation()+rotationDetector.getAngle());
+		return false;
+	}
+	
+	
 	
 }

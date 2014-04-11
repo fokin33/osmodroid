@@ -175,13 +175,13 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	
 	public ActionBar actionBar;
 	private ArrayList<String> mDrawerItems=new ArrayList<String>();
-	static DrawerLayout mDrawerLayout;
-	static ListView mDrawerList;
+	 DrawerLayout mDrawerLayout;
+	 ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private CharSequence mTitle;
 	private CharSequence mDrawerTitle;
-	static FragmentManager fMan;
-	static DrawerItemClickListener drawClickListener = new DrawerItemClickListener();
+	FragmentManager fMan;
+	DrawerItemClickListener drawClickListener;
 	upd mainUpdListener;
 	private BroadcastReceiver mIMstatusReciever;
 	//private boolean afterrotate=false;
@@ -223,34 +223,6 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	};
 	private boolean proceednewintent=false;
 	private ArrayAdapter<String> menuAdapter;
-	
-	
-
-	public static String unescape (String s)
-	{
-	    while (true)
-	    {
-	        int n=s.indexOf("&#");
-	        if (n<0) break;
-	        int m=s.indexOf(";",n+2);
-	        if (m<0) break;
-	        try
-	        {
-	            s=s.substring(0,n)+(char)(Integer.parseInt(s.substring(n+2,m)))+
-	                s.substring(m+1);
-	        }
-	        catch (Exception e)
-	        {
-	            return s;
-	        }
-	    }
-	    s=s.replace("&quot;","\"");
-	    s=s.replace("&lt;","<");
-	    s=s.replace("&gt;",">");
-	    s=s.replace("&amp;","&");
-	    return s;
-	}
-
 
 	 protected void updateMainUI() {
 		 Log.d(this.getClass().getSimpleName(), "updateMainUI gpsclient");
@@ -291,9 +263,10 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		drawClickListener = new DrawerItemClickListener();
-		Log.d(this.getClass().getSimpleName(), "onCreate() gpsclient");
+		Log.d(this.getClass().getSimpleName(), "onCreate() gpsclient"); 
+		
 		super.onCreate(savedInstanceState);
+		OsMoDroid.activity=this;
 		PreferenceManager.setDefaultValues(this, R.xml.pref, true);
 		ReadPref();
 		String sdState = android.os.Environment.getExternalStorageState();
@@ -353,12 +326,12 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	        mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		        // Set the adapter for the list view
 		    	setupDrawerList();
-		    	drawClickListener.globalActivity=this;
-		        mDrawerList.setOnItemClickListener(drawClickListener);
+
+		     
 		        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		        mDrawerLayout.setBackgroundColor(Color.WHITE);
 			
-		        fMan=getSupportFragmentManager();
+		       
 			
 	         actionBar = getSupportActionBar();
 	         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -383,6 +356,10 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	            }
 	        };
 	        mDrawerLayout.setDrawerListener(mDrawerToggle);
+	        fMan=getSupportFragmentManager();
+			drawClickListener = new DrawerItemClickListener(fMan, mDrawerList, mDrawerLayout, this);
+			   mDrawerList.setOnItemClickListener(drawClickListener);
+			
 			bindService();
 			if(savedInstanceState!=null){
 			//	afterrotate=true;
@@ -423,20 +400,30 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	void setupDrawerList() {
 		mDrawerItems.clear();
 		if (!OsMoDroid.settings.getString("key", "" ).equals("") ){
-		  
-		 for (String s: new String[] {
-				    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
-				    getString(R.string.chanals),getString(R.string.devices),getString(R.string.links),
-				    getString(R.string.notifications), getString(R.string.tracks) , getString(R.string.exit)})
+			 String[] menu1 = new String[] {
+					    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
+					    getString(R.string.chanals),getString(R.string.devices),getString(R.string.links),
+					    getString(R.string.notifications), getString(R.string.tracks) , getString(R.string.exit)};
+			if(OsMoDroid.debug){
+				 menu1 = new String[] {
+					    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
+					    getString(R.string.chanals),getString(R.string.devices),getString(R.string.links),
+					    getString(R.string.notifications), getString(R.string.tracks) , getString(R.string.exit), "debug"};
+				
+			};
+			
+			 
+		 for (String s: menu1)
 		 {
 		 mDrawerItems.add(s);
 		 
 		 }
 		 }
 		else{
-			for (String s:  new String[] {
-				    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
-				    getString(R.string.tracks),getString(R.string.exit)} ){
+			 String[] menu2=new String[] {
+					    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
+					    getString(R.string.tracks),getString(R.string.exit)};
+			for (String s: menu2 ){
 				mDrawerItems.add(s);
 			}
 		}
@@ -772,7 +759,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	@Override
 	protected void onDestroy() {
 		Log.d(this.getClass().getSimpleName(), "onDestroy() gpsclient");
-		
+		OsMoDroid.activity=null;
 if (mBound) {
 
 			try {
@@ -1026,8 +1013,8 @@ if (!(adevice==null)){device=adevice;
 
 OsMoDroid.editor.putString("device", adevice);
 OsMoDroid.editor.commit();}
-if (!(adevicename==null)){devicename=unescape(adevicename);
-OsMoDroid.editor.putString("devicename", unescape(adevicename));
+if (!(adevicename==null)){devicename=Netutil.unescape(adevicename);
+OsMoDroid.editor.putString("devicename", Netutil.unescape(adevicename));
 OsMoDroid.editor.commit();
 
 }

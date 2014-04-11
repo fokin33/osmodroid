@@ -169,5 +169,6 @@
 <string name="drawer_open">open</string>
 <string name="drawer_close">close</string>
 <string name="iam">Me</string>
-<string name="obeservsers">Observers</string>
+<string name="needgps">Need GPS Enabled</string>
+<string name="enablegps">Please, enable GPS</string>
 </resources>

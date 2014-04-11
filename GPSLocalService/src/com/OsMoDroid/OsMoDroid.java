@@ -18,14 +18,16 @@ public class OsMoDroid extends Application {
 	public static final String NOTIFIESFILENAME = "messagelist";
 	public static final String DEVLIST = "devlist";
 	static int uploadnotifyid = MIN_UPLOAD_ID;
-	public static SharedPreferences settings; 
+	public static SharedPreferences settings;
+	static GPSLocalServiceClient activity;
 	public static int notifyidApp() {
-
-		return notifyid++;
+	return notifyid++;
 	}
 
 	public static Context context;
 	public static Editor editor;
+	public static boolean debug=false;
+	
 
 	@Override
 	public void onCreate() {
