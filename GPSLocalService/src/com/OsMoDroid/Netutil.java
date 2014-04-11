@@ -61,7 +61,30 @@ public class Netutil {
 			}
 			else {
 				Log.d(this.getClass().getName(), "InitTask onpostexecute null map");
-			}			super.onPostExecute(result);		}		@Override		protected List<Point> doInBackground(InputStream... params) {			if(cg.points.size()==0){			return getGPXPoints(params[0]);}			return new ArrayList<Point>();		}			}	
+			}			super.onPostExecute(result);		}		@Override		protected List<Point> doInBackground(InputStream... params) {			if(cg.points.size()==0){			return getGPXPoints(params[0]);}			return new ArrayList<Point>();		}			}	public synchronized static String unescape (String s)
+	{
+	    while (true)
+	    {
+	        int n=s.indexOf("&#");
+	        if (n<0) break;
+	        int m=s.indexOf(";",n+2);
+	        if (m<0) break;
+	        try
+	        {
+	            s=s.substring(0,n)+(char)(Integer.parseInt(s.substring(n+2,m)))+
+	                s.substring(m+1);
+	        }
+	        catch (Exception e)
+	        {
+	            return s;
+	        }
+	    }
+	    s=s.replace("&quot;","\"");
+	    s=s.replace("&lt;","<");
+	    s=s.replace("&gt;",">");
+	    s=s.replace("&amp;","&");
+	    return s;
+	}	
 
 
 	

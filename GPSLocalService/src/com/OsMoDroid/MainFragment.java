@@ -9,9 +9,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
 import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.provider.Settings;
 import android.text.ClipboardManager;
 import android.text.util.Linkify;
 import android.util.Log;
@@ -525,7 +527,36 @@ else {
 
 			start.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
+					if(OsMoDroid.settings.getBoolean("usegps", true)){
+						if(!globalActivity.mService.myManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+						{
+							AlertDialog alertdialog1 = new AlertDialog.Builder(
+			                         getSherlockActivity()).create();
+			         alertdialog1.setTitle(getSherlockActivity().getString(R.string.needgps));
+
+			         alertdialog1.setMessage(getSherlockActivity().getString(R.string.enablegps));
+
+			         alertdialog1.setButton(getString(R.string.yes),
+			                         new DialogInterface.OnClickListener() {
+			                                 public void onClick(DialogInterface dialog, int which) {
+			                                	 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+			                                	    startActivity(intent);
+			                                         return;
+			                                 }
+			                         });
+			         alertdialog1.setButton2(getString(R.string.No),
+	                         new DialogInterface.OnClickListener() {
+	                                 public void onClick(DialogInterface dialog, int which) {
+	                                         return;
+	                                 }
+	                         });
+			         alertdialog1.show();
+						}
+								
+					}
+					
 					globalActivity.startlocalservice();
+					
 
 				}
 			});

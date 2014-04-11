@@ -223,34 +223,6 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	};
 	private boolean proceednewintent=false;
 	private ArrayAdapter<String> menuAdapter;
-	
-	
-
-	public static String unescape (String s)
-	{
-	    while (true)
-	    {
-	        int n=s.indexOf("&#");
-	        if (n<0) break;
-	        int m=s.indexOf(";",n+2);
-	        if (m<0) break;
-	        try
-	        {
-	            s=s.substring(0,n)+(char)(Integer.parseInt(s.substring(n+2,m)))+
-	                s.substring(m+1);
-	        }
-	        catch (Exception e)
-	        {
-	            return s;
-	        }
-	    }
-	    s=s.replace("&quot;","\"");
-	    s=s.replace("&lt;","<");
-	    s=s.replace("&gt;",">");
-	    s=s.replace("&amp;","&");
-	    return s;
-	}
-
 
 	 protected void updateMainUI() {
 		 Log.d(this.getClass().getSimpleName(), "updateMainUI gpsclient");
@@ -1041,8 +1013,8 @@ if (!(adevice==null)){device=adevice;
 
 OsMoDroid.editor.putString("device", adevice);
 OsMoDroid.editor.commit();}
-if (!(adevicename==null)){devicename=unescape(adevicename);
-OsMoDroid.editor.putString("devicename", unescape(adevicename));
+if (!(adevicename==null)){devicename=Netutil.unescape(adevicename);
+OsMoDroid.editor.putString("devicename", Netutil.unescape(adevicename));
 OsMoDroid.editor.commit();
 
 }

@@ -962,7 +962,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	private int pollperiod=0;
 	private de.tavendo.autobahn.WebSocket.ConnectionHandler c;
 	private WebSocketOptions o;
-	private boolean log=false;
+	private boolean log=true;
 	//boolean connecting=false;
 	     static String formatInterval(final long l)
 	    {

@@ -776,7 +776,7 @@ if (getMessageType( topic).equals("chch")){
 private void addToChannelChat(String toParse, String topic) {
 	if(log)Log.d(this.getClass().getName(), "type=chch");
 	if(log)Log.d(this.getClass().getName(), "Сообщение в чат канала " + toParse);
-	String fromDevice=localService.getString(R.string.obeservsers);
+	String fromDevice="Незнамо кто";
 	//09-16 18:25:41.057: D/com.OsMoDroid.IM(1474):     "data": "0|40+\u041e\u043f\u0430\u0441\u043d\u043e +2013-09-16 22:25:44"
 	//"data": "0|40|cxbcxvbcxvbcxvb|2013-03-14 22:42:34"
 	String[] data = toParse.split("\\|");
@@ -798,6 +798,9 @@ private void addToChannelChat(String toParse, String topic) {
 				fromDevice=localService.getString(R.string.iam);
 				if(log)Log.d(this.getClass().getName(), "Сообщение от устройства в канале от меня ");
 			}
+			if (datanew[0].equals("0")){
+			fromDevice=localService.getString(R.string.observers);
+			}
 		}
 		Intent intent =new Intent(localService, GPSLocalServiceClient.class).putExtra("channelpos", channel.u);
 		intent.setAction("channelchat");
@@ -806,7 +809,7 @@ private void addToChannelChat(String toParse, String topic) {
 	 	NotificationCompat.Builder notificationBuilder =new NotificationCompat.Builder(
 				localService.getApplicationContext())
 		    	.setWhen(when)
-		    	.setContentText(channel.name+" "+fromDevice+": "+datanew[1])
+		    	.setContentText(channel.name+" "+fromDevice+": "+Netutil.unescape(datanew[1]))
 		    	.setContentTitle("OsMoDroid")
 		    	.setSmallIcon(android.R.drawable.ic_menu_send)
 		    	.setAutoCancel(true)
@@ -827,7 +830,7 @@ if (!OsMoDroid.settings.getBoolean("silentnotify", false)){
 		
 		
 				channel.messagesstringList.clear();
-				channel.messagesstringList.add(fromDevice + ": "+datanew[1]);
+				channel.messagesstringList.add(fromDevice + ": "+Netutil.unescape(datanew[1]));
 				localService.alertHandler.post(new Runnable(){
 					public void run() {
 						if (LocalService.channelsmessagesAdapter!=null&& LocalService.currentChannel != null&&LocalService.currentChannel.u==channel.u ){

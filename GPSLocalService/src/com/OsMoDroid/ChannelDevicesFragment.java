@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.ClipboardManager;
+import android.text.Layout;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -197,8 +198,8 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 		   //LocalService.currentChannel= LocalService.channelList.get(channelpos); 
 		   
 		    LocalService.channelsDevicesAdapter = new ChannelsDevicesAdapter(getSherlockActivity(),R.layout.channelsdeviceitem,  LocalService.currentchanneldeviceList);
-	LocalService.channelsmessagesAdapter = new ArrayAdapter<String>(getSherlockActivity(), android.R.layout.simple_list_item_1, LocalService.currentChannel.messagesstringList );
-
+	LocalService.channelsmessagesAdapter = new ArrayAdapter<String>(getSherlockActivity(), R.layout.channelchatitem, LocalService.currentChannel.messagesstringList );
+			
 		    lv1 = (ListView) view.findViewById(R.id.mychannelsdeviceslistView);
 		    lv2 = (ListView) view.findViewById(R.id.mychannelsmessages);
 		    input =(EditText) view.findViewById(R.id.mychannelsdeviceseditText1);
@@ -292,7 +293,7 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 		if (result.Jo.has("om_channel_chat_get:"+LocalService.currentChannel.u)){
 			
 			LocalService.currentChannel.messagesstringList.clear();
-			String fromDevice="Зрители";
+			String fromDevice="Неизвестно кто";
 			try {
 				  JSONArray a = result.Jo.getJSONArray("om_channel_chat_get:"+LocalService.currentChannel.u);
 		 		  Log.d(getClass().getSimpleName(), a.toString());
@@ -304,10 +305,15 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 		 					fromDevice=dev.name;
 		 				}
 		 			}
+		 			if (jsonObject.optInt("device")==0)
+		 				{
+		 					fromDevice=getSherlockActivity().getString(R.string.observers);
+		 				}
+		 				
 		 			if (jsonObject.optInt("device")==Integer.parseInt(OsMoDroid.settings.getString("device", "0"))){
 		 				fromDevice=getSherlockActivity().getString(R.string.iam);
 		 			}
-		 			LocalService.currentChannel.messagesstringList.add( fromDevice+": "+jsonObject.optString("text"));
+		 			LocalService.currentChannel.messagesstringList.add( fromDevice+": "+Netutil.unescape(jsonObject.optString("text")));
 		 			//Collections.sort(LocalService.currentChannel.messagesstringList);
 				 if (LocalService.channelsmessagesAdapter!=null) {LocalService.channelsmessagesAdapter.notifyDataSetChanged();}
 			}
