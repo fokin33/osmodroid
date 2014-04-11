@@ -72,7 +72,7 @@
         <CheckBoxPreference
             android:defaultValue= "false"
             android:key= "gpx"
-            android:summary= "Tracks are stored on the memory card (/sdcard/OsMoDroid/)"
+            android:summary= "Tracks are stored on the memory card by default (/sdcard/OsMoDroid/)"
             android:title= "Track record"/>
 
                 <PreferenceScreen android:title="Record settings" android:dependency="gpx">

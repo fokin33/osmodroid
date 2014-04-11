@@ -55,7 +55,7 @@
                                 android:key="modeAND"
                                 android:title="Режим параметров И"
                                 android:summary="По умолчанию ИЛИ (или время, или дистанция или курс)"
-                                android:defaultValue="true"/>
+                                android:defaultValue="false"/>
                             <PreferenceScreen android:title="Идентификация" >
                                 <EditTextPreference
                                     android:key="hash"
