@@ -39,8 +39,8 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 	ObjectOutputStream output = null;	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private  WampConnection mWampConnection = new WampConnection();
 	//WebSocketConnection mWebsocketConnection = new WebSocketConnection();
-	final String wsuri = "ws://osmo.mobi:5739/";
-	final String websocketuri = "ws://osmo.mobi:5740/";
+	final String wsuri = "ws://push.osmo.mobi/";
+	final String websocketuri = "ws://srv.osmo.mobi/";
 	protected boolean connOpened=false;
 	protected boolean connecting=false;
 	final boolean  log=true;	public IM(ArrayList<String[]> longPollChList, Context context,String key,final LocalService localService) {
@@ -75,7 +75,11 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 				localService.refresh();
 				if(localService.isOnline()&&running){
 					setReconnectAlarm();
+				}else 
+				{
+					stop();
 				}
+				
 				disablekeepAliveAlarm();
 				
 			}

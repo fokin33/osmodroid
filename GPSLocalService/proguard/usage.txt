@@ -992,8 +992,8 @@ com.OsMoDroid.DeviceChatFragment:
 com.OsMoDroid.DevicesFragment:
     268:269:public void needToOpenChat(int)
 com.OsMoDroid.GPSLocalServiceClient:
-    866:873:public static java.lang.String bytesToHex(byte[])
-    879:890:public static java.lang.String SHA1(java.lang.String)
+    876:883:public static java.lang.String bytesToHex(byte[])
+    889:900:public static java.lang.String SHA1(java.lang.String)
 com.OsMoDroid.IM:
     private static final int RECONNECT_TIMEOUT
     private static final int KEEP_ALIVE
@@ -1005,7 +1005,7 @@ com.OsMoDroid.IM:
     java.lang.Thread myThread
     java.lang.String myLongPollCh
     java.io.FileOutputStream fos
-    302:317:private void getadres(java.util.ArrayList)
+    312:327:private void getadres(java.util.ArrayList)
 com.OsMoDroid.IRemoteOsMoDroidListener$Stub:
     private static final java.lang.String DESCRIPTOR
     static final int TRANSACTION_channelUpdated
@@ -1129,14 +1129,14 @@ de.tavendo.autobahn.WampConnection:
     146:150:private java.lang.String newId(int)
     160:160:private java.lang.String newId()
     166:173:public void connect(java.lang.String,de.tavendo.autobahn.Wamp$ConnectionHandler)
-    227:234:public void connect(java.lang.String,de.tavendo.autobahn.Wamp$ConnectionHandler,java.util.List)
-    303:309:private varargs void call(java.lang.String,de.tavendo.autobahn.WampConnection$CallMeta,java.lang.Object[])
-    323:324:public varargs void call(java.lang.String,java.lang.Class,de.tavendo.autobahn.Wamp$CallHandler,java.lang.Object[])
-    338:339:public varargs void call(java.lang.String,org.codehaus.jackson.type.TypeReference,de.tavendo.autobahn.Wamp$CallHandler,java.lang.Object[])
-    388:389:public void subscribe(java.lang.String,org.codehaus.jackson.type.TypeReference,de.tavendo.autobahn.Wamp$EventHandler)
-    399:406:public void unsubscribe(java.lang.String)
-    431:440:public void prefix(java.lang.String,java.lang.String)
-    451:453:public void publish(java.lang.String,java.lang.Object)
+    233:240:public void connect(java.lang.String,de.tavendo.autobahn.Wamp$ConnectionHandler,java.util.List)
+    309:315:private varargs void call(java.lang.String,de.tavendo.autobahn.WampConnection$CallMeta,java.lang.Object[])
+    329:330:public varargs void call(java.lang.String,java.lang.Class,de.tavendo.autobahn.Wamp$CallHandler,java.lang.Object[])
+    344:345:public varargs void call(java.lang.String,org.codehaus.jackson.type.TypeReference,de.tavendo.autobahn.Wamp$CallHandler,java.lang.Object[])
+    394:395:public void subscribe(java.lang.String,org.codehaus.jackson.type.TypeReference,de.tavendo.autobahn.Wamp$EventHandler)
+    405:412:public void unsubscribe(java.lang.String)
+    437:446:public void prefix(java.lang.String,java.lang.String)
+    457:459:public void publish(java.lang.String,java.lang.Object)
 de.tavendo.autobahn.WampConnection$CallMeta:
     55:59:WampConnection$CallMeta(de.tavendo.autobahn.Wamp$CallHandler,java.lang.Class)
     61:65:WampConnection$CallMeta(de.tavendo.autobahn.Wamp$CallHandler,org.codehaus.jackson.type.TypeReference)

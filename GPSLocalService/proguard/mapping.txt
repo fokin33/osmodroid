@@ -2974,39 +2974,39 @@ com.OsMoDroid.GPSLocalServiceClient -> com.OsMoDroid.GPSLocalServiceClient:
     277:281:void onStop() -> onStop
     288:290:void onSaveInstanceState(android.os.Bundle) -> onSaveInstanceState
     294:425:void onCreate(android.os.Bundle) -> onCreate
-    429:451:void setupDrawerList() -> b
-    456:459:void onPostCreate(android.os.Bundle) -> onPostCreate
-    463:466:void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
-    471:481:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
-    488:499:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
-    504:519:void onResume() -> onResume
-    525:543:void onResumeFragments() -> onResumeFragments
-    547:589:void intentAction(android.content.Intent) -> a
-    592:599:void onNewIntent(android.content.Intent) -> onNewIntent
-    610:667:void auth() -> c
-    673:673:boolean checkStarted() -> d
-    678:729:void ReadPref() -> e
-    734:737:void startlocalservice() -> f
-    740:749:void bindService() -> i
-    752:757:void stop(java.lang.Boolean) -> a
-    779:804:void onDestroy() -> onDestroy
-    809:837:java.lang.String getPage(java.lang.String,boolean,java.lang.String) -> a
-    849:862:java.lang.String inputStreamToString(java.io.InputStream) -> a
-    894:899:java.lang.String getDeviceName() -> g
-    905:912:java.lang.String capitalize(java.lang.String) -> b
-    916:920:void requestHash() -> h
-    1184:1217:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
-    1220:1242:boolean saveSharedPreferencesToFile(java.io.File) -> a
-    1246:1286:boolean loadSharedPreferencesFromFile(java.io.File) -> b
-    759:759:void access$0(com.OsMoDroid.GPSLocalServiceClient) -> a
+    429:461:void setupDrawerList() -> b
+    466:469:void onPostCreate(android.os.Bundle) -> onPostCreate
+    473:476:void onConfigurationChanged(android.content.res.Configuration) -> onConfigurationChanged
+    481:491:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
+    498:509:void onActivityResult(int,int,android.content.Intent) -> onActivityResult
+    514:529:void onResume() -> onResume
+    535:553:void onResumeFragments() -> onResumeFragments
+    557:599:void intentAction(android.content.Intent) -> a
+    602:609:void onNewIntent(android.content.Intent) -> onNewIntent
+    620:677:void auth() -> c
+    683:683:boolean checkStarted() -> d
+    688:739:void ReadPref() -> e
+    744:747:void startlocalservice() -> f
+    750:759:void bindService() -> i
+    762:767:void stop(java.lang.Boolean) -> a
+    789:814:void onDestroy() -> onDestroy
+    819:847:java.lang.String getPage(java.lang.String,boolean,java.lang.String) -> a
+    859:872:java.lang.String inputStreamToString(java.io.InputStream) -> a
+    904:909:java.lang.String getDeviceName() -> g
+    915:922:java.lang.String capitalize(java.lang.String) -> b
+    926:930:void requestHash() -> h
+    1194:1227:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+    1230:1252:boolean saveSharedPreferencesToFile(java.io.File) -> a
+    1256:1296:boolean loadSharedPreferencesFromFile(java.io.File) -> b
+    769:769:void access$0(com.OsMoDroid.GPSLocalServiceClient) -> a
     188:188:android.content.Intent access$1(com.OsMoDroid.GPSLocalServiceClient) -> b
-    546:546:void access$2(com.OsMoDroid.GPSLocalServiceClient,android.content.Intent) -> a
+    556:556:void access$2(com.OsMoDroid.GPSLocalServiceClient,android.content.Intent) -> a
     188:188:void access$3$1b30c8d1(com.OsMoDroid.GPSLocalServiceClient) -> c
     156:156:java.lang.String access$4(com.OsMoDroid.GPSLocalServiceClient) -> d
     157:157:int access$5(com.OsMoDroid.GPSLocalServiceClient) -> e
     158:158:java.lang.String access$6(com.OsMoDroid.GPSLocalServiceClient) -> f
     160:160:java.lang.String access$7(com.OsMoDroid.GPSLocalServiceClient) -> g
-    739:739:void access$8(com.OsMoDroid.GPSLocalServiceClient) -> h
+    749:749:void access$8(com.OsMoDroid.GPSLocalServiceClient) -> h
     156:156:void access$9(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> a
     157:157:void access$10(com.OsMoDroid.GPSLocalServiceClient,int) -> a
     158:158:void access$11(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> b
@@ -3033,18 +3033,18 @@ com.OsMoDroid.GPSLocalServiceClient$5 -> com.OsMoDroid.GPSLocalServiceClient$5:
     com.OsMoDroid.GPSLocalServiceClient this$0 -> a
     android.widget.EditText val$input -> b
     android.widget.EditText val$inputlogin -> c
-    640:655:void onClick(android.content.DialogInterface,int) -> onClick
+    650:665:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.GPSLocalServiceClient$6 -> com.OsMoDroid.GPSLocalServiceClient$6:
     com.OsMoDroid.GPSLocalServiceClient this$0 -> a
-    663:663:void onClick(android.content.DialogInterface,int) -> onClick
+    673:673:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.GPSLocalServiceClient$RequestAuthTask -> com.OsMoDroid.o:
     java.lang.String authtext -> d
     java.lang.String adevice -> a
     java.lang.Boolean Err -> e
     android.app.ProgressDialog dialog -> b
     com.OsMoDroid.GPSLocalServiceClient this$0 -> c
-    933:934:void onPreExecute() -> onPreExecute
-    971:1000:java.lang.Void doInBackground$10299ca() -> a
+    943:944:void onPreExecute() -> onPreExecute
+    981:1010:java.lang.Void doInBackground$10299ca() -> a
     1:1:void onPostExecute(java.lang.Object) -> onPostExecute
     1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.OsMoDroid.GPSLocalServiceClient$RequestCommandTask -> com.OsMoDroid.p:
@@ -3055,8 +3055,8 @@ com.OsMoDroid.GPSLocalServiceClient$RequestCommandTask -> com.OsMoDroid.p:
     java.lang.String adevicename -> g
     android.app.ProgressDialog dialog -> a
     com.OsMoDroid.GPSLocalServiceClient this$0 -> b
-    1018:1019:void onPreExecute() -> onPreExecute
-    1074:1174:java.lang.String doInBackground(java.lang.String[]) -> a
+    1028:1029:void onPreExecute() -> onPreExecute
+    1084:1184:java.lang.String doInBackground(java.lang.String[]) -> a
     1:1:void onPostExecute(java.lang.Object) -> onPostExecute
     1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.OsMoDroid.GPSLocalServiceClient$upd -> com.OsMoDroid.q:
@@ -3089,73 +3089,74 @@ com.OsMoDroid.IM -> com.OsMoDroid.r:
     android.app.PendingIntent reconnectPIntent -> v
     android.app.PendingIntent keepAlivePIntent -> w
     android.content.BroadcastReceiver bcr -> A
-    257:261:void addlog(java.lang.String) -> a
-    269:274:void setkeepAliveAlarm() -> a
-    277:285:void disablekeepAliveAlarm() -> b
-    289:294:void setReconnectAlarm() -> c
-    321:326:void addchannels(java.util.ArrayList) -> a
-    329:343:void removechannels(java.util.ArrayList) -> b
-    348:354:java.lang.String getMessageType(java.lang.String) -> b
-    362:423:void addtoDeviceChat(java.lang.String) -> c
-    511:521:void close() -> d
-    524:536:void start() -> e
-    538:970:void parseEx(java.lang.String,java.lang.String) -> a
-    973:1037:void addToChannelChat(java.lang.String,java.lang.String) -> b
-    1040:1049:void stop() -> f
-    1052:1074:void resubscribe() -> g
+    267:271:void addlog(java.lang.String) -> a
+    279:284:void setkeepAliveAlarm() -> a
+    287:295:void disablekeepAliveAlarm() -> b
+    299:304:void setReconnectAlarm() -> c
+    331:336:void addchannels(java.util.ArrayList) -> a
+    339:353:void removechannels(java.util.ArrayList) -> b
+    358:364:java.lang.String getMessageType(java.lang.String) -> b
+    372:433:void addtoDeviceChat(java.lang.String) -> c
+    521:531:void close() -> d
+    534:546:void start() -> e
+    548:980:void parseEx(java.lang.String,java.lang.String) -> a
+    983:1047:void addToChannelChat(java.lang.String,java.lang.String) -> b
+    1050:1059:void stop() -> f
+    1062:1084:void resubscribe() -> g
     149:149:de.tavendo.autobahn.WampConnection access$0(com.OsMoDroid.IM) -> a
 com.OsMoDroid.IM$1 -> com.OsMoDroid.r$1:
     com.OsMoDroid.IM this$0 -> a
-    236:239:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    246:249:void onReceive(android.content.Context,android.content.Intent) -> onReceive
 com.OsMoDroid.IM$10 -> com.OsMoDroid.r$2:
     com.OsMoDroid.IM this$0 -> a
-    789:791:void run() -> run
+    799:801:void run() -> run
 com.OsMoDroid.IM$11 -> com.OsMoDroid.r$3:
     com.OsMoDroid.IM this$0 -> a
-    797:799:void run() -> run
+    807:809:void run() -> run
 com.OsMoDroid.IM$12 -> com.OsMoDroid.r$4:
     com.OsMoDroid.IM this$0 -> a
-    804:812:void run() -> run
+    814:822:void run() -> run
 com.OsMoDroid.IM$13 -> com.OsMoDroid.r$5:
     com.OsMoDroid.IM this$0 -> a
-    890:896:void run() -> run
+    900:906:void run() -> run
 com.OsMoDroid.IM$14 -> com.OsMoDroid.r$6:
     com.OsMoDroid.IM this$0 -> a
-    942:954:void run() -> run
+    952:964:void run() -> run
 com.OsMoDroid.IM$15 -> com.OsMoDroid.r$7:
     com.OsMoDroid.IM this$0 -> a
     com.OsMoDroid.Channel val$channel -> b
-    1029:1033:void run() -> run
+    1039:1043:void run() -> run
 com.OsMoDroid.IM$16 -> com.OsMoDroid.r$8:
     com.OsMoDroid.IM this$0 -> a
-    1064:1066:void onEvent(java.lang.String,java.lang.Object) -> a
+    1074:1076:void onEvent(java.lang.String,java.lang.Object) -> a
 com.OsMoDroid.IM$2 -> com.OsMoDroid.r$9:
     com.OsMoDroid.IM this$0 -> a
-    244:253:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    254:263:void onReceive(android.content.Context,android.content.Intent) -> onReceive
 com.OsMoDroid.IM$3 -> com.OsMoDroid.r$10:
     com.OsMoDroid.IM this$0 -> a
-    436:498:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    446:508:void onReceive(android.content.Context,android.content.Intent) -> onReceive
 com.OsMoDroid.IM$4 -> com.OsMoDroid.r$11:
     com.OsMoDroid.IM this$0 -> a
     com.OsMoDroid.LocalService val$localService -> b
     169:176:void onOpen() -> a
-    180:191:void onClose(int,java.lang.String) -> a
+    180:195:void onClose(int,java.lang.String) -> a
+    199:201:void onPong() -> b
 com.OsMoDroid.IM$5 -> com.OsMoDroid.r$12:
     com.OsMoDroid.IM this$0 -> a
-    398:401:void run() -> run
+    408:411:void run() -> run
 com.OsMoDroid.IM$6 -> com.OsMoDroid.r$13:
     com.OsMoDroid.IM this$0 -> a
     java.util.ArrayList val$tempdeviceList -> b
-    591:594:void run() -> run
+    601:604:void run() -> run
 com.OsMoDroid.IM$7 -> com.OsMoDroid.r$14:
     com.OsMoDroid.IM this$0 -> a
-    645:650:void run() -> run
+    655:660:void run() -> run
 com.OsMoDroid.IM$8 -> com.OsMoDroid.r$15:
     com.OsMoDroid.IM this$0 -> a
-    660:665:void run() -> run
+    670:675:void run() -> run
 com.OsMoDroid.IM$9 -> com.OsMoDroid.r$16:
     com.OsMoDroid.IM this$0 -> a
-    726:733:void run() -> run
+    736:743:void run() -> run
 com.OsMoDroid.IRemoteOsMoDroidListener -> com.OsMoDroid.s:
     void channelUpdated() -> a
     void channelsListUpdated() -> b
@@ -3527,15 +3528,15 @@ com.OsMoDroid.MainFragment -> com.OsMoDroid.MainFragment:
     81:132:void updateMainUI() -> b
     140:163:void onCreateOptionsMenu(com.actionbarsherlock.view.Menu,com.actionbarsherlock.view.MenuInflater) -> onCreateOptionsMenu
     167:167:void onPrepareOptionsMenu(com.actionbarsherlock.view.Menu) -> onPrepareOptionsMenu
-    171:292:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
-    304:608:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
-    617:621:void onAttach(android.app.Activity) -> onAttach
-    624:631:void onDetach() -> onDetach
-    646:648:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
-    653:653:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
-    656:658:void update() -> a
+    171:291:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
+    303:607:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    616:620:void onAttach(android.app.Activity) -> onAttach
+    623:630:void onDetach() -> onDetach
+    645:647:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
+    652:652:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+    655:657:void update() -> a
     38:38:com.OsMoDroid.GPSLocalServiceClient access$0(com.OsMoDroid.MainFragment) -> a
-    633:633:void access$1(com.OsMoDroid.MainFragment,android.view.View) -> a
+    632:632:void access$1(com.OsMoDroid.MainFragment,android.view.View) -> a
 com.OsMoDroid.MainFragment$1 -> com.OsMoDroid.MainFragment$1:
     com.OsMoDroid.MainFragment this$0 -> a
     182:183:void onClick(android.content.DialogInterface,int) -> onClick
@@ -3551,61 +3552,61 @@ com.OsMoDroid.MainFragment$4 -> com.OsMoDroid.MainFragment$4:
 com.OsMoDroid.MainFragment$5 -> com.OsMoDroid.MainFragment$5:
     com.OsMoDroid.MainFragment this$0 -> a
     android.widget.ToggleButton val$alarmToggle -> b
-    340:352:void onClick(android.view.View) -> onClick
+    339:351:void onClick(android.view.View) -> onClick
 com.OsMoDroid.MainFragment$6 -> com.OsMoDroid.MainFragment$6:
     com.OsMoDroid.MainFragment this$0 -> a
-    360:362:void onClick(android.view.View) -> onClick
+    359:361:void onClick(android.view.View) -> onClick
 com.OsMoDroid.MainFragment$7 -> com.OsMoDroid.MainFragment$7:
     java.lang.Boolean stopsession -> a
     com.OsMoDroid.MainFragment this$0 -> b
     android.view.View val$view -> c
-    382:524:void onClick(android.view.View) -> onClick
-    376:376:com.OsMoDroid.MainFragment access$0(com.OsMoDroid.MainFragment$7) -> a
+    381:523:void onClick(android.view.View) -> onClick
+    375:375:com.OsMoDroid.MainFragment access$0(com.OsMoDroid.MainFragment$7) -> a
 com.OsMoDroid.MainFragment$7$1 -> com.OsMoDroid.MainFragment$7$1:
     com.OsMoDroid.MainFragment$7 this$1 -> a
     android.view.View val$view -> b
-    393:432:void onClick(android.content.DialogInterface,int) -> onClick
+    392:431:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$1$1 -> com.OsMoDroid.MainFragment$7$1$1:
     com.OsMoDroid.MainFragment$7$1 this$2 -> a
     android.view.View val$view -> b
-    408:411:void onClick(android.content.DialogInterface,int) -> onClick
+    407:410:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$1$2 -> com.OsMoDroid.MainFragment$7$1$2:
     com.OsMoDroid.MainFragment$7$1 this$2 -> a
     android.view.View val$view -> b
-    417:420:void onClick(android.content.DialogInterface,int) -> onClick
+    416:419:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$2 -> com.OsMoDroid.MainFragment$7$2:
     com.OsMoDroid.MainFragment$7 this$1 -> a
     android.view.View val$view -> b
-    438:477:void onClick(android.content.DialogInterface,int) -> onClick
+    437:476:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$2$1 -> com.OsMoDroid.MainFragment$7$2$1:
     com.OsMoDroid.MainFragment$7$2 this$2 -> a
     android.view.View val$view -> b
-    453:456:void onClick(android.content.DialogInterface,int) -> onClick
+    452:455:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$2$2 -> com.OsMoDroid.MainFragment$7$2$2:
     com.OsMoDroid.MainFragment$7$2 this$2 -> a
     android.view.View val$view -> b
-    462:465:void onClick(android.content.DialogInterface,int) -> onClick
+    461:464:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$3 -> com.OsMoDroid.MainFragment$7$3:
     com.OsMoDroid.MainFragment$7 this$1 -> a
     android.view.View val$view -> b
-    495:498:void onClick(android.content.DialogInterface,int) -> onClick
+    494:497:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$4 -> com.OsMoDroid.MainFragment$7$4:
     com.OsMoDroid.MainFragment$7 this$1 -> a
     android.view.View val$view -> b
-    504:507:void onClick(android.content.DialogInterface,int) -> onClick
+    503:506:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$8 -> com.OsMoDroid.MainFragment$8:
     com.OsMoDroid.MainFragment this$0 -> a
-    529:531:void onClick(android.view.View) -> onClick
+    528:530:void onClick(android.view.View) -> onClick
 com.OsMoDroid.MainFragment$9 -> com.OsMoDroid.MainFragment$9:
     com.OsMoDroid.MainFragment this$0 -> a
     android.view.View val$view -> b
-    537:602:void onReceive(android.content.Context,android.content.Intent) -> onReceive
-    534:534:com.OsMoDroid.MainFragment access$0(com.OsMoDroid.MainFragment$9) -> a
+    536:601:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    533:533:com.OsMoDroid.MainFragment access$0(com.OsMoDroid.MainFragment$9) -> a
 com.OsMoDroid.MainFragment$9$1 -> com.OsMoDroid.MainFragment$9$1:
     com.OsMoDroid.MainFragment$9 this$1 -> a
     android.widget.ToggleButton val$globalsendToggle -> b
     android.content.Intent val$intent -> c
-    553:557:void onClick(android.view.View) -> onClick
+    552:556:void onClick(android.view.View) -> onClick
 com.OsMoDroid.MapFragment -> com.OsMoDroid.MapFragment:
     org.osmdroid.util.ResourceProxyImpl mResourceProxy -> a
     org.osmdroid.views.MapView mMapView -> b
@@ -3705,15 +3706,16 @@ com.OsMoDroid.OsMoDroid -> com.OsMoDroid.OsMoDroid:
     java.lang.String FILENAME -> a
     boolean mesactivityVisible -> b
     boolean gpslocalserviceclientVisible -> c
-    int notifyid -> i
+    int notifyid -> j
     int uploadnotifyid -> d
     android.content.SharedPreferences settings -> e
     com.OsMoDroid.GPSLocalServiceClient activity -> f
     android.content.Context context -> g
     android.content.SharedPreferences$Editor editor -> h
+    boolean debug -> i
     24:24:int notifyidApp() -> a
-    33:38:void onCreate() -> onCreate
-    42:45:int uploadnotifyid() -> b
+    34:39:void onCreate() -> onCreate
+    43:46:int uploadnotifyid() -> b
 com.OsMoDroid.PrefActivity -> com.OsMoDroid.PrefActivity:
     14:18:void onCreate(android.os.Bundle) -> onCreate
     26:29:void onDestroy() -> onDestroy
@@ -8074,6 +8076,7 @@ de.tavendo.autobahn.Wamp$CallHandler -> a.a.a.f:
 de.tavendo.autobahn.Wamp$ConnectionHandler -> a.a.a.g:
     void onOpen() -> a
     void onClose(int,java.lang.String) -> a
+    void onPong() -> b
 de.tavendo.autobahn.Wamp$EventHandler -> a.a.a.h:
     void onEvent(java.lang.String,java.lang.Object) -> a
 de.tavendo.autobahn.WampConnection -> a.a.a.i:
@@ -8086,15 +8089,16 @@ de.tavendo.autobahn.WampConnection -> a.a.a.i:
     de.tavendo.autobahn.Wamp$ConnectionHandler mSessionHandler -> m
     119:124:void createWriter() -> a
     131:135:void createReader() -> b
-    238:239:void connect(java.lang.String,de.tavendo.autobahn.Wamp$ConnectionHandler,de.tavendo.autobahn.WampOptions) -> a
-    247:280:void processAppMessage(java.lang.Object) -> a
-    374:375:void subscribe(java.lang.String,java.lang.Class,de.tavendo.autobahn.Wamp$EventHandler) -> a
-    414:420:void unsubscribe() -> c
+    244:245:void connect(java.lang.String,de.tavendo.autobahn.Wamp$ConnectionHandler,de.tavendo.autobahn.WampOptions) -> a
+    253:286:void processAppMessage(java.lang.Object) -> a
+    380:381:void subscribe(java.lang.String,java.lang.Class,de.tavendo.autobahn.Wamp$EventHandler) -> a
+    420:426:void unsubscribe() -> c
     111:111:de.tavendo.autobahn.Wamp$ConnectionHandler access$0(de.tavendo.autobahn.WampConnection) -> a
 de.tavendo.autobahn.WampConnection$1 -> a.a.a.i$1:
     de.tavendo.autobahn.WampConnection this$0 -> a
-    196:201:void onOpen() -> a
-    205:210:void onClose(int,java.lang.String) -> a
+    196:198:void onPong() -> a
+    202:207:void onOpen() -> b
+    211:216:void onClose(int,java.lang.String) -> a
 de.tavendo.autobahn.WampConnection$CallMeta -> a.a.a.j:
     de.tavendo.autobahn.Wamp$CallHandler mResultHandler -> a
     java.lang.Class mResultClass -> b
@@ -8150,8 +8154,9 @@ de.tavendo.autobahn.WampWriter -> a.a.a.y:
     80:166:void processAppMessage(java.lang.Object) -> a
 de.tavendo.autobahn.WebSocket -> a.a.a.z:
 de.tavendo.autobahn.WebSocket$ConnectionHandler -> a.a.a.aa:
-    void onOpen() -> a
+    void onOpen() -> b
     void onClose(int,java.lang.String) -> a
+    void onPong() -> a
 de.tavendo.autobahn.WebSocketConnection -> a.a.a.ab:
     java.lang.String TAG -> g
     android.os.Handler mMasterHandler -> a
@@ -8177,9 +8182,9 @@ de.tavendo.autobahn.WebSocketConnection -> a.a.a.ab:
     294:301:void disconnect() -> f
     308:312:boolean reconnect() -> g
     349:371:void onClose(int,java.lang.String) -> a
-    485:485:void processAppMessage(java.lang.Object) -> a
-    493:498:void createWriter() -> a
-    506:510:void createReader() -> b
+    489:489:void processAppMessage(java.lang.Object) -> a
+    497:502:void createWriter() -> a
+    510:514:void createReader() -> b
     49:49:java.lang.String access$0(de.tavendo.autobahn.WebSocketConnection) -> a
     50:50:int access$1(de.tavendo.autobahn.WebSocketConnection) -> b
     348:348:void access$2(de.tavendo.autobahn.WebSocketConnection,int,java.lang.String) -> a
@@ -8195,13 +8200,14 @@ de.tavendo.autobahn.WebSocketConnection$1 -> a.a.a.ab$1:
     335:336:void run() -> run
 de.tavendo.autobahn.WebSocketConnection$2 -> a.a.a.ab$2:
     de.tavendo.autobahn.WebSocketConnection this$0 -> a
-    383:479:void handleMessage(android.os.Message) -> handleMessage
+    383:483:void handleMessage(android.os.Message) -> handleMessage
 de.tavendo.autobahn.WebSocketConnection$WebSocketConnector -> a.a.a.ac:
     de.tavendo.autobahn.WebSocketConnection this$0 -> a
     69:125:void run() -> run
 de.tavendo.autobahn.WebSocketConnectionHandler -> a.a.a.ad:
-    32:32:void onOpen() -> a
+    32:32:void onOpen() -> b
     42:42:void onClose(int,java.lang.String) -> a
+    74:74:void onPong() -> a
 de.tavendo.autobahn.WebSocketException -> a.a.a.ae:
 de.tavendo.autobahn.WebSocketMessage -> a.a.a.af:
 de.tavendo.autobahn.WebSocketMessage$BinaryMessage -> a.a.a.ag:

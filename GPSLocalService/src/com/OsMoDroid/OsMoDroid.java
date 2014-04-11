@@ -26,7 +26,7 @@ public class OsMoDroid extends Application {
 
 	public static Context context;
 	public static Editor editor;
-	public static boolean debug=true;
+	public static boolean debug=false;
 	
 
 	@Override
