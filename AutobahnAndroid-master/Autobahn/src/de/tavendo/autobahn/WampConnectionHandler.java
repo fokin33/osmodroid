@@ -12,4 +12,10 @@ public class WampConnectionHandler implements Wamp.ConnectionHandler {
 		
 	}
 
+	@Override
+	public void onPong() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

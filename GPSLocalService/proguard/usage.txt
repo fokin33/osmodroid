@@ -8,13 +8,13 @@ android.support.v4.accessibilityservice.AccessibilityServiceInfoCompatJellyBeanM
 android.support.v4.content.AsyncTaskLoader
 android.support.v4.content.AsyncTaskLoader$LoadTask
 android.support.v4.content.ContextCompatFroyo:
-====    23:23:ContextCompatFroyo()
+    23:23:ContextCompatFroyo()
 android.support.v4.content.ContextCompatHoneycomb:
-====    27:27:ContextCompatHoneycomb()
+    27:27:ContextCompatHoneycomb()
 android.support.v4.content.ContextCompatJellybean:
-====    23:23:ContextCompatJellybean()
+    23:23:ContextCompatJellybean()
 android.support.v4.content.ContextCompatKitKat:
-====    23:23:ContextCompatKitKat()
+    23:23:ContextCompatKitKat()
 android.support.v4.content.CursorLoader
 android.support.v4.content.FileProvider:
     private static final java.lang.String META_DATA_FILE_PROVIDER_PATHS
@@ -24,11 +24,11 @@ android.support.v4.content.FileProvider:
     private static final java.lang.String TAG_EXTERNAL
     private static final java.lang.String ATTR_NAME
     private static final java.lang.String ATTR_PATH
-====    376:377:public static android.net.Uri getUriForFile(android.content.Context,java.lang.String,java.io.File)
+    376:377:public static android.net.Uri getUriForFile(android.content.Context,java.lang.String,java.io.File)
 android.support.v4.content.FileProvider$PathStrategy:
-====    public abstract android.net.Uri getUriForFile(java.io.File)
+    public abstract android.net.Uri getUriForFile(java.io.File)
 android.support.v4.content.FileProvider$SimplePathStrategy:
-====    662:692:public android.net.Uri getUriForFile(java.io.File)
+    662:692:public android.net.Uri getUriForFile(java.io.File)
 android.support.v4.content.IntentCompat:
     public static final java.lang.String ACTION_EXTERNAL_APPLICATIONS_AVAILABLE
     public static final java.lang.String ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE
@@ -37,41 +37,41 @@ android.support.v4.content.IntentCompat:
     public static final java.lang.String EXTRA_HTML_TEXT
     public static final int FLAG_ACTIVITY_TASK_ON_HOME
     public static final int FLAG_ACTIVITY_CLEAR_TASK
-====    95:97:private IntentCompat()
-====    249:249:public static android.content.Intent makeMainSelectorActivity(java.lang.String,java.lang.String)
-====    266:266:public static android.content.Intent makeRestartActivityTask(android.content.ComponentName)
+    95:97:private IntentCompat()
+    249:249:public static android.content.Intent makeMainSelectorActivity(java.lang.String,java.lang.String)
+    266:266:public static android.content.Intent makeRestartActivityTask(android.content.ComponentName)
 android.support.v4.content.IntentCompat$IntentCompatImpl:
-====    public abstract android.content.Intent makeMainSelectorActivity(java.lang.String,java.lang.String)
-====    public abstract android.content.Intent makeRestartActivityTask(android.content.ComponentName)
+    public abstract android.content.Intent makeMainSelectorActivity(java.lang.String,java.lang.String)
+    public abstract android.content.Intent makeRestartActivityTask(android.content.ComponentName)
 android.support.v4.content.IntentCompat$IntentCompatImplBase:
-====    51:53:public android.content.Intent makeMainSelectorActivity(java.lang.String,java.lang.String)
-====    58:61:public android.content.Intent makeRestartActivityTask(android.content.ComponentName)
+    51:53:public android.content.Intent makeMainSelectorActivity(java.lang.String,java.lang.String)
+    58:61:public android.content.Intent makeRestartActivityTask(android.content.ComponentName)
 android.support.v4.content.IntentCompat$IntentCompatImplHC:
-====    72:72:public android.content.Intent makeRestartActivityTask(android.content.ComponentName)
+    72:72:public android.content.Intent makeRestartActivityTask(android.content.ComponentName)
 android.support.v4.content.IntentCompat$IntentCompatImplIcsMr1:
-====    79:79:public android.content.Intent makeMainSelectorActivity(java.lang.String,java.lang.String)
+    79:79:public android.content.Intent makeMainSelectorActivity(java.lang.String,java.lang.String)
 android.support.v4.content.IntentCompatHoneycomb:
-====    22:22:IntentCompatHoneycomb()
-====    28:28:public static android.content.Intent makeRestartActivityTask(android.content.ComponentName)
+    22:22:IntentCompatHoneycomb()
+    28:28:public static android.content.Intent makeRestartActivityTask(android.content.ComponentName)
 android.support.v4.content.IntentCompatIcsMr1
 android.support.v4.content.Loader:
     android.content.Context mContext
-====    38:93:public Loader(android.content.Context)
-====    103:106:public void deliverResult(java.lang.Object)
-====    112:112:public android.content.Context getContext()
-====    119:119:public int getId()
-====    158:158:public boolean isStarted()
-====    167:167:public boolean isAbandoned()
-====    176:176:public boolean isReset()
-====    218:219:public void forceLoad()
-====    226:226:protected void onForceLoad()
-====    314:317:public boolean takeContentChanged()
-====    328:329:public void commitContentChanged()
-====    339:342:public void rollbackContentChanged()
-====    353:361:public void onContentChanged()
+    91:93:public Loader(android.content.Context)
+    103:106:public void deliverResult(java.lang.Object)
+    112:112:public android.content.Context getContext()
+    119:119:public int getId()
+    158:158:public boolean isStarted()
+    167:167:public boolean isAbandoned()
+    176:176:public boolean isReset()
+    218:219:public void forceLoad()
+    226:226:protected void onForceLoad()
+    314:317:public boolean takeContentChanged()
+    328:329:public void commitContentChanged()
+    339:342:public void rollbackContentChanged()
+    353:361:public void onContentChanged()
 android.support.v4.content.Loader$ForceLoadContentObserver
 android.support.v4.content.Loader$OnLoadCompleteListener:
-====    public abstract void onLoadComplete(android.support.v4.content.Loader,java.lang.Object)
+    public abstract void onLoadComplete(android.support.v4.content.Loader,java.lang.Object)
 android.support.v4.content.LocalBroadcastManager
 android.support.v4.content.LocalBroadcastManager$1
 android.support.v4.content.LocalBroadcastManager$BroadcastRecord
@@ -87,22 +87,22 @@ android.support.v4.content.ModernAsyncTask$Status
 android.support.v4.content.ModernAsyncTask$WorkerRunnable
 android.support.v4.content.WakefulBroadcastReceiver:
     private static final java.lang.String EXTRA_WAKE_LOCK_ID
-====    81:101:public static android.content.ComponentName startWakefulService(android.content.Context,android.content.Intent)
-====    113:132:public static boolean completeWakefulIntent(android.content.Intent)
+    81:101:public static android.content.ComponentName startWakefulService(android.content.Context,android.content.Intent)
+    113:132:public static boolean completeWakefulIntent(android.content.Intent)
 android.support.v4.content.pm.ActivityInfoCompat
 android.support.v4.database.DatabaseUtilsCompat
 android.support.v4.graphics.drawable.DrawableCompat:
-====    25:66:public DrawableCompat()
-====    102:103:public static void jumpToCurrentState(android.graphics.drawable.Drawable)
+    25:66:public DrawableCompat()
+    102:103:public static void jumpToCurrentState(android.graphics.drawable.Drawable)
 android.support.v4.graphics.drawable.DrawableCompat$BaseDrawableImpl:
-====    41:41:public void jumpToCurrentState(android.graphics.drawable.Drawable)
+    41:41:public void jumpToCurrentState(android.graphics.drawable.Drawable)
 android.support.v4.graphics.drawable.DrawableCompat$DrawableImpl:
-====    public abstract void jumpToCurrentState(android.graphics.drawable.Drawable)
+    public abstract void jumpToCurrentState(android.graphics.drawable.Drawable)
 android.support.v4.graphics.drawable.DrawableCompat$HoneycombDrawableImpl:
-====    59:60:public void jumpToCurrentState(android.graphics.drawable.Drawable)
+    59:60:public void jumpToCurrentState(android.graphics.drawable.Drawable)
 android.support.v4.graphics.drawable.DrawableCompatHoneycomb
 android.support.v4.graphics.drawable.DrawableCompatKitKat:
-====    24:24:DrawableCompatKitKat()
+    24:24:DrawableCompatKitKat()
 android.support.v4.hardware.display.DisplayManagerCompat
 android.support.v4.hardware.display.DisplayManagerCompat$JellybeanMr1Impl
 android.support.v4.hardware.display.DisplayManagerCompat$LegacyImpl
@@ -142,9 +142,9 @@ android.support.v4.net.TrafficStatsCompatIcs
 android.support.v4.os.EnvironmentCompat
 android.support.v4.os.EnvironmentCompatKitKat
 android.support.v4.os.ParcelableCompat:
-====    26:42:public ParcelableCompat()
+    26:42:public ParcelableCompat()
 android.support.v4.os.ParcelableCompatCreatorHoneycombMR2Stub:
-====    22:22:ParcelableCompatCreatorHoneycombMR2Stub()
+    22:22:ParcelableCompatCreatorHoneycombMR2Stub()
 android.support.v4.print.PrintHelper
 android.support.v4.print.PrintHelper$1
 android.support.v4.print.PrintHelper$PrintHelperKitkatImpl
@@ -172,18 +172,18 @@ android.support.v4.text.TextDirectionHeuristicsCompat$TextDirectionHeuristicInte
 android.support.v4.text.TextDirectionHeuristicsCompat$TextDirectionHeuristicLocale
 android.support.v4.text.TextUtilsCompat
 android.support.v4.util.ArrayMap:
-====    61:62:public ArrayMap(int)
-====    68:69:public ArrayMap(android.support.v4.util.SimpleArrayMap)
-====    130:130:public boolean containsAll(java.util.Collection)
-====    151:151:public boolean removeAll(java.util.Collection)
-====    161:161:public boolean retainAll(java.util.Collection)
+    61:62:public ArrayMap(int)
+    68:69:public ArrayMap(android.support.v4.util.SimpleArrayMap)
+    130:130:public boolean containsAll(java.util.Collection)
+    151:151:public boolean removeAll(java.util.Collection)
+    161:161:public boolean retainAll(java.util.Collection)
 android.support.v4.util.AtomicFile
 android.support.v4.util.ContainerHelpers:
-====    19:19:ContainerHelpers()
-====    29:29:public static int idealLongArraySize(int)
-====    65:80:static int binarySearch(long[],int,long)
+    19:19:ContainerHelpers()
+    29:29:public static int idealLongArraySize(int)
+    65:80:static int binarySearch(long[],int,long)
 android.support.v4.util.DebugUtils:
-====    25:25:public DebugUtils()
+    25:25:public DebugUtils()
 android.support.v4.util.LongSparseArray
 android.support.v4.util.LruCache
 android.support.v4.util.SimpleArrayMap:
@@ -191,19 +191,19 @@ android.support.v4.util.SimpleArrayMap:
     private static final java.lang.String TAG
     private static final int BASE_SIZE
     private static final int CACHE_SIZE
-====    217:225:public SimpleArrayMap(int)
-====    231:235:public SimpleArrayMap(android.support.v4.util.SimpleArrayMap)
-====    419:432:public void putAll(android.support.v4.util.SimpleArrayMap)
+    217:225:public SimpleArrayMap(int)
+    231:235:public SimpleArrayMap(android.support.v4.util.SimpleArrayMap)
+    419:432:public void putAll(android.support.v4.util.SimpleArrayMap)
 android.support.v4.util.SparseArrayCompat:
-====    132:136:public void removeAtRange(int,int)
-====    263:268:public void setValueAt(int,java.lang.Object)
-====    294:302:public int indexOfValue(java.lang.Object)
-====    325:352:public void append(int,java.lang.Object)
+    132:136:public void removeAtRange(int,int)
+    263:268:public void setValueAt(int,java.lang.Object)
+    294:302:public int indexOfValue(java.lang.Object)
+    325:352:public void append(int,java.lang.Object)
 android.support.v4.util.TimeUtils
 android.support.v4.view.AccessibilityDelegateCompatIcs:
-====    28:30:AccessibilityDelegateCompatIcs()
+    28:30:AccessibilityDelegateCompatIcs()
 android.support.v4.view.AccessibilityDelegateCompatJellyBean:
-====    30:32:AccessibilityDelegateCompatJellyBean()
+    30:32:AccessibilityDelegateCompatJellyBean()
 android.support.v4.view.ActionProvider
 android.support.v4.view.ActionProvider$SubUiVisibilityListener
 android.support.v4.view.ActionProvider$VisibilityListener
@@ -217,57 +217,57 @@ android.support.v4.view.GravityCompat:
     public static final int START
     public static final int END
     public static final int RELATIVE_HORIZONTAL_GRAVITY_MASK
-====    27:62:public GravityCompat()
-====    132:133:public static void apply(int,int,int,android.graphics.Rect,android.graphics.Rect,int)
-====    162:163:public static void apply(int,int,int,android.graphics.Rect,int,int,android.graphics.Rect,int)
-====    186:187:public static void applyDisplay(int,android.graphics.Rect,android.graphics.Rect,int)
+    27:62:public GravityCompat()
+    132:133:public static void apply(int,int,int,android.graphics.Rect,android.graphics.Rect,int)
+    162:163:public static void apply(int,int,int,android.graphics.Rect,int,int,android.graphics.Rect,int)
+    186:187:public static void applyDisplay(int,android.graphics.Rect,android.graphics.Rect,int)
 android.support.v4.view.GravityCompat$GravityCompatImpl:
-====    public abstract void apply(int,int,int,android.graphics.Rect,android.graphics.Rect,int)
-====    public abstract void apply(int,int,int,android.graphics.Rect,int,int,android.graphics.Rect,int)
-====    public abstract void applyDisplay(int,android.graphics.Rect,android.graphics.Rect,int)
+    public abstract void apply(int,int,int,android.graphics.Rect,android.graphics.Rect,int)
+    public abstract void apply(int,int,int,android.graphics.Rect,int,int,android.graphics.Rect,int)
+    public abstract void applyDisplay(int,android.graphics.Rect,android.graphics.Rect,int)
 android.support.v4.view.GravityCompat$GravityCompatImplBase:
-====    46:47:public void apply(int,int,int,android.graphics.Rect,android.graphics.Rect,int)
-====    52:53:public void apply(int,int,int,android.graphics.Rect,int,int,android.graphics.Rect,int)
-====    58:59:public void applyDisplay(int,android.graphics.Rect,android.graphics.Rect,int)
+    46:47:public void apply(int,int,int,android.graphics.Rect,android.graphics.Rect,int)
+    52:53:public void apply(int,int,int,android.graphics.Rect,int,int,android.graphics.Rect,int)
+    58:59:public void applyDisplay(int,android.graphics.Rect,android.graphics.Rect,int)
 android.support.v4.view.GravityCompat$GravityCompatImplJellybeanMr1:
-====    71:72:public void apply(int,int,int,android.graphics.Rect,android.graphics.Rect,int)
-====    77:79:public void apply(int,int,int,android.graphics.Rect,int,int,android.graphics.Rect,int)
-====    83:84:public void applyDisplay(int,android.graphics.Rect,android.graphics.Rect,int)
+    71:72:public void apply(int,int,int,android.graphics.Rect,android.graphics.Rect,int)
+    77:79:public void apply(int,int,int,android.graphics.Rect,int,int,android.graphics.Rect,int)
+    83:84:public void applyDisplay(int,android.graphics.Rect,android.graphics.Rect,int)
 android.support.v4.view.GravityCompatJellybeanMr1:
-====    23:23:GravityCompatJellybeanMr1()
-====    31:32:public static void apply(int,int,int,android.graphics.Rect,android.graphics.Rect,int)
-====    36:37:public static void apply(int,int,int,android.graphics.Rect,int,int,android.graphics.Rect,int)
-====    40:41:public static void applyDisplay(int,android.graphics.Rect,android.graphics.Rect,int)
+    23:23:GravityCompatJellybeanMr1()
+    31:32:public static void apply(int,int,int,android.graphics.Rect,android.graphics.Rect,int)
+    36:37:public static void apply(int,int,int,android.graphics.Rect,int,int,android.graphics.Rect,int)
+    40:41:public static void applyDisplay(int,android.graphics.Rect,android.graphics.Rect,int)
 android.support.v4.view.KeyEventCompat:
-====    26:144:public KeyEventCompat()
-====    176:176:public static int normalizeMetaState(int)
-====    180:180:public static boolean metaStateHasModifiers(int,int)
-====    184:184:public static boolean metaStateHasNoModifiers(int)
-====    200:200:public static boolean isTracking(android.view.KeyEvent)
-====    204:204:public static java.lang.Object getKeyDispatcherState(android.view.View)
-====    209:209:public static boolean dispatch(android.view.KeyEvent,android.view.KeyEvent$Callback,java.lang.Object,java.lang.Object)
+    26:144:public KeyEventCompat()
+    176:176:public static int normalizeMetaState(int)
+    180:180:public static boolean metaStateHasModifiers(int,int)
+    184:184:public static boolean metaStateHasNoModifiers(int)
+    200:200:public static boolean isTracking(android.view.KeyEvent)
+    204:204:public static java.lang.Object getKeyDispatcherState(android.view.View)
+    209:209:public static boolean dispatch(android.view.KeyEvent,android.view.KeyEvent$Callback,java.lang.Object,java.lang.Object)
 android.support.v4.view.KeyEventCompat$BaseKeyEventVersionImpl:
     private static final int META_MODIFIER_MASK
     private static final int META_ALL_MASK
-====    103:103:public boolean isTracking(android.view.KeyEvent)
-====    108:108:public java.lang.Object getKeyDispatcherState(android.view.View)
-====    114:114:public boolean dispatch(android.view.KeyEvent,android.view.KeyEvent$Callback,java.lang.Object,java.lang.Object)
+    103:103:public boolean isTracking(android.view.KeyEvent)
+    108:108:public java.lang.Object getKeyDispatcherState(android.view.View)
+    114:114:public boolean dispatch(android.view.KeyEvent,android.view.KeyEvent$Callback,java.lang.Object,java.lang.Object)
 android.support.v4.view.KeyEventCompat$EclairKeyEventVersionImpl:
-====    126:126:public boolean isTracking(android.view.KeyEvent)
-====    131:131:public java.lang.Object getKeyDispatcherState(android.view.View)
-====    137:137:public boolean dispatch(android.view.KeyEvent,android.view.KeyEvent$Callback,java.lang.Object,java.lang.Object)
+    126:126:public boolean isTracking(android.view.KeyEvent)
+    131:131:public java.lang.Object getKeyDispatcherState(android.view.View)
+    137:137:public boolean dispatch(android.view.KeyEvent,android.view.KeyEvent$Callback,java.lang.Object,java.lang.Object)
 android.support.v4.view.KeyEventCompat$KeyEventVersionImpl:
-====    public abstract int normalizeMetaState(int)
-====    public abstract boolean isTracking(android.view.KeyEvent)
-====    public abstract java.lang.Object getKeyDispatcherState(android.view.View)
-====    public abstract boolean dispatch(android.view.KeyEvent,android.view.KeyEvent$Callback,java.lang.Object,java.lang.Object)
+    public abstract int normalizeMetaState(int)
+    public abstract boolean isTracking(android.view.KeyEvent)
+    public abstract java.lang.Object getKeyDispatcherState(android.view.View)
+    public abstract boolean dispatch(android.view.KeyEvent,android.view.KeyEvent$Callback,java.lang.Object,java.lang.Object)
 android.support.v4.view.KeyEventCompatEclair:
-====    23:23:KeyEventCompatEclair()
-====    25:25:public static java.lang.Object getKeyDispatcherState(android.view.View)
-====    30:30:public static boolean dispatch(android.view.KeyEvent,android.view.KeyEvent$Callback,java.lang.Object,java.lang.Object)
-====    38:38:public static boolean isTracking(android.view.KeyEvent)
+    23:23:KeyEventCompatEclair()
+    25:25:public static java.lang.Object getKeyDispatcherState(android.view.View)
+    30:30:public static boolean dispatch(android.view.KeyEvent,android.view.KeyEvent$Callback,java.lang.Object,java.lang.Object)
+    38:38:public static boolean isTracking(android.view.KeyEvent)
 android.support.v4.view.KeyEventCompatHoneycomb:
-====    24:24:KeyEventCompatHoneycomb()
+    24:24:KeyEventCompatHoneycomb()
 android.support.v4.view.MarginLayoutParamsCompat
 android.support.v4.view.MarginLayoutParamsCompat$MarginLayoutParamsCompatImpl
 android.support.v4.view.MarginLayoutParamsCompat$MarginLayoutParamsCompatImplBase
@@ -295,9 +295,9 @@ android.support.v4.view.MotionEventCompat:
     public static final int ACTION_POINTER_INDEX_SHIFT
     public static final int ACTION_HOVER_ENTER
     public static final int ACTION_HOVER_EXIT
-====    25:80:public MotionEventCompat()
+    25:80:public MotionEventCompat()
 android.support.v4.view.MotionEventCompatEclair:
-====    24:24:MotionEventCompatEclair()
+    24:24:MotionEventCompatEclair()
 android.support.v4.view.PagerTabStrip:
     private static final java.lang.String TAG
     private static final int INDICATOR_HEIGHT
@@ -308,14 +308,14 @@ android.support.v4.view.PagerTabStrip:
     private static final int FULL_UNDERLINE_HEIGHT
     private static final int MIN_STRIP_HEIGHT
     private int mMinTextSpacing
-====    76:77:public PagerTabStrip(android.content.Context)
-====    61:121:public PagerTabStrip(android.content.Context,android.util.AttributeSet)
-====    129:132:public void setTabIndicatorColor(int)
-====    140:141:public void setTabIndicatorColorResource(int)
-====    147:147:public int getTabIndicatorColor()
-====    160:164:public void setTextSpacing(int)
-====    197:200:public void setDrawFullUnderline(boolean)
-====    210:210:public boolean getDrawFullUnderline()
+    76:77:public PagerTabStrip(android.content.Context)
+    80:121:public PagerTabStrip(android.content.Context,android.util.AttributeSet)
+    129:132:public void setTabIndicatorColor(int)
+    140:141:public void setTabIndicatorColorResource(int)
+    147:147:public int getTabIndicatorColor()
+    160:164:public void setTextSpacing(int)
+    197:200:public void setDrawFullUnderline(boolean)
+    210:210:public boolean getDrawFullUnderline()
 android.support.v4.view.PagerTabStrip$1
 android.support.v4.view.PagerTabStrip$2
 android.support.v4.view.PagerTitleStrip:
@@ -324,26 +324,26 @@ android.support.v4.view.PagerTitleStrip:
     private static final int TEXT_SPACING
     private int mNonPrimaryAlpha
     int mTextColor
-====    108:109:private static void setSingleLineAllCaps(android.widget.TextView)
-====    112:113:public PagerTitleStrip(android.content.Context)
-====    53:168:public PagerTitleStrip(android.content.Context,android.util.AttributeSet)
-====    176:178:public void setTextSpacing(int)
-====    184:184:public int getTextSpacing()
-====    193:197:public void setNonPrimaryAlpha(float)
-====    206:211:public void setTextColor(int)
-====    224:227:public void setTextSize(int,float)
-====    236:238:public void setGravity(int)
+    108:109:private static void setSingleLineAllCaps(android.widget.TextView)
+    112:113:public PagerTitleStrip(android.content.Context)
+    116:168:public PagerTitleStrip(android.content.Context,android.util.AttributeSet)
+    176:178:public void setTextSpacing(int)
+    184:184:public int getTextSpacing()
+    193:197:public void setNonPrimaryAlpha(float)
+    206:211:public void setTextColor(int)
+    224:227:public void setTextSize(int,float)
+    236:238:public void setGravity(int)
 android.support.v4.view.PagerTitleStrip$1
 android.support.v4.view.PagerTitleStrip$PageListener:
-====    470:470:private PagerTitleStrip$PageListener(android.support.v4.view.PagerTitleStrip)
-====    501:502:public void onAdapterChanged(android.support.v4.view.PagerAdapter,android.support.v4.view.PagerAdapter)
-====    470:470:synthetic PagerTitleStrip$PageListener(android.support.v4.view.PagerTitleStrip,android.support.v4.view.PagerTitleStrip$1)
+    470:470:private PagerTitleStrip$PageListener(android.support.v4.view.PagerTitleStrip)
+    501:502:public void onAdapterChanged(android.support.v4.view.PagerAdapter,android.support.v4.view.PagerAdapter)
+    470:470:synthetic PagerTitleStrip$PageListener(android.support.v4.view.PagerTitleStrip,android.support.v4.view.PagerTitleStrip$1)
 android.support.v4.view.PagerTitleStrip$PagerTitleStripImpl:
-====    public abstract void setSingleLineAllCaps(android.widget.TextView)
+    public abstract void setSingleLineAllCaps(android.widget.TextView)
 android.support.v4.view.PagerTitleStrip$PagerTitleStripImplBase:
-====    88:89:public void setSingleLineAllCaps(android.widget.TextView)
+    88:89:public void setSingleLineAllCaps(android.widget.TextView)
 android.support.v4.view.PagerTitleStrip$PagerTitleStripImplIcs:
-====    94:95:public void setSingleLineAllCaps(android.widget.TextView)
+    94:95:public void setSingleLineAllCaps(android.widget.TextView)
 android.support.v4.view.PagerTitleStripIcs
 android.support.v4.view.PagerTitleStripIcs$SingleLineAllCapsTransform
 android.support.v4.view.ScaleGestureDetectorCompat
@@ -353,9 +353,9 @@ android.support.v4.view.ScaleGestureDetectorCompat$ScaleGestureDetectorCompatKit
 android.support.v4.view.ScaleGestureDetectorCompat$ScaleGestureDetectorImpl
 android.support.v4.view.ScaleGestureDetectorCompatKitKat
 android.support.v4.view.VelocityTrackerCompat:
-====    25:51:public VelocityTrackerCompat()
+    25:51:public VelocityTrackerCompat()
 android.support.v4.view.VelocityTrackerCompatHoneycomb:
-====    24:24:VelocityTrackerCompatHoneycomb()
+    24:24:VelocityTrackerCompatHoneycomb()
 android.support.v4.view.ViewCompat:
     public static final int OVER_SCROLL_ALWAYS
     public static final int OVER_SCROLL_IF_CONTENT_SCROLLS
@@ -379,125 +379,125 @@ android.support.v4.view.ViewCompat:
     public static final int MEASURED_STATE_MASK
     public static final int MEASURED_HEIGHT_STATE_SHIFT
     public static final int MEASURED_STATE_TOO_SMALL
-====    34:534:public ViewCompat()
-====    585:585:public static boolean canScrollVertically(android.view.View,int)
-====    614:615:public static void setOverScrollMode(android.view.View,int)
-====    651:652:public static void onPopulateAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
-====    684:685:public static void onInitializeAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
-====    720:721:public static void onInitializeAccessibilityNodeInfo(android.view.View,android.support.v4.view.accessibility.AccessibilityNodeInfoCompat)
-====    747:747:public static boolean hasTransientState(android.view.View)
-====    758:759:public static void setHasTransientState(android.view.View,boolean)
-====    820:821:public static void postOnAnimationDelayed(android.view.View,java.lang.Runnable,long)
-====    872:872:public static boolean performAccessibilityAction(android.view.View,int,android.os.Bundle)
-====    899:899:public static android.support.v4.view.accessibility.AccessibilityNodeProviderCompat getAccessibilityNodeProvider(android.view.View)
-====    910:910:public static float getAlpha(android.view.View)
-====    984:984:public static int getLabelFor(android.view.View)
-====    995:996:public static void setLabelFor(android.view.View,int)
-====    1063:1064:public static void setLayoutDirection(android.view.View,int)
-====    1105:1105:public static int resolveSizeAndState(int,int,int)
-====    1119:1119:public static int getMeasuredWidthAndState(android.view.View)
-====    1133:1133:public static int getMeasuredHeightAndState(android.view.View)
-====    1144:1144:public static int getMeasuredState(android.view.View)
-====    1156:1156:public int getAccessibilityLiveRegion(android.view.View)
-====    1188:1189:public void setAccessibilityLiveRegion(android.view.View,int)
+    34:534:public ViewCompat()
+    585:585:public static boolean canScrollVertically(android.view.View,int)
+    614:615:public static void setOverScrollMode(android.view.View,int)
+    651:652:public static void onPopulateAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
+    684:685:public static void onInitializeAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
+    720:721:public static void onInitializeAccessibilityNodeInfo(android.view.View,android.support.v4.view.accessibility.AccessibilityNodeInfoCompat)
+    747:747:public static boolean hasTransientState(android.view.View)
+    758:759:public static void setHasTransientState(android.view.View,boolean)
+    820:821:public static void postOnAnimationDelayed(android.view.View,java.lang.Runnable,long)
+    872:872:public static boolean performAccessibilityAction(android.view.View,int,android.os.Bundle)
+    899:899:public static android.support.v4.view.accessibility.AccessibilityNodeProviderCompat getAccessibilityNodeProvider(android.view.View)
+    910:910:public static float getAlpha(android.view.View)
+    984:984:public static int getLabelFor(android.view.View)
+    995:996:public static void setLabelFor(android.view.View,int)
+    1063:1064:public static void setLayoutDirection(android.view.View,int)
+    1105:1105:public static int resolveSizeAndState(int,int,int)
+    1119:1119:public static int getMeasuredWidthAndState(android.view.View)
+    1133:1133:public static int getMeasuredHeightAndState(android.view.View)
+    1144:1144:public static int getMeasuredState(android.view.View)
+    1156:1156:public int getAccessibilityLiveRegion(android.view.View)
+    1188:1189:public void setAccessibilityLiveRegion(android.view.View,int)
 android.support.v4.view.ViewCompat$BaseViewCompatImpl:
-====    239:239:public boolean canScrollVertically(android.view.View,int)
-====    246:246:public void setOverScrollMode(android.view.View,int)
-====    252:252:public void onPopulateAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
-====    255:255:public void onInitializeAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
-====    258:258:public void onInitializeAccessibilityNodeInfo(android.view.View,android.support.v4.view.accessibility.AccessibilityNodeInfoCompat)
-====    261:261:public boolean hasTransientState(android.view.View)
-====    265:265:public void setHasTransientState(android.view.View,boolean)
-====    276:277:public void postOnAnimationDelayed(android.view.View,java.lang.Runnable,long)
-====    288:288:public boolean performAccessibilityAction(android.view.View,int,android.os.Bundle)
-====    291:291:public android.support.v4.view.accessibility.AccessibilityNodeProviderCompat getAccessibilityNodeProvider(android.view.View)
-====    294:294:public float getAlpha(android.view.View)
-====    303:303:public int getLabelFor(android.view.View)
-====    307:307:public void setLabelFor(android.view.View,int)
-====    320:320:public void setLayoutDirection(android.view.View,int)
-====    337:337:public int resolveSizeAndState(int,int,int)
-====    342:342:public int getMeasuredWidthAndState(android.view.View)
-====    347:347:public int getMeasuredHeightAndState(android.view.View)
-====    352:352:public int getMeasuredState(android.view.View)
-====    357:357:public int getAccessibilityLiveRegion(android.view.View)
-====    363:363:public void setAccessibilityLiveRegion(android.view.View,int)
+    239:239:public boolean canScrollVertically(android.view.View,int)
+    246:246:public void setOverScrollMode(android.view.View,int)
+    252:252:public void onPopulateAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
+    255:255:public void onInitializeAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
+    258:258:public void onInitializeAccessibilityNodeInfo(android.view.View,android.support.v4.view.accessibility.AccessibilityNodeInfoCompat)
+    261:261:public boolean hasTransientState(android.view.View)
+    265:265:public void setHasTransientState(android.view.View,boolean)
+    276:277:public void postOnAnimationDelayed(android.view.View,java.lang.Runnable,long)
+    288:288:public boolean performAccessibilityAction(android.view.View,int,android.os.Bundle)
+    291:291:public android.support.v4.view.accessibility.AccessibilityNodeProviderCompat getAccessibilityNodeProvider(android.view.View)
+    294:294:public float getAlpha(android.view.View)
+    303:303:public int getLabelFor(android.view.View)
+    307:307:public void setLabelFor(android.view.View,int)
+    320:320:public void setLayoutDirection(android.view.View,int)
+    337:337:public int resolveSizeAndState(int,int,int)
+    342:342:public int getMeasuredWidthAndState(android.view.View)
+    347:347:public int getMeasuredHeightAndState(android.view.View)
+    352:352:public int getMeasuredState(android.view.View)
+    357:357:public int getAccessibilityLiveRegion(android.view.View)
+    363:363:public void setAccessibilityLiveRegion(android.view.View,int)
 android.support.v4.view.ViewCompat$GBViewCompatImpl:
-====    380:381:public void setOverScrollMode(android.view.View,int)
+    380:381:public void setOverScrollMode(android.view.View,int)
 android.support.v4.view.ViewCompat$HCViewCompatImpl:
-====    391:391:public float getAlpha(android.view.View)
-====    411:411:public int resolveSizeAndState(int,int,int)
-====    415:415:public int getMeasuredWidthAndState(android.view.View)
-====    419:419:public int getMeasuredHeightAndState(android.view.View)
-====    423:423:public int getMeasuredState(android.view.View)
+    391:391:public float getAlpha(android.view.View)
+    411:411:public int resolveSizeAndState(int,int,int)
+    415:415:public int getMeasuredWidthAndState(android.view.View)
+    419:419:public int getMeasuredHeightAndState(android.view.View)
+    423:423:public int getMeasuredState(android.view.View)
 android.support.v4.view.ViewCompat$ICSViewCompatImpl:
-====    434:434:public boolean canScrollVertically(android.view.View,int)
-====    438:439:public void onPopulateAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
-====    442:443:public void onInitializeAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
-====    446:447:public void onInitializeAccessibilityNodeInfo(android.view.View,android.support.v4.view.accessibility.AccessibilityNodeInfoCompat)
+    434:434:public boolean canScrollVertically(android.view.View,int)
+    438:439:public void onPopulateAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
+    442:443:public void onInitializeAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
+    446:447:public void onInitializeAccessibilityNodeInfo(android.view.View,android.support.v4.view.accessibility.AccessibilityNodeInfoCompat)
 android.support.v4.view.ViewCompat$JBViewCompatImpl:
-====    457:457:public boolean hasTransientState(android.view.View)
-====    461:462:public void setHasTransientState(android.view.View,boolean)
-====    477:478:public void postOnAnimationDelayed(android.view.View,java.lang.Runnable,long)
-====    489:489:public boolean performAccessibilityAction(android.view.View,int,android.os.Bundle)
-====    493:497:public android.support.v4.view.accessibility.AccessibilityNodeProviderCompat getAccessibilityNodeProvider(android.view.View)
+    457:457:public boolean hasTransientState(android.view.View)
+    461:462:public void setHasTransientState(android.view.View,boolean)
+    477:478:public void postOnAnimationDelayed(android.view.View,java.lang.Runnable,long)
+    489:489:public boolean performAccessibilityAction(android.view.View,int,android.os.Bundle)
+    493:497:public android.support.v4.view.accessibility.AccessibilityNodeProviderCompat getAccessibilityNodeProvider(android.view.View)
 android.support.v4.view.ViewCompat$JbMr1ViewCompatImpl:
-====    510:510:public int getLabelFor(android.view.View)
-====    515:516:public void setLabelFor(android.view.View,int)
-====    530:531:public void setLayoutDirection(android.view.View,int)
+    510:510:public int getLabelFor(android.view.View)
+    515:516:public void setLabelFor(android.view.View,int)
+    530:531:public void setLayoutDirection(android.view.View,int)
 android.support.v4.view.ViewCompat$KitKatViewCompatImpl:
-====    537:537:public int getAccessibilityLiveRegion(android.view.View)
-====    542:543:public void setAccessibilityLiveRegion(android.view.View,int)
+    537:537:public int getAccessibilityLiveRegion(android.view.View)
+    542:543:public void setAccessibilityLiveRegion(android.view.View,int)
 android.support.v4.view.ViewCompat$ViewCompatImpl:
-====    public abstract boolean canScrollVertically(android.view.View,int)
-====    public abstract void setOverScrollMode(android.view.View,int)
-====    public abstract void onInitializeAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
-====    public abstract void onPopulateAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
-====    public abstract void onInitializeAccessibilityNodeInfo(android.view.View,android.support.v4.view.accessibility.AccessibilityNodeInfoCompat)
-====    public abstract boolean hasTransientState(android.view.View)
-====    public abstract void setHasTransientState(android.view.View,boolean)
-====    public abstract void postOnAnimationDelayed(android.view.View,java.lang.Runnable,long)
-====    public abstract boolean performAccessibilityAction(android.view.View,int,android.os.Bundle)
-====    public abstract android.support.v4.view.accessibility.AccessibilityNodeProviderCompat getAccessibilityNodeProvider(android.view.View)
-====    public abstract float getAlpha(android.view.View)
-====    public abstract int getLabelFor(android.view.View)
-====    public abstract void setLabelFor(android.view.View,int)
-====    public abstract void setLayoutDirection(android.view.View,int)
-====    public abstract int resolveSizeAndState(int,int,int)
-====    public abstract int getMeasuredWidthAndState(android.view.View)
-====    public abstract int getMeasuredHeightAndState(android.view.View)
-====    public abstract int getMeasuredState(android.view.View)
-====    public abstract int getAccessibilityLiveRegion(android.view.View)
-====    public abstract void setAccessibilityLiveRegion(android.view.View,int)
+    public abstract boolean canScrollVertically(android.view.View,int)
+    public abstract void setOverScrollMode(android.view.View,int)
+    public abstract void onInitializeAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
+    public abstract void onPopulateAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
+    public abstract void onInitializeAccessibilityNodeInfo(android.view.View,android.support.v4.view.accessibility.AccessibilityNodeInfoCompat)
+    public abstract boolean hasTransientState(android.view.View)
+    public abstract void setHasTransientState(android.view.View,boolean)
+    public abstract void postOnAnimationDelayed(android.view.View,java.lang.Runnable,long)
+    public abstract boolean performAccessibilityAction(android.view.View,int,android.os.Bundle)
+    public abstract android.support.v4.view.accessibility.AccessibilityNodeProviderCompat getAccessibilityNodeProvider(android.view.View)
+    public abstract float getAlpha(android.view.View)
+    public abstract int getLabelFor(android.view.View)
+    public abstract void setLabelFor(android.view.View,int)
+    public abstract void setLayoutDirection(android.view.View,int)
+    public abstract int resolveSizeAndState(int,int,int)
+    public abstract int getMeasuredWidthAndState(android.view.View)
+    public abstract int getMeasuredHeightAndState(android.view.View)
+    public abstract int getMeasuredState(android.view.View)
+    public abstract int getAccessibilityLiveRegion(android.view.View)
+    public abstract void setAccessibilityLiveRegion(android.view.View,int)
 android.support.v4.view.ViewCompatEclairMr1:
-====    22:22:ViewCompatEclairMr1()
+    22:22:ViewCompatEclairMr1()
 android.support.v4.view.ViewCompatGingerbread:
-====    21:21:ViewCompatGingerbread()
-====    27:28:public static void setOverScrollMode(android.view.View,int)
+    21:21:ViewCompatGingerbread()
+    27:28:public static void setOverScrollMode(android.view.View,int)
 android.support.v4.view.ViewCompatHC:
-====    23:23:ViewCompatHC()
-====    29:29:public static float getAlpha(android.view.View)
-====    41:41:public static int resolveSizeAndState(int,int,int)
-====    45:45:public static int getMeasuredWidthAndState(android.view.View)
-====    49:49:public static int getMeasuredHeightAndState(android.view.View)
-====    53:53:public static int getMeasuredState(android.view.View)
+    23:23:ViewCompatHC()
+    29:29:public static float getAlpha(android.view.View)
+    41:41:public static int resolveSizeAndState(int,int,int)
+    45:45:public static int getMeasuredWidthAndState(android.view.View)
+    49:49:public static int getMeasuredHeightAndState(android.view.View)
+    53:53:public static int getMeasuredState(android.view.View)
 android.support.v4.view.ViewCompatICS:
-====    27:27:ViewCompatICS()
-====    34:34:public static boolean canScrollVertically(android.view.View,int)
-====    42:43:public static void onPopulateAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
-====    46:47:public static void onInitializeAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
-====    50:51:public static void onInitializeAccessibilityNodeInfo(android.view.View,java.lang.Object)
+    27:27:ViewCompatICS()
+    34:34:public static boolean canScrollVertically(android.view.View,int)
+    42:43:public static void onPopulateAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
+    46:47:public static void onInitializeAccessibilityEvent(android.view.View,android.view.accessibility.AccessibilityEvent)
+    50:51:public static void onInitializeAccessibilityNodeInfo(android.view.View,java.lang.Object)
 android.support.v4.view.ViewCompatJB:
-====    26:26:ViewCompatJB()
-====    29:29:public static boolean hasTransientState(android.view.View)
-====    33:34:public static void setHasTransientState(android.view.View,boolean)
-====    50:51:public static void postOnAnimationDelayed(android.view.View,java.lang.Runnable,long)
-====    62:62:public static boolean performAccessibilityAction(android.view.View,int,android.os.Bundle)
-====    66:66:public static java.lang.Object getAccessibilityNodeProvider(android.view.View)
+    26:26:ViewCompatJB()
+    29:29:public static boolean hasTransientState(android.view.View)
+    33:34:public static void setHasTransientState(android.view.View,boolean)
+    50:51:public static void postOnAnimationDelayed(android.view.View,java.lang.Runnable,long)
+    62:62:public static boolean performAccessibilityAction(android.view.View,int,android.os.Bundle)
+    66:66:public static java.lang.Object getAccessibilityNodeProvider(android.view.View)
 android.support.v4.view.ViewCompatJellybeanMr1:
-====    25:25:ViewCompatJellybeanMr1()
-====    28:28:public static int getLabelFor(android.view.View)
-====    32:33:public static void setLabelFor(android.view.View,int)
-====    44:45:public static void setLayoutDirection(android.view.View,int)
+    25:25:ViewCompatJellybeanMr1()
+    28:28:public static int getLabelFor(android.view.View)
+    32:33:public static void setLabelFor(android.view.View,int)
+    44:45:public static void setLayoutDirection(android.view.View,int)
 android.support.v4.view.ViewCompatKitKat
 android.support.v4.view.ViewConfigurationCompat
 android.support.v4.view.ViewConfigurationCompat$BaseViewConfigurationVersionImpl
@@ -507,25 +507,25 @@ android.support.v4.view.ViewConfigurationCompatFroyo
 android.support.v4.view.ViewGroupCompat:
     public static final int LAYOUT_MODE_CLIP_BOUNDS
     public static final int LAYOUT_MODE_OPTICAL_BOUNDS
-====    120:122:private ViewGroupCompat()
-====    141:141:public static boolean onRequestSendAccessibilityEvent(android.view.ViewGroup,android.view.View,android.view.accessibility.AccessibilityEvent)
-====    177:177:public static int getLayoutMode(android.view.ViewGroup)
-====    190:191:public static void setLayoutMode(android.view.ViewGroup,int)
+    120:122:private ViewGroupCompat()
+    141:141:public static boolean onRequestSendAccessibilityEvent(android.view.ViewGroup,android.view.View,android.view.accessibility.AccessibilityEvent)
+    177:177:public static int getLayoutMode(android.view.ViewGroup)
+    190:191:public static void setLayoutMode(android.view.ViewGroup,int)
 android.support.v4.view.ViewGroupCompat$ViewGroupCompatIcsImpl:
-====    87:87:public boolean onRequestSendAccessibilityEvent(android.view.ViewGroup,android.view.View,android.view.accessibility.AccessibilityEvent)
+    87:87:public boolean onRequestSendAccessibilityEvent(android.view.ViewGroup,android.view.View,android.view.accessibility.AccessibilityEvent)
 android.support.v4.view.ViewGroupCompat$ViewGroupCompatImpl:
-====    public abstract boolean onRequestSendAccessibilityEvent(android.view.ViewGroup,android.view.View,android.view.accessibility.AccessibilityEvent)
-====    public abstract int getLayoutMode(android.view.ViewGroup)
-====    public abstract void setLayoutMode(android.view.ViewGroup,int)
+    public abstract boolean onRequestSendAccessibilityEvent(android.view.ViewGroup,android.view.View,android.view.accessibility.AccessibilityEvent)
+    public abstract int getLayoutMode(android.view.ViewGroup)
+    public abstract void setLayoutMode(android.view.ViewGroup,int)
 android.support.v4.view.ViewGroupCompat$ViewGroupCompatJellybeanMR2Impl:
-====    94:94:public int getLayoutMode(android.view.ViewGroup)
-====    99:100:public void setLayoutMode(android.view.ViewGroup,int)
+    94:94:public int getLayoutMode(android.view.ViewGroup)
+    99:100:public void setLayoutMode(android.view.ViewGroup,int)
 android.support.v4.view.ViewGroupCompat$ViewGroupCompatStubImpl:
-====    58:58:public boolean onRequestSendAccessibilityEvent(android.view.ViewGroup,android.view.View,android.view.accessibility.AccessibilityEvent)
-====    67:67:public int getLayoutMode(android.view.ViewGroup)
-====    73:73:public void setLayoutMode(android.view.ViewGroup,int)
+    58:58:public boolean onRequestSendAccessibilityEvent(android.view.ViewGroup,android.view.View,android.view.accessibility.AccessibilityEvent)
+    67:67:public int getLayoutMode(android.view.ViewGroup)
+    73:73:public void setLayoutMode(android.view.ViewGroup,int)
 android.support.v4.view.ViewGroupCompatHC:
-====    23:24:private ViewGroupCompatHC()
+    23:24:private ViewGroupCompatHC()
 android.support.v4.view.ViewGroupCompatIcs
 android.support.v4.view.ViewGroupCompatJellybeanMR2
 android.support.v4.view.ViewPager:
@@ -549,33 +549,33 @@ android.support.v4.view.ViewPager:
     public static final int SCROLL_STATE_IDLE
     public static final int SCROLL_STATE_DRAGGING
     public static final int SCROLL_STATE_SETTLING
-====    130:346:public ViewPager(android.content.Context)
-====    130:351:public ViewPager(android.content.Context,android.util.AttributeSet)
-====    354:379:void initViewPager()
-====    408:451:public void setAdapter(android.support.v4.view.PagerAdapter)
-====    454:462:private void removeNonDecorViews()
-====    592:593:public void setOnPageChangeListener(android.support.v4.view.ViewPager$OnPageChangeListener)
-====    608:620:public void setPageTransformer(boolean,android.support.v4.view.ViewPager$PageTransformer)
-====    623:638:void setChildrenDrawingOrderEnabledCompat(boolean)
-====    667:667:public int getOffscreenPageLimit()
-====    688:697:public void setOffscreenPageLimit(int)
-====    708:715:public void setPageMargin(int)
-====    723:723:public int getPageMargin()
-====    732:736:public void setPageMarginDrawable(android.graphics.drawable.Drawable)
-====    744:745:public void setPageMarginDrawable(int)
-====    778:779:void smoothScrollTo(int,int)
-====    845:911:void dataSetChanged()
-====    2273:2289:public boolean beginFakeDrag()
-====    2299:2320:public void endFakeDrag()
-====    2330:2368:public void fakeDragBy(float)
-====    2380:2380:public boolean isFakeDragging()
-====    84:84:static synthetic void access$000(android.support.v4.view.ViewPager,int)
-====    84:84:static synthetic android.support.v4.view.PagerAdapter access$200(android.support.v4.view.ViewPager)
-====    84:84:static synthetic int access$300(android.support.v4.view.ViewPager)
+    344:346:public ViewPager(android.content.Context)
+    349:351:public ViewPager(android.content.Context,android.util.AttributeSet)
+    354:379:void initViewPager()
+    408:451:public void setAdapter(android.support.v4.view.PagerAdapter)
+    454:462:private void removeNonDecorViews()
+    592:593:public void setOnPageChangeListener(android.support.v4.view.ViewPager$OnPageChangeListener)
+    608:620:public void setPageTransformer(boolean,android.support.v4.view.ViewPager$PageTransformer)
+    623:638:void setChildrenDrawingOrderEnabledCompat(boolean)
+    667:667:public int getOffscreenPageLimit()
+    688:697:public void setOffscreenPageLimit(int)
+    708:715:public void setPageMargin(int)
+    723:723:public int getPageMargin()
+    732:736:public void setPageMarginDrawable(android.graphics.drawable.Drawable)
+    744:745:public void setPageMarginDrawable(int)
+    778:779:void smoothScrollTo(int,int)
+    845:911:void dataSetChanged()
+    2273:2289:public boolean beginFakeDrag()
+    2299:2320:public void endFakeDrag()
+    2330:2368:public void fakeDragBy(float)
+    2380:2380:public boolean isFakeDragging()
+    84:84:static synthetic void access$000(android.support.v4.view.ViewPager,int)
+    84:84:static synthetic android.support.v4.view.PagerAdapter access$200(android.support.v4.view.ViewPager)
+    84:84:static synthetic int access$300(android.support.v4.view.ViewPager)
 android.support.v4.view.ViewPager$3
 android.support.v4.view.ViewPager$MyAccessibilityDelegate
 android.support.v4.view.ViewPager$OnAdapterChangeListener:
-====    public abstract void onAdapterChanged(android.support.v4.view.PagerAdapter,android.support.v4.view.PagerAdapter)
+    public abstract void onAdapterChanged(android.support.v4.view.PagerAdapter,android.support.v4.view.PagerAdapter)
 android.support.v4.view.ViewPager$PagerObserver
 android.support.v4.view.ViewPager$SimpleOnPageChangeListener
 android.support.v4.view.ViewParentCompat
@@ -629,144 +629,144 @@ android.support.v4.view.accessibility.AccessibilityNodeInfoCompat:
     public static final int MOVEMENT_GRANULARITY_LINE
     public static final int MOVEMENT_GRANULARITY_PARAGRAPH
     public static final int MOVEMENT_GRANULARITY_PAGE
-====    1099:1099:public static android.support.v4.view.accessibility.AccessibilityNodeInfoCompat obtain(android.view.View)
-====    1113:1113:public static android.support.v4.view.accessibility.AccessibilityNodeInfoCompat obtain(android.view.View,int)
-====    1123:1123:public static android.support.v4.view.accessibility.AccessibilityNodeInfoCompat obtain()
-====    1166:1167:public void setSource(android.view.View,int)
-====    1181:1181:public android.support.v4.view.accessibility.AccessibilityNodeInfoCompat findFocus(int)
-====    1199:1199:public android.support.v4.view.accessibility.AccessibilityNodeInfoCompat focusSearch(int)
-====    1208:1208:public int getWindowId()
-====    1217:1217:public int getChildCount()
-====    1234:1234:public android.support.v4.view.accessibility.AccessibilityNodeInfoCompat getChild(int)
-====    1267:1268:public void addChild(android.view.View,int)
-====    1311:1311:public boolean performAction(int)
-====    1328:1328:public boolean performAction(int,android.os.Bundle)
-====    1370:1377:public java.util.List findAccessibilityNodeInfosByText(java.lang.String)
-====    1391:1391:public android.support.v4.view.accessibility.AccessibilityNodeInfoCompat getParent()
-====    1429:1430:public void setParent(android.view.View,int)
-====    1501:1502:public void setCheckable(boolean)
-====    1525:1526:public void setChecked(boolean)
-====    1743:1744:public void setPassword(boolean)
-====    1767:1768:public void setScrollable(boolean)
-====    1839:1840:public void setText(java.lang.CharSequence)
-====    1889:1890:public void setViewIdResourceName(java.lang.String)
-====    1927:1927:public int getLiveRegion()
-====    1943:1944:public void setLiveRegion(int)
+    1099:1099:public static android.support.v4.view.accessibility.AccessibilityNodeInfoCompat obtain(android.view.View)
+    1113:1113:public static android.support.v4.view.accessibility.AccessibilityNodeInfoCompat obtain(android.view.View,int)
+    1123:1123:public static android.support.v4.view.accessibility.AccessibilityNodeInfoCompat obtain()
+    1166:1167:public void setSource(android.view.View,int)
+    1181:1181:public android.support.v4.view.accessibility.AccessibilityNodeInfoCompat findFocus(int)
+    1199:1199:public android.support.v4.view.accessibility.AccessibilityNodeInfoCompat focusSearch(int)
+    1208:1208:public int getWindowId()
+    1217:1217:public int getChildCount()
+    1234:1234:public android.support.v4.view.accessibility.AccessibilityNodeInfoCompat getChild(int)
+    1267:1268:public void addChild(android.view.View,int)
+    1311:1311:public boolean performAction(int)
+    1328:1328:public boolean performAction(int,android.os.Bundle)
+    1370:1377:public java.util.List findAccessibilityNodeInfosByText(java.lang.String)
+    1391:1391:public android.support.v4.view.accessibility.AccessibilityNodeInfoCompat getParent()
+    1429:1430:public void setParent(android.view.View,int)
+    1501:1502:public void setCheckable(boolean)
+    1525:1526:public void setChecked(boolean)
+    1743:1744:public void setPassword(boolean)
+    1767:1768:public void setScrollable(boolean)
+    1839:1840:public void setText(java.lang.CharSequence)
+    1889:1890:public void setViewIdResourceName(java.lang.String)
+    1927:1927:public int getLiveRegion()
+    1943:1944:public void setLiveRegion(int)
 android.support.v4.view.accessibility.AccessibilityNodeInfoCompat$AccessibilityNodeInfoIcsImpl:
-====    429:429:public java.lang.Object obtain()
-====    434:434:public java.lang.Object obtain(android.view.View)
-====    454:454:public java.util.List findAccessibilityNodeInfosByText(java.lang.Object,java.lang.String)
-====    474:474:public java.lang.Object getChild(java.lang.Object,int)
-====    479:479:public int getChildCount(java.lang.Object)
-====    499:499:public java.lang.Object getParent(java.lang.Object)
-====    509:509:public int getWindowId(java.lang.Object)
-====    564:564:public boolean performAction(java.lang.Object,int)
-====    579:580:public void setCheckable(java.lang.Object,boolean)
-====    584:585:public void setChecked(java.lang.Object,boolean)
-====    634:635:public void setPassword(java.lang.Object,boolean)
-====    639:640:public void setScrollable(java.lang.Object,boolean)
-====    654:655:public void setText(java.lang.Object,java.lang.CharSequence)
+    429:429:public java.lang.Object obtain()
+    434:434:public java.lang.Object obtain(android.view.View)
+    454:454:public java.util.List findAccessibilityNodeInfosByText(java.lang.Object,java.lang.String)
+    474:474:public java.lang.Object getChild(java.lang.Object,int)
+    479:479:public int getChildCount(java.lang.Object)
+    499:499:public java.lang.Object getParent(java.lang.Object)
+    509:509:public int getWindowId(java.lang.Object)
+    564:564:public boolean performAction(java.lang.Object,int)
+    579:580:public void setCheckable(java.lang.Object,boolean)
+    584:585:public void setChecked(java.lang.Object,boolean)
+    634:635:public void setPassword(java.lang.Object,boolean)
+    639:640:public void setScrollable(java.lang.Object,boolean)
+    654:655:public void setText(java.lang.Object,java.lang.CharSequence)
 android.support.v4.view.accessibility.AccessibilityNodeInfoCompat$AccessibilityNodeInfoImpl:
-====    public abstract java.lang.Object obtain()
-====    public abstract java.lang.Object obtain(android.view.View)
-====    public abstract java.lang.Object obtain(android.view.View,int)
-====    public abstract void setSource(java.lang.Object,android.view.View,int)
-====    public abstract java.lang.Object findFocus(java.lang.Object,int)
-====    public abstract java.lang.Object focusSearch(java.lang.Object,int)
-====    public abstract int getWindowId(java.lang.Object)
-====    public abstract int getChildCount(java.lang.Object)
-====    public abstract java.lang.Object getChild(java.lang.Object,int)
-====    public abstract void addChild(java.lang.Object,android.view.View,int)
-====    public abstract boolean performAction(java.lang.Object,int)
-====    public abstract boolean performAction(java.lang.Object,int,android.os.Bundle)
-====    public abstract java.util.List findAccessibilityNodeInfosByText(java.lang.Object,java.lang.String)
-====    public abstract java.lang.Object getParent(java.lang.Object)
-====    public abstract void setParent(java.lang.Object,android.view.View,int)
-====    public abstract void setCheckable(java.lang.Object,boolean)
-====    public abstract void setChecked(java.lang.Object,boolean)
-====    public abstract void setPassword(java.lang.Object,boolean)
-====    public abstract void setScrollable(java.lang.Object,boolean)
-====    public abstract void setText(java.lang.Object,java.lang.CharSequence)
-====    public abstract void setViewIdResourceName(java.lang.Object,java.lang.String)
-====    public abstract int getLiveRegion(java.lang.Object)
-====    public abstract void setLiveRegion(java.lang.Object,int)
+    public abstract java.lang.Object obtain()
+    public abstract java.lang.Object obtain(android.view.View)
+    public abstract java.lang.Object obtain(android.view.View,int)
+    public abstract void setSource(java.lang.Object,android.view.View,int)
+    public abstract java.lang.Object findFocus(java.lang.Object,int)
+    public abstract java.lang.Object focusSearch(java.lang.Object,int)
+    public abstract int getWindowId(java.lang.Object)
+    public abstract int getChildCount(java.lang.Object)
+    public abstract java.lang.Object getChild(java.lang.Object,int)
+    public abstract void addChild(java.lang.Object,android.view.View,int)
+    public abstract boolean performAction(java.lang.Object,int)
+    public abstract boolean performAction(java.lang.Object,int,android.os.Bundle)
+    public abstract java.util.List findAccessibilityNodeInfosByText(java.lang.Object,java.lang.String)
+    public abstract java.lang.Object getParent(java.lang.Object)
+    public abstract void setParent(java.lang.Object,android.view.View,int)
+    public abstract void setCheckable(java.lang.Object,boolean)
+    public abstract void setChecked(java.lang.Object,boolean)
+    public abstract void setPassword(java.lang.Object,boolean)
+    public abstract void setScrollable(java.lang.Object,boolean)
+    public abstract void setText(java.lang.Object,java.lang.CharSequence)
+    public abstract void setViewIdResourceName(java.lang.Object,java.lang.String)
+    public abstract int getLiveRegion(java.lang.Object)
+    public abstract void setLiveRegion(java.lang.Object,int)
 android.support.v4.view.accessibility.AccessibilityNodeInfoCompat$AccessibilityNodeInfoJellybeanImpl:
-====    666:666:public java.lang.Object obtain(android.view.View,int)
-====    671:671:public java.lang.Object findFocus(java.lang.Object,int)
-====    676:676:public java.lang.Object focusSearch(java.lang.Object,int)
-====    681:682:public void addChild(java.lang.Object,android.view.View,int)
-====    686:687:public void setSource(java.lang.Object,android.view.View,int)
-====    711:711:public boolean performAction(java.lang.Object,int,android.os.Bundle)
-====    726:727:public void setParent(java.lang.Object,android.view.View,int)
+    666:666:public java.lang.Object obtain(android.view.View,int)
+    671:671:public java.lang.Object findFocus(java.lang.Object,int)
+    676:676:public java.lang.Object focusSearch(java.lang.Object,int)
+    681:682:public void addChild(java.lang.Object,android.view.View,int)
+    686:687:public void setSource(java.lang.Object,android.view.View,int)
+    711:711:public boolean performAction(java.lang.Object,int,android.os.Bundle)
+    726:727:public void setParent(java.lang.Object,android.view.View,int)
 android.support.v4.view.accessibility.AccessibilityNodeInfoCompat$AccessibilityNodeInfoJellybeanMr2Impl:
-====    739:740:public void setViewIdResourceName(java.lang.Object,java.lang.String)
+    739:740:public void setViewIdResourceName(java.lang.Object,java.lang.String)
 android.support.v4.view.accessibility.AccessibilityNodeInfoCompat$AccessibilityNodeInfoKitKatImpl:
-====    746:746:public int getLiveRegion(java.lang.Object)
-====    751:752:public void setLiveRegion(java.lang.Object,int)
+    746:746:public int getLiveRegion(java.lang.Object)
+    751:752:public void setLiveRegion(java.lang.Object,int)
 android.support.v4.view.accessibility.AccessibilityNodeInfoCompat$AccessibilityNodeInfoStubImpl:
-====    107:107:public java.lang.Object obtain()
-====    112:112:public java.lang.Object obtain(android.view.View)
-====    117:117:public java.lang.Object obtain(android.view.View,int)
-====    138:138:public void addChild(java.lang.Object,android.view.View,int)
-====    142:142:public java.util.List findAccessibilityNodeInfosByText(java.lang.Object,java.lang.String)
-====    162:162:public java.lang.Object getChild(java.lang.Object,int)
-====    167:167:public int getChildCount(java.lang.Object)
-====    187:187:public java.lang.Object getParent(java.lang.Object)
-====    197:197:public int getWindowId(java.lang.Object)
-====    262:262:public boolean performAction(java.lang.Object,int)
-====    267:267:public boolean performAction(java.lang.Object,int,android.os.Bundle)
-====    293:293:public void setCheckable(java.lang.Object,boolean)
-====    298:298:public void setChecked(java.lang.Object,boolean)
-====    358:358:public void setPassword(java.lang.Object,boolean)
-====    363:363:public void setScrollable(java.lang.Object,boolean)
-====    378:378:public void setSource(java.lang.Object,android.view.View,int)
-====    382:382:public java.lang.Object findFocus(java.lang.Object,int)
-====    387:387:public java.lang.Object focusSearch(java.lang.Object,int)
-====    393:393:public void setText(java.lang.Object,java.lang.CharSequence)
-====    403:403:public void setParent(java.lang.Object,android.view.View,int)
-====    413:413:public void setViewIdResourceName(java.lang.Object,java.lang.String)
-====    417:417:public int getLiveRegion(java.lang.Object)
-====    423:423:public void setLiveRegion(java.lang.Object,int)
+    107:107:public java.lang.Object obtain()
+    112:112:public java.lang.Object obtain(android.view.View)
+    117:117:public java.lang.Object obtain(android.view.View,int)
+    138:138:public void addChild(java.lang.Object,android.view.View,int)
+    142:142:public java.util.List findAccessibilityNodeInfosByText(java.lang.Object,java.lang.String)
+    162:162:public java.lang.Object getChild(java.lang.Object,int)
+    167:167:public int getChildCount(java.lang.Object)
+    187:187:public java.lang.Object getParent(java.lang.Object)
+    197:197:public int getWindowId(java.lang.Object)
+    262:262:public boolean performAction(java.lang.Object,int)
+    267:267:public boolean performAction(java.lang.Object,int,android.os.Bundle)
+    293:293:public void setCheckable(java.lang.Object,boolean)
+    298:298:public void setChecked(java.lang.Object,boolean)
+    358:358:public void setPassword(java.lang.Object,boolean)
+    363:363:public void setScrollable(java.lang.Object,boolean)
+    378:378:public void setSource(java.lang.Object,android.view.View,int)
+    382:382:public java.lang.Object findFocus(java.lang.Object,int)
+    387:387:public java.lang.Object focusSearch(java.lang.Object,int)
+    393:393:public void setText(java.lang.Object,java.lang.CharSequence)
+    403:403:public void setParent(java.lang.Object,android.view.View,int)
+    413:413:public void setViewIdResourceName(java.lang.Object,java.lang.String)
+    417:417:public int getLiveRegion(java.lang.Object)
+    423:423:public void setLiveRegion(java.lang.Object,int)
 android.support.v4.view.accessibility.AccessibilityNodeInfoCompatIcs:
-====    28:28:AccessibilityNodeInfoCompatIcs()
-====    31:31:public static java.lang.Object obtain()
-====    35:35:public static java.lang.Object obtain(android.view.View)
-====    52:53:public static java.util.List findAccessibilityNodeInfosByText(java.lang.Object,java.lang.String)
-====    69:69:public static java.lang.Object getChild(java.lang.Object,int)
-====    73:73:public static int getChildCount(java.lang.Object)
-====    89:89:public static java.lang.Object getParent(java.lang.Object)
-====    97:97:public static int getWindowId(java.lang.Object)
-====    141:141:public static boolean performAction(java.lang.Object,int)
-====    153:154:public static void setCheckable(java.lang.Object,boolean)
-====    157:158:public static void setChecked(java.lang.Object,boolean)
-====    197:198:public static void setPassword(java.lang.Object,boolean)
-====    201:202:public static void setScrollable(java.lang.Object,boolean)
-====    213:214:public static void setText(java.lang.Object,java.lang.CharSequence)
+    28:28:AccessibilityNodeInfoCompatIcs()
+    31:31:public static java.lang.Object obtain()
+    35:35:public static java.lang.Object obtain(android.view.View)
+    52:53:public static java.util.List findAccessibilityNodeInfosByText(java.lang.Object,java.lang.String)
+    69:69:public static java.lang.Object getChild(java.lang.Object,int)
+    73:73:public static int getChildCount(java.lang.Object)
+    89:89:public static java.lang.Object getParent(java.lang.Object)
+    97:97:public static int getWindowId(java.lang.Object)
+    141:141:public static boolean performAction(java.lang.Object,int)
+    153:154:public static void setCheckable(java.lang.Object,boolean)
+    157:158:public static void setChecked(java.lang.Object,boolean)
+    197:198:public static void setPassword(java.lang.Object,boolean)
+    201:202:public static void setScrollable(java.lang.Object,boolean)
+    213:214:public static void setText(java.lang.Object,java.lang.CharSequence)
 android.support.v4.view.accessibility.AccessibilityNodeInfoCompatJellyBean:
-====    26:26:AccessibilityNodeInfoCompatJellyBean()
-====    29:30:public static void addChild(java.lang.Object,android.view.View,int)
-====    33:34:public static void setSource(java.lang.Object,android.view.View,int)
-====    45:45:public static boolean performAction(java.lang.Object,int,android.os.Bundle)
-====    57:57:public static java.lang.Object obtain(android.view.View,int)
-====    61:61:public static java.lang.Object findFocus(java.lang.Object,int)
-====    65:65:public static java.lang.Object focusSearch(java.lang.Object,int)
-====    69:70:public static void setParent(java.lang.Object,android.view.View,int)
+    26:26:AccessibilityNodeInfoCompatJellyBean()
+    29:30:public static void addChild(java.lang.Object,android.view.View,int)
+    33:34:public static void setSource(java.lang.Object,android.view.View,int)
+    45:45:public static boolean performAction(java.lang.Object,int,android.os.Bundle)
+    57:57:public static java.lang.Object obtain(android.view.View,int)
+    61:61:public static java.lang.Object findFocus(java.lang.Object,int)
+    65:65:public static java.lang.Object focusSearch(java.lang.Object,int)
+    69:70:public static void setParent(java.lang.Object,android.view.View,int)
 android.support.v4.view.accessibility.AccessibilityNodeInfoCompatJellybeanMr2:
-====    21:21:AccessibilityNodeInfoCompatJellybeanMr2()
-====    24:25:public static void setViewIdResourceName(java.lang.Object,java.lang.String)
+    21:21:AccessibilityNodeInfoCompatJellybeanMr2()
+    24:25:public static void setViewIdResourceName(java.lang.Object,java.lang.String)
 android.support.v4.view.accessibility.AccessibilityNodeInfoCompatKitKat
 android.support.v4.view.accessibility.AccessibilityNodeProviderCompat:
-====    246:246:public android.support.v4.view.accessibility.AccessibilityNodeInfoCompat findFocus(int)
+    246:246:public android.support.v4.view.accessibility.AccessibilityNodeInfoCompat findFocus(int)
 android.support.v4.view.accessibility.AccessibilityNodeProviderCompat$AccessibilityNodeProviderKitKatImpl$1:
-====    123:127:public java.lang.Object findFocus(int)
+    123:127:public java.lang.Object findFocus(int)
 android.support.v4.view.accessibility.AccessibilityNodeProviderCompatJellyBean:
-====    28:29:AccessibilityNodeProviderCompatJellyBean()
+    28:29:AccessibilityNodeProviderCompatJellyBean()
 android.support.v4.view.accessibility.AccessibilityNodeProviderCompatKitKat:
-====    28:29:AccessibilityNodeProviderCompatKitKat()
+    28:29:AccessibilityNodeProviderCompatKitKat()
 android.support.v4.view.accessibility.AccessibilityNodeProviderCompatKitKat$1:
-====    61:61:public android.view.accessibility.AccessibilityNodeInfo findFocus(int)
+    61:61:public android.view.accessibility.AccessibilityNodeInfo findFocus(int)
 android.support.v4.view.accessibility.AccessibilityNodeProviderCompatKitKat$AccessibilityNodeInfoBridge:
-====    public abstract java.lang.Object findFocus(int)
+    public abstract java.lang.Object findFocus(int)
 android.support.v4.view.accessibility.AccessibilityRecordCompat
 android.support.v4.view.accessibility.AccessibilityRecordCompat$AccessibilityRecordIcsImpl
 android.support.v4.view.accessibility.AccessibilityRecordCompat$AccessibilityRecordIcsMr1Impl
@@ -787,14 +787,14 @@ android.support.v4.widget.ContentLoadingProgressBar:
     private boolean mPostedHide
     private boolean mPostedShow
     private boolean mDismissed
-====    65:66:public ContentLoadingProgressBar(android.content.Context)
-====    34:70:public ContentLoadingProgressBar(android.content.Context,android.util.AttributeSet)
-====    95:112:public void hide()
-====    120:127:public void show()
-====    30:30:static synthetic boolean access$002(android.support.v4.widget.ContentLoadingProgressBar,boolean)
-====    30:30:static synthetic long access$102(android.support.v4.widget.ContentLoadingProgressBar,long)
-====    30:30:static synthetic boolean access$202(android.support.v4.widget.ContentLoadingProgressBar,boolean)
-====    30:30:static synthetic boolean access$300(android.support.v4.widget.ContentLoadingProgressBar)
+    65:66:public ContentLoadingProgressBar(android.content.Context)
+    69:70:public ContentLoadingProgressBar(android.content.Context,android.util.AttributeSet)
+    95:112:public void hide()
+    120:127:public void show()
+    30:30:static synthetic boolean access$002(android.support.v4.widget.ContentLoadingProgressBar,boolean)
+    30:30:static synthetic long access$102(android.support.v4.widget.ContentLoadingProgressBar,long)
+    30:30:static synthetic boolean access$202(android.support.v4.widget.ContentLoadingProgressBar,boolean)
+    30:30:static synthetic boolean access$300(android.support.v4.widget.ContentLoadingProgressBar)
 android.support.v4.widget.ContentLoadingProgressBar$1
 android.support.v4.widget.ContentLoadingProgressBar$2
 android.support.v4.widget.DrawerLayout:
@@ -812,30 +812,30 @@ android.support.v4.widget.DrawerLayout:
     private static final boolean ALLOW_EDGE_LOCK
     private static final boolean CHILDREN_DISALLOW_INTERCEPT
     private static final float TOUCH_SLOP_SENSITIVITY
-====    294:296:public void setScrimColor(int)
-====    322:324:public void setDrawerLockMode(int)
-====    394:400:public void setDrawerLockMode(int,android.view.View)
-====    410:417:public int getDrawerLockMode(int)
-====    540:549:void moveDrawerToOffset(android.view.View,float)
+    294:296:public void setScrimColor(int)
+    322:324:public void setDrawerLockMode(int)
+    394:400:public void setDrawerLockMode(int,android.view.View)
+    410:417:public int getDrawerLockMode(int)
+    540:549:void moveDrawerToOffset(android.view.View,float)
 android.support.v4.widget.DrawerLayout$LayoutParams:
-====    1509:1511:public DrawerLayout$LayoutParams(int,int,int)
+    1509:1511:public DrawerLayout$LayoutParams(int,int,int)
 android.support.v4.widget.DrawerLayout$SimpleDrawerListener
 android.support.v4.widget.EdgeEffectCompat:
-====    132:134:public EdgeEffectCompat(android.content.Context)
-====    204:204:public boolean onAbsorb(int)
+    132:134:public EdgeEffectCompat(android.content.Context)
+    204:204:public boolean onAbsorb(int)
 android.support.v4.widget.EdgeEffectCompat$BaseEdgeEffectImpl:
-====    60:60:public java.lang.Object newEdgeEffect(android.content.Context)
-====    82:82:public boolean onAbsorb(java.lang.Object,int)
+    60:60:public java.lang.Object newEdgeEffect(android.content.Context)
+    82:82:public boolean onAbsorb(java.lang.Object,int)
 android.support.v4.widget.EdgeEffectCompat$EdgeEffectIcsImpl:
-====    92:92:public java.lang.Object newEdgeEffect(android.content.Context)
-====    116:116:public boolean onAbsorb(java.lang.Object,int)
+    92:92:public java.lang.Object newEdgeEffect(android.content.Context)
+    116:116:public boolean onAbsorb(java.lang.Object,int)
 android.support.v4.widget.EdgeEffectCompat$EdgeEffectImpl:
-====    public abstract java.lang.Object newEdgeEffect(android.content.Context)
-====    public abstract boolean onAbsorb(java.lang.Object,int)
+    public abstract java.lang.Object newEdgeEffect(android.content.Context)
+    public abstract boolean onAbsorb(java.lang.Object,int)
 android.support.v4.widget.EdgeEffectCompatIcs:
-====    28:28:EdgeEffectCompatIcs()
-====    30:30:public static java.lang.Object newEdgeEffect(android.content.Context)
-====    57:58:public static boolean onAbsorb(java.lang.Object,int)
+    28:28:EdgeEffectCompatIcs()
+    30:30:public static java.lang.Object newEdgeEffect(android.content.Context)
+    57:58:public static boolean onAbsorb(java.lang.Object,int)
 android.support.v4.widget.ExploreByTouchHelper
 android.support.v4.widget.ExploreByTouchHelper$1
 android.support.v4.widget.ExploreByTouchHelper$ExploreByTouchNodeProvider
@@ -851,48 +851,48 @@ android.support.v4.widget.PopupMenuCompat$KitKatPopupMenuImpl
 android.support.v4.widget.PopupMenuCompat$PopupMenuImpl
 android.support.v4.widget.PopupMenuCompatKitKat
 android.support.v4.widget.ScrollerCompat:
-====    251:251:public static android.support.v4.widget.ScrollerCompat create(android.content.Context)
-====    314:314:public float getCurrVelocity()
-====    341:342:public void startScroll(int,int,int,int)
-====    382:383:public void fling(int,int,int,int,int,int,int,int)
-====    410:412:public void fling(int,int,int,int,int,int,int,int,int,int)
-====    437:438:public void notifyHorizontalEdgeReached(int,int,int)
-====    454:455:public void notifyVerticalEdgeReached(int,int,int)
-====    471:471:public boolean isOverScrolled()
+    251:251:public static android.support.v4.widget.ScrollerCompat create(android.content.Context)
+    314:314:public float getCurrVelocity()
+    341:342:public void startScroll(int,int,int,int)
+    382:383:public void fling(int,int,int,int,int,int,int,int)
+    410:412:public void fling(int,int,int,int,int,int,int,int,int,int)
+    437:438:public void notifyHorizontalEdgeReached(int,int,int)
+    454:455:public void notifyVerticalEdgeReached(int,int,int)
+    471:471:public boolean isOverScrolled()
 android.support.v4.widget.ScrollerCompat$ScrollerCompatImpl:
-====    public abstract float getCurrVelocity(java.lang.Object)
-====    public abstract void startScroll(java.lang.Object,int,int,int,int)
-====    public abstract void fling(java.lang.Object,int,int,int,int,int,int,int,int)
-====    public abstract void fling(java.lang.Object,int,int,int,int,int,int,int,int,int,int)
-====    public abstract void notifyHorizontalEdgeReached(java.lang.Object,int,int,int)
-====    public abstract void notifyVerticalEdgeReached(java.lang.Object,int,int,int)
-====    public abstract boolean isOverScrolled(java.lang.Object)
+    public abstract float getCurrVelocity(java.lang.Object)
+    public abstract void startScroll(java.lang.Object,int,int,int,int)
+    public abstract void fling(java.lang.Object,int,int,int,int,int,int,int,int)
+    public abstract void fling(java.lang.Object,int,int,int,int,int,int,int,int,int,int)
+    public abstract void notifyHorizontalEdgeReached(java.lang.Object,int,int,int)
+    public abstract void notifyVerticalEdgeReached(java.lang.Object,int,int,int)
+    public abstract boolean isOverScrolled(java.lang.Object)
 android.support.v4.widget.ScrollerCompat$ScrollerCompatImplBase:
-====    79:79:public float getCurrVelocity(java.lang.Object)
-====    89:90:public void startScroll(java.lang.Object,int,int,int,int)
-====    101:102:public void fling(java.lang.Object,int,int,int,int,int,int,int,int)
-====    107:108:public void fling(java.lang.Object,int,int,int,int,int,int,int,int,int,int)
-====    119:119:public void notifyHorizontalEdgeReached(java.lang.Object,int,int,int)
-====    124:124:public void notifyVerticalEdgeReached(java.lang.Object,int,int,int)
-====    129:129:public boolean isOverScrolled(java.lang.Object)
+    79:79:public float getCurrVelocity(java.lang.Object)
+    89:90:public void startScroll(java.lang.Object,int,int,int,int)
+    101:102:public void fling(java.lang.Object,int,int,int,int,int,int,int,int)
+    107:108:public void fling(java.lang.Object,int,int,int,int,int,int,int,int,int,int)
+    119:119:public void notifyHorizontalEdgeReached(java.lang.Object,int,int,int)
+    124:124:public void notifyVerticalEdgeReached(java.lang.Object,int,int,int)
+    129:129:public boolean isOverScrolled(java.lang.Object)
 android.support.v4.widget.ScrollerCompat$ScrollerCompatImplGingerbread:
-====    166:166:public float getCurrVelocity(java.lang.Object)
-====    176:177:public void startScroll(java.lang.Object,int,int,int,int)
-====    188:190:public void fling(java.lang.Object,int,int,int,int,int,int,int,int)
-====    195:197:public void fling(java.lang.Object,int,int,int,int,int,int,int,int,int,int)
-====    207:208:public void notifyHorizontalEdgeReached(java.lang.Object,int,int,int)
-====    212:213:public void notifyVerticalEdgeReached(java.lang.Object,int,int,int)
-====    217:217:public boolean isOverScrolled(java.lang.Object)
+    166:166:public float getCurrVelocity(java.lang.Object)
+    176:177:public void startScroll(java.lang.Object,int,int,int,int)
+    188:190:public void fling(java.lang.Object,int,int,int,int,int,int,int,int)
+    195:197:public void fling(java.lang.Object,int,int,int,int,int,int,int,int,int,int)
+    207:208:public void notifyHorizontalEdgeReached(java.lang.Object,int,int,int)
+    212:213:public void notifyVerticalEdgeReached(java.lang.Object,int,int,int)
+    217:217:public boolean isOverScrolled(java.lang.Object)
 android.support.v4.widget.ScrollerCompat$ScrollerCompatImplIcs:
-====    234:234:public float getCurrVelocity(java.lang.Object)
+    234:234:public float getCurrVelocity(java.lang.Object)
 android.support.v4.widget.ScrollerCompatGingerbread:
-====    24:24:ScrollerCompatGingerbread()
-====    47:48:public static void startScroll(java.lang.Object,int,int,int,int)
-====    57:58:public static void fling(java.lang.Object,int,int,int,int,int,int,int,int)
-====    62:64:public static void fling(java.lang.Object,int,int,int,int,int,int,int,int,int,int)
-====    72:73:public static void notifyHorizontalEdgeReached(java.lang.Object,int,int,int)
-====    76:77:public static void notifyVerticalEdgeReached(java.lang.Object,int,int,int)
-====    80:80:public static boolean isOverScrolled(java.lang.Object)
+    24:24:ScrollerCompatGingerbread()
+    47:48:public static void startScroll(java.lang.Object,int,int,int,int)
+    57:58:public static void fling(java.lang.Object,int,int,int,int,int,int,int,int)
+    62:64:public static void fling(java.lang.Object,int,int,int,int,int,int,int,int,int,int)
+    72:73:public static void notifyHorizontalEdgeReached(java.lang.Object,int,int,int)
+    76:77:public static void notifyVerticalEdgeReached(java.lang.Object,int,int,int)
+    80:80:public static boolean isOverScrolled(java.lang.Object)
 android.support.v4.widget.ScrollerCompatIcs
 android.support.v4.widget.SearchViewCompat
 android.support.v4.widget.SearchViewCompat$OnCloseListenerCompat
@@ -909,12 +909,12 @@ android.support.v4.widget.SearchViewCompatHoneycomb$2
 android.support.v4.widget.SearchViewCompatHoneycomb$OnCloseListenerCompatBridge
 android.support.v4.widget.SearchViewCompatHoneycomb$OnQueryTextListenerCompatBridge
 android.support.v4.widget.SearchViewCompatIcs:
-====    26:28:SearchViewCompatIcs()
-====    43:43:public static android.view.View newSearchView(android.content.Context)
-====    47:48:public static void setImeOptions(android.view.View,int)
-====    51:52:public static void setInputType(android.view.View,int)
+    26:28:SearchViewCompatIcs()
+    43:43:public static android.view.View newSearchView(android.content.Context)
+    47:48:public static void setImeOptions(android.view.View,int)
+    51:52:public static void setInputType(android.view.View,int)
 android.support.v4.widget.SearchViewCompatIcs$MySearchView:
-====    30:31:public SearchViewCompatIcs$MySearchView(android.content.Context)
+    30:31:public SearchViewCompatIcs$MySearchView(android.content.Context)
 android.support.v4.widget.SimpleCursorAdapter
 android.support.v4.widget.SimpleCursorAdapter$CursorToStringConverter
 android.support.v4.widget.SimpleCursorAdapter$ViewBinder
@@ -923,24 +923,24 @@ android.support.v4.widget.SlidingPaneLayout:
     private static final int DEFAULT_OVERHANG_SIZE
     private static final int DEFAULT_FADE_COLOR
     private static final int MIN_FLING_VELOCITY
-====    244:245:public SlidingPaneLayout(android.content.Context)
-====    248:249:public SlidingPaneLayout(android.content.Context,android.util.AttributeSet)
-====    277:279:public void setParallaxDistance(int)
-====    287:287:public int getParallaxDistance()
-====    296:297:public void setSliderFadeColor(int)
-====    303:303:public int getSliderFadeColor()
-====    313:314:public void setCoveredFadeColor(int)
-====    320:320:public int getCoveredFadeColor()
-====    324:325:public void setPanelSlideListener(android.support.v4.widget.SlidingPaneLayout$PanelSlideListener)
-====    848:849:public void smoothSlideOpen()
-====    866:867:public void smoothSlideClosed()
-====    895:895:public boolean canSlide()
-====    1038:1039:public void setShadowDrawable(android.graphics.drawable.Drawable)
-====    1048:1049:public void setShadowResource(int)
-====    1103:1122:protected boolean canScroll(android.view.View,boolean,int,int,int)
+    244:245:public SlidingPaneLayout(android.content.Context)
+    248:249:public SlidingPaneLayout(android.content.Context,android.util.AttributeSet)
+    277:279:public void setParallaxDistance(int)
+    287:287:public int getParallaxDistance()
+    296:297:public void setSliderFadeColor(int)
+    303:303:public int getSliderFadeColor()
+    313:314:public void setCoveredFadeColor(int)
+    320:320:public int getCoveredFadeColor()
+    324:325:public void setPanelSlideListener(android.support.v4.widget.SlidingPaneLayout$PanelSlideListener)
+    848:849:public void smoothSlideOpen()
+    866:867:public void smoothSlideClosed()
+    895:895:public boolean canSlide()
+    1038:1039:public void setShadowDrawable(android.graphics.drawable.Drawable)
+    1048:1049:public void setShadowResource(int)
+    1103:1122:protected boolean canScroll(android.view.View,boolean,int,int,int)
 android.support.v4.widget.SlidingPaneLayout$LayoutParams:
-====    1257:1278:public SlidingPaneLayout$LayoutParams(int,int)
-====    1257:1291:public SlidingPaneLayout$LayoutParams(android.support.v4.widget.SlidingPaneLayout$LayoutParams)
+    1277:1278:public SlidingPaneLayout$LayoutParams(int,int)
+    1289:1291:public SlidingPaneLayout$LayoutParams(android.support.v4.widget.SlidingPaneLayout$LayoutParams)
 android.support.v4.widget.SlidingPaneLayout$SimplePanelSlideListener
 android.support.v4.widget.ViewDragHelper:
     private static final java.lang.String TAG
@@ -959,12 +959,12 @@ android.support.v4.widget.ViewDragHelper:
     private static final int EDGE_SIZE
     private static final int BASE_SETTLE_DURATION
     private static final int MAX_SETTLE_DURATION
-====    412:412:public float getMinVelocity()
-====    483:483:public int getActivePointerId()
-====    690:701:public void flingCapturedView(int,int,int,int)
-====    908:927:protected boolean canScroll(android.view.View,boolean,int,int,int,int)
-====    1331:1337:public boolean isEdgeTouched(int)
-====    1351:1351:public boolean isEdgeTouched(int,int)
+    412:412:public float getMinVelocity()
+    483:483:public int getActivePointerId()
+    690:701:public void flingCapturedView(int,int,int,int)
+    908:927:protected boolean canScroll(android.view.View,boolean,int,int,int,int)
+    1331:1337:public boolean isEdgeTouched(int)
+    1351:1351:public boolean isEdgeTouched(int,int)
 android.util.Base64:
     public static final int DEFAULT
     public static final int NO_PADDING
@@ -972,30 +972,28 @@ android.util.Base64:
     public static final int CRLF
     public static final int URL_SAFE
     public static final int NO_CLOSE
-====    119:119:public static byte[] decode(java.lang.String,int)
-====    137:137:public static byte[] decode(byte[],int)
-====    159:174:public static byte[] decode(byte[],int,int,int)
-====    478:481:public static java.lang.String encodeToString(byte[],int,int,int)
+    119:119:public static byte[] decode(java.lang.String,int)
+    137:137:public static byte[] decode(byte[],int)
+    159:174:public static byte[] decode(byte[],int,int,int)
+    478:481:public static java.lang.String encodeToString(byte[],int,int,int)
 android.util.Base64$Coder:
-====    public abstract boolean process(byte[],int,int,boolean)
-====    public abstract int maxOutputSize(int)
+    public abstract boolean process(byte[],int,int,boolean)
+    public abstract int maxOutputSize(int)
 android.util.Base64$Decoder
 android.util.Base64$Encoder:
     public static final int LINE_GROUPS
-====    601:601:public int maxOutputSize(int)
+    601:601:public int maxOutputSize(int)
 com.OsMoDroid.BuildConfig
 com.OsMoDroid.Device:
     public java.lang.String ch
 com.OsMoDroid.DeviceChatFragment:
-====    77:82:java.lang.String getMyApp()
-====    253:257:public static void getDevices(com.OsMoDroid.ResultsListener)
+    77:82:java.lang.String getMyApp()
+    253:257:public static void getDevices(com.OsMoDroid.ResultsListener)
 com.OsMoDroid.DevicesFragment:
-====    268:269:public void needToOpenChat(int)
-com.OsMoDroid.ExceptionHandler:
-====    45:45:static com.OsMoDroid.ExceptionHandler reportOnlyHandler(android.content.Context)
+    268:269:public void needToOpenChat(int)
 com.OsMoDroid.GPSLocalServiceClient:
-====    861:868:public static java.lang.String bytesToHex(byte[])
-====    874:885:public static java.lang.String SHA1(java.lang.String)
+    866:873:public static java.lang.String bytesToHex(byte[])
+    879:890:public static java.lang.String SHA1(java.lang.String)
 com.OsMoDroid.IM:
     private static final int RECONNECT_TIMEOUT
     private static final int KEEP_ALIVE
@@ -1007,16 +1005,16 @@ com.OsMoDroid.IM:
     java.lang.Thread myThread
     java.lang.String myLongPollCh
     java.io.FileOutputStream fos
-====    290:305:private void getadres(java.util.ArrayList)
+    302:317:private void getadres(java.util.ArrayList)
 com.OsMoDroid.IRemoteOsMoDroidListener$Stub:
     private static final java.lang.String DESCRIPTOR
     static final int TRANSACTION_channelUpdated
     static final int TRANSACTION_channelsListUpdated
     static final int TRANSACTION_routeTo
-====    13:16:public IRemoteOsMoDroidListener$Stub()
-====    34:34:public android.os.IBinder asBinder()
+    13:16:public IRemoteOsMoDroidListener$Stub()
+    34:34:public android.os.IBinder asBinder()
 com.OsMoDroid.IRemoteOsMoDroidListener$Stub$Proxy:
-====    86:86:public java.lang.String getInterfaceDescriptor()
+    86:86:public java.lang.String getInterfaceDescriptor()
 com.OsMoDroid.IRemoteOsMoDroidService$Stub:
     private static final java.lang.String DESCRIPTOR
     static final int TRANSACTION_registerListener
@@ -1049,7 +1047,7 @@ com.OsMoDroid.IRemoteOsMoDroidService$Stub:
     static final int TRANSACTION_getPointDescription
     static final int TRANSACTION_getPointColor
     static final int TRANSACTION_refreshChannels
-====    23:30:public static com.OsMoDroid.IRemoteOsMoDroidService asInterface(android.os.IBinder)
+    23:30:public static com.OsMoDroid.IRemoteOsMoDroidService asInterface(android.os.IBinder)
 com.OsMoDroid.IRemoteOsMoDroidService$Stub$Proxy
 com.OsMoDroid.LocalService:
     private static final int OSMODROID_ID
@@ -1059,14 +1057,14 @@ com.OsMoDroid.LocalService:
     java.lang.String text
     private de.tavendo.autobahn.WebSocket$ConnectionHandler c
     private de.tavendo.autobahn.WebSocketOptions o
-====    1150:1152:public java.lang.String getPosition()
-====    1157:1157:public java.lang.String getSendResult()
-====    1193:1193:public int getSendCounter()
+    1152:1154:public java.lang.String getPosition()
+    1159:1159:public java.lang.String getSendResult()
+    1195:1195:public int getSendCounter()
 com.OsMoDroid.Netutil:
-====    54:54:public Netutil()
-====    282:285:public static com.OsMoDroid.Netutil$MyAsyncTask newapicommand(android.content.Context,java.lang.String,java.lang.String)
-====    330:336:public static java.lang.String bytesToHex(byte[])
-====    341:348:public static java.lang.String SHA1(java.lang.String)
+    55:55:public Netutil()
+    283:286:public static com.OsMoDroid.Netutil$MyAsyncTask newapicommand(android.content.Context,java.lang.String,java.lang.String)
+    331:337:public static java.lang.String bytesToHex(byte[])
+    342:349:public static java.lang.String SHA1(java.lang.String)
 com.OsMoDroid.OsMoDroid:
     private static final int MIN_UPLOAD_ID
     private static final int MAX_UPLOAD_ID
@@ -1088,19 +1086,21 @@ com.OsMoDroid.R$string
 com.OsMoDroid.R$style
 com.OsMoDroid.R$styleable
 com.OsMoDroid.R$xml
+com.OsMoDroid.RotationGestureDetector:
+    private static final int INVALID_POINTER_ID
 com.OsMoDroid.SerializableHolder
 de.tavendo.autobahn.ByteBufferInputStream
 de.tavendo.autobahn.Doxygen
 de.tavendo.autobahn.NoCopyByteArrayOutputStream:
-====    53:53:public java.io.InputStream getInputStream()
+    53:53:public java.io.InputStream getInputStream()
 de.tavendo.autobahn.PrefixMap:
-====    46:48:public void set(java.lang.String,java.lang.String)
-====    57:57:public java.lang.String get(java.lang.String)
-====    69:75:public java.lang.String remove(java.lang.String)
+    46:48:public void set(java.lang.String,java.lang.String)
+    57:57:public java.lang.String get(java.lang.String)
+    69:75:public java.lang.String remove(java.lang.String)
 de.tavendo.autobahn.Utf8Validator:
     private static final int ACCEPT
     private static final int REJECT
-====    86:86:public int position()
+    86:86:public int position()
 de.tavendo.autobahn.Wamp:
     public static final java.lang.String URI_WAMP_BASE
     public static final java.lang.String URI_WAMP_ERROR
@@ -1109,39 +1109,39 @@ de.tavendo.autobahn.Wamp:
     public static final java.lang.String URI_WAMP_ERROR_GENERIC
     public static final java.lang.String DESC_WAMP_ERROR_GENERIC
     public static final java.lang.String URI_WAMP_ERROR_INTERNAL
-====    public abstract void connect(java.lang.String,de.tavendo.autobahn.Wamp$ConnectionHandler)
-====    public abstract void connect(java.lang.String,de.tavendo.autobahn.Wamp$ConnectionHandler,java.util.List)
-====    public abstract void connect(java.lang.String,de.tavendo.autobahn.Wamp$ConnectionHandler,de.tavendo.autobahn.WampOptions,java.util.List)
-====    public abstract void connect(java.lang.String,de.tavendo.autobahn.Wamp$ConnectionHandler,de.tavendo.autobahn.WampOptions)
-====    public abstract void disconnect()
-====    public abstract boolean isConnected()
-====    public abstract void prefix(java.lang.String,java.lang.String)
-====    public varargs abstract void call(java.lang.String,java.lang.Class,de.tavendo.autobahn.Wamp$CallHandler,java.lang.Object[])
-====    public varargs abstract void call(java.lang.String,org.codehaus.jackson.type.TypeReference,de.tavendo.autobahn.Wamp$CallHandler,java.lang.Object[])
-====    public abstract void subscribe(java.lang.String,java.lang.Class,de.tavendo.autobahn.Wamp$EventHandler)
-====    public abstract void subscribe(java.lang.String,org.codehaus.jackson.type.TypeReference,de.tavendo.autobahn.Wamp$EventHandler)
-====    public abstract void unsubscribe(java.lang.String)
-====    public abstract void unsubscribe()
-====    public abstract void publish(java.lang.String,java.lang.Object)
+    public abstract void connect(java.lang.String,de.tavendo.autobahn.Wamp$ConnectionHandler)
+    public abstract void connect(java.lang.String,de.tavendo.autobahn.Wamp$ConnectionHandler,java.util.List)
+    public abstract void connect(java.lang.String,de.tavendo.autobahn.Wamp$ConnectionHandler,de.tavendo.autobahn.WampOptions,java.util.List)
+    public abstract void connect(java.lang.String,de.tavendo.autobahn.Wamp$ConnectionHandler,de.tavendo.autobahn.WampOptions)
+    public abstract void disconnect()
+    public abstract boolean isConnected()
+    public abstract void prefix(java.lang.String,java.lang.String)
+    public varargs abstract void call(java.lang.String,java.lang.Class,de.tavendo.autobahn.Wamp$CallHandler,java.lang.Object[])
+    public varargs abstract void call(java.lang.String,org.codehaus.jackson.type.TypeReference,de.tavendo.autobahn.Wamp$CallHandler,java.lang.Object[])
+    public abstract void subscribe(java.lang.String,java.lang.Class,de.tavendo.autobahn.Wamp$EventHandler)
+    public abstract void subscribe(java.lang.String,org.codehaus.jackson.type.TypeReference,de.tavendo.autobahn.Wamp$EventHandler)
+    public abstract void unsubscribe(java.lang.String)
+    public abstract void unsubscribe()
+    public abstract void publish(java.lang.String,java.lang.Object)
 de.tavendo.autobahn.WampConnection:
     private static final boolean DEBUG
     protected de.tavendo.autobahn.WampWriter mWriterHandler
-====    146:150:private java.lang.String newId(int)
-====    160:160:private java.lang.String newId()
-====    166:173:public void connect(java.lang.String,de.tavendo.autobahn.Wamp$ConnectionHandler)
-====    227:234:public void connect(java.lang.String,de.tavendo.autobahn.Wamp$ConnectionHandler,java.util.List)
-====    303:309:private varargs void call(java.lang.String,de.tavendo.autobahn.WampConnection$CallMeta,java.lang.Object[])
-====    323:324:public varargs void call(java.lang.String,java.lang.Class,de.tavendo.autobahn.Wamp$CallHandler,java.lang.Object[])
-====    338:339:public varargs void call(java.lang.String,org.codehaus.jackson.type.TypeReference,de.tavendo.autobahn.Wamp$CallHandler,java.lang.Object[])
-====    388:389:public void subscribe(java.lang.String,org.codehaus.jackson.type.TypeReference,de.tavendo.autobahn.Wamp$EventHandler)
-====    399:406:public void unsubscribe(java.lang.String)
-====    431:440:public void prefix(java.lang.String,java.lang.String)
-====    451:453:public void publish(java.lang.String,java.lang.Object)
+    146:150:private java.lang.String newId(int)
+    160:160:private java.lang.String newId()
+    166:173:public void connect(java.lang.String,de.tavendo.autobahn.Wamp$ConnectionHandler)
+    227:234:public void connect(java.lang.String,de.tavendo.autobahn.Wamp$ConnectionHandler,java.util.List)
+    303:309:private varargs void call(java.lang.String,de.tavendo.autobahn.WampConnection$CallMeta,java.lang.Object[])
+    323:324:public varargs void call(java.lang.String,java.lang.Class,de.tavendo.autobahn.Wamp$CallHandler,java.lang.Object[])
+    338:339:public varargs void call(java.lang.String,org.codehaus.jackson.type.TypeReference,de.tavendo.autobahn.Wamp$CallHandler,java.lang.Object[])
+    388:389:public void subscribe(java.lang.String,org.codehaus.jackson.type.TypeReference,de.tavendo.autobahn.Wamp$EventHandler)
+    399:406:public void unsubscribe(java.lang.String)
+    431:440:public void prefix(java.lang.String,java.lang.String)
+    451:453:public void publish(java.lang.String,java.lang.Object)
 de.tavendo.autobahn.WampConnection$CallMeta:
-====    55:59:WampConnection$CallMeta(de.tavendo.autobahn.Wamp$CallHandler,java.lang.Class)
-====    61:65:WampConnection$CallMeta(de.tavendo.autobahn.Wamp$CallHandler,org.codehaus.jackson.type.TypeReference)
+    55:59:WampConnection$CallMeta(de.tavendo.autobahn.Wamp$CallHandler,java.lang.Class)
+    61:65:WampConnection$CallMeta(de.tavendo.autobahn.Wamp$CallHandler,org.codehaus.jackson.type.TypeReference)
 de.tavendo.autobahn.WampConnection$SubMeta:
-====    91:95:WampConnection$SubMeta(de.tavendo.autobahn.Wamp$EventHandler,org.codehaus.jackson.type.TypeReference)
+    91:95:WampConnection$SubMeta(de.tavendo.autobahn.Wamp$EventHandler,org.codehaus.jackson.type.TypeReference)
 de.tavendo.autobahn.WampConnectionHandler
 de.tavendo.autobahn.WampCra
 de.tavendo.autobahn.WampCra$AuthHandler
@@ -1161,24 +1161,24 @@ de.tavendo.autobahn.WampMessage:
     public static final int MESSAGE_TYPE_UNSUBSCRIBE
     public static final int MESSAGE_TYPE_PUBLISH
     public static final int MESSAGE_TYPE_EVENT
-====    26:26:public WampMessage()
+    26:26:public WampMessage()
 de.tavendo.autobahn.WampMessage$Call:
-====    53:57:public WampMessage$Call(java.lang.String,java.lang.String,int)
+    53:57:public WampMessage$Call(java.lang.String,java.lang.String,int)
 de.tavendo.autobahn.WampMessage$Publish:
-====    128:131:public WampMessage$Publish(java.lang.String,java.lang.Object)
+    128:131:public WampMessage$Publish(java.lang.String,java.lang.Object)
 de.tavendo.autobahn.WampReader:
     private static final boolean DEBUG
 de.tavendo.autobahn.WampWriter:
     private static final boolean DEBUG
 de.tavendo.autobahn.WebSocket:
-====    public abstract void connect(java.lang.String,de.tavendo.autobahn.WebSocket$ConnectionHandler)
-====    public abstract void connect(java.lang.String,de.tavendo.autobahn.WebSocket$ConnectionHandler,de.tavendo.autobahn.WebSocketOptions)
-====    public abstract void disconnect()
-====    public abstract boolean isConnected()
-====    public abstract void sendBinaryMessage(byte[])
-====    public abstract void sendRawTextMessage(byte[])
-====    public abstract void sendTextMessage(java.lang.String)
-====    public abstract void sendPing()
+    public abstract void connect(java.lang.String,de.tavendo.autobahn.WebSocket$ConnectionHandler)
+    public abstract void connect(java.lang.String,de.tavendo.autobahn.WebSocket$ConnectionHandler,de.tavendo.autobahn.WebSocketOptions)
+    public abstract void disconnect()
+    public abstract boolean isConnected()
+    public abstract void sendBinaryMessage(byte[])
+    public abstract void sendRawTextMessage(byte[])
+    public abstract void sendTextMessage(java.lang.String)
+    public abstract void sendPing()
 de.tavendo.autobahn.WebSocket$ConnectionHandler:
     public static final int CLOSE_NORMAL
     public static final int CLOSE_CANNOT_CONNECT
@@ -1189,34 +1189,34 @@ de.tavendo.autobahn.WebSocket$ConnectionHandler:
     public static final int CLOSE_RECONNECT
 de.tavendo.autobahn.WebSocketConnection:
     private static final boolean DEBUG
-====    144:145:public void sendTextMessage(java.lang.String)
-====    149:150:public void sendRawTextMessage(byte[])
-====    154:155:public void sendBinaryMessage(byte[])
-====    213:214:public void connect(java.lang.String,de.tavendo.autobahn.WebSocket$ConnectionHandler)
-====    218:219:public void connect(java.lang.String,de.tavendo.autobahn.WebSocket$ConnectionHandler,de.tavendo.autobahn.WebSocketOptions)
+    144:145:public void sendTextMessage(java.lang.String)
+    149:150:public void sendRawTextMessage(byte[])
+    154:155:public void sendBinaryMessage(byte[])
+    213:214:public void connect(java.lang.String,de.tavendo.autobahn.WebSocket$ConnectionHandler)
+    218:219:public void connect(java.lang.String,de.tavendo.autobahn.WebSocket$ConnectionHandler,de.tavendo.autobahn.WebSocketOptions)
 de.tavendo.autobahn.WebSocketException:
     private static final long serialVersionUID
-====    30:31:public WebSocketException(java.lang.String,java.lang.Throwable)
+    30:31:public WebSocketException(java.lang.String,java.lang.Throwable)
 de.tavendo.autobahn.WebSocketMessage:
-====    29:29:public WebSocketMessage()
+    29:29:public WebSocketMessage()
 de.tavendo.autobahn.WebSocketMessage$ClientHandshake:
-====    57:62:WebSocketMessage$ClientHandshake(java.lang.String,java.lang.String,java.lang.String)
-====    64:69:WebSocketMessage$ClientHandshake(java.lang.String,java.lang.String,java.lang.String,java.lang.String[])
+    57:62:WebSocketMessage$ClientHandshake(java.lang.String,java.lang.String,java.lang.String)
+    64:69:WebSocketMessage$ClientHandshake(java.lang.String,java.lang.String,java.lang.String,java.lang.String[])
 de.tavendo.autobahn.WebSocketOptions:
-====    106:112:public void setMaxFramePayloadSize(int)
-====    133:139:public void setMaxMessagePayloadSize(int)
-====    159:160:public void setTcpNoDelay(boolean)
-====    180:183:public void setSocketReceiveTimeout(int)
-====    204:207:public void setSocketConnectTimeout(int)
-====    227:228:public void setValidateIncomingUtf8(boolean)
-====    249:250:public void setMaskClientFrames(boolean)
+    106:112:public void setMaxFramePayloadSize(int)
+    133:139:public void setMaxMessagePayloadSize(int)
+    159:160:public void setTcpNoDelay(boolean)
+    180:183:public void setSocketReceiveTimeout(int)
+    204:207:public void setSocketConnectTimeout(int)
+    227:228:public void setValidateIncomingUtf8(boolean)
+    249:250:public void setMaskClientFrames(boolean)
 de.tavendo.autobahn.WebSocketReader:
     private static final boolean DEBUG
     private static final int STATE_CLOSED
     private static final int STATE_CONNECTING
     private static final int STATE_CLOSING
     private static final int STATE_OPEN
-====    567:581:private java.util.Map parseHttpHeaders(byte[])
+    567:581:private java.util.Map parseHttpHeaders(byte[])
 de.tavendo.autobahn.WebSocketWriter:
     private static final boolean DEBUG
 microsoft.mappoint.TileSystem:
@@ -1225,11 +1225,11 @@ microsoft.mappoint.TileSystem:
     private static final double MaxLatitude
     private static final double MinLongitude
     private static final double MaxLongitude
-====    19:19:public TileSystem()
-====    92:92:public static double MapScale(double,int,int)
-====    189:193:public static android.graphics.Point TileXYToPixelXY(int,int,android.graphics.Point)
-====    208:221:public static java.lang.String TileXYToQuadKey(int,int,int)
-====    234:263:public static android.graphics.Point QuadKeyToTileXY(java.lang.String,android.graphics.Point)
+    19:19:public TileSystem()
+    92:92:public static double MapScale(double,int,int)
+    189:193:public static android.graphics.Point TileXYToPixelXY(int,int,android.graphics.Point)
+    208:221:public static java.lang.String TileXYToQuadKey(int,int,int)
+    234:263:public static android.graphics.Point QuadKeyToTileXY(java.lang.String,android.graphics.Point)
 org.metalev.multitouch.controller.MultiTouchController:
     private static final long EVENT_SETTLE_TIME_INTERVAL
     private static final float MAX_MULTITOUCH_POS_JUMP_SIZE
@@ -1240,51 +1240,51 @@ org.metalev.multitouch.controller.MultiTouchController:
     private static final int MODE_NOTHING
     private static final int MODE_DRAG
     private static final int MODE_PINCH
-====    160:161:public MultiTouchController(org.metalev.multitouch.controller.MultiTouchController$MultiTouchObjectCanvas)
-====    177:178:protected void setHandleSingleTouchEvents(boolean)
-====    184:184:protected boolean getHandleSingleTouchEvents()
+    160:161:public MultiTouchController(org.metalev.multitouch.controller.MultiTouchController$MultiTouchObjectCanvas)
+    177:178:protected void setHandleSingleTouchEvents(boolean)
+    184:184:protected boolean getHandleSingleTouchEvents()
 org.metalev.multitouch.controller.MultiTouchController$PointInfo:
-====    535:557:public void set(org.metalev.multitouch.controller.MultiTouchController$PointInfo)
-====    638:638:public int getNumTouchPoints()
-====    648:648:public float[] getXs()
-====    658:658:public float[] getYs()
-====    668:668:public int[] getPointerIds()
-====    673:673:public float getPressure()
-====    678:678:public float[] getPressures()
-====    688:688:public int getAction()
+    535:557:public void set(org.metalev.multitouch.controller.MultiTouchController$PointInfo)
+    638:638:public int getNumTouchPoints()
+    648:648:public float[] getXs()
+    658:658:public float[] getYs()
+    668:668:public int[] getPointerIds()
+    673:673:public float getPressure()
+    678:678:public float[] getPressures()
+    688:688:public int getAction()
 org.metalev.multitouch.controller.MultiTouchController$PositionAndScale:
-====    736:736:public float getXOff()
-====    740:740:public float getYOff()
-====    749:749:public float getScaleX()
-====    754:754:public float getScaleY()
-====    758:758:public float getAngle()
+    736:736:public float getXOff()
+    740:740:public float getYOff()
+    749:749:public float getScaleX()
+    754:754:public float getScaleY()
+    758:758:public float getAngle()
 org.osmdroid.DefaultResourceProxyImpl:
-====    50:102:public java.lang.String getString(org.osmdroid.ResourceProxy$string)
-====    108:108:public varargs java.lang.String getString(org.osmdroid.ResourceProxy$string,java.lang.Object[])
-====    163:163:public android.graphics.drawable.Drawable getDrawable(org.osmdroid.ResourceProxy$bitmap)
+    50:102:public java.lang.String getString(org.osmdroid.ResourceProxy$string)
+    108:108:public varargs java.lang.String getString(org.osmdroid.ResourceProxy$string,java.lang.Object[])
+    163:163:public android.graphics.drawable.Drawable getDrawable(org.osmdroid.ResourceProxy$bitmap)
 org.osmdroid.DefaultResourceProxyImpl$1
 org.osmdroid.LocationListenerProxy
 org.osmdroid.ResourceProxy:
-====    public abstract java.lang.String getString(org.osmdroid.ResourceProxy$string)
-====    public varargs abstract java.lang.String getString(org.osmdroid.ResourceProxy$string,java.lang.Object[])
-====    public abstract android.graphics.drawable.Drawable getDrawable(org.osmdroid.ResourceProxy$bitmap)
+    public abstract java.lang.String getString(org.osmdroid.ResourceProxy$string)
+    public varargs abstract java.lang.String getString(org.osmdroid.ResourceProxy$string,java.lang.Object[])
+    public abstract android.graphics.drawable.Drawable getDrawable(org.osmdroid.ResourceProxy$bitmap)
 org.osmdroid.SensorEventListenerProxy
 org.osmdroid.api.IMap
 org.osmdroid.api.IMapController:
-====    public abstract void scrollBy(int,int)
-====    public abstract void stopAnimation(boolean)
-====    public abstract void stopPanning()
-====    public abstract boolean zoomOutFixing(int,int)
-====    public abstract void zoomToSpan(int,int)
+    public abstract void scrollBy(int,int)
+    public abstract void stopAnimation(boolean)
+    public abstract void stopPanning()
+    public abstract boolean zoomOutFixing(int,int)
+    public abstract void zoomToSpan(int,int)
 org.osmdroid.api.IMapView:
-====    public abstract org.osmdroid.api.IMapController getController()
-====    public abstract org.osmdroid.api.IProjection getProjection()
-====    public abstract int getZoomLevel()
-====    public abstract int getMaxZoomLevel()
-====    public abstract int getLatitudeSpan()
-====    public abstract int getLongitudeSpan()
-====    public abstract org.osmdroid.api.IGeoPoint getMapCenter()
-====    public abstract void setBackgroundColor(int)
+    public abstract org.osmdroid.api.IMapController getController()
+    public abstract org.osmdroid.api.IProjection getProjection()
+    public abstract int getZoomLevel()
+    public abstract int getMaxZoomLevel()
+    public abstract int getLatitudeSpan()
+    public abstract int getLongitudeSpan()
+    public abstract org.osmdroid.api.IGeoPoint getMapCenter()
+    public abstract void setBackgroundColor(int)
 org.osmdroid.api.IMyLocationOverlay
 org.osmdroid.api.IPosition
 org.osmdroid.api.IProjection
@@ -1301,12 +1301,12 @@ org.osmdroid.contributor.util.RecordedGeoPoint:
     private static final long serialVersionUID
     protected final long mTimeStamp
     protected final int mNumSatellites
-====    32:33:public RecordedGeoPoint(int,int)
-====    37:40:public RecordedGeoPoint(int,int,long,int)
-====    47:47:public long getTimeStamp()
-====    51:51:public double getLatitudeAsDouble()
-====    55:55:public double getLongitudeAsDouble()
-====    59:59:public int getNumSatellites()
+    32:33:public RecordedGeoPoint(int,int)
+    37:40:public RecordedGeoPoint(int,int,long,int)
+    47:47:public long getTimeStamp()
+    51:51:public double getLatitudeAsDouble()
+    55:55:public double getLongitudeAsDouble()
+    59:59:public int getNumSatellites()
 org.osmdroid.contributor.util.RecordedRouteGPXFormatter
 org.osmdroid.contributor.util.Util
 org.osmdroid.contributor.util.constants.OpenStreetMapContributorConstants
@@ -1315,36 +1315,36 @@ org.osmdroid.events.DelayedMapListener$CallbackTask
 org.osmdroid.events.MapAdapter
 org.osmdroid.events.MapEvent
 org.osmdroid.events.ScrollEvent:
-====    25:25:public org.osmdroid.views.MapView getSource()
-====    32:32:public int getX()
-====    39:39:public int getY()
+    25:25:public org.osmdroid.views.MapView getSource()
+    32:32:public int getX()
+    39:39:public int getY()
 org.osmdroid.events.ZoomEvent:
-====    23:23:public org.osmdroid.views.MapView getSource()
-====    30:30:public int getZoomLevel()
+    23:23:public org.osmdroid.views.MapView getSource()
+    30:30:public int getZoomLevel()
 org.osmdroid.http.HttpClientFactory:
-====    23:23:public HttpClientFactory()
-====    35:36:public static void setFactoryInstance(org.osmdroid.http.IHttpClientFactory)
+    23:23:public HttpClientFactory()
+    35:36:public static void setFactoryInstance(org.osmdroid.http.IHttpClientFactory)
 org.osmdroid.tileprovider.BitmapPool:
-====    73:79:public void clearBitmapPool()
+    73:79:public void clearBitmapPool()
 org.osmdroid.tileprovider.ExpirableBitmapDrawable:
     public static final int EXPIRED
 org.osmdroid.tileprovider.IMapTileProviderCallback:
-====    public abstract boolean useDataConnection()
+    public abstract boolean useDataConnection()
 org.osmdroid.tileprovider.LRUMapTileCache:
     private static final long serialVersionUID
-====    88:89:public void setTileRemovedListener(org.osmdroid.tileprovider.LRUMapTileCache$TileRemovedListener)
+    88:89:public void setTileRemovedListener(org.osmdroid.tileprovider.LRUMapTileCache$TileRemovedListener)
 org.osmdroid.tileprovider.MapTile:
     public static final int MAPTILE_SUCCESS_ID
     public static final int MAPTILE_FAIL_ID
 org.osmdroid.tileprovider.MapTileProviderBase:
-====    221:222:public void setUseDataConnection(boolean)
+    221:222:public void setUseDataConnection(boolean)
 org.osmdroid.tileprovider.MapTileProviderBase$ZoomOutTileLooper:
     private static final int MAX_ZOOM_OUT_DIFF
 org.osmdroid.tileprovider.MapTileProviderBasic:
-====    31:32:public MapTileProviderBasic(android.content.Context)
+    31:32:public MapTileProviderBasic(android.content.Context)
 org.osmdroid.tileprovider.MapTileRequestState:
-====    34:34:public boolean isEmpty()
-====    43:43:public org.osmdroid.tileprovider.modules.MapTileModuleProviderBase getCurrentProvider()
+    34:34:public boolean isEmpty()
+    43:43:public org.osmdroid.tileprovider.modules.MapTileModuleProviderBase getCurrentProvider()
 org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants:
     public static final boolean DEBUGMODE
     public static final boolean DEBUG_TILE_PROVIDERS
@@ -1367,9 +1367,9 @@ org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants:
     public static final long TILE_MAX_CACHE_SIZE_BYTES
     public static final long TILE_TRIM_CACHE_SIZE_BYTES
 org.osmdroid.tileprovider.modules.INetworkAvailablityCheck:
-====    public abstract boolean getWiFiNetworkAvailable()
-====    public abstract boolean getCellularDataNetworkAvailable()
-====    public abstract boolean getRouteToPathExists(int)
+    public abstract boolean getWiFiNetworkAvailable()
+    public abstract boolean getCellularDataNetworkAvailable()
+    public abstract boolean getRouteToPathExists(int)
 org.osmdroid.tileprovider.modules.MBTilesFileArchive:
     public static final java.lang.String TABLE_TILES
     public static final java.lang.String COL_TILES_ZOOM_LEVEL
@@ -1377,78 +1377,78 @@ org.osmdroid.tileprovider.modules.MBTilesFileArchive:
     public static final java.lang.String COL_TILES_TILE_ROW
     public static final java.lang.String COL_TILES_TILE_DATA
 org.osmdroid.tileprovider.modules.MapTileDownloader:
-====    65:66:public MapTileDownloader(org.osmdroid.tileprovider.tilesource.ITileSource)
-====    69:70:public MapTileDownloader(org.osmdroid.tileprovider.tilesource.ITileSource,org.osmdroid.tileprovider.modules.IFilesystemCache)
-====    95:95:public org.osmdroid.tileprovider.tilesource.ITileSource getTileSource()
-====    109:109:protected java.lang.String getName()
+    65:66:public MapTileDownloader(org.osmdroid.tileprovider.tilesource.ITileSource)
+    69:70:public MapTileDownloader(org.osmdroid.tileprovider.tilesource.ITileSource,org.osmdroid.tileprovider.modules.IFilesystemCache)
+    95:95:public org.osmdroid.tileprovider.tilesource.ITileSource getTileSource()
+    109:109:protected java.lang.String getName()
 org.osmdroid.tileprovider.modules.MapTileFileArchiveProvider:
-====    94:94:protected java.lang.String getName()
+    94:94:protected java.lang.String getName()
 org.osmdroid.tileprovider.modules.MapTileFilesystemProvider:
-====    47:48:public MapTileFilesystemProvider(org.osmdroid.tileprovider.IRegisterReceiver)
-====    91:91:protected java.lang.String getName()
+    47:48:public MapTileFilesystemProvider(org.osmdroid.tileprovider.IRegisterReceiver)
+    91:91:protected java.lang.String getName()
 org.osmdroid.tileprovider.modules.MapTileModuleProviderBase:
-====    protected abstract java.lang.String getName()
+    protected abstract java.lang.String getName()
 org.osmdroid.tileprovider.modules.MapTileModuleProviderBase$1:
     private static final long serialVersionUID
 org.osmdroid.tileprovider.modules.MapTileModuleProviderBase$CantContinueException:
     private static final long serialVersionUID
-====    317:319:public MapTileModuleProviderBase$CantContinueException(org.osmdroid.tileprovider.modules.MapTileModuleProviderBase,java.lang.String)
+    317:319:public MapTileModuleProviderBase$CantContinueException(org.osmdroid.tileprovider.modules.MapTileModuleProviderBase,java.lang.String)
 org.osmdroid.tileprovider.modules.NetworkAvailabliltyCheck:
-====    33:34:public boolean getWiFiNetworkAvailable()
-====    39:41:public boolean getCellularDataNetworkAvailable()
-====    46:46:public boolean getRouteToPathExists(int)
+    33:34:public boolean getWiFiNetworkAvailable()
+    39:41:public boolean getCellularDataNetworkAvailable()
+    46:46:public boolean getRouteToPathExists(int)
 org.osmdroid.tileprovider.modules.TileWriter:
-====    78:78:public static long getUsedCacheSpace()
+    78:78:public static long getUsedCacheSpace()
 org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase:
-====    62:62:public int ordinal()
-====    95:95:public java.lang.String localizedName(org.osmdroid.ResourceProxy)
+    62:62:public int ordinal()
+    95:95:public java.lang.String localizedName(org.osmdroid.ResourceProxy)
 org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase$LowMemoryException:
     private static final long serialVersionUID
-====    159:161:public BitmapTileSourceBase$LowMemoryException(org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase,java.lang.String)
+    159:161:public BitmapTileSourceBase$LowMemoryException(org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase,java.lang.String)
 org.osmdroid.tileprovider.tilesource.CloudmadeTileSource:
-====    44:45:public void setStyle(java.lang.Integer)
-====    58:58:public java.lang.Integer getStyle()
-====    9:9:public bridge synthetic java.lang.Object getStyle()
-====    9:9:public bridge synthetic void setStyle(java.lang.Object)
+    44:45:public void setStyle(java.lang.Integer)
+    58:58:public java.lang.Integer getStyle()
+    9:9:public bridge synthetic java.lang.Object getStyle()
+    9:9:public bridge synthetic void setStyle(java.lang.Object)
 org.osmdroid.tileprovider.tilesource.IStyledTileSource:
-====    public abstract void setStyle(java.lang.Object)
-====    public abstract java.lang.Object getStyle()
+    public abstract void setStyle(java.lang.Object)
+    public abstract java.lang.Object getStyle()
 org.osmdroid.tileprovider.tilesource.ITileSource:
-====    public abstract int ordinal()
-====    public abstract java.lang.String localizedName(org.osmdroid.ResourceProxy)
+    public abstract int ordinal()
+    public abstract java.lang.String localizedName(org.osmdroid.ResourceProxy)
 org.osmdroid.tileprovider.tilesource.MapBoxTileSource
 org.osmdroid.tileprovider.tilesource.QuadTreeTileSource
 org.osmdroid.tileprovider.tilesource.TileSourceFactory:
-====    7:7:public TileSourceFactory()
-====    30:35:public static boolean containsTileSource(java.lang.String)
-====    47:52:public static org.osmdroid.tileprovider.tilesource.ITileSource getTileSource(int)
-====    60:61:public static void addTileSource(org.osmdroid.tileprovider.tilesource.ITileSource)
+    7:7:public TileSourceFactory()
+    30:35:public static boolean containsTileSource(java.lang.String)
+    47:52:public static org.osmdroid.tileprovider.tilesource.ITileSource getTileSource(int)
+    60:61:public static void addTileSource(org.osmdroid.tileprovider.tilesource.ITileSource)
 org.osmdroid.tileprovider.util.CloudmadeUtil:
     private static final java.lang.String CLOUDMADE_KEY
     private static final java.lang.String CLOUDMADE_ID
     private static final java.lang.String CLOUDMADE_TOKEN
-====    63:83:public static void retrieveCloudmadeKey(android.content.Context)
+    63:83:public static void retrieveCloudmadeKey(android.content.Context)
 org.osmdroid.tileprovider.util.ManifestUtil
 org.osmdroid.tileprovider.util.StreamUtils:
     public static final int IO_BUFFER_SIZE
 org.osmdroid.util.BoundingBoxE6:
     static final long serialVersionUID
-====    51:56:public BoundingBoxE6(double,double,double,double)
-====    66:66:public org.osmdroid.util.GeoPoint getCenter()
-====    71:71:public int getDiagonalLengthInMeters()
-====    76:76:public int getLatNorthE6()
-====    80:80:public int getLatSouthE6()
-====    84:84:public int getLonEastE6()
-====    88:88:public int getLonWestE6()
-====    92:92:public int getLatitudeSpanE6()
-====    96:96:public int getLongitudeSpanE6()
-====    110:114:public android.graphics.PointF getRelativePositionOfGeoPointInBoundingBoxWithLinearInterpolation(int,int,android.graphics.PointF)
-====    119:123:public android.graphics.PointF getRelativePositionOfGeoPointInBoundingBoxWithExactGudermannInterpolation(int,int,android.graphics.PointF)
-====    129:145:public org.osmdroid.util.GeoPoint getGeoPointOfRelativePositionWithLinearInterpolation(float,float)
-====    151:170:public org.osmdroid.util.GeoPoint getGeoPointOfRelativePositionWithExactGudermannInterpolation(float,float)
-====    174:178:public org.osmdroid.util.BoundingBoxE6 increaseByScale(float)
-====    199:199:public org.osmdroid.util.GeoPoint bringToBoundingBox(int,int)
-====    204:218:public static org.osmdroid.util.BoundingBoxE6 fromGeoPoints(java.util.ArrayList)
+    51:56:public BoundingBoxE6(double,double,double,double)
+    66:66:public org.osmdroid.util.GeoPoint getCenter()
+    71:71:public int getDiagonalLengthInMeters()
+    76:76:public int getLatNorthE6()
+    80:80:public int getLatSouthE6()
+    84:84:public int getLonEastE6()
+    88:88:public int getLonWestE6()
+    92:92:public int getLatitudeSpanE6()
+    96:96:public int getLongitudeSpanE6()
+    110:114:public android.graphics.PointF getRelativePositionOfGeoPointInBoundingBoxWithLinearInterpolation(int,int,android.graphics.PointF)
+    119:123:public android.graphics.PointF getRelativePositionOfGeoPointInBoundingBoxWithExactGudermannInterpolation(int,int,android.graphics.PointF)
+    129:145:public org.osmdroid.util.GeoPoint getGeoPointOfRelativePositionWithLinearInterpolation(float,float)
+    151:170:public org.osmdroid.util.GeoPoint getGeoPointOfRelativePositionWithExactGudermannInterpolation(float,float)
+    174:178:public org.osmdroid.util.BoundingBoxE6 increaseByScale(float)
+    199:199:public org.osmdroid.util.GeoPoint bringToBoundingBox(int,int)
+    204:218:public static org.osmdroid.util.BoundingBoxE6 fromGeoPoints(java.util.ArrayList)
 org.osmdroid.util.GEMFFile:
     private static final long FILE_SIZE_LIMIT
     private static final int FILE_COPY_BUFFER_SIZE
@@ -1456,61 +1456,61 @@ org.osmdroid.util.GEMFFile:
     private static final int TILE_SIZE
     private static final int U32_SIZE
     private static final int U64_SIZE
-====    49:404:public GEMFFile(java.lang.String,java.util.List)
-====    416:419:public void close()
-====    515:515:public java.util.LinkedHashMap getSources()
-====    523:527:public void selectSource(int)
-====    533:534:public void acceptAnySource()
-====    540:546:public java.util.Set getZoomLevels()
+    107:404:public GEMFFile(java.lang.String,java.util.List)
+    416:419:public void close()
+    515:515:public java.util.LinkedHashMap getSources()
+    523:527:public void selectSource(int)
+    533:534:public void acceptAnySource()
+    540:546:public java.util.Set getZoomLevels()
 org.osmdroid.util.GeoPoint:
     static final long serialVersionUID
-====    66:70:public GeoPoint(org.osmdroid.util.GeoPoint)
-====    73:81:public static org.osmdroid.util.GeoPoint fromDoubleString(java.lang.String,char)
-====    89:97:public static org.osmdroid.util.GeoPoint fromInvertedDoubleString(java.lang.String,char)
-====    106:114:public static org.osmdroid.util.GeoPoint fromIntString(java.lang.String)
-====    147:147:public int getAltitude()
-====    159:160:public void setAltitude(int)
-====    163:165:public void setCoordsE6(int,int)
-====    245:261:public int distanceTo(org.osmdroid.api.IGeoPoint)
-====    269:279:public double bearingTo(org.osmdroid.api.IGeoPoint)
-====    291:309:public org.osmdroid.util.GeoPoint destinationPoint(double,float)
-====    313:313:public static org.osmdroid.util.GeoPoint fromCenterBetween(org.osmdroid.util.GeoPoint,org.osmdroid.util.GeoPoint)
-====    318:318:public java.lang.String toDoubleString()
-====    323:323:public java.lang.String toInvertedDoubleString()
+    66:70:public GeoPoint(org.osmdroid.util.GeoPoint)
+    73:81:public static org.osmdroid.util.GeoPoint fromDoubleString(java.lang.String,char)
+    89:97:public static org.osmdroid.util.GeoPoint fromInvertedDoubleString(java.lang.String,char)
+    106:114:public static org.osmdroid.util.GeoPoint fromIntString(java.lang.String)
+    147:147:public int getAltitude()
+    159:160:public void setAltitude(int)
+    163:165:public void setCoordsE6(int,int)
+    245:261:public int distanceTo(org.osmdroid.api.IGeoPoint)
+    269:279:public double bearingTo(org.osmdroid.api.IGeoPoint)
+    291:309:public org.osmdroid.util.GeoPoint destinationPoint(double,float)
+    313:313:public static org.osmdroid.util.GeoPoint fromCenterBetween(org.osmdroid.util.GeoPoint,org.osmdroid.util.GeoPoint)
+    318:318:public java.lang.String toDoubleString()
+    323:323:public java.lang.String toInvertedDoubleString()
 org.osmdroid.util.GeometryMath:
     public static final double DEG2RAD
     public static final double RAD2DEG
-====    11:11:public GeometryMath()
-====    17:17:public static final android.graphics.Rect getBoundingBoxForRotatatedRectangle(android.graphics.Rect,float,android.graphics.Rect)
-====    23:23:public static final android.graphics.Rect getBoundingBoxForRotatatedRectangle(android.graphics.Rect,android.graphics.Point,float,android.graphics.Rect)
+    11:11:public GeometryMath()
+    17:17:public static final android.graphics.Rect getBoundingBoxForRotatatedRectangle(android.graphics.Rect,float,android.graphics.Rect)
+    23:23:public static final android.graphics.Rect getBoundingBoxForRotatatedRectangle(android.graphics.Rect,android.graphics.Point,float,android.graphics.Rect)
 org.osmdroid.util.LocationUtils
 org.osmdroid.util.MyMath:
-====    27:28:private MyMath()
-====    43:43:public static double gudermannInverse(double)
-====    47:47:public static double gudermann(double)
+    27:28:private MyMath()
+    43:43:public static double gudermannInverse(double)
+    47:47:public static double gudermann(double)
 org.osmdroid.util.NetworkLocationIgnorer
 org.osmdroid.util.Position
 org.osmdroid.util.ResourceProxyImpl:
-====    29:30:public java.lang.String getString(org.osmdroid.ResourceProxy$string)
-====    35:36:public varargs java.lang.String getString(org.osmdroid.ResourceProxy$string,java.lang.Object[])
-====    41:42:public android.graphics.drawable.Drawable getDrawable(org.osmdroid.ResourceProxy$bitmap)
-====    47:51:private int getId(java.lang.String,java.lang.String)
+    29:30:public java.lang.String getString(org.osmdroid.ResourceProxy$string)
+    35:36:public varargs java.lang.String getString(org.osmdroid.ResourceProxy$string,java.lang.Object[])
+    41:42:public android.graphics.drawable.Drawable getDrawable(org.osmdroid.ResourceProxy$bitmap)
+    47:51:private int getId(java.lang.String,java.lang.String)
 org.osmdroid.util.TileSystem:
-====    16:16:public TileSystem()
-====    20:21:public static void setTileSize(int)
-====    40:40:public static double MapScale(double,int,int)
-====    55:56:public static org.osmdroid.util.GeoPoint PixelXYToLatLong(int,int,int,org.osmdroid.util.GeoPoint)
-====    69:69:public static android.graphics.Point TileXYToPixelXY(int,int,android.graphics.Point)
-====    74:74:public static java.lang.String TileXYToQuadKey(int,int,int)
-====    79:79:public static android.graphics.Point QuadKeyToTileXY(java.lang.String,android.graphics.Point)
+    16:16:public TileSystem()
+    20:21:public static void setTileSize(int)
+    40:40:public static double MapScale(double,int,int)
+    55:56:public static org.osmdroid.util.GeoPoint PixelXYToLatLong(int,int,int,org.osmdroid.util.GeoPoint)
+    69:69:public static android.graphics.Point TileXYToPixelXY(int,int,android.graphics.Point)
+    74:74:public static java.lang.String TileXYToQuadKey(int,int,int)
+    79:79:public static android.graphics.Point QuadKeyToTileXY(java.lang.String,android.graphics.Point)
 org.osmdroid.util.constants.GeoConstants
 org.osmdroid.util.constants.UtilConstants
 org.osmdroid.views.MapController:
-====    77:78:public void zoomToSpan(org.osmdroid.util.BoundingBoxE6)
-====    83:104:public void zoomToSpan(int,int)
-====    131:132:public void scrollBy(int,int)
-====    145:147:public void stopPanning()
-====    157:178:public void stopAnimation(boolean)
+    77:78:public void zoomToSpan(org.osmdroid.util.BoundingBoxE6)
+    83:104:public void zoomToSpan(int,int)
+    131:132:public void scrollBy(int,int)
+    145:147:public void stopPanning()
+    157:178:public void stopAnimation(boolean)
 org.osmdroid.views.MapControllerOld
 org.osmdroid.views.MapControllerOld$1
 org.osmdroid.views.MapControllerOld$AbstractAnimationRunner
@@ -1524,30 +1524,30 @@ org.osmdroid.views.MapControllerOld$QuarterCosinusalDeceleratingAnimationRunner
 org.osmdroid.views.MapView:
     private static final double ZOOM_SENSITIVITY
     protected org.osmdroid.util.BoundingBoxE6 mScrollableAreaBoundingBox
-====    226:226:public org.osmdroid.tileprovider.MapTileProviderBase getTileProvider()
-====    234:234:public android.os.Handler getTileRequestCompleteHandler()
-====    239:239:public int getLatitudeSpan()
-====    244:244:public int getLongitudeSpan()
-====    306:307:void setMapCenter(org.osmdroid.api.IGeoPoint)
-====    313:314:void setMapCenter(int,int)
-====    387:417:public void zoomToBoundingBox(org.osmdroid.util.BoundingBoxE6)
-====    466:467:public void setMinZoomLevel(java.lang.Integer)
-====    474:475:public void setMaxZoomLevel(java.lang.Integer)
-====    497:497:boolean zoomIn()
-====    506:506:boolean zoomInFixing(int,int)
-====    513:513:boolean zoomOut()
-====    517:518:boolean zoomOutFixing(org.osmdroid.api.IGeoPoint)
-====    522:522:boolean zoomOutFixing(int,int)
-====    540:540:public org.osmdroid.ResourceProxy getResourceProxy()
-====    556:556:public boolean useDataConnection()
-====    567:568:public void setUseDataConnection(boolean)
-====    580:600:public void setScrollableAreaLimit(org.osmdroid.util.BoundingBoxE6)
-====    603:603:public org.osmdroid.util.BoundingBoxE6 getScrollableAreaLimit()
-====    610:611:public void invalidateMapCoordinates(android.graphics.Rect)
-====    1043:1043:public boolean isUsingSafeCanvas()
-====    1052:1053:public void setUseSafeCanvas(boolean)
-====    1148:1149:public void setMapListener(org.osmdroid.events.MapListener)
-====    65:65:public bridge synthetic org.osmdroid.api.IProjection getProjection()
+    226:226:public org.osmdroid.tileprovider.MapTileProviderBase getTileProvider()
+    234:234:public android.os.Handler getTileRequestCompleteHandler()
+    239:239:public int getLatitudeSpan()
+    244:244:public int getLongitudeSpan()
+    306:307:void setMapCenter(org.osmdroid.api.IGeoPoint)
+    313:314:void setMapCenter(int,int)
+    387:417:public void zoomToBoundingBox(org.osmdroid.util.BoundingBoxE6)
+    466:467:public void setMinZoomLevel(java.lang.Integer)
+    474:475:public void setMaxZoomLevel(java.lang.Integer)
+    497:497:boolean zoomIn()
+    506:506:boolean zoomInFixing(int,int)
+    513:513:boolean zoomOut()
+    517:518:boolean zoomOutFixing(org.osmdroid.api.IGeoPoint)
+    522:522:boolean zoomOutFixing(int,int)
+    540:540:public org.osmdroid.ResourceProxy getResourceProxy()
+    556:556:public boolean useDataConnection()
+    567:568:public void setUseDataConnection(boolean)
+    580:600:public void setScrollableAreaLimit(org.osmdroid.util.BoundingBoxE6)
+    603:603:public org.osmdroid.util.BoundingBoxE6 getScrollableAreaLimit()
+    610:611:public void invalidateMapCoordinates(android.graphics.Rect)
+    1043:1043:public boolean isUsingSafeCanvas()
+    1052:1053:public void setUseSafeCanvas(boolean)
+    1148:1149:public void setMapListener(org.osmdroid.events.MapListener)
+    65:65:public bridge synthetic org.osmdroid.api.IProjection getProjection()
 org.osmdroid.views.MapView$LayoutParams:
     public static final int TOP_LEFT
     public static final int TOP_CENTER
@@ -1559,20 +1559,20 @@ org.osmdroid.views.MapView$LayoutParams:
     public static final int BOTTOM_CENTER
     public static final int BOTTOM_RIGHT
 org.osmdroid.views.MapView$Projection:
-====    1256:1256:public org.osmdroid.util.BoundingBoxE6 getBoundingBox()
-====    1268:1268:public float getMapOrientation()
-====    1276:1276:public int getTileSizePixels()
-====    1286:1287:public android.graphics.Point getCenterMapTileCoords()
-====    1297:1298:public android.graphics.Point getUpperLeftCornerOfCenterMapTile()
-====    1315:1318:public android.graphics.Point fromMapPixels(int,int,android.graphics.Point)
-====    1420:1420:public android.graphics.Point toPixels(android.graphics.Point,android.graphics.Point)
-====    1428:1428:public android.graphics.Point toPixels(int,int,android.graphics.Point)
-====    1433:1449:public android.graphics.Rect toPixels(org.osmdroid.util.BoundingBoxE6)
-====    1454:1454:public float metersToEquatorPixels(float)
-====    1459:1459:public org.osmdroid.api.IGeoPoint getNorthEast()
-====    1464:1464:public org.osmdroid.api.IGeoPoint getSouthWest()
-====    1469:1469:public android.graphics.Point toPixels(org.osmdroid.api.IGeoPoint,android.graphics.Point)
-====    1474:1474:public org.osmdroid.api.IGeoPoint fromPixels(int,int)
+    1256:1256:public org.osmdroid.util.BoundingBoxE6 getBoundingBox()
+    1268:1268:public float getMapOrientation()
+    1276:1276:public int getTileSizePixels()
+    1286:1287:public android.graphics.Point getCenterMapTileCoords()
+    1297:1298:public android.graphics.Point getUpperLeftCornerOfCenterMapTile()
+    1315:1318:public android.graphics.Point fromMapPixels(int,int,android.graphics.Point)
+    1420:1420:public android.graphics.Point toPixels(android.graphics.Point,android.graphics.Point)
+    1428:1428:public android.graphics.Point toPixels(int,int,android.graphics.Point)
+    1433:1449:public android.graphics.Rect toPixels(org.osmdroid.util.BoundingBoxE6)
+    1454:1454:public float metersToEquatorPixels(float)
+    1459:1459:public org.osmdroid.api.IGeoPoint getNorthEast()
+    1464:1464:public org.osmdroid.api.IGeoPoint getSouthWest()
+    1469:1469:public android.graphics.Point toPixels(org.osmdroid.api.IGeoPoint,android.graphics.Point)
+    1474:1474:public org.osmdroid.api.IGeoPoint fromPixels(int,int)
 org.osmdroid.views.overlay.DirectedLocationOverlay
 org.osmdroid.views.overlay.IOverlayMenuProvider
 org.osmdroid.views.overlay.ItemizedIconOverlay
@@ -1590,13 +1590,13 @@ org.osmdroid.views.overlay.ItemizedOverlayControlView:
     protected android.widget.ImageButton mCenterToButton
     protected android.widget.ImageButton mNavToButton
     protected org.osmdroid.views.overlay.ItemizedOverlayControlView$ItemizedOverlayControlViewListener mLis
-====    36:37:public ItemizedOverlayControlView(android.content.Context,android.util.AttributeSet)
-====    41:71:public ItemizedOverlayControlView(android.content.Context,android.util.AttributeSet,org.osmdroid.ResourceProxy)
-====    78:79:public void setItemizedOverlayControlViewListener(org.osmdroid.views.overlay.ItemizedOverlayControlView$ItemizedOverlayControlViewListener)
-====    82:83:public void setNextEnabled(boolean)
-====    86:87:public void setPreviousEnabled(boolean)
-====    90:91:public void setNavToVisible(int)
-====    102:133:private void initViewListeners()
+    36:37:public ItemizedOverlayControlView(android.content.Context,android.util.AttributeSet)
+    41:71:public ItemizedOverlayControlView(android.content.Context,android.util.AttributeSet,org.osmdroid.ResourceProxy)
+    78:79:public void setItemizedOverlayControlViewListener(org.osmdroid.views.overlay.ItemizedOverlayControlView$ItemizedOverlayControlViewListener)
+    82:83:public void setNextEnabled(boolean)
+    86:87:public void setPreviousEnabled(boolean)
+    90:91:public void setNavToVisible(int)
+    102:133:private void initViewListeners()
 org.osmdroid.views.overlay.ItemizedOverlayControlView$1
 org.osmdroid.views.overlay.ItemizedOverlayControlView$2
 org.osmdroid.views.overlay.ItemizedOverlayControlView$3
@@ -1608,196 +1608,196 @@ org.osmdroid.views.overlay.MyLocationOverlay
 org.osmdroid.views.overlay.Overlay:
     protected static final float SHADOW_X_SKEW
     protected static final float SHADOW_Y_SCALE
-====    52:61:public Overlay(android.content.Context)
-====    77:78:public void setEnabled(boolean)
-====    275:282:protected static synchronized void drawAt(android.graphics.Canvas,android.graphics.drawable.Drawable,int,int,boolean,float)
+    58:61:public Overlay(android.content.Context)
+    77:78:public void setEnabled(boolean)
+    275:282:protected static synchronized void drawAt(android.graphics.Canvas,android.graphics.drawable.Drawable,int,int,boolean,float)
 org.osmdroid.views.overlay.OverlayItem
 org.osmdroid.views.overlay.OverlayItem$HotspotPlace
 org.osmdroid.views.overlay.OverlayManager:
-====    66:73:public void setUseSafeCanvas(boolean)
-====    81:81:public org.osmdroid.views.overlay.TilesOverlay getTilesOverlay()
-====    304:310:public void setOptionsMenusEnabled(boolean)
-====    313:327:public boolean onCreateOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
-====    331:344:public boolean onPrepareOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
-====    348:364:public boolean onOptionsItemSelected(android.view.MenuItem,int,org.osmdroid.views.MapView)
+    66:73:public void setUseSafeCanvas(boolean)
+    81:81:public org.osmdroid.views.overlay.TilesOverlay getTilesOverlay()
+    304:310:public void setOptionsMenusEnabled(boolean)
+    313:327:public boolean onCreateOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
+    331:344:public boolean onPrepareOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
+    348:364:public boolean onOptionsItemSelected(android.view.MenuItem,int,org.osmdroid.views.MapView)
 org.osmdroid.views.overlay.PathOverlay:
-====    64:65:public PathOverlay(int,android.content.Context)
-====    68:69:public PathOverlay(int,org.osmdroid.ResourceProxy)
-====    85:86:public void setColor(int)
-====    89:90:public void setAlpha(int)
-====    100:106:public void addGreatCircle(org.osmdroid.util.GeoPoint,org.osmdroid.util.GeoPoint)
-====    119:143:public void addGreatCircle(org.osmdroid.util.GeoPoint,org.osmdroid.util.GeoPoint,int)
-====    146:146:public android.graphics.Paint getPaint()
-====    150:154:public void setPaint(android.graphics.Paint)
-====    170:173:public varargs void addPoints(org.osmdroid.api.IGeoPoint[])
-====    182:182:public int getNumberOfPoints()
+    64:65:public PathOverlay(int,android.content.Context)
+    68:69:public PathOverlay(int,org.osmdroid.ResourceProxy)
+    85:86:public void setColor(int)
+    89:90:public void setAlpha(int)
+    100:106:public void addGreatCircle(org.osmdroid.util.GeoPoint,org.osmdroid.util.GeoPoint)
+    119:143:public void addGreatCircle(org.osmdroid.util.GeoPoint,org.osmdroid.util.GeoPoint,int)
+    146:146:public android.graphics.Paint getPaint()
+    150:154:public void setPaint(android.graphics.Paint)
+    170:173:public varargs void addPoints(org.osmdroid.api.IGeoPoint[])
+    182:182:public int getNumberOfPoints()
 org.osmdroid.views.overlay.SafeDrawOverlay:
-====    24:30:public SafeDrawOverlay(android.content.Context)
+    29:30:public SafeDrawOverlay(android.content.Context)
 org.osmdroid.views.overlay.ScaleBarOverlay
 org.osmdroid.views.overlay.SimpleLocationOverlay
 org.osmdroid.views.overlay.TilesOverlay:
-====    69:70:public TilesOverlay(org.osmdroid.tileprovider.MapTileProviderBase,android.content.Context)
-====    98:98:public boolean useDataConnection()
-====    109:110:public void setUseDataConnection(boolean)
-====    218:219:public void setOptionsMenuEnabled(boolean)
-====    223:223:public boolean isOptionsMenuEnabled()
-====    229:247:public boolean onCreateOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
-====    253:264:public boolean onPrepareOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
-====    271:283:public boolean onOptionsItemSelected(android.view.MenuItem,int,org.osmdroid.views.MapView)
-====    288:288:public int getLoadingBackgroundColor()
-====    306:306:public int getLoadingLineColor()
-====    310:314:public void setLoadingLineColor(int)
-====    363:364:public void setOvershootTileCache(int)
-====    372:372:public int getOvershootTileCache()
+    69:70:public TilesOverlay(org.osmdroid.tileprovider.MapTileProviderBase,android.content.Context)
+    98:98:public boolean useDataConnection()
+    109:110:public void setUseDataConnection(boolean)
+    218:219:public void setOptionsMenuEnabled(boolean)
+    223:223:public boolean isOptionsMenuEnabled()
+    229:247:public boolean onCreateOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
+    253:264:public boolean onPrepareOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
+    271:283:public boolean onOptionsItemSelected(android.view.MenuItem,int,org.osmdroid.views.MapView)
+    288:288:public int getLoadingBackgroundColor()
+    306:306:public int getLoadingLineColor()
+    310:314:public void setLoadingLineColor(int)
+    363:364:public void setOvershootTileCache(int)
+    372:372:public int getOvershootTileCache()
 org.osmdroid.views.overlay.compass.CompassOverlay:
-====    127:129:public void setCompassCenter(float,float)
-====    133:133:public org.osmdroid.views.overlay.compass.IOrientationProvider getOrientationProvider()
-====    192:193:public void setOptionsMenuEnabled(boolean)
-====    198:198:public boolean isOptionsMenuEnabled()
-====    205:210:public boolean onCreateOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
-====    216:217:public boolean onPrepareOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
-====    223:232:public boolean onOptionsItemSelected(android.view.MenuItem,int,org.osmdroid.views.MapView)
-====    249:251:public boolean enableCompass(org.osmdroid.views.overlay.compass.IOrientationProvider)
-====    310:310:public float getOrientation()
+    127:129:public void setCompassCenter(float,float)
+    133:133:public org.osmdroid.views.overlay.compass.IOrientationProvider getOrientationProvider()
+    192:193:public void setOptionsMenuEnabled(boolean)
+    198:198:public boolean isOptionsMenuEnabled()
+    205:210:public boolean onCreateOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
+    216:217:public boolean onPrepareOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
+    223:232:public boolean onOptionsItemSelected(android.view.MenuItem,int,org.osmdroid.views.MapView)
+    249:251:public boolean enableCompass(org.osmdroid.views.overlay.compass.IOrientationProvider)
+    310:310:public float getOrientation()
 org.osmdroid.views.overlay.compass.IOrientationProvider:
-====    public abstract float getLastKnownOrientation()
+    public abstract float getLastKnownOrientation()
 org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider:
-====    49:49:public float getLastKnownOrientation()
+    49:49:public float getLastKnownOrientation()
 org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay:
-====    94:95:public MyLocationNewOverlay(android.content.Context,org.osmdroid.views.MapView)
-====    140:141:public void setDrawAccuracyEnabled(boolean)
-====    149:149:public boolean isDrawAccuracyEnabled()
-====    153:153:public org.osmdroid.views.overlay.mylocation.IMyLocationProvider getMyLocationProvider()
-====    168:169:public void setPersonHotspot(float,float)
-====    323:323:public boolean isOptionsMenuEnabled()
-====    329:334:public boolean onCreateOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
-====    340:341:public boolean onPrepareOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
-====    347:358:public boolean onOptionsItemSelected(android.view.MenuItem,int,org.osmdroid.views.MapView)
-====    370:373:public org.osmdroid.util.GeoPoint getMyLocation()
-====    378:378:public android.location.Location getLastFix()
-====    476:478:public boolean enableMyLocation(org.osmdroid.views.overlay.mylocation.IMyLocationProvider)
-====    541:546:public boolean runOnFirstFix(java.lang.Runnable)
+    94:95:public MyLocationNewOverlay(android.content.Context,org.osmdroid.views.MapView)
+    140:141:public void setDrawAccuracyEnabled(boolean)
+    149:149:public boolean isDrawAccuracyEnabled()
+    153:153:public org.osmdroid.views.overlay.mylocation.IMyLocationProvider getMyLocationProvider()
+    168:169:public void setPersonHotspot(float,float)
+    323:323:public boolean isOptionsMenuEnabled()
+    329:334:public boolean onCreateOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
+    340:341:public boolean onPrepareOptionsMenu(android.view.Menu,int,org.osmdroid.views.MapView)
+    347:358:public boolean onOptionsItemSelected(android.view.MenuItem,int,org.osmdroid.views.MapView)
+    370:373:public org.osmdroid.util.GeoPoint getMyLocation()
+    378:378:public android.location.Location getLastFix()
+    476:478:public boolean enableMyLocation(org.osmdroid.views.overlay.mylocation.IMyLocationProvider)
+    541:546:public boolean runOnFirstFix(java.lang.Runnable)
 org.osmdroid.views.safecanvas.ISafeCanvas:
-====    public abstract int getXOffset()
-====    public abstract int getYOffset()
-====    public abstract void getUnsafeCanvas(org.osmdroid.views.safecanvas.ISafeCanvas$UnsafeCanvasHandler)
-====    public abstract android.graphics.Canvas getWrappedCanvas()
-====    public abstract void setBitmap(android.graphics.Bitmap)
-====    public abstract boolean isOpaque()
-====    public abstract int getWidth()
-====    public abstract int getDensity()
-====    public abstract void setDensity(int)
-====    public abstract int save(int)
-====    public abstract int saveLayer(android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint,int)
-====    public abstract int saveLayer(double,double,double,double,org.osmdroid.views.safecanvas.SafePaint,int)
-====    public abstract int saveLayerAlpha(android.graphics.Rect,int,int)
-====    public abstract int saveLayerAlpha(double,double,double,double,int,int)
-====    public abstract int getSaveCount()
-====    public abstract void restoreToCount(int)
-====    public abstract void translate(float,float)
-====    public abstract void scale(float,float)
-====    public abstract void rotate(float)
-====    public abstract void skew(float,float)
-====    public abstract void concat(android.graphics.Matrix)
-====    public abstract android.graphics.Matrix getMatrix()
-====    public abstract boolean clipRect(android.graphics.Rect,android.graphics.Region$Op)
-====    public abstract boolean clipRect(android.graphics.Rect)
-====    public abstract boolean clipRect(double,double,double,double,android.graphics.Region$Op)
-====    public abstract boolean clipRect(double,double,double,double)
-====    public abstract boolean clipRect(int,int,int,int)
-====    public abstract boolean clipPath(org.osmdroid.views.safecanvas.SafeTranslatedPath,android.graphics.Region$Op)
-====    public abstract boolean clipPath(org.osmdroid.views.safecanvas.SafeTranslatedPath)
-====    public abstract boolean clipRegion(android.graphics.Region,android.graphics.Region$Op)
-====    public abstract boolean clipRegion(android.graphics.Region)
-====    public abstract android.graphics.DrawFilter getDrawFilter()
-====    public abstract void setDrawFilter(android.graphics.DrawFilter)
-====    public abstract boolean quickReject(android.graphics.Rect,android.graphics.Canvas$EdgeType)
-====    public abstract boolean quickReject(org.osmdroid.views.safecanvas.SafeTranslatedPath,android.graphics.Canvas$EdgeType)
-====    public abstract boolean quickReject(double,double,double,double,android.graphics.Canvas$EdgeType)
-====    public abstract boolean getClipBounds(android.graphics.Rect)
-====    public abstract android.graphics.Rect getClipBounds()
-====    public abstract void drawRGB(int,int,int)
-====    public abstract void drawARGB(int,int,int,int)
-====    public abstract void drawColor(int)
-====    public abstract void drawColor(int,android.graphics.PorterDuff$Mode)
-====    public abstract void drawPaint(org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawPoints(double[],int,int,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawPoints(double[],org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawPoint(double,double,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawLine(double,double,double,double,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawLines(double[],int,int,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawLines(double[],org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawRect(android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawRect(double,double,double,double,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawOval(android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawArc(android.graphics.Rect,float,float,boolean,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawRoundRect(android.graphics.Rect,float,float,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawPath(org.osmdroid.views.safecanvas.SafeTranslatedPath,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawBitmap(android.graphics.Bitmap,android.graphics.Rect,android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawBitmap(int[],int,int,double,double,int,int,boolean,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawBitmap(int[],int,int,int,int,int,int,boolean,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawBitmap(android.graphics.Bitmap,android.graphics.Matrix,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawBitmapMesh(android.graphics.Bitmap,int,int,double[],int,int[],int,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawVertices(android.graphics.Canvas$VertexMode,int,double[],int,float[],int,int[],int,short[],int,int,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawText(char[],int,int,double,double,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawText(java.lang.String,double,double,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawText(java.lang.String,int,int,double,double,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawText(java.lang.CharSequence,int,int,double,double,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawPosText(char[],int,int,double[],org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawPosText(java.lang.String,double[],org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawTextOnPath(char[],int,int,org.osmdroid.views.safecanvas.SafeTranslatedPath,float,float,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawTextOnPath(java.lang.String,org.osmdroid.views.safecanvas.SafeTranslatedPath,float,float,org.osmdroid.views.safecanvas.SafePaint)
-====    public abstract void drawPicture(android.graphics.Picture,android.graphics.Rect)
+    public abstract int getXOffset()
+    public abstract int getYOffset()
+    public abstract void getUnsafeCanvas(org.osmdroid.views.safecanvas.ISafeCanvas$UnsafeCanvasHandler)
+    public abstract android.graphics.Canvas getWrappedCanvas()
+    public abstract void setBitmap(android.graphics.Bitmap)
+    public abstract boolean isOpaque()
+    public abstract int getWidth()
+    public abstract int getDensity()
+    public abstract void setDensity(int)
+    public abstract int save(int)
+    public abstract int saveLayer(android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint,int)
+    public abstract int saveLayer(double,double,double,double,org.osmdroid.views.safecanvas.SafePaint,int)
+    public abstract int saveLayerAlpha(android.graphics.Rect,int,int)
+    public abstract int saveLayerAlpha(double,double,double,double,int,int)
+    public abstract int getSaveCount()
+    public abstract void restoreToCount(int)
+    public abstract void translate(float,float)
+    public abstract void scale(float,float)
+    public abstract void rotate(float)
+    public abstract void skew(float,float)
+    public abstract void concat(android.graphics.Matrix)
+    public abstract android.graphics.Matrix getMatrix()
+    public abstract boolean clipRect(android.graphics.Rect,android.graphics.Region$Op)
+    public abstract boolean clipRect(android.graphics.Rect)
+    public abstract boolean clipRect(double,double,double,double,android.graphics.Region$Op)
+    public abstract boolean clipRect(double,double,double,double)
+    public abstract boolean clipRect(int,int,int,int)
+    public abstract boolean clipPath(org.osmdroid.views.safecanvas.SafeTranslatedPath,android.graphics.Region$Op)
+    public abstract boolean clipPath(org.osmdroid.views.safecanvas.SafeTranslatedPath)
+    public abstract boolean clipRegion(android.graphics.Region,android.graphics.Region$Op)
+    public abstract boolean clipRegion(android.graphics.Region)
+    public abstract android.graphics.DrawFilter getDrawFilter()
+    public abstract void setDrawFilter(android.graphics.DrawFilter)
+    public abstract boolean quickReject(android.graphics.Rect,android.graphics.Canvas$EdgeType)
+    public abstract boolean quickReject(org.osmdroid.views.safecanvas.SafeTranslatedPath,android.graphics.Canvas$EdgeType)
+    public abstract boolean quickReject(double,double,double,double,android.graphics.Canvas$EdgeType)
+    public abstract boolean getClipBounds(android.graphics.Rect)
+    public abstract android.graphics.Rect getClipBounds()
+    public abstract void drawRGB(int,int,int)
+    public abstract void drawARGB(int,int,int,int)
+    public abstract void drawColor(int)
+    public abstract void drawColor(int,android.graphics.PorterDuff$Mode)
+    public abstract void drawPaint(org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawPoints(double[],int,int,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawPoints(double[],org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawPoint(double,double,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawLine(double,double,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawLines(double[],int,int,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawLines(double[],org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawRect(android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawRect(double,double,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawOval(android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawArc(android.graphics.Rect,float,float,boolean,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawRoundRect(android.graphics.Rect,float,float,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawPath(org.osmdroid.views.safecanvas.SafeTranslatedPath,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawBitmap(android.graphics.Bitmap,android.graphics.Rect,android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawBitmap(int[],int,int,double,double,int,int,boolean,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawBitmap(int[],int,int,int,int,int,int,boolean,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawBitmap(android.graphics.Bitmap,android.graphics.Matrix,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawBitmapMesh(android.graphics.Bitmap,int,int,double[],int,int[],int,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawVertices(android.graphics.Canvas$VertexMode,int,double[],int,float[],int,int[],int,short[],int,int,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawText(char[],int,int,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawText(java.lang.String,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawText(java.lang.String,int,int,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawText(java.lang.CharSequence,int,int,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawPosText(char[],int,int,double[],org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawPosText(java.lang.String,double[],org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawTextOnPath(char[],int,int,org.osmdroid.views.safecanvas.SafeTranslatedPath,float,float,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawTextOnPath(java.lang.String,org.osmdroid.views.safecanvas.SafeTranslatedPath,float,float,org.osmdroid.views.safecanvas.SafePaint)
+    public abstract void drawPicture(android.graphics.Picture,android.graphics.Rect)
 org.osmdroid.views.safecanvas.ISafeCanvas$UnsafeCanvasHandler
 org.osmdroid.views.safecanvas.SafeBitmapShader
 org.osmdroid.views.safecanvas.SafeDashPathEffect
 org.osmdroid.views.safecanvas.SafeTranslatedCanvas:
-====    31:41:public SafeTranslatedCanvas(android.graphics.Canvas)
-====    50:50:public int getXOffset()
-====    55:55:public int getYOffset()
-====    64:68:public void getUnsafeCanvas(org.osmdroid.views.safecanvas.ISafeCanvas$UnsafeCanvasHandler)
-====    75:75:public android.graphics.Matrix getOriginalMatrix()
-====    80:80:public boolean clipPath(org.osmdroid.views.safecanvas.SafeTranslatedPath,android.graphics.Region$Op)
-====    85:85:public boolean clipPath(org.osmdroid.views.safecanvas.SafeTranslatedPath)
-====    90:90:public boolean clipRect(double,double,double,double,android.graphics.Region$Op)
-====    96:96:public boolean clipRect(double,double,double,double)
-====    143:145:public void drawArc(android.graphics.Rect,float,float,boolean,org.osmdroid.views.safecanvas.SafePaint)
-====    155:158:public void drawBitmap(android.graphics.Bitmap,android.graphics.Matrix,org.osmdroid.views.safecanvas.SafePaint)
-====    162:165:public void drawBitmap(android.graphics.Bitmap,android.graphics.Rect,android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint)
-====    178:180:public void drawBitmap(int[],int,int,double,double,int,int,boolean,org.osmdroid.views.safecanvas.SafePaint)
-====    185:187:public void drawBitmap(int[],int,int,int,int,int,int,boolean,org.osmdroid.views.safecanvas.SafePaint)
-====    192:194:public void drawBitmapMesh(android.graphics.Bitmap,int,int,double[],int,int[],int,org.osmdroid.views.safecanvas.SafePaint)
-====    216:222:public void drawLine(double,double,double,double,org.osmdroid.views.safecanvas.SafePaint)
-====    226:227:public void drawLines(double[],int,int,org.osmdroid.views.safecanvas.SafePaint)
-====    231:232:public void drawLines(double[],org.osmdroid.views.safecanvas.SafePaint)
-====    236:237:public void drawOval(android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint)
-====    241:242:public void drawPaint(org.osmdroid.views.safecanvas.SafePaint)
-====    246:247:public void drawPath(org.osmdroid.views.safecanvas.SafeTranslatedPath,org.osmdroid.views.safecanvas.SafePaint)
-====    263:266:public void drawPoint(double,double,org.osmdroid.views.safecanvas.SafePaint)
-====    270:271:public void drawPoints(double[],int,int,org.osmdroid.views.safecanvas.SafePaint)
-====    275:276:public void drawPoints(double[],org.osmdroid.views.safecanvas.SafePaint)
-====    280:282:public void drawPosText(char[],int,int,double[],org.osmdroid.views.safecanvas.SafePaint)
-====    286:287:public void drawPosText(java.lang.String,double[],org.osmdroid.views.safecanvas.SafePaint)
-====    296:302:public void drawRect(double,double,double,double,org.osmdroid.views.safecanvas.SafePaint)
-====    306:309:public void drawRect(android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint)
-====    313:314:public void drawRoundRect(android.graphics.Rect,float,float,org.osmdroid.views.safecanvas.SafePaint)
-====    318:319:public void drawText(java.lang.String,double,double,org.osmdroid.views.safecanvas.SafePaint)
-====    323:325:public void drawText(char[],int,int,double,double,org.osmdroid.views.safecanvas.SafePaint)
-====    329:331:public void drawText(java.lang.CharSequence,int,int,double,double,org.osmdroid.views.safecanvas.SafePaint)
-====    335:337:public void drawText(java.lang.String,int,int,double,double,org.osmdroid.views.safecanvas.SafePaint)
-====    342:343:public void drawTextOnPath(char[],int,int,org.osmdroid.views.safecanvas.SafeTranslatedPath,float,float,org.osmdroid.views.safecanvas.SafePaint)
-====    348:349:public void drawTextOnPath(java.lang.String,org.osmdroid.views.safecanvas.SafeTranslatedPath,float,float,org.osmdroid.views.safecanvas.SafePaint)
-====    355:358:public void drawVertices(android.graphics.Canvas$VertexMode,int,double[],int,float[],int,int[],int,short[],int,int,org.osmdroid.views.safecanvas.SafePaint)
-====    412:416:public boolean quickReject(double,double,double,double,android.graphics.Canvas$EdgeType)
-====    422:422:public boolean quickReject(org.osmdroid.views.safecanvas.SafeTranslatedPath,android.graphics.Canvas$EdgeType)
-====    428:428:public boolean quickReject(android.graphics.Rect,android.graphics.Canvas$EdgeType)
-====    470:470:public int saveLayer(double,double,double,double,org.osmdroid.views.safecanvas.SafePaint,int)
-====    476:478:public int saveLayer(android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint,int)
-====    484:484:public int saveLayerAlpha(double,double,double,double,int,int)
-====    490:490:public int saveLayerAlpha(android.graphics.Rect,int,int)
-====    560:565:protected final android.graphics.RectF toOffsetRectF(android.graphics.Rect,android.graphics.RectF)
-====    572:578:protected final float[] toOffsetFloatAry(double[],float[])
+    39:41:public SafeTranslatedCanvas(android.graphics.Canvas)
+    50:50:public int getXOffset()
+    55:55:public int getYOffset()
+    64:68:public void getUnsafeCanvas(org.osmdroid.views.safecanvas.ISafeCanvas$UnsafeCanvasHandler)
+    75:75:public android.graphics.Matrix getOriginalMatrix()
+    80:80:public boolean clipPath(org.osmdroid.views.safecanvas.SafeTranslatedPath,android.graphics.Region$Op)
+    85:85:public boolean clipPath(org.osmdroid.views.safecanvas.SafeTranslatedPath)
+    90:90:public boolean clipRect(double,double,double,double,android.graphics.Region$Op)
+    96:96:public boolean clipRect(double,double,double,double)
+    143:145:public void drawArc(android.graphics.Rect,float,float,boolean,org.osmdroid.views.safecanvas.SafePaint)
+    155:158:public void drawBitmap(android.graphics.Bitmap,android.graphics.Matrix,org.osmdroid.views.safecanvas.SafePaint)
+    162:165:public void drawBitmap(android.graphics.Bitmap,android.graphics.Rect,android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint)
+    178:180:public void drawBitmap(int[],int,int,double,double,int,int,boolean,org.osmdroid.views.safecanvas.SafePaint)
+    185:187:public void drawBitmap(int[],int,int,int,int,int,int,boolean,org.osmdroid.views.safecanvas.SafePaint)
+    192:194:public void drawBitmapMesh(android.graphics.Bitmap,int,int,double[],int,int[],int,org.osmdroid.views.safecanvas.SafePaint)
+    216:222:public void drawLine(double,double,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    226:227:public void drawLines(double[],int,int,org.osmdroid.views.safecanvas.SafePaint)
+    231:232:public void drawLines(double[],org.osmdroid.views.safecanvas.SafePaint)
+    236:237:public void drawOval(android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint)
+    241:242:public void drawPaint(org.osmdroid.views.safecanvas.SafePaint)
+    246:247:public void drawPath(org.osmdroid.views.safecanvas.SafeTranslatedPath,org.osmdroid.views.safecanvas.SafePaint)
+    263:266:public void drawPoint(double,double,org.osmdroid.views.safecanvas.SafePaint)
+    270:271:public void drawPoints(double[],int,int,org.osmdroid.views.safecanvas.SafePaint)
+    275:276:public void drawPoints(double[],org.osmdroid.views.safecanvas.SafePaint)
+    280:282:public void drawPosText(char[],int,int,double[],org.osmdroid.views.safecanvas.SafePaint)
+    286:287:public void drawPosText(java.lang.String,double[],org.osmdroid.views.safecanvas.SafePaint)
+    296:302:public void drawRect(double,double,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    306:309:public void drawRect(android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint)
+    313:314:public void drawRoundRect(android.graphics.Rect,float,float,org.osmdroid.views.safecanvas.SafePaint)
+    318:319:public void drawText(java.lang.String,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    323:325:public void drawText(char[],int,int,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    329:331:public void drawText(java.lang.CharSequence,int,int,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    335:337:public void drawText(java.lang.String,int,int,double,double,org.osmdroid.views.safecanvas.SafePaint)
+    342:343:public void drawTextOnPath(char[],int,int,org.osmdroid.views.safecanvas.SafeTranslatedPath,float,float,org.osmdroid.views.safecanvas.SafePaint)
+    348:349:public void drawTextOnPath(java.lang.String,org.osmdroid.views.safecanvas.SafeTranslatedPath,float,float,org.osmdroid.views.safecanvas.SafePaint)
+    355:358:public void drawVertices(android.graphics.Canvas$VertexMode,int,double[],int,float[],int,int[],int,short[],int,int,org.osmdroid.views.safecanvas.SafePaint)
+    412:416:public boolean quickReject(double,double,double,double,android.graphics.Canvas$EdgeType)
+    422:422:public boolean quickReject(org.osmdroid.views.safecanvas.SafeTranslatedPath,android.graphics.Canvas$EdgeType)
+    428:428:public boolean quickReject(android.graphics.Rect,android.graphics.Canvas$EdgeType)
+    470:470:public int saveLayer(double,double,double,double,org.osmdroid.views.safecanvas.SafePaint,int)
+    476:478:public int saveLayer(android.graphics.Rect,org.osmdroid.views.safecanvas.SafePaint,int)
+    484:484:public int saveLayerAlpha(double,double,double,double,int,int)
+    490:490:public int saveLayerAlpha(android.graphics.Rect,int,int)
+    560:565:protected final android.graphics.RectF toOffsetRectF(android.graphics.Rect,android.graphics.RectF)
+    572:578:protected final float[] toOffsetFloatAry(double[],float[])
 org.osmdroid.views.safecanvas.SafeTranslatedPath
 org.osmdroid.views.util.Mercator
 org.osmdroid.views.util.MyMath
@@ -1808,60 +1808,60 @@ org.osmdroid.views.util.constants.OverlayConstants
 org.slf4j.IMarkerFactory
 org.slf4j.Logger:
     public static final java.lang.String ROOT_LOGGER_NAME
-====    public abstract java.lang.String getName()
-====    public abstract boolean isTraceEnabled()
-====    public abstract void trace(java.lang.String)
-====    public abstract void trace(java.lang.String,java.lang.Object)
-====    public abstract void trace(java.lang.String,java.lang.Object,java.lang.Object)
-====    public abstract void trace(java.lang.String,java.lang.Object[])
-====    public abstract void trace(java.lang.String,java.lang.Throwable)
-====    public abstract boolean isTraceEnabled(org.slf4j.Marker)
-====    public abstract void trace(org.slf4j.Marker,java.lang.String)
-====    public abstract void trace(org.slf4j.Marker,java.lang.String,java.lang.Object)
-====    public abstract void trace(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
-====    public abstract void trace(org.slf4j.Marker,java.lang.String,java.lang.Object[])
-====    public abstract void trace(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
-====    public abstract boolean isDebugEnabled()
-====    public abstract void debug(java.lang.String)
-====    public abstract void debug(java.lang.String,java.lang.Object)
-====    public abstract void debug(java.lang.String,java.lang.Object,java.lang.Object)
-====    public abstract void debug(java.lang.String,java.lang.Object[])
-====    public abstract void debug(java.lang.String,java.lang.Throwable)
-====    public abstract boolean isDebugEnabled(org.slf4j.Marker)
-====    public abstract void debug(org.slf4j.Marker,java.lang.String)
-====    public abstract void debug(org.slf4j.Marker,java.lang.String,java.lang.Object)
-====    public abstract void debug(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
-====    public abstract void debug(org.slf4j.Marker,java.lang.String,java.lang.Object[])
-====    public abstract void debug(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
-====    public abstract boolean isInfoEnabled()
-====    public abstract void info(java.lang.String,java.lang.Object)
-====    public abstract void info(java.lang.String,java.lang.Object,java.lang.Object)
-====    public abstract void info(java.lang.String,java.lang.Object[])
-====    public abstract boolean isInfoEnabled(org.slf4j.Marker)
-====    public abstract void info(org.slf4j.Marker,java.lang.String)
-====    public abstract void info(org.slf4j.Marker,java.lang.String,java.lang.Object)
-====    public abstract void info(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
-====    public abstract void info(org.slf4j.Marker,java.lang.String,java.lang.Object[])
-====    public abstract void info(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
-====    public abstract boolean isWarnEnabled()
-====    public abstract void warn(java.lang.String,java.lang.Object)
-====    public abstract void warn(java.lang.String,java.lang.Object[])
-====    public abstract void warn(java.lang.String,java.lang.Object,java.lang.Object)
-====    public abstract boolean isWarnEnabled(org.slf4j.Marker)
-====    public abstract void warn(org.slf4j.Marker,java.lang.String)
-====    public abstract void warn(org.slf4j.Marker,java.lang.String,java.lang.Object)
-====    public abstract void warn(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
-====    public abstract void warn(org.slf4j.Marker,java.lang.String,java.lang.Object[])
-====    public abstract void warn(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
-====    public abstract boolean isErrorEnabled()
-====    public abstract void error(java.lang.String,java.lang.Object)
-====    public abstract void error(java.lang.String,java.lang.Object[])
-====    public abstract boolean isErrorEnabled(org.slf4j.Marker)
-====    public abstract void error(org.slf4j.Marker,java.lang.String)
-====    public abstract void error(org.slf4j.Marker,java.lang.String,java.lang.Object)
-====    public abstract void error(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
-====    public abstract void error(org.slf4j.Marker,java.lang.String,java.lang.Object[])
-====    public abstract void error(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+    public abstract java.lang.String getName()
+    public abstract boolean isTraceEnabled()
+    public abstract void trace(java.lang.String)
+    public abstract void trace(java.lang.String,java.lang.Object)
+    public abstract void trace(java.lang.String,java.lang.Object,java.lang.Object)
+    public abstract void trace(java.lang.String,java.lang.Object[])
+    public abstract void trace(java.lang.String,java.lang.Throwable)
+    public abstract boolean isTraceEnabled(org.slf4j.Marker)
+    public abstract void trace(org.slf4j.Marker,java.lang.String)
+    public abstract void trace(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    public abstract void trace(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    public abstract void trace(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    public abstract void trace(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+    public abstract boolean isDebugEnabled()
+    public abstract void debug(java.lang.String)
+    public abstract void debug(java.lang.String,java.lang.Object)
+    public abstract void debug(java.lang.String,java.lang.Object,java.lang.Object)
+    public abstract void debug(java.lang.String,java.lang.Object[])
+    public abstract void debug(java.lang.String,java.lang.Throwable)
+    public abstract boolean isDebugEnabled(org.slf4j.Marker)
+    public abstract void debug(org.slf4j.Marker,java.lang.String)
+    public abstract void debug(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    public abstract void debug(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    public abstract void debug(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    public abstract void debug(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+    public abstract boolean isInfoEnabled()
+    public abstract void info(java.lang.String,java.lang.Object)
+    public abstract void info(java.lang.String,java.lang.Object,java.lang.Object)
+    public abstract void info(java.lang.String,java.lang.Object[])
+    public abstract boolean isInfoEnabled(org.slf4j.Marker)
+    public abstract void info(org.slf4j.Marker,java.lang.String)
+    public abstract void info(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    public abstract void info(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    public abstract void info(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    public abstract void info(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+    public abstract boolean isWarnEnabled()
+    public abstract void warn(java.lang.String,java.lang.Object)
+    public abstract void warn(java.lang.String,java.lang.Object[])
+    public abstract void warn(java.lang.String,java.lang.Object,java.lang.Object)
+    public abstract boolean isWarnEnabled(org.slf4j.Marker)
+    public abstract void warn(org.slf4j.Marker,java.lang.String)
+    public abstract void warn(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    public abstract void warn(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    public abstract void warn(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    public abstract void warn(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+    public abstract boolean isErrorEnabled()
+    public abstract void error(java.lang.String,java.lang.Object)
+    public abstract void error(java.lang.String,java.lang.Object[])
+    public abstract boolean isErrorEnabled(org.slf4j.Marker)
+    public abstract void error(org.slf4j.Marker,java.lang.String)
+    public abstract void error(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    public abstract void error(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    public abstract void error(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    public abstract void error(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
 org.slf4j.LoggerFactory:
     static final java.lang.String NO_STATICLOGGERBINDER_URL
     static final java.lang.String MULTIPLE_BINDINGS_URL
@@ -1876,7 +1876,7 @@ org.slf4j.LoggerFactory:
     static final int SUCCESSFUL_INITILIZATION
     static final int GET_SINGLETON_INEXISTENT
     static final int GET_SINGLETON_EXISTS
-====    101:104:static void reset()
+    101:104:static void reset()
 org.slf4j.MDC
 org.slf4j.Marker
 org.slf4j.MarkerFactory
@@ -1884,99 +1884,99 @@ org.slf4j.helpers.BasicMDCAdapter
 org.slf4j.helpers.BasicMarker
 org.slf4j.helpers.BasicMarkerFactory
 org.slf4j.helpers.MarkerIgnoringBase:
-====    42:42:public boolean isTraceEnabled(org.slf4j.Marker)
-====    46:47:public void trace(org.slf4j.Marker,java.lang.String)
-====    50:51:public void trace(org.slf4j.Marker,java.lang.String,java.lang.Object)
-====    54:55:public void trace(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
-====    58:59:public void trace(org.slf4j.Marker,java.lang.String,java.lang.Object[])
-====    62:63:public void trace(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
-====    66:66:public boolean isDebugEnabled(org.slf4j.Marker)
-====    70:71:public void debug(org.slf4j.Marker,java.lang.String)
-====    74:75:public void debug(org.slf4j.Marker,java.lang.String,java.lang.Object)
-====    78:79:public void debug(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
-====    82:83:public void debug(org.slf4j.Marker,java.lang.String,java.lang.Object[])
-====    86:87:public void debug(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
-====    90:90:public boolean isInfoEnabled(org.slf4j.Marker)
-====    94:95:public void info(org.slf4j.Marker,java.lang.String)
-====    98:99:public void info(org.slf4j.Marker,java.lang.String,java.lang.Object)
-====    102:103:public void info(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
-====    106:107:public void info(org.slf4j.Marker,java.lang.String,java.lang.Object[])
-====    110:111:public void info(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
-====    114:114:public boolean isWarnEnabled(org.slf4j.Marker)
-====    118:119:public void warn(org.slf4j.Marker,java.lang.String)
-====    122:123:public void warn(org.slf4j.Marker,java.lang.String,java.lang.Object)
-====    126:127:public void warn(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
-====    130:131:public void warn(org.slf4j.Marker,java.lang.String,java.lang.Object[])
-====    134:135:public void warn(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
-====    139:139:public boolean isErrorEnabled(org.slf4j.Marker)
-====    143:144:public void error(org.slf4j.Marker,java.lang.String)
-====    147:148:public void error(org.slf4j.Marker,java.lang.String,java.lang.Object)
-====    151:152:public void error(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
-====    155:156:public void error(org.slf4j.Marker,java.lang.String,java.lang.Object[])
-====    159:160:public void error(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+    42:42:public boolean isTraceEnabled(org.slf4j.Marker)
+    46:47:public void trace(org.slf4j.Marker,java.lang.String)
+    50:51:public void trace(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    54:55:public void trace(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    58:59:public void trace(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    62:63:public void trace(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+    66:66:public boolean isDebugEnabled(org.slf4j.Marker)
+    70:71:public void debug(org.slf4j.Marker,java.lang.String)
+    74:75:public void debug(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    78:79:public void debug(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    82:83:public void debug(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    86:87:public void debug(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+    90:90:public boolean isInfoEnabled(org.slf4j.Marker)
+    94:95:public void info(org.slf4j.Marker,java.lang.String)
+    98:99:public void info(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    102:103:public void info(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    106:107:public void info(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    110:111:public void info(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+    114:114:public boolean isWarnEnabled(org.slf4j.Marker)
+    118:119:public void warn(org.slf4j.Marker,java.lang.String)
+    122:123:public void warn(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    126:127:public void warn(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    130:131:public void warn(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    134:135:public void warn(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
+    139:139:public boolean isErrorEnabled(org.slf4j.Marker)
+    143:144:public void error(org.slf4j.Marker,java.lang.String)
+    147:148:public void error(org.slf4j.Marker,java.lang.String,java.lang.Object)
+    151:152:public void error(org.slf4j.Marker,java.lang.String,java.lang.Object,java.lang.Object)
+    155:156:public void error(org.slf4j.Marker,java.lang.String,java.lang.Object[])
+    159:160:public void error(org.slf4j.Marker,java.lang.String,java.lang.Throwable)
 org.slf4j.helpers.MessageFormatter:
     static final char DELIM_START
     static final char DELIM_STOP
     static final java.lang.String DELIM_STR
     private static final char ESCAPE_CHAR
-====    87:87:public MessageFormatter()
-====    114:114:public static final java.lang.String format(java.lang.String,java.lang.Object)
+    87:87:public MessageFormatter()
+    114:114:public static final java.lang.String format(java.lang.String,java.lang.Object)
 org.slf4j.helpers.NOPLogger:
     private static final long serialVersionUID
-====    73:73:public final boolean isTraceEnabled()
-====    79:79:public final void trace(java.lang.String)
-====    84:84:public final void trace(java.lang.String,java.lang.Object)
-====    89:89:public final void trace(java.lang.String,java.lang.Object,java.lang.Object)
-====    94:94:public final void trace(java.lang.String,java.lang.Object[])
-====    99:99:public final void trace(java.lang.String,java.lang.Throwable)
-====    106:106:public final boolean isDebugEnabled()
-====    112:112:public final void debug(java.lang.String)
-====    117:117:public final void debug(java.lang.String,java.lang.Object)
-====    122:122:public final void debug(java.lang.String,java.lang.Object,java.lang.Object)
-====    127:127:public final void debug(java.lang.String,java.lang.Object[])
-====    134:134:public final void debug(java.lang.String,java.lang.Throwable)
-====    142:142:public final boolean isInfoEnabled()
-====    154:154:public final void info(java.lang.String,java.lang.Object)
-====    159:159:public final void info(java.lang.String,java.lang.Object,java.lang.Object)
-====    164:164:public final void info(java.lang.String,java.lang.Object[])
-====    178:178:public final boolean isWarnEnabled()
-====    189:189:public final void warn(java.lang.String,java.lang.Object)
-====    194:194:public final void warn(java.lang.String,java.lang.Object,java.lang.Object)
-====    199:199:public final void warn(java.lang.String,java.lang.Object[])
-====    210:210:public final boolean isErrorEnabled()
-====    221:221:public final void error(java.lang.String,java.lang.Object)
-====    231:231:public final void error(java.lang.String,java.lang.Object[])
+    73:73:public final boolean isTraceEnabled()
+    79:79:public final void trace(java.lang.String)
+    84:84:public final void trace(java.lang.String,java.lang.Object)
+    89:89:public final void trace(java.lang.String,java.lang.Object,java.lang.Object)
+    94:94:public final void trace(java.lang.String,java.lang.Object[])
+    99:99:public final void trace(java.lang.String,java.lang.Throwable)
+    106:106:public final boolean isDebugEnabled()
+    112:112:public final void debug(java.lang.String)
+    117:117:public final void debug(java.lang.String,java.lang.Object)
+    122:122:public final void debug(java.lang.String,java.lang.Object,java.lang.Object)
+    127:127:public final void debug(java.lang.String,java.lang.Object[])
+    134:134:public final void debug(java.lang.String,java.lang.Throwable)
+    142:142:public final boolean isInfoEnabled()
+    154:154:public final void info(java.lang.String,java.lang.Object)
+    159:159:public final void info(java.lang.String,java.lang.Object,java.lang.Object)
+    164:164:public final void info(java.lang.String,java.lang.Object[])
+    178:178:public final boolean isWarnEnabled()
+    189:189:public final void warn(java.lang.String,java.lang.Object)
+    194:194:public final void warn(java.lang.String,java.lang.Object,java.lang.Object)
+    199:199:public final void warn(java.lang.String,java.lang.Object[])
+    210:210:public final boolean isErrorEnabled()
+    221:221:public final void error(java.lang.String,java.lang.Object)
+    231:231:public final void error(java.lang.String,java.lang.Object[])
 org.slf4j.helpers.NOPMakerAdapter
 org.slf4j.helpers.NamedLoggerBase:
-====    41:41:protected java.lang.Object readResolve()
+    41:41:protected java.lang.Object readResolve()
 org.slf4j.helpers.Util:
-====    34:34:public Util()
+    34:34:public Util()
 org.slf4j.impl.AndroidLogger:
     private static final long serialVersionUID
-====    73:73:public boolean isTraceEnabled()
-====    79:80:public void trace(java.lang.String)
-====    85:86:public void trace(java.lang.String,java.lang.Object)
-====    91:92:public void trace(java.lang.String,java.lang.Object,java.lang.Object)
-====    97:98:public void trace(java.lang.String,java.lang.Object[])
-====    103:104:public void trace(java.lang.String,java.lang.Throwable)
-====    109:109:public boolean isDebugEnabled()
-====    115:116:public void debug(java.lang.String)
-====    121:122:public void debug(java.lang.String,java.lang.Object)
-====    127:128:public void debug(java.lang.String,java.lang.Object,java.lang.Object)
-====    133:134:public void debug(java.lang.String,java.lang.Object[])
-====    139:140:public void debug(java.lang.String,java.lang.Throwable)
-====    145:145:public boolean isInfoEnabled()
-====    157:158:public void info(java.lang.String,java.lang.Object)
-====    163:164:public void info(java.lang.String,java.lang.Object,java.lang.Object)
-====    169:170:public void info(java.lang.String,java.lang.Object[])
-====    181:181:public boolean isWarnEnabled()
-====    193:194:public void warn(java.lang.String,java.lang.Object)
-====    199:200:public void warn(java.lang.String,java.lang.Object,java.lang.Object)
-====    205:206:public void warn(java.lang.String,java.lang.Object[])
-====    217:217:public boolean isErrorEnabled()
-====    229:230:public void error(java.lang.String,java.lang.Object)
-====    241:242:public void error(java.lang.String,java.lang.Object[])
-====    270:270:private java.lang.String format(java.lang.String,java.lang.Object[])
+    73:73:public boolean isTraceEnabled()
+    79:80:public void trace(java.lang.String)
+    85:86:public void trace(java.lang.String,java.lang.Object)
+    91:92:public void trace(java.lang.String,java.lang.Object,java.lang.Object)
+    97:98:public void trace(java.lang.String,java.lang.Object[])
+    103:104:public void trace(java.lang.String,java.lang.Throwable)
+    109:109:public boolean isDebugEnabled()
+    115:116:public void debug(java.lang.String)
+    121:122:public void debug(java.lang.String,java.lang.Object)
+    127:128:public void debug(java.lang.String,java.lang.Object,java.lang.Object)
+    133:134:public void debug(java.lang.String,java.lang.Object[])
+    139:140:public void debug(java.lang.String,java.lang.Throwable)
+    145:145:public boolean isInfoEnabled()
+    157:158:public void info(java.lang.String,java.lang.Object)
+    163:164:public void info(java.lang.String,java.lang.Object,java.lang.Object)
+    169:170:public void info(java.lang.String,java.lang.Object[])
+    181:181:public boolean isWarnEnabled()
+    193:194:public void warn(java.lang.String,java.lang.Object)
+    199:200:public void warn(java.lang.String,java.lang.Object,java.lang.Object)
+    205:206:public void warn(java.lang.String,java.lang.Object[])
+    217:217:public boolean isErrorEnabled()
+    229:230:public void error(java.lang.String,java.lang.Object)
+    241:242:public void error(java.lang.String,java.lang.Object[])
+    270:270:private java.lang.String format(java.lang.String,java.lang.Object[])
 org.slf4j.impl.StaticMDCBinder
 org.slf4j.impl.StaticMarkerBinder
 org.slf4j.spi.LocationAwareLogger

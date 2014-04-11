@@ -428,20 +428,30 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	void setupDrawerList() {
 		mDrawerItems.clear();
 		if (!OsMoDroid.settings.getString("key", "" ).equals("") ){
-		  
-		 for (String s: new String[] {
-				    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
-				    getString(R.string.chanals),getString(R.string.devices),getString(R.string.links),
-				    getString(R.string.notifications), getString(R.string.tracks) , getString(R.string.exit)})
+			 String[] menu1 = new String[] {
+					    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
+					    getString(R.string.chanals),getString(R.string.devices),getString(R.string.links),
+					    getString(R.string.notifications), getString(R.string.tracks) , getString(R.string.exit)};
+			if(OsMoDroid.debug){
+				 menu1 = new String[] {
+					    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
+					    getString(R.string.chanals),getString(R.string.devices),getString(R.string.links),
+					    getString(R.string.notifications), getString(R.string.tracks) , getString(R.string.exit), "debug"};
+				
+			};
+			
+			 
+		 for (String s: menu1)
 		 {
 		 mDrawerItems.add(s);
 		 
 		 }
 		 }
 		else{
-			for (String s:  new String[] {
-				    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
-				    getString(R.string.tracks),getString(R.string.exit)} ){
+			 String[] menu2=new String[] {
+					    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
+					    getString(R.string.tracks),getString(R.string.exit)};
+			for (String s: menu2 ){
 				mDrawerItems.add(s);
 			}
 		}

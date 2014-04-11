@@ -1396,6 +1396,7 @@ com.OsMoDroid.BootComplitedReceiver
 com.OsMoDroid.BootComplitedReceiver: BootComplitedReceiver()
 com.OsMoDroid.ChannelDevicesFragment
 com.OsMoDroid.ChannelsFragment
+com.OsMoDroid.DebugFragment
 com.OsMoDroid.DeviceChatFragment
 com.OsMoDroid.DevicesFragment
 com.OsMoDroid.GPSLocalServiceClient

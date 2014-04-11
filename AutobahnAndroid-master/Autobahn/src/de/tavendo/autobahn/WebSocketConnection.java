@@ -421,7 +421,11 @@ public class WebSocketConnection implements WebSocket {
                mWriter.forward(pong);
 
             } else if (msg.obj instanceof WebSocketMessage.Pong) {
-
+            	  if (mWsHandler != null) {
+                      mWsHandler.onPong();
+                   } else {
+                      if (DEBUG) Log.d(TAG, "could not call onBinaryMessage() .. handler already NULL");
+                   }
                @SuppressWarnings("unused")
                WebSocketMessage.Pong pong = (WebSocketMessage.Pong) msg.obj;
 

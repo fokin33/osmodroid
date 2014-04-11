@@ -26,7 +26,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 
-public class ChannelsOverlay extends Overlay implements RotationGestureDetector.RotationListener {
+public class ChannelsOverlay extends Overlay implements RotationGestureDetector.OnRotationGestureListener {
 	//private final float mScale;
 	Paint paint=new Paint();
 	private Paint pathpaint;
@@ -53,7 +53,7 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
     public boolean onTouchEvent(MotionEvent event, MapView mapView)
     {
         if (this.isEnabled()) {
-            mRotationDetector.onTouch(event);
+            mRotationDetector.onTouchEvent(event);
         }
         return super.onTouchEvent(event, mapView);
     }
@@ -204,12 +204,10 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 	}
 
 
-
-
 	@Override
-	public void onRotate(float deltaAngle) {
-		map.setMapOrientation(map.getMapOrientation() + deltaAngle);
-
+	public boolean OnRotation(RotationGestureDetector rotationDetector) {
+		map.setMapOrientation(map.getMapOrientation()+rotationDetector.getAngle());
+		return false;
 	}
 	
 	

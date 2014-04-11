@@ -385,12 +385,14 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	public static Channel currentChannel;
 	public static List<Device> currentchanneldeviceList= new ArrayList<Device>();
     public static ArrayList<String> messagelist= new ArrayList<String>();
+    public static ArrayList<String> debuglist= new ArrayList<String>();
     public static List<MyMessage> chatmessagelist= new ArrayList<MyMessage>();
     public static Device currentDevice;
     public static DeviceAdapter deviceAdapter;
     public static ChannelsAdapter channelsAdapter;
     public static ChannelsDevicesAdapter channelsDevicesAdapter;
     public static ArrayAdapter<String> channelsmessagesAdapter;
+    public static ArrayAdapter<String> debugAdapter;
     public static DeviceChatAdapter chatmessagesAdapter;
     static Context serContext;
 	protected static boolean uploadto=false;

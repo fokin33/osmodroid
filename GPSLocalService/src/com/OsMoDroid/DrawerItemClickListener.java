@@ -26,6 +26,7 @@ public class DrawerItemClickListener implements OnItemClickListener {
 	 TracFileListFragment trac;
 	 DeviceChatFragment devchat;
 	 ChannelDevicesFragment chandev;
+	 DebugFragment debug;
 	 int currentItem=0;
 	private FragmentManager fMan;
 	ListView mDrawerList;
@@ -132,7 +133,14 @@ public class DrawerItemClickListener implements OnItemClickListener {
     	   Intent i = new Intent(activity, LocalService.class);
            activity.stopService(i);
            activity.finish();
-       } 
+       }
+       else if(name.equals( "debug")){
+    	   if(debug==null){ 
+           	debug=new DebugFragment();
+           	}
+               ft.replace(R.id.fragment_container, debug);
+               currentItem=8;
+       }
         
        
         

@@ -278,7 +278,11 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 				
 				@Override
 				public void onClick(View v) {
+					Location center = MapFragment.this.getLastKnownLocation();
+					if (center!=null){
+					mController.setCenter(new GeoPoint(MapFragment.this.getLastKnownLocation()));
 					mController.setZoom(16);
+					}
 					myLoc.enableFollowLocation();
 					
 				}
@@ -335,8 +339,20 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 
 	@Override
 	public Location getLastKnownLocation() {
-		// TODO Auto-generated method stub
-		return null;
+		Location forcelocation = LocalService.myManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		Location forcenetworklocation = LocalService.myManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+		if(forcelocation!=null){
+			if (forcenetworklocation!=null){
+				if(forcenetworklocation.getTime()>forcelocation.getTime()){
+					return forcenetworklocation;
+				}
+			}
+			return forcelocation;
+		}
+		else{
+			return forcenetworklocation;	
+		}
+		
 	}
 
 
@@ -377,7 +393,7 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 
 	@Override
 	public void onLocationChanged(Location location) {
-		if(location.hasBearing()&&rotate){
+		if(myLoc.isFollowLocationEnabled()&&location.hasBearing()&&rotate&&location.getSpeed()>1){
 		mMapView.setMapOrientation(-location.getBearing());
 		}
 		if(location.getProvider().equals(LocationManager.GPS_PROVIDER)){

@@ -60,6 +60,8 @@ public interface Wamp {
        * @param reason     A humand readable description of the reason of connection close.
        */
       public void onClose(int code, String reason);
+
+	public void onPong();
    }
 
    /**

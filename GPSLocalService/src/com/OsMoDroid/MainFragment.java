@@ -288,7 +288,6 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 	          
 		}
 		
-		
 		return super.onOptionsItemSelected(item);
 
 	}
