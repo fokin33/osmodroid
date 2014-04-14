@@ -1902,9 +1902,9 @@ new Netutil.MyAsyncTask(this).execute(params);}
 
 		if(log)Log.d(getClass().getSimpleName(), "notify:"+notification.toString());
 
-//		if(myIM.mWebsocketConnection.isConnected()){
-//			myIM.mWebsocketConnection.sendTextMessage("session.open|");
-//		}
+		if(myIM.mWebsocketConnection.isConnected()){
+			myIM.mWebsocketConnection.sendTextMessage("session.open|");
+		}
 
 
 
@@ -2175,9 +2175,9 @@ public void sendid()
 			if (myManager!=null){
 
 			myManager.removeUpdates(this);}
-//			if(myIM.mWebsocketConnection.isConnected()){
-//				myIM.mWebsocketConnection.sendTextMessage("session.close|");
-//			}
+			if(myIM.mWebsocketConnection.isConnected()){
+				myIM.mWebsocketConnection.sendTextMessage("session.close|");
+			}
 			setstarted(false);
 
 			mStopForegroundArgs[0]= Boolean.TRUE;
@@ -3130,12 +3130,12 @@ private void sendlocation (Location location){
 //	- 5 = hashstring (уникальный хеш пользователя)
 
 //	- 6 = checknumint(3) (контрольное число к хешу)
-//	if (myIM.mWebsocketConnection.isConnected()){
-//		myIM.mWebsocketConnection.sendTextMessage("p|"+df6.format( location.getLatitude()) +":"+ df6.format(location.getLongitude())+":"+ df1.format( location.getAccuracy())
-//
-//				+":"+df1.format( location.getAltitude())+":"+df1.format( location.getSpeed()));
-//		if(log)Log.d(this.getClass().getName(), "GPS websocket sendlocation");
-//	}
+	if (myIM.mWebsocketConnection.isConnected()){
+		myIM.mWebsocketConnection.sendTextMessage("p|"+df6.format( location.getLatitude()) +":"+ df6.format(location.getLongitude())+":"+ df1.format( location.getAccuracy())
+
+				+":"+df1.format( location.getAltitude())+":"+df1.format( location.getSpeed()));
+		if(log)Log.d(this.getClass().getName(), "GPS websocket sendlocation");
+	}
 if (usebuffer)
 
 	{URLadr="http://t.esya.ru/?"+  df6.format( location.getLatitude()) +":"+ df6.format(location.getLongitude())+":"+ df1.format( location.getAccuracy())

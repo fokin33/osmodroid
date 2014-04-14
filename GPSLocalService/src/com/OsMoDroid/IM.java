@@ -32,13 +32,13 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 
 	protected  boolean running       = false;	//protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;	String mykey;//	String timestamp=Long.toString(System.currentTimeMillis());	String lcursor="";	int pingTimeout=900;	Thread myThread;	private BufferedReader    in      = null;	Context parent;	String myLongPollCh;
 	ArrayList<String[]>  myLongPollChList;	//ArrayList<String> list= new ArrayList<String>();	ConnectionHandler c;
-	//WebSocketConnectionHandler wsc;
+	WebSocketConnectionHandler wsc;
 
 	WampOptions o;	int mestype=0;	LocalService localService;	
 	FileOutputStream fos;
 	ObjectOutputStream output = null;	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private  WampConnection mWampConnection = new WampConnection();
-	//WebSocketConnection mWebsocketConnection = new WebSocketConnection();
+	WebSocketConnection mWebsocketConnection = new WebSocketConnection();
 	final String wsuri = "ws://push.osmo.mobi/";
 	final String websocketuri = "ws://srv.osmo.mobi/";
 	protected boolean connOpened=false;
@@ -90,41 +90,56 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 				
 			}
 		};
-//		wsc=new WebSocketConnectionHandler(){
-//
-//			@Override
-//			public void onOpen() {
-//				mWebsocketConnection.sendTextMessage("auth|"+localService.settings.getString("hash", "")); 
-//				if(log)Log.d(this.getClass().getName(), "websocket2 onOpen");
-//				super.onOpen();
-//			}
-//
-//			@Override
-//			public void onClose(int code, String reason) {
-//				if(log)Log.d(this.getClass().getName(), "websocket2 onclose, code="+code+" reason="+reason);
-//				if(log)Log.d(this.getClass().getName(), "websocket2 onclose, isConnected="+mWebsocketConnection.isConnected());
-//				super.onClose(code, reason);
-//			}
-//
-//			@Override
-//			public void onTextMessage(String payload) {
-//				if(log)Log.d(this.getClass().getName(), "websocket2 onTextMessage: "+payload);
-//				super.onTextMessage(payload);
-//			}
-//
-//			@Override
-//			public void onRawTextMessage(byte[] payload) {
-//				if(log)Log.d(this.getClass().getName(), "websocket2 onRawTextMessage: "+payload.toString());
-//				super.onRawTextMessage(payload);
-//			}
-//
-//			@Override
-//			public void onBinaryMessage(byte[] payload) {
-//				if(log)Log.d(this.getClass().getName(), "websocket2 onBinaryMessage: "+payload.toString());
-//				super.onBinaryMessage(payload);
-//			}
-//			
-//		};
+		wsc=new WebSocketConnectionHandler(){
+
+			@Override
+			public void onPong()
+				{
+					addlog("websocket2 Pong recieved");
+					super.onPong();
+				}
+
+			@Override
+			public void onOpen() {
+				mWebsocketConnection.sendTextMessage("auth|"+OsMoDroid.settings.getString("hash", "")); 
+				if(log)Log.d(this.getClass().getName(), "websocket2 onOpen");
+				addlog("websocket2 onOpen, "+" isconnected="+mWebsocketConnection.isConnected());
+				super.onOpen();
+			}
+
+			@Override
+			public void onClose(int code, String reason) {
+				if(log)Log.d(this.getClass().getName(), "websocket2 onclose, code="+code+" reason="+reason);
+				if(log)Log.d(this.getClass().getName(), "websocket2 onclose, isConnected="+mWebsocketConnection.isConnected());
+				addlog("websocket2 onclose, code="+code+" reason="+reason+" isconnected="+mWebsocketConnection.isConnected());
+				if(localService.isOnline()&&running){
+					setReconnectAlarm();
+				}else 
+					{
+						stop();
+					}
+				super.onClose(code, reason);
+			}
+
+			@Override
+			public void onTextMessage(String payload) {
+				if(log)Log.d(this.getClass().getName(), "websocket2 onTextMessage: "+payload);
+				super.onTextMessage(payload);
+			}
+
+			@Override
+			public void onRawTextMessage(byte[] payload) {
+				if(log)Log.d(this.getClass().getName(), "websocket2 onRawTextMessage: "+payload.toString());
+				super.onRawTextMessage(payload);
+			}
+
+			@Override
+			public void onBinaryMessage(byte[] payload) {
+				if(log)Log.d(this.getClass().getName(), "websocket2 onBinaryMessage: "+payload.toString());
+				super.onBinaryMessage(payload);
+			}
+			
+		};
 		o = new WampOptions();
 		o.setReconnectInterval(0);
 		o.setReceiveTextMessagesRaw(true);
@@ -146,10 +161,10 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
             	  if(log)Log.d(this.getClass().getName(), "websocket send ping");
             	  mWampConnection.sendPing();
               }
-//              if(mWebsocketConnection!=null&&mWebsocketConnection.isConnected()){
-//            	  if(log)Log.d(this.getClass().getName(), "websocket2 send ping");
-//            	  mWebsocketConnection.sendPing();
-//              }
+              if(mWebsocketConnection!=null&&mWebsocketConnection.isConnected()){
+            	  if(log)Log.d(this.getClass().getName(), "websocket2 send ping");
+            	  mWebsocketConnection.sendPing();
+              }
           }
       };
       
@@ -331,12 +346,12 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 				stop();	};	 void start(){		if(log)Log.d(this.getClass().getName(), "void IM.start");
 		addlog("webcoket void start");
 		running = true;		mWampConnection.connect(wsuri, c, o);
-//		try {
-//			mWebsocketConnection.connect(websocketuri, wsc);
-//		} catch (WebSocketException e) {
-//			if(log)Log.d(this.getClass().getName(), "error conn:"+ e.toString());
-//			e.printStackTrace();
-//		}
+		try {
+			mWebsocketConnection.connect(websocketuri, wsc);
+		} catch (WebSocketException e) {
+			if(log)Log.d(this.getClass().getName(), "error conn:"+ e.toString());
+			e.printStackTrace();
+		}
 		connecting=true;
 		localService.refresh();		  }void parseEx (String toParse, String topic){
 	addlog("webcoket void parseEx");
@@ -846,7 +861,7 @@ if (!OsMoDroid.settings.getBoolean("silentnotify", false)){
 		 addlog("webcoket void stop");
 		 running = false;
 		 manager.cancel(reconnectPIntent);		 if(mWampConnection.isConnected()){mWampConnection.disconnect();}
-		 //if(mWebsocketConnection.isConnected()){mWampConnection.disconnect();}
+		 if(mWebsocketConnection.isConnected()){mWampConnection.disconnect();}
 
 			}
 
