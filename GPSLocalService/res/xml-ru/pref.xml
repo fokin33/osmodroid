@@ -127,7 +127,7 @@
                             android:key="modeAND_gpx"
                             android:title="Режим параметров И"
                             android:summary="По умолчанию ИЛИ (или время, или дистанция или курс)"
-                            android:defaultValue="true"/>
+                            android:defaultValue="false"/>
                         <CheckBoxPreference
                             android:title="Загружать на ТреРа автоматически"
                             android:key="automaticupload"
