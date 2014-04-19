@@ -42,6 +42,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -52,6 +53,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
 public class MapFragment extends SherlockFragment implements DeviceChange, IMyLocationProvider,LocationListener {
 	 	ResourceProxyImpl mResourceProxy;
@@ -68,6 +70,9 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 		private long lastgpslocation=0;
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+			MenuItem traces = menu.add(0, 1, 0, R.string.showtraces);
+			traces.setCheckable(true);
+			traces.setChecked(OsMoDroid.settings.getBoolean("traces", true));
 			
 			super.onCreateOptionsMenu(menu, inflater);
 		}
@@ -76,6 +81,26 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 
 		
 		
+	@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+			switch (item.getItemId()) {
+			case 1:
+				item.setChecked(!item.isChecked());
+				OsMoDroid.editor.putBoolean("traces", item.isChecked());
+				OsMoDroid.editor.commit();
+				mMapView.invalidate();
+			break;
+
+			default:
+				break;
+			}
+			return super.onOptionsItemSelected(item);
+		}
+
+
+
+
+
 	@Override
      public void onCreate(Bundle savedInstanceState) {
 		Log.d(getClass().getSimpleName(), "map oncreate"); 
@@ -237,7 +262,7 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 			View view = inflater.inflate(R.layout.map, container, false);
 			mMapView = (MapView)view.findViewById(R.id.mapview);
 			ImageButton centerImageButton = (ImageButton)view.findViewById(R.id.imageButtonCenter);
-			ImageButton rotateImageButton = (ImageButton)view.findViewById(R.id.ImageButtonRotate);
+		
 			mMapView.setTileSource(myTileSource);
 			if(myTracePathOverlay==null)
 			{
@@ -287,26 +312,33 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 					
 				}
 			});
-            
-            rotateImageButton.setOnClickListener(new View.OnClickListener() {
-
+           
+           		
+			CompassOverlay compas = new CompassOverlay(getSherlockActivity(), mMapView){
 
 				@Override
-				public void onClick(View v) {
-					Log.d(getClass().getSimpleName(), "map click on rotate");
-					if(rotate){
-						rotate=false;
-						mMapView.setMapOrientation(0);
-					}
-					else 
+				public boolean onSingleTapUp(MotionEvent e, MapView mapView) {
+					if (e.getX()>mCompassFrameCenterX-mCompassFrame.getWidth() && e.getX()<mCompassFrameCenterX+mCompassFrame.getWidth()
+					&& e.getY()>mCompassFrameCenterX-mCompassFrame.getHeight() && e.getY()<mCompassFrameCenterX+mCompassFrame.getHeight())
 					{
-						rotate=true;
+						Log.d(getClass().getSimpleName(), "map click on compas");
+						if(rotate){
+							rotate=false;
+							mMapView.setMapOrientation(0);
+						}
+						else 
+						{
+							rotate=true;
+						}	
+						return false;
 					}
 					
+					return super.onSingleTapUp(e, mapView);
 				}
-			});
-			
-			CompassOverlay compas = new CompassOverlay(getSherlockActivity(), mMapView);
+
+				
+				
+			};
 			ChannelsOverlay choverlay = new ChannelsOverlay(mResourceProxy, mMapView);
 			mMapView.getOverlays().add(choverlay);
 			mMapView.getOverlays().add(compas);
@@ -393,7 +425,7 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 
 	@Override
 	public void onLocationChanged(Location location) {
-		if(myLoc.isFollowLocationEnabled()&&location.hasBearing()&&rotate&&location.getSpeed()>1){
+		if(myLoc!=null&&myLoc.isFollowLocationEnabled()&&location.hasBearing()&&rotate&&location.getSpeed()>1){
 		mMapView.setMapOrientation(-location.getBearing());
 		}
 		if(location.getProvider().equals(LocationManager.GPS_PROVIDER)){

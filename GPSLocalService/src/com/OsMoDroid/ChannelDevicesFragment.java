@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -27,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -56,7 +58,8 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 	@Override
 	public boolean onContextItemSelected(android.view.MenuItem item) {
 		 final AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();
-		  if (item.getItemId() == 1) 
+		  
+		 if (item.getItemId() == 1) 
 		  {
 			String latitude =Float.toString(LocalService.channelsDevicesAdapter.getItem(acmi.position).lat);
 			String longitude=Float.toString(LocalService.channelsDevicesAdapter.getItem(acmi.position).lon);;
@@ -83,7 +86,7 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
-		   menu.add(0, 1, 0, R.string.showonmap).setIcon(android.R.drawable.ic_menu_mylocation);;
+				   menu.add(0, 1, 0, R.string.showonmap).setIcon(android.R.drawable.ic_menu_mylocation);;
 		super.onCreateContextMenu(menu, v, menuInfo);
 	}
 
@@ -198,7 +201,8 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 		   //LocalService.currentChannel= LocalService.channelList.get(channelpos); 
 		   
 		    LocalService.channelsDevicesAdapter = new ChannelsDevicesAdapter(getSherlockActivity(),R.layout.channelsdeviceitem,  LocalService.currentchanneldeviceList);
-	LocalService.channelsmessagesAdapter = new ArrayAdapter<String>(getSherlockActivity(), R.layout.channelchatitem, LocalService.currentChannel.messagesstringList );
+	LocalService.channelsmessagesAdapter = new ChannelChatAdapter(globalActivity,  R.layout.devicechatitem, LocalService.currentChannel.messagesstringList);
+			//(getSherlockActivity(), R.layout.channelchatitem, LocalService.currentChannel.messagesstringList );
 			
 		    lv1 = (ListView) view.findViewById(R.id.mychannelsdeviceslistView);
 		    lv2 = (ListView) view.findViewById(R.id.mychannelsmessages);
@@ -244,33 +248,33 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 		       if (LocalService.channelsmessagesAdapter!=null) {LocalService.channelsmessagesAdapter.notifyDataSetChanged();}
 
 		       registerForContextMenu(lv1);
+		      
 
 		  lv1.setOnItemClickListener(new OnItemClickListener() {
-
-
-
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-
-					long arg3) {
-
-							arg0.showContextMenuForChild(arg1);
-
-							}
-
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) 
+				{
+					arg0.showContextMenuForChild(arg1);
+				}
 		});
-
-
-
-		  
+		  lv2.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) 
+				{
+					ChannelChatMessage m =(ChannelChatMessage)arg0.getItemAtPosition(arg2);
+					input.setText(m.from+", "+input.getText());
+					input.setSelection(input.length());
+					OsMoDroid.inputMethodManager.showSoftInput(input, InputMethodManager.SHOW_IMPLICIT);
+				}
+		});
 		t.add(Netutil.newapicommand((ResultsListener)LocalService.serContext, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", "")));
 		t.add(Netutil.newapicommand((ResultsListener)ChannelDevicesFragment.this,getSherlockActivity(), "om_channel_chat_get:"+LocalService.currentChannel.u));
-
-		
 		return view;
 
 	}
 	
 	
+	// only will trigger it if no physical keyboard is open
+	
+	 
 
 
 	@Override
@@ -291,29 +295,39 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 		
 		//"om_channel_chat_get:"+LocalService.currentChannel.u
 		if (result.Jo.has("om_channel_chat_get:"+LocalService.currentChannel.u)){
+//		    		u = 468
+//		    	    device = 5837
+//		    	    text = не ник аккаунта
+//		    	    time = 2014-04-18 18:38:22
 			
 			LocalService.currentChannel.messagesstringList.clear();
-			String fromDevice="Неизвестно кто";
+			
 			try {
 				  JSONArray a = result.Jo.getJSONArray("om_channel_chat_get:"+LocalService.currentChannel.u);
 		 		  Log.d(getClass().getSimpleName(), a.toString());
 		 		 for (int i = 0; i < a.length(); i++) {
 		 			JSONObject jsonObject = a.getJSONObject(i);
-		
+		 			ChannelChatMessage m =new ChannelChatMessage();
 		 			for(Device dev:LocalService.currentChannel.deviceList){
 		 				if(dev.u==jsonObject.optInt("device")){
-		 					fromDevice=dev.name;
+		 					m.from=dev.name;
+		 					m.device=dev.u;
+		 					m.color=Color.parseColor("#"+dev.color);
 		 				}
 		 			}
 		 			if (jsonObject.optInt("device")==0)
 		 				{
-		 					fromDevice=getSherlockActivity().getString(R.string.observers);
+		 				m.from=getSherlockActivity().getString(R.string.observers);
+		 				m.color=Color.parseColor("#006400");
 		 				}
 		 				
 		 			if (jsonObject.optInt("device")==Integer.parseInt(OsMoDroid.settings.getString("device", "0"))){
-		 				fromDevice=getSherlockActivity().getString(R.string.iam);
+		 				m.from=getSherlockActivity().getString(R.string.iam);
+		 				m.color=Color.parseColor("#AAAAAA");
 		 			}
-		 			LocalService.currentChannel.messagesstringList.add( fromDevice+": "+Netutil.unescape(jsonObject.optString("text")));
+		 			m.text=Netutil.unescape(jsonObject.optString("text"));
+					m.time=jsonObject.optString("time");
+		 			LocalService.currentChannel.messagesstringList.add(m);
 		 			//Collections.sort(LocalService.currentChannel.messagesstringList);
 				 if (LocalService.channelsmessagesAdapter!=null) {LocalService.channelsmessagesAdapter.notifyDataSetChanged();}
 			}

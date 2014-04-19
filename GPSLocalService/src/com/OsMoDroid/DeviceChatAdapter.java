@@ -53,7 +53,7 @@ public class DeviceChatAdapter extends ArrayAdapter<MyMessage> {
 		     
 		
 		        txtFromAddr = (TextView) row.findViewById(R.id.txtFromAddr);
-		        txtFromName = (TextView) row.findViewById(R.id.txtFromName);
+		        txtFromName = (TextView) row.findViewById(R.id.txtFrom);
 		        txtText = (TextView) row.findViewById(R.id.txtText);
 		        txtTime = (TextView) row.findViewById(R.id.txtTime);
 		        txtFromAddr.setText(message.from_addr);

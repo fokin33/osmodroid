@@ -171,4 +171,5 @@
 <string name="iam">Me</string>
 <string name="needgps">Need GPS Enabled</string>
 <string name="enablegps">Please, enable GPS</string>
+<string name="showtraces">Show traces</string>
 </resources>

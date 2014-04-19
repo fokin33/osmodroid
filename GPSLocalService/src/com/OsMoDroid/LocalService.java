@@ -391,7 +391,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
     public static DeviceAdapter deviceAdapter;
     public static ChannelsAdapter channelsAdapter;
     public static ChannelsDevicesAdapter channelsDevicesAdapter;
-    public static ArrayAdapter<String> channelsmessagesAdapter;
+    public static ArrayAdapter<ChannelChatMessage> channelsmessagesAdapter;
     public static ArrayAdapter<String> debugAdapter;
     public static DeviceChatAdapter chatmessagesAdapter;
     static Context serContext;

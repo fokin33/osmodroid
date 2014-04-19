@@ -29,16 +29,6 @@
         android:layout_alignParentTop="true"
         android:src="@drawable/ic_action_center_me" />
 
-    <ImageButton
-        android:id="@+id/ImageButtonRotate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/imageButtonCenter"
-        android:background="@android:drawable/ic_menu_rotate"
-        android:scaleType="center"
-        android:src="@android:drawable/ic_menu_rotate" />
-
 </RelativeLayout>
 
  

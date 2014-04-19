@@ -11,7 +11,8 @@ import java.util.Map;
 import com.OsMoDroid.LocalService.SendCoor;import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Notification;import android.app.PendingIntent;import android.app.PendingIntent.CanceledException;import android.content.BroadcastReceiver;import android.content.SharedPreferences;
-import android.content.Context;import android.content.Intent;import android.content.IntentFilter;import android.location.LocationManager;
+import android.content.Context;import android.content.Intent;import android.content.IntentFilter;import android.graphics.Color;
+import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.net.NetworkInfo;import android.os.Bundle;import android.os.Environment;
 import android.os.SystemClock;
@@ -87,6 +88,7 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 			@Override
 			public void onPong() {
 				addlog("websocket Pong Recieved");
+				if(log)Log.d(this.getClass().getName(), "websocket onPong");
 				
 			}
 		};
@@ -776,7 +778,7 @@ if (getMessageType( topic).equals("chch")){
 private void addToChannelChat(String toParse, String topic) {
 	if(log)Log.d(this.getClass().getName(), "type=chch");
 	if(log)Log.d(this.getClass().getName(), "Сообщение в чат канала " + toParse);
-	String fromDevice="Незнамо кто";
+	ChannelChatMessage m =new ChannelChatMessage();
 	//09-16 18:25:41.057: D/com.OsMoDroid.IM(1474):     "data": "0|40+\u041e\u043f\u0430\u0441\u043d\u043e +2013-09-16 22:25:44"
 	//"data": "0|40|cxbcxvbcxvbcxvb|2013-03-14 22:42:34"
 	String[] data = toParse.split("\\|");
@@ -792,14 +794,17 @@ private void addToChannelChat(String toParse, String topic) {
 			if(log)Log.d(this.getClass().getName(), "device nest" + device.name + " " + device.u);
 			if (datanew[0].equals(Integer.toString(device.u))) {
 				if(log)Log.d(this.getClass().getName(), "Сообщение от устройства в канале " + device.toString());
-				fromDevice = device.name;
+				m.from = device.name;
+				m.color=m.color=Color.parseColor("#"+device.color);
 			}
 			if (datanew[0].equals(OsMoDroid.settings.getString("device", ""))){
-				fromDevice=localService.getString(R.string.iam);
+				m.from=localService.getString(R.string.iam);
 				if(log)Log.d(this.getClass().getName(), "Сообщение от устройства в канале от меня ");
+				m.color=Color.parseColor("#AAAAAA");
 			}
 			if (datanew[0].equals("0")){
-			fromDevice=localService.getString(R.string.observers);
+			m.from=localService.getString(R.string.observers);
+			m.color=Color.parseColor("#006400");
 			}
 		}
 		Intent intent =new Intent(localService, GPSLocalServiceClient.class).putExtra("channelpos", channel.u);
@@ -809,7 +814,7 @@ private void addToChannelChat(String toParse, String topic) {
 	 	NotificationCompat.Builder notificationBuilder =new NotificationCompat.Builder(
 				localService.getApplicationContext())
 		    	.setWhen(when)
-		    	.setContentText(channel.name+" "+fromDevice+": "+Netutil.unescape(datanew[1]))
+		    	.setContentText(channel.name+" "+m.from+": "+Netutil.unescape(datanew[1]))
 		    	.setContentTitle("OsMoDroid")
 		    	.setSmallIcon(android.R.drawable.ic_menu_send)
 		    	.setAutoCancel(true)
@@ -830,7 +835,10 @@ if (!OsMoDroid.settings.getBoolean("silentnotify", false)){
 		
 		
 				channel.messagesstringList.clear();
-				channel.messagesstringList.add(fromDevice + ": "+Netutil.unescape(datanew[1]));
+				m.text=Netutil.unescape(datanew[1]);
+				m.time=datanew[2];
+				channel.messagesstringList.add(m);
+				// fromDevice + ": "+Netutil.unescape(datanew[1]));
 				localService.alertHandler.post(new Runnable(){
 					public void run() {
 						if (LocalService.channelsmessagesAdapter!=null&& LocalService.currentChannel != null&&LocalService.currentChannel.u==channel.u ){
@@ -843,7 +851,7 @@ if (!OsMoDroid.settings.getBoolean("silentnotify", false)){
 	}
 }	 void stop (){
 		 if(log)Log.d(this.getClass().getName(), "void IM.stop");
-		 addlog("webcoket void stop");
+		 addlog("webcoket void stop, isconnected="+mWampConnection.isConnected());
 		 running = false;
 		 manager.cancel(reconnectPIntent);		 if(mWampConnection.isConnected()){mWampConnection.disconnect();}
 		 //if(mWebsocketConnection.isConnected()){mWampConnection.disconnect();}
@@ -851,7 +859,7 @@ if (!OsMoDroid.settings.getBoolean("silentnotify", false)){
 			}
 
 	 void resubscribe() {
-		 addlog("webcoket resubscribe");
+		 //addlog("webcoket resubscribe");
 		 if(mWampConnection!=null&&connOpened){
 			 mWampConnection.unsubscribe();
 			 if(log)Log.d(this.getClass().getName(), "websocket unsubscribe all");

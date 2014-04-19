@@ -148,7 +148,9 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 			
 			for(Device dev:ch.deviceList)
 			{
-				 if (theBoundingBox.contains(new GeoPoint(dev.lat, dev.lon))) 
+				if(dev.lat!=0f&&dev.lon!=0f)
+				{ 
+				if (theBoundingBox.contains(new GeoPoint(dev.lat, dev.lon))) 
 				 {
 					pj.toMapPixels(new GeoPoint(dev.lat, dev.lon), scrPoint);
 				  	paint.setDither(true);
@@ -165,6 +167,8 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 					canvas.drawCircle(scrPoint.x, scrPoint.y, 10, paint);
 					canvas.restore();
 				 }
+				}
+				 if(OsMoDroid.settings.getBoolean("traces", true)){
 				 if(dev.devicePath.size()>2)
 				 	{
 					 pathpaint.setColor(Color.parseColor("#" + dev.color));
@@ -179,6 +183,7 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 					 	}
 					 	canvas.drawPath(path, pathpaint);
 				 	}
+			}
 			}
 			for(com.OsMoDroid.Channel.Point p: ch.pointList){
 				if (theBoundingBox.contains(new GeoPoint(p.lat, p.lon))) 

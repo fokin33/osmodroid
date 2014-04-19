@@ -984,6 +984,9 @@ android.util.Base64$Encoder:
     public static final int LINE_GROUPS
     601:601:public int maxOutputSize(int)
 com.OsMoDroid.BuildConfig
+com.OsMoDroid.ChannelChatMessage:
+    public int u
+    16:24:public ChannelChatMessage(int,int,java.lang.String,java.lang.String,java.lang.String,int)
 com.OsMoDroid.Device:
     public java.lang.String ch
 com.OsMoDroid.DeviceChatFragment:
@@ -1005,7 +1008,7 @@ com.OsMoDroid.IM:
     java.lang.Thread myThread
     java.lang.String myLongPollCh
     java.io.FileOutputStream fos
-    312:327:private void getadres(java.util.ArrayList)
+    314:329:private void getadres(java.util.ArrayList)
 com.OsMoDroid.IRemoteOsMoDroidListener$Stub:
     private static final java.lang.String DESCRIPTOR
     static final int TRANSACTION_channelUpdated

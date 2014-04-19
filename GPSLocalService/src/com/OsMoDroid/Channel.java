@@ -32,7 +32,7 @@ public class Channel {
 	public String ch;
 	public String url;
 	public List<Device> deviceList= new ArrayList<Device>();
-	public List<String> messagesstringList= new ArrayList<String>();
+	public List<ChannelChatMessage> messagesstringList= new ArrayList<ChannelChatMessage>();
 	//public List<PathOverlay> paths = new ArrayList<PathOverlay>();
 	ArrayList<Point> pointList= new ArrayList<Channel.Point>();
 	public Boolean connected=false;

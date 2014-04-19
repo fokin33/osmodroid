@@ -167,5 +167,9 @@
 <string name="writen">Записано</string>
 <string name="wekksends">Отправок в неделю:</string>
 <string name="from_undefined">от неопределенного</string>
-<string name="map">Карта</string><string name="iam">Я</string><string name="needgps">Нужен включенный GPS</string><string name="enablegps">Пожалуйста включите GPS, без него не будет достаточной точности.Перейти к настройкам Местоположения ?</string>
+<string name="map">Карта</string>
+<string name="iam">Я</string>
+<string name="needgps">Нужен включенный GPS</string>
+<string name="enablegps">Пожалуйста включите GPS, без него не будет достаточной точности.Перейти к настройкам Местоположения ?</string>
+<string name="showtraces">Показывать следы</string>
 </resources>
