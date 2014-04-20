@@ -312,18 +312,18 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 		 				if(dev.u==jsonObject.optInt("device")){
 		 					m.from=dev.name;
 		 					m.device=dev.u;
-		 					m.color=Color.parseColor("#"+dev.color);
+		 					m.color=Color.parseColor("#40"+dev.color);
 		 				}
 		 			}
 		 			if (jsonObject.optInt("device")==0)
 		 				{
 		 				m.from=getSherlockActivity().getString(R.string.observers);
-		 				m.color=Color.parseColor("#006400");
+		 				m.color=Color.parseColor("#40006400");
 		 				}
 		 				
 		 			if (jsonObject.optInt("device")==Integer.parseInt(OsMoDroid.settings.getString("device", "0"))){
 		 				m.from=getSherlockActivity().getString(R.string.iam);
-		 				m.color=Color.parseColor("#AAAAAA");
+		 				m.color=Color.parseColor("#40AAAAAA");
 		 			}
 		 			m.text=Netutil.unescape(jsonObject.optString("text"));
 					m.time=jsonObject.optString("time");

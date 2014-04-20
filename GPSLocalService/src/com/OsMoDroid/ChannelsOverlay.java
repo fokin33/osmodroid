@@ -148,26 +148,7 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 			
 			for(Device dev:ch.deviceList)
 			{
-				if(dev.lat!=0f&&dev.lon!=0f)
-				{ 
-				if (theBoundingBox.contains(new GeoPoint(dev.lat, dev.lon))) 
-				 {
-					pj.toMapPixels(new GeoPoint(dev.lat, dev.lon), scrPoint);
-				  	paint.setDither(true);
-					paint.setAntiAlias(true);
-					paint.setTextSize(22f);
-					paint.setTypeface(Typeface.DEFAULT_BOLD);
-					paint.setTextAlign(Paint.Align.CENTER);
-					paint.setColor(Color.parseColor("#013220"));
-					canvas.save();
-			        canvas.rotate(-mapView.getMapOrientation(), scrPoint.x, scrPoint.y);
-					canvas.drawText(dev.name, scrPoint.x, scrPoint.y-10, paint);
-					canvas.drawText(dev.speed, scrPoint.x,scrPoint.y-2*10, paint);
-					paint.setColor(Color.parseColor("#" + dev.color));
-					canvas.drawCircle(scrPoint.x, scrPoint.y, 10, paint);
-					canvas.restore();
-				 }
-				}
+				
 				 if(OsMoDroid.settings.getBoolean("traces", true)){
 				 if(dev.devicePath.size()>2)
 				 	{
@@ -184,6 +165,26 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 					 	canvas.drawPath(path, pathpaint);
 				 	}
 			}
+				 if(dev.lat!=0f&&dev.lon!=0f)
+					{ 
+					if (theBoundingBox.contains(new GeoPoint(dev.lat, dev.lon))) 
+					 {
+						pj.toMapPixels(new GeoPoint(dev.lat, dev.lon), scrPoint);
+					  	paint.setDither(true);
+						paint.setAntiAlias(true);
+						paint.setTextSize(22f);
+						paint.setTypeface(Typeface.DEFAULT_BOLD);
+						paint.setTextAlign(Paint.Align.CENTER);
+						paint.setColor(Color.parseColor("#013220"));
+						canvas.save();
+				        canvas.rotate(-mapView.getMapOrientation(), scrPoint.x, scrPoint.y);
+						canvas.drawText(dev.name, scrPoint.x, scrPoint.y-10, paint);
+						canvas.drawText(dev.speed, scrPoint.x,scrPoint.y-2*10, paint);
+						paint.setColor(Color.parseColor("#" + dev.color));
+						canvas.drawCircle(scrPoint.x, scrPoint.y, 10, paint);
+						canvas.restore();
+					 }
+					}
 			}
 			for(com.OsMoDroid.Channel.Point p: ch.pointList){
 				if (theBoundingBox.contains(new GeoPoint(p.lat, p.lon))) 

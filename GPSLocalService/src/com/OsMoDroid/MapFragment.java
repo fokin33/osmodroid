@@ -16,6 +16,7 @@ import org.osmdroid.tileprovider.tilesource.XYTileSource;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.util.ResourceProxyImpl;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.MapView.Projection;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.ItemizedOverlay;
 import org.osmdroid.views.overlay.OverlayItem;
@@ -27,18 +28,21 @@ import org.osmdroid.views.overlay.mylocation.IMyLocationConsumer;
 import org.osmdroid.views.overlay.mylocation.IMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -262,7 +266,7 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 			View view = inflater.inflate(R.layout.map, container, false);
 			mMapView = (MapView)view.findViewById(R.id.mapview);
 			ImageButton centerImageButton = (ImageButton)view.findViewById(R.id.imageButtonCenter);
-		
+			Button rotateButton = (Button)view.findViewById(R.id.buttonRotate);
 			mMapView.setTileSource(myTileSource);
 			if(myTracePathOverlay==null)
 			{
@@ -312,33 +316,27 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 					
 				}
 			});
-           
-           		
-			CompassOverlay compas = new CompassOverlay(getSherlockActivity(), mMapView){
-
-				@Override
-				public boolean onSingleTapUp(MotionEvent e, MapView mapView) {
-					if (e.getX()>mCompassFrameCenterX-mCompassFrame.getWidth() && e.getX()<mCompassFrameCenterX+mCompassFrame.getWidth()
-					&& e.getY()>mCompassFrameCenterX-mCompassFrame.getHeight() && e.getY()<mCompassFrameCenterX+mCompassFrame.getHeight())
-					{
-						Log.d(getClass().getSimpleName(), "map click on compas");
-						if(rotate){
-							rotate=false;
-							mMapView.setMapOrientation(0);
-						}
-						else 
-						{
-							rotate=true;
-						}	
-						return false;
+           rotateButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				
+					Log.d(getClass().getSimpleName(), "map click on compas");
+					if(rotate){
+						rotate=false;
+						mMapView.setMapOrientation(0);
 					}
+					else 
+					{
+						rotate=true;
+					}	
 					
-					return super.onSingleTapUp(e, mapView);
-				}
-
 				
 				
-			};
+			}
+		});
+           		
+			CompassOverlay compas = new CompassOverlay(getSherlockActivity(), mMapView);
 			ChannelsOverlay choverlay = new ChannelsOverlay(mResourceProxy, mMapView);
 			mMapView.getOverlays().add(choverlay);
 			mMapView.getOverlays().add(compas);
