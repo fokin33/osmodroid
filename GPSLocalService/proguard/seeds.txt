@@ -13674,3 +13674,5 @@ org.osmdroid.views.MapView: MapView(android.content.Context,int,org.osmdroid.Res
 org.osmdroid.views.overlay.ItemizedOverlayControlView
 org.osmdroid.views.overlay.OverlayItem$HotspotPlace: org.osmdroid.views.overlay.OverlayItem$HotspotPlace[] values()
 org.osmdroid.views.overlay.OverlayItem$HotspotPlace: org.osmdroid.views.overlay.OverlayItem$HotspotPlace valueOf(java.lang.String)
+org.osmdroid.views.overlay.ScaleBarOverlay$UnitsOfMeasure: org.osmdroid.views.overlay.ScaleBarOverlay$UnitsOfMeasure[] values()
+org.osmdroid.views.overlay.ScaleBarOverlay$UnitsOfMeasure: org.osmdroid.views.overlay.ScaleBarOverlay$UnitsOfMeasure valueOf(java.lang.String)

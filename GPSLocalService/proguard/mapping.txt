@@ -2656,11 +2656,7 @@ com.OsMoDroid.Channel$Point -> com.OsMoDroid.d:
     java.lang.String color -> f
     com.OsMoDroid.Channel this$0 -> g
 com.OsMoDroid.ChannelChatAdapter -> com.OsMoDroid.e:
-    android.widget.TextView txtFrom -> a
-    android.widget.TextView txtText -> b
-    android.widget.TextView txtTime -> c
-    android.widget.TextView txtFromAddr -> d
-    32:55:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+    34:68:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
 com.OsMoDroid.ChannelChatMessage -> com.OsMoDroid.f:
     int device -> a
     java.lang.String from -> b
@@ -2775,8 +2771,8 @@ com.OsMoDroid.ChannelsOverlay -> com.OsMoDroid.i:
     org.osmdroid.views.MapView map -> b
     com.OsMoDroid.RotationGestureDetector mRotationDetector -> h
     55:58:boolean onTouchEvent(android.view.MotionEvent,org.osmdroid.views.MapView) -> a
-    65:209:void draw(android.graphics.Canvas,org.osmdroid.views.MapView,boolean) -> a
-    214:215:boolean OnRotation(com.OsMoDroid.RotationGestureDetector) -> a
+    65:210:void draw(android.graphics.Canvas,org.osmdroid.views.MapView,boolean) -> a
+    215:216:boolean OnRotation(com.OsMoDroid.RotationGestureDetector) -> a
 com.OsMoDroid.ColoredGPX -> com.OsMoDroid.j:
     java.io.File gpxfile -> a
     int color -> b
@@ -3638,41 +3634,41 @@ com.OsMoDroid.MapFragment -> com.OsMoDroid.MapFragment:
     boolean rotate -> c
     org.osmdroid.views.overlay.mylocation.IMyLocationConsumer myLocationConumer -> h
     long lastgpslocation -> i
-    73:78:void onCreateOptionsMenu(com.actionbarsherlock.view.Menu,com.actionbarsherlock.view.MenuInflater) -> onCreateOptionsMenu
-    86:92:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
-    106:112:void onCreate(android.os.Bundle) -> onCreate
-    118:122:void onAttach(android.app.Activity) -> onAttach
-    126:136:void onDetach() -> onDetach
-    139:148:void onDestroyView() -> onDestroyView
-    171:173:void onDestroy() -> onDestroy
-    181:186:void onPause() -> onPause
-    194:199:void onResume() -> onResume
-    207:210:void onStart() -> onStart
-    218:221:void onStop() -> onStop
-    229:237:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
-    245:247:void onViewStateRestored(android.os.Bundle) -> onViewStateRestored
-    253:347:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
-    356:360:void onDeviceChange$470c4619() -> a
-    366:369:void onChannelListChange() -> b
-    374:385:android.location.Location getLastKnownLocation() -> c
-    396:406:boolean startLocationProvider(org.osmdroid.views.overlay.mylocation.IMyLocationConsumer) -> a
-    417:420:void stopLocationProvider() -> d
-    428:449:void onLocationChanged(android.location.Location) -> onLocationChanged
-    459:459:void onProviderDisabled(java.lang.String) -> onProviderDisabled
-    469:469:void onProviderEnabled(java.lang.String) -> onProviderEnabled
-    479:479:void onStatusChanged(java.lang.String,int,android.os.Bundle) -> onStatusChanged
-    487:490:void onNewPoint(org.osmdroid.util.GeoPoint) -> a
-    61:61:org.osmdroid.api.IMapController access$0(com.OsMoDroid.MapFragment) -> a
-    62:62:org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay access$1(com.OsMoDroid.MapFragment) -> b
+    77:82:void onCreateOptionsMenu(com.actionbarsherlock.view.Menu,com.actionbarsherlock.view.MenuInflater) -> onCreateOptionsMenu
+    90:96:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
+    110:116:void onCreate(android.os.Bundle) -> onCreate
+    122:126:void onAttach(android.app.Activity) -> onAttach
+    130:140:void onDetach() -> onDetach
+    143:152:void onDestroyView() -> onDestroyView
+    175:177:void onDestroy() -> onDestroy
+    185:190:void onPause() -> onPause
+    198:203:void onResume() -> onResume
+    211:214:void onStart() -> onStart
+    222:225:void onStop() -> onStop
+    233:241:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
+    249:251:void onViewStateRestored(android.os.Bundle) -> onViewStateRestored
+    257:345:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    354:358:void onDeviceChange$470c4619() -> a
+    364:367:void onChannelListChange() -> b
+    372:383:android.location.Location getLastKnownLocation() -> c
+    394:404:boolean startLocationProvider(org.osmdroid.views.overlay.mylocation.IMyLocationConsumer) -> a
+    415:418:void stopLocationProvider() -> d
+    426:447:void onLocationChanged(android.location.Location) -> onLocationChanged
+    457:457:void onProviderDisabled(java.lang.String) -> onProviderDisabled
+    467:467:void onProviderEnabled(java.lang.String) -> onProviderEnabled
+    477:477:void onStatusChanged(java.lang.String,int,android.os.Bundle) -> onStatusChanged
+    485:488:void onNewPoint(org.osmdroid.util.GeoPoint) -> a
+    65:65:org.osmdroid.api.IMapController access$0(com.OsMoDroid.MapFragment) -> a
+    66:66:org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay access$1(com.OsMoDroid.MapFragment) -> b
 com.OsMoDroid.MapFragment$1 -> com.OsMoDroid.MapFragment$1:
     com.OsMoDroid.MapFragment this$0 -> a
-    306:313:void onClick(android.view.View) -> onClick
+    310:317:void onClick(android.view.View) -> onClick
 com.OsMoDroid.MapFragment$2 -> com.OsMoDroid.MapFragment$2:
     com.OsMoDroid.MapFragment this$0 -> a
-    321:336:boolean onSingleTapUp(android.view.MotionEvent,org.osmdroid.views.MapView) -> b
+    324:336:void onClick(android.view.View) -> onClick
 com.OsMoDroid.MapFragment$MAPSurferTileSource -> com.OsMoDroid.ab:
     com.OsMoDroid.MapFragment this$0 -> a
-    160:160:java.lang.String getTileURLString(org.osmdroid.tileprovider.MapTile) -> a
+    164:164:java.lang.String getTileURLString(org.osmdroid.tileprovider.MapTile) -> a
 com.OsMoDroid.MyMessage -> com.OsMoDroid.ac:
     int u -> a
     java.lang.String from -> b
@@ -4894,7 +4890,7 @@ com.actionbarsherlock.internal.ActionBarSherlockCompat -> com.actionbarsherlock.
     273:277:boolean dispatchOpenOptionsMenu() -> dispatchOpenOptionsMenu
     284:291:boolean dispatchCloseOptionsMenu() -> dispatchCloseOptionsMenu
     298:305:void dispatchPostCreate(android.os.Bundle) -> dispatchPostCreate
-    313:313:boolean dispatchCreateOptionsMenu(android.view.Menu) -> dispatchCreateOptionsMenu
+    310:311:boolean dispatchCreateOptionsMenu(android.view.Menu) -> dispatchCreateOptionsMenu
     320:345:boolean dispatchPrepareOptionsMenu(android.view.Menu) -> dispatchPrepareOptionsMenu
     350:350:boolean dispatchOptionsItemSelected(android.view.MenuItem) -> dispatchOptionsItemSelected
     357:364:boolean dispatchMenuOpened(int,android.view.Menu) -> dispatchMenuOpened
@@ -15331,9 +15327,9 @@ org.osmdroid.DefaultResourceProxyImpl -> org.osmdroid.a:
     org.slf4j.Logger logger -> a
     android.content.res.Resources mResources -> b
     android.util.DisplayMetrics mDisplayMetrics -> c
-    113:136:android.graphics.Bitmap getBitmap(org.osmdroid.ResourceProxy$bitmap) -> a
-    144:158:android.graphics.BitmapFactory$Options getBitmapOptions() -> b
-    170:170:float getDisplayMetricsDensity() -> a
+    115:138:android.graphics.Bitmap getBitmap(org.osmdroid.ResourceProxy$bitmap) -> a
+    146:160:android.graphics.BitmapFactory$Options getBitmapOptions() -> b
+    172:172:float getDisplayMetricsDensity() -> a
 org.osmdroid.ResourceProxy -> org.osmdroid.b:
     android.graphics.Bitmap getBitmap(org.osmdroid.ResourceProxy$bitmap) -> a
     float getDisplayMetricsDensity() -> a
@@ -15366,21 +15362,22 @@ org.osmdroid.ResourceProxy$string -> org.osmdroid.d:
     org.osmdroid.ResourceProxy$string mapquest_osm -> i
     org.osmdroid.ResourceProxy$string mapquest_aerial -> j
     org.osmdroid.ResourceProxy$string bing -> k
-    org.osmdroid.ResourceProxy$string fiets_nl -> l
-    org.osmdroid.ResourceProxy$string base_nl -> m
-    org.osmdroid.ResourceProxy$string roads_nl -> n
-    org.osmdroid.ResourceProxy$string unknown -> o
-    org.osmdroid.ResourceProxy$string format_distance_meters -> p
-    org.osmdroid.ResourceProxy$string format_distance_kilometers -> q
-    org.osmdroid.ResourceProxy$string format_distance_miles -> r
-    org.osmdroid.ResourceProxy$string format_distance_nautical_miles -> s
-    org.osmdroid.ResourceProxy$string format_distance_feet -> t
-    org.osmdroid.ResourceProxy$string online_mode -> u
-    org.osmdroid.ResourceProxy$string offline_mode -> v
-    org.osmdroid.ResourceProxy$string my_location -> w
-    org.osmdroid.ResourceProxy$string compass -> x
-    org.osmdroid.ResourceProxy$string map_mode -> y
-    org.osmdroid.ResourceProxy$string[] $VALUES -> z
+    org.osmdroid.ResourceProxy$string mapbox -> l
+    org.osmdroid.ResourceProxy$string fiets_nl -> m
+    org.osmdroid.ResourceProxy$string base_nl -> n
+    org.osmdroid.ResourceProxy$string roads_nl -> o
+    org.osmdroid.ResourceProxy$string unknown -> p
+    org.osmdroid.ResourceProxy$string format_distance_meters -> q
+    org.osmdroid.ResourceProxy$string format_distance_kilometers -> r
+    org.osmdroid.ResourceProxy$string format_distance_miles -> s
+    org.osmdroid.ResourceProxy$string format_distance_nautical_miles -> t
+    org.osmdroid.ResourceProxy$string format_distance_feet -> u
+    org.osmdroid.ResourceProxy$string online_mode -> v
+    org.osmdroid.ResourceProxy$string offline_mode -> w
+    org.osmdroid.ResourceProxy$string my_location -> x
+    org.osmdroid.ResourceProxy$string compass -> y
+    org.osmdroid.ResourceProxy$string map_mode -> z
+    org.osmdroid.ResourceProxy$string[] $VALUES -> A
     8:8:org.osmdroid.ResourceProxy$string[] values() -> values
     8:8:org.osmdroid.ResourceProxy$string valueOf(java.lang.String) -> valueOf
 org.osmdroid.api.IGeoPoint -> org.osmdroid.a.a:
@@ -15513,10 +15510,10 @@ org.osmdroid.tileprovider.MapTileProviderBase$ScaleTileLooper -> org.osmdroid.d.
     void handleTile(int,org.osmdroid.tileprovider.MapTile,int,int) -> a
 org.osmdroid.tileprovider.MapTileProviderBase$ZoomInTileLooper -> org.osmdroid.d.l:
     org.osmdroid.tileprovider.MapTileProviderBase this$0 -> i
-    325:364:void handleTile(int,org.osmdroid.tileprovider.MapTile,int,int) -> a
+    325:366:void handleTile(int,org.osmdroid.tileprovider.MapTile,int,int) -> a
 org.osmdroid.tileprovider.MapTileProviderBase$ZoomOutTileLooper -> org.osmdroid.d.m:
     org.osmdroid.tileprovider.MapTileProviderBase this$0 -> i
-    375:422:void handleTile(int,org.osmdroid.tileprovider.MapTile,int,int) -> a
+    377:424:void handleTile(int,org.osmdroid.tileprovider.MapTile,int,int) -> a
 org.osmdroid.tileprovider.MapTileProviderBasic -> org.osmdroid.d.n:
 org.osmdroid.tileprovider.MapTileRequestState -> org.osmdroid.d.o:
     java.util.Queue mProviderQueue -> a
@@ -15548,14 +15545,17 @@ org.osmdroid.tileprovider.modules.DatabaseFileArchive -> org.osmdroid.d.b.c:
     android.database.sqlite.SQLiteDatabase mDatabase -> b
     27:27:org.osmdroid.tileprovider.modules.DatabaseFileArchive getDatabaseFileArchive(java.io.File) -> a
     33:52:java.io.InputStream getInputStream(org.osmdroid.tileprovider.tilesource.ITileSource,org.osmdroid.tileprovider.MapTile) -> a
-    57:57:java.lang.String toString() -> toString
+    57:58:void close() -> a
+    62:62:java.lang.String toString() -> toString
 org.osmdroid.tileprovider.modules.GEMFFileArchive -> org.osmdroid.d.b.d:
     org.osmdroid.util.GEMFFile mFile -> a
     21:21:org.osmdroid.tileprovider.modules.GEMFFileArchive getGEMFFileArchive(java.io.File) -> a
     26:26:java.io.InputStream getInputStream(org.osmdroid.tileprovider.tilesource.ITileSource,org.osmdroid.tileprovider.MapTile) -> a
-    31:31:java.lang.String toString() -> toString
+    32:34:void close() -> a
+    38:38:java.lang.String toString() -> toString
 org.osmdroid.tileprovider.modules.IArchiveFile -> org.osmdroid.d.b.e:
     java.io.InputStream getInputStream(org.osmdroid.tileprovider.tilesource.ITileSource,org.osmdroid.tileprovider.MapTile) -> a
+    void close() -> a
 org.osmdroid.tileprovider.modules.IFilesystemCache -> org.osmdroid.d.b.f:
     boolean saveFile(org.osmdroid.tileprovider.tilesource.ITileSource,org.osmdroid.tileprovider.MapTile,java.io.InputStream) -> a
 org.osmdroid.tileprovider.modules.INetworkAvailablityCheck -> org.osmdroid.d.b.g:
@@ -15565,7 +15565,8 @@ org.osmdroid.tileprovider.modules.MBTilesFileArchive -> org.osmdroid.d.b.h:
     android.database.sqlite.SQLiteDatabase mDatabase -> b
     34:34:org.osmdroid.tileprovider.modules.MBTilesFileArchive getDatabaseFileArchive(java.io.File) -> a
     44:66:java.io.InputStream getInputStream(org.osmdroid.tileprovider.tilesource.ITileSource,org.osmdroid.tileprovider.MapTile) -> a
-    71:71:java.lang.String toString() -> toString
+    71:72:void close() -> a
+    76:76:java.lang.String toString() -> toString
 org.osmdroid.tileprovider.modules.MapTileDownloader -> org.osmdroid.d.b.i:
     org.slf4j.Logger logger -> d
     org.osmdroid.tileprovider.modules.IFilesystemCache mFilesystemCache -> e
@@ -15598,15 +15599,15 @@ org.osmdroid.tileprovider.modules.MapTileFileArchiveProvider -> org.osmdroid.d.b
     121:124:void onMediaMounted() -> f
     128:131:void onMediaUnmounted() -> g
     135:136:void setTileSource(org.osmdroid.tileprovider.tilesource.ITileSource) -> a
-    140:144:void detach() -> h
-    152:168:void findArchiveFiles() -> l
-    172:182:java.io.InputStream getInputStream(org.osmdroid.tileprovider.MapTile,org.osmdroid.tileprovider.tilesource.ITileSource) -> a
+    140:145:void detach() -> h
+    153:169:void findArchiveFiles() -> l
+    173:183:java.io.InputStream getInputStream(org.osmdroid.tileprovider.MapTile,org.osmdroid.tileprovider.tilesource.ITileSource) -> a
     28:28:java.util.concurrent.atomic.AtomicReference access$000(org.osmdroid.tileprovider.modules.MapTileFileArchiveProvider) -> a
     28:28:java.io.InputStream access$100(org.osmdroid.tileprovider.modules.MapTileFileArchiveProvider,org.osmdroid.tileprovider.MapTile,org.osmdroid.tileprovider.tilesource.ITileSource) -> a
     28:28:org.slf4j.Logger access$200() -> i
 org.osmdroid.tileprovider.modules.MapTileFileArchiveProvider$TileLoader -> org.osmdroid.d.b.l:
     org.osmdroid.tileprovider.modules.MapTileFileArchiveProvider this$0 -> a
-    194:231:android.graphics.drawable.Drawable loadTile(org.osmdroid.tileprovider.MapTileRequestState) -> a
+    195:232:android.graphics.drawable.Drawable loadTile(org.osmdroid.tileprovider.MapTileRequestState) -> a
 org.osmdroid.tileprovider.modules.MapTileFileStorageProviderBase -> org.osmdroid.d.b.m:
     org.slf4j.Logger logger -> d
     boolean mSdCardAvailable -> e
@@ -15694,7 +15695,8 @@ org.osmdroid.tileprovider.modules.ZipFileArchive -> org.osmdroid.d.b.v:
     java.util.zip.ZipFile mZipFile -> b
     26:26:org.osmdroid.tileprovider.modules.ZipFileArchive getZipFileArchive(java.io.File) -> a
     31:40:java.io.InputStream getInputStream(org.osmdroid.tileprovider.tilesource.ITileSource,org.osmdroid.tileprovider.MapTile) -> a
-    45:45:java.lang.String toString() -> toString
+    46:48:void close() -> a
+    52:52:java.lang.String toString() -> toString
 org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase -> org.osmdroid.d.c.a:
     org.slf4j.Logger logger -> a
     int globalOrdinal -> e
@@ -15743,11 +15745,11 @@ org.osmdroid.tileprovider.tilesource.TileSourceFactory -> org.osmdroid.d.c.g:
     org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase BASE -> d
     org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase TOPO -> e
     org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase HILLS -> f
-    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase CLOUDMADESTANDARDTILES -> g
-    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase CLOUDMADESMALLTILES -> h
-    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase MAPQUESTOSM -> i
-    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase MAPQUESTAERIAL -> j
-    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase DEFAULT_TILE_SOURCE -> k
+    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase MAPQUESTOSM -> g
+    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase MAPQUESTAERIAL -> h
+    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase DEFAULT_TILE_SOURCE -> i
+    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase CLOUDMADESTANDARDTILES -> j
+    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase CLOUDMADESMALLTILES -> k
     org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase FIETS_OVERLAY_NL -> l
     org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase BASE_OVERLAY_NL -> m
     org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase ROADS_OVERLAY_NL -> n
@@ -15798,9 +15800,10 @@ org.osmdroid.util.GEMFFile -> org.osmdroid.util.a:
     java.util.LinkedHashMap mSources -> f
     boolean mSourceLimited -> g
     int mCurrentSource -> h
-    429:444:void openFiles() -> b
-    451:496:void readHeader() -> c
-    508:508:java.lang.String getName() -> a
+    416:419:void close() -> a
+    429:444:void openFiles() -> c
+    451:496:void readHeader() -> d
+    508:508:java.lang.String getName() -> b
     555:616:java.io.InputStream getInputStream(int,int,int) -> a
 org.osmdroid.util.GEMFFile$GEMFInputStream -> org.osmdroid.util.b:
     java.io.RandomAccessFile raf -> a
@@ -15851,6 +15854,8 @@ org.osmdroid.util.MyMath -> org.osmdroid.util.e:
 org.osmdroid.util.ResourceProxyImpl -> org.osmdroid.util.f:
     android.content.res.Resources mResources -> a
     java.lang.String mResourceNameBase -> b
+    43:44:android.graphics.Bitmap getBitmap(org.osmdroid.ResourceProxy$bitmap) -> a
+    55:59:int getId(java.lang.String,java.lang.String) -> a
 org.osmdroid.util.TileLooper -> org.osmdroid.util.g:
     android.graphics.Point mUpperLeft -> j
     android.graphics.Point mLowerRight -> k
@@ -15920,58 +15925,59 @@ org.osmdroid.views.MapView -> org.osmdroid.views.MapView:
     org.osmdroid.tileprovider.MapTileProviderBase mTileProvider -> B
     android.os.Handler mTileRequestCompleteHandler -> C
     android.graphics.Point mPoint -> D
-    210:210:org.osmdroid.api.IMapController getController() -> a
-    218:218:java.util.List getOverlays() -> b
-    222:222:org.osmdroid.views.overlay.OverlayManager getOverlayManager() -> c
-    230:230:android.widget.Scroller getScroller() -> d
-    248:248:org.osmdroid.util.BoundingBoxE6 getBoundingBox() -> e
-    270:279:android.graphics.Rect getScreenRect$323c19cd() -> f
-    283:286:android.graphics.Rect getIntrinsicScreenRect$323c19cd() -> g
-    299:302:org.osmdroid.views.MapView$Projection getProjection() -> h
-    317:322:void setTileSource(org.osmdroid.tileprovider.tilesource.ITileSource) -> a
-    329:377:int setZoomLevel(int) -> a
-    427:427:int getZoomLevel() -> i
-    439:442:int getZoomLevel(boolean) -> a
-    450:450:int getMinZoomLevel() -> q
-    458:458:int getMaxZoomLevel() -> r
-    478:482:boolean canZoomIn() -> j
-    486:490:boolean canZoomOut() -> k
-    501:502:boolean zoomInFixing(org.osmdroid.api.IGeoPoint) -> a
-    532:535:org.osmdroid.api.IGeoPoint getMapCenter() -> l
-    544:546:void setMapOrientation(float) -> a
-    549:549:float getMapOrientation() -> m
-    614:629:void invalidateMapCoordinates(int,int,int,int) -> a
-    639:639:android.view.ViewGroup$LayoutParams generateDefaultLayoutParams() -> generateDefaultLayoutParams
-    645:645:android.view.ViewGroup$LayoutParams generateLayoutParams(android.util.AttributeSet) -> generateLayoutParams
-    651:651:boolean checkLayoutParams(android.view.ViewGroup$LayoutParams) -> checkLayoutParams
-    656:656:android.view.ViewGroup$LayoutParams generateLayoutParams(android.view.ViewGroup$LayoutParams) -> generateLayoutParams
-    661:738:void onMeasure(int,int) -> onMeasure
-    743:800:void onLayout(boolean,int,int,int,int) -> onLayout
-    808:810:boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
-    815:817:boolean onKeyUp(int,android.view.KeyEvent) -> onKeyUp
-    823:829:boolean onTrackballEvent(android.view.MotionEvent) -> onTrackballEvent
-    839:879:boolean dispatchTouchEvent(android.view.MotionEvent) -> dispatchTouchEvent
-    884:884:boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
-    888:919:android.view.MotionEvent rotateTouchEvent(android.view.MotionEvent) -> a
-    924:937:void computeScroll() -> computeScroll
-    941:995:void scrollTo(int,int) -> scrollTo
-    999:1001:void setBackgroundColor(int) -> setBackgroundColor
-    1005:1035:void dispatchDraw(android.graphics.Canvas) -> dispatchDraw
-    1057:1060:void onDetachedFromWindow() -> onDetachedFromWindow
-    1073:1073:boolean isAnimating() -> n
-    1082:1089:java.lang.Object getDraggableObjectAtPoint(org.metalev.multitouch.controller.MultiTouchController$PointInfo) -> a
-    1095:1096:void getPositionAndScale$71d97c1e(org.metalev.multitouch.controller.MultiTouchController$PositionAndScale) -> a
-    1102:1126:void selectObject$f4318(java.lang.Object) -> a
-    1131:1141:boolean setPositionAndScale$7a677017(org.metalev.multitouch.controller.MultiTouchController$PositionAndScale) -> b
-    1156:1158:void checkZoomButtons() -> s
-    1161:1163:void setBuiltInZoomControls$1385ff() -> o
-    1166:1167:void setMultiTouchControls$1385ff() -> p
-    1171:1197:org.osmdroid.tileprovider.tilesource.ITileSource getTileSourceFromAttributes(android.util.AttributeSet) -> a
-    65:65:int access$400(org.osmdroid.views.MapView) -> a
-    65:65:android.widget.Scroller access$500(org.osmdroid.views.MapView) -> b
-    65:65:boolean access$600(org.osmdroid.views.MapView) -> c
-    65:65:android.widget.ZoomButtonsController access$700(org.osmdroid.views.MapView) -> d
-    65:65:org.metalev.multitouch.controller.MultiTouchController access$800(org.osmdroid.views.MapView) -> e
+    211:211:org.osmdroid.api.IMapController getController() -> a
+    219:219:java.util.List getOverlays() -> b
+    223:223:org.osmdroid.views.overlay.OverlayManager getOverlayManager() -> c
+    231:231:android.widget.Scroller getScroller() -> d
+    249:249:org.osmdroid.util.BoundingBoxE6 getBoundingBox() -> e
+    271:280:android.graphics.Rect getScreenRect$323c19cd() -> f
+    284:287:android.graphics.Rect getIntrinsicScreenRect$323c19cd() -> g
+    300:303:org.osmdroid.views.MapView$Projection getProjection() -> h
+    318:323:void setTileSource(org.osmdroid.tileprovider.tilesource.ITileSource) -> a
+    330:378:int setZoomLevel(int) -> a
+    428:428:int getZoomLevel() -> i
+    440:443:int getZoomLevel(boolean) -> a
+    451:451:int getMinZoomLevel() -> q
+    459:459:int getMaxZoomLevel() -> r
+    479:483:boolean canZoomIn() -> j
+    487:491:boolean canZoomOut() -> k
+    502:503:boolean zoomInFixing(org.osmdroid.api.IGeoPoint) -> a
+    533:536:org.osmdroid.api.IGeoPoint getMapCenter() -> l
+    545:547:void setMapOrientation(float) -> a
+    550:550:float getMapOrientation() -> m
+    615:630:void invalidateMapCoordinates(int,int,int,int) -> a
+    640:640:android.view.ViewGroup$LayoutParams generateDefaultLayoutParams() -> generateDefaultLayoutParams
+    646:646:android.view.ViewGroup$LayoutParams generateLayoutParams(android.util.AttributeSet) -> generateLayoutParams
+    652:652:boolean checkLayoutParams(android.view.ViewGroup$LayoutParams) -> checkLayoutParams
+    657:657:android.view.ViewGroup$LayoutParams generateLayoutParams(android.view.ViewGroup$LayoutParams) -> generateLayoutParams
+    662:739:void onMeasure(int,int) -> onMeasure
+    744:801:void onLayout(boolean,int,int,int,int) -> onLayout
+    810:812:boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
+    817:819:boolean onKeyUp(int,android.view.KeyEvent) -> onKeyUp
+    825:831:boolean onTrackballEvent(android.view.MotionEvent) -> onTrackballEvent
+    841:881:boolean dispatchTouchEvent(android.view.MotionEvent) -> dispatchTouchEvent
+    886:886:boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
+    890:921:android.view.MotionEvent rotateTouchEvent(android.view.MotionEvent) -> a
+    926:939:void computeScroll() -> computeScroll
+    943:997:void scrollTo(int,int) -> scrollTo
+    1001:1003:void setBackgroundColor(int) -> setBackgroundColor
+    1018:1024:void invertCanvas(android.graphics.Canvas) -> a
+    1028:1058:void dispatchDraw(android.graphics.Canvas) -> dispatchDraw
+    1080:1083:void onDetachedFromWindow() -> onDetachedFromWindow
+    1096:1096:boolean isAnimating() -> n
+    1105:1112:java.lang.Object getDraggableObjectAtPoint(org.metalev.multitouch.controller.MultiTouchController$PointInfo) -> a
+    1118:1119:void getPositionAndScale$71d97c1e(org.metalev.multitouch.controller.MultiTouchController$PositionAndScale) -> a
+    1125:1149:void selectObject$f4318(java.lang.Object) -> a
+    1154:1164:boolean setPositionAndScale$7a677017(org.metalev.multitouch.controller.MultiTouchController$PositionAndScale) -> b
+    1179:1181:void checkZoomButtons() -> s
+    1184:1186:void setBuiltInZoomControls$1385ff() -> o
+    1189:1190:void setMultiTouchControls$1385ff() -> p
+    1194:1220:org.osmdroid.tileprovider.tilesource.ITileSource getTileSourceFromAttributes(android.util.AttributeSet) -> a
+    66:66:int access$400(org.osmdroid.views.MapView) -> a
+    66:66:android.widget.Scroller access$500(org.osmdroid.views.MapView) -> b
+    66:66:boolean access$600(org.osmdroid.views.MapView) -> c
+    66:66:android.widget.ZoomButtonsController access$700(org.osmdroid.views.MapView) -> d
+    66:66:org.metalev.multitouch.controller.MultiTouchController access$800(org.osmdroid.views.MapView) -> e
 org.osmdroid.views.MapView$LayoutParams -> org.osmdroid.views.e:
     org.osmdroid.api.IGeoPoint geoPoint -> a
     int alignment -> b
@@ -15979,21 +15985,21 @@ org.osmdroid.views.MapView$LayoutParams -> org.osmdroid.views.e:
     int offsetY -> d
 org.osmdroid.views.MapView$MapViewDoubleClickListener -> org.osmdroid.views.f:
     org.osmdroid.views.MapView this$0 -> a
-    1551:1556:boolean onDoubleTap(android.view.MotionEvent) -> onDoubleTap
-    1561:1562:boolean onDoubleTapEvent(android.view.MotionEvent) -> onDoubleTapEvent
-    1570:1571:boolean onSingleTapConfirmed(android.view.MotionEvent) -> onSingleTapConfirmed
+    1574:1579:boolean onDoubleTap(android.view.MotionEvent) -> onDoubleTap
+    1584:1585:boolean onDoubleTapEvent(android.view.MotionEvent) -> onDoubleTapEvent
+    1593:1594:boolean onSingleTapConfirmed(android.view.MotionEvent) -> onSingleTapConfirmed
 org.osmdroid.views.MapView$MapViewGestureDetectorListener -> org.osmdroid.views.g:
     org.osmdroid.views.MapView this$0 -> a
-    1484:1494:boolean onDown(android.view.MotionEvent) -> onDown
-    1500:1509:boolean onFling(android.view.MotionEvent,android.view.MotionEvent,float,float) -> onFling
-    1514:1518:void onLongPress(android.view.MotionEvent) -> onLongPress
-    1523:1529:boolean onScroll(android.view.MotionEvent,android.view.MotionEvent,float,float) -> onScroll
-    1534:1535:void onShowPress(android.view.MotionEvent) -> onShowPress
-    1539:1543:boolean onSingleTapUp(android.view.MotionEvent) -> onSingleTapUp
+    1507:1517:boolean onDown(android.view.MotionEvent) -> onDown
+    1523:1532:boolean onFling(android.view.MotionEvent,android.view.MotionEvent,float,float) -> onFling
+    1537:1541:void onLongPress(android.view.MotionEvent) -> onLongPress
+    1546:1552:boolean onScroll(android.view.MotionEvent,android.view.MotionEvent,float,float) -> onScroll
+    1557:1558:void onShowPress(android.view.MotionEvent) -> onShowPress
+    1562:1563:boolean onSingleTapUp(android.view.MotionEvent) -> onSingleTapUp
 org.osmdroid.views.MapView$MapViewZoomListener -> org.osmdroid.views.h:
     org.osmdroid.views.MapView this$0 -> a
-    1581:1586:void onZoom(boolean) -> onZoom
-    1590:1590:void onVisibilityChanged(boolean) -> onVisibilityChanged
+    1604:1609:void onZoom(boolean) -> onZoom
+    1613:1613:void onVisibilityChanged(boolean) -> onVisibilityChanged
 org.osmdroid.views.MapView$Projection -> org.osmdroid.views.i:
     int viewWidth_2 -> b
     int viewHeight_2 -> c
@@ -16006,13 +16012,13 @@ org.osmdroid.views.MapView$Projection -> org.osmdroid.views.i:
     android.graphics.Rect mIntrinsicScreenRectProjection -> j
     float mMapOrientation -> k
     org.osmdroid.views.MapView this$0 -> a
-    1252:1252:int getZoomLevel() -> a
-    1260:1260:android.graphics.Rect getScreenRect() -> b
-    1309:1310:org.osmdroid.api.IGeoPoint fromPixels(float,float) -> a
-    1331:1353:android.graphics.Point toMapPixels(org.osmdroid.api.IGeoPoint,android.graphics.Point) -> a
-    1369:1372:android.graphics.Point toMapPixelsProjected(int,int,android.graphics.Point) -> a
-    1387:1391:android.graphics.Point toMapPixelsTranslated(android.graphics.Point,android.graphics.Point) -> a
-    1402:1412:android.graphics.Rect fromPixelsToProjected(android.graphics.Rect) -> a
+    1275:1275:int getZoomLevel() -> a
+    1283:1283:android.graphics.Rect getScreenRect() -> b
+    1332:1333:org.osmdroid.api.IGeoPoint fromPixels(float,float) -> a
+    1354:1376:android.graphics.Point toMapPixels(org.osmdroid.api.IGeoPoint,android.graphics.Point) -> a
+    1392:1395:android.graphics.Point toMapPixelsProjected(int,int,android.graphics.Point) -> a
+    1410:1414:android.graphics.Point toMapPixelsTranslated(android.graphics.Point,android.graphics.Point) -> a
+    1425:1435:android.graphics.Rect fromPixelsToProjected(android.graphics.Rect) -> a
 org.osmdroid.views.overlay.ItemizedOverlayControlView -> org.osmdroid.views.overlay.ItemizedOverlayControlView:
 org.osmdroid.views.overlay.Overlay -> org.osmdroid.views.overlay.a:
     java.util.concurrent.atomic.AtomicInteger sOrdinal -> a
@@ -16037,7 +16043,7 @@ org.osmdroid.views.overlay.Overlay -> org.osmdroid.views.overlay.a:
     235:235:boolean onLongPress$4682072e() -> k
     246:246:boolean onScroll$6e3d8c7d() -> l
     250:250:void onShowPress$4682072a() -> m
-    260:260:boolean onSingleTapUp(android.view.MotionEvent,org.osmdroid.views.MapView) -> b
+    260:260:boolean onSingleTapUp$4682072e() -> n
 org.osmdroid.views.overlay.Overlay$Snappable -> org.osmdroid.views.overlay.b:
     boolean onSnapToItem$d9026f1(int,int,android.graphics.Point) -> a
 org.osmdroid.views.overlay.OverlayManager -> org.osmdroid.views.overlay.c:
@@ -16045,7 +16051,7 @@ org.osmdroid.views.overlay.OverlayManager -> org.osmdroid.views.overlay.c:
     boolean mUseSafeCanvas -> b
     java.util.concurrent.CopyOnWriteArrayList mOverlayList -> c
     38:38:int size() -> size
-    99:99:java.lang.Iterable overlaysReversed() -> l
+    99:99:java.lang.Iterable overlaysReversed() -> m
     125:145:void onDraw(android.graphics.Canvas,org.osmdroid.views.MapView) -> a
     148:155:void onDetach(org.osmdroid.views.MapView) -> a
     158:164:boolean onKeyDown$4aafb6b2() -> a
@@ -16061,7 +16067,7 @@ org.osmdroid.views.overlay.OverlayManager -> org.osmdroid.views.overlay.c:
     265:271:boolean onLongPress$4682072e() -> i
     276:282:boolean onScroll$6e3d8c7d() -> j
     286:289:void onShowPress$4682072a() -> k
-    292:298:boolean onSingleTapUp(android.view.MotionEvent,org.osmdroid.views.MapView) -> b
+    292:298:boolean onSingleTapUp$4682072e() -> l
     19:19:java.lang.Object remove(int) -> remove
     19:19:void add(int,java.lang.Object) -> add
     19:19:java.lang.Object set(int,java.lang.Object) -> set
@@ -16084,7 +16090,7 @@ org.osmdroid.views.overlay.PathOverlay -> org.osmdroid.views.overlay.d:
     android.graphics.Point mTempPoint1 -> g
     android.graphics.Point mTempPoint2 -> h
     android.graphics.Rect mLineBounds -> i
-    157:159:void clearPath() -> n
+    157:159:void clearPath() -> o
     162:163:void addPoint(org.osmdroid.api.IGeoPoint) -> a
     176:179:void addPoints(java.util.List) -> a
     192:260:void draw(android.graphics.Canvas,org.osmdroid.views.MapView,boolean) -> a
@@ -16093,8 +16099,8 @@ org.osmdroid.views.overlay.SafeDrawOverlay -> org.osmdroid.views.overlay.e:
     android.graphics.Matrix sMatrix -> b
     boolean mUseSafeCanvas -> e
     void drawSafe(org.osmdroid.views.safecanvas.ISafeCanvas,org.osmdroid.views.MapView,boolean) -> a
-    39:90:void draw(android.graphics.Canvas,org.osmdroid.views.MapView,boolean) -> a
-    97:98:void setUseSafeCanvas(boolean) -> a
+    38:80:void draw(android.graphics.Canvas,org.osmdroid.views.MapView,boolean) -> a
+    87:88:void setUseSafeCanvas(boolean) -> a
 org.osmdroid.views.overlay.TilesOverlay -> org.osmdroid.views.overlay.f:
     org.slf4j.Logger logger -> h
     int MENU_MAP_MODE -> a
@@ -16112,45 +16118,55 @@ org.osmdroid.views.overlay.TilesOverlay -> org.osmdroid.views.overlay.f:
     int mOvershootTileCache -> p
     org.osmdroid.util.TileLooper mTileLooper -> q
     83:84:void onDetach(org.osmdroid.views.MapView) -> a
-    87:87:int getMinimumZoomLevel() -> n
-    91:91:int getMaximumZoomLevel() -> o
+    87:87:int getMinimumZoomLevel() -> o
+    91:91:int getMaximumZoomLevel() -> p
     119:136:void drawSafe(org.osmdroid.views.safecanvas.ISafeCanvas,org.osmdroid.views.MapView,boolean) -> a
-    211:214:void onTileReadyToDraw(android.graphics.Canvas,android.graphics.drawable.Drawable,android.graphics.Rect) -> a
-    299:303:void setLoadingBackgroundColor(int) -> b
-    317:339:android.graphics.drawable.Drawable getLoadingTile() -> p
+    214:217:void onTileReadyToDraw(android.graphics.Canvas,android.graphics.drawable.Drawable,android.graphics.Rect) -> a
+    302:306:void setLoadingBackgroundColor(int) -> b
+    320:342:android.graphics.drawable.Drawable getLoadingTile() -> q
     39:39:int access$000(org.osmdroid.views.overlay.TilesOverlay) -> a
     39:39:android.graphics.drawable.Drawable access$100(org.osmdroid.views.overlay.TilesOverlay) -> b
     39:39:android.graphics.Rect access$200(org.osmdroid.views.overlay.TilesOverlay) -> c
 org.osmdroid.views.overlay.TilesOverlay$1 -> org.osmdroid.views.overlay.f$1:
     org.osmdroid.views.overlay.TilesOverlay this$0 -> a
     164:166:void initialiseLoop(int,int) -> a
-    169:203:void handleTile(android.graphics.Canvas,int,org.osmdroid.tileprovider.MapTile,int,int) -> a
-    206:206:void finaliseLoop() -> a
+    169:206:void handleTile(android.graphics.Canvas,int,org.osmdroid.tileprovider.MapTile,int,int) -> a
+    209:209:void finaliseLoop() -> a
 org.osmdroid.views.overlay.compass.CompassOverlay -> org.osmdroid.views.overlay.a.a:
-    org.osmdroid.views.MapView mMapView -> b
-    android.view.Display mDisplay -> a
-    org.osmdroid.views.overlay.compass.IOrientationProvider mOrientationProvider -> e
-    org.osmdroid.views.safecanvas.SafePaint mPaint -> f
-    android.graphics.Picture mCompassFrame -> g
-    android.graphics.Picture mCompassRose -> h
-    android.graphics.Matrix mCompassMatrix -> n
-    boolean mIsCompassEnabled -> o
-    float mAzimuth -> p
-    float mCompassCenterX -> q
-    float mCompassCenterY -> r
-    float mCompassRadius -> s
-    float mCompassFrameCenterX -> i
-    float mCompassFrameCenterY -> j
-    float mCompassRoseCenterX -> k
-    float mCompassRoseCenterY -> l
-    int MENU_COMPASS -> m
-    boolean mOptionsMenuEnabled -> t
-    101:103:void onDetach(org.osmdroid.views.MapView) -> a
-    107:119:void invalidateCompass() -> o
-    176:183:void drawSafe(org.osmdroid.views.safecanvas.ISafeCanvas,org.osmdroid.views.MapView,boolean) -> a
-    243:245:void onOrientationChanged$656c6270(float) -> a
-    262:275:boolean enableCompass() -> n
-    333:343:void drawTriangle$7557fba5(android.graphics.Canvas,float,float,android.graphics.Paint) -> a
+    android.graphics.Paint sSmoothPaint -> m
+    org.osmdroid.views.MapView mMapView -> a
+    android.view.Display mDisplay -> n
+    org.osmdroid.views.overlay.compass.IOrientationProvider mOrientationProvider -> b
+    org.osmdroid.views.safecanvas.SafePaint mPaint -> e
+    android.graphics.Bitmap mCompassFrameBitmap -> f
+    android.graphics.Bitmap mCompassRoseBitmap -> g
+    android.graphics.Matrix mCompassMatrix -> o
+    android.graphics.Matrix mCanvasIdentityMatrix -> p
+    boolean mIsCompassEnabled -> q
+    float mAzimuth -> r
+    float mCompassCenterX -> s
+    float mCompassCenterY -> t
+    float mCompassRadius -> u
+    float mCompassFrameCenterX -> h
+    float mCompassFrameCenterY -> i
+    float mCompassRoseCenterX -> j
+    float mCompassRoseCenterY -> k
+    int MENU_COMPASS -> l
+    boolean mOptionsMenuEnabled -> v
+    105:107:void onDetach(org.osmdroid.views.MapView) -> a
+    111:123:void invalidateCompass() -> q
+    196:203:void drawSafe(org.osmdroid.views.safecanvas.ISafeCanvas,org.osmdroid.views.MapView,boolean) -> a
+    263:265:void onOrientationChanged$656c6270(float) -> a
+    282:295:boolean enableCompass() -> o
+    353:363:void drawTriangle(android.graphics.Canvas,float,float,float,float,android.graphics.Paint) -> a
+    37:37:android.graphics.Matrix access$000(org.osmdroid.views.overlay.compass.CompassOverlay) -> a
+    37:37:android.graphics.Paint access$100() -> p
+org.osmdroid.views.overlay.compass.CompassOverlay$1 -> org.osmdroid.views.overlay.a.a$1:
+    org.osmdroid.views.overlay.compass.CompassOverlay this$0 -> a
+    165:170:void onUnsafeCanvas(android.graphics.Canvas) -> a
+org.osmdroid.views.overlay.compass.CompassOverlay$2 -> org.osmdroid.views.overlay.a.a$2:
+    org.osmdroid.views.overlay.compass.CompassOverlay this$0 -> a
+    180:185:void onUnsafeCanvas(android.graphics.Canvas) -> a
 org.osmdroid.views.overlay.compass.IOrientationConsumer -> org.osmdroid.views.overlay.a.b:
     void onOrientationChanged$656c6270(float) -> a
 org.osmdroid.views.overlay.compass.IOrientationProvider -> org.osmdroid.views.overlay.a.c:
@@ -16200,12 +16216,12 @@ org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay -> org.osmdroid.views
     277:283:void drawSafe(org.osmdroid.views.safecanvas.ISafeCanvas,org.osmdroid.views.MapView,boolean) -> a
     288:299:boolean onSnapToItem$d9026f1(int,int,android.graphics.Point) -> a
     305:309:boolean onTouchEvent(android.view.MotionEvent,org.osmdroid.views.MapView) -> a
-    318:319:void setOptionsMenuEnabled$1385ff() -> n
-    386:404:void enableFollowLocation() -> o
-    420:420:boolean isFollowLocationEnabled() -> p
+    318:319:void setOptionsMenuEnabled$1385ff() -> o
+    386:404:void enableFollowLocation() -> p
+    420:420:boolean isFollowLocationEnabled() -> q
     426:473:void onLocationChanged$6cc9c566(android.location.Location) -> a
-    489:512:boolean enableMyLocation() -> q
-    519:529:void disableMyLocation() -> r
+    489:512:boolean enableMyLocation() -> r
+    519:529:void disableMyLocation() -> s
 org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay$1 -> org.osmdroid.views.overlay.b.c$1:
     int val$left -> a
     int val$top -> b
@@ -16214,20 +16230,20 @@ org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay$1 -> org.osmdroid.vie
     org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay this$0 -> e
     463:464:void run() -> run
 org.osmdroid.views.safecanvas.ISafeCanvas -> org.osmdroid.views.a.a:
+    void getUnsafeCanvas(org.osmdroid.views.safecanvas.ISafeCanvas$UnsafeCanvasHandler) -> a
     android.graphics.Canvas getSafeCanvas() -> a
-    int getHeight() -> getHeight
     int save() -> save
     void restore() -> restore
     void scale(float,float,double,double) -> a
     void rotate(float,double,double) -> a
-    void setMatrix(android.graphics.Matrix) -> setMatrix
     void getMatrix(android.graphics.Matrix) -> getMatrix
     void drawCircle(double,double,float,org.osmdroid.views.safecanvas.SafePaint) -> a
     void drawBitmap(android.graphics.Bitmap,double,double,org.osmdroid.views.safecanvas.SafePaint) -> a
-    void drawPicture(android.graphics.Picture) -> drawPicture
-org.osmdroid.views.safecanvas.SafePaint -> org.osmdroid.views.a.b:
+org.osmdroid.views.safecanvas.ISafeCanvas$UnsafeCanvasHandler -> org.osmdroid.views.a.b:
+    void onUnsafeCanvas(android.graphics.Canvas) -> a
+org.osmdroid.views.safecanvas.SafePaint -> org.osmdroid.views.a.c:
     21:23:android.graphics.PathEffect setPathEffect(android.graphics.PathEffect) -> setPathEffect
-org.osmdroid.views.safecanvas.SafeTranslatedCanvas -> org.osmdroid.views.a.c:
+org.osmdroid.views.safecanvas.SafeTranslatedCanvas -> org.osmdroid.views.a.d:
     android.graphics.Matrix sMatrix -> c
     android.graphics.RectF sRectF -> d
     float[] sFloatAry -> e
@@ -16235,49 +16251,51 @@ org.osmdroid.views.safecanvas.SafeTranslatedCanvas -> org.osmdroid.views.a.c:
     android.graphics.Matrix mMatrix -> g
     int xOffset -> a
     int yOffset -> b
-    45:45:android.graphics.Canvas getSafeCanvas() -> a
-    59:61:void setCanvas(android.graphics.Canvas) -> a
-    102:102:boolean clipRect(int,int,int,int) -> clipRect
-    108:109:boolean clipRect(android.graphics.Rect,android.graphics.Region$Op) -> clipRect
-    114:115:boolean clipRect(android.graphics.Rect) -> clipRect
-    120:121:boolean clipRegion(android.graphics.Region,android.graphics.Region$Op) -> clipRegion
-    126:127:boolean clipRegion(android.graphics.Region) -> clipRegion
-    132:133:void concat(android.graphics.Matrix) -> concat
-    137:138:void drawARGB(int,int,int,int) -> drawARGB
-    149:151:void drawBitmap(android.graphics.Bitmap,double,double,org.osmdroid.views.safecanvas.SafePaint) -> a
-    170:173:void drawBitmap(android.graphics.Bitmap,android.graphics.Rect,android.graphics.Rect,android.graphics.Paint) -> drawBitmap
-    198:200:void drawCircle(double,double,float,org.osmdroid.views.safecanvas.SafePaint) -> a
-    205:206:void drawColor(int,android.graphics.PorterDuff$Mode) -> drawColor
-    211:212:void drawColor(int) -> drawColor
-    251:254:void drawPicture(android.graphics.Picture,android.graphics.Rect) -> drawPicture
-    258:259:void drawPicture(android.graphics.Picture) -> drawPicture
-    291:292:void drawRGB(int,int,int) -> drawRGB
-    362:365:boolean getClipBounds(android.graphics.Rect) -> getClipBounds
-    371:371:int getDensity() -> getDensity
-    377:377:android.graphics.DrawFilter getDrawFilter() -> getDrawFilter
-    383:383:int getHeight() -> getHeight
-    389:390:void getMatrix(android.graphics.Matrix) -> getMatrix
-    395:395:int getSaveCount() -> getSaveCount
-    401:401:int getWidth() -> getWidth
-    407:407:boolean isOpaque() -> isOpaque
-    434:435:void restore() -> restore
-    440:441:void restoreToCount(int) -> restoreToCount
-    445:448:void rotate(float) -> rotate
-    452:453:void rotate(float,double,double) -> a
-    458:458:int save() -> save
-    464:464:int save(int) -> save
-    496:497:void scale(float,float) -> scale
-    501:502:void scale(float,float,double,double) -> a
-    506:507:void setBitmap(android.graphics.Bitmap) -> setBitmap
-    511:512:void setDensity(int) -> setDensity
-    516:517:void setDrawFilter(android.graphics.DrawFilter) -> setDrawFilter
-    521:522:void setMatrix(android.graphics.Matrix) -> setMatrix
-    526:527:void skew(float,float) -> skew
-    531:532:void translate(float,float) -> translate
-    536:538:java.lang.Object clone() -> clone
-    543:543:boolean equals(java.lang.Object) -> equals
-    548:548:int hashCode() -> hashCode
-    553:553:java.lang.String toString() -> toString
+    46:46:android.graphics.Canvas getSafeCanvas() -> a
+    60:62:void setCanvas(android.graphics.Canvas) -> a
+    65:82:void getUnsafeCanvas(org.osmdroid.views.safecanvas.ISafeCanvas$UnsafeCanvasHandler) -> a
+    95:95:boolean isHardwareAccelerated() -> isHardwareAccelerated
+    122:122:boolean clipRect(int,int,int,int) -> clipRect
+    128:129:boolean clipRect(android.graphics.Rect,android.graphics.Region$Op) -> clipRect
+    134:135:boolean clipRect(android.graphics.Rect) -> clipRect
+    140:141:boolean clipRegion(android.graphics.Region,android.graphics.Region$Op) -> clipRegion
+    146:147:boolean clipRegion(android.graphics.Region) -> clipRegion
+    152:153:void concat(android.graphics.Matrix) -> concat
+    157:158:void drawARGB(int,int,int,int) -> drawARGB
+    169:171:void drawBitmap(android.graphics.Bitmap,double,double,org.osmdroid.views.safecanvas.SafePaint) -> a
+    190:193:void drawBitmap(android.graphics.Bitmap,android.graphics.Rect,android.graphics.Rect,android.graphics.Paint) -> drawBitmap
+    218:220:void drawCircle(double,double,float,org.osmdroid.views.safecanvas.SafePaint) -> a
+    225:226:void drawColor(int,android.graphics.PorterDuff$Mode) -> drawColor
+    231:232:void drawColor(int) -> drawColor
+    271:274:void drawPicture(android.graphics.Picture,android.graphics.Rect) -> drawPicture
+    278:279:void drawPicture(android.graphics.Picture) -> drawPicture
+    311:312:void drawRGB(int,int,int) -> drawRGB
+    382:385:boolean getClipBounds(android.graphics.Rect) -> getClipBounds
+    391:391:int getDensity() -> getDensity
+    397:397:android.graphics.DrawFilter getDrawFilter() -> getDrawFilter
+    403:403:int getHeight() -> getHeight
+    409:410:void getMatrix(android.graphics.Matrix) -> getMatrix
+    415:415:int getSaveCount() -> getSaveCount
+    421:421:int getWidth() -> getWidth
+    427:427:boolean isOpaque() -> isOpaque
+    454:455:void restore() -> restore
+    460:461:void restoreToCount(int) -> restoreToCount
+    465:468:void rotate(float) -> rotate
+    472:473:void rotate(float,double,double) -> a
+    478:478:int save() -> save
+    484:484:int save(int) -> save
+    516:517:void scale(float,float) -> scale
+    521:522:void scale(float,float,double,double) -> a
+    526:527:void setBitmap(android.graphics.Bitmap) -> setBitmap
+    531:532:void setDensity(int) -> setDensity
+    536:537:void setDrawFilter(android.graphics.DrawFilter) -> setDrawFilter
+    541:542:void setMatrix(android.graphics.Matrix) -> setMatrix
+    546:547:void skew(float,float) -> skew
+    551:552:void translate(float,float) -> translate
+    556:558:java.lang.Object clone() -> clone
+    563:563:boolean equals(java.lang.Object) -> equals
+    568:568:int hashCode() -> hashCode
+    573:573:java.lang.String toString() -> toString
 org.slf4j.ILoggerFactory -> org.b.a:
     org.slf4j.Logger getLogger(java.lang.String) -> a
 org.slf4j.Logger -> org.b.b:
