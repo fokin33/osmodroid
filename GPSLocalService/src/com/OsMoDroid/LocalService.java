@@ -1172,21 +1172,11 @@ public void stopcomand()
 
 			else
 			{
-				if (position==null){position = ( df6.format(forcenetworklocation.getLatitude())+", "+df6.format( forcenetworklocation.getLongitude())+"\nСкорость:" +df1.format(forcenetworklocation.getSpeed()*3.6))+" Км/ч";}
-				URLadr="http://t.esya.ru/?"+  df6.format( forcenetworklocation.getLatitude()) +":"+ df6.format( forcenetworklocation.getLongitude())+":"+ df1.format(forcenetworklocation.getAccuracy())
-					+":"+df1.format( forcenetworklocation.getAltitude())+":"+df1.format( forcenetworklocation.getSpeed())+":"+hash+":"+n;
-				if(log)Log.d(this.getClass().getName(), URLadr);
-				SendCoor forcesend = new SendCoor();
-				forcesend.execute(URLadr," ");
+				sendlocation(forcenetworklocation);
 			}
 		}
 		else{
-			if (position==null){position = ( "Ш:" + df6.format(forcelocation.getLatitude())+ " Д:"+  df6.format( forcelocation.getLongitude())+" С:" +df1.format(forcelocation.getSpeed()*3.6));}
-			URLadr="http://t.esya.ru/?"+  df6.format( forcelocation.getLatitude()) +":"+ df6.format( forcelocation.getLongitude())+":"+ df1.format(forcelocation.getAccuracy())
-				+":"+df1.format( forcelocation.getAltitude())+":"+df1.format( forcelocation.getSpeed())+":"+hash+":"+n;
-			if(log)Log.d(this.getClass().getName(), URLadr);
-			SendCoor forcesend = new SendCoor();
-			forcesend.execute(URLadr," ");
+			sendlocation(forcelocation);
 
 		}
 	}
@@ -1317,10 +1307,10 @@ public void stopcomand()
 		
 //sockaddr = new InetSocketAddress("esya.ru", 2145);
 ///////////////////////
-		if(OsMoDroid.settings.getString("newkey", "").equals("")){
+		
 			if(log)Log.d(this.getClass().getName(), "try sendid");
 			sendid();
-		}
+		
 if (live&&!OsMoDroid.settings.getString("hash", "" ).equals(""))
 {
 	if (isOnline())
@@ -1481,29 +1471,18 @@ if (live&&!OsMoDroid.settings.getString("hash", "" ).equals(""))
 		registerReceiver(onlinePauseforStartReciever, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
 	}
 }
-if (OsMoDroid.settings.getBoolean("im", false) && !OsMoDroid.settings.getString("key", "" ).equals("") ){
-	if(log)Log.d(this.getClass().getName(), "try load longPollchannels");
-	ArrayList<String[]>  entries =  (ArrayList<String[]>)loadObject(OsMoDroid.FILENAME, new ArrayList<String[]>().getClass());
-	
-	
 	//if(log)Log.d(this.getClass().getName(), "entries="+entries);
-	if(entries==null){
-			{
+	
+	
 				ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
 				longPollchannels.add(new String[] {"om_online","o",""});
-				//longPollchannels.add(new String[] {"om_check_"+OsMoDroid.settings.getString("device", ""),"r",""});
 				if(!OsMoDroid.settings.getString("lpch", "").equals(""))
 				{ 
 				longPollchannels.add(new String[] {"ctrl_"+OsMoDroid.settings.getString("lpch", ""),"r",""});
 				longPollchannels.add(new String[] {OsMoDroid.settings.getString("lpch", "")+"_chat","m",""});
 				}
-				myIM = new IM( longPollchannels ,this,OsMoDroid.settings.getString("key", ""), this);
-			}
-		} else
-		{
-			if(log)Log.d(this.getClass().getName(), "start IM with saves longpollchannels");
-			myIM = new IM( entries ,this,OsMoDroid.settings.getString("key", ""), this);
-		}
+				myIM = new IM( longPollchannels,this , this);
+			
 		try {
 		if(log)Log.d(this.getClass().getName(), "try load notifications");
 		input = new ObjectInputStream(openFileInput(OsMoDroid.NOTIFIESFILENAME));
@@ -1522,7 +1501,7 @@ if (OsMoDroid.settings.getBoolean("im", false) && !OsMoDroid.settings.getString(
 		disconnectChannelsChats();
 		connectChannelsChats();
 		
-}		
+		
 if (OsMoDroid.settings.getBoolean("started", false)){
 	startServiceWork();
 }
@@ -1659,7 +1638,6 @@ OsMoDroid.settings.edit().putBoolean("ondestroy", false).commit();
 		if(log)Log.d(this.getClass().getName(), "Disable signalisation after destroy");
 		if (state){ stopServiceWork(false);}
 		if(myIM!=null){  myIM.close();}
-		deleteFile(OsMoDroid.FILENAME);
 		deleteFile(OsMoDroid.NOTIFIESFILENAME);
 		deleteFile(OsMoDroid.DEVLIST);
 		stopcomand();
@@ -1895,16 +1873,18 @@ invokeMethod(mStartForeground, mStartForegroundArgs);
 setstarted(true);
 
 if (live){
-
+	if(myIM.mWebsocketConnection.isConnected()){
+		myIM.mWebsocketConnection.sendTextMessage("session_open");
+	}
 //String[] params = {"http://a.t.esya.ru/?act=session_start&hash="+OsMoDroid.settings.getString("hash", "")+"&n="+OsMoDroid.settings.getString("n", "")+"&ttl="+OsMoDroid.settings.getString("session_ttl", "30"),"false","","session_start"};
-APIcomParams params = new APIcomParams("http://a.t.esya.ru/?act=session_start&hash="+OsMoDroid.settings.getString("hash", "")+"&n="+OsMoDroid.settings.getString("n", "")+"&ttl="+OsMoDroid.settings.getString("session_ttl", "30"),null,"session_start"); 
-new Netutil.MyAsyncTask(this).execute(params);}
+//APIcomParams params = new APIcomParams("http://a.t.esya.ru/?act=session_start&hash="+OsMoDroid.settings.getString("hash", "")+"&n="+OsMoDroid.settings.getString("n", "")+"&ttl="+OsMoDroid.settings.getString("session_ttl", "30"),null,"session_start"); 
+//new Netutil.MyAsyncTask(this).execute(params);
+
+}
 
 		if(log)Log.d(getClass().getSimpleName(), "notify:"+notification.toString());
 
-		if(myIM.mWebsocketConnection.isConnected()){
-			myIM.mWebsocketConnection.sendTextMessage("session.open|");
-		}
+		
 
 
 
@@ -1941,7 +1921,7 @@ private void manageIM(){
 			longPollchannels.add(new String[] {"ctrl_"+OsMoDroid.settings.getString("lpch", ""),"r",""});
 			longPollchannels.add(new String[] {OsMoDroid.settings.getString("lpch", "")+"_chat","m",""});
 			}
-			myIM = new IM( longPollchannels ,this,OsMoDroid.settings.getString("key", ""), this);	
+			myIM = new IM( longPollchannels ,this, this);	
 			if(log)Log.d(getClass().getSimpleName(), "om_device_channel_adaptive from manageim");
 			Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 		}
@@ -1969,7 +1949,7 @@ public void sendid()
 	if(IMEI==null){
 		IMEI="unknown";
 	}
-	 
+	Log.d(getClass().getSimpleName(), "http://api.osmo.mobi/auth "+"android="+version+"&android_id="+androidID+"&imei="+IMEI);
         APIcomParams params = new APIcomParams("http://api.osmo.mobi/auth","android="+version+"&android_id="+androidID+"&imei="+IMEI,"sendid"); 
         MyAsyncTask sendidtask = new Netutil.MyAsyncTask(this);
         sendidtask.execute(params) ;
@@ -2150,8 +2130,11 @@ public void sendid()
 
 		if (live&&stopsession){
                     //String[] params = {"http://a.t.esya.ru/?act=session_stop&hash="+OsMoDroid.settings.getString("hash", "")+"&n="+OsMoDroid.settings.getString("n", ""),"false","","session_stop"};
-                    APIcomParams params = new APIcomParams("http://a.t.esya.ru/?act=session_stop&hash="+OsMoDroid.settings.getString("hash", "")+"&n="+OsMoDroid.settings.getString("n", "")+"&ttl="+OsMoDroid.settings.getString("session_ttl", "30"),null,"session_stop");
-                    new Netutil.MyAsyncTask(this).execute(params);
+                    //APIcomParams params = new APIcomParams("http://a.t.esya.ru/?act=session_stop&hash="+OsMoDroid.settings.getString("hash", "")+"&n="+OsMoDroid.settings.getString("n", "")+"&ttl="+OsMoDroid.settings.getString("session_ttl", "30"),null,"session_stop");
+                    //new Netutil.MyAsyncTask(this).execute(params);
+			if(myIM.mWebsocketConnection.isConnected()){
+				myIM.mWebsocketConnection.sendTextMessage("session_close");
+			}
 
                 
 		}
@@ -2175,9 +2158,7 @@ public void sendid()
 			if (myManager!=null){
 
 			myManager.removeUpdates(this);}
-			if(myIM.mWebsocketConnection.isConnected()){
-				myIM.mWebsocketConnection.sendTextMessage("session.close|");
-			}
+			
 			setstarted(false);
 
 			mStopForegroundArgs[0]= Boolean.TRUE;
@@ -2488,7 +2469,7 @@ public void sendid()
 				return;
 			}
 		}
-		if(firstsend)
+		if(firstsend&&sessionstarted)
 		{
 			if(log)Log.d(this.getClass().getName(),"Первая отправка");
 			sendlocation(location);
@@ -2587,7 +2568,7 @@ public void sendid()
 				}
 			}
 			if(log)Log.d(this.getClass().getName(), "sessionstarted="+sessionstarted);
-			if (!hash.equals("") && live&&sessionstarted)
+			if (live&&sessionstarted)
 			{
 				if(bearing>0){
 					//if(log)Log.d(this.getClass().getName(), "Попали в проверку курса для отправки");
@@ -3136,168 +3117,6 @@ private void sendlocation (Location location){
 				+":"+df1.format( location.getAltitude())+":"+df1.format( location.getSpeed()));
 		if(log)Log.d(this.getClass().getName(), "GPS websocket sendlocation");
 	}
-if (usebuffer)
-
-	{URLadr="http://t.esya.ru/?"+  df6.format( location.getLatitude()) +":"+ df6.format(location.getLongitude())+":"+ df1.format( location.getAccuracy())
-
-	+":"+df1.format( location.getAltitude())+":"+df1.format( location.getSpeed())+":"+hash+":"+n+":"+location.getTime()/1000;
-
-	}
-
-else
-
-	{URLadr="http://t.esya.ru/?"+  df6.format( location.getLatitude()) +":"+ df6.format( location.getLongitude())+":"+ df1.format(location.getAccuracy())
-
-	+":"+df1.format( location.getAltitude())+":"+df1.format( location.getSpeed())+":"+hash+":"+n;
-
-	}
-
-
-
-if (send!=null)
-{
-	if(log)Log.d(this.getClass().getName(), "send.status="+send.getStatus().toString() +" isCanceled="+send.isCancelled());	
-}
-
-if (send == null ||send.getStatus().equals(AsyncTask.Status.FINISHED) || send.isCancelled())
-
-//если задач по отправке не существует или закончена или отменена
-
-{
-	if(log)Log.d(this.getClass().getName(), "sendlocation send==null or FINISHED or isCanceled");
-
-
-	if(usebuffer){
-
-// если используется буфер
-		if(log)Log.d(this.getClass().getName(), "sendlocation if usebuffer");
-	if (sended )
-
-	{
-		if(log)Log.d(this.getClass().getName(), "sendlocation if sended");
-//и прошлая отправка успешная
-
-		if(log)Log.d(this.getClass().getName(), "buffersb.delete "+buffersb.toString());
-
-		buffersb.delete(0, lastbuffersb.length());
-
-		buffercounter=buffercounter-lcounter;
-		sendcounter=sendcounter+lcounter;
-
-		if(log)Log.d(this.getClass().getName(), "buffersb.delete "+buffersb.toString());
-
-	}
-
-	else
-
-	{
-		if(log)Log.d(this.getClass().getName(), "sendlocation if not sended");
-		//прошлая отправка не успешная
-
-		if(log)Log.d(this.getClass().getName(), "buffersb.append "+buffersb.toString());
-
-
-
-
-
-		if (buffersb.length()==0)
-
-		{
-			if(log)Log.d(this.getClass().getName(), "sendlocation if buffersb.l=0");
-
-			buffersb.append("log[]=").append(sendedsb);
-
-			buffercounter=buffercounter+scounter;
-
-		}
-
-		else
-
-		{
-			if(log)Log.d(this.getClass().getName(), "sendlocation if buffersb.l!=0");
-
-			buffersb.append("&log[]=").append(sendedsb);
-
-			buffercounter=buffercounter+scounter;
-
-		}
-
-		if(log)Log.d(this.getClass().getName(), "buffersb.append "+buffersb.toString());
-
-
-
-	}
-
-				}
-	if(log)Log.d(this.getClass().getName(), "sendlocation send=new SendCoor");
-	send = new SendCoor();
-
-	if(usebuffer)
-
-	{
-
-		if(log)Log.d(this.getClass().getName(), "sendlocation if usebuffer");
-
-		lastbuffersb.setLength(0);
-
-		lastbuffersb.append(buffersb);
-
-		lcounter=buffercounter;
-
-		sendedsb.setLength(0);
-
-		sendedsb.append(df6.format( location.getLatitude())).append(':').append(df6.format( location.getLongitude())).append(':').append(df1.format( location.getAltitude())).append(':').append(df1.format( location.getSpeed())).append(':').append(location.getTime()/1000);
-
-		scounter=1;
-
-		if(log)Log.d(this.getClass().getName(), "send.execute "+lastbuffersb.toString());
-
-		send.execute(URLadr,lastbuffersb.toString());}
-
-	else {
-		if(log)Log.d(this.getClass().getName(), "sendlocation if not usebuffer");
-
-		send.execute(URLadr," ");}
-
-	}
-
-
-
- else
-
-{
-	 if(log)Log.d(this.getClass().getName(), "sendlocation send!=null or not FINISHED or not canceled");
-	if(usebuffer)
-
-	{
-		if(log)Log.d(this.getClass().getName(), "sendlocation if usebuffer");
-	if (buffersb.length()==0)
-
-
-	{
-		if(log)Log.d(this.getClass().getName(), "sendlocation if buffersb.l=0");
-		if(log)Log.d(this.getClass().getName(), "2buffersb.append "+buffersb.toString());
-
-		buffersb.append("log[]=").append(df6.format( location.getLatitude())).append(':').append(df6.format( location.getLongitude())).append(':').append(df1.format( location.getAltitude())).append(':').append(df1.format( location.getSpeed())).append(':').append(location.getTime()/1000);
-
-		buffercounter=buffercounter+1;
-
-		if(log)Log.d(this.getClass().getName(), "2buffersb.append "+buffersb.toString());}
-
-	else{
-		if(log)Log.d(this.getClass().getName(), "sendlocation if buffersb!=0");
-
-		if(log)Log.d(this.getClass().getName(), "3uffersb.append "+buffersb.toString());
-
-		buffersb.append("&log[]=").append(df6.format( location.getLatitude())).append(':').append(df6.format( location.getLongitude())).append(':').append(df1.format( location.getAltitude())).append(':').append(df1.format( location.getSpeed())).append(':').append(location.getTime()/1000);
-
-		buffercounter=buffercounter+1;
-
-		if(log)Log.d(this.getClass().getName(), "3buffersb.append "+buffersb.toString());}
-
-	}
-
-}
 
 
 
@@ -3641,6 +3460,7 @@ public void onResultsSucceeded(APIComResult result) {
 
 	}
 	if(result.Command.equals("sendid")&&!(result.Jo==null)){
+		if(log)Log.d(getClass().getSimpleName(),"sendid response:"+result.Jo.toString());
 		Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
 		if(result.Jo.has("key")){
 			try {
@@ -3651,6 +3471,7 @@ public void onResultsSucceeded(APIComResult result) {
 				e.printStackTrace();
 			}
 		}
+		
 	}
 	if (result.Command.equals("APIM")&& !(result.Jo==null))
 

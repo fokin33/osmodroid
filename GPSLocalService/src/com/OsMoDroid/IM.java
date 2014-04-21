@@ -30,7 +30,7 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 	
 	private static final String KEEPALIVE_INTENT = "com.osmodroid.keepalive";
 
-	protected  boolean running       = false;	//protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;	String mykey;//	String timestamp=Long.toString(System.currentTimeMillis());	String lcursor="";	int pingTimeout=900;	Thread myThread;	private BufferedReader    in      = null;	Context parent;	String myLongPollCh;
+	protected  boolean running       = false;	//protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;//	String mykey;//	String timestamp=Long.toString(System.currentTimeMillis());	String lcursor="";	int pingTimeout=900;	Thread myThread;	private BufferedReader    in      = null;	Context parent;	String myLongPollCh;
 	ArrayList<String[]>  myLongPollChList;	//ArrayList<String> list= new ArrayList<String>();	ConnectionHandler c;
 	WebSocketConnectionHandler wsc;
 
@@ -43,14 +43,14 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 	final String websocketuri = "ws://srv.osmo.mobi/";
 	protected boolean connOpened=false;
 	protected boolean connecting=false;
-	final boolean  log=true;	public IM(ArrayList<String[]> longPollChList, Context context,String key,final LocalService localService) {
+	final boolean  log=true;	public IM(ArrayList<String[]> longPollChList, Context context,final LocalService localService) {
 		this.localService=localService; 
 		parent=context;
 		manager = (AlarmManager)(parent.getSystemService( Context.ALARM_SERVICE ));
 		reconnectPIntent = PendingIntent.getBroadcast( parent, 0, new Intent(RECONNECT_INTENT), 0 );
 		keepAlivePIntent = PendingIntent.getBroadcast( parent, 0, new Intent(KEEPALIVE_INTENT), 0 );
 		myLongPollChList=longPollChList;
-		mykey=key;
+		
 		parent.registerReceiver(bcr, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
 		c = new ConnectionHandler() {
 			
@@ -101,7 +101,7 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 
 			@Override
 			public void onOpen() {
-				mWebsocketConnection.sendTextMessage("auth|"+OsMoDroid.settings.getString("hash", "")); 
+				mWebsocketConnection.sendTextMessage("auth|"+OsMoDroid.settings.getString("newkey", "")); 
 				if(log)Log.d(this.getClass().getName(), "websocket2 onOpen");
 				addlog("websocket2 onOpen, "+" isconnected="+mWebsocketConnection.isConnected());
 				super.onOpen();
@@ -124,6 +124,28 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 			@Override
 			public void onTextMessage(String payload) {
 				if(log)Log.d(this.getClass().getName(), "websocket2 onTextMessage: "+payload);
+				//{"s":1,"session":31,"url":"DjXR18Jt","warn":null}
+				try
+					{
+						JSONObject jo = new JSONObject(payload);
+						if(jo.optString("c").equals("session_open")&&jo.has("url")){
+							OsMoDroid.editor.putString("viewurl","http://test1342.osmo.mobi/u/"+jo.optString("url"));
+							OsMoDroid.editor.commit();
+							IM.this.localService.refresh();
+							localService.sessionstarted=true;
+						} else 
+							if(jo.optString("c").equals("session_close")){
+								localService.sessionstarted=false;
+								OsMoDroid.editor.remove("viewurl");
+								OsMoDroid.editor.commit();
+								IM.this.localService.refresh();
+							}
+					} catch (JSONException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 				super.onTextMessage(payload);
 			}
 
@@ -209,27 +231,7 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 	    }
 	
 
-	private void getadres(ArrayList<String[]> longPollChList) {
-		//подключении не вставляется
-		//http://d.esya.ru/?identifier=1364306035.30188078700000:somaanjUobpong&ncrnd=1364306032050
-		//http://d.esya.ru/?identifier=somaanjUobpong&ncrnd=1364306032050
-		
-		adr="http://d.esya.ru/?identifier="+mykey;
-		for (String str[] : longPollChList){
-			if  (str[2].length()>0){
-				adr=adr+","+str[2]+":"+str[0];
-			}
-			else {
-			adr=adr+","+str[0];
-			}
-		}
-		adr=adr+"&ncrnd="+Long.toString(System.currentTimeMillis());
-		if(log)Log.d(this.getClass().getName(), "IM adr="+adr);
-		if(log)Log.d(this.getClass().getName(), "try to save longPollChList");
-		localService.saveObject(longPollChList, OsMoDroid.FILENAME);
-		if(log)Log.d(this.getClass().getName(), "Success saved longPollChList");
-		
-	}
+	
 	
 	public void addchannels(ArrayList<String[]> longPollChList){
 		

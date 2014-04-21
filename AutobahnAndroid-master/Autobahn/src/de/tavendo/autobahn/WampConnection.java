@@ -30,7 +30,7 @@ import android.util.Log;
 
 public class WampConnection extends WebSocketConnection implements Wamp {
 
-   private static final boolean DEBUG = false;
+   private static final boolean DEBUG = true;
    private static final String TAG = WampConnection.class.getName();
 
 

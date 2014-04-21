@@ -373,7 +373,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 
 				@Override
 				public void onReceive(Context context, Intent intent) {
-					if (intent.hasExtra("connecting")&&intent.hasExtra("connect")&&!OsMoDroid.settings.getString("key", "").equals(""))
+					if (intent.hasExtra("connecting")&&intent.hasExtra("connect"))
 					{
 						
 						if(intent.getBooleanExtra("connect", false)&&!intent.getBooleanExtra("connecting", false))
@@ -491,11 +491,11 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 		started = checkStarted();
 		
 		
-		if (hash.equals("") && live) {
-			RequestAuthTask requestAuthTask = new RequestAuthTask();
-			requestAuthTask.execute();
-			
-		}
+//		if (hash.equals("") && live) {
+//			RequestAuthTask requestAuthTask = new RequestAuthTask();
+//			requestAuthTask.execute();
+//			
+//		}
 		
 
 	}

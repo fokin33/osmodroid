@@ -7,7 +7,7 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
 public class OsMoDroid extends Application {
-	static String FILENAME = "longPollChList";
+	
 	private static final int MIN_UPLOAD_ID = 4;
 	private static final int MAX_UPLOAD_ID = 1000;
 	public static boolean mesactivityVisible = false;
@@ -26,7 +26,7 @@ public class OsMoDroid extends Application {
 
 	public static Context context;
 	public static Editor editor;
-	public static boolean debug=false;
+	public static boolean debug=true;
 	
 
 	@Override

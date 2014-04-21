@@ -40,7 +40,7 @@ import android.util.Log;
  */
 public class WebSocketWriter extends Handler {
 
-   private static final boolean DEBUG = false;
+   private static final boolean DEBUG = true;
    private static final String TAG = WebSocketWriter.class.getName();
 
    /// Random number generator for handshake key and frame mask generation.

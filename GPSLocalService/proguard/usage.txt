@@ -1005,7 +1005,7 @@ com.OsMoDroid.IM:
     java.lang.Thread myThread
     java.lang.String myLongPollCh
     java.io.FileOutputStream fos
-    312:327:private void getadres(java.util.ArrayList)
+    327:342:private void getadres(java.util.ArrayList)
 com.OsMoDroid.IRemoteOsMoDroidListener$Stub:
     private static final java.lang.String DESCRIPTOR
     static final int TRANSACTION_channelUpdated
@@ -1189,10 +1189,8 @@ de.tavendo.autobahn.WebSocket$ConnectionHandler:
     public static final int CLOSE_RECONNECT
 de.tavendo.autobahn.WebSocketConnection:
     private static final boolean DEBUG
-    144:145:public void sendTextMessage(java.lang.String)
     149:150:public void sendRawTextMessage(byte[])
     154:155:public void sendBinaryMessage(byte[])
-    213:214:public void connect(java.lang.String,de.tavendo.autobahn.WebSocket$ConnectionHandler)
     218:219:public void connect(java.lang.String,de.tavendo.autobahn.WebSocket$ConnectionHandler,de.tavendo.autobahn.WebSocketOptions)
 de.tavendo.autobahn.WebSocketException:
     private static final long serialVersionUID
