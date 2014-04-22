@@ -722,9 +722,7 @@ if (getMessageType( topic).equals("ch")){
 		{
 			if (channel.ch.equals(topic))
 			{
-			if(log)Log.d(this.getClass().getName(), "chanal nest" + channel.name);
 			for (Device device : channel.deviceList) {
-				if(log)Log.d(this.getClass().getName(), "device nest" + device.name + " " + device.u);
 				if (datanew[0].equals(Integer.toString(device.u))) {
 					if(log)Log.d(this.getClass().getName(), "Изменилось состояние устройства в канале с " + device.toString());
 					device.lat = Float.parseFloat(datanew[1]);
@@ -786,12 +784,8 @@ private void addToChannelChat(String toParse, String topic) {
 	String[] datanew = data[1].split("\\+");
 	//if(log)Log.d(this.getClass().getName(), "datanew[0]=" + datanew[0] + " datanew[1]=" + datanew[1] + " datanew[2]=" + datanew[2]);
 	for (final Channel channel : LocalService.channelList) {
-		if(log)Log.d(this.getClass().getName(), "chanal nest" + channel.name);
 		if (topic.equals(channel.ch+"_chat")){
-					
-		
 		for (Device device : channel.deviceList) {
-			if(log)Log.d(this.getClass().getName(), "device nest" + device.name + " " + device.u);
 			if (datanew[0].equals(Integer.toString(device.u))) {
 				if(log)Log.d(this.getClass().getName(), "Сообщение от устройства в канале " + device.toString());
 				m.from = device.name;

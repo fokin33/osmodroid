@@ -75,8 +75,11 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 			MenuItem traces = menu.add(0, 1, 0, R.string.showtraces);
+			MenuItem rotation = menu.add(0, 2, 0, "Enable manual rotation");
 			traces.setCheckable(true);
+			rotation.setCheckable(true);
 			traces.setChecked(OsMoDroid.settings.getBoolean("traces", true));
+			rotation.setChecked(OsMoDroid.settings.getBoolean("rotation", false));
 			
 			super.onCreateOptionsMenu(menu, inflater);
 		}
@@ -94,7 +97,12 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 				OsMoDroid.editor.commit();
 				mMapView.invalidate();
 			break;
-
+			case 2:
+				item.setChecked(!item.isChecked());
+				OsMoDroid.editor.putBoolean("rotation", item.isChecked());
+				OsMoDroid.editor.commit();
+				mMapView.invalidate();
+			break;	
 			default:
 				break;
 			}
@@ -320,11 +328,10 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 			
 			@Override
 			public void onClick(View v) {
-				
+					mMapView.setMapOrientation(0);
 					Log.d(getClass().getSimpleName(), "map click on compas");
 					if(rotate){
 						rotate=false;
-						mMapView.setMapOrientation(0);
 					}
 					else 
 					{

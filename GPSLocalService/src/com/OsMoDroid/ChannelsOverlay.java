@@ -26,7 +26,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 
-public class ChannelsOverlay extends Overlay implements RotationGestureDetector.OnRotationGestureListener {
+public class ChannelsOverlay extends Overlay implements RotationGestureDetector.RotationListener {
 	//private final float mScale;
 	Paint paint=new Paint();
 	private Paint pathpaint;
@@ -34,6 +34,7 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 	private final Point mTempPoint2 = new Point();
 	MapView map;
 	private RotationGestureDetector mRotationDetector;
+	private float currentAngle=0f;
 	public ChannelsOverlay(ResourceProxy pResourceProxy, MapView map) {
 		super(pResourceProxy);
 		// mScale = OsMoDroid.context.getResources().getDisplayMetrics().density;
@@ -53,7 +54,7 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
     public boolean onTouchEvent(MotionEvent event, MapView mapView)
     {
         if (this.isEnabled()) {
-            mRotationDetector.onTouchEvent(event);
+            mRotationDetector.onTouch(event);
         }
         return super.onTouchEvent(event, mapView);
     }
@@ -209,12 +210,18 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 		
 	}
 
-
 	@Override
-	public boolean OnRotation(RotationGestureDetector rotationDetector) {
-		map.setMapOrientation(map.getMapOrientation()+rotationDetector.getAngle());
-		return false;
-	}
+	public void onRotate(float deltaAngle)
+		{
+			if(OsMoDroid.settings.getBoolean("rotation", false))
+				{
+					map.setMapOrientation(map.getMapOrientation()+deltaAngle);
+				}
+			
+		}
+
+
+	
 	
 	
 	

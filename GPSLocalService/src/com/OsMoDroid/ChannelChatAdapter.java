@@ -55,7 +55,7 @@ public class ChannelChatAdapter extends ArrayAdapter<ChannelChatMessage> {
 		        row.setBackgroundColor(message.color);
 		        //txtFrom.setBackgroundColor(message.color);
 		        
-		        if(message.text.startsWith(OsMoDroid.settings.getString("devicename", ""))){
+		        if(message.text.startsWith(OsMoDroid.settings.getString("devicename", "")+",")){
 //		        	txtText.setBackgroundColor(Color.DKGRAY);
 //		        	txtFrom.setBackgroundColor(Color.DKGRAY);
 //		        	txtTime.setBackgroundColor(Color.DKGRAY);
