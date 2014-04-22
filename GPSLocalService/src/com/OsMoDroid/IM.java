@@ -795,16 +795,16 @@ private void addToChannelChat(String toParse, String topic) {
 			if (datanew[0].equals(Integer.toString(device.u))) {
 				if(log)Log.d(this.getClass().getName(), "Сообщение от устройства в канале " + device.toString());
 				m.from = device.name;
-				m.color=m.color=Color.parseColor("#"+device.color);
+				m.color=m.color=Color.parseColor("#40"+device.color);
 			}
 			if (datanew[0].equals(OsMoDroid.settings.getString("device", ""))){
 				m.from=localService.getString(R.string.iam);
 				if(log)Log.d(this.getClass().getName(), "Сообщение от устройства в канале от меня ");
-				m.color=Color.parseColor("#AAAAAA");
+				m.color=Color.parseColor("#40AAAAAA");
 			}
 			if (datanew[0].equals("0")){
 			m.from=localService.getString(R.string.observers);
-			m.color=Color.parseColor("#006400");
+			m.color=Color.parseColor("#40006400");
 			}
 		}
 		Intent intent =new Intent(localService, GPSLocalServiceClient.class).putExtra("channelpos", channel.u);
