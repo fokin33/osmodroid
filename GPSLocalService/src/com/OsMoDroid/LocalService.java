@@ -372,6 +372,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	final private static  DecimalFormatSymbols dot= new DecimalFormatSymbols();
 	protected boolean firstgpsbeepedon=false;
 	static IM myIM;
+	static IM trackerIM;
 	TextToSpeech tts;
 	private int _langTTSavailable = -1;
 	String text;
@@ -400,7 +401,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	public static boolean channelsupdated=false;
 	public static boolean chatVisible=false;
 	 public static String currentItemName="";
-    final  Handler alertHandler = new Handler() {
+    final   Handler alertHandler = new Handler() {
 			@Override
 			public void handleMessage(Message message) {
 			if(log)Log.d(this.getClass().getName(), "Handle message "+message.toString());
@@ -963,6 +964,8 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	private de.tavendo.autobahn.WebSocket.ConnectionHandler c;
 	private WebSocketOptions o;
 	private boolean log=true;
+	private String sending="";
+	private ArrayList<String> buffer= new ArrayList<String>();
 	//boolean connecting=false;
 	     static String formatInterval(final long l)
 	    {
@@ -1082,7 +1085,7 @@ public synchronized void informRemoteClientRouteTo(float Lat, float Lon){
 
 
 
-public void refresh(){
+public synchronized void refresh(){
 
 	in.removeExtra("startmessage");
 	in.putExtra("position", position+"\n"+satellite+" "+getString(R.string.accuracy)+accuracy);
@@ -1099,9 +1102,10 @@ public void refresh(){
 	in.putExtra("maxspeed", df1.format(maxspeed*3.6));
 	in.putExtra("workdistance", df2.format(workdistance/1000));
 	in.putExtra("timeperiod", formatInterval(timeperiod));
-	if (myIM!=null){
-	in.putExtra("connect", myIM.connOpened);
-	in.putExtra("connecting", myIM.connecting);
+	if (trackerIM!=null){
+	in.putExtra("connect", trackerIM.connOpened);
+	in.putExtra("connecting", trackerIM.connecting);
+	
 	}
 	sendBroadcast(in);
 
@@ -1481,7 +1485,16 @@ if (live&&!OsMoDroid.settings.getString("hash", "" ).equals(""))
 				longPollchannels.add(new String[] {"ctrl_"+OsMoDroid.settings.getString("lpch", ""),"r",""});
 				longPollchannels.add(new String[] {OsMoDroid.settings.getString("lpch", "")+"_chat","m",""});
 				}
-				myIM = new IM( longPollchannels,this , this);
+//				myIM = new IM( longPollchannels,this , this){
+//
+//					@Override
+//					void parseEx(String toParse, String topic)
+//						{
+//							// TODO Auto-generated method stub
+//							super.parseEx(toParse, topic);
+//						}
+//					
+//				};
 			
 		try {
 		if(log)Log.d(this.getClass().getName(), "try load notifications");
@@ -1501,7 +1514,88 @@ if (live&&!OsMoDroid.settings.getString("hash", "" ).equals(""))
 		disconnectChannelsChats();
 		connectChannelsChats();
 		
+	trackerIM = new IM("osmo.mobi", 4242, this){
 		
+		@Override
+		void ondisconnect(){
+			if(!sending.equals("")){
+				buffer.add(sending);
+				sending="";
+			}
+		}
+		
+		@Override
+		void parseEx(String toParse, String topic)
+			{
+				JSONObject jo = new JSONObject();
+				
+				String c;
+				try
+					{
+						c = toParse.substring(0, toParse.indexOf('|'));
+					} catch (Exception e1)
+					{
+						c=toParse;
+					}
+				
+				try
+					{
+						jo = new JSONObject(toParse.substring(toParse.indexOf('|')+1));
+					}
+				catch (JSONException e) {
+					
+				}
+				
+				if(c.equals("NEED_AUTH")){
+					sendToServer( "AUTH|"+OsMoDroid.settings.getString("newkey", ""));
+				}
+				if(c.equals("AUTH")){
+					if(jo.has("health")){
+						authed=true;
+						setkeepAliveAlarm();
+					}
+				}
+				
+				super.parseEx(toParse, topic);
+				if(toParse.equals("1")){
+					sending="";
+					return;
+				}
+				try
+					{
+						
+						if(jo.has("server")){
+							
+						}
+						if(jo.has("c")){
+							if(jo.getString("c").equals("AU")){
+								if(jo.has("device")){
+								authed=true;
+								setkeepAliveAlarm();
+								trackerIM.sendToServer("A|session_open");
+								}
+							}
+							else
+								if(jo.getString("c").equals("session_open")){
+									sessionstarted=true;
+									OsMoDroid.editor.putString("viewurl","http://test1342.osmo.mobi/u/"+jo.optString("url"));
+									OsMoDroid.editor.commit();
+									localService.refresh();
+								}
+							else
+								if(jo.getString("c").equals("session_close")){
+									sessionstarted=false;
+									close();
+									}
+						}
+					} catch (JSONException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+			}
+	};
 if (OsMoDroid.settings.getBoolean("started", false)){
 	startServiceWork();
 }
@@ -1873,9 +1967,9 @@ invokeMethod(mStartForeground, mStartForegroundArgs);
 setstarted(true);
 
 if (live){
-	if(myIM.mWebsocketConnection.isConnected()){
-		myIM.mWebsocketConnection.sendTextMessage("session_open");
-	}
+	
+	trackerIM.start();
+	
 //String[] params = {"http://a.t.esya.ru/?act=session_start&hash="+OsMoDroid.settings.getString("hash", "")+"&n="+OsMoDroid.settings.getString("n", "")+"&ttl="+OsMoDroid.settings.getString("session_ttl", "30"),"false","","session_start"};
 //APIcomParams params = new APIcomParams("http://a.t.esya.ru/?act=session_start&hash="+OsMoDroid.settings.getString("hash", "")+"&n="+OsMoDroid.settings.getString("n", "")+"&ttl="+OsMoDroid.settings.getString("session_ttl", "30"),null,"session_start"); 
 //new Netutil.MyAsyncTask(this).execute(params);
@@ -1921,15 +2015,27 @@ private void manageIM(){
 			longPollchannels.add(new String[] {"ctrl_"+OsMoDroid.settings.getString("lpch", ""),"r",""});
 			longPollchannels.add(new String[] {OsMoDroid.settings.getString("lpch", "")+"_chat","m",""});
 			}
-			myIM = new IM( longPollchannels ,this, this);	
+//			myIM = new IM( longPollchannels ,this, this){
+//
+//				@Override
+//				void parseEx(String toParse, String topic)
+//					{
+//						// TODO Auto-generated method stub
+//						super.parseEx(toParse, topic);
+//					}
+//				
+//			};	
 			if(log)Log.d(getClass().getSimpleName(), "om_device_channel_adaptive from manageim");
 			Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 		}
 	if (!OsMoDroid.settings.getBoolean("im", false) && myIM!=null){
 		myIM.close();
 		myIM=null;
-	}
 		
+	}
+	if(trackerIM!=null){
+		trackerIM.close();
+	}
 		
 	
 }
@@ -2126,14 +2232,17 @@ public void sendid()
 			 soundPool.play(stopsound, 1f, 1f, 1, 0, 1f);
 		}
 		
-		am.cancel(pi);
+		am.cancel( pi);
 
 		if (live&&stopsession){
                     //String[] params = {"http://a.t.esya.ru/?act=session_stop&hash="+OsMoDroid.settings.getString("hash", "")+"&n="+OsMoDroid.settings.getString("n", ""),"false","","session_stop"};
                     //APIcomParams params = new APIcomParams("http://a.t.esya.ru/?act=session_stop&hash="+OsMoDroid.settings.getString("hash", "")+"&n="+OsMoDroid.settings.getString("n", "")+"&ttl="+OsMoDroid.settings.getString("session_ttl", "30"),null,"session_stop");
                     //new Netutil.MyAsyncTask(this).execute(params);
-			if(myIM.mWebsocketConnection.isConnected()){
-				myIM.mWebsocketConnection.sendTextMessage("session_close");
+			if(trackerIM.authed){
+				trackerIM.sendToServer("session_close");
+						sessionstarted=false;
+				
+				
 			}
 
                 
@@ -3111,12 +3220,20 @@ private void sendlocation (Location location){
 //	- 5 = hashstring (уникальный хеш пользователя)
 
 //	- 6 = checknumint(3) (контрольное число к хешу)
-	if (myIM.mWebsocketConnection.isConnected()){
-		myIM.mWebsocketConnection.sendTextMessage("p|"+df6.format( location.getLatitude()) +":"+ df6.format(location.getLongitude())+":"+ df1.format( location.getAccuracy())
-
-				+":"+df1.format( location.getAltitude())+":"+df1.format( location.getSpeed()));
+	  if(log)Log.d(this.getClass().getName(), "Отправка:"+trackerIM.authed +" s "+sending);
+	if (trackerIM!=null&&trackerIM.authed&&sending.equals("")){
+		sending=
+				"p|"+df6.format( location.getLatitude()) +":"+ df6.format(location.getLongitude())+":"+ df1.format( location.getAccuracy())
+		+":"+df1.format( location.getAltitude())+":"+df1.format( location.getSpeed());
+		trackerIM.sendToServer(sending);		
+		
+					
 		if(log)Log.d(this.getClass().getName(), "GPS websocket sendlocation");
-	}
+	} else
+		{
+			buffer.add("p|"+df6.format( location.getLatitude()) +":"+ df6.format(location.getLongitude())+":"+ df1.format( location.getAccuracy())
+		+":"+df1.format( location.getAltitude())+":"+df1.format( location.getSpeed()));
+		}
 
 
 
@@ -3198,7 +3315,7 @@ public void onInit(int status) {
 
 }
 
-public boolean isOnline() {
+public synchronized boolean isOnline() {
 
     ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
 

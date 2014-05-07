@@ -213,6 +213,24 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 				intentAction(needIntent);
 				needIntent=null;
 			}
+			
+				
+				 if (mService.trackerIM!=null){
+					 if(mService.trackerIM.connOpened&&!mService.trackerIM.connecting){
+				
+						 actionBar.setLogo(R.drawable.eyeo);
+					 } else if (mService.trackerIM.connecting) 
+					 {
+						 actionBar.setLogo(R.drawable.eyeu);
+					 }
+					 else
+					 {
+						 actionBar.setLogo(R.drawable.eyen);
+					 }
+						 
+				 }
+				
+			
 		}
 
 		public void onServiceDisconnected(ComponentName arg0) {
@@ -410,7 +428,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 					    getString(R.string.chanals),getString(R.string.devices),getString(R.string.links),
 					    getString(R.string.notifications), getString(R.string.tracks) , getString(R.string.exit), "debug"};
 				
-			};
+			}
 			
 			 
 		 for (String s: menu1)
@@ -423,6 +441,12 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 			 String[] menu2=new String[] {
 					    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
 					    getString(R.string.tracks),getString(R.string.exit)};
+			 if(OsMoDroid.debug){
+				 menu2 = new String[] {
+						    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
+						    getString(R.string.tracks),getString(R.string.exit), "debug"};
+				
+			}
 			for (String s: menu2 ){
 				mDrawerItems.add(s);
 			}

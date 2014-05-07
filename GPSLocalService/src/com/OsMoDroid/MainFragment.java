@@ -80,7 +80,7 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 	}
 
 	 void updateMainUI() {
-		 Log.d(getClass().getSimpleName(), "mainfragment updateMainUI");
+		 //Log.d(getClass().getSimpleName(), "mainfragment updateMainUI");
 
 		String startStatus =globalActivity.checkStarted() ? getString(R.string.Running)
 				: getString(R.string.NotRunning);
@@ -308,23 +308,23 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 		final View view =  inflater.inflate(R.layout.main,container, false);
 		
 		
-		if (OsMoDroid.settings.getBoolean("im", false)){
-		
-		 if (globalActivity.mService!=null&&globalActivity.mService.myIM!=null&&!OsMoDroid.settings.getString("key", "").equals("")){
-			 if(globalActivity.mService.myIM.connOpened&&!globalActivity.mService.myIM.connecting){
-		
-				 globalActivity.actionBar.setLogo(R.drawable.eyeo);
-			 } else if (globalActivity.mService.myIM.connecting) 
-			 {
-				 globalActivity.actionBar.setLogo(R.drawable.eyeu);
-			 }
-			 else
-			 {
-				 globalActivity.actionBar.setLogo(R.drawable.eyen);
-			 }
-				 
-		 }
-		}
+//		if (OsMoDroid.settings.getBoolean("im", false)){
+//		
+//		 if (globalActivity.mService!=null&&globalActivity.mService.myIM!=null&&!OsMoDroid.settings.getString("key", "").equals("")){
+//			 if(globalActivity.mService.myIM.connOpened&&!globalActivity.mService.myIM.connecting){
+//		
+//				 globalActivity.actionBar.setLogo(R.drawable.eyeo);
+//			 } else if (globalActivity.mService.myIM.connecting) 
+//			 {
+//				 globalActivity.actionBar.setLogo(R.drawable.eyeu);
+//			 }
+//			 else
+//			 {
+//				 globalActivity.actionBar.setLogo(R.drawable.eyen);
+//			 }
+//				 
+//		 }
+//		}
 		
 			final ToggleButton alarmToggle = (ToggleButton) view.findViewById(R.id.alarmButton);
 			if(OsMoDroid.settings.contains("signalisation")){
