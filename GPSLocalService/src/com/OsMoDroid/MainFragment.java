@@ -306,8 +306,10 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 		 
 		
 		final View view =  inflater.inflate(R.layout.main,container, false);
-		
-		
+		if(!OsMoDroid.settings.getString("startmessage", "").equals("")){
+		TextView tt = (TextView) view.findViewById(R.id.Location);
+		tt.setText(getString(R.string.servermessage)+":\n"+OsMoDroid.settings.getString("startmessage", ""));
+		}
 		if (OsMoDroid.settings.getBoolean("im", false)){
 		
 		 if (globalActivity.mService!=null&&globalActivity.mService.myIM!=null&&!OsMoDroid.settings.getString("key", "").equals("")){
@@ -614,8 +616,9 @@ else {
 						t2.setText(OsMoDroid.settings.getString("devicename", "")+" :\n "+globalActivity.viewurl);
 						Linkify.addLinks(t2, Linkify.ALL);
 						TextView tt = (TextView) view.findViewById(R.id.Location);
-						tt.setText(getString(R.string.servermessage)+'\n'+startmessage);
+						tt.setText(getString(R.string.servermessage)+":\n"+startmessage);
 						globalActivity.messageShowed=true;
+						OsMoDroid.editor.putString("startmessage", startmessage);
 						
 
 					}

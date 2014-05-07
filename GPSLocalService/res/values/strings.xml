@@ -172,4 +172,6 @@
 <string name="needgps">Need GPS Enabled</string>
 <string name="enablegps">Please, enable GPS</string>
 <string name="showtraces">Show traces</string>
+<string name="enable_manual_rotation">Enable manual rotation</string>
+<string name="enable_course_rotation">Enable course rotation</string>
 </resources>

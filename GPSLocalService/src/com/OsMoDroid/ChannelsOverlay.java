@@ -8,7 +8,7 @@ import org.osmdroid.api.IMapView;
 import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.MapView.Projection;
+import org.osmdroid.views.Projection;
 import org.osmdroid.views.overlay.ItemizedOverlay;
 import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.OverlayItem;
@@ -78,7 +78,7 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 					// precompute new points to the intermediate projection.
 					while (gpx.mPointsPrecomputed < size) {
 						final Point pt = gpx.points.get(gpx.mPointsPrecomputed);
-						pj.toMapPixelsProjected(pt.x, pt.y, pt);
+						pj.toProjectedPixels(pt.x, pt.y, pt);
 
 						gpx.mPointsPrecomputed++;
 					}
@@ -89,7 +89,12 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 					Point projectedPoint1;
 
 					// clipping rectangle in the intermediate projection, to avoid performing projection.
-					final Rect clipBounds = pj.fromPixelsToProjected(pj.getScreenRect());
+					BoundingBoxE6 boundingBox = pj.getBoundingBox();
+					Point topLeft = pj.toProjectedPixels(boundingBox.getLatNorthE6(),
+					boundingBox.getLonWestE6(), null);
+					Point bottomRight = pj.toProjectedPixels(boundingBox.getLatSouthE6(),
+					boundingBox.getLonEastE6(), null);
+					final Rect clipBounds = new Rect(topLeft.x, topLeft.y, bottomRight.x, bottomRight.y);
 
 					gpx.mPath.rewind();
 					projectedPoint0 = gpx.points.get(size - 1);
@@ -110,11 +115,11 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 						// the starting point may be not calculated, because previous segment was out of clip
 						// bounds
 						if (screenPoint0 == null) {
-							screenPoint0 = pj.toMapPixelsTranslated(projectedPoint0, this.mTempPoint1);
+							screenPoint0 = pj.toPixelsFromProjected(projectedPoint0, this.mTempPoint1);
 							gpx.mPath.moveTo(screenPoint0.x, screenPoint0.y);
 						}
 
-						screenPoint1 = pj.toMapPixelsTranslated(projectedPoint1, this.mTempPoint2);
+						screenPoint1 = pj.toPixelsFromProjected(projectedPoint1, this.mTempPoint2);
 
 						// skip this point, too close to previous point
 						if (Math.abs(screenPoint1.x - screenPoint0.x) + Math.abs(screenPoint1.y - screenPoint0.y) <= 1) {
@@ -155,11 +160,11 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 				 	{
 					 pathpaint.setColor(Color.parseColor("#" + dev.color));
 					 Path path = new Path();
-					 pj.toMapPixels(dev.devicePath.get(0), scrPoint);
+					 pj.toProjectedPixels((GeoPoint) dev.devicePath.get(0), scrPoint);
 					 path.moveTo(scrPoint.x, scrPoint.y);
 					 for (IGeoPoint geo: dev.devicePath)
 					 	{
-						 pj.toMapPixels(geo, scrPoint);
+						 pj.toProjectedPixels((GeoPoint) geo, scrPoint);
 						 path.lineTo(scrPoint.x, scrPoint.y);
 						 path.moveTo(scrPoint.x, scrPoint.y);
 					 	}
@@ -170,7 +175,7 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 					{ 
 					if (theBoundingBox.contains(new GeoPoint(dev.lat, dev.lon))) 
 					 {
-						pj.toMapPixels(new GeoPoint(dev.lat, dev.lon), scrPoint);
+						pj.toProjectedPixels(new GeoPoint(dev.lat, dev.lon), scrPoint);
 					  	paint.setDither(true);
 						paint.setAntiAlias(true);
 						paint.setTextSize(22f);
@@ -190,7 +195,7 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 			for(com.OsMoDroid.Channel.Point p: ch.pointList){
 				if (theBoundingBox.contains(new GeoPoint(p.lat, p.lon))) 
 				 {
-					pj.toMapPixels(new GeoPoint(p.lat, p.lon), scrPoint);
+					pj.toProjectedPixels(new GeoPoint(p.lat, p.lon), scrPoint);
 				  	paint.setDither(true);
 					paint.setAntiAlias(true);
 					paint.setTextSize(22f);

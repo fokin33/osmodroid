@@ -87,6 +87,7 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 
 			@Override
 			public void onPong() {
+				manager.cancel(reconnectPIntent);
 				addlog("websocket Pong Recieved");
 				if(log)Log.d(this.getClass().getName(), "websocket onPong");
 				
@@ -147,6 +148,7 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
             	  addlog("websocket sendPing");
             	  if(log)Log.d(this.getClass().getName(), "websocket send ping");
             	  mWampConnection.sendPing();
+            	  setReconnectAlarm();
               }
 //              if(mWebsocketConnection!=null&&mWebsocketConnection.isConnected()){
 //            	  if(log)Log.d(this.getClass().getName(), "websocket2 send ping");

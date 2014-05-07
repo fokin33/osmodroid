@@ -54,7 +54,7 @@
 <string name="message">Сообщение</string>
 <string name="sendsupport">Сообщить в техническую поддержку</string>
 <string name="about">О программе</string>
-<string name="abouttext">OsMoDroid, клиент мониторинга OsMo\nАвтор: Денис Фокин (c) 2012-2014\n\nИспользуя данное приложение вы принимаете Условия Использования: http://esya.ru/om/terms/\n\nОфициальный сайт OsMoDroid: http://osmodroid.com\nСправка по OsMoDroid: http://osmodroid.com/help/\nСвязка с OsmAnd: http://osmodroid.com/withosmand.html\n\nСправка по мониторингу: http://esya.ru/om/start/ \n Map Data: © OpenStreetMap contributors \n Tiles: © GIScience Heidelberg</string>
+<string name="abouttext">OsMoDroid, клиент мониторинга OsMo\nАвтор: Денис Фокин (c) 2012-2014\n\nИспользуя данное приложение вы принимаете Условия Использования:\nhttp://esya.ru/om/terms/\n\nОфициальный сайт OsMoDroid:\nhttp://osmodroid.com\nСправка по OsMoDroid:\nhttp://osmodroid.com/help/\nСвязка с OsmAnd:\nhttp://osmodroid.com/withosmand.html\n\nСправка по мониторингу:\nhttp://esya.ru/om/start/ \n Map Data: © OpenStreetMap contributors \n Tiles: © GIScience Heidelberg</string>
 <string name="send">>></string>
 <string name="cancel">Отмена</string>
 <string name="speed">Скорость: км/ч</string>
@@ -172,4 +172,6 @@
 <string name="needgps">Нужен включенный GPS</string>
 <string name="enablegps">Пожалуйста включите GPS, без него не будет достаточной точности.Перейти к настройкам Местоположения ?</string>
 <string name="showtraces">Показывать следы</string>
+<string name="enable_manual_rotation">Вращение карты жестами</string>
+<string name="enable_course_rotation">Вращение по курсу</string>
 </resources>

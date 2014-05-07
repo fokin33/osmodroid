@@ -260,9 +260,11 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) 
 				{
 					ChannelChatMessage m =(ChannelChatMessage)arg0.getItemAtPosition(arg2);
+					if(input.length()==0&&!(m.from.equals(getString(R.string.iam)))){
 					input.setText(m.from+", "+input.getText());
 					input.setSelection(input.length());
 					OsMoDroid.inputMethodManager.showSoftInput(input, InputMethodManager.SHOW_IMPLICIT);
+					}
 				}
 		});
 		t.add(Netutil.newapicommand((ResultsListener)LocalService.serContext, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", "")));

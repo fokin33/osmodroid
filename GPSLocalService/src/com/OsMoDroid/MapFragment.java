@@ -16,7 +16,6 @@ import org.osmdroid.tileprovider.tilesource.XYTileSource;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.util.ResourceProxyImpl;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.MapView.Projection;
 import org.osmdroid.views.overlay.ItemizedIconOverlay;
 import org.osmdroid.views.overlay.ItemizedOverlay;
 import org.osmdroid.views.overlay.OverlayItem;
@@ -31,6 +30,7 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -72,15 +72,18 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 		//ArrayList<PathOverlay> paths = new ArrayList<PathOverlay>();
 		private IMyLocationConsumer myLocationConumer;
 		private long lastgpslocation=0;
+		private MenuItem courserotation;
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 			MenuItem traces = menu.add(0, 1, 0, R.string.showtraces);
-			MenuItem rotation = menu.add(0, 2, 0, "Enable manual rotation");
+			MenuItem rotation = menu.add(0, 2, 0, R.string.enable_manual_rotation);
+			courserotation = menu.add(0, 3, 0, R.string.enable_course_rotation);
 			traces.setCheckable(true);
 			rotation.setCheckable(true);
+			courserotation.setCheckable(true);
 			traces.setChecked(OsMoDroid.settings.getBoolean("traces", true));
 			rotation.setChecked(OsMoDroid.settings.getBoolean("rotation", false));
-			
+			courserotation.setChecked(rotate);
 			super.onCreateOptionsMenu(menu, inflater);
 		}
 
@@ -103,6 +106,12 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 				OsMoDroid.editor.commit();
 				mMapView.invalidate();
 			break;	
+			case 3:
+				item.setChecked(!item.isChecked());
+				rotate=!rotate;
+				mMapView.setMapOrientation(0);
+				mMapView.invalidate();
+			break;
 			default:
 				break;
 			}
@@ -158,6 +167,8 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 	
 		super.onDestroyView();
 	}
+	
+	
 	class MAPSurferTileSource extends OnlineTileSourceBase {
 
 		MAPSurferTileSource(String aName, string aResourceId, int aZoomMinLevel,
@@ -179,12 +190,10 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 
 	@Override
 	public void onDestroy() {
-		
-		Log.d(getClass().getSimpleName(), "map ondestroy");
 		super.onDestroy();
 	}
 
-
+	
 
 
 
@@ -270,7 +279,7 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 			final int aTileSizePixels=256;
 			final String aImageFilenameEnding = ".png";
 			final String[] aBaseUrl=new String[] {"http://openmapsurfer.uni-hd.de/tiles/roads/"};
-			MAPSurferTileSource myTileSource = new MAPSurferTileSource(name, string.base, aZoomMinLevel, aZoomMaxLevel, aTileSizePixels, aImageFilenameEnding, aBaseUrl);
+			MAPSurferTileSource myTileSource = new MAPSurferTileSource(name, string.unknown, aZoomMinLevel, aZoomMaxLevel, aTileSizePixels, aImageFilenameEnding, aBaseUrl);
 			View view = inflater.inflate(R.layout.map, container, false);
 			mMapView = (MapView)view.findViewById(R.id.mapview);
 			ImageButton centerImageButton = (ImageButton)view.findViewById(R.id.imageButtonCenter);
@@ -330,16 +339,8 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 			public void onClick(View v) {
 					mMapView.setMapOrientation(0);
 					Log.d(getClass().getSimpleName(), "map click on compas");
-					if(rotate){
-						rotate=false;
-					}
-					else 
-					{
-						rotate=true;
-					}	
-					
-				
-				
+					rotate=!rotate;
+					courserotation.setChecked(rotate);
 			}
 		});
            		
