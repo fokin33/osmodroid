@@ -1553,6 +1553,7 @@ org.osmdroid.views.MapView$LayoutParams:
 org.osmdroid.views.Projection:
     85:85:public android.graphics.Rect getIntrinsicScreenRect()
     94:94:public org.osmdroid.api.IGeoPoint fromPixels(int,int)
+    138:138:public android.graphics.Point toProjectedPixels(org.osmdroid.util.GeoPoint,android.graphics.Point)
     196:196:public float metersToEquatorPixels(float)
     209:209:public float metersToPixels(float)
     216:216:public org.osmdroid.api.IGeoPoint getNorthEast()
