@@ -203,9 +203,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 			invokeService();
 			started = true;
 			updateMainUI();
-			if (live&&!OsMoDroid.settings.getString("hash", "" ).equals("")&&OsMoDroid.settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-14400000){
-				mService.startcomand();
-				}
+			
 			if (!OsMoDroid.settings.getString("key", "" ).equals("") ){
 			Netutil.newapicommand((ResultsListener)mService.serContext, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
 			}
@@ -215,11 +213,11 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 			}
 			
 				
-				 if (mService.trackerIM!=null){
-					 if(mService.trackerIM.connOpened&&!mService.trackerIM.connecting){
+				 if (mService.myIM!=null){
+					 if(mService.myIM.connOpened&&!mService.myIM.connecting){
 				
 						 actionBar.setLogo(R.drawable.eyeo);
-					 } else if (mService.trackerIM.connecting) 
+					 } else if (mService.myIM.connecting) 
 					 {
 						 actionBar.setLogo(R.drawable.eyeu);
 					 }
@@ -1048,7 +1046,7 @@ OsMoDroid.editor.putString("key", key);
 OsMoDroid.editor.remove("laststartcommandtime");
 OsMoDroid.editor.commit();
 Netutil.newapicommand((Context) GPSLocalServiceClient.this, "om_device_bind:"+OsMoDroid.settings.getString("hash", "")+","+OsMoDroid.settings.getString("n", ""));
-mService.startcomand();
+
 //mDrawerItems = ;
 setupDrawerList();
 

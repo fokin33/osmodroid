@@ -22,8 +22,7 @@ import android.net.NetworkInfo;import android.os.Bundle;import android.os.Env
 import android.os.Looper;
 import android.os.SystemClock;
 import android.os.Handler;import android.os.Message;import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;import android.util.Log;import android.widget.Toast;import de.tavendo.autobahn.*;import de.tavendo.autobahn.Wamp.ConnectionHandler;
-import de.tavendo.autobahn.Wamp.EventHandler;
+import android.support.v4.app.NotificationCompat;import android.util.Log;import android.widget.Toast;
 /**
  * @author dfokin
  *Class for work with LongPolling
@@ -38,7 +37,7 @@ public class IM {	Handler handler;
 	private static final String KEEPALIVE_INTENT = "com.osmodroid.keepalive";
 
 	protected  boolean running       = false;	//protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;//	String mykey;//	String timestamp=Long.toString(System.currentTimeMillis());	String lcursor="";	int pingTimeout=900;	Thread connectThread;	//private BufferedReader    in      = null;	Context parent;	String myLongPollCh;
-	ArrayList<String[]>  myLongPollChList;	int mestype=0;	LocalService localService;	FileOutputStream fos;
+	ArrayList<String[]>  myLongPollChList = new ArrayList<String[]>();	int mestype=0;	LocalService localService;	FileOutputStream fos;
 	ObjectOutputStream output = null;	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	static String SERVER_IP;// = "osmo.mobi";
 	static int SERVERPORT;// = 5757;
@@ -55,7 +54,8 @@ public class IM {	Handler handler;
 
 	long sendBytes=0;
 	long recievedBytes=0;
-
+	public boolean needopensession=false;
+	public boolean needclosesession=false;
 	private Thread readerThread;
 
 	private Thread writerThread;
@@ -91,7 +91,9 @@ public class IM {	Handler handler;
 		
 		SERVER_IP=server;
 		SERVERPORT=port;
-		
+		if(!OsMoDroid.settings.getString("newkey", "").equals("")){
+		start();
+		}
 	}
 	public void sendToServer(String str){
 	Message msg =new Message();
@@ -116,16 +118,26 @@ public class IM {	Handler handler;
             	  addlog("websocket sendPing");
             	  if(log)Log.d(this.getClass().getName(), " send ping");
             	  sendToServer("P");
-            	  setReconnectAlarm();
+            	
               }
              
           }
       };
       
-      void addlog(String str){
-    	  	if(OsMoDroid.debug)ExceptionHandler.reportOnlyHandler(parent.getApplicationContext()).uncaughtException(Thread.currentThread(), new Throwable(str));
-    	  	if(OsMoDroid.debug)LocalService.debuglist.add( sdf1.format(new Date(System.currentTimeMillis()))+" "+str+" S="+sendBytes+ " R="+recievedBytes);
-  			if(LocalService.debugAdapter!=null){LocalService.debugAdapter.notifyDataSetChanged();}
+      void addlog(final String str){
+    	  	localService.alertHandler.post(new Runnable()
+				{
+					
+					@Override
+					public void run()
+						{
+							if(OsMoDroid.debug)ExceptionHandler.reportOnlyHandler(parent.getApplicationContext()).uncaughtException(Thread.currentThread(), new Throwable(str));
+				    	  	if(OsMoDroid.debug)LocalService.debuglist.add( sdf1.format(new Date(System.currentTimeMillis()))+" "+str+" S="+sendBytes+ " R="+recievedBytes);
+				  			if(LocalService.debugAdapter!=null){LocalService.debugAdapter.notifyDataSetChanged();}
+							
+						}
+				});
+    	  	
     	  
       }
       
@@ -273,6 +285,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 					}
 									}		    }		}	};
 
+	
+
 
 	
 
@@ -326,6 +340,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 										 error=wr.checkError();
 										
 										 if(log)Log.d(this.getClass().getName(), "wr write "+b.getString("write")+" error="+error);
+										 addlog("wr write "+b.getString("write")+" error="+error);
 										 if(error){
 											 setReconnectOnError();
 											 Looper.myLooper().quit();
@@ -566,6 +581,106 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		return;
 		}
 	
+	JSONObject jo = new JSONObject();
+	
+	String c="";
+	String d="";
+	try
+		{
+			c = toParse.substring(0, toParse.indexOf('|'));
+			d = toParse.substring(toParse.indexOf('|')+1);
+		} catch (Exception e1)
+		{
+			c=toParse;
+			
+		}
+	
+	try
+		{
+			jo = new JSONObject(d);
+		}
+	catch (JSONException e) {
+		
+	}
+	
+	if(c.equals("NEED_AUTH")){
+		sendToServer( "AUTH|"+OsMoDroid.settings.getString("newkey", ""));
+	}
+	if(c.equals("AUTH")){
+		if(jo.has("health")){
+			authed=true;
+			if(needopensession){
+				sendToServer("TRACKER_SESSION_OPEN");
+			}
+			if(needclosesession){
+				sendToServer("TRACKER_SESSION_CLOSE");
+			}
+			if(OsMoDroid.gpslocalserviceclientVisible){
+				sendToServer("MOTD");
+			}
+			setkeepAliveAlarm();
+		}
+	}
+	if(c.equals("TRACKER_SESSION_OPEN")){
+		localService.sessionstarted=true;
+		needopensession=false;
+		OsMoDroid.editor.putString("viewurl","http://test1342.osmo.mobi/u/"+jo.optString("url"));
+		OsMoDroid.editor.commit();
+		localService.refresh();
+	}
+	else
+		if(c.equals("TRACKER_SESSION_CLOSE")){
+			localService.sessionstarted=false;
+			needclosesession=false;
+			}
+	
+	if(c.equals("T")){
+		localService.sendcounter++;
+		localService.sending="";
+		localService.refresh();
+		return;
+	}
+	if(c.equals("MOTD")){
+		localService.motd=d;
+		localService.refresh();
+	}
+//	try
+//		{
+//			
+//			if(jo.has("server")){
+//				
+//			}
+//			if(jo.has("c")){
+//				if(jo.getString("c").equals("AU")){
+//					if(jo.has("device")){
+//					authed=true;
+//					setkeepAliveAlarm();
+//					sendToServer("TRACKER_SESSION_OPEN");
+//					}
+//				}
+//				else
+//					if(jo.getString("c").equals("session_open")){
+//						sessionstarted=true;
+//						OsMoDroid.editor.putString("viewurl","http://test1342.osmo.mobi/u/"+jo.optString("url"));
+//						OsMoDroid.editor.commit();
+//						localService.refresh();
+//					}
+//				else
+//					if(jo.getString("c").equals("session_close")){
+//						sessionstarted=false;
+//						close();
+//						}
+//			}
+//		} catch (JSONException e)
+//		{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+
+	
+	
+	
 	}
 
 	void ondisconnect(){
@@ -587,7 +702,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			
 			
 			
-			
+			disablekeepAliveAlarm();
 			
 			authed=false;
 			connecting=false;

@@ -106,9 +106,7 @@ import com.OsMoDroid.LocalService.SendCoor;
 
 import com.OsMoDroid.Netutil.MyAsyncTask;
 
-import de.tavendo.autobahn.WebSocketConnection;
-import de.tavendo.autobahn.WebSocketException;
-import de.tavendo.autobahn.WebSocketOptions;
+
 
 
 
@@ -372,7 +370,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	final private static  DecimalFormatSymbols dot= new DecimalFormatSymbols();
 	protected boolean firstgpsbeepedon=false;
 	static IM myIM;
-	static IM trackerIM;
+	//static IM trackerIM;
 	TextToSpeech tts;
 	private int _langTTSavailable = -1;
 	String text;
@@ -961,11 +959,11 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	private boolean bindedremote;
 	private boolean bindedlocaly;
 	private int pollperiod=0;
-	private de.tavendo.autobahn.WebSocket.ConnectionHandler c;
-	private WebSocketOptions o;
+	
 	private boolean log=true;
-	private String sending="";
+	String sending="";
 	private ArrayList<String> buffer= new ArrayList<String>();
+	public String motd="";
 	//boolean connecting=false;
 	     static String formatInterval(final long l)
 	    {
@@ -1102,11 +1100,11 @@ public synchronized void refresh(){
 	in.putExtra("maxspeed", df1.format(maxspeed*3.6));
 	in.putExtra("workdistance", df2.format(workdistance/1000));
 	in.putExtra("timeperiod", formatInterval(timeperiod));
-	if (trackerIM!=null){
-	in.putExtra("connect", trackerIM.connOpened);
-	in.putExtra("connecting", trackerIM.connecting);
-	
+	if (myIM!=null){
+	in.putExtra("connect", myIM.connOpened);
+	in.putExtra("connecting", myIM.connecting);
 	}
+	in.putExtra("motd", motd);
 	sendBroadcast(in);
 
 }
@@ -1313,16 +1311,15 @@ public void stopcomand()
 ///////////////////////
 		
 			if(log)Log.d(this.getClass().getName(), "try sendid");
-			sendid();
-		
-if (live&&!OsMoDroid.settings.getString("hash", "" ).equals(""))
+			if(OsMoDroid.settings.getString("newkey", "").equals(""))
+				{
+						sendid();
+				}
+if (live)
 {
 	if (isOnline())
 		{
-			if (OsMoDroid.settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-14400000)
-			{
-				startcomand();
-			}	
+			
 	
 			if (!OsMoDroid.settings.getString("key", "" ).equals("") )
 			{
@@ -1405,10 +1402,7 @@ if (live&&!OsMoDroid.settings.getString("hash", "" ).equals(""))
 						if(netinfo.isConnected()) 
 							{
 								if(log)Log.d(this.getClass().getName(), "OnlinePauseforStartReciever"+this+" Network is connected");
-							if (OsMoDroid.settings.getLong("laststartcommandtime", 0)<System.currentTimeMillis()-14000000)
-								{
-									startcomand();
-								}
+							
 							if (!OsMoDroid.settings.getString("key", "" ).equals("") )
 							{
 								String om_device_get = OsMoDroid.settings.getString("om_device_get", "");
@@ -1514,7 +1508,7 @@ if (live&&!OsMoDroid.settings.getString("hash", "" ).equals(""))
 		disconnectChannelsChats();
 		connectChannelsChats();
 		
-	trackerIM = new IM("osmo.mobi", 4242, this){
+	myIM = new IM("osmo.mobi", 4242, this){
 		
 		@Override
 		void ondisconnect(){
@@ -1524,77 +1518,6 @@ if (live&&!OsMoDroid.settings.getString("hash", "" ).equals(""))
 			}
 		}
 		
-		@Override
-		void parseEx(String toParse, String topic)
-			{
-				JSONObject jo = new JSONObject();
-				
-				String c;
-				try
-					{
-						c = toParse.substring(0, toParse.indexOf('|'));
-					} catch (Exception e1)
-					{
-						c=toParse;
-					}
-				
-				try
-					{
-						jo = new JSONObject(toParse.substring(toParse.indexOf('|')+1));
-					}
-				catch (JSONException e) {
-					
-				}
-				
-				if(c.equals("NEED_AUTH")){
-					sendToServer( "AUTH|"+OsMoDroid.settings.getString("newkey", ""));
-				}
-				if(c.equals("AUTH")){
-					if(jo.has("health")){
-						authed=true;
-						setkeepAliveAlarm();
-					}
-				}
-				
-				super.parseEx(toParse, topic);
-				if(toParse.equals("1")){
-					sending="";
-					return;
-				}
-				try
-					{
-						
-						if(jo.has("server")){
-							
-						}
-						if(jo.has("c")){
-							if(jo.getString("c").equals("AU")){
-								if(jo.has("device")){
-								authed=true;
-								setkeepAliveAlarm();
-								trackerIM.sendToServer("A|session_open");
-								}
-							}
-							else
-								if(jo.getString("c").equals("session_open")){
-									sessionstarted=true;
-									OsMoDroid.editor.putString("viewurl","http://test1342.osmo.mobi/u/"+jo.optString("url"));
-									OsMoDroid.editor.commit();
-									localService.refresh();
-								}
-							else
-								if(jo.getString("c").equals("session_close")){
-									sessionstarted=false;
-									close();
-									}
-						}
-					} catch (JSONException e)
-					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-			}
 	};
 if (OsMoDroid.settings.getBoolean("started", false)){
 	startServiceWork();
@@ -1842,7 +1765,7 @@ OsMoDroid.settings.edit().putBoolean("ondestroy", false).commit();
 		}
 		requestLocationUpdates();
 		}
-		manageIM();
+		
 		if(log)Log.d(getClass().getSimpleName(), "applyPreferecne end");
 
 	}
@@ -1967,8 +1890,14 @@ invokeMethod(mStartForeground, mStartForegroundArgs);
 setstarted(true);
 
 if (live){
-	
-	trackerIM.start();
+	if (myIM!=null&&myIM.authed){
+	myIM.sendToServer("TRACKER_SESSION_OPEN");
+	myIM.needopensession=true;
+	}else
+		{
+			myIM.needopensession=true;
+		}
+	//trackerIM.start();
 	
 //String[] params = {"http://a.t.esya.ru/?act=session_start&hash="+OsMoDroid.settings.getString("hash", "")+"&n="+OsMoDroid.settings.getString("n", "")+"&ttl="+OsMoDroid.settings.getString("session_ttl", "30"),"false","","session_start"};
 //APIcomParams params = new APIcomParams("http://a.t.esya.ru/?act=session_start&hash="+OsMoDroid.settings.getString("hash", "")+"&n="+OsMoDroid.settings.getString("n", "")+"&ttl="+OsMoDroid.settings.getString("session_ttl", "30"),null,"session_start"); 
@@ -2004,41 +1933,7 @@ if (live){
 		registerReceiver( checkreceiver, new IntentFilter( "CHECK_GPS"));
 	}
 
-private void manageIM(){
-	if (OsMoDroid.settings.getBoolean("im", false) && myIM==null&& !OsMoDroid.settings.getString("key", "" ).equals("") ){
 
-		
-			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
-			longPollchannels.add(new String[] {"om_online","o",""}); 
-			if(!OsMoDroid.settings.getString("lpch", "").equals(""))
-			{ 
-			longPollchannels.add(new String[] {"ctrl_"+OsMoDroid.settings.getString("lpch", ""),"r",""});
-			longPollchannels.add(new String[] {OsMoDroid.settings.getString("lpch", "")+"_chat","m",""});
-			}
-//			myIM = new IM( longPollchannels ,this, this){
-//
-//				@Override
-//				void parseEx(String toParse, String topic)
-//					{
-//						// TODO Auto-generated method stub
-//						super.parseEx(toParse, topic);
-//					}
-//				
-//			};	
-			if(log)Log.d(getClass().getSimpleName(), "om_device_channel_adaptive from manageim");
-			Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
-		}
-	if (!OsMoDroid.settings.getBoolean("im", false) && myIM!=null){
-		myIM.close();
-		myIM=null;
-		
-	}
-	if(trackerIM!=null){
-		trackerIM.close();
-	}
-		
-	
-}
 public void sendid()
 
 {
@@ -2238,12 +2133,14 @@ public void sendid()
                     //String[] params = {"http://a.t.esya.ru/?act=session_stop&hash="+OsMoDroid.settings.getString("hash", "")+"&n="+OsMoDroid.settings.getString("n", ""),"false","","session_stop"};
                     //APIcomParams params = new APIcomParams("http://a.t.esya.ru/?act=session_stop&hash="+OsMoDroid.settings.getString("hash", "")+"&n="+OsMoDroid.settings.getString("n", "")+"&ttl="+OsMoDroid.settings.getString("session_ttl", "30"),null,"session_stop");
                     //new Netutil.MyAsyncTask(this).execute(params);
-			if(trackerIM.authed){
-				trackerIM.sendToServer("session_close");
-						sessionstarted=false;
-				
-				
+			if(myIM.authed){
+				myIM.sendToServer("TRACKER_SESSION_CLOSE");
+				myIM.needclosesession=true;		
 			}
+			else
+				{
+					myIM.needclosesession=true;
+				}
 
                 
 		}
@@ -3220,19 +3117,27 @@ private void sendlocation (Location location){
 //	- 5 = hashstring (уникальный хеш пользователя)
 
 //	- 6 = checknumint(3) (контрольное число к хешу)
-	  if(log)Log.d(this.getClass().getName(), "Отправка:"+trackerIM.authed +" s "+sending);
-	if (trackerIM!=null&&trackerIM.authed&&sending.equals("")){
+	
+	//T|L53.1:30.3S2A4H2B23
+	  if(log)Log.d(this.getClass().getName(), "Отправка:"+myIM.authed +" s "+sending);
+	if (myIM!=null&&myIM.authed&&sending.equals("")){
 		sending=
-				"p|"+df6.format( location.getLatitude()) +":"+ df6.format(location.getLongitude())+":"+ df1.format( location.getAccuracy())
-		+":"+df1.format( location.getAltitude())+":"+df1.format( location.getSpeed());
-		trackerIM.sendToServer(sending);		
+				"T|L"+df6.format( location.getLatitude()) +":"+ df6.format(location.getLongitude())
+				+"S" + df1.format( location.getSpeed())
+				+"A" + df1.format( location.getAltitude())
+				+"H" + df1.format( location.getAccuracy());
+				
+		myIM.sendToServer(sending);		
 		
 					
 		if(log)Log.d(this.getClass().getName(), "GPS websocket sendlocation");
 	} else
 		{
-			buffer.add("p|"+df6.format( location.getLatitude()) +":"+ df6.format(location.getLongitude())+":"+ df1.format( location.getAccuracy())
-		+":"+df1.format( location.getAltitude())+":"+df1.format( location.getSpeed()));
+			buffer.add("T|L"+df6.format( location.getLatitude()) +":"+ df6.format(location.getLongitude())
+					+"S" + df1.format( location.getSpeed())
+					+"A" + df1.format( location.getAltitude())
+					+"H" + df1.format( location.getAccuracy()));
+			buffercounter++;
 		}
 
 
@@ -3583,6 +3488,7 @@ public void onResultsSucceeded(APIComResult result) {
 			try {
 				OsMoDroid.editor.putString("newkey", result.Jo.getString("key"));
 				OsMoDroid.editor.commit();
+				myIM.start();
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -574,7 +574,7 @@ else {
 					globalActivity.position = intent.getStringExtra("position");
 					globalActivity.sendresult = intent.getStringExtra("sendresult");
 					String stat = intent.getStringExtra("stat");
-					String startmessage = intent.getStringExtra("startmessage");
+					String startmessage = intent.getStringExtra("motd");
 					if (intent.hasExtra("globalsend")){
 						final ToggleButton globalsendToggle = (ToggleButton) view.findViewById(R.id.toggleButton1);
 						globalsendToggle.setOnClickListener(new OnClickListener() {
@@ -610,9 +610,7 @@ else {
 
 //					if (!(startmessage==null)&&!globalActivity.messageShowed) {
 					if (!(startmessage==null)) {
-						TextView t2 = (TextView) view.findViewById(R.id.URL);
-						t2.setText(OsMoDroid.settings.getString("devicename", "")+" :\n "+globalActivity.viewurl);
-						Linkify.addLinks(t2, Linkify.ALL);
+						
 						TextView tt = (TextView) view.findViewById(R.id.Location);
 						tt.setText(getString(R.string.servermessage)+'\n'+startmessage);
 						globalActivity.messageShowed=true;
@@ -661,7 +659,7 @@ else {
 	}
 	
 	private void updateServiceStatus(View view) {
-		Log.d(getClass().getSimpleName(), "mainfragment updateservicestatus() gpsclient");
+		//Log.d(getClass().getSimpleName(), "mainfragment updateservicestatus() gpsclient");
 		String startStatus =globalActivity.checkStarted() ? getString(R.string.Running)
 				: getString(R.string.NotRunning);
 		String statusText = //getString(R.string.Status) + startStatus+
