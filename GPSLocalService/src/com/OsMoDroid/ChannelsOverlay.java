@@ -160,11 +160,11 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 				 	{
 					 pathpaint.setColor(Color.parseColor("#" + dev.color));
 					 Path path = new Path();
-					 pj.toProjectedPixels((GeoPoint) dev.devicePath.get(0), scrPoint);
+					 pj.toPixels((GeoPoint) dev.devicePath.get(0), scrPoint);
 					 path.moveTo(scrPoint.x, scrPoint.y);
 					 for (IGeoPoint geo: dev.devicePath)
 					 	{
-						 pj.toProjectedPixels((GeoPoint) geo, scrPoint);
+						 pj.toPixels((GeoPoint) geo, scrPoint);
 						 path.lineTo(scrPoint.x, scrPoint.y);
 						 path.moveTo(scrPoint.x, scrPoint.y);
 					 	}
@@ -175,8 +175,8 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 					{ 
 					if (theBoundingBox.contains(new GeoPoint(dev.lat, dev.lon))) 
 					 {
-						pj.toProjectedPixels(new GeoPoint(dev.lat, dev.lon), scrPoint);
-					  	paint.setDither(true);
+						pj.toPixels(new GeoPoint(dev.lat, dev.lon), scrPoint);
+						paint.setDither(true);
 						paint.setAntiAlias(true);
 						paint.setTextSize(22f);
 						paint.setTypeface(Typeface.DEFAULT_BOLD);
@@ -195,7 +195,7 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 			for(com.OsMoDroid.Channel.Point p: ch.pointList){
 				if (theBoundingBox.contains(new GeoPoint(p.lat, p.lon))) 
 				 {
-					pj.toProjectedPixels(new GeoPoint(p.lat, p.lon), scrPoint);
+					pj.toPixels(new GeoPoint(p.lat, p.lon), scrPoint);
 				  	paint.setDither(true);
 					paint.setAntiAlias(true);
 					paint.setTextSize(22f);
