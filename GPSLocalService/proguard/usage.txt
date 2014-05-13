@@ -1002,13 +1002,14 @@ com.OsMoDroid.IM:
     private static final int KEEP_ALIVE
     private static final java.lang.String RECONNECT_INTENT
     private static final java.lang.String KEEPALIVE_INTENT
+    private static final java.lang.String CHECKPING_INTENT
     private java.net.HttpURLConnection con
     private java.io.InputStream instream
     java.lang.String adr
     java.lang.Thread myThread
     java.lang.String myLongPollCh
     java.io.FileOutputStream fos
-    316:331:private void getadres(java.util.ArrayList)
+    311:326:private void getadres(java.util.ArrayList)
 com.OsMoDroid.IRemoteOsMoDroidListener$Stub:
     private static final java.lang.String DESCRIPTOR
     static final int TRANSACTION_channelUpdated

@@ -3079,7 +3079,7 @@ com.OsMoDroid.IM -> com.OsMoDroid.t:
     java.lang.String mykey -> d
     java.lang.String lcursor -> e
     int pingTimeout -> f
-    java.io.BufferedReader in -> x
+    java.io.BufferedReader in -> z
     android.content.Context parent -> g
     java.util.ArrayList myLongPollChList -> h
     de.tavendo.autobahn.Wamp$ConnectionHandler c -> i
@@ -3087,87 +3087,94 @@ com.OsMoDroid.IM -> com.OsMoDroid.t:
     int mestype -> k
     com.OsMoDroid.LocalService localService -> l
     java.io.ObjectOutputStream output -> m
-    java.text.SimpleDateFormat sdf1 -> y
-    de.tavendo.autobahn.WampConnection mWampConnection -> z
+    java.text.SimpleDateFormat sdf1 -> A
+    de.tavendo.autobahn.WampConnection mWampConnection -> B
     java.lang.String wsuri -> n
     java.lang.String websocketuri -> o
     boolean connOpened -> p
     boolean connecting -> q
     boolean log -> r
-    android.content.BroadcastReceiver reconnectReceiver -> s
-    android.content.BroadcastReceiver keepAliveReceiver -> t
-    android.app.AlarmManager manager -> u
-    android.app.PendingIntent reconnectPIntent -> v
-    android.app.PendingIntent keepAlivePIntent -> w
-    android.content.BroadcastReceiver bcr -> A
-    271:275:void addlog(java.lang.String) -> a
-    283:288:void setkeepAliveAlarm() -> a
-    291:299:void disablekeepAliveAlarm() -> b
-    303:308:void setReconnectAlarm() -> c
-    335:340:void addchannels(java.util.ArrayList) -> a
-    343:357:void removechannels(java.util.ArrayList) -> b
-    362:368:java.lang.String getMessageType(java.lang.String) -> b
-    376:437:void addtoDeviceChat(java.lang.String) -> c
-    525:535:void close() -> d
-    538:550:void start() -> e
-    552:982:void parseEx(java.lang.String,java.lang.String) -> a
-    985:1054:void addToChannelChat(java.lang.String,java.lang.String) -> b
-    1057:1066:void stop() -> f
-    1070:1091:void resubscribe() -> g
-    150:150:de.tavendo.autobahn.WampConnection access$0(com.OsMoDroid.IM) -> a
+    android.app.AlarmManager manager -> s
+    android.app.PendingIntent reconnectPIntent -> t
+    android.app.PendingIntent keepAlivePIntent -> u
+    android.app.PendingIntent checkPongPIntent -> v
+    android.content.BroadcastReceiver reconnectReceiver -> w
+    android.content.BroadcastReceiver keepAliveReceiver -> x
+    android.content.BroadcastReceiver checkPingReceiver -> y
+    android.content.BroadcastReceiver bcr -> C
+    251:255:void addlog(java.lang.String) -> a
+    259:264:void setcheckPingAlarm() -> a
+    267:272:void setkeepAliveAlarm() -> b
+    275:283:void disablekeepAliveAlarm() -> c
+    286:294:void disablecheckpingAlarm() -> d
+    298:303:void setReconnectAlarm() -> e
+    330:335:void addchannels(java.util.ArrayList) -> a
+    338:352:void removechannels(java.util.ArrayList) -> b
+    357:363:java.lang.String getMessageType(java.lang.String) -> b
+    371:432:void addtoDeviceChat(java.lang.String) -> c
+    520:541:void close() -> f
+    544:556:void start() -> g
+    558:988:void parseEx(java.lang.String,java.lang.String) -> a
+    991:1060:void addToChannelChat(java.lang.String,java.lang.String) -> b
+    1063:1072:void stop() -> h
+    1076:1097:void resubscribe() -> i
+    152:152:de.tavendo.autobahn.WampConnection access$0(com.OsMoDroid.IM) -> a
 com.OsMoDroid.IM$1 -> com.OsMoDroid.t$1:
     com.OsMoDroid.IM this$0 -> a
-    249:252:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    223:226:void onReceive(android.content.Context,android.content.Intent) -> onReceive
 com.OsMoDroid.IM$10 -> com.OsMoDroid.t$2:
     com.OsMoDroid.IM this$0 -> a
-    803:805:void run() -> run
+    746:753:void run() -> run
 com.OsMoDroid.IM$11 -> com.OsMoDroid.t$3:
     com.OsMoDroid.IM this$0 -> a
-    811:813:void run() -> run
+    809:811:void run() -> run
 com.OsMoDroid.IM$12 -> com.OsMoDroid.t$4:
     com.OsMoDroid.IM this$0 -> a
-    818:826:void run() -> run
+    817:819:void run() -> run
 com.OsMoDroid.IM$13 -> com.OsMoDroid.t$5:
     com.OsMoDroid.IM this$0 -> a
-    904:910:void run() -> run
+    824:832:void run() -> run
 com.OsMoDroid.IM$14 -> com.OsMoDroid.t$6:
     com.OsMoDroid.IM this$0 -> a
-    954:966:void run() -> run
+    910:916:void run() -> run
 com.OsMoDroid.IM$15 -> com.OsMoDroid.t$7:
     com.OsMoDroid.IM this$0 -> a
-    com.OsMoDroid.Channel val$channel -> b
-    1046:1050:void run() -> run
+    960:972:void run() -> run
 com.OsMoDroid.IM$16 -> com.OsMoDroid.t$8:
     com.OsMoDroid.IM this$0 -> a
-    1081:1083:void onEvent(java.lang.String,java.lang.Object) -> a
-com.OsMoDroid.IM$2 -> com.OsMoDroid.t$9:
+    com.OsMoDroid.Channel val$channel -> b
+    1052:1056:void run() -> run
+com.OsMoDroid.IM$17 -> com.OsMoDroid.t$9:
     com.OsMoDroid.IM this$0 -> a
-    257:267:void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.OsMoDroid.IM$3 -> com.OsMoDroid.t$10:
+    1087:1089:void onEvent(java.lang.String,java.lang.Object) -> a
+com.OsMoDroid.IM$2 -> com.OsMoDroid.t$10:
     com.OsMoDroid.IM this$0 -> a
-    450:512:void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.OsMoDroid.IM$4 -> com.OsMoDroid.t$11:
+    231:238:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.OsMoDroid.IM$3 -> com.OsMoDroid.t$11:
+    com.OsMoDroid.IM this$0 -> a
+    246:248:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.OsMoDroid.IM$4 -> com.OsMoDroid.t$12:
+    com.OsMoDroid.IM this$0 -> a
+    445:507:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.OsMoDroid.IM$5 -> com.OsMoDroid.t$13:
     com.OsMoDroid.IM this$0 -> a
     com.OsMoDroid.LocalService val$localService -> b
-    170:177:void onOpen() -> a
-    181:196:void onClose(int,java.lang.String) -> a
-    200:204:void onPong() -> b
-com.OsMoDroid.IM$5 -> com.OsMoDroid.t$12:
+    178:185:void onOpen() -> a
+    189:204:void onClose(int,java.lang.String) -> a
+    208:212:void onPong() -> b
+com.OsMoDroid.IM$6 -> com.OsMoDroid.t$14:
     com.OsMoDroid.IM this$0 -> a
-    412:415:void run() -> run
-com.OsMoDroid.IM$6 -> com.OsMoDroid.t$13:
+    407:410:void run() -> run
+com.OsMoDroid.IM$7 -> com.OsMoDroid.t$15:
     com.OsMoDroid.IM this$0 -> a
     java.util.ArrayList val$tempdeviceList -> b
-    605:608:void run() -> run
-com.OsMoDroid.IM$7 -> com.OsMoDroid.t$14:
+    611:614:void run() -> run
+com.OsMoDroid.IM$8 -> com.OsMoDroid.t$16:
     com.OsMoDroid.IM this$0 -> a
-    659:664:void run() -> run
-com.OsMoDroid.IM$8 -> com.OsMoDroid.t$15:
+    665:670:void run() -> run
+com.OsMoDroid.IM$9 -> com.OsMoDroid.t$17:
     com.OsMoDroid.IM this$0 -> a
-    674:679:void run() -> run
-com.OsMoDroid.IM$9 -> com.OsMoDroid.t$16:
-    com.OsMoDroid.IM this$0 -> a
-    740:747:void run() -> run
+    680:685:void run() -> run
 com.OsMoDroid.IRemoteOsMoDroidListener -> com.OsMoDroid.u:
     void channelUpdated() -> a
     void channelsListUpdated() -> b
@@ -4884,7 +4891,7 @@ com.actionbarsherlock.internal.ActionBarSherlockCompat -> com.actionbarsherlock.
     273:277:boolean dispatchOpenOptionsMenu() -> dispatchOpenOptionsMenu
     284:291:boolean dispatchCloseOptionsMenu() -> dispatchCloseOptionsMenu
     298:305:void dispatchPostCreate(android.os.Bundle) -> dispatchPostCreate
-    313:313:boolean dispatchCreateOptionsMenu(android.view.Menu) -> dispatchCreateOptionsMenu
+    310:311:boolean dispatchCreateOptionsMenu(android.view.Menu) -> dispatchCreateOptionsMenu
     320:345:boolean dispatchPrepareOptionsMenu(android.view.Menu) -> dispatchPrepareOptionsMenu
     350:350:boolean dispatchOptionsItemSelected(android.view.MenuItem) -> dispatchOptionsItemSelected
     357:364:boolean dispatchMenuOpened(int,android.view.Menu) -> dispatchMenuOpened

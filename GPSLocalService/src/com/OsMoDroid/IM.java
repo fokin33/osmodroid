@@ -30,6 +30,8 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 	private static final String RECONNECT_INTENT = "com.osmodroid.reconnect";
 	
 	private static final String KEEPALIVE_INTENT = "com.osmodroid.keepalive";
+	
+	private static final String CHECKPING_INTENT = "com.osmodroid.checkping";
 
 	protected  boolean running       = false;	//protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;	String mykey;//	String timestamp=Long.toString(System.currentTimeMillis());	String lcursor="";	int pingTimeout=900;	Thread myThread;	private BufferedReader    in      = null;	Context parent;	String myLongPollCh;
 	ArrayList<String[]>  myLongPollChList;	//ArrayList<String> list= new ArrayList<String>();	ConnectionHandler c;
@@ -44,12 +46,18 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 	final String websocketuri = "ws://srv.osmo.mobi/";
 	protected boolean connOpened=false;
 	protected boolean connecting=false;
-	final boolean  log=true;	public IM(ArrayList<String[]> longPollChList, Context context,String key,final LocalService localService) {
+	final boolean  log=true;
+	AlarmManager manager;
+    PendingIntent reconnectPIntent;
+    PendingIntent keepAlivePIntent;
+	PendingIntent checkPongPIntent;
+		public IM(ArrayList<String[]> longPollChList, Context context,String key,final LocalService localService) {
 		this.localService=localService; 
 		parent=context;
 		manager = (AlarmManager)(parent.getSystemService( Context.ALARM_SERVICE ));
 		reconnectPIntent = PendingIntent.getBroadcast( parent, 0, new Intent(RECONNECT_INTENT), 0 );
 		keepAlivePIntent = PendingIntent.getBroadcast( parent, 0, new Intent(KEEPALIVE_INTENT), 0 );
+		checkPongPIntent = PendingIntent.getBroadcast( parent, 0, new Intent(CHECKPING_INTENT), 0 );
 		myLongPollChList=longPollChList;
 		mykey=key;
 		parent.registerReceiver(bcr, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
@@ -87,47 +95,13 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 
 			@Override
 			public void onPong() {
-				manager.cancel(reconnectPIntent);
+				disablecheckpingAlarm();
 				addlog("websocket Pong Recieved");
 				if(log)Log.d(this.getClass().getName(), "websocket onPong");
 				
 			}
 		};
-//		wsc=new WebSocketConnectionHandler(){
-//
-//			@Override
-//			public void onOpen() {
-//				mWebsocketConnection.sendTextMessage("auth|"+localService.settings.getString("hash", "")); 
-//				if(log)Log.d(this.getClass().getName(), "websocket2 onOpen");
-//				super.onOpen();
-//			}
-//
-//			@Override
-//			public void onClose(int code, String reason) {
-//				if(log)Log.d(this.getClass().getName(), "websocket2 onclose, code="+code+" reason="+reason);
-//				if(log)Log.d(this.getClass().getName(), "websocket2 onclose, isConnected="+mWebsocketConnection.isConnected());
-//				super.onClose(code, reason);
-//			}
-//
-//			@Override
-//			public void onTextMessage(String payload) {
-//				if(log)Log.d(this.getClass().getName(), "websocket2 onTextMessage: "+payload);
-//				super.onTextMessage(payload);
-//			}
-//
-//			@Override
-//			public void onRawTextMessage(byte[] payload) {
-//				if(log)Log.d(this.getClass().getName(), "websocket2 onRawTextMessage: "+payload.toString());
-//				super.onRawTextMessage(payload);
-//			}
-//
-//			@Override
-//			public void onBinaryMessage(byte[] payload) {
-//				if(log)Log.d(this.getClass().getName(), "websocket2 onBinaryMessage: "+payload.toString());
-//				super.onBinaryMessage(payload);
-//			}
-//			
-//		};
+
 		o = new WampOptions();
 		o.setReconnectInterval(0);
 		o.setReceiveTextMessagesRaw(true);
@@ -148,15 +122,21 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
             	  addlog("websocket sendPing");
             	  if(log)Log.d(this.getClass().getName(), "websocket send ping");
             	  mWampConnection.sendPing();
-            	  setReconnectAlarm();
+            	  setcheckPingAlarm();
               }
-//              if(mWebsocketConnection!=null&&mWebsocketConnection.isConnected()){
-//            	  if(log)Log.d(this.getClass().getName(), "websocket2 send ping");
-//            	  mWebsocketConnection.sendPing();
-//              }
+
           }
       };
-      
+      BroadcastReceiver checkPingReceiver = new BroadcastReceiver()
+		{
+			
+			@Override
+			public void onReceive(Context context, Intent intent)
+				{
+					addlog("websocket checkPing reciever trigged");
+					if(mWampConnection.isConnected()){mWampConnection.disconnect();}
+				}
+		};
       void addlog(String str){
     	  	if(OsMoDroid.debug)ExceptionHandler.reportOnlyHandler(parent.getApplicationContext()).uncaughtException(Thread.currentThread(), new Throwable(str));
     	  	if(OsMoDroid.debug)LocalService.debuglist.add( sdf1.format(new Date(System.currentTimeMillis()))+" "+str);
@@ -165,9 +145,13 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
       }
       
       
-      AlarmManager manager;
-      PendingIntent reconnectPIntent;
-      PendingIntent keepAlivePIntent;
+     void setcheckPingAlarm(){
+    	  if(log)Log.d(this.getClass().getName(), "void setcheckPingAlarm");
+    	  addlog("websocket setCheckPingAlarm");
+    	  parent.registerReceiver( checkPingReceiver, new IntentFilter(CHECKPING_INTENT) );
+    	  manager.cancel(checkPongPIntent);
+    	  manager.set( AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + RECONNECT_TIMEOUT, checkPongPIntent );
+     }
 	 
       public void setkeepAliveAlarm(){
     	  if(log)Log.d(this.getClass().getName(), "void setKeepAliveAlarm");
@@ -186,6 +170,17 @@ public class IM {	private static final int RECONNECT_TIMEOUT = 1000*5;
 			e.printStackTrace();
 		}
     	  manager.cancel(keepAlivePIntent);
+      }
+      
+      public void disablecheckpingAlarm(){
+    	  if(log)Log.d(this.getClass().getName(), "void disablecheckpingAlarm");
+    	  addlog("websocket void disablecheckpingalarm");
+    	  try {
+			parent.unregisterReceiver(checkPingReceiver);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	  manager.cancel(checkPongPIntent);
       }
       
       public void setReconnectAlarm() 
@@ -332,7 +327,18 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		
 			e.printStackTrace();
 		}
-				stop();	};	 void start(){		if(log)Log.d(this.getClass().getName(), "void IM.start");
+		try {
+			parent.unregisterReceiver(keepAliveReceiver);
+		} catch (Exception e) {
+		
+			e.printStackTrace();
+		}
+		try {
+			parent.unregisterReceiver(checkPingReceiver);
+		} catch (Exception e) {
+		
+			e.printStackTrace();
+		}		stop();	};	 void start(){		if(log)Log.d(this.getClass().getName(), "void IM.start");
 		addlog("webcoket void start");
 		running = true;		mWampConnection.connect(wsuri, c, o);
 //		try {
