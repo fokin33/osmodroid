@@ -214,11 +214,6 @@
             android:title="Мобильные сети"
             android:defaultValue="true" />
         <CheckBoxPreference
-            android:key="im"
-            android:summary="Включает постоянную связь с сервером Еся.ру"
-            android:title="Полнофункциональный режим"
-            android:defaultValue="true" />
-        <CheckBoxPreference
             android:key="autostart"
             android:summary="Запускать фоновый сервис при включении телефона"
             android:title="Автозагрузка в фоне"

@@ -3412,53 +3412,53 @@ com.OsMoDroid.LocalService -> com.OsMoDroid.LocalService:
     1759:1776:void applyPreference() -> f
     1781:1911:void startServiceWork() -> g
     1920:1931:void manageGPSFixAlarm() -> n
-    1984:2001:void ttsManage() -> o
-    2011:2039:void requestLocationUpdates() -> h
-    2052:2117:void openGPX() -> p
-    2131:2222:void stopServiceWork(java.lang.Boolean) -> a
-    2236:2270:void closeGPX() -> q
-    2307:2315:void setstarted(boolean) -> a
-    2458:2646:void onLocationChanged(android.location.Location) -> onLocationChanged
-    2649:2650:void onProviderDisabled(java.lang.String) -> onProviderDisabled
-    2656:2657:void onProviderEnabled(java.lang.String) -> onProviderEnabled
-    2662:2663:void onStatusChanged(java.lang.String,int,android.os.Bundle) -> onStatusChanged
-    2803:2839:java.lang.String inputStreamToString(java.io.InputStream) -> a
-    2912:2948:java.lang.String unescape(java.lang.String) -> b
-    2962:3050:java.lang.String decodesendresult(java.lang.String) -> c
-    3062:3112:void writegpx(android.location.Location) -> a
-    3116:3304:void sendlocation(android.location.Location) -> b
-    3307:3338:void onGpsStatusChanged(int) -> onGpsStatusChanged
-    3344:3380:void onInit(int) -> onInit
-    3384:3398:boolean isOnline() -> i
-    3407:3420:void warnwronghash() -> r
-    3426:3490:void notifywarnactivity(java.lang.String,boolean) -> a
-    3494:3501:void connectChannels() -> s
-    3503:3510:void connectChannelsChats() -> t
-    3512:3519:void disconnectChannelsChats() -> u
-    3522:3527:void disconnectChannels() -> v
-    3537:3799:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
-    3803:3820:void deviceListFromJSONArray(org.json.JSONArray) -> a
-    3824:3838:void channelListFromJSONArray(org.json.JSONArray) -> b
-    3841:3855:void playAlarmOn(java.lang.Boolean) -> b
-    3858:3873:void playAlarmOff(java.lang.Boolean) -> c
-    3877:3896:void enableSignalisation(java.lang.Boolean) -> d
-    3901:3922:void disableSignalisation(java.lang.Boolean) -> e
-    3927:3927:void onAccuracyChanged(android.hardware.Sensor,int) -> onAccuracyChanged
-    3932:3956:void onSensorChanged(android.hardware.SensorEvent) -> onSensorChanged
-    3961:3970:void saveObject(java.lang.Object,java.lang.String) -> a
-    3974:3987:java.lang.Object loadObject(java.lang.String,java.lang.Class) -> a
+    1961:1978:void ttsManage() -> o
+    1988:2016:void requestLocationUpdates() -> h
+    2029:2094:void openGPX() -> p
+    2108:2199:void stopServiceWork(java.lang.Boolean) -> a
+    2213:2247:void closeGPX() -> q
+    2284:2292:void setstarted(boolean) -> a
+    2435:2623:void onLocationChanged(android.location.Location) -> onLocationChanged
+    2626:2627:void onProviderDisabled(java.lang.String) -> onProviderDisabled
+    2633:2634:void onProviderEnabled(java.lang.String) -> onProviderEnabled
+    2639:2640:void onStatusChanged(java.lang.String,int,android.os.Bundle) -> onStatusChanged
+    2780:2816:java.lang.String inputStreamToString(java.io.InputStream) -> a
+    2889:2925:java.lang.String unescape(java.lang.String) -> b
+    2939:3027:java.lang.String decodesendresult(java.lang.String) -> c
+    3039:3089:void writegpx(android.location.Location) -> a
+    3093:3281:void sendlocation(android.location.Location) -> b
+    3284:3315:void onGpsStatusChanged(int) -> onGpsStatusChanged
+    3321:3357:void onInit(int) -> onInit
+    3361:3375:boolean isOnline() -> i
+    3384:3397:void warnwronghash() -> r
+    3403:3467:void notifywarnactivity(java.lang.String,boolean) -> a
+    3471:3478:void connectChannels() -> s
+    3480:3487:void connectChannelsChats() -> t
+    3489:3496:void disconnectChannelsChats() -> u
+    3499:3504:void disconnectChannels() -> v
+    3514:3776:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+    3780:3797:void deviceListFromJSONArray(org.json.JSONArray) -> a
+    3801:3815:void channelListFromJSONArray(org.json.JSONArray) -> b
+    3818:3832:void playAlarmOn(java.lang.Boolean) -> b
+    3835:3850:void playAlarmOff(java.lang.Boolean) -> c
+    3854:3873:void enableSignalisation(java.lang.Boolean) -> d
+    3878:3899:void disableSignalisation(java.lang.Boolean) -> e
+    3904:3904:void onAccuracyChanged(android.hardware.Sensor,int) -> onAccuracyChanged
+    3909:3933:void onSensorChanged(android.hardware.SensorEvent) -> onSensorChanged
+    3938:3947:void saveObject(java.lang.Object,java.lang.String) -> a
+    3951:3964:java.lang.Object loadObject(java.lang.String,java.lang.Class) -> a
     965:965:boolean access$0(com.OsMoDroid.LocalService) -> a
     311:311:void access$1(com.OsMoDroid.LocalService,java.lang.String) -> a
-    2843:2843:void access$2(com.OsMoDroid.LocalService,boolean) -> a
+    2820:2820:void access$2(com.OsMoDroid.LocalService,boolean) -> a
     371:371:java.text.SimpleDateFormat access$3() -> j
-    2958:2958:java.lang.String access$4(com.OsMoDroid.LocalService,java.lang.String) -> b
+    2935:2935:java.lang.String access$4(com.OsMoDroid.LocalService,java.lang.String) -> b
     300:300:boolean access$5(com.OsMoDroid.LocalService) -> b
     278:278:boolean access$6(com.OsMoDroid.LocalService) -> c
     272:272:android.media.SoundPool access$7() -> k
     311:311:java.lang.String access$8(com.OsMoDroid.LocalService) -> d
     954:954:android.app.Notification access$9(com.OsMoDroid.LocalService) -> e
     955:955:android.app.PendingIntent access$10(com.OsMoDroid.LocalService) -> f
-    2665:2665:java.lang.String access$11(com.OsMoDroid.LocalService,java.lang.String,java.lang.String) -> a
+    2642:2642:java.lang.String access$11(com.OsMoDroid.LocalService,java.lang.String,java.lang.String) -> a
     300:300:void access$12$32c62201(com.OsMoDroid.LocalService) -> g
     346:346:long access$13(com.OsMoDroid.LocalService) -> h
     348:348:long access$14(com.OsMoDroid.LocalService) -> i
@@ -3531,7 +3531,7 @@ com.OsMoDroid.LocalService$LocalBinder -> com.OsMoDroid.z:
 com.OsMoDroid.LocalService$SendCoor -> com.OsMoDroid.aa:
     java.lang.String tmp -> b
     com.OsMoDroid.LocalService this$0 -> a
-    2377:2448:java.lang.String doInBackground(java.lang.String[]) -> a
+    2354:2425:java.lang.String doInBackground(java.lang.String[]) -> a
     1:1:void onPostExecute(java.lang.Object) -> onPostExecute
     1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.OsMoDroid.MainFragment -> com.OsMoDroid.MainFragment:

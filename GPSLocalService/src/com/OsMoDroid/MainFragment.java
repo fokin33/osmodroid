@@ -310,7 +310,7 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 		TextView tt = (TextView) view.findViewById(R.id.Location);
 		tt.setText(getString(R.string.servermessage)+":\n"+OsMoDroid.settings.getString("startmessage", ""));
 		}
-		if (OsMoDroid.settings.getBoolean("im", false)){
+		
 		
 		 if (globalActivity.mService!=null&&globalActivity.mService.myIM!=null&&!OsMoDroid.settings.getString("key", "").equals("")){
 			 if(globalActivity.mService.myIM.connOpened&&!globalActivity.mService.myIM.connecting){
@@ -326,7 +326,7 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 			 }
 				 
 		 }
-		}
+		
 		
 			final ToggleButton alarmToggle = (ToggleButton) view.findViewById(R.id.alarmButton);
 			if(OsMoDroid.settings.contains("signalisation")){

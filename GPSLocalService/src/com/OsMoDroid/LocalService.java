@@ -1481,7 +1481,7 @@ if (live&&!OsMoDroid.settings.getString("hash", "" ).equals(""))
 		registerReceiver(onlinePauseforStartReciever, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
 	}
 }
-if (OsMoDroid.settings.getBoolean("im", false) && !OsMoDroid.settings.getString("key", "" ).equals("") ){
+if ( !OsMoDroid.settings.getString("key", "" ).equals("") ){
 	if(log)Log.d(this.getClass().getName(), "try load longPollchannels");
 	ArrayList<String[]>  entries =  (ArrayList<String[]>)loadObject(OsMoDroid.FILENAME, new ArrayList<String[]>().getClass());
 	
@@ -1770,7 +1770,7 @@ OsMoDroid.settings.edit().putBoolean("ondestroy", false).commit();
 		}
 		requestLocationUpdates();
 		}
-		manageIM();
+		
 		if(log)Log.d(getClass().getSimpleName(), "applyPreferecne end");
 
 	}
@@ -1930,29 +1930,6 @@ new Netutil.MyAsyncTask(this).execute(params);}
 		registerReceiver( checkreceiver, new IntentFilter( "CHECK_GPS"));
 	}
 
-private void manageIM(){
-	if (OsMoDroid.settings.getBoolean("im", false) && myIM==null&& !OsMoDroid.settings.getString("key", "" ).equals("") ){
-
-		
-			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
-			longPollchannels.add(new String[] {"om_online","o",""}); 
-			if(!OsMoDroid.settings.getString("lpch", "").equals(""))
-			{ 
-			longPollchannels.add(new String[] {"ctrl_"+OsMoDroid.settings.getString("lpch", ""),"r",""});
-			longPollchannels.add(new String[] {OsMoDroid.settings.getString("lpch", "")+"_chat","m",""});
-			}
-			myIM = new IM( longPollchannels ,this,OsMoDroid.settings.getString("key", ""), this);	
-			if(log)Log.d(getClass().getSimpleName(), "om_device_channel_adaptive from manageim");
-			Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
-		}
-	if (!OsMoDroid.settings.getBoolean("im", false) && myIM!=null){
-		myIM.close();
-		myIM=null;
-	}
-		
-		
-	
-}
 public void sendid()
 
 {
