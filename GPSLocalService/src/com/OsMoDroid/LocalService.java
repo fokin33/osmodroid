@@ -1508,7 +1508,7 @@ if (live)
 		disconnectChannelsChats();
 		connectChannelsChats();
 		
-	myIM = new IM("osmo.mobi", 4242, this){
+	myIM = new IM("osmo.mobi", 3245, this){
 		
 		@Override
 		void ondisconnect(){

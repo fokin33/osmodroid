@@ -36,13 +36,11 @@ public class IM {	Handler handler;
 	
 	private static final String KEEPALIVE_INTENT = "com.osmodroid.keepalive";
 
-	protected  boolean running       = false;	//protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;//	String mykey;//	String timestamp=Long.toString(System.currentTimeMillis());	String lcursor="";	int pingTimeout=900;	Thread connectThread;	//private BufferedReader    in      = null;	Context parent;	String myLongPollCh;
+	protected  boolean running       = false;	//protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;//	String mykey;//	String timestamp=Long.toString(System.currentTimeMillis());	String lcursor="";	int pingTimeout=900;	Thread connectThread;	//private BufferedReader    in      = null;		Context parent;	String myLongPollCh;
 	ArrayList<String[]>  myLongPollChList = new ArrayList<String[]>();	int mestype=0;	LocalService localService;	FileOutputStream fos;
 	ObjectOutputStream output = null;	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	static String SERVER_IP;// = "osmo.mobi";
 	static int SERVERPORT;// = 5757;
-	final String wsuri = "ws://push.osmo.mobi/";
-	final String websocketuri = "ws://srv.osmo.mobi/";
 	protected boolean connOpened=false;
 	protected boolean connecting=false;
 	final boolean  log=true;
@@ -59,6 +57,9 @@ public class IM {	Handler handler;
 	private Thread readerThread;
 
 	private Thread writerThread;
+	private int workserverint=-1;
+
+	private String workservername="";	
 	
 	Handler readHandler= new Handler(){
 		@Override
@@ -95,13 +96,14 @@ public class IM {	Handler handler;
 		start();
 		}
 	}
-	public void sendToServer(String str){
-	Message msg =new Message();
-	Bundle b =new Bundle();
-	b.putString("write",str);
-	msg.setData(b);
-	handler.sendMessage(msg);
-	}
+	public void sendToServer(String str)
+		{
+			Message msg =new Message();
+			Bundle b =new Bundle();
+			b.putString("write",str);
+			msg.setData(b);
+			handler.sendMessage(msg);
+		}
 	
 	  BroadcastReceiver reconnectReceiver = new BroadcastReceiver() {
           @Override public void onReceive( Context context, Intent _ )
@@ -292,7 +294,9 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 
 
 
-	 /**
+
+
+	 /**
 	 * Выключает IM
 	 */
 	void close(){		if(log)Log.d(this.getClass().getName(), "void IM.close");
@@ -426,11 +430,23 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		@Override
 		public void run()
 			{
+				SocketAddress sockAddr;
 				 try {
-					 InetAddress serverAddr = InetAddress.getByName(SERVER_IP);
-					 SocketAddress sockAddr = new InetSocketAddress(serverAddr, SERVERPORT);
+					 if(workservername.equals(""))
+						 {
+							 InetAddress serverAddr = InetAddress.getByName(SERVER_IP);
+							 sockAddr = new InetSocketAddress(serverAddr, SERVERPORT);
+						 }
+					 else
+						 {
+							 InetAddress serverAddr = InetAddress.getByName(workservername);
+							 sockAddr = new InetSocketAddress(serverAddr, workserverint);
+						 }
+					 workserverint=-1;
+					 workservername="";
 					 socket=new Socket();
-					 socket.connect(sockAddr, 5000);
+					 
+					socket.connect(sockAddr, 5000);
 					 connOpened=true;
 					 connecting=false;
 					 
@@ -574,6 +590,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	}
 
 	void parseEx (String toParse, String topic){
+		
 		manager.cancel(reconnectPIntent);
 	if(toParse.equals("P|\n")){
 		addlog("recieve pong");
@@ -606,7 +623,12 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	if(c.equals("NEED_AUTH")){
 		sendToServer( "AUTH|"+OsMoDroid.settings.getString("newkey", ""));
 	}
+	if(c.equals("ADDR")){
+		workservername=jo.optString("address").substring(0, jo.optString("address").indexOf(':'));
+		workserverint=Integer.parseInt(jo.optString("address").substring( jo.optString("address").indexOf(':')+1));
+	}
 	if(c.equals("AUTH")){
+		
 		if(!jo.has("error")){
 			authed=true;
 			if(needopensession){
@@ -703,7 +725,6 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			
 			
 			disablekeepAliveAlarm();
-			
 			authed=false;
 			connecting=false;
 			connOpened=false;
