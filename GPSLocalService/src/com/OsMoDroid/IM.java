@@ -36,7 +36,7 @@ public class IM {	Handler handler;
 	
 	private static final String KEEPALIVE_INTENT = "com.osmodroid.keepalive";
 
-	protected  boolean running       = false;	//protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;//	String mykey;//	String timestamp=Long.toString(System.currentTimeMillis());	String lcursor="";	int pingTimeout=900;	Thread connectThread;	//private BufferedReader    in      = null;		Context parent;	String myLongPollCh;
+	protected  boolean running       = false;	//protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;//	String mykey;//	String timestamp=Long.toString(System.currentTimeMillis());	String lcursor="";	int pingTimeout=900;	Thread connectThread;	//private BufferedReader    in      = null;		Context parent;	private String token="";	String myLongPollCh;
 	ArrayList<String[]>  myLongPollChList = new ArrayList<String[]>();	int mestype=0;	LocalService localService;	FileOutputStream fos;
 	ObjectOutputStream output = null;	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	static String SERVER_IP;// = "osmo.mobi";
@@ -286,6 +286,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 						stop();
 					}
 									}		    }		}	};
+
+	
 
 	
 
@@ -621,14 +623,14 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	}
 	
 	if(c.equals("NEED_AUTH")){
-		sendToServer( "AUTH|"+OsMoDroid.settings.getString("newkey", ""));
+		sendToServer( "AUTH|{\"key\":\""+OsMoDroid.settings.getString("newkey", "")+"\"}");
 	}
-	if(c.equals("ADDR")){
-		workservername=jo.optString("address").substring(0, jo.optString("address").indexOf(':'));
-		workserverint=Integer.parseInt(jo.optString("address").substring( jo.optString("address").indexOf(':')+1));
+	if(c.equals("NEED_TOKEN")){
+		sendToServer( "AUTH|{\"token\":\""+token+"\"");
 	}
-	if(c.equals("AUTH")){
-		
+	
+	
+	if(c.equals("TOKEN")){
 		if(!jo.has("error")){
 			authed=true;
 			if(needopensession){
@@ -641,6 +643,20 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 				sendToServer("MOTD");
 			}
 			setkeepAliveAlarm();
+			
+		}
+	}
+	
+	if(c.equals("AUTH")){
+		
+		if(!jo.has("error")){
+			
+			if(jo.has("token")){
+				token=jo.optString("token");
+				workservername=jo.optString("address").substring(0, jo.optString("address").indexOf(':'));
+				workserverint=Integer.parseInt(jo.optString("address").substring( jo.optString("address").indexOf(':')+1));
+			}
+		
 		}
 	}
 	if(c.equals("TRACKER_SESSION_OPEN")){
