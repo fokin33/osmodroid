@@ -607,7 +607,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		sendToServer( "AUTH|"+OsMoDroid.settings.getString("newkey", ""));
 	}
 	if(c.equals("AUTH")){
-		if(jo.has("health")){
+		if(!jo.has("error")){
 			authed=true;
 			if(needopensession){
 				sendToServer("TRACKER_SESSION_OPEN");
