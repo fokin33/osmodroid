@@ -22,12 +22,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 
+import com.OsMoDroid.GPSLocalServiceClient.RequestCommandTask;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
@@ -140,7 +143,7 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 	public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
 		//SubMenu menu1 = menu.addSubMenu(Menu.NONE, 11, 4, "Действия");
 		SubMenu menu2 = menu.addSubMenu(Menu.NONE, 12, 4, R.string.more);
-
+		
 		MenuItem auth = menu2.add(0, 1, 0, R.string.RepeatAuth);
 		MenuItem mi = menu.add(0, 2, 0, R.string.Settings);
 		mi.setIcon(android.R.drawable.ic_menu_preferences);
@@ -159,6 +162,7 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 //		MenuItem exit = menu.add(0, 14, 0, R.string.exit);
 		MenuItem save =menu2.add(0, 18, 0, R.string.savepref);
         MenuItem load =menu2.add(0, 19, 0, R.string.loadpref);
+        MenuItem addlisten = menu.add(0, 20, 0, "listento");
         //MenuItem changeName = menu.add(0, 20, 0, R.string.changename);
 
                  super.onCreateOptionsMenu(menu, inflater);
@@ -288,6 +292,58 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 			 
 			 }
 	          
+		}
+		if (item.getItemId() == 20) {
+			// final View textEntryView = factory.inflate(R.layout.dialog,
+			// null);
+			LinearLayout layout = new LinearLayout(globalActivity);
+			layout.setOrientation(LinearLayout.VERTICAL);
+			final TextView txv5 = new TextView(globalActivity);
+			txv5.setText("listen id");
+			layout.addView(txv5);
+	
+
+			final EditText input = new EditText(globalActivity);
+			//input2.setText("Ваше имя");
+			layout.addView(input);
+//		final EditText input = new EditText(this);
+			//final TextView txv4 = new TextView(this);
+			//txv4.setText("Одноразовый пароль можно получить по адресу http://esya.ru/app.html?act=add при наличии регистрации");
+			//Linkify.addLinks(txv4, Linkify.ALL);
+			//layout.addView(txv4);
+
+			AlertDialog alertdialog3 = new AlertDialog.Builder(
+					globalActivity)
+					.setTitle(R.string.appauth)
+					.setView(layout)
+					.setPositiveButton(R.string.yes,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int whichButton) {
+									String pass = input.getText().toString();
+									if (!(pass.equals(""))) {
+										globalActivity.mService.myIM.listenArrayList.add(input.getText().toString());
+										if(globalActivity.mService.myIM.authed){
+											globalActivity.mService.myIM.sendToServer("LISTEN|"+pass);
+										}
+									} else {
+										Toast.makeText(
+												globalActivity,
+												R.string.noappcode, 5).show();
+									}
+								}
+							})
+					.setNegativeButton(R.string.No,
+							new DialogInterface.OnClickListener() {
+								public void onClick(DialogInterface dialog,
+										int whichButton) {
+
+
+								}
+							}).create();
+
+			alertdialog3.show();
+	
 		}
 		
 		return super.onOptionsItemSelected(item);
