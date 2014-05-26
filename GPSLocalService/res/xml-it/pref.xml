@@ -8,7 +8,7 @@
             android:key="live"
             android:title="Monitoraggio in diretta"/>
 
-                    <PreferenceScreen android:title="Imposatzioni monitoraggio" android:dependency="live">
+                    <PreferenceScreen android:title="Impostazioni monitoraggio" android:dependency="live">
                             <EditTextPreference
                                 android:digits="0123456789"
                                 android:inputType= "number"
@@ -75,7 +75,7 @@
             android:summary= "Le tracce sono conservate nella carta di memoria di default (/sdcard/OsMoDroid/)"
             android:title= "Registra traccia"/>
 
-                <PreferenceScreen android:title="Impstazioni di registrazione" android:dependency="gpx">
+                <PreferenceScreen android:title="Impostazioni di registrazione" android:dependency="gpx">
                         <EditTextPreference
                             android:digits= "0123456789"
                             android:inputType= "number"
@@ -127,7 +127,7 @@
                     
     </PreferenceCategory>
     
-    <PreferenceCategory android:title="Più">
+    <PreferenceCategory android:title="Avanzate">
 
                     <PreferenceScreen android:title="Notifica" >
                             <CheckBoxPreference
