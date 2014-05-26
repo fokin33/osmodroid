@@ -8,7 +8,7 @@
             android:key="live"
             android:title="Monitoraggio in diretta"/>
 
-                    <PreferenceScreen android:title="Imposatzioni monitoraggio" android:dependency="live">
+                    <PreferenceScreen android:title="Impostazioni monitoraggio" android:dependency="live">
                             <EditTextPreference
                                 android:digits="0123456789"
                                 android:inputType= "number"
