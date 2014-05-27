@@ -48,7 +48,7 @@
 <string name="buffer">Buffer:</string>
 <string name="request">Autorizzazione richiesta, prego attendere ...</string>
 <string name="noappcode">Password vuota</string>
-<string name="nokey">Errore nell'autorizzazione</string>
+<string name="nokey">Errore nell\'autorizzazione</string>
 <string name="getkey">Autorizza</string>
 <string name="getadres">Ottieni indirizzi</string>
 <string name="getdevice">Acquisisci dispositivo</string>
@@ -78,7 +78,7 @@ Tiles © GIScience Heidelberg
 <string name="cancel">Cancella</string>
 <string name="speed">Velocità km/h:</string>
 <string name="auth">Autorizzazione</string>
-<string name="warnhash">I dati di identificazione (hash o numero di riferimento) sono sbagliati, è necessario reimpostare l'hash o immetterlo nelle impostazioni manualmente</string>
+<string name="warnhash">I dati di identificazione (hash o numero di riferimento) sono sbagliati, è necessario reimpostare l\'hash o immetterlo nelle impostazioni manualmente</string>
 
 <!-- Fuzzy -->
 <string name="nomapapp">Applicazione tipo Maps non installata</string>
@@ -119,7 +119,7 @@ Tiles © GIScience Heidelberg
 <string name="binddevice">Pareggia il dispositivo</string>
 <string name="hash">Hash:</string>
 <string name="controlnumber">Codice di conferma:</string>
-<string name="bindapp">Collega l'app</string>
+<string name="bindapp">Collega l\'app</string>
 <string name="esya_ru_notrespond">OsMoDroid non può accedere al server</string>
 
 <!-- Fuzzy -->
@@ -130,14 +130,14 @@ Tiles © GIScience Heidelberg
 <string name="stat">Statistiche</string>
 <string name="login">Nome utente su Esya.ru:</string>
 <string name="password">Password:</string>
-<string name="appauth">Autorizza l'Applicazione</string>
+<string name="appauth">Autorizza l\'Applicazione</string>
 <string name="inbuffer">in buffer:</string>
 <string name="authpleasewait">Autorizzazione richiesta, prego attendere ...</string>
 <string name="commandpleasewait">Comando in esecuzione, prego attendere ...</string>
 <string name="resultenterchanalnoget">Risultato ingresso al canale non ricevuto</string>
 <string name="linksnotget">Collegamenti non letti</string>
 <string name="noanswerfromserver">Mancata risposta dal server</string>
-<string name="urlnoget">Impossibile ottenere l'URL</string>
+<string name="urlnoget">Impossibile ottenere l\'URL</string>
 <string name="prefsaved">Impostazioni salvate sulla scheda di memoria</string>
 <string name="prefloaded">Impostazioni lette dalla scheda di memoria</string>
 <string name="started">Avviato</string>
