@@ -142,10 +142,10 @@ Tiles © GIScience Heidelberg
 <string name="prefloaded">Impostazioni lette dalla scheda di memoria</string>
 <string name="started">Avviato</string>
 <string name="stoped">Fermato</string>
-<string name="monitoringondevice">Monitorando sul dispositivo\"</string>
+<string name="monitoringondevice">Monitorando sul dispositivo\</string>
 <string name="enternet">Unito alla rete</string>
 <string name="exitnet">Lascia la rete</string>
-<string name="device">Il dispositivo\"</string>
+<string name="device">Il dispositivo\</string>
 <string name="accuracy">Accuratezza:</string>
 <string name="maximal">Massimo:</string>
 <string name="kmch">Km/h</string>
@@ -194,12 +194,12 @@ Tiles © GIScience Heidelberg
 <string name="wekksends"> Settimane inviate:</string>
 <string name="from_undefined">da anonimo</string>
 <string name="map">Mappa</string>
-<string name="drawer_open">open</string>
-<string name="drawer_close">close</string>
-<string name="iam">Me</string>
-<string name="needgps">Need GPS Enabled</string>
-<string name="enablegps">Please, enable GPS</string>
-<string name="showtraces">Show traces</string>
-<string name="enable_manual_rotation">Enable manual rotation</string>
-<string name="enable_course_rotation">Enable course rotation</string>
+<string name="iam">Io</string>
+<string name="needgps">Necessita del GPS acceso </string>
+<string name="enablegps">Prego accenda il GPS</string>
+<string name="showtraces">Mostra le tracce</string>
+<string name="enable_manual_rotation">Abilita la rotazione manuale</string>
+<string name="enable_course_rotation">Abilita la rotazione della traccia</string>
+<string name="drawer_open">Apri</string>
+<string name="drawer_close">Chiudi</string>
 </resources>
