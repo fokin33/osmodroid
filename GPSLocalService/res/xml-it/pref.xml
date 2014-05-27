@@ -127,7 +127,7 @@
                     
     </PreferenceCategory>
     
-    <PreferenceCategory android:title="Più">
+    <PreferenceCategory android:title="Avanzate">
 
                     <PreferenceScreen android:title="Notifica" >
                             <CheckBoxPreference
