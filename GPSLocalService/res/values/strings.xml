@@ -53,7 +53,7 @@
 <string name="message">Message</string>
 <string name="sendsupport">Report to support</string>
 <string name="about">About</string>
-<string name="abouttext"> OsMoDroid, monitoring client OsMo \n Author : Denis Fokin (c) 2012-2014 \n \n Using this application you accept the Terms of Use : http://esya.ru/om/terms/ \n \n Site OsMoDroid: http://osmodroid.com \nManual on OsMoDroid: http://osmodroid.com/help/ \nLink with OsmAnd: http://osmodroid.com/withosmand.html \n \nManual monitoring : http://esya.ru/om/start/ \n Map Data: © OpenStreetMap contributors \n Tiles: © GIScience Heidelberg</string>
+<string name="abouttext">OsMoDroid, monitoring client for OsMo\n Main developer: Denis Fokin (c) 2012-2014 \n \n Using this application you accept the Terms of Use : http://esya.ru/om/terms/ \n \n Site OsMoDroid: http://osmodroid.com \nManual on OsMoDroid: http://osmodroid.com/help/ \nLink with OsmAnd: http://osmodroid.com/withosmand.html \n \nManual monitoring : http://esya.ru/om/start/ \nMap Data © OpenStreetMap contributors www.osm.org \nTiles © GIScience Heidelberg</string>
 <string name="send">>></string>
 <string name="cancel">Cancel</string>
 <string name="speed">Speed: km/h</string>

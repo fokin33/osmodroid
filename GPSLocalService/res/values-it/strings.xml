@@ -69,7 +69,11 @@ Il sito OsMoDroid: http://osmodroid.com
 Il Manuale di OsMoDroid: http://osmodroid.com/help/
 Link a OsmAnd: http://osmodroid.com/withosmand.html
  
-Manuale a proposito del monitoraggio: http://esya.ru/om/start/</string>
+Manuale a proposito del monitoraggio: http://esya.ru/om/start/
+
+Map Data © OpenStreetMap contributors www.osm.org
+Tiles © GIScience Heidelberg
+</string>
 <string name="send">Invia</string>
 <string name="cancel">Cancella</string>
 <string name="speed">Velocità km/h:</string>
