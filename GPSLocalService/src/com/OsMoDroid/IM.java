@@ -225,19 +225,19 @@ public void removechannels(ArrayList<String[]> longPollChList){
 	
 	return ids;
 	
-}			public void addtoDeviceChat(String message) {int u = -1;			try {
+}			public void addtoDeviceChat(String message) {String u = "";			try {
 				MyMessage mes =new MyMessage( new JSONObject(message));
 				if(log)Log.d(this.getClass().getName(), "MyMessage,from "+mes.from);
 				if(log)Log.d(this.getClass().getName(), "DeviceList= "+LocalService.deviceList);
 if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	for (Device dev : LocalService.deviceList){
-		if(Integer.toString(dev.u).equals(mes.to)){
+		if((dev.u).equals(mes.to)){
 			u=dev.u;
 		}
 	}
 } else {
 				for (Device dev : LocalService.deviceList){
-					if(Integer.toString(dev.u).equals(mes.from)){
+					if((dev.u).equals(mes.from)){
 						u=dev.u;
 					}
 				}
@@ -274,8 +274,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if (u!=-1){
-			Message msg = new Message();			Bundle b = new Bundle();			b.putInt("deviceU", u);			msg.setData(b);			localService.alertHandler.sendMessage(msg);		}			}	private BroadcastReceiver bcr = new BroadcastReceiver() {		@Override		public void onReceive(Context context, Intent intent) {			addlog("network broadcast recive");		//	if(log)Log.d(this.getClass().getName(), "BCR"+this);		//	if(log)Log.d(this.getClass().getName(), "BCR"+this+" Intent:"+intent);			if (intent.getAction().equals(android.net.ConnectivityManager.CONNECTIVITY_ACTION)) {				Bundle extras = intent.getExtras();			//	if(log)Log.d(this.getClass().getName(), "BCR"+this+ " "+intent.getExtras());				if(extras.containsKey("networkInfo")) {					NetworkInfo netinfo = (NetworkInfo) extras.get("networkInfo");				//	if(log)Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo);				//	if(log)Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo.getType());					if(netinfo.isConnected()) {						if(log)Log.d(this.getClass().getName(), "BCR Network is connected");						if(log)Log.d(this.getClass().getName(), "Running:"+running);						// Network is connected
+			if (!u.equals("")){
+			Message msg = new Message();			Bundle b = new Bundle();			b.putString("deviceU", u);			msg.setData(b);			localService.alertHandler.sendMessage(msg);		}			}	private BroadcastReceiver bcr = new BroadcastReceiver() {		@Override		public void onReceive(Context context, Intent intent) {			addlog("network broadcast recive");		//	if(log)Log.d(this.getClass().getName(), "BCR"+this);		//	if(log)Log.d(this.getClass().getName(), "BCR"+this+" Intent:"+intent);			if (intent.getAction().equals(android.net.ConnectivityManager.CONNECTIVITY_ACTION)) {				Bundle extras = intent.getExtras();			//	if(log)Log.d(this.getClass().getName(), "BCR"+this+ " "+intent.getExtras());				if(extras.containsKey("networkInfo")) {					NetworkInfo netinfo = (NetworkInfo) extras.get("networkInfo");				//	if(log)Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo);				//	if(log)Log.d(this.getClass().getName(), "BCR"+this+ " "+netinfo.getType());					if(netinfo.isConnected()) {						if(log)Log.d(this.getClass().getName(), "BCR Network is connected");						if(log)Log.d(this.getClass().getName(), "Running:"+running);						// Network is connected
 						addlog("webcoket Network is connected, running="+running);						if(!running ) {							//SetAlarm();
 							start();
 							addlog("webcoket start by broadcast because no running");
@@ -559,7 +559,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			
 			for (Device device : channel.deviceList) {
 				if(log)Log.d(this.getClass().getName(), "device nest" + device.name + " " + device.u);
-				if (datanew[0].equals(Integer.toString(device.u))) {
+				if (datanew[0].equals((device.u))) {
 					if(log)Log.d(this.getClass().getName(), "Сообщение от устройства в канале " + device.toString());
 					fromDevice = device.name;
 				}
@@ -665,9 +665,14 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 				sendToServer("MOTD");
 			}
 			setkeepAliveAlarm();
+			String listen = "";
 			for (String str : listenArrayList){
-				sendToServer("LISTEN|"+str);
+				listen=("LISTEN|"+str)+"=";
 			}
+			if(!listen.equals(""))
+				{
+					sendToServer(listen);
+				}
 		}
 	}
 	
@@ -695,6 +700,10 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		localService.motd=LocalService.unescape(d);
 		localService.refresh();
 	}
+	if(c.substring(0, c.indexOf(":")).equals("GROUP_JOIN")){
+		sendToServer("GROUP_CONNECT"+c.substring(c.indexOf(":")));
+	}
+	
 //	try
 //		{
 //			

@@ -51,7 +51,7 @@ public class DevicesFragment extends SherlockFragment implements ResultsListener
 	public void onResume() {
 		Log.d(getClass().getSimpleName(),"devicesfragment Onresume");
 		globalActivity.actionBar.setTitle(R.string.devices);
-if(deviceU!=-1){
+if(!deviceU.equals("")){
 	openDeviceChat(deviceU);
 	
 }
@@ -123,7 +123,7 @@ if(deviceU!=-1){
 											//netutil.newapicommand((ResultsListener) MyDevices.this, "im_send:"+LocalService.deviceList.get((int) acmi.id).uid+","+LocalService.deviceList.get((int) acmi.id).app,"json="+postjson.toString());
 										
 											postjson.put("from", OsMoDroid.settings.getString("device", ""));
-											postjson.put("to", Integer.toString(LocalService.deviceList.get((int) acmi.id).u));
+											postjson.put("to", (LocalService.deviceList.get((int) acmi.id).u));
 											postjson.put("text", input.getText().toString());
 											Netutil.newapicommand((ResultsListener) DevicesFragment.this, "om_device_message_send","json="+postjson.toString());
 											} catch (JSONException e) {
@@ -225,10 +225,10 @@ if(deviceU!=-1){
 		return super.onContextItemSelected(item);
 	}
 
-	void openDeviceChat(int i) {
+	void openDeviceChat(String u) {
 		 globalActivity.drawClickListener.devchat = new DeviceChatFragment();
 		Bundle bundle = new Bundle();
-		bundle.putInt("deviceU", i);
+		bundle.putString("deviceU", u);
 		globalActivity.drawClickListener.devchat.setArguments(bundle);
 		globalActivity.showFragment(globalActivity.drawClickListener.devchat,true);
 	}
@@ -259,11 +259,11 @@ if(deviceU!=-1){
 
 	private GPSLocalServiceClient globalActivity;
 	private ListView lv1;
-	 int deviceU=-1;
+	 String deviceU="";
 	//private boolean openedbynotification=false;
 	
 	
-	public void needToOpenChat(int i)
+	public void needToOpenChat(String i)
 	{
 		deviceU=i;
 	}
@@ -412,7 +412,7 @@ if(deviceU!=-1){
 	
 	@Override
 	public void onPause() {
-		deviceU=-1;
+		deviceU="";
 		Log.d(getClass().getSimpleName(),"onpause");
 		//openedbynotification=true;
 		super.onPause();

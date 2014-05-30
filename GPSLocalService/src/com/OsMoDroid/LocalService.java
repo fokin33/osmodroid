@@ -409,7 +409,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 			if(b.getInt("deviceU") != -1){
 				String fromDevice=getString(R.string.from_undefined);
 				for (Device dev : LocalService.deviceList){
-					if (b.getInt("deviceU")==dev.u){
+					if (b.getString("deviceU").equals(dev.u)){
 						fromDevice=" "+dev.name;
 					}
 				}
@@ -433,7 +433,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 					Notification notification = notificationBuilder.build();
 					LocalService.mNotificationManager.notify(OsMoDroid.mesnotifyid, notification);
 			}
-			if (LocalService.currentDevice!=null&&LocalService.currentDevice.u==b.getInt("deviceU") ){
+			if (LocalService.currentDevice!=null&&LocalService.currentDevice.u.equals(b.getString("deviceU")) ){
 				LocalService.mNotificationManager.cancel(OsMoDroid.mesnotifyid);
 			}
 			String text = b.getString("MessageText");
@@ -484,468 +484,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 }
 };
 
-	final RemoteCallbackList<IRemoteOsMoDroidListener> remoteListenerCallBackList = new RemoteCallbackList<IRemoteOsMoDroidListener>();
-	private final IRemoteOsMoDroidService.Stub rBinder = new IRemoteOsMoDroidService.Stub() {
-			public int getVersion()  {
-				return 5;
-			}
-			public int getBackwardCompatibleVersion()  {
-				return 0;
-			}
-			public void Deactivate(){
-				if (state){
-		        	alertHandler.post(new Runnable() {
-						public void run() {
-							stopServiceWork(false);
-		                }});
-		        }
-				return;
-			}
-			public boolean isActive() {
-				return state;
-			}
-			public void Activate() {
-				if (!state){
-		        	alertHandler.post(new Runnable() {
-						public void run() {
-		        	startServiceWork();
-		            }});
-		        }
-			}
-
-
-			public int getNumberOfLayers()  {
-				try {
-					return channelList.size();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return 0;
-			}
-
-
-
-			public int getLayerId(int pos) {
-				try {	
-					return channelList.get(pos).u;
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return 0;
-			}
-
-			public String getLayerName(int layerId) {
-				try {
-					for (Channel channel: channelList){
-						if (channel.u==layerId){
-							return channel.name;
-					}
-					}
-					
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return null;
-			}
-
-			public String getLayerDescription(int layerId)
-				{
-				try {
-					for (Channel channel: channelList){
-						if (channel.u==layerId){
-							return channel.name;
-					}
-					}
-					
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return null;
-			}
-
-
-
-			public int getNumberOfObjects(int layerId){
-				try {
-					for (Channel channel: channelList){
-						if (channel.u==layerId){
-							return channel.deviceList.size();
-					}
-					}
-					
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return 0;
-			}
-
-
-
-			public int getObjectId(int layerId, int pos) {
-				try {
-					for (Channel channel: channelList){
-						if (channel.u==layerId){
-							return channel.deviceList.get(pos).u;
-					}
-					}
-					
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return 0;
-			}
-			public float getObjectLat(int layerId, int objectId)
-			{
-				try {
-					for (Channel channel: channelList){
-						if (channel.u==layerId){
-							for (Device device:channel.deviceList){
-								if (device.u==objectId){
-									return device.lat;			
-								}
-							}
-					}
-					}
-					
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return 0;
-			}
-
-
-
-			public float getObjectLon(int layerId, int objectId)
-					{
-				try {
-					for (Channel channel: channelList){
-						if (channel.u==layerId){
-							for (Device device:channel.deviceList){
-								if (device.u==objectId){
-									return device.lon;		
-								}
-							}
-							
-							
-					}
-					}									
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return 0;
-			}
-
-
-
-			public String getObjectName(int layerId, int objectId)
-					 {
-				try {
-					for (Channel channel: channelList){
-						if (channel.u==layerId){
-							for (Device device:channel.deviceList){
-								if (device.u==objectId){
-									return device.name;		
-								}
-							}
-					}
-					}
-					
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return null;
-			}
-
-
-
-			public String getObjectDescription(int layerId, int objectId)
-					 {
-				try {
-					for (Channel channel: channelList){
-						if (channel.u==layerId){
-							for (Device device:channel.deviceList){
-								if (device.u==objectId){
-									return device.name;		
-								}
-							}
-							
-							
-					}
-					}
-					
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return null;
-			}
-
-
-
-			public void registerListener(IRemoteOsMoDroidListener listener)
-					throws RemoteException {
-				if (listener!=null){
-					remoteListenerCallBackList.register(listener);
-				}
-				
-			}
-
-
-
-			public void unregisterListener(IRemoteOsMoDroidListener listener)
-					throws RemoteException {
-				if (listener!=null){
-					remoteListenerCallBackList.unregister(listener);
-				}
-				
-			}
-
-
-
-			public String getObjectSpeed(int layerId, int objectId)
-			 {
-					try {
-						for (Channel channel: channelList){
-							if (channel.u==layerId){
-								for (Device device:channel.deviceList){
-									if (device.u==objectId){
-										return device.speed;			
-									}
-								}
-						}
-						}
-						
-						
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					return null;
-			}
-
-
-
-			public String getObjectColor(int layerId, int objectId)
-					throws RemoteException {
-				try {
-					for (Channel channel: channelList){
-						if (channel.u==layerId){
-							for (Device device:channel.deviceList){
-								if (device.u==objectId){
-									return device.color;			
-								}
-							}
-						}
-					}
-			} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return null;
-			}
-
-
-
-			@Override
-			public void refreshChannels() throws RemoteException {
-				Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
-							}
-			@Override
-			public int getNumberOfGpx(int layerId) throws RemoteException {
-				try {
-					for (Channel channel: channelList){
-						if (channel.u==layerId){
-							return channel.gpxList.size();
-					}
-					}
-					
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return 0;
-							}
-
-
-
-			@Override
-			public String getGpxFile(int layerId, int pos)
-					throws RemoteException {
-				try {
-					for (Channel channel: channelList){
-						if (channel.u==layerId){
-							return channel.gpxList.get(pos).gpxfile.getPath();
-					}
-					}
-					
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return null;
-			}
-
-			@Override
-			public int getGpxColor(int layerId, int pos) throws RemoteException {
-				try {
-					for (Channel channel: channelList){
-						if (channel.u==layerId){
-							return channel.gpxList.get(pos).color;
-					}
-					}
-					
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return Color.MAGENTA;
-			}
-
-			@Override
-			public int getNumberOfPoints(int layerId) throws RemoteException {
-				try {
-					for (Channel channel: channelList){
-						if (channel.u==layerId){
-							return channel.pointList.size();
-					}
-					}
-					
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return 0;
-			}
-
-
-
-			@Override
-			public int getPointId(int layerId, int pos) throws RemoteException {
-				try {
-					for (Channel channel: channelList){
-						if (channel.u==layerId){
-							return channel.pointList.get(pos).u;
-					}
-					}
-					
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return 0;
-			}
-
-
-
-			@Override
-			public float getPointLat(int layerId, int pointId)
-					throws RemoteException {
-				try {
-					for (Channel channel: channelList){
-						if (channel.u==layerId){
-							for (Point point:channel.pointList){
-								if (point.u==pointId){
-									return point.lat;			
-								}
-							}
-						}
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return 0;
-			}
-
-
-
-			@Override
-			public float getPointLon(int layerId, int pointId)
-					throws RemoteException {
-				try {
-					for (Channel channel: channelList){
-						if (channel.u==layerId){
-							for (Point point:channel.pointList){
-								if (point.u==pointId){
-									return point.lon;			
-								}
-							}
-						}
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return 0;
-			}
-
-
-
-			@Override
-			public String getPointName(int layerId, int pointId)
-					throws RemoteException {
-				try {
-					for (Channel channel: channelList){
-						if (channel.u==layerId){
-							for (Point point:channel.pointList){
-								if (point.u==pointId){
-									return point.name;			
-								}
-							}
-						}
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return null;
-			}
-
-
-
-			@Override
-			public String getPointDescription(int layerId, int pointId)
-					throws RemoteException {
-				try {
-					for (Channel channel: channelList){
-						if (channel.u==layerId){
-							for (Point point:channel.pointList){
-								if (point.u==pointId){
-									return point.description;			
-								}
-							}
-						}
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return null;
-			}
-
-
-
-			@Override
-			public String getPointColor(int layerId, int pointId)
-					throws RemoteException {
-				try {
-					for (Channel channel: channelList){
-						if (channel.u==layerId){
-							for (Point point:channel.pointList){
-								if (point.u==pointId){
-									return point.color;			
-								}
-							}
-						}
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				return null;
-			}
-		
-    };
-    
+	
     private Float sensivity;
     private int alarmStreamId=0;
     private int count=0;
@@ -1017,71 +556,16 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 
 	@Override
 	 public IBinder onBind(Intent intent) {
-		if (intent.getAction().equals("OsMoDroid.remote")){
-			bindedremote=true;
-			if (!OsMoDroid.settings.getString("key", "" ).equals("") )
-			{
-				Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
-			}
-			binded=true;
-			connectChannels();
-			Log.d(this.getClass().getName(), "on rebind "+binded + "intent="+intent.getAction()+" bindedremote="+bindedremote+" bindedlocaly="+bindedlocaly);
-			return rBinder;
-		}else
-		{
+		
+		
 			bindedlocaly=true;
 			binded=true;
 			connectChannels();
 			Log.d(this.getClass().getName(), "on rebind "+binded + "intent="+intent.getAction()+" bindedremote="+bindedremote+" bindedlocaly="+bindedlocaly);
 			return mBinder;
-		}
+		
 		
     }
-
-
-public synchronized void informRemoteClientChannelUpdate(){
-	final int N = remoteListenerCallBackList.beginBroadcast();
-    for (int i=0; i<N; i++) {
-        try {
-        	remoteListenerCallBackList.getBroadcastItem(i).channelUpdated();
-        } catch (RemoteException e) {
-            // The RemoteCallbackList will take care of removing
-            // the dead object for us.
-        }
-    }
-    remoteListenerCallBackList.finishBroadcast();
-    if(log)Log.d(getClass().getSimpleName(), "inform client channelUpdated");
-}
-
-public synchronized void informRemoteClientChannelsListUpdate(){
-	final int N = remoteListenerCallBackList.beginBroadcast();
-    for (int i=0; i<N; i++) {
-        try {
-        	remoteListenerCallBackList.getBroadcastItem(i).channelsListUpdated();
-        } catch (RemoteException e) {
-            // The RemoteCallbackList will take care of removing
-            // the dead object for us.
-        }
-    }
-    remoteListenerCallBackList.finishBroadcast();
-    if(log)Log.d(getClass().getSimpleName(), "inform client channelsListUpdated");
-}
-
-public synchronized void informRemoteClientRouteTo(float Lat, float Lon){
-	final int N = remoteListenerCallBackList.beginBroadcast();
-    for (int i=0; i<N; i++) {
-        try {
-        	remoteListenerCallBackList.getBroadcastItem(i).routeTo(Lat, Lon);
-        } catch (RemoteException e) {
-            // The RemoteCallbackList will take care of removing
-            // the dead object for us.
-        }
-    }
-    remoteListenerCallBackList.finishBroadcast();
-    if(log)Log.d(getClass().getSimpleName(), "inform client routeTo");
-}
-
-
 
 public synchronized void refresh(){
 
@@ -1685,7 +1169,6 @@ OsMoDroid.settings.edit().putBoolean("ondestroy", false).commit();
 		if (!(LocwakeLock==null)&&LocwakeLock.isHeld())LocwakeLock.release();
 		if (!(SendwakeLock==null)&&SendwakeLock.isHeld())SendwakeLock.release();
 		mNotificationManager.cancelAll();
-		remoteListenerCallBackList.kill();
 		OsMoDroid.settings.edit().remove("globalsend").commit();
 		OsMoDroid.settings.edit().putBoolean("ondestroy", true).commit();
 
@@ -3531,7 +3014,7 @@ public void onResultsSucceeded(APIComResult result) {
 		    				catch (JSONException e) {
 		    					if(log)Log.d(getClass().getSimpleName(), e.getMessage());
 							}
-		    				informRemoteClientChannelsListUpdate();
+		    			
 		    			}
 		    		}
 		    	}
@@ -3544,7 +3027,7 @@ public void onResultsSucceeded(APIComResult result) {
 		    				 catch (Exception e) {
 		    					e.printStackTrace();
 							}
-		    				informRemoteClientChannelsListUpdate();
+		    		
 		    			}
 		    		}
 		    	}
@@ -3616,7 +3099,7 @@ public void onResultsSucceeded(APIComResult result) {
 			 if (binded){
 				 disconnectChannels();
 				 connectChannels();
-				 informRemoteClientChannelsListUpdate();
+				
 				 if(LocalService.devlistener!=null)
 				 	{
 					 	if(log)Log.d(getClass().getSimpleName(), "inform map");

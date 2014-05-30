@@ -98,7 +98,7 @@ public class DrawerItemClickListener implements OnItemClickListener {
     	   if(bundle!=null){
     		   
     		   //devs.setArguments(bundle.geti);
-    		   devs.deviceU=bundle.getInt("deviceU",-1);
+    		   devs.deviceU=bundle.getString("deviceU");
     	   }
                ft.replace(R.id.fragment_container, devs);
                currentItem=4;

@@ -415,7 +415,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 
 	void setupDrawerList() {
 		mDrawerItems.clear();
-		if (!OsMoDroid.settings.getString("key", "" ).equals("") ){
+//		if (!OsMoDroid.settings.getString("key", "" ).equals("") ){
 			 String[] menu1 = new String[] {
 					    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
 					    getString(R.string.chanals),getString(R.string.devices),getString(R.string.links),
@@ -434,21 +434,21 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 		 mDrawerItems.add(s);
 		 
 		 }
-		 }
-		else{
-			 String[] menu2=new String[] {
-					    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
-					    getString(R.string.tracks),getString(R.string.exit)};
-			 if(OsMoDroid.debug){
-				 menu2 = new String[] {
-						    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
-						    getString(R.string.tracks),getString(R.string.exit), "debug"};
-				
-			}
-			for (String s: menu2 ){
-				mDrawerItems.add(s);
-			}
-		}
+		// }
+//		else{
+//			 String[] menu2=new String[] {
+//					    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
+//					    getString(R.string.tracks),getString(R.string.exit)};
+//			 if(OsMoDroid.debug){
+//				 menu2 = new String[] {
+//						    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
+//						    getString(R.string.tracks),getString(R.string.exit), "debug"};
+//				
+//			}
+//			for (String s: menu2 ){
+//				mDrawerItems.add(s);
+//			}
+//		}
 		
 		menuAdapter=new ArrayAdapter<String>(this,R.layout.drawer_list_item, mDrawerItems);
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item, mDrawerItems));

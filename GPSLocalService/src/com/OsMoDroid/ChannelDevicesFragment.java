@@ -278,57 +278,6 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 
 
 		Log.d(getClass().getSimpleName(),"OnResultListener Command:"+result.Command+",Jo="+result.Jo);
-		if (!(result.Jo==null)  ) {
-
-			try {
-				Toast.makeText(getSherlockActivity(),result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
-			} catch (NullPointerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		
-		
-		//"om_channel_chat_get:"+LocalService.currentChannel.u
-		if (result.Jo.has("om_channel_chat_get:"+LocalService.currentChannel.u)){
-			
-			LocalService.currentChannel.messagesstringList.clear();
-			String fromDevice="Неизвестно кто";
-			try {
-				  JSONArray a = result.Jo.getJSONArray("om_channel_chat_get:"+LocalService.currentChannel.u);
-		 		  Log.d(getClass().getSimpleName(), a.toString());
-		 		 for (int i = 0; i < a.length(); i++) {
-		 			JSONObject jsonObject = a.getJSONObject(i);
-		
-		 			for(Device dev:LocalService.currentChannel.deviceList){
-		 				if(dev.u==jsonObject.optInt("device")){
-		 					fromDevice=dev.name;
-		 				}
-		 			}
-		 			if (jsonObject.optInt("device")==0)
-		 				{
-		 					fromDevice=getSherlockActivity().getString(R.string.observers);
-		 				}
-		 				
-		 			if (jsonObject.optInt("device")==Integer.parseInt(OsMoDroid.settings.getString("device", "0"))){
-		 				fromDevice=getSherlockActivity().getString(R.string.iam);
-		 			}
-		 			LocalService.currentChannel.messagesstringList.add( fromDevice+": "+Netutil.unescape(jsonObject.optString("text")));
-		 			//Collections.sort(LocalService.currentChannel.messagesstringList);
-				 if (LocalService.channelsmessagesAdapter!=null) {LocalService.channelsmessagesAdapter.notifyDataSetChanged();}
-			}
-		
-		 		 
-				} catch (Exception e) {
-
-					 Log.d(getClass().getSimpleName(), "om_device_channel_adaptive эксепшн"+e.getMessage());
-					e.printStackTrace();
-				}
-
-
-		}
-		}
-		
 		
 		
 		

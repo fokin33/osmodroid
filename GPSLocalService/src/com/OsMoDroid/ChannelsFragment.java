@@ -301,7 +301,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 			}
         
         if (item.getItemId() == 2) {
-			if (!(OsMoDroid.settings.getString("device", "").equals(""))) {
+			if (globalActivity.mService.myIM.authed) {
 			LinearLayout layout = new LinearLayout(globalActivity);
 			layout.setOrientation(LinearLayout.VERTICAL);
 			final TextView txv1 = new TextView(globalActivity);
@@ -321,7 +321,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 									if (!(canalid.equals("")))
 									{
 										
-										Netutil.newapicommand((ResultsListener)ChannelsFragment.this,(Context)getSherlockActivity(), "om_channel_enter:"+OsMoDroid.settings.getString("device", "")+","+canalid);
+										globalActivity.mService.myIM.sendToServer("GROUP_JOIN:"+canalid+"|test");
 									} else {
 											Toast.makeText(
 											globalActivity,

@@ -11,7 +11,7 @@ import org.osmdroid.views.overlay.PathOverlay;
 import android.util.Log;
 
 public class Device implements Serializable{
-	public int u;
+	public String u;
 	public String name;
 	public String app;
 	public String last;
@@ -46,7 +46,7 @@ public class Device implements Serializable{
 	 ){
 		Log.d(getClass().getSimpleName(), "u="+u+" "+"name="+name+"app="+app+" "+"last="
 	 +last+" "+"url="+url+" "+"where="+where+" "+"lat="+lat+" "+"lon="+lon+" "+"online="+state+" "+"uid="+uid+" ");
-		 this.u=Integer.parseInt(u);
+		 this.u=u;
 		 this.name=name;
 		  this.app=app;
 		  this.last=last;
@@ -80,7 +80,7 @@ public class Device implements Serializable{
 			 String ch){
 				Log.d(getClass().getSimpleName(), "u="+u+" "+"name="+name+"app="+app+" "+"last="
 			 +last+" "+"url="+url+" "+"where="+where+" "+"lat="+lat+" "+"lon="+lon+" "+"online="+state+" "+"uid="+uid+" ");
-				 this.u=Integer.parseInt(u);
+				 this.u=u;
 				 this.name=name;
 				  this.app=app;
 				  this.last=last;
@@ -102,7 +102,7 @@ public class Device implements Serializable{
 	
 
 	public Device(String u, String name, String online, String uid) {
-		 this.u=Integer.parseInt(u);
+		 this.u=u;
 		 this.name=name;
 		 this.uid=uid;
 		 this.online=online;

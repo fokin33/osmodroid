@@ -45,7 +45,7 @@ public class Channel {
 		public void onResultsSucceeded(APIComResult result) {
 			Log.d(getClass().getSimpleName(),"download result="+result.load);
 			addtrack(result.load);
-			localService.informRemoteClientChannelsListUpdate();
+		
 			
 					}
 	};
