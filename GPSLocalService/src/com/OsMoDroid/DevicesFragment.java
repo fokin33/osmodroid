@@ -123,7 +123,7 @@ if(!deviceU.equals("")){
 											//netutil.newapicommand((ResultsListener) MyDevices.this, "im_send:"+LocalService.deviceList.get((int) acmi.id).uid+","+LocalService.deviceList.get((int) acmi.id).app,"json="+postjson.toString());
 										
 											postjson.put("from", OsMoDroid.settings.getString("device", ""));
-											postjson.put("to", (LocalService.deviceList.get((int) acmi.id).u));
+											postjson.put("to", (LocalService.deviceList.get((int) acmi.id).tracker_id));
 											postjson.put("text", input.getText().toString());
 											Netutil.newapicommand((ResultsListener) DevicesFragment.this, "om_device_message_send","json="+postjson.toString());
 											} catch (JSONException e) {
@@ -183,7 +183,7 @@ if(!deviceU.equals("")){
 
 
 		  if (item.getItemId() == 2) {
-			  	openDeviceChat(LocalService.deviceList.get((int) acmi.id).u);
+			  	openDeviceChat(LocalService.deviceList.get((int) acmi.id).tracker_id);
 			   return true;
 
 	    }

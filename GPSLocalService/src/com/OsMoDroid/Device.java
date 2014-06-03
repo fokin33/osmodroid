@@ -11,7 +11,7 @@ import org.osmdroid.views.overlay.PathOverlay;
 import android.util.Log;
 
 public class Device implements Serializable{
-	public String u;
+	public String tracker_id;
 	public String name;
 	public String app;
 	public String last;
@@ -46,7 +46,7 @@ public class Device implements Serializable{
 	 ){
 		Log.d(getClass().getSimpleName(), "u="+u+" "+"name="+name+"app="+app+" "+"last="
 	 +last+" "+"url="+url+" "+"where="+where+" "+"lat="+lat+" "+"lon="+lon+" "+"online="+state+" "+"uid="+uid+" ");
-		 this.u=u;
+		 this.tracker_id=u;
 		 this.name=name;
 		  this.app=app;
 		  this.last=last;
@@ -80,7 +80,7 @@ public class Device implements Serializable{
 			 String ch){
 				Log.d(getClass().getSimpleName(), "u="+u+" "+"name="+name+"app="+app+" "+"last="
 			 +last+" "+"url="+url+" "+"where="+where+" "+"lat="+lat+" "+"lon="+lon+" "+"online="+state+" "+"uid="+uid+" ");
-				 this.u=u;
+				 this.tracker_id=u;
 				 this.name=name;
 				  this.app=app;
 				  this.last=last;
@@ -102,17 +102,22 @@ public class Device implements Serializable{
 	
 
 	public Device(String u, String name, String online, String uid) {
-		 this.u=u;
+		 this.tracker_id=u;
 		 this.name=name;
 		 this.uid=uid;
 		 this.online=online;
+	}
+
+	public Device(String trid, String name) {
+		this.name=name;
+		this.tracker_id=trid;
 	}
 
 	@Override
 	public String toString() {
 		
 		
-		return "Device:u="+u+",name="+name+",app="+app+",last="+last+",url="+url+",where="+where+",lat="+lat+",lon="+lon
+		return "Device:u="+tracker_id+",name="+name+",app="+app+",last="+last+",url="+url+",where="+where+",lat="+lat+",lon="+lon
 				+",online="+online+",state="+state+",uid="+uid + ",speed="+speed+" color="+color;
 	}
 

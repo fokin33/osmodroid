@@ -29,7 +29,7 @@ public class Channel {
 	public String name;
 	public int u;
 	public String created;
-	public String ch;
+	public String group_id;
 	public String url;
 	public List<Device> deviceList= new ArrayList<Device>();
 	public List<String> messagesstringList= new ArrayList<String>();
@@ -93,21 +93,22 @@ public class Channel {
 	public Channel(JSONObject jo, LocalService localService)
 	{
 		this.localService=localService;
-		this.name=jo.optString("name");
-		this.u=Integer.parseInt(jo.optString("u"));
-		this.created=jo.optString("created");
-		this.ch=jo.optString("ch");
-		this.url="http://esya.ru/om/"+jo.optString("url");
 		
-		if (jo.optJSONObject("me")!=null&&jo.optJSONObject("me").optString("active").equals("1")){
-	 		this.send=true;
-	 	} else
-	 	{
-	 		this.send=false;
-	 	}
+		this.name=jo.optJSONObject("group").optString("name");
+		this.u=Integer.parseInt(jo.optJSONObject("group").optString("u"));
+		this.created=jo.optJSONObject("group").optString("created");
+		this.group_id=jo.optJSONObject("group").optString("group_id");
+		this.url="http://test1342.osmo.mobi/g/"+jo.optJSONObject("group").optString("url");
+		
+//		if (jo.optJSONObject("me")!=null&&jo.optJSONObject("me").optString("active").equals("1")){
+//	 		this.send=true;
+//	 	} else
+//	 	{
+//	 		this.send=false;
+//	 	}
 		
 	
-		 JSONArray a =jo.optJSONArray("user");
+		 JSONArray a =jo.optJSONArray("users");
 		for (int i = 0; i < a.length(); i++) {
 	 			JSONObject jsonObject;
 				try {
@@ -122,19 +123,10 @@ public class Channel {
 //	 				    name = toxIC jiayu
 //	 				    icon = 1
 		 			
-	if (!jsonObject.getString("u").equals(OsMoDroid.settings.getString("device", "")))
+	if (!jsonObject.getString("group_tracker_id").equals(OsMoDroid.settings.getString("device", "")))
 		{
 		try {
-			this.deviceList.add(new Device(jsonObject.getString("u")
-					, jsonObject.getString("name"),""
-					,"",
-					"",
-					"",
-					jsonObject.getString("lat"),
-					jsonObject.getString("lon"),
-					jsonObject.getString("online"),
-					jsonObject.getString("state"), "", jsonObject.optString("color"), ch
-					) );
+			this.deviceList.add(new Device(jsonObject.getString("group_tracker_id"),jsonObject.getString("name")) );
 		} catch (NumberFormatException e) {
 			Log.d(getClass().getSimpleName(),"Wrong device info");
 			e.printStackTrace();
@@ -173,7 +165,7 @@ public class Channel {
 		Log.d(getClass().getSimpleName(),"Channel connecting");	
 	//	chanIM= new IM("om_"+this.ch+",om_"+this.ch+"_chat", LocalService.serContext, 2);
 		ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
-		longPollchannels.add(new String[] {this.ch,"ch",""});
+		longPollchannels.add(new String[] {this.group_id,"ch",""});
 		//longPollchannels.add(new String[] {this.ch+"_chat","chch",""});
 		
 		if (LocalService.myIM!=null){
@@ -189,7 +181,7 @@ public class Channel {
 	//	chanIM= new IM("om_"+this.ch+",om_"+this.ch+"_chat", LocalService.serContext, 2);
 		ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
 		//longPollchannels.add(new String[] {this.ch,"ch",""});
-		longPollchannels.add(new String[] {this.ch+"_chat","chch",""});
+		longPollchannels.add(new String[] {this.group_id+"_chat","chch",""});
 		
 		if (LocalService.myIM!=null){
 			LocalService.myIM.removechannels(longPollchannels);
@@ -203,7 +195,7 @@ public class Channel {
 		Log.d(getClass().getSimpleName(),"Channel disconnecting");	
 		//	chanIM= new IM("om_"+this.ch+",om_"+this.ch+"_chat", LocalService.serContext, 2);
 			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
-			longPollchannels.add(new String[] {this.ch,"ch",""});
+			longPollchannels.add(new String[] {this.group_id,"ch",""});
 			//longPollchannels.add(new String[] {this.ch+"_chat","chch",""});
 			
 			if (LocalService.myIM!=null){
@@ -215,7 +207,7 @@ public class Channel {
 		//	chanIM= new IM("om_"+this.ch+",om_"+this.ch+"_chat", LocalService.serContext, 2);
 			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
 			//longPollchannels.add(new String[] {this.ch,"ch",""});
-			longPollchannels.add(new String[] {this.ch+"_chat","chch",""});
+			longPollchannels.add(new String[] {this.group_id+"_chat","chch",""});
 			
 			if (LocalService.myIM!=null){
 				LocalService.myIM.removechannels(longPollchannels);	}	

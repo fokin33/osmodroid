@@ -41,7 +41,7 @@ public class MyMessage implements Comparable<MyMessage>{
 		
 		if (from_name.equals("")||from_name.equals("null")){
 			for (Device dev : LocalService.deviceList){
-				if ((dev.u).equals(from)){
+				if ((dev.tracker_id).equals(from)){
 					from_name=dev.name;
 				}
 			}

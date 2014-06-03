@@ -409,7 +409,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 			if(b.getInt("deviceU") != -1){
 				String fromDevice=getString(R.string.from_undefined);
 				for (Device dev : LocalService.deviceList){
-					if (b.getString("deviceU").equals(dev.u)){
+					if (b.getString("deviceU").equals(dev.tracker_id)){
 						fromDevice=" "+dev.name;
 					}
 				}
@@ -433,7 +433,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 					Notification notification = notificationBuilder.build();
 					LocalService.mNotificationManager.notify(OsMoDroid.mesnotifyid, notification);
 			}
-			if (LocalService.currentDevice!=null&&LocalService.currentDevice.u.equals(b.getString("deviceU")) ){
+			if (LocalService.currentDevice!=null&&LocalService.currentDevice.tracker_id.equals(b.getString("deviceU")) ){
 				LocalService.mNotificationManager.cancel(OsMoDroid.mesnotifyid);
 			}
 			String text = b.getString("MessageText");

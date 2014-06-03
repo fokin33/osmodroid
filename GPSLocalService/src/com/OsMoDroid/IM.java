@@ -231,19 +231,19 @@ public void removechannels(ArrayList<String[]> longPollChList){
 				if(log)Log.d(this.getClass().getName(), "DeviceList= "+LocalService.deviceList);
 if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	for (Device dev : LocalService.deviceList){
-		if((dev.u).equals(mes.to)){
-			u=dev.u;
+		if((dev.tracker_id).equals(mes.to)){
+			u=dev.tracker_id;
 		}
 	}
 } else {
 				for (Device dev : LocalService.deviceList){
-					if((dev.u).equals(mes.from)){
-						u=dev.u;
+					if((dev.tracker_id).equals(mes.from)){
+						u=dev.tracker_id;
 					}
 				}
 }		
 				
-				if (LocalService.currentDevice!=null&& u ==LocalService.currentDevice.u){
+				if (LocalService.currentDevice!=null&& u ==LocalService.currentDevice.tracker_id){
 					boolean contains = false;
 					for (MyMessage mes1: LocalService.chatmessagelist){
 						
@@ -554,12 +554,12 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		//if(log)Log.d(this.getClass().getName(), "datanew[0]=" + datanew[0] + " datanew[1]=" + datanew[1] + " datanew[2]=" + datanew[2]);
 		for (final Channel channel : LocalService.channelList) {
 			if(log)Log.d(this.getClass().getName(), "chanal nest" + channel.name);
-			if (topic.equals(channel.ch+"_chat")){
+			if (topic.equals(channel.group_id+"_chat")){
 						
 			
 			for (Device device : channel.deviceList) {
-				if(log)Log.d(this.getClass().getName(), "device nest" + device.name + " " + device.u);
-				if (datanew[0].equals((device.u))) {
+				if(log)Log.d(this.getClass().getName(), "device nest" + device.name + " " + device.tracker_id);
+				if (datanew[0].equals((device.tracker_id))) {
 					if(log)Log.d(this.getClass().getName(), "Сообщение от устройства в канале " + device.toString());
 					fromDevice = device.name;
 				}
@@ -623,7 +623,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		}
 	
 	JSONObject jo = new JSONObject();
-	
+	JSONArray ja = new JSONArray();
 	String c="";
 	String d="";
 	try
@@ -638,10 +638,17 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	
 	try
 		{
+			
 			jo = new JSONObject(d);
 		}
 	catch (JSONException e) {
-		
+		try {
+			e.printStackTrace();
+			ja=new JSONArray(d);
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} 
 	}
 	
 	if(c.equals("NEED_AUTH")){
@@ -664,6 +671,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			if(OsMoDroid.gpslocalserviceclientVisible){
 				sendToServer("MOTD");
 			}
+			sendToServer("GROUP_GET_ALL");
 			setkeepAliveAlarm();
 			String listen = "";
 			for (String str : listenArrayList){
@@ -700,9 +708,38 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		localService.motd=LocalService.unescape(d);
 		localService.refresh();
 	}
-	if(c.substring(0, c.indexOf(":")).equals("GROUP_JOIN")){
+	if(c.contains("GROUP_JOIN")){
 		sendToServer("GROUP_CONNECT"+c.substring(c.indexOf(":")));
 	}
+	if(c.contains("GROUP_CONNECT"))
+		{
+			Channel ch = new Channel(jo, localService);
+			if(!LocalService.channelList.contains(ch))
+			{
+				LocalService.channelList.add(ch);
+			}
+					if (LocalService.channelsAdapter!=null ){
+						
+						LocalService.channelsAdapter.notifyDataSetChanged();
+			
+					}
+		}
+	if(c.contains("GROUP_GET_ALL"))
+	{
+		 
+			for (int i = 0; i < ja.length(); i++) {
+		 			JSONObject jsonObject;
+					try {
+						jsonObject = ja.getJSONObject(i);
+						sendToServer("GROUP_CONNECT:"+jsonObject.getString("group_id"));
+					}
+					catch (Exception e) {
+						// TODO: handle exception
+					}
+			}
+		
+	}
+	
 	
 //	try
 //		{

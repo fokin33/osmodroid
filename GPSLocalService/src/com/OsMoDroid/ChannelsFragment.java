@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.text.ClipboardManager;
+import android.text.InputType;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -309,6 +310,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 			layout.addView(txv1);
 			final EditText input = new EditText(globalActivity);
 			layout.addView(input);
+			input.setInputType(InputType.TYPE_CLASS_TEXT| InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
 			AlertDialog alertdialog4 = new AlertDialog.Builder(
 					globalActivity)
 					.setTitle(R.string.bindtochanal)
@@ -376,7 +378,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 	    	});
 	    	if(LocalService.channelList.size()==0)
 	    	{
-	    		Netutil.newapicommand((ResultsListener)LocalService.serContext,(Context)getSherlockActivity(), "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
+	    		//Netutil.newapicommand((ResultsListener)LocalService.serContext,(Context)getSherlockActivity(), "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
 	    	}
 	    	return view;
 		}

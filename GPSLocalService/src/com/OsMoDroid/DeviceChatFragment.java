@@ -53,7 +53,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 	Device getDeviceByU (int u){
 		Log.d(this.getClass().getSimpleName(), " LocalService.deviceList="+ LocalService.deviceList.toString());
 		for (Device dev : LocalService.deviceList){
-			if (dev.u.equals(u)){
+			if (dev.tracker_id.equals(u)){
 				return dev;
 			}
 		}
@@ -75,7 +75,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 	}
 	String getMyApp (){
 		for (Device dev:LocalService.deviceList ){
-			if (dev.u.equals(OsMoDroid.settings.getString("device", "-1"))){
+			if (dev.tracker_id.equals(OsMoDroid.settings.getString("device", "-1"))){
 				return dev.app;
 			}
 		}
@@ -108,7 +108,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 		
 	}
 	void getDeviceInfo() {
-		String u =getDeviceByU(deviceU).u;
+		String u =getDeviceByU(deviceU).tracker_id;
 		t.add( Netutil.newapicommand((ResultsListener)DeviceChatFragment.this,globalActivity, "om_device_message_get:"+OsMoDroid.settings.getString("device", "")+","+u));
 	}
 	@Override
@@ -165,7 +165,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
 		if (item.getItemId()==2){
-			t.add(Netutil.newapicommand((ResultsListener)DeviceChatFragment.this,globalActivity, "om_device_message_get:"+OsMoDroid.settings.getString("device", "")+","+getDeviceByU(deviceU).u));
+			t.add(Netutil.newapicommand((ResultsListener)DeviceChatFragment.this,globalActivity, "om_device_message_get:"+OsMoDroid.settings.getString("device", "")+","+getDeviceByU(deviceU).tracker_id));
 		}
 		
 		return super.onOptionsItemSelected(item);
@@ -213,7 +213,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 			try {
 
 				postjson.put("from", OsMoDroid.settings.getString("device", ""));
-				postjson.put("to", getDeviceByU(deviceU).u);
+				postjson.put("to", getDeviceByU(deviceU).tracker_id);
 				postjson.put("text", input.getText().toString());
 				t.add(Netutil.newapicommand((ResultsListener) DeviceChatFragment.this, "om_device_message_send","json="+postjson.toString()));
 
@@ -268,7 +268,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 		
 		
 		
-		if (result.Jo.has("om_device_message_get:"+OsMoDroid.settings.getString("device", "")+","+getDeviceByU(deviceU).u)){
+		if (result.Jo.has("om_device_message_get:"+OsMoDroid.settings.getString("device", "")+","+getDeviceByU(deviceU).tracker_id)){
 			
 			LocalService.chatmessagelist.clear();
 
@@ -276,7 +276,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 			
 			
 			try {
-				  JSONArray a = result.Jo.getJSONArray("om_device_message_get:"+OsMoDroid.settings.getString("device", "")+","+getDeviceByU(deviceU).u );
+				  JSONArray a = result.Jo.getJSONArray("om_device_message_get:"+OsMoDroid.settings.getString("device", "")+","+getDeviceByU(deviceU).tracker_id );
 				  for (int i = 0; i < a.length(); i++) {
 			 			JSONObject jsonObject = a.getJSONObject(i);
 	          	{
