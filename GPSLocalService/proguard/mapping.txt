@@ -2993,23 +2993,23 @@ com.OsMoDroid.GPSLocalServiceClient -> com.OsMoDroid.GPSLocalServiceClient:
     486:501:void onResume() -> onResume
     507:525:void onResumeFragments() -> onResumeFragments
     529:571:void intentAction(android.content.Intent) -> a
-    574:581:void onNewIntent(android.content.Intent) -> onNewIntent
-    592:649:void auth() -> c
-    655:655:boolean checkStarted() -> d
-    660:711:void ReadPref() -> e
-    716:719:void startlocalservice() -> f
-    722:731:void bindService() -> i
-    734:739:void stop(java.lang.Boolean) -> a
-    761:786:void onDestroy() -> onDestroy
-    791:819:java.lang.String getPage(java.lang.String,boolean,java.lang.String) -> a
-    831:844:java.lang.String inputStreamToString(java.io.InputStream) -> a
-    876:881:java.lang.String getDeviceName() -> g
-    887:894:java.lang.String capitalize(java.lang.String) -> a
-    898:902:void requestHash() -> h
-    1166:1199:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
-    1202:1224:boolean saveSharedPreferencesToFile(java.io.File) -> a
-    1228:1268:boolean loadSharedPreferencesFromFile(java.io.File) -> b
-    741:741:void access$0(com.OsMoDroid.GPSLocalServiceClient) -> a
+    576:588:void onNewIntent(android.content.Intent) -> onNewIntent
+    599:656:void auth() -> c
+    662:662:boolean checkStarted() -> d
+    667:718:void ReadPref() -> e
+    723:726:void startlocalservice() -> f
+    729:738:void bindService() -> i
+    741:746:void stop(java.lang.Boolean) -> a
+    768:793:void onDestroy() -> onDestroy
+    798:826:java.lang.String getPage(java.lang.String,boolean,java.lang.String) -> a
+    838:851:java.lang.String inputStreamToString(java.io.InputStream) -> a
+    883:888:java.lang.String getDeviceName() -> g
+    894:901:java.lang.String capitalize(java.lang.String) -> a
+    905:909:void requestHash() -> h
+    1173:1206:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+    1209:1231:boolean saveSharedPreferencesToFile(java.io.File) -> a
+    1235:1275:boolean loadSharedPreferencesFromFile(java.io.File) -> b
+    748:748:void access$0(com.OsMoDroid.GPSLocalServiceClient) -> a
     188:188:android.content.Intent access$1(com.OsMoDroid.GPSLocalServiceClient) -> b
     528:528:void access$2(com.OsMoDroid.GPSLocalServiceClient,android.content.Intent) -> a
     188:188:void access$3$1b30c8d1(com.OsMoDroid.GPSLocalServiceClient) -> c
@@ -3017,7 +3017,7 @@ com.OsMoDroid.GPSLocalServiceClient -> com.OsMoDroid.GPSLocalServiceClient:
     157:157:int access$5(com.OsMoDroid.GPSLocalServiceClient) -> e
     158:158:java.lang.String access$6(com.OsMoDroid.GPSLocalServiceClient) -> f
     160:160:java.lang.String access$7(com.OsMoDroid.GPSLocalServiceClient) -> g
-    721:721:void access$8(com.OsMoDroid.GPSLocalServiceClient) -> h
+    728:728:void access$8(com.OsMoDroid.GPSLocalServiceClient) -> h
     156:156:void access$9(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> a
     157:157:void access$10(com.OsMoDroid.GPSLocalServiceClient,int) -> a
     158:158:void access$11(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> b
@@ -3044,18 +3044,18 @@ com.OsMoDroid.GPSLocalServiceClient$5 -> com.OsMoDroid.GPSLocalServiceClient$5:
     com.OsMoDroid.GPSLocalServiceClient this$0 -> a
     android.widget.EditText val$input -> b
     android.widget.EditText val$inputlogin -> c
-    622:637:void onClick(android.content.DialogInterface,int) -> onClick
+    629:644:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.GPSLocalServiceClient$6 -> com.OsMoDroid.GPSLocalServiceClient$6:
     com.OsMoDroid.GPSLocalServiceClient this$0 -> a
-    645:645:void onClick(android.content.DialogInterface,int) -> onClick
+    652:652:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.GPSLocalServiceClient$RequestAuthTask -> com.OsMoDroid.q:
     java.lang.String authtext -> d
     java.lang.String adevice -> a
     java.lang.Boolean Err -> e
     android.app.ProgressDialog dialog -> b
     com.OsMoDroid.GPSLocalServiceClient this$0 -> c
-    915:916:void onPreExecute() -> onPreExecute
-    953:982:java.lang.Void doInBackground$10299ca() -> a
+    922:923:void onPreExecute() -> onPreExecute
+    960:989:java.lang.Void doInBackground$10299ca() -> a
     1:1:void onPostExecute(java.lang.Object) -> onPostExecute
     1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.OsMoDroid.GPSLocalServiceClient$RequestCommandTask -> com.OsMoDroid.r:
@@ -3066,8 +3066,8 @@ com.OsMoDroid.GPSLocalServiceClient$RequestCommandTask -> com.OsMoDroid.r:
     java.lang.String adevicename -> g
     android.app.ProgressDialog dialog -> a
     com.OsMoDroid.GPSLocalServiceClient this$0 -> b
-    1000:1001:void onPreExecute() -> onPreExecute
-    1056:1156:java.lang.String doInBackground(java.lang.String[]) -> a
+    1007:1008:void onPreExecute() -> onPreExecute
+    1063:1163:java.lang.String doInBackground(java.lang.String[]) -> a
     1:1:void onPostExecute(java.lang.Object) -> onPostExecute
     1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.OsMoDroid.GPSLocalServiceClient$upd -> com.OsMoDroid.s:
@@ -3414,51 +3414,51 @@ com.OsMoDroid.LocalService -> com.OsMoDroid.LocalService:
     1920:1931:void manageGPSFixAlarm() -> n
     1961:1978:void ttsManage() -> o
     1988:2016:void requestLocationUpdates() -> h
-    2029:2094:void openGPX() -> p
-    2108:2199:void stopServiceWork(java.lang.Boolean) -> a
-    2213:2247:void closeGPX() -> q
-    2284:2292:void setstarted(boolean) -> a
-    2435:2623:void onLocationChanged(android.location.Location) -> onLocationChanged
-    2626:2627:void onProviderDisabled(java.lang.String) -> onProviderDisabled
-    2633:2634:void onProviderEnabled(java.lang.String) -> onProviderEnabled
-    2639:2640:void onStatusChanged(java.lang.String,int,android.os.Bundle) -> onStatusChanged
-    2780:2816:java.lang.String inputStreamToString(java.io.InputStream) -> a
-    2889:2925:java.lang.String unescape(java.lang.String) -> b
-    2939:3027:java.lang.String decodesendresult(java.lang.String) -> c
-    3039:3089:void writegpx(android.location.Location) -> a
-    3093:3281:void sendlocation(android.location.Location) -> b
-    3284:3315:void onGpsStatusChanged(int) -> onGpsStatusChanged
-    3321:3357:void onInit(int) -> onInit
-    3361:3375:boolean isOnline() -> i
-    3384:3397:void warnwronghash() -> r
-    3403:3467:void notifywarnactivity(java.lang.String,boolean) -> a
-    3471:3478:void connectChannels() -> s
-    3480:3487:void connectChannelsChats() -> t
-    3489:3496:void disconnectChannelsChats() -> u
-    3499:3504:void disconnectChannels() -> v
-    3514:3776:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
-    3780:3797:void deviceListFromJSONArray(org.json.JSONArray) -> a
-    3801:3815:void channelListFromJSONArray(org.json.JSONArray) -> b
-    3818:3832:void playAlarmOn(java.lang.Boolean) -> b
-    3835:3850:void playAlarmOff(java.lang.Boolean) -> c
-    3854:3873:void enableSignalisation(java.lang.Boolean) -> d
-    3878:3899:void disableSignalisation(java.lang.Boolean) -> e
-    3904:3904:void onAccuracyChanged(android.hardware.Sensor,int) -> onAccuracyChanged
-    3909:3933:void onSensorChanged(android.hardware.SensorEvent) -> onSensorChanged
-    3938:3947:void saveObject(java.lang.Object,java.lang.String) -> a
-    3951:3964:java.lang.Object loadObject(java.lang.String,java.lang.Class) -> a
+    2029:2105:void openGPX() -> p
+    2117:2208:void stopServiceWork(java.lang.Boolean) -> a
+    2222:2258:void closeGPX() -> q
+    2295:2303:void setstarted(boolean) -> a
+    2446:2634:void onLocationChanged(android.location.Location) -> onLocationChanged
+    2637:2638:void onProviderDisabled(java.lang.String) -> onProviderDisabled
+    2644:2645:void onProviderEnabled(java.lang.String) -> onProviderEnabled
+    2650:2651:void onStatusChanged(java.lang.String,int,android.os.Bundle) -> onStatusChanged
+    2791:2827:java.lang.String inputStreamToString(java.io.InputStream) -> a
+    2900:2936:java.lang.String unescape(java.lang.String) -> b
+    2950:3038:java.lang.String decodesendresult(java.lang.String) -> c
+    3050:3100:void writegpx(android.location.Location) -> a
+    3104:3292:void sendlocation(android.location.Location) -> b
+    3295:3326:void onGpsStatusChanged(int) -> onGpsStatusChanged
+    3332:3368:void onInit(int) -> onInit
+    3372:3386:boolean isOnline() -> i
+    3395:3408:void warnwronghash() -> r
+    3414:3478:void notifywarnactivity(java.lang.String,boolean) -> a
+    3482:3489:void connectChannels() -> s
+    3491:3498:void connectChannelsChats() -> t
+    3500:3507:void disconnectChannelsChats() -> u
+    3510:3515:void disconnectChannels() -> v
+    3525:3787:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+    3791:3808:void deviceListFromJSONArray(org.json.JSONArray) -> a
+    3812:3826:void channelListFromJSONArray(org.json.JSONArray) -> b
+    3829:3843:void playAlarmOn(java.lang.Boolean) -> b
+    3846:3861:void playAlarmOff(java.lang.Boolean) -> c
+    3865:3884:void enableSignalisation(java.lang.Boolean) -> d
+    3889:3910:void disableSignalisation(java.lang.Boolean) -> e
+    3915:3915:void onAccuracyChanged(android.hardware.Sensor,int) -> onAccuracyChanged
+    3920:3944:void onSensorChanged(android.hardware.SensorEvent) -> onSensorChanged
+    3949:3958:void saveObject(java.lang.Object,java.lang.String) -> a
+    3962:3975:java.lang.Object loadObject(java.lang.String,java.lang.Class) -> a
     965:965:boolean access$0(com.OsMoDroid.LocalService) -> a
     311:311:void access$1(com.OsMoDroid.LocalService,java.lang.String) -> a
-    2820:2820:void access$2(com.OsMoDroid.LocalService,boolean) -> a
+    2831:2831:void access$2(com.OsMoDroid.LocalService,boolean) -> a
     371:371:java.text.SimpleDateFormat access$3() -> j
-    2935:2935:java.lang.String access$4(com.OsMoDroid.LocalService,java.lang.String) -> b
+    2946:2946:java.lang.String access$4(com.OsMoDroid.LocalService,java.lang.String) -> b
     300:300:boolean access$5(com.OsMoDroid.LocalService) -> b
     278:278:boolean access$6(com.OsMoDroid.LocalService) -> c
     272:272:android.media.SoundPool access$7() -> k
     311:311:java.lang.String access$8(com.OsMoDroid.LocalService) -> d
     954:954:android.app.Notification access$9(com.OsMoDroid.LocalService) -> e
     955:955:android.app.PendingIntent access$10(com.OsMoDroid.LocalService) -> f
-    2642:2642:java.lang.String access$11(com.OsMoDroid.LocalService,java.lang.String,java.lang.String) -> a
+    2653:2653:java.lang.String access$11(com.OsMoDroid.LocalService,java.lang.String,java.lang.String) -> a
     300:300:void access$12$32c62201(com.OsMoDroid.LocalService) -> g
     346:346:long access$13(com.OsMoDroid.LocalService) -> h
     348:348:long access$14(com.OsMoDroid.LocalService) -> i
@@ -3531,7 +3531,7 @@ com.OsMoDroid.LocalService$LocalBinder -> com.OsMoDroid.z:
 com.OsMoDroid.LocalService$SendCoor -> com.OsMoDroid.aa:
     java.lang.String tmp -> b
     com.OsMoDroid.LocalService this$0 -> a
-    2354:2425:java.lang.String doInBackground(java.lang.String[]) -> a
+    2365:2436:java.lang.String doInBackground(java.lang.String[]) -> a
     1:1:void onPostExecute(java.lang.Object) -> onPostExecute
     1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.OsMoDroid.MainFragment -> com.OsMoDroid.MainFragment:
