@@ -4891,7 +4891,7 @@ com.actionbarsherlock.internal.ActionBarSherlockCompat -> com.actionbarsherlock.
     273:277:boolean dispatchOpenOptionsMenu() -> dispatchOpenOptionsMenu
     284:291:boolean dispatchCloseOptionsMenu() -> dispatchCloseOptionsMenu
     298:305:void dispatchPostCreate(android.os.Bundle) -> dispatchPostCreate
-    310:311:boolean dispatchCreateOptionsMenu(android.view.Menu) -> dispatchCreateOptionsMenu
+    313:313:boolean dispatchCreateOptionsMenu(android.view.Menu) -> dispatchCreateOptionsMenu
     320:345:boolean dispatchPrepareOptionsMenu(android.view.Menu) -> dispatchPrepareOptionsMenu
     350:350:boolean dispatchOptionsItemSelected(android.view.MenuItem) -> dispatchOptionsItemSelected
     357:364:boolean dispatchMenuOpened(int,android.view.Menu) -> dispatchMenuOpened

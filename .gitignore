@@ -5,3 +5,5 @@ GPSLocalService/.settings/org.eclipse.jdt.core.prefs
 GPSLocalService/.settings/org.eclipse.core.resources.prefs
 *.properties
 *.properties
+GPSLocalService/proguard/dump.txt
+GPSLocalService/proguard/mapping.txt
