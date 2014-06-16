@@ -137,7 +137,7 @@ public class IM implements ResultsListener {	Handler handler;
 					@Override
 					public void run()
 						{
-							if(OsMoDroid.debug)ExceptionHandler.reportOnlyHandler(parent.getApplicationContext()).uncaughtException(Thread.currentThread(), new Throwable(str));
+							//if(OsMoDroid.debug)ExceptionHandler.reportOnlyHandler(parent.getApplicationContext()).uncaughtException(Thread.currentThread(), new Throwable(str));
 				    	  	if(OsMoDroid.debug)LocalService.debuglist.add( sdf1.format(new Date(System.currentTimeMillis()))+" "+str+" S="+sendBytes+ " R="+recievedBytes);
 				  			if(LocalService.debugAdapter!=null){LocalService.debugAdapter.notifyDataSetChanged();}
 							
@@ -776,6 +776,17 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 					}
 				
 				}
+				for (int i = d.indexOf("S")+1; i <= d.length(); i++) {
+					if(!Character.isDigit(d.charAt(i))){
+						if(!Character.toString(d.charAt(i)).equals(".")){
+							dev.speed=d.substring(d.indexOf("S")+1, i);
+							break;
+						}
+					}
+				
+				}
+				
+				if(LocalService.devlistener!=null){LocalService.devlistener.onDeviceChange(dev);}
 				}
 				}
 			}
@@ -838,7 +849,14 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 				});
 			
 			
-			
+			try
+				{
+					socket.close();
+				} catch (IOException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			disablekeepAliveAlarm();
 			authed=false;
 			connecting=false;

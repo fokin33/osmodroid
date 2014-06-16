@@ -161,13 +161,13 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 			        canvas.rotate(-mapView.getMapOrientation(), scrPoint.x, scrPoint.y);
 					canvas.drawText(dev.name, scrPoint.x, scrPoint.y-10, paint);
 					canvas.drawText(dev.speed, scrPoint.x,scrPoint.y-2*10, paint);
-					paint.setColor(Color.parseColor("#" + dev.color));
+					paint.setColor(Color.parseColor(dev.color));
 					canvas.drawCircle(scrPoint.x, scrPoint.y, 10, paint);
 					canvas.restore();
 				 }
 				 if(dev.devicePath.size()>2)
 				 	{
-					 pathpaint.setColor(Color.parseColor("#" + dev.color));
+					 pathpaint.setColor(Color.parseColor(dev.color));
 					 Path path = new Path();
 					 pj.toMapPixels(dev.devicePath.get(0), scrPoint);
 					 path.moveTo(scrPoint.x, scrPoint.y);
@@ -193,7 +193,7 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 					canvas.save();
 			        canvas.rotate(-mapView.getMapOrientation(), scrPoint.x, scrPoint.y);
 					canvas.drawText(p.name, scrPoint.x, scrPoint.y-10, paint);
-					paint.setColor(Color.parseColor("#" + p.color));
+					paint.setColor(Color.parseColor(p.color));
 					canvas.drawRect(scrPoint.x-10, scrPoint.y-10, scrPoint.x+10, scrPoint.y+10, paint);
 					canvas.restore();
 				 }

@@ -126,7 +126,7 @@ public class Channel {
 	if (!jsonObject.getString("group_tracker_id").equals(OsMoDroid.settings.getString("device", "")))
 		{
 		try {
-			this.deviceList.add(new Device(jsonObject.getString("group_tracker_id"),jsonObject.getString("name")) );
+			this.deviceList.add(new Device(jsonObject.getString("group_tracker_id"),jsonObject.getString("name"), jsonObject.getString("color") ) );
 		} catch (NumberFormatException e) {
 			Log.d(getClass().getSimpleName(),"Wrong device info");
 			e.printStackTrace();

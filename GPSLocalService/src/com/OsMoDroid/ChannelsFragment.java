@@ -323,7 +323,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 									if (!(canalid.equals("")))
 									{
 										
-										globalActivity.mService.myIM.sendToServer("GROUP_JOIN:"+canalid+"|test");
+										globalActivity.mService.myIM.sendToServer("GROUP_JOIN:"+canalid+"|"+globalActivity.mService.getDeviceName());
 									} else {
 											Toast.makeText(
 											globalActivity,
@@ -345,7 +345,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
         	}
         if (item.getItemId() == 3) 
         	{
-        		Netutil.newapicommand((ResultsListener)LocalService.serContext, (Context)getSherlockActivity(), "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
+        		globalActivity.mService.myIM.sendToServer("GROUP_GET_ALL");
         	}
         return super.onOptionsItemSelected(item);
 	}

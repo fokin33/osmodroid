@@ -23,7 +23,7 @@ public class Device implements Serializable{
 	public String state;
 	public String uid;
 	public String speed="";
-	public String color="AAAAAA";
+	public String color="#AAAAAA";
 	public String ch;
 	public List<IGeoPoint> devicePath= new ArrayList<IGeoPoint>();
 	//public PathOverlay p;
@@ -108,9 +108,10 @@ public class Device implements Serializable{
 		 this.online=online;
 	}
 
-	public Device(String trid, String name) {
+	public Device(String trid, String name, String color) {
 		this.name=name;
 		this.tracker_id=trid;
+		this.color=color;
 	}
 
 	@Override
