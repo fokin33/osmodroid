@@ -675,7 +675,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			setkeepAliveAlarm();
 			String listen = "";
 			for (String str : listenArrayList){
-				listen=("LISTEN|"+str)+"=";
+				listen=("LISTEN:"+str)+"=";
 			}
 			if(!listen.equals(""))
 				{
@@ -713,16 +713,34 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	}
 	if(c.contains("GROUP_CONNECT"))
 		{
+		if(!jo.has("error")){
+			String listen="";
 			Channel ch = new Channel(jo, localService);
+			
 			if(!LocalService.channelList.contains(ch))
 			{
 				LocalService.channelList.add(ch);
+				
+					
+				
+				
 			}
 					if (LocalService.channelsAdapter!=null ){
 						
 						LocalService.channelsAdapter.notifyDataSetChanged();
 			
 					}
+					for(Device dev: ch.deviceList){
+						listen=listen+("LISTEN:"+dev.tracker_id)+"=";
+					}
+					if(!listen.equals(""))
+					{
+						sendToServer(listen);
+					}		
+			}
+		else {
+			Toast.makeText(localService, "No group", Toast.LENGTH_SHORT);
+		}
 		}
 	if(c.contains("GROUP_GET_ALL"))
 	{
@@ -739,7 +757,29 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			}
 		
 	}
-	
+	//LT:fI8qCrlvw6j0dEKZtB9h|L59.252465:30.324515S20.3A124.3H2.5C235
+	if(c.contains("LT"))
+		
+		{
+		for (Channel ch : LocalService.channelList)
+			{
+			for (Device dev : ch.deviceList){
+			if (c.substring(c.indexOf(":")+1, c.length()).equals(dev.tracker_id)){
+				
+				dev.lat=Float.parseFloat(d.substring(d.indexOf("L")+1, d.indexOf(":")));
+				for (int i = d.indexOf(":")+1; i <= d.length(); i++) {
+					if(!Character.isDigit(d.charAt(i))){
+						if(!Character.toString(d.charAt(i)).equals(".")){
+							dev.lon=Float.parseFloat(d.substring(d.indexOf(":")+1, i));
+							break;
+						}
+					}
+				
+				}
+				}
+				}
+			}
+		}
 	
 //	try
 //		{
