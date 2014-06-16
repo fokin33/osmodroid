@@ -2608,8 +2608,8 @@ private void sendlocation (Location location){
 				"T|L"+df6.format( location.getLatitude()) +":"+ df6.format(location.getLongitude())
 				+"S" + df1.format( location.getSpeed())
 				+"A" + df1.format( location.getAltitude())
-				+"H" + df1.format( location.getAccuracy());
-				
+				+"H" + "5"//df1.format( location.getAccuracy())
+				;				
 		myIM.sendToServer(sending);		
 		
 					
