@@ -13,7 +13,8 @@ import java.net.SocketTimeoutException;
 import java.util.Map;
 import java.util.Date;import java.util.Iterator;import java.util.Map.Entry;
 import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import org.osmdroid.util.GeoPoint;
-import com.OsMoDroid.LocalService.SendCoor;import com.OsMoDroid.Netutil.MyAsyncTask;
+import com.OsMoDroid.IM.IMWriter;
+import com.OsMoDroid.LocalService.SendCoor;import com.OsMoDroid.Netutil.MyAsyncTask;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Notification;import android.app.PendingIntent;import android.app.PendingIntent.CanceledException;import android.content.BroadcastReceiver;import android.content.SharedPreferences;
@@ -30,8 +31,8 @@ import android.provider.Settings.Secure;
  * @author dfokin
  *Class for work with LongPolling
  */
-public class IM implements ResultsListener {	Handler handler;
-		private static final int RECONNECT_TIMEOUT = 1000*5;
+public class IM implements ResultsListener {	
+	private IMWriter iMWriter;	private static final int RECONNECT_TIMEOUT = 1000*5;
 	
 	private static final int KEEP_ALIVE = 1000*270;
 
@@ -39,7 +40,7 @@ public class IM implements ResultsListener {	Handler handler;
 	
 	private static final String KEEPALIVE_INTENT = "com.osmodroid.keepalive";
 
-	protected  boolean running       = false;	//protected boolean connected     = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;//	String mykey;//	String timestamp=Long.toString(System.currentTimeMillis());	String lcursor="";	int pingTimeout=900;	Thread connectThread;	//private BufferedReader    in      = null;		Context parent;	private String token="";	String myLongPollCh;
+	protected  boolean running       = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;	String lcursor="";	int pingTimeout=900;	Thread connectThread;		Context parent;	private String token="";	String myLongPollCh;
 	ArrayList<String[]>  myLongPollChList = new ArrayList<String[]>();
 	ArrayList<String>  listenArrayList = new ArrayList<String>();	int mestype=0;	LocalService localService;	FileOutputStream fos;
 	ObjectOutputStream output = null;	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -73,19 +74,7 @@ public class IM implements ResultsListener {	Handler handler;
 				super.handleMessage(msg);
 			}
 	};
-	public IM(ArrayList<String[]> longPollChList, Context context,final LocalService localService, String server,int port) {
-		this.localService=localService; 
-		parent=context;
-		manager = (AlarmManager)(parent.getSystemService( Context.ALARM_SERVICE ));
-		reconnectPIntent = PendingIntent.getBroadcast( parent, 0, new Intent(RECONNECT_INTENT), 0 );
-		keepAlivePIntent = PendingIntent.getBroadcast( parent, 0, new Intent(KEEPALIVE_INTENT), 0 );
-		myLongPollChList=longPollChList;
-		
-		
-		SERVER_IP=server;
-		SERVERPORT=port;
-		start();
-	}
+
 	
 	public IM(String server, int port, LocalService service){
 		localService=service;
@@ -106,7 +95,15 @@ public class IM implements ResultsListener {	Handler handler;
 			Bundle b =new Bundle();
 			b.putString("write",str);
 			msg.setData(b);
-			handler.sendMessage(msg);
+			if (iMWriter.handler!=null){
+				iMWriter.handler.sendMessage(msg);	
+			}
+			else {
+				addlog("panic! handler is null ");
+				 if(log)Log.d(this.getClass().getName(), " handler is null!!!");
+			}
+				
+			
 		}
 	
 	  BroadcastReceiver reconnectReceiver = new BroadcastReceiver() {
@@ -295,6 +292,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 
 	
 
+	
+
 
 	
 
@@ -315,9 +314,9 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		}
 				stop();	};
 	public void gettoken()
-
+	
 	{
-		
+		addlog("Start gettoket");
 		Log.d(getClass().getSimpleName(), "http://api.osmo.mobi/prepare");
 	        APIcomParams params = new APIcomParams("http://api.osmo.mobi/prepare","key="+OsMoDroid.settings.getString("newkey", "")+"&protocol=1","gettoken"); 
 	        MyAsyncTask sendidtask = new Netutil.MyAsyncTask(this);
@@ -332,7 +331,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		localService.refresh();
 		connectThread = new Thread(new IMConnect());
 		readerThread = new Thread(new IMReader());
-		writerThread = new Thread(new IMWriter());
+		iMWriter=new IMWriter();
+		writerThread = new Thread(iMWriter);
 		connectThread.setPriority(Thread.MIN_PRIORITY);
 		readerThread.setPriority(Thread.MIN_PRIORITY);
 		writerThread.setPriority(Thread.MIN_PRIORITY);
@@ -341,9 +341,10 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		
 		parent.registerReceiver(bcr, new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE"));
 		  }
-	 private class IMWriter implements Runnable{
+	 public class IMWriter implements Runnable{
 		 boolean error=false;
 		 Looper l;
+		 public Handler handler;
 		@Override
 		public void run()
 			
@@ -359,7 +360,15 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 								if(running){
 									if (socket.isConnected()&&wr!=null){
 										 setReconnectAlarm(); 
-										
+										 try
+												{
+													
+													Thread.sleep(500);
+												} catch (InterruptedException e)
+												{
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
 										 wr.println(b.getString("write"));
 										
 										 error=wr.checkError();
@@ -375,7 +384,9 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 										 }
 										 }
 								}
-								
+								else {
+									addlog("not connected now");
+								}
 							
 								super.handleMessage(msg);
 							}
@@ -511,7 +522,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		 if(log)Log.d(this.getClass().getName(), "void IM.stop");
 		 addlog("webcoket void stop");
 		 running = false;
-		 if(handler!=null){handler.getLooper().quit();}
+		 if(iMWriter.handler!=null){iMWriter.handler.getLooper().quit();}
 		 if(socket!=null){
 		 try
 			{
@@ -612,6 +623,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		}
 	}
 
+	@SuppressWarnings("static-access")
 	void parseEx (String toParse, String topic){
 		addlog("recieve "+toParse);
 		if(log)Log.d(this.getClass().getName(), "recive "+toParse);
@@ -671,6 +683,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			if(OsMoDroid.gpslocalserviceclientVisible){
 				sendToServer("MOTD");
 			}
+			
 			sendToServer("GROUP_GET_ALL");
 			setkeepAliveAlarm();
 			String listen = "";
@@ -870,6 +883,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	@Override
 	public void onResultsSucceeded(APIComResult result) {
 		if(result.Command.equals("gettoken")&&!(result.Jo==null)){
+			addlog("Recieve token "+result.Jo.toString());
 			if(log)Log.d(getClass().getSimpleName(),"gettoken response:"+result.Jo.toString());
 			//Toast.makeText(localService,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
 			if(result.Jo.has("token")){
