@@ -996,6 +996,7 @@ if (live)
 		
 		@Override
 		void ondisconnect(){
+			if(log)Log.d(this.getClass().getName(), "ondisconnect in localservice");
 			if(!sending.equals("")){
 				buffer.add(sending);
 				sending="";
@@ -1376,9 +1377,11 @@ if (live){
 	if (myIM!=null&&myIM.authed){
 	myIM.sendToServer("TRACKER_SESSION_OPEN");
 	myIM.needopensession=true;
+	myIM.needclosesession=false;
 	}else
 		{
 			myIM.needopensession=true;
+			myIM.needclosesession=false;
 		}
 	//trackerIM.start();
 	
@@ -1618,11 +1621,13 @@ public void sendid()
                     //new Netutil.MyAsyncTask(this).execute(params);
 			if(myIM.authed){
 				myIM.sendToServer("TRACKER_SESSION_CLOSE");
-				myIM.needclosesession=true;		
+				myIM.needclosesession=true;
+				myIM.needopensession=false;
 			}
 			else
 				{
 					myIM.needclosesession=true;
+					myIM.needopensession=false;
 				}
 
                 
@@ -2602,13 +2607,14 @@ private void sendlocation (Location location){
 //	- 6 = checknumint(3) (контрольное число к хешу)
 	
 	//T|L53.1:30.3S2A4H2B23
-	  if(log)Log.d(this.getClass().getName(), "Отправка:"+myIM.authed +" s "+sending);
+	  
 	if (myIM!=null&&myIM.authed&&sending.equals("")){
+		if(log)Log.d(this.getClass().getName(), "Отправка:"+myIM.authed +" s "+sending);
 		sending=
 				"T|L"+df6.format( location.getLatitude()) +":"+ df6.format(location.getLongitude())
 				+"S" + df1.format( location.getSpeed())
 				+"A" + df1.format( location.getAltitude())
-				+"H" + "5"//df1.format( location.getAccuracy())
+				+"H" + df1.format( location.getAccuracy())
 				;				
 		myIM.sendToServer(sending);		
 		
@@ -2616,6 +2622,7 @@ private void sendlocation (Location location){
 		if(log)Log.d(this.getClass().getName(), "GPS websocket sendlocation");
 	} else
 		{
+			if(log)Log.d(this.getClass().getName(), "Отправка не пошла: "+myIM.authed +" s "+sending);
 			buffer.add("T|L"+df6.format( location.getLatitude()) +":"+ df6.format(location.getLongitude())
 					+"S" + df1.format( location.getSpeed())
 					+"A" + df1.format( location.getAltitude())
