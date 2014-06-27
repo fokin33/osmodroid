@@ -593,13 +593,20 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	}
 	@Override
 	protected void onNewIntent(Intent intent) {
-	if (OsMoDroid.gpslocalserviceclientVisible){
-		Log.d(this.getClass().getSimpleName(), "on new intent="+intent.getIntExtra("deviceU", -1));
-		intentAction(intent);
 		
+	try {
+		if (OsMoDroid.gpslocalserviceclientVisible){
+			Log.d(this.getClass().getSimpleName(), "on new intent="+intent.getIntExtra("deviceU", -1));
+			intentAction(intent);
+			
+		}
+		proceednewintent=true;
+			super.onNewIntent(intent);
+	} catch (IllegalStateException e) {
+		Log.d(this.getClass().getSimpleName(), "on new intent bug");
+		e.printStackTrace();
 	}
-	proceednewintent=true;
-		super.onNewIntent(intent);
+		
 	}
 	
 	

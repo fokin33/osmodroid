@@ -992,8 +992,8 @@ com.OsMoDroid.DeviceChatFragment:
 com.OsMoDroid.DevicesFragment:
     268:269:public void needToOpenChat(int)
 com.OsMoDroid.GPSLocalServiceClient:
-    848:855:public static java.lang.String bytesToHex(byte[])
-    861:872:public static java.lang.String SHA1(java.lang.String)
+    855:862:public static java.lang.String bytesToHex(byte[])
+    868:879:public static java.lang.String SHA1(java.lang.String)
 com.OsMoDroid.IM:
     private static final int RECONNECT_TIMEOUT
     private static final int KEEP_ALIVE

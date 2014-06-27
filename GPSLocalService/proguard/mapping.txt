@@ -2619,10 +2619,10 @@ com.OsMoDroid.APIcomParams -> com.OsMoDroid.b:
     int notification -> f
     com.OsMoDroid.ColoredGPX load -> g
 com.OsMoDroid.AboutActivity -> com.OsMoDroid.AboutActivity:
-    21:25:void onCreate(android.os.Bundle) -> onCreate
-    30:31:void onDestroy() -> onDestroy
-    37:38:void onPause() -> onPause
-    45:46:void onResume() -> onResume
+    23:38:void onCreate(android.os.Bundle) -> onCreate
+    43:44:void onDestroy() -> onDestroy
+    50:51:void onPause() -> onPause
+    58:59:void onResume() -> onResume
 com.OsMoDroid.BootComplitedReceiver -> com.OsMoDroid.BootComplitedReceiver:
     13:21:void onReceive(android.content.Context,android.content.Intent) -> onReceive
 com.OsMoDroid.Channel -> com.OsMoDroid.c:
@@ -2655,6 +2655,14 @@ com.OsMoDroid.Channel$Point -> com.OsMoDroid.d:
     java.lang.String description -> e
     java.lang.String color -> f
     com.OsMoDroid.Channel this$0 -> g
+com.OsMoDroid.ChannelChatAdapter -> com.OsMoDroid.e:
+    34:68:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
+com.OsMoDroid.ChannelChatMessage -> com.OsMoDroid.f:
+    int device -> a
+    java.lang.String from -> b
+    java.lang.String text -> c
+    java.lang.String time -> d
+    int color -> e
 com.OsMoDroid.ChannelDevicesFragment -> com.OsMoDroid.ChannelDevicesFragment:
     java.util.ArrayList t -> a
     android.widget.ListView lv1 -> b
@@ -2664,35 +2672,38 @@ com.OsMoDroid.ChannelDevicesFragment -> com.OsMoDroid.ChannelDevicesFragment:
     java.text.SimpleDateFormat sdf1 -> f
     com.OsMoDroid.GPSLocalServiceClient globalActivity -> g
     int channelpos -> h
-    52:54:void onActivityCreated(android.os.Bundle) -> onActivityCreated
-    58:72:boolean onContextItemSelected(android.view.MenuItem) -> onContextItemSelected
-    77:81:void onDestroyView() -> onDestroyView
-    86:88:void onCreateContextMenu(android.view.ContextMenu,android.view.View,android.view.ContextMenu$ContextMenuInfo) -> onCreateContextMenu
-    107:113:void onDestroy() -> onDestroy
-    117:122:void onCreate(android.os.Bundle) -> onCreate
-    126:129:void onAttach(android.app.Activity) -> onAttach
-    132:137:void onDetach() -> onDetach
-    140:145:void onResume() -> onResume
-    149:154:void onCreateOptionsMenu(com.actionbarsherlock.view.Menu,com.actionbarsherlock.view.MenuInflater) -> onCreateOptionsMenu
-    161:164:void onPause() -> onPause
-    168:173:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
-    182:269:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
-    280:335:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+    54:56:void onActivityCreated(android.os.Bundle) -> onActivityCreated
+    60:75:boolean onContextItemSelected(android.view.MenuItem) -> onContextItemSelected
+    80:84:void onDestroyView() -> onDestroyView
+    89:91:void onCreateContextMenu(android.view.ContextMenu,android.view.View,android.view.ContextMenu$ContextMenuInfo) -> onCreateContextMenu
+    110:116:void onDestroy() -> onDestroy
+    120:125:void onCreate(android.os.Bundle) -> onCreate
+    129:132:void onAttach(android.app.Activity) -> onAttach
+    135:140:void onDetach() -> onDetach
+    143:148:void onResume() -> onResume
+    152:157:void onCreateOptionsMenu(com.actionbarsherlock.view.Menu,com.actionbarsherlock.view.MenuInflater) -> onCreateOptionsMenu
+    164:167:void onPause() -> onPause
+    171:176:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
+    185:272:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    286:351:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
 com.OsMoDroid.ChannelDevicesFragment$1 -> com.OsMoDroid.ChannelDevicesFragment$1:
     com.OsMoDroid.ChannelDevicesFragment this$0 -> a
-    213:239:void onClick(android.view.View) -> onClick
+    217:243:void onClick(android.view.View) -> onClick
 com.OsMoDroid.ChannelDevicesFragment$2 -> com.OsMoDroid.ChannelDevicesFragment$2:
     com.OsMoDroid.ChannelDevicesFragment this$0 -> a
-    256:258:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.OsMoDroid.ChannelsAdapter -> com.OsMoDroid.e:
+    256:257:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+com.OsMoDroid.ChannelDevicesFragment$3 -> com.OsMoDroid.ChannelDevicesFragment$3:
+    com.OsMoDroid.ChannelDevicesFragment this$0 -> a
+    262:268:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
+com.OsMoDroid.ChannelsAdapter -> com.OsMoDroid.g:
     com.OsMoDroid.LocalService localservice -> a
     android.content.Context context -> b
     android.view.View$OnClickListener myCheckChangList -> c
     38:58:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.OsMoDroid.ChannelsAdapter$1 -> com.OsMoDroid.e$1:
+com.OsMoDroid.ChannelsAdapter$1 -> com.OsMoDroid.g$1:
     com.OsMoDroid.ChannelsAdapter this$0 -> a
     63:69:void onClick(android.view.View) -> onClick
-com.OsMoDroid.ChannelsDevicesAdapter -> com.OsMoDroid.f:
+com.OsMoDroid.ChannelsDevicesAdapter -> com.OsMoDroid.h:
     android.widget.TextView channelDeviceName -> a
     android.widget.TextView channelDeviceWhere -> b
     android.widget.TextView channelDeviceSpeed -> c
@@ -2752,17 +2763,18 @@ com.OsMoDroid.ChannelsFragment$7 -> com.OsMoDroid.ChannelsFragment$7:
 com.OsMoDroid.ChannelsFragment$8 -> com.OsMoDroid.ChannelsFragment$8:
     com.OsMoDroid.ChannelsFragment this$0 -> a
     374:375:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.OsMoDroid.ChannelsOverlay -> com.OsMoDroid.g:
+com.OsMoDroid.ChannelsOverlay -> com.OsMoDroid.i:
     android.graphics.Paint paint -> a
     android.graphics.Paint pathpaint -> e
     android.graphics.Point mTempPoint1 -> f
     android.graphics.Point mTempPoint2 -> g
     org.osmdroid.views.MapView map -> b
     com.OsMoDroid.RotationGestureDetector mRotationDetector -> h
-    55:58:boolean onTouchEvent(android.view.MotionEvent,org.osmdroid.views.MapView) -> a
-    65:204:void draw(android.graphics.Canvas,org.osmdroid.views.MapView,boolean) -> a
-    209:210:boolean OnRotation(com.OsMoDroid.RotationGestureDetector) -> a
-com.OsMoDroid.ColoredGPX -> com.OsMoDroid.h:
+    float currentAngle -> i
+    56:59:boolean onTouchEvent(android.view.MotionEvent,org.osmdroid.views.MapView) -> a
+    66:216:void draw(android.graphics.Canvas,org.osmdroid.views.MapView,boolean) -> a
+    221:226:void onRotate(float) -> a
+com.OsMoDroid.ColoredGPX -> com.OsMoDroid.j:
     java.io.File gpxfile -> a
     int color -> b
     java.util.List points -> c
@@ -2781,7 +2793,7 @@ com.OsMoDroid.DebugFragment -> com.OsMoDroid.DebugFragment:
     84:86:void onAttach(android.app.Activity) -> onAttach
     92:94:void onCreateOptionsMenu(com.actionbarsherlock.view.Menu,com.actionbarsherlock.view.MenuInflater) -> onCreateOptionsMenu
     99:103:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
-com.OsMoDroid.Device -> com.OsMoDroid.i:
+com.OsMoDroid.Device -> com.OsMoDroid.k:
     int u -> a
     java.lang.String name -> b
     java.lang.String app -> c
@@ -2797,16 +2809,16 @@ com.OsMoDroid.Device -> com.OsMoDroid.i:
     java.lang.String color -> m
     java.util.List devicePath -> n
     115:115:java.lang.String toString() -> toString
-com.OsMoDroid.DeviceAdapter -> com.OsMoDroid.j:
+com.OsMoDroid.DeviceAdapter -> com.OsMoDroid.l:
     android.widget.TextView deviceName -> a
     android.widget.TextView deviceWhere -> b
     android.widget.TextView deviceLast -> c
     27:78:android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.OsMoDroid.DeviceChange -> com.OsMoDroid.k:
+com.OsMoDroid.DeviceChange -> com.OsMoDroid.m:
     void onDeviceChange$470c4619() -> a
     void onChannelListChange() -> b
     void onNewPoint(org.osmdroid.util.GeoPoint) -> a
-com.OsMoDroid.DeviceChatAdapter -> com.OsMoDroid.l:
+com.OsMoDroid.DeviceChatAdapter -> com.OsMoDroid.n:
     android.widget.TextView txtFromAddr -> a
     android.widget.TextView txtFromName -> b
     android.widget.TextView txtText -> c
@@ -2877,7 +2889,7 @@ com.OsMoDroid.DevicesFragment$4 -> com.OsMoDroid.DevicesFragment$4:
 com.OsMoDroid.DevicesFragment$5 -> com.OsMoDroid.DevicesFragment$5:
     com.OsMoDroid.DevicesFragment this$0 -> a
     400:402:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.OsMoDroid.DrawerItemClickListener -> com.OsMoDroid.m:
+com.OsMoDroid.DrawerItemClickListener -> com.OsMoDroid.o:
     com.OsMoDroid.MainFragment main -> a
     com.OsMoDroid.StatFragment stat -> b
     com.OsMoDroid.MapFragment map -> c
@@ -2896,7 +2908,7 @@ com.OsMoDroid.DrawerItemClickListener -> com.OsMoDroid.m:
     com.OsMoDroid.GPSLocalServiceClient activity -> p
     47:49:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
     52:162:void selectItem(java.lang.String,android.os.Bundle) -> a
-com.OsMoDroid.ExceptionHandler -> com.OsMoDroid.n:
+com.OsMoDroid.ExceptionHandler -> com.OsMoDroid.p:
     java.text.DateFormat formatter -> a
     java.text.DateFormat fileFormatter -> b
     java.lang.String versionName -> c
@@ -2981,23 +2993,23 @@ com.OsMoDroid.GPSLocalServiceClient -> com.OsMoDroid.GPSLocalServiceClient:
     486:501:void onResume() -> onResume
     507:525:void onResumeFragments() -> onResumeFragments
     529:571:void intentAction(android.content.Intent) -> a
-    574:581:void onNewIntent(android.content.Intent) -> onNewIntent
-    592:649:void auth() -> c
-    655:655:boolean checkStarted() -> d
-    660:711:void ReadPref() -> e
-    716:719:void startlocalservice() -> f
-    722:731:void bindService() -> i
-    734:739:void stop(java.lang.Boolean) -> a
-    761:786:void onDestroy() -> onDestroy
-    791:819:java.lang.String getPage(java.lang.String,boolean,java.lang.String) -> a
-    831:844:java.lang.String inputStreamToString(java.io.InputStream) -> a
-    876:881:java.lang.String getDeviceName() -> g
-    887:894:java.lang.String capitalize(java.lang.String) -> a
-    898:902:void requestHash() -> h
-    1166:1199:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
-    1202:1224:boolean saveSharedPreferencesToFile(java.io.File) -> a
-    1228:1268:boolean loadSharedPreferencesFromFile(java.io.File) -> b
-    741:741:void access$0(com.OsMoDroid.GPSLocalServiceClient) -> a
+    576:588:void onNewIntent(android.content.Intent) -> onNewIntent
+    599:656:void auth() -> c
+    662:662:boolean checkStarted() -> d
+    667:718:void ReadPref() -> e
+    723:726:void startlocalservice() -> f
+    729:738:void bindService() -> i
+    741:746:void stop(java.lang.Boolean) -> a
+    768:793:void onDestroy() -> onDestroy
+    798:826:java.lang.String getPage(java.lang.String,boolean,java.lang.String) -> a
+    838:851:java.lang.String inputStreamToString(java.io.InputStream) -> a
+    883:888:java.lang.String getDeviceName() -> g
+    894:901:java.lang.String capitalize(java.lang.String) -> a
+    905:909:void requestHash() -> h
+    1173:1206:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+    1209:1231:boolean saveSharedPreferencesToFile(java.io.File) -> a
+    1235:1275:boolean loadSharedPreferencesFromFile(java.io.File) -> b
+    748:748:void access$0(com.OsMoDroid.GPSLocalServiceClient) -> a
     188:188:android.content.Intent access$1(com.OsMoDroid.GPSLocalServiceClient) -> b
     528:528:void access$2(com.OsMoDroid.GPSLocalServiceClient,android.content.Intent) -> a
     188:188:void access$3$1b30c8d1(com.OsMoDroid.GPSLocalServiceClient) -> c
@@ -3005,7 +3017,7 @@ com.OsMoDroid.GPSLocalServiceClient -> com.OsMoDroid.GPSLocalServiceClient:
     157:157:int access$5(com.OsMoDroid.GPSLocalServiceClient) -> e
     158:158:java.lang.String access$6(com.OsMoDroid.GPSLocalServiceClient) -> f
     160:160:java.lang.String access$7(com.OsMoDroid.GPSLocalServiceClient) -> g
-    721:721:void access$8(com.OsMoDroid.GPSLocalServiceClient) -> h
+    728:728:void access$8(com.OsMoDroid.GPSLocalServiceClient) -> h
     156:156:void access$9(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> a
     157:157:void access$10(com.OsMoDroid.GPSLocalServiceClient,int) -> a
     158:158:void access$11(com.OsMoDroid.GPSLocalServiceClient,java.lang.String) -> b
@@ -3032,21 +3044,21 @@ com.OsMoDroid.GPSLocalServiceClient$5 -> com.OsMoDroid.GPSLocalServiceClient$5:
     com.OsMoDroid.GPSLocalServiceClient this$0 -> a
     android.widget.EditText val$input -> b
     android.widget.EditText val$inputlogin -> c
-    622:637:void onClick(android.content.DialogInterface,int) -> onClick
+    629:644:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.GPSLocalServiceClient$6 -> com.OsMoDroid.GPSLocalServiceClient$6:
     com.OsMoDroid.GPSLocalServiceClient this$0 -> a
-    645:645:void onClick(android.content.DialogInterface,int) -> onClick
-com.OsMoDroid.GPSLocalServiceClient$RequestAuthTask -> com.OsMoDroid.o:
+    652:652:void onClick(android.content.DialogInterface,int) -> onClick
+com.OsMoDroid.GPSLocalServiceClient$RequestAuthTask -> com.OsMoDroid.q:
     java.lang.String authtext -> d
     java.lang.String adevice -> a
     java.lang.Boolean Err -> e
     android.app.ProgressDialog dialog -> b
     com.OsMoDroid.GPSLocalServiceClient this$0 -> c
-    915:916:void onPreExecute() -> onPreExecute
-    953:982:java.lang.Void doInBackground$10299ca() -> a
+    922:923:void onPreExecute() -> onPreExecute
+    960:989:java.lang.Void doInBackground$10299ca() -> a
     1:1:void onPostExecute(java.lang.Object) -> onPostExecute
     1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.OsMoDroid.GPSLocalServiceClient$RequestCommandTask -> com.OsMoDroid.p:
+com.OsMoDroid.GPSLocalServiceClient$RequestCommandTask -> com.OsMoDroid.r:
     java.lang.String Commandtext -> c
     java.lang.String adevice -> d
     java.lang.String akey -> e
@@ -3054,13 +3066,13 @@ com.OsMoDroid.GPSLocalServiceClient$RequestCommandTask -> com.OsMoDroid.p:
     java.lang.String adevicename -> g
     android.app.ProgressDialog dialog -> a
     com.OsMoDroid.GPSLocalServiceClient this$0 -> b
-    1000:1001:void onPreExecute() -> onPreExecute
-    1056:1156:java.lang.String doInBackground(java.lang.String[]) -> a
+    1007:1008:void onPreExecute() -> onPreExecute
+    1063:1163:java.lang.String doInBackground(java.lang.String[]) -> a
     1:1:void onPostExecute(java.lang.Object) -> onPostExecute
     1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.OsMoDroid.GPSLocalServiceClient$upd -> com.OsMoDroid.q:
+com.OsMoDroid.GPSLocalServiceClient$upd -> com.OsMoDroid.s:
     void update() -> a
-com.OsMoDroid.IM -> com.OsMoDroid.r:
+com.OsMoDroid.IM -> com.OsMoDroid.t:
     boolean running -> a
     boolean autoReconnect -> b
     java.lang.Integer timeout -> c
@@ -3071,116 +3083,112 @@ com.OsMoDroid.IM -> com.OsMoDroid.r:
     android.content.Context parent -> g
     java.util.ArrayList myLongPollChList -> h
     de.tavendo.autobahn.Wamp$ConnectionHandler c -> i
-    de.tavendo.autobahn.WebSocketConnectionHandler wsc -> j
-    de.tavendo.autobahn.WampOptions o -> k
-    int mestype -> l
-    com.OsMoDroid.LocalService localService -> m
-    java.io.ObjectOutputStream output -> n
+    de.tavendo.autobahn.WampOptions o -> j
+    int mestype -> k
+    com.OsMoDroid.LocalService localService -> l
+    java.io.ObjectOutputStream output -> m
     java.text.SimpleDateFormat sdf1 -> A
     de.tavendo.autobahn.WampConnection mWampConnection -> B
-    de.tavendo.autobahn.WebSocketConnection mWebsocketConnection -> o
-    java.lang.String wsuri -> p
-    java.lang.String websocketuri -> q
-    boolean connOpened -> r
-    boolean connecting -> s
-    boolean log -> t
-    android.content.BroadcastReceiver reconnectReceiver -> u
-    android.content.BroadcastReceiver keepAliveReceiver -> v
-    android.app.AlarmManager manager -> w
-    android.app.PendingIntent reconnectPIntent -> x
-    android.app.PendingIntent keepAlivePIntent -> y
+    java.lang.String wsuri -> n
+    java.lang.String websocketuri -> o
+    boolean connOpened -> p
+    boolean connecting -> q
+    boolean log -> r
+    android.app.AlarmManager manager -> s
+    android.app.PendingIntent reconnectPIntent -> t
+    android.app.PendingIntent keepAlivePIntent -> u
+    android.app.PendingIntent checkPongPIntent -> v
+    android.content.BroadcastReceiver reconnectReceiver -> w
+    android.content.BroadcastReceiver keepAliveReceiver -> x
+    android.content.BroadcastReceiver checkPingReceiver -> y
     android.content.BroadcastReceiver bcr -> C
-    282:286:void addlog(java.lang.String) -> a
-    294:299:void setkeepAliveAlarm() -> a
-    302:310:void disablekeepAliveAlarm() -> b
-    314:319:void setReconnectAlarm() -> c
-    346:351:void addchannels(java.util.ArrayList) -> a
-    354:368:void removechannels(java.util.ArrayList) -> b
-    373:379:java.lang.String getMessageType(java.lang.String) -> b
-    387:448:void addtoDeviceChat(java.lang.String) -> c
-    536:546:void close() -> d
-    549:561:void start() -> e
-    563:995:void parseEx(java.lang.String,java.lang.String) -> a
-    998:1065:void addToChannelChat(java.lang.String,java.lang.String) -> b
-    1068:1077:void stop() -> f
-    1080:1102:void resubscribe() -> g
-    149:149:de.tavendo.autobahn.WampConnection access$0(com.OsMoDroid.IM) -> a
-com.OsMoDroid.IM$1 -> com.OsMoDroid.r$1:
+    251:255:void addlog(java.lang.String) -> a
+    259:264:void setcheckPingAlarm() -> a
+    267:272:void setkeepAliveAlarm() -> b
+    275:283:void disablekeepAliveAlarm() -> c
+    286:294:void disablecheckpingAlarm() -> d
+    298:303:void setReconnectAlarm() -> e
+    330:335:void addchannels(java.util.ArrayList) -> a
+    338:352:void removechannels(java.util.ArrayList) -> b
+    357:363:java.lang.String getMessageType(java.lang.String) -> b
+    371:432:void addtoDeviceChat(java.lang.String) -> c
+    520:541:void close() -> f
+    544:556:void start() -> g
+    558:988:void parseEx(java.lang.String,java.lang.String) -> a
+    991:1060:void addToChannelChat(java.lang.String,java.lang.String) -> b
+    1063:1072:void stop() -> h
+    1076:1097:void resubscribe() -> i
+    152:152:de.tavendo.autobahn.WampConnection access$0(com.OsMoDroid.IM) -> a
+com.OsMoDroid.IM$1 -> com.OsMoDroid.t$1:
     com.OsMoDroid.IM this$0 -> a
-    261:264:void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.OsMoDroid.IM$10 -> com.OsMoDroid.r$2:
+    223:226:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.OsMoDroid.IM$10 -> com.OsMoDroid.t$2:
     com.OsMoDroid.IM this$0 -> a
-    751:758:void run() -> run
-com.OsMoDroid.IM$11 -> com.OsMoDroid.r$3:
+    746:753:void run() -> run
+com.OsMoDroid.IM$11 -> com.OsMoDroid.t$3:
     com.OsMoDroid.IM this$0 -> a
-    814:816:void run() -> run
-com.OsMoDroid.IM$12 -> com.OsMoDroid.r$4:
+    809:811:void run() -> run
+com.OsMoDroid.IM$12 -> com.OsMoDroid.t$4:
     com.OsMoDroid.IM this$0 -> a
-    822:824:void run() -> run
-com.OsMoDroid.IM$13 -> com.OsMoDroid.r$5:
+    817:819:void run() -> run
+com.OsMoDroid.IM$13 -> com.OsMoDroid.t$5:
     com.OsMoDroid.IM this$0 -> a
-    829:837:void run() -> run
-com.OsMoDroid.IM$14 -> com.OsMoDroid.r$6:
+    824:832:void run() -> run
+com.OsMoDroid.IM$14 -> com.OsMoDroid.t$6:
     com.OsMoDroid.IM this$0 -> a
-    915:921:void run() -> run
-com.OsMoDroid.IM$15 -> com.OsMoDroid.r$7:
+    910:916:void run() -> run
+com.OsMoDroid.IM$15 -> com.OsMoDroid.t$7:
     com.OsMoDroid.IM this$0 -> a
-    967:979:void run() -> run
-com.OsMoDroid.IM$16 -> com.OsMoDroid.r$8:
+    960:972:void run() -> run
+com.OsMoDroid.IM$16 -> com.OsMoDroid.t$8:
     com.OsMoDroid.IM this$0 -> a
     com.OsMoDroid.Channel val$channel -> b
-    1057:1061:void run() -> run
-com.OsMoDroid.IM$17 -> com.OsMoDroid.r$9:
+    1052:1056:void run() -> run
+com.OsMoDroid.IM$17 -> com.OsMoDroid.t$9:
     com.OsMoDroid.IM this$0 -> a
-    1092:1094:void onEvent(java.lang.String,java.lang.Object) -> a
-com.OsMoDroid.IM$2 -> com.OsMoDroid.r$10:
+    1087:1089:void onEvent(java.lang.String,java.lang.Object) -> a
+com.OsMoDroid.IM$2 -> com.OsMoDroid.t$10:
     com.OsMoDroid.IM this$0 -> a
-    269:278:void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.OsMoDroid.IM$3 -> com.OsMoDroid.r$11:
+    231:238:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.OsMoDroid.IM$3 -> com.OsMoDroid.t$11:
     com.OsMoDroid.IM this$0 -> a
-    461:523:void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.OsMoDroid.IM$4 -> com.OsMoDroid.r$12:
+    246:248:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.OsMoDroid.IM$4 -> com.OsMoDroid.t$12:
     com.OsMoDroid.IM this$0 -> a
-    com.OsMoDroid.LocalService val$localService -> b
-    169:176:void onOpen() -> a
-    180:195:void onClose(int,java.lang.String) -> a
-    199:201:void onPong() -> b
-com.OsMoDroid.IM$5 -> com.OsMoDroid.r$13:
+    445:507:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+com.OsMoDroid.IM$5 -> com.OsMoDroid.t$13:
     com.OsMoDroid.IM this$0 -> a
     com.OsMoDroid.LocalService val$localService -> b
-    208:210:void onPong() -> a
-    214:218:void onOpen() -> b
-    222:232:void onClose(int,java.lang.String) -> a
-    236:238:void onTextMessage(java.lang.String) -> a
-    242:244:void onRawTextMessage(byte[]) -> a
-    248:250:void onBinaryMessage(byte[]) -> b
-com.OsMoDroid.IM$6 -> com.OsMoDroid.r$14:
+    178:185:void onOpen() -> a
+    189:204:void onClose(int,java.lang.String) -> a
+    208:212:void onPong() -> b
+com.OsMoDroid.IM$6 -> com.OsMoDroid.t$14:
     com.OsMoDroid.IM this$0 -> a
-    423:426:void run() -> run
-com.OsMoDroid.IM$7 -> com.OsMoDroid.r$15:
+    407:410:void run() -> run
+com.OsMoDroid.IM$7 -> com.OsMoDroid.t$15:
     com.OsMoDroid.IM this$0 -> a
     java.util.ArrayList val$tempdeviceList -> b
-    616:619:void run() -> run
-com.OsMoDroid.IM$8 -> com.OsMoDroid.r$16:
+    611:614:void run() -> run
+com.OsMoDroid.IM$8 -> com.OsMoDroid.t$16:
     com.OsMoDroid.IM this$0 -> a
-    670:675:void run() -> run
-com.OsMoDroid.IM$9 -> com.OsMoDroid.r$17:
+    665:670:void run() -> run
+com.OsMoDroid.IM$9 -> com.OsMoDroid.t$17:
     com.OsMoDroid.IM this$0 -> a
-    685:690:void run() -> run
-com.OsMoDroid.IRemoteOsMoDroidListener -> com.OsMoDroid.s:
+    680:685:void run() -> run
+com.OsMoDroid.IRemoteOsMoDroidListener -> com.OsMoDroid.u:
     void channelUpdated() -> a
     void channelsListUpdated() -> b
     void routeTo(float,float) -> a
-com.OsMoDroid.IRemoteOsMoDroidListener$Stub -> com.OsMoDroid.t:
+com.OsMoDroid.IRemoteOsMoDroidListener$Stub -> com.OsMoDroid.v:
     23:30:com.OsMoDroid.IRemoteOsMoDroidListener asInterface(android.os.IBinder) -> a
     38:71:boolean onTransact(int,android.os.Parcel,android.os.Parcel,int) -> onTransact
-com.OsMoDroid.IRemoteOsMoDroidListener$Stub$Proxy -> com.OsMoDroid.u:
+com.OsMoDroid.IRemoteOsMoDroidListener$Stub$Proxy -> com.OsMoDroid.w:
     android.os.IBinder mRemote -> a
     82:82:android.os.IBinder asBinder() -> asBinder
     90:101:void channelUpdated() -> a
     104:115:void channelsListUpdated() -> b
     118:131:void routeTo(float,float) -> a
-com.OsMoDroid.IRemoteOsMoDroidService -> com.OsMoDroid.v:
+com.OsMoDroid.IRemoteOsMoDroidService -> com.OsMoDroid.x:
     void registerListener(com.OsMoDroid.IRemoteOsMoDroidListener) -> a
     void unregisterListener(com.OsMoDroid.IRemoteOsMoDroidListener) -> b
     void Deactivate() -> a
@@ -3209,7 +3217,7 @@ com.OsMoDroid.IRemoteOsMoDroidService -> com.OsMoDroid.v:
     java.lang.String getPointDescription(int,int) -> n
     java.lang.String getPointColor(int,int) -> o
     void refreshChannels() -> e
-com.OsMoDroid.IRemoteOsMoDroidService$Stub -> com.OsMoDroid.w:
+com.OsMoDroid.IRemoteOsMoDroidService$Stub -> com.OsMoDroid.y:
     34:34:android.os.IBinder asBinder() -> asBinder
     38:357:boolean onTransact(int,android.os.Parcel,android.os.Parcel,int) -> onTransact
 com.OsMoDroid.LocalService -> com.OsMoDroid.LocalService:
@@ -3404,53 +3412,53 @@ com.OsMoDroid.LocalService -> com.OsMoDroid.LocalService:
     1759:1776:void applyPreference() -> f
     1781:1911:void startServiceWork() -> g
     1920:1931:void manageGPSFixAlarm() -> n
-    1984:2001:void ttsManage() -> o
-    2011:2039:void requestLocationUpdates() -> h
-    2052:2117:void openGPX() -> p
-    2131:2222:void stopServiceWork(java.lang.Boolean) -> a
-    2236:2270:void closeGPX() -> q
-    2307:2315:void setstarted(boolean) -> a
-    2458:2646:void onLocationChanged(android.location.Location) -> onLocationChanged
-    2649:2650:void onProviderDisabled(java.lang.String) -> onProviderDisabled
-    2656:2657:void onProviderEnabled(java.lang.String) -> onProviderEnabled
-    2662:2663:void onStatusChanged(java.lang.String,int,android.os.Bundle) -> onStatusChanged
-    2803:2839:java.lang.String inputStreamToString(java.io.InputStream) -> a
-    2912:2948:java.lang.String unescape(java.lang.String) -> b
-    2962:3050:java.lang.String decodesendresult(java.lang.String) -> c
-    3062:3112:void writegpx(android.location.Location) -> a
-    3116:3304:void sendlocation(android.location.Location) -> b
-    3307:3338:void onGpsStatusChanged(int) -> onGpsStatusChanged
-    3344:3380:void onInit(int) -> onInit
-    3384:3398:boolean isOnline() -> i
-    3407:3420:void warnwronghash() -> r
-    3426:3490:void notifywarnactivity(java.lang.String,boolean) -> a
-    3494:3501:void connectChannels() -> s
-    3503:3510:void connectChannelsChats() -> t
-    3512:3519:void disconnectChannelsChats() -> u
-    3522:3527:void disconnectChannels() -> v
-    3537:3799:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
-    3803:3820:void deviceListFromJSONArray(org.json.JSONArray) -> a
-    3824:3838:void channelListFromJSONArray(org.json.JSONArray) -> b
-    3841:3855:void playAlarmOn(java.lang.Boolean) -> b
-    3858:3873:void playAlarmOff(java.lang.Boolean) -> c
-    3877:3896:void enableSignalisation(java.lang.Boolean) -> d
-    3901:3922:void disableSignalisation(java.lang.Boolean) -> e
-    3927:3927:void onAccuracyChanged(android.hardware.Sensor,int) -> onAccuracyChanged
-    3932:3956:void onSensorChanged(android.hardware.SensorEvent) -> onSensorChanged
-    3961:3970:void saveObject(java.lang.Object,java.lang.String) -> a
-    3974:3987:java.lang.Object loadObject(java.lang.String,java.lang.Class) -> a
+    1961:1978:void ttsManage() -> o
+    1988:2016:void requestLocationUpdates() -> h
+    2029:2105:void openGPX() -> p
+    2117:2208:void stopServiceWork(java.lang.Boolean) -> a
+    2222:2258:void closeGPX() -> q
+    2295:2303:void setstarted(boolean) -> a
+    2446:2634:void onLocationChanged(android.location.Location) -> onLocationChanged
+    2637:2638:void onProviderDisabled(java.lang.String) -> onProviderDisabled
+    2644:2645:void onProviderEnabled(java.lang.String) -> onProviderEnabled
+    2650:2651:void onStatusChanged(java.lang.String,int,android.os.Bundle) -> onStatusChanged
+    2791:2827:java.lang.String inputStreamToString(java.io.InputStream) -> a
+    2900:2936:java.lang.String unescape(java.lang.String) -> b
+    2950:3038:java.lang.String decodesendresult(java.lang.String) -> c
+    3050:3100:void writegpx(android.location.Location) -> a
+    3104:3292:void sendlocation(android.location.Location) -> b
+    3295:3326:void onGpsStatusChanged(int) -> onGpsStatusChanged
+    3332:3368:void onInit(int) -> onInit
+    3372:3386:boolean isOnline() -> i
+    3395:3408:void warnwronghash() -> r
+    3414:3478:void notifywarnactivity(java.lang.String,boolean) -> a
+    3482:3489:void connectChannels() -> s
+    3491:3498:void connectChannelsChats() -> t
+    3500:3507:void disconnectChannelsChats() -> u
+    3510:3515:void disconnectChannels() -> v
+    3525:3787:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+    3791:3808:void deviceListFromJSONArray(org.json.JSONArray) -> a
+    3812:3826:void channelListFromJSONArray(org.json.JSONArray) -> b
+    3829:3843:void playAlarmOn(java.lang.Boolean) -> b
+    3846:3861:void playAlarmOff(java.lang.Boolean) -> c
+    3865:3884:void enableSignalisation(java.lang.Boolean) -> d
+    3889:3910:void disableSignalisation(java.lang.Boolean) -> e
+    3915:3915:void onAccuracyChanged(android.hardware.Sensor,int) -> onAccuracyChanged
+    3920:3944:void onSensorChanged(android.hardware.SensorEvent) -> onSensorChanged
+    3949:3958:void saveObject(java.lang.Object,java.lang.String) -> a
+    3962:3975:java.lang.Object loadObject(java.lang.String,java.lang.Class) -> a
     965:965:boolean access$0(com.OsMoDroid.LocalService) -> a
     311:311:void access$1(com.OsMoDroid.LocalService,java.lang.String) -> a
-    2843:2843:void access$2(com.OsMoDroid.LocalService,boolean) -> a
+    2831:2831:void access$2(com.OsMoDroid.LocalService,boolean) -> a
     371:371:java.text.SimpleDateFormat access$3() -> j
-    2958:2958:java.lang.String access$4(com.OsMoDroid.LocalService,java.lang.String) -> b
+    2946:2946:java.lang.String access$4(com.OsMoDroid.LocalService,java.lang.String) -> b
     300:300:boolean access$5(com.OsMoDroid.LocalService) -> b
     278:278:boolean access$6(com.OsMoDroid.LocalService) -> c
     272:272:android.media.SoundPool access$7() -> k
     311:311:java.lang.String access$8(com.OsMoDroid.LocalService) -> d
     954:954:android.app.Notification access$9(com.OsMoDroid.LocalService) -> e
     955:955:android.app.PendingIntent access$10(com.OsMoDroid.LocalService) -> f
-    2665:2665:java.lang.String access$11(com.OsMoDroid.LocalService,java.lang.String,java.lang.String) -> a
+    2653:2653:java.lang.String access$11(com.OsMoDroid.LocalService,java.lang.String,java.lang.String) -> a
     300:300:void access$12$32c62201(com.OsMoDroid.LocalService) -> g
     346:346:long access$13(com.OsMoDroid.LocalService) -> h
     348:348:long access$14(com.OsMoDroid.LocalService) -> i
@@ -3517,13 +3525,13 @@ com.OsMoDroid.LocalService$5 -> com.OsMoDroid.LocalService$5:
 com.OsMoDroid.LocalService$6 -> com.OsMoDroid.LocalService$6:
     com.OsMoDroid.LocalService this$0 -> a
     1400:1479:void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.OsMoDroid.LocalService$LocalBinder -> com.OsMoDroid.x:
+com.OsMoDroid.LocalService$LocalBinder -> com.OsMoDroid.z:
     com.OsMoDroid.LocalService this$0 -> a
     974:974:com.OsMoDroid.LocalService getService() -> a
-com.OsMoDroid.LocalService$SendCoor -> com.OsMoDroid.y:
+com.OsMoDroid.LocalService$SendCoor -> com.OsMoDroid.aa:
     java.lang.String tmp -> b
     com.OsMoDroid.LocalService this$0 -> a
-    2377:2448:java.lang.String doInBackground(java.lang.String[]) -> a
+    2365:2436:java.lang.String doInBackground(java.lang.String[]) -> a
     1:1:void onPostExecute(java.lang.Object) -> onPostExecute
     1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
 com.OsMoDroid.MainFragment -> com.OsMoDroid.MainFragment:
@@ -3539,14 +3547,14 @@ com.OsMoDroid.MainFragment -> com.OsMoDroid.MainFragment:
     142:165:void onCreateOptionsMenu(com.actionbarsherlock.view.Menu,com.actionbarsherlock.view.MenuInflater) -> onCreateOptionsMenu
     169:169:void onPrepareOptionsMenu(com.actionbarsherlock.view.Menu) -> onPrepareOptionsMenu
     173:293:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
-    305:638:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
-    647:651:void onAttach(android.app.Activity) -> onAttach
-    654:661:void onDetach() -> onDetach
-    676:678:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
-    683:683:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
-    686:688:void update() -> a
+    305:641:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    650:654:void onAttach(android.app.Activity) -> onAttach
+    657:664:void onDetach() -> onDetach
+    679:681:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
+    686:686:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+    689:691:void update() -> a
     40:40:com.OsMoDroid.GPSLocalServiceClient access$0(com.OsMoDroid.MainFragment) -> a
-    663:663:void access$1(com.OsMoDroid.MainFragment,android.view.View) -> a
+    666:666:void access$1(com.OsMoDroid.MainFragment,android.view.View) -> a
 com.OsMoDroid.MainFragment$1 -> com.OsMoDroid.MainFragment$1:
     com.OsMoDroid.MainFragment this$0 -> a
     184:185:void onClick(android.content.DialogInterface,int) -> onClick
@@ -3562,68 +3570,68 @@ com.OsMoDroid.MainFragment$4 -> com.OsMoDroid.MainFragment$4:
 com.OsMoDroid.MainFragment$5 -> com.OsMoDroid.MainFragment$5:
     com.OsMoDroid.MainFragment this$0 -> a
     android.widget.ToggleButton val$alarmToggle -> b
-    341:353:void onClick(android.view.View) -> onClick
+    343:355:void onClick(android.view.View) -> onClick
 com.OsMoDroid.MainFragment$6 -> com.OsMoDroid.MainFragment$6:
     com.OsMoDroid.MainFragment this$0 -> a
-    361:363:void onClick(android.view.View) -> onClick
+    363:365:void onClick(android.view.View) -> onClick
 com.OsMoDroid.MainFragment$7 -> com.OsMoDroid.MainFragment$7:
     java.lang.Boolean stopsession -> a
     com.OsMoDroid.MainFragment this$0 -> b
     android.view.View val$view -> c
-    383:525:void onClick(android.view.View) -> onClick
-    377:377:com.OsMoDroid.MainFragment access$0(com.OsMoDroid.MainFragment$7) -> a
+    385:527:void onClick(android.view.View) -> onClick
+    379:379:com.OsMoDroid.MainFragment access$0(com.OsMoDroid.MainFragment$7) -> a
 com.OsMoDroid.MainFragment$7$1 -> com.OsMoDroid.MainFragment$7$1:
     com.OsMoDroid.MainFragment$7 this$1 -> a
     android.view.View val$view -> b
-    394:433:void onClick(android.content.DialogInterface,int) -> onClick
+    396:435:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$1$1 -> com.OsMoDroid.MainFragment$7$1$1:
     com.OsMoDroid.MainFragment$7$1 this$2 -> a
     android.view.View val$view -> b
-    409:412:void onClick(android.content.DialogInterface,int) -> onClick
+    411:414:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$1$2 -> com.OsMoDroid.MainFragment$7$1$2:
     com.OsMoDroid.MainFragment$7$1 this$2 -> a
     android.view.View val$view -> b
-    418:421:void onClick(android.content.DialogInterface,int) -> onClick
+    420:423:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$2 -> com.OsMoDroid.MainFragment$7$2:
     com.OsMoDroid.MainFragment$7 this$1 -> a
     android.view.View val$view -> b
-    439:478:void onClick(android.content.DialogInterface,int) -> onClick
+    441:480:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$2$1 -> com.OsMoDroid.MainFragment$7$2$1:
     com.OsMoDroid.MainFragment$7$2 this$2 -> a
     android.view.View val$view -> b
-    454:457:void onClick(android.content.DialogInterface,int) -> onClick
+    456:459:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$2$2 -> com.OsMoDroid.MainFragment$7$2$2:
     com.OsMoDroid.MainFragment$7$2 this$2 -> a
     android.view.View val$view -> b
-    463:466:void onClick(android.content.DialogInterface,int) -> onClick
+    465:468:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$3 -> com.OsMoDroid.MainFragment$7$3:
     com.OsMoDroid.MainFragment$7 this$1 -> a
     android.view.View val$view -> b
-    496:499:void onClick(android.content.DialogInterface,int) -> onClick
+    498:501:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$7$4 -> com.OsMoDroid.MainFragment$7$4:
     com.OsMoDroid.MainFragment$7 this$1 -> a
     android.view.View val$view -> b
-    505:508:void onClick(android.content.DialogInterface,int) -> onClick
+    507:510:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$8 -> com.OsMoDroid.MainFragment$8:
     com.OsMoDroid.MainFragment this$0 -> a
-    530:561:void onClick(android.view.View) -> onClick
-    528:528:com.OsMoDroid.MainFragment access$0(com.OsMoDroid.MainFragment$8) -> a
+    532:563:void onClick(android.view.View) -> onClick
+    530:530:com.OsMoDroid.MainFragment access$0(com.OsMoDroid.MainFragment$8) -> a
 com.OsMoDroid.MainFragment$8$1 -> com.OsMoDroid.MainFragment$8$1:
     com.OsMoDroid.MainFragment$8 this$1 -> a
-    542:544:void onClick(android.content.DialogInterface,int) -> onClick
+    544:546:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$8$2 -> com.OsMoDroid.MainFragment$8$2:
     com.OsMoDroid.MainFragment$8 this$1 -> a
-    550:550:void onClick(android.content.DialogInterface,int) -> onClick
+    552:552:void onClick(android.content.DialogInterface,int) -> onClick
 com.OsMoDroid.MainFragment$9 -> com.OsMoDroid.MainFragment$9:
     com.OsMoDroid.MainFragment this$0 -> a
     android.view.View val$view -> b
-    567:632:void onReceive(android.content.Context,android.content.Intent) -> onReceive
-    564:564:com.OsMoDroid.MainFragment access$0(com.OsMoDroid.MainFragment$9) -> a
+    569:635:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    566:566:com.OsMoDroid.MainFragment access$0(com.OsMoDroid.MainFragment$9) -> a
 com.OsMoDroid.MainFragment$9$1 -> com.OsMoDroid.MainFragment$9$1:
     com.OsMoDroid.MainFragment$9 this$1 -> a
     android.widget.ToggleButton val$globalsendToggle -> b
     android.content.Intent val$intent -> c
-    583:587:void onClick(android.view.View) -> onClick
+    585:589:void onClick(android.view.View) -> onClick
 com.OsMoDroid.MapFragment -> com.OsMoDroid.MapFragment:
     org.osmdroid.util.ResourceProxyImpl mResourceProxy -> a
     org.osmdroid.views.MapView mMapView -> b
@@ -3634,41 +3642,44 @@ com.OsMoDroid.MapFragment -> com.OsMoDroid.MapFragment:
     boolean rotate -> c
     org.osmdroid.views.overlay.mylocation.IMyLocationConsumer myLocationConumer -> h
     long lastgpslocation -> i
-    72:73:void onCreateOptionsMenu(com.actionbarsherlock.view.Menu,com.actionbarsherlock.view.MenuInflater) -> onCreateOptionsMenu
-    81:87:void onCreate(android.os.Bundle) -> onCreate
-    93:97:void onAttach(android.app.Activity) -> onAttach
-    101:111:void onDetach() -> onDetach
-    114:123:void onDestroyView() -> onDestroyView
-    146:148:void onDestroy() -> onDestroy
-    156:161:void onPause() -> onPause
-    169:174:void onResume() -> onResume
-    182:185:void onStart() -> onStart
-    193:196:void onStop() -> onStop
-    204:212:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
-    220:222:void onViewStateRestored(android.os.Bundle) -> onViewStateRestored
-    228:315:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
-    324:328:void onDeviceChange$470c4619() -> a
-    334:337:void onChannelListChange() -> b
-    342:353:android.location.Location getLastKnownLocation() -> c
-    364:374:boolean startLocationProvider(org.osmdroid.views.overlay.mylocation.IMyLocationConsumer) -> a
-    385:388:void stopLocationProvider() -> d
-    396:417:void onLocationChanged(android.location.Location) -> onLocationChanged
-    427:427:void onProviderDisabled(java.lang.String) -> onProviderDisabled
-    437:437:void onProviderEnabled(java.lang.String) -> onProviderEnabled
-    447:447:void onStatusChanged(java.lang.String,int,android.os.Bundle) -> onStatusChanged
-    455:458:void onNewPoint(org.osmdroid.util.GeoPoint) -> a
-    59:59:org.osmdroid.api.IMapController access$0(com.OsMoDroid.MapFragment) -> a
-    60:60:org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay access$1(com.OsMoDroid.MapFragment) -> b
+    com.actionbarsherlock.view.MenuItem courserotation -> j
+    78:88:void onCreateOptionsMenu(com.actionbarsherlock.view.Menu,com.actionbarsherlock.view.MenuInflater) -> onCreateOptionsMenu
+    96:114:boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem) -> onOptionsItemSelected
+    127:133:void onCreate(android.os.Bundle) -> onCreate
+    139:143:void onAttach(android.app.Activity) -> onAttach
+    147:157:void onDetach() -> onDetach
+    160:169:void onDestroyView() -> onDestroyView
+    193:194:void onDestroy() -> onDestroy
+    202:207:void onPause() -> onPause
+    215:220:void onResume() -> onResume
+    228:231:void onStart() -> onStart
+    239:242:void onStop() -> onStop
+    250:258:void onViewCreated(android.view.View,android.os.Bundle) -> onViewCreated
+    266:268:void onViewStateRestored(android.os.Bundle) -> onViewStateRestored
+    274:353:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle) -> onCreateView
+    362:366:void onDeviceChange$470c4619() -> a
+    372:375:void onChannelListChange() -> b
+    380:391:android.location.Location getLastKnownLocation() -> c
+    402:412:boolean startLocationProvider(org.osmdroid.views.overlay.mylocation.IMyLocationConsumer) -> a
+    423:426:void stopLocationProvider() -> d
+    434:455:void onLocationChanged(android.location.Location) -> onLocationChanged
+    465:465:void onProviderDisabled(java.lang.String) -> onProviderDisabled
+    475:475:void onProviderEnabled(java.lang.String) -> onProviderEnabled
+    485:485:void onStatusChanged(java.lang.String,int,android.os.Bundle) -> onStatusChanged
+    493:496:void onNewPoint(org.osmdroid.util.GeoPoint) -> a
+    65:65:org.osmdroid.api.IMapController access$0(com.OsMoDroid.MapFragment) -> a
+    66:66:org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay access$1(com.OsMoDroid.MapFragment) -> b
+    75:75:com.actionbarsherlock.view.MenuItem access$2(com.OsMoDroid.MapFragment) -> c
 com.OsMoDroid.MapFragment$1 -> com.OsMoDroid.MapFragment$1:
     com.OsMoDroid.MapFragment this$0 -> a
-    281:288:void onClick(android.view.View) -> onClick
+    327:334:void onClick(android.view.View) -> onClick
 com.OsMoDroid.MapFragment$2 -> com.OsMoDroid.MapFragment$2:
     com.OsMoDroid.MapFragment this$0 -> a
-    296:306:void onClick(android.view.View) -> onClick
-com.OsMoDroid.MapFragment$MAPSurferTileSource -> com.OsMoDroid.z:
+    340:344:void onClick(android.view.View) -> onClick
+com.OsMoDroid.MapFragment$MAPSurferTileSource -> com.OsMoDroid.ab:
     com.OsMoDroid.MapFragment this$0 -> a
-    135:135:java.lang.String getTileURLString(org.osmdroid.tileprovider.MapTile) -> a
-com.OsMoDroid.MyMessage -> com.OsMoDroid.aa:
+    183:183:java.lang.String getTileURLString(org.osmdroid.tileprovider.MapTile) -> a
+com.OsMoDroid.MyMessage -> com.OsMoDroid.ac:
     int u -> a
     java.lang.String from -> b
     java.lang.String from_app -> c
@@ -3683,7 +3694,7 @@ com.OsMoDroid.MyMessage -> com.OsMoDroid.aa:
     java.lang.String from_addr -> l
     java.lang.String to -> m
     1:1:int compareTo(java.lang.Object) -> compareTo
-com.OsMoDroid.Netutil -> com.OsMoDroid.ab:
+com.OsMoDroid.Netutil -> com.OsMoDroid.ad:
     251:254:com.OsMoDroid.Netutil$MyAsyncTask newapicommand(com.OsMoDroid.ResultsListener,java.lang.String) -> a
     258:273:java.lang.String inputStreamToFile(java.io.InputStream,java.io.File) -> a
     290:293:com.OsMoDroid.Netutil$MyAsyncTask newapicommand(com.OsMoDroid.ResultsListener,android.content.Context,java.lang.String,java.lang.String) -> a
@@ -3693,11 +3704,11 @@ com.OsMoDroid.Netutil -> com.OsMoDroid.ab:
     319:327:java.lang.String inputStreamToString(java.io.InputStream) -> a
     356:388:java.util.List getGPXPoints(java.io.InputStream) -> b
     427:445:java.lang.String unescape(java.lang.String) -> a
-com.OsMoDroid.Netutil$InitTask -> com.OsMoDroid.ac:
+com.OsMoDroid.Netutil$InitTask -> com.OsMoDroid.ae:
     com.OsMoDroid.ColoredGPX cg -> a
     1:1:void onPostExecute(java.lang.Object) -> onPostExecute
     1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.OsMoDroid.Netutil$MyAsyncTask -> com.OsMoDroid.ad:
+com.OsMoDroid.Netutil$MyAsyncTask -> com.OsMoDroid.af:
     android.content.Context mContext -> e
     com.OsMoDroid.ResultsListener listener -> a
     java.net.HttpURLConnection con -> b
@@ -3724,37 +3735,29 @@ com.OsMoDroid.OsMoDroid -> com.OsMoDroid.OsMoDroid:
     java.lang.String FILENAME -> a
     boolean mesactivityVisible -> b
     boolean gpslocalserviceclientVisible -> c
-    int notifyid -> j
+    int notifyid -> k
     int uploadnotifyid -> d
     android.content.SharedPreferences settings -> e
     com.OsMoDroid.GPSLocalServiceClient activity -> f
-    android.content.Context context -> g
-    android.content.SharedPreferences$Editor editor -> h
-    boolean debug -> i
-    24:24:int notifyidApp() -> a
-    34:39:void onCreate() -> onCreate
-    43:46:int uploadnotifyid() -> b
+    android.view.inputmethod.InputMethodManager inputMethodManager -> g
+    android.content.Context context -> h
+    android.content.SharedPreferences$Editor editor -> i
+    boolean debug -> j
+    25:25:int notifyidApp() -> a
+    35:41:void onCreate() -> onCreate
+    45:48:int uploadnotifyid() -> b
 com.OsMoDroid.PrefActivity -> com.OsMoDroid.PrefActivity:
     14:18:void onCreate(android.os.Bundle) -> onCreate
     26:29:void onDestroy() -> onDestroy
-com.OsMoDroid.ResultsListener -> com.OsMoDroid.ae:
+com.OsMoDroid.ResultsListener -> com.OsMoDroid.ag:
     void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
-com.OsMoDroid.RotationGestureDetector -> com.OsMoDroid.af:
-    float fX -> a
-    float fY -> b
-    float sX -> c
-    float sY -> d
-    float focalX -> e
-    float focalY -> f
-    int ptrID1 -> g
-    int ptrID2 -> h
-    float mAngle -> i
-    boolean firstTouch -> j
-    com.OsMoDroid.RotationGestureDetector$OnRotationGestureListener mListener -> k
-    15:15:float getAngle() -> a
-    29:82:boolean onTouchEvent(android.view.MotionEvent) -> a
-com.OsMoDroid.RotationGestureDetector$OnRotationGestureListener -> com.OsMoDroid.ag:
-    boolean OnRotation(com.OsMoDroid.RotationGestureDetector) -> a
+com.OsMoDroid.RotationGestureDetector -> com.OsMoDroid.ah:
+    float mRotation -> a
+    com.OsMoDroid.RotationGestureDetector$RotationListener mListener -> b
+    18:21:float rotation(android.view.MotionEvent) -> b
+    25:36:void onTouch(android.view.MotionEvent) -> a
+com.OsMoDroid.RotationGestureDetector$RotationListener -> com.OsMoDroid.ai:
+    void onRotate(float) -> a
 com.OsMoDroid.SimLinksFragment -> com.OsMoDroid.SimLinksFragment:
     com.OsMoDroid.GPSLocalServiceClient globalActivity -> c
     android.widget.ArrayAdapter adapter -> d
@@ -3817,23 +3820,23 @@ com.OsMoDroid.TracFileListFragment -> com.OsMoDroid.TracFileListFragment:
 com.OsMoDroid.TracFileListFragment$1 -> com.OsMoDroid.TracFileListFragment$1:
     com.OsMoDroid.TracFileListFragment this$0 -> a
     242:244:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.OsMoDroid.TracFileListFragment$ReadTrackList -> com.OsMoDroid.ah:
+com.OsMoDroid.TracFileListFragment$ReadTrackList -> com.OsMoDroid.aj:
     java.util.ArrayList tempTrackFileList -> b
     com.OsMoDroid.TracFileListFragment this$0 -> a
     122:127:void onPreExecute() -> onPreExecute
     1:1:void onPostExecute(java.lang.Object) -> onPostExecute
     1:1:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
     1:1:void onProgressUpdate(java.lang.Object[]) -> onProgressUpdate
-com.OsMoDroid.TracFileListFragment$ReadTrackList$1 -> com.OsMoDroid.ah$1:
+com.OsMoDroid.TracFileListFragment$ReadTrackList$1 -> com.OsMoDroid.aj$1:
     com.OsMoDroid.TracFileListFragment$ReadTrackList this$1 -> a
     89:89:boolean accept(java.io.File,java.lang.String) -> accept
-com.OsMoDroid.TrackFile -> com.OsMoDroid.ai:
+com.OsMoDroid.TrackFile -> com.OsMoDroid.ak:
     java.text.SimpleDateFormat sdf1 -> d
     java.lang.String fileName -> a
     java.lang.String fileDate -> b
     java.lang.String fileSize -> c
     1:1:int compareTo(java.lang.Object) -> compareTo
-com.OsMoDroid.TrackFileAdapter -> com.OsMoDroid.aj:
+com.OsMoDroid.TrackFileAdapter -> com.OsMoDroid.al:
     android.widget.TextView fileName -> a
     android.widget.TextView fileDate -> b
     android.widget.TextView fileSize -> c
@@ -4888,7 +4891,7 @@ com.actionbarsherlock.internal.ActionBarSherlockCompat -> com.actionbarsherlock.
     273:277:boolean dispatchOpenOptionsMenu() -> dispatchOpenOptionsMenu
     284:291:boolean dispatchCloseOptionsMenu() -> dispatchCloseOptionsMenu
     298:305:void dispatchPostCreate(android.os.Bundle) -> dispatchPostCreate
-    310:311:boolean dispatchCreateOptionsMenu(android.view.Menu) -> dispatchCreateOptionsMenu
+    313:313:boolean dispatchCreateOptionsMenu(android.view.Menu) -> dispatchCreateOptionsMenu
     320:345:boolean dispatchPrepareOptionsMenu(android.view.Menu) -> dispatchPrepareOptionsMenu
     350:350:boolean dispatchOptionsItemSelected(android.view.MenuItem) -> dispatchOptionsItemSelected
     357:364:boolean dispatchMenuOpened(int,android.view.Menu) -> dispatchMenuOpened
@@ -8174,9 +8177,6 @@ de.tavendo.autobahn.WebSocket -> a.a.a.z:
 de.tavendo.autobahn.WebSocket$ConnectionHandler -> a.a.a.aa:
     void onOpen() -> b
     void onClose(int,java.lang.String) -> a
-    void onTextMessage(java.lang.String) -> a
-    void onRawTextMessage(byte[]) -> a
-    void onBinaryMessage(byte[]) -> b
     void onPong() -> a
 de.tavendo.autobahn.WebSocketConnection -> a.a.a.ab:
     java.lang.String TAG -> g
@@ -8197,10 +8197,8 @@ de.tavendo.autobahn.WebSocketConnection -> a.a.a.ab:
     de.tavendo.autobahn.WebSocketOptions mOptions -> f
     boolean mActive -> q
     boolean mPrevConnected -> r
-    144:145:void sendTextMessage(java.lang.String) -> a
     157:159:void sendPing() -> d
     162:162:boolean isConnected() -> e
-    213:214:void connect(java.lang.String,de.tavendo.autobahn.WebSocket$ConnectionHandler) -> a
     226:290:void connect$7ce0b31b(java.lang.String,java.lang.String[],de.tavendo.autobahn.WebSocket$ConnectionHandler,de.tavendo.autobahn.WebSocketOptions) -> a
     294:301:void disconnect() -> f
     308:312:boolean reconnect() -> g
@@ -8230,9 +8228,6 @@ de.tavendo.autobahn.WebSocketConnection$WebSocketConnector -> a.a.a.ac:
 de.tavendo.autobahn.WebSocketConnectionHandler -> a.a.a.ad:
     32:32:void onOpen() -> b
     42:42:void onClose(int,java.lang.String) -> a
-    51:51:void onTextMessage(java.lang.String) -> a
-    60:60:void onRawTextMessage(byte[]) -> a
-    68:68:void onBinaryMessage(byte[]) -> b
     74:74:void onPong() -> a
 de.tavendo.autobahn.WebSocketException -> a.a.a.ae:
 de.tavendo.autobahn.WebSocketMessage -> a.a.a.af:
@@ -15333,9 +15328,9 @@ org.osmdroid.DefaultResourceProxyImpl -> org.osmdroid.a:
     org.slf4j.Logger logger -> a
     android.content.res.Resources mResources -> b
     android.util.DisplayMetrics mDisplayMetrics -> c
-    113:136:android.graphics.Bitmap getBitmap(org.osmdroid.ResourceProxy$bitmap) -> a
-    144:158:android.graphics.BitmapFactory$Options getBitmapOptions() -> b
-    170:170:float getDisplayMetricsDensity() -> a
+    109:132:android.graphics.Bitmap getBitmap(org.osmdroid.ResourceProxy$bitmap) -> a
+    140:154:android.graphics.BitmapFactory$Options getBitmapOptions() -> b
+    166:166:float getDisplayMetricsDensity() -> a
 org.osmdroid.ResourceProxy -> org.osmdroid.b:
     android.graphics.Bitmap getBitmap(org.osmdroid.ResourceProxy$bitmap) -> a
     float getDisplayMetricsDensity() -> a
@@ -15360,29 +15355,27 @@ org.osmdroid.ResourceProxy$string -> org.osmdroid.d:
     org.osmdroid.ResourceProxy$string mapnik -> a
     org.osmdroid.ResourceProxy$string cyclemap -> b
     org.osmdroid.ResourceProxy$string public_transport -> c
-    org.osmdroid.ResourceProxy$string base -> d
-    org.osmdroid.ResourceProxy$string topo -> e
-    org.osmdroid.ResourceProxy$string hills -> f
-    org.osmdroid.ResourceProxy$string cloudmade_small -> g
-    org.osmdroid.ResourceProxy$string cloudmade_standard -> h
-    org.osmdroid.ResourceProxy$string mapquest_osm -> i
-    org.osmdroid.ResourceProxy$string mapquest_aerial -> j
-    org.osmdroid.ResourceProxy$string bing -> k
-    org.osmdroid.ResourceProxy$string fiets_nl -> l
-    org.osmdroid.ResourceProxy$string base_nl -> m
-    org.osmdroid.ResourceProxy$string roads_nl -> n
-    org.osmdroid.ResourceProxy$string unknown -> o
-    org.osmdroid.ResourceProxy$string format_distance_meters -> p
-    org.osmdroid.ResourceProxy$string format_distance_kilometers -> q
-    org.osmdroid.ResourceProxy$string format_distance_miles -> r
-    org.osmdroid.ResourceProxy$string format_distance_nautical_miles -> s
-    org.osmdroid.ResourceProxy$string format_distance_feet -> t
-    org.osmdroid.ResourceProxy$string online_mode -> u
-    org.osmdroid.ResourceProxy$string offline_mode -> v
-    org.osmdroid.ResourceProxy$string my_location -> w
-    org.osmdroid.ResourceProxy$string compass -> x
-    org.osmdroid.ResourceProxy$string map_mode -> y
-    org.osmdroid.ResourceProxy$string[] $VALUES -> z
+    org.osmdroid.ResourceProxy$string cloudmade_small -> d
+    org.osmdroid.ResourceProxy$string cloudmade_standard -> e
+    org.osmdroid.ResourceProxy$string mapquest_osm -> f
+    org.osmdroid.ResourceProxy$string mapquest_aerial -> g
+    org.osmdroid.ResourceProxy$string bing -> h
+    org.osmdroid.ResourceProxy$string mapbox -> i
+    org.osmdroid.ResourceProxy$string fiets_nl -> j
+    org.osmdroid.ResourceProxy$string base_nl -> k
+    org.osmdroid.ResourceProxy$string roads_nl -> l
+    org.osmdroid.ResourceProxy$string unknown -> m
+    org.osmdroid.ResourceProxy$string format_distance_meters -> n
+    org.osmdroid.ResourceProxy$string format_distance_kilometers -> o
+    org.osmdroid.ResourceProxy$string format_distance_miles -> p
+    org.osmdroid.ResourceProxy$string format_distance_nautical_miles -> q
+    org.osmdroid.ResourceProxy$string format_distance_feet -> r
+    org.osmdroid.ResourceProxy$string online_mode -> s
+    org.osmdroid.ResourceProxy$string offline_mode -> t
+    org.osmdroid.ResourceProxy$string my_location -> u
+    org.osmdroid.ResourceProxy$string compass -> v
+    org.osmdroid.ResourceProxy$string map_mode -> w
+    org.osmdroid.ResourceProxy$string[] $VALUES -> x
     8:8:org.osmdroid.ResourceProxy$string[] values() -> values
     8:8:org.osmdroid.ResourceProxy$string valueOf(java.lang.String) -> valueOf
 org.osmdroid.api.IGeoPoint -> org.osmdroid.a.a:
@@ -15498,7 +15491,7 @@ org.osmdroid.tileprovider.MapTileProviderBase -> org.osmdroid.d.j:
     198:199:void ensureCapacity(int) -> a
     202:203:void clearTileCache() -> e
     210:210:boolean useDataConnection() -> f
-    232:252:void rescaleCache(int,int,android.graphics.Rect) -> a
+    233:256:void rescaleCache(org.osmdroid.views.Projection,int,int,android.graphics.Rect) -> a
     36:36:org.slf4j.Logger access$000() -> g
 org.osmdroid.tileprovider.MapTileProviderBase$ScaleTileLooper -> org.osmdroid.d.k:
     java.util.HashMap mNewTiles -> a
@@ -15509,16 +15502,16 @@ org.osmdroid.tileprovider.MapTileProviderBase$ScaleTileLooper -> org.osmdroid.d.
     android.graphics.Rect mDestRect -> f
     android.graphics.Paint mDebugPaint -> g
     org.osmdroid.tileprovider.MapTileProviderBase this$0 -> h
-    278:280:void initialiseLoop(int,int) -> a
-    289:297:void handleTile(android.graphics.Canvas,int,org.osmdroid.tileprovider.MapTile,int,int) -> a
-    302:312:void finaliseLoop() -> a
+    282:284:void initialiseLoop(int,int) -> a
+    293:301:void handleTile(android.graphics.Canvas,int,org.osmdroid.tileprovider.MapTile,int,int) -> a
+    306:316:void finaliseLoop() -> a
     void handleTile(int,org.osmdroid.tileprovider.MapTile,int,int) -> a
 org.osmdroid.tileprovider.MapTileProviderBase$ZoomInTileLooper -> org.osmdroid.d.l:
     org.osmdroid.tileprovider.MapTileProviderBase this$0 -> i
-    325:364:void handleTile(int,org.osmdroid.tileprovider.MapTile,int,int) -> a
+    329:370:void handleTile(int,org.osmdroid.tileprovider.MapTile,int,int) -> a
 org.osmdroid.tileprovider.MapTileProviderBase$ZoomOutTileLooper -> org.osmdroid.d.m:
     org.osmdroid.tileprovider.MapTileProviderBase this$0 -> i
-    375:422:void handleTile(int,org.osmdroid.tileprovider.MapTile,int,int) -> a
+    381:428:void handleTile(int,org.osmdroid.tileprovider.MapTile,int,int) -> a
 org.osmdroid.tileprovider.MapTileProviderBasic -> org.osmdroid.d.n:
 org.osmdroid.tileprovider.MapTileRequestState -> org.osmdroid.d.o:
     java.util.Queue mProviderQueue -> a
@@ -15550,14 +15543,17 @@ org.osmdroid.tileprovider.modules.DatabaseFileArchive -> org.osmdroid.d.b.c:
     android.database.sqlite.SQLiteDatabase mDatabase -> b
     27:27:org.osmdroid.tileprovider.modules.DatabaseFileArchive getDatabaseFileArchive(java.io.File) -> a
     33:52:java.io.InputStream getInputStream(org.osmdroid.tileprovider.tilesource.ITileSource,org.osmdroid.tileprovider.MapTile) -> a
-    57:57:java.lang.String toString() -> toString
+    57:58:void close() -> a
+    62:62:java.lang.String toString() -> toString
 org.osmdroid.tileprovider.modules.GEMFFileArchive -> org.osmdroid.d.b.d:
     org.osmdroid.util.GEMFFile mFile -> a
     21:21:org.osmdroid.tileprovider.modules.GEMFFileArchive getGEMFFileArchive(java.io.File) -> a
     26:26:java.io.InputStream getInputStream(org.osmdroid.tileprovider.tilesource.ITileSource,org.osmdroid.tileprovider.MapTile) -> a
-    31:31:java.lang.String toString() -> toString
+    32:34:void close() -> a
+    38:38:java.lang.String toString() -> toString
 org.osmdroid.tileprovider.modules.IArchiveFile -> org.osmdroid.d.b.e:
     java.io.InputStream getInputStream(org.osmdroid.tileprovider.tilesource.ITileSource,org.osmdroid.tileprovider.MapTile) -> a
+    void close() -> a
 org.osmdroid.tileprovider.modules.IFilesystemCache -> org.osmdroid.d.b.f:
     boolean saveFile(org.osmdroid.tileprovider.tilesource.ITileSource,org.osmdroid.tileprovider.MapTile,java.io.InputStream) -> a
 org.osmdroid.tileprovider.modules.INetworkAvailablityCheck -> org.osmdroid.d.b.g:
@@ -15567,7 +15563,8 @@ org.osmdroid.tileprovider.modules.MBTilesFileArchive -> org.osmdroid.d.b.h:
     android.database.sqlite.SQLiteDatabase mDatabase -> b
     34:34:org.osmdroid.tileprovider.modules.MBTilesFileArchive getDatabaseFileArchive(java.io.File) -> a
     44:66:java.io.InputStream getInputStream(org.osmdroid.tileprovider.tilesource.ITileSource,org.osmdroid.tileprovider.MapTile) -> a
-    71:71:java.lang.String toString() -> toString
+    71:72:void close() -> a
+    76:76:java.lang.String toString() -> toString
 org.osmdroid.tileprovider.modules.MapTileDownloader -> org.osmdroid.d.b.i:
     org.slf4j.Logger logger -> d
     org.osmdroid.tileprovider.modules.IFilesystemCache mFilesystemCache -> e
@@ -15600,15 +15597,15 @@ org.osmdroid.tileprovider.modules.MapTileFileArchiveProvider -> org.osmdroid.d.b
     121:124:void onMediaMounted() -> f
     128:131:void onMediaUnmounted() -> g
     135:136:void setTileSource(org.osmdroid.tileprovider.tilesource.ITileSource) -> a
-    140:144:void detach() -> h
-    152:168:void findArchiveFiles() -> l
-    172:182:java.io.InputStream getInputStream(org.osmdroid.tileprovider.MapTile,org.osmdroid.tileprovider.tilesource.ITileSource) -> a
+    140:145:void detach() -> h
+    153:169:void findArchiveFiles() -> l
+    173:183:java.io.InputStream getInputStream(org.osmdroid.tileprovider.MapTile,org.osmdroid.tileprovider.tilesource.ITileSource) -> a
     28:28:java.util.concurrent.atomic.AtomicReference access$000(org.osmdroid.tileprovider.modules.MapTileFileArchiveProvider) -> a
     28:28:java.io.InputStream access$100(org.osmdroid.tileprovider.modules.MapTileFileArchiveProvider,org.osmdroid.tileprovider.MapTile,org.osmdroid.tileprovider.tilesource.ITileSource) -> a
     28:28:org.slf4j.Logger access$200() -> i
 org.osmdroid.tileprovider.modules.MapTileFileArchiveProvider$TileLoader -> org.osmdroid.d.b.l:
     org.osmdroid.tileprovider.modules.MapTileFileArchiveProvider this$0 -> a
-    194:231:android.graphics.drawable.Drawable loadTile(org.osmdroid.tileprovider.MapTileRequestState) -> a
+    195:232:android.graphics.drawable.Drawable loadTile(org.osmdroid.tileprovider.MapTileRequestState) -> a
 org.osmdroid.tileprovider.modules.MapTileFileStorageProviderBase -> org.osmdroid.d.b.m:
     org.slf4j.Logger logger -> d
     boolean mSdCardAvailable -> e
@@ -15696,7 +15693,8 @@ org.osmdroid.tileprovider.modules.ZipFileArchive -> org.osmdroid.d.b.v:
     java.util.zip.ZipFile mZipFile -> b
     26:26:org.osmdroid.tileprovider.modules.ZipFileArchive getZipFileArchive(java.io.File) -> a
     31:40:java.io.InputStream getInputStream(org.osmdroid.tileprovider.tilesource.ITileSource,org.osmdroid.tileprovider.MapTile) -> a
-    45:45:java.lang.String toString() -> toString
+    46:48:void close() -> a
+    52:52:java.lang.String toString() -> toString
 org.osmdroid.tileprovider.tilesource.BitmapTileSourceBase -> org.osmdroid.d.c.a:
     org.slf4j.Logger logger -> a
     int globalOrdinal -> e
@@ -15742,18 +15740,15 @@ org.osmdroid.tileprovider.tilesource.TileSourceFactory -> org.osmdroid.d.c.g:
     org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase MAPNIK -> a
     org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase CYCLEMAP -> b
     org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase PUBLIC_TRANSPORT -> c
-    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase BASE -> d
-    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase TOPO -> e
-    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase HILLS -> f
+    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase MAPQUESTOSM -> d
+    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase MAPQUESTAERIAL -> e
+    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase DEFAULT_TILE_SOURCE -> f
     org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase CLOUDMADESTANDARDTILES -> g
     org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase CLOUDMADESMALLTILES -> h
-    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase MAPQUESTOSM -> i
-    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase MAPQUESTAERIAL -> j
-    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase DEFAULT_TILE_SOURCE -> k
-    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase FIETS_OVERLAY_NL -> l
-    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase BASE_OVERLAY_NL -> m
-    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase ROADS_OVERLAY_NL -> n
-    java.util.ArrayList mTileSources -> o
+    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase FIETS_OVERLAY_NL -> i
+    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase BASE_OVERLAY_NL -> j
+    org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase ROADS_OVERLAY_NL -> k
+    java.util.ArrayList mTileSources -> l
     21:26:org.osmdroid.tileprovider.tilesource.ITileSource getTileSource(java.lang.String) -> a
     56:56:java.util.ArrayList getTileSources() -> a
 org.osmdroid.tileprovider.tilesource.XYTileSource -> org.osmdroid.d.c.h:
@@ -15783,6 +15778,10 @@ org.osmdroid.util.BoundingBoxE6 -> org.osmdroid.util.BoundingBoxE6:
     int mLonEastE6 -> c
     int mLonWestE6 -> d
     android.os.Parcelable$Creator CREATOR -> CREATOR
+    76:76:int getLatNorthE6() -> a
+    80:80:int getLatSouthE6() -> b
+    84:84:int getLonEastE6() -> c
+    88:88:int getLonWestE6() -> d
     189:189:java.lang.String toString() -> toString
     222:222:boolean contains(org.osmdroid.api.IGeoPoint) -> a
     252:252:int describeContents() -> describeContents
@@ -15800,9 +15799,10 @@ org.osmdroid.util.GEMFFile -> org.osmdroid.util.a:
     java.util.LinkedHashMap mSources -> f
     boolean mSourceLimited -> g
     int mCurrentSource -> h
-    429:444:void openFiles() -> b
-    451:496:void readHeader() -> c
-    508:508:java.lang.String getName() -> a
+    416:419:void close() -> a
+    429:444:void openFiles() -> c
+    451:496:void readHeader() -> d
+    508:508:java.lang.String getName() -> b
     555:616:java.io.InputStream getInputStream(int,int,int) -> a
 org.osmdroid.util.GEMFFile$GEMFInputStream -> org.osmdroid.util.b:
     java.io.RandomAccessFile raf -> a
@@ -15853,6 +15853,8 @@ org.osmdroid.util.MyMath -> org.osmdroid.util.e:
 org.osmdroid.util.ResourceProxyImpl -> org.osmdroid.util.f:
     android.content.res.Resources mResources -> a
     java.lang.String mResourceNameBase -> b
+    43:44:android.graphics.Bitmap getBitmap(org.osmdroid.ResourceProxy$bitmap) -> a
+    55:59:int getId(java.lang.String,java.lang.String) -> a
 org.osmdroid.util.TileLooper -> org.osmdroid.util.g:
     android.graphics.Point mUpperLeft -> j
     android.graphics.Point mLowerRight -> k
@@ -15862,7 +15864,8 @@ org.osmdroid.util.TileLooper -> org.osmdroid.util.g:
     void finaliseLoop() -> a
 org.osmdroid.util.TileSystem -> org.osmdroid.util.h:
     35:35:double GroundResolution(double,int) -> a
-    46:46:android.graphics.Point LatLongToPixelXY$47d8de08(double,double,android.graphics.Point) -> a
+    46:46:android.graphics.Point LatLongToPixelXY(double,double,int,android.graphics.Point) -> a
+    55:56:org.osmdroid.util.GeoPoint PixelXYToLatLong$1ef21a48(int,int,int) -> a
     98:113:double wrap(double,double,double,double) -> a
 org.osmdroid.views.MapController -> org.osmdroid.views.a:
     org.osmdroid.views.MapView mMapView -> a
@@ -15871,109 +15874,110 @@ org.osmdroid.views.MapController -> org.osmdroid.views.a:
     android.view.animation.ScaleAnimation mZoomInAnimationOld -> d
     android.view.animation.ScaleAnimation mZoomOutAnimationOld -> e
     android.animation.Animator mCurrentAnimator -> f
-    111:113:void animateTo(org.osmdroid.api.IGeoPoint) -> a
-    139:141:void setCenter(org.osmdroid.api.IGeoPoint) -> b
-    182:182:int setZoom(int) -> a
-    190:191:boolean zoomIn() -> a
-    196:212:boolean zoomInFixing(int,int) -> a
-    221:222:boolean zoomOut() -> b
-    248:249:void onAnimationStart() -> c
-    252:276:void onAnimationEnd() -> d
+    110:112:void animateTo(org.osmdroid.api.IGeoPoint) -> a
+    141:146:void setCenter(org.osmdroid.api.IGeoPoint) -> b
+    187:187:int setZoom(int) -> a
+    195:195:boolean zoomIn() -> a
+    200:216:boolean zoomInFixing(int,int) -> a
+    225:225:boolean zoomOut() -> b
+    251:252:void onAnimationStart() -> c
+    255:275:void onAnimationEnd() -> d
 org.osmdroid.views.MapController$MyZoomAnimationListener -> org.osmdroid.views.b:
     org.osmdroid.views.MapController this$0 -> a
-    304:305:void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
-    309:310:void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
-    315:315:void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
+    303:304:void onAnimationStart(android.view.animation.Animation) -> onAnimationStart
+    308:309:void onAnimationEnd(android.view.animation.Animation) -> onAnimationEnd
+    314:314:void onAnimationRepeat(android.view.animation.Animation) -> onAnimationRepeat
 org.osmdroid.views.MapController$MyZoomAnimatorListener -> org.osmdroid.views.c:
     org.osmdroid.views.MapController this$0 -> a
-    281:283:void onAnimationStart(android.animation.Animator) -> onAnimationStart
-    287:289:void onAnimationEnd(android.animation.Animator) -> onAnimationEnd
+    280:282:void onAnimationStart(android.animation.Animator) -> onAnimationStart
+    286:288:void onAnimationEnd(android.animation.Animator) -> onAnimationEnd
 org.osmdroid.views.MapController$MyZoomAnimatorUpdateListener -> org.osmdroid.views.d:
     org.osmdroid.views.MapController this$0 -> a
-    295:297:void onAnimationUpdate(android.animation.ValueAnimator) -> onAnimationUpdate
+    294:296:void onAnimationUpdate(android.animation.ValueAnimator) -> onAnimationUpdate
 org.osmdroid.views.MapView -> org.osmdroid.views.MapView:
-    org.slf4j.Logger logger -> j
-    double ZOOM_LOG_BASE_INV -> k
-    java.lang.reflect.Method sMotionEventTransformMethod -> l
-    int mZoomLevel -> m
-    org.osmdroid.views.overlay.OverlayManager mOverlayManager -> n
-    org.osmdroid.views.MapView$Projection mProjection -> o
-    org.osmdroid.views.overlay.TilesOverlay mMapOverlay -> p
-    android.view.GestureDetector mGestureDetector -> q
-    android.widget.Scroller mScroller -> r
+    org.slf4j.Logger logger -> l
+    double ZOOM_LOG_BASE_INV -> m
+    java.lang.reflect.Method sMotionEventTransformMethod -> n
+    int mZoomLevel -> o
+    org.osmdroid.views.overlay.OverlayManager mOverlayManager -> p
+    org.osmdroid.views.Projection mProjection -> q
+    org.osmdroid.views.overlay.TilesOverlay mMapOverlay -> r
+    android.view.GestureDetector mGestureDetector -> s
+    android.widget.Scroller mScroller -> t
     boolean mIsFlinging -> a
     java.util.concurrent.atomic.AtomicInteger mTargetZoomLevel -> b
     java.util.concurrent.atomic.AtomicBoolean mIsAnimating -> c
     java.lang.Integer mMinimumZoomLevel -> d
     java.lang.Integer mMaximumZoomLevel -> e
-    org.osmdroid.views.MapController mController -> s
-    android.widget.ZoomButtonsController mZoomController -> t
-    boolean mEnableZoomController -> u
-    org.osmdroid.ResourceProxy mResourceProxy -> v
-    org.metalev.multitouch.controller.MultiTouchController mMultiTouchController -> w
+    org.osmdroid.views.MapController mController -> u
+    android.widget.ZoomButtonsController mZoomController -> v
+    boolean mEnableZoomController -> w
+    org.osmdroid.ResourceProxy mResourceProxy -> x
+    org.metalev.multitouch.controller.MultiTouchController mMultiTouchController -> y
     float mMultiTouchScale -> f
     android.graphics.PointF mMultiTouchScalePoint -> g
     org.osmdroid.events.MapListener mListener -> h
-    float mapOrientation -> x
-    android.graphics.Matrix mRotateMatrix -> y
-    float[] mRotatePoints -> z
+    float mapOrientation -> z
     android.graphics.Rect mInvalidateRect -> A
     android.graphics.Rect mScrollableAreaLimit -> i
     org.osmdroid.tileprovider.MapTileProviderBase mTileProvider -> B
     android.os.Handler mTileRequestCompleteHandler -> C
-    android.graphics.Point mPoint -> D
-    210:210:org.osmdroid.api.IMapController getController() -> a
-    218:218:java.util.List getOverlays() -> b
-    222:222:org.osmdroid.views.overlay.OverlayManager getOverlayManager() -> c
-    230:230:android.widget.Scroller getScroller() -> d
-    248:248:org.osmdroid.util.BoundingBoxE6 getBoundingBox() -> e
-    270:279:android.graphics.Rect getScreenRect$323c19cd() -> f
-    283:286:android.graphics.Rect getIntrinsicScreenRect$323c19cd() -> g
-    299:302:org.osmdroid.views.MapView$Projection getProjection() -> h
-    317:322:void setTileSource(org.osmdroid.tileprovider.tilesource.ITileSource) -> a
-    329:377:int setZoomLevel(int) -> a
-    427:427:int getZoomLevel() -> i
-    439:442:int getZoomLevel(boolean) -> a
-    450:450:int getMinZoomLevel() -> q
-    458:458:int getMaxZoomLevel() -> r
-    478:482:boolean canZoomIn() -> j
-    486:490:boolean canZoomOut() -> k
-    501:502:boolean zoomInFixing(org.osmdroid.api.IGeoPoint) -> a
-    532:535:org.osmdroid.api.IGeoPoint getMapCenter() -> l
-    544:546:void setMapOrientation(float) -> a
-    549:549:float getMapOrientation() -> m
-    614:629:void invalidateMapCoordinates(int,int,int,int) -> a
-    639:639:android.view.ViewGroup$LayoutParams generateDefaultLayoutParams() -> generateDefaultLayoutParams
-    645:645:android.view.ViewGroup$LayoutParams generateLayoutParams(android.util.AttributeSet) -> generateLayoutParams
-    651:651:boolean checkLayoutParams(android.view.ViewGroup$LayoutParams) -> checkLayoutParams
-    656:656:android.view.ViewGroup$LayoutParams generateLayoutParams(android.view.ViewGroup$LayoutParams) -> generateLayoutParams
-    661:738:void onMeasure(int,int) -> onMeasure
-    743:800:void onLayout(boolean,int,int,int,int) -> onLayout
-    808:810:boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
-    815:817:boolean onKeyUp(int,android.view.KeyEvent) -> onKeyUp
-    823:829:boolean onTrackballEvent(android.view.MotionEvent) -> onTrackballEvent
-    839:879:boolean dispatchTouchEvent(android.view.MotionEvent) -> dispatchTouchEvent
-    884:884:boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
-    888:919:android.view.MotionEvent rotateTouchEvent(android.view.MotionEvent) -> a
-    924:937:void computeScroll() -> computeScroll
-    941:995:void scrollTo(int,int) -> scrollTo
-    999:1001:void setBackgroundColor(int) -> setBackgroundColor
-    1005:1035:void dispatchDraw(android.graphics.Canvas) -> dispatchDraw
-    1057:1060:void onDetachedFromWindow() -> onDetachedFromWindow
-    1073:1073:boolean isAnimating() -> n
-    1082:1089:java.lang.Object getDraggableObjectAtPoint(org.metalev.multitouch.controller.MultiTouchController$PointInfo) -> a
-    1095:1096:void getPositionAndScale$71d97c1e(org.metalev.multitouch.controller.MultiTouchController$PositionAndScale) -> a
-    1102:1126:void selectObject$f4318(java.lang.Object) -> a
-    1131:1141:boolean setPositionAndScale$7a677017(org.metalev.multitouch.controller.MultiTouchController$PositionAndScale) -> b
-    1156:1158:void checkZoomButtons() -> s
-    1161:1163:void setBuiltInZoomControls$1385ff() -> o
-    1166:1167:void setMultiTouchControls$1385ff() -> p
-    1171:1197:org.osmdroid.tileprovider.tilesource.ITileSource getTileSourceFromAttributes(android.util.AttributeSet) -> a
-    65:65:int access$400(org.osmdroid.views.MapView) -> a
-    65:65:android.widget.Scroller access$500(org.osmdroid.views.MapView) -> b
-    65:65:boolean access$600(org.osmdroid.views.MapView) -> c
-    65:65:android.widget.ZoomButtonsController access$700(org.osmdroid.views.MapView) -> d
-    65:65:org.metalev.multitouch.controller.MultiTouchController access$800(org.osmdroid.views.MapView) -> e
+    android.graphics.Matrix mRotateScaleMatrix -> j
+    android.graphics.Point mRotateScalePoint -> k
+    android.graphics.Point mLayoutPoint -> D
+    207:207:org.osmdroid.api.IMapController getController() -> a
+    215:215:java.util.List getOverlays() -> b
+    219:219:org.osmdroid.views.overlay.OverlayManager getOverlayManager() -> c
+    227:227:android.widget.Scroller getScroller() -> d
+    245:245:org.osmdroid.util.BoundingBoxE6 getBoundingBox() -> e
+    252:257:android.graphics.Rect getScreenRect$323c19cd() -> f
+    261:263:android.graphics.Rect getIntrinsicScreenRect$323c19cd() -> g
+    276:279:org.osmdroid.views.Projection getProjection() -> h
+    294:299:void setTileSource(org.osmdroid.tileprovider.tilesource.ITileSource) -> a
+    306:344:int setZoomLevel(int) -> a
+    394:394:int getZoomLevel() -> i
+    406:409:int getZoomLevel(boolean) -> a
+    417:417:int getMinZoomLevel() -> q
+    425:425:int getMaxZoomLevel() -> r
+    445:449:boolean canZoomIn() -> j
+    453:457:boolean canZoomOut() -> k
+    473:473:boolean zoomInFixing(int,int) -> a
+    499:499:org.osmdroid.api.IGeoPoint getMapCenter() -> l
+    507:509:void setMapOrientation(float) -> a
+    512:512:float getMapOrientation() -> m
+    570:571:void invalidateMapCoordinates(int,int,int,int) -> a
+    574:575:void postInvalidateMapCoordinates(int,int,int,int) -> b
+    578:593:void invalidateMapCoordinates(int,int,int,int,boolean) -> a
+    603:603:android.view.ViewGroup$LayoutParams generateDefaultLayoutParams() -> generateDefaultLayoutParams
+    609:609:android.view.ViewGroup$LayoutParams generateLayoutParams(android.util.AttributeSet) -> generateLayoutParams
+    615:615:boolean checkLayoutParams(android.view.ViewGroup$LayoutParams) -> checkLayoutParams
+    620:620:android.view.ViewGroup$LayoutParams generateLayoutParams(android.view.ViewGroup$LayoutParams) -> generateLayoutParams
+    626:629:void onMeasure(int,int) -> onMeasure
+    634:692:void onLayout(boolean,int,int,int,int) -> onLayout
+    701:703:boolean onKeyDown(int,android.view.KeyEvent) -> onKeyDown
+    708:710:boolean onKeyUp(int,android.view.KeyEvent) -> onKeyUp
+    716:722:boolean onTrackballEvent(android.view.MotionEvent) -> onTrackballEvent
+    732:772:boolean dispatchTouchEvent(android.view.MotionEvent) -> dispatchTouchEvent
+    777:777:boolean onTouchEvent(android.view.MotionEvent) -> onTouchEvent
+    781:810:android.view.MotionEvent rotateTouchEvent(android.view.MotionEvent) -> a
+    815:828:void computeScroll() -> computeScroll
+    832:887:void scrollTo(int,int) -> scrollTo
+    891:893:void setBackgroundColor(int) -> setBackgroundColor
+    897:935:void dispatchDraw(android.graphics.Canvas) -> dispatchDraw
+    939:942:void onDetachedFromWindow() -> onDetachedFromWindow
+    955:955:boolean isAnimating() -> n
+    964:971:java.lang.Object getDraggableObjectAtPoint(org.metalev.multitouch.controller.MultiTouchController$PointInfo) -> a
+    977:978:void getPositionAndScale$71d97c1e(org.metalev.multitouch.controller.MultiTouchController$PositionAndScale) -> a
+    984:1004:void selectObject$f4318(java.lang.Object) -> a
+    1009:1019:boolean setPositionAndScale$7a677017(org.metalev.multitouch.controller.MultiTouchController$PositionAndScale) -> b
+    1034:1036:void checkZoomButtons() -> s
+    1039:1041:void setBuiltInZoomControls$1385ff() -> o
+    1044:1045:void setMultiTouchControls$1385ff() -> p
+    1049:1075:org.osmdroid.tileprovider.tilesource.ITileSource getTileSourceFromAttributes(android.util.AttributeSet) -> a
+    61:61:android.widget.Scroller access$300(org.osmdroid.views.MapView) -> a
+    61:61:boolean access$400(org.osmdroid.views.MapView) -> b
+    61:61:android.widget.ZoomButtonsController access$500(org.osmdroid.views.MapView) -> c
+    61:61:org.metalev.multitouch.controller.MultiTouchController access$600(org.osmdroid.views.MapView) -> d
 org.osmdroid.views.MapView$LayoutParams -> org.osmdroid.views.e:
     org.osmdroid.api.IGeoPoint geoPoint -> a
     int alignment -> b
@@ -15981,40 +15985,48 @@ org.osmdroid.views.MapView$LayoutParams -> org.osmdroid.views.e:
     int offsetY -> d
 org.osmdroid.views.MapView$MapViewDoubleClickListener -> org.osmdroid.views.f:
     org.osmdroid.views.MapView this$0 -> a
-    1551:1556:boolean onDoubleTap(android.view.MotionEvent) -> onDoubleTap
-    1561:1562:boolean onDoubleTapEvent(android.view.MotionEvent) -> onDoubleTapEvent
-    1570:1571:boolean onSingleTapConfirmed(android.view.MotionEvent) -> onSingleTapConfirmed
+    1155:1162:boolean onDoubleTap(android.view.MotionEvent) -> onDoubleTap
+    1167:1168:boolean onDoubleTapEvent(android.view.MotionEvent) -> onDoubleTapEvent
+    1176:1177:boolean onSingleTapConfirmed(android.view.MotionEvent) -> onSingleTapConfirmed
 org.osmdroid.views.MapView$MapViewGestureDetectorListener -> org.osmdroid.views.g:
     org.osmdroid.views.MapView this$0 -> a
-    1484:1494:boolean onDown(android.view.MotionEvent) -> onDown
-    1500:1509:boolean onFling(android.view.MotionEvent,android.view.MotionEvent,float,float) -> onFling
-    1514:1518:void onLongPress(android.view.MotionEvent) -> onLongPress
-    1523:1529:boolean onScroll(android.view.MotionEvent,android.view.MotionEvent,float,float) -> onScroll
-    1534:1535:void onShowPress(android.view.MotionEvent) -> onShowPress
-    1539:1540:boolean onSingleTapUp(android.view.MotionEvent) -> onSingleTapUp
+    1088:1098:boolean onDown(android.view.MotionEvent) -> onDown
+    1104:1113:boolean onFling(android.view.MotionEvent,android.view.MotionEvent,float,float) -> onFling
+    1118:1122:void onLongPress(android.view.MotionEvent) -> onLongPress
+    1127:1133:boolean onScroll(android.view.MotionEvent,android.view.MotionEvent,float,float) -> onScroll
+    1138:1139:void onShowPress(android.view.MotionEvent) -> onShowPress
+    1143:1144:boolean onSingleTapUp(android.view.MotionEvent) -> onSingleTapUp
 org.osmdroid.views.MapView$MapViewZoomListener -> org.osmdroid.views.h:
     org.osmdroid.views.MapView this$0 -> a
-    1581:1586:void onZoom(boolean) -> onZoom
-    1590:1590:void onVisibilityChanged(boolean) -> onVisibilityChanged
-org.osmdroid.views.MapView$Projection -> org.osmdroid.views.i:
-    int viewWidth_2 -> b
-    int viewHeight_2 -> c
-    int worldSize_2 -> d
-    int offsetX -> e
-    int offsetY -> f
-    org.osmdroid.util.BoundingBoxE6 mBoundingBoxProjection -> g
-    int mZoomLevelProjection -> h
-    android.graphics.Rect mScreenRectProjection -> i
-    android.graphics.Rect mIntrinsicScreenRectProjection -> j
-    float mMapOrientation -> k
-    org.osmdroid.views.MapView this$0 -> a
-    1252:1252:int getZoomLevel() -> a
-    1260:1260:android.graphics.Rect getScreenRect() -> b
-    1309:1310:org.osmdroid.api.IGeoPoint fromPixels(float,float) -> a
-    1331:1353:android.graphics.Point toMapPixels(org.osmdroid.api.IGeoPoint,android.graphics.Point) -> a
-    1369:1372:android.graphics.Point toMapPixelsProjected(int,int,android.graphics.Point) -> a
-    1387:1391:android.graphics.Point toMapPixelsTranslated(android.graphics.Point,android.graphics.Point) -> a
-    1402:1412:android.graphics.Rect fromPixelsToProjected(android.graphics.Rect) -> a
+    1187:1192:void onZoom(boolean) -> onZoom
+    1196:1196:void onVisibilityChanged(boolean) -> onVisibilityChanged
+org.osmdroid.views.Projection -> org.osmdroid.views.i:
+    int mMapViewWidth -> d
+    int mMapViewHeight -> e
+    int mOffsetX -> a
+    int mOffsetY -> b
+    float mMultiTouchScale -> c
+    android.graphics.Matrix mRotateAndScaleMatrix -> f
+    android.graphics.Matrix mUnrotateAndScaleMatrix -> g
+    float[] mRotateScalePoints -> h
+    org.osmdroid.util.BoundingBoxE6 mBoundingBoxProjection -> i
+    int mZoomLevelProjection -> j
+    android.graphics.Rect mScreenRectProjection -> k
+    android.graphics.Rect mIntrinsicScreenRectProjection -> l
+    float mMapOrientation -> m
+    73:73:int getZoomLevel() -> a
+    77:77:org.osmdroid.util.BoundingBoxE6 getBoundingBox() -> b
+    81:81:android.graphics.Rect getScreenRect() -> c
+    98:98:org.osmdroid.api.IGeoPoint fromPixels$2baad99a(int,int) -> a
+    103:108:android.graphics.Point toPixels(org.osmdroid.api.IGeoPoint,android.graphics.Point) -> a
+    112:131:android.graphics.Point adjustForDateLine(int,int,android.graphics.Point) -> f
+    154:154:android.graphics.Point toProjectedPixels(int,int,android.graphics.Point) -> a
+    169:177:android.graphics.Point toPixelsFromProjected(android.graphics.Point,android.graphics.Point) -> a
+    181:184:android.graphics.Point toPixelsFromMercator(int,int,android.graphics.Point) -> b
+    188:191:android.graphics.Point toMercatorPixels(int,int,android.graphics.Point) -> c
+    229:229:android.graphics.Matrix getInvertedScaleRotateCanvasMatrix() -> d
+    237:247:android.graphics.Point unrotateAndScalePoint(int,int,android.graphics.Point) -> d
+    255:265:android.graphics.Point rotateAndScalePoint(int,int,android.graphics.Point) -> e
 org.osmdroid.views.overlay.ItemizedOverlayControlView -> org.osmdroid.views.overlay.ItemizedOverlayControlView:
 org.osmdroid.views.overlay.Overlay -> org.osmdroid.views.overlay.a:
     java.util.concurrent.atomic.AtomicInteger sOrdinal -> a
@@ -16044,26 +16056,25 @@ org.osmdroid.views.overlay.Overlay$Snappable -> org.osmdroid.views.overlay.b:
     boolean onSnapToItem$d9026f1(int,int,android.graphics.Point) -> a
 org.osmdroid.views.overlay.OverlayManager -> org.osmdroid.views.overlay.c:
     org.osmdroid.views.overlay.TilesOverlay mTilesOverlay -> a
-    boolean mUseSafeCanvas -> b
-    java.util.concurrent.CopyOnWriteArrayList mOverlayList -> c
-    38:38:int size() -> size
-    99:99:java.lang.Iterable overlaysReversed() -> m
-    125:145:void onDraw(android.graphics.Canvas,org.osmdroid.views.MapView) -> a
-    148:155:void onDetach(org.osmdroid.views.MapView) -> a
-    158:164:boolean onKeyDown$4aafb6b2() -> a
-    168:174:boolean onKeyUp$4aafb6b2() -> b
-    178:184:boolean onTouchEvent(android.view.MotionEvent,org.osmdroid.views.MapView) -> a
-    188:194:boolean onTrackballEvent$4682072e() -> c
-    198:206:boolean onSnapToItem$d9026f1(int,int,android.graphics.Point) -> a
-    212:218:boolean onDoubleTap$4682072e() -> d
-    222:228:boolean onDoubleTapEvent$4682072e() -> e
-    232:238:boolean onSingleTapConfirmed$4682072e() -> f
-    244:250:boolean onDown$4682072e() -> g
-    255:261:boolean onFling$6e3d8c7d() -> h
-    265:271:boolean onLongPress$4682072e() -> i
-    276:282:boolean onScroll$6e3d8c7d() -> j
-    286:289:void onShowPress$4682072a() -> k
-    292:298:boolean onSingleTapUp$4682072e() -> l
+    java.util.concurrent.CopyOnWriteArrayList mOverlayList -> b
+    37:37:int size() -> size
+    78:78:java.lang.Iterable overlaysReversed() -> m
+    104:124:void onDraw(android.graphics.Canvas,org.osmdroid.views.MapView) -> a
+    127:134:void onDetach(org.osmdroid.views.MapView) -> a
+    137:143:boolean onKeyDown$4aafb6b2() -> a
+    147:153:boolean onKeyUp$4aafb6b2() -> b
+    157:163:boolean onTouchEvent(android.view.MotionEvent,org.osmdroid.views.MapView) -> a
+    167:173:boolean onTrackballEvent$4682072e() -> c
+    177:185:boolean onSnapToItem$d9026f1(int,int,android.graphics.Point) -> a
+    191:197:boolean onDoubleTap$4682072e() -> d
+    201:207:boolean onDoubleTapEvent$4682072e() -> e
+    211:217:boolean onSingleTapConfirmed$4682072e() -> f
+    223:229:boolean onDown$4682072e() -> g
+    234:240:boolean onFling$6e3d8c7d() -> h
+    244:250:boolean onLongPress$4682072e() -> i
+    255:261:boolean onScroll$6e3d8c7d() -> j
+    265:268:void onShowPress$4682072a() -> k
+    271:277:boolean onSingleTapUp$4682072e() -> l
     19:19:java.lang.Object remove(int) -> remove
     19:19:void add(int,java.lang.Object) -> add
     19:19:java.lang.Object set(int,java.lang.Object) -> set
@@ -16071,13 +16082,13 @@ org.osmdroid.views.overlay.OverlayManager -> org.osmdroid.views.overlay.c:
     19:19:java.util.concurrent.CopyOnWriteArrayList access$000(org.osmdroid.views.overlay.OverlayManager) -> a
 org.osmdroid.views.overlay.OverlayManager$1 -> org.osmdroid.views.overlay.c$1:
     org.osmdroid.views.overlay.OverlayManager this$0 -> a
-    102:104:java.util.Iterator iterator() -> iterator
+    81:83:java.util.Iterator iterator() -> iterator
 org.osmdroid.views.overlay.OverlayManager$1$1 -> org.osmdroid.views.overlay.c$1$1:
     java.util.ListIterator val$i -> a
     org.osmdroid.views.overlay.OverlayManager$1 this$1 -> b
-    107:107:boolean hasNext() -> hasNext
-    117:118:void remove() -> remove
-    104:104:java.lang.Object next() -> next
+    86:86:boolean hasNext() -> hasNext
+    96:97:void remove() -> remove
+    83:83:java.lang.Object next() -> next
 org.osmdroid.views.overlay.PathOverlay -> org.osmdroid.views.overlay.d:
     java.util.ArrayList mPoints -> b
     int mPointsPrecomputed -> e
@@ -16086,18 +16097,11 @@ org.osmdroid.views.overlay.PathOverlay -> org.osmdroid.views.overlay.d:
     android.graphics.Point mTempPoint1 -> g
     android.graphics.Point mTempPoint2 -> h
     android.graphics.Rect mLineBounds -> i
-    157:159:void clearPath() -> o
-    162:163:void addPoint(org.osmdroid.api.IGeoPoint) -> a
-    176:179:void addPoints(java.util.List) -> a
-    192:260:void draw(android.graphics.Canvas,org.osmdroid.views.MapView,boolean) -> a
-org.osmdroid.views.overlay.SafeDrawOverlay -> org.osmdroid.views.overlay.e:
-    org.osmdroid.views.safecanvas.SafeTranslatedCanvas sSafeCanvas -> a
-    android.graphics.Matrix sMatrix -> b
-    boolean mUseSafeCanvas -> e
-    void drawSafe(org.osmdroid.views.safecanvas.ISafeCanvas,org.osmdroid.views.MapView,boolean) -> a
-    39:90:void draw(android.graphics.Canvas,org.osmdroid.views.MapView,boolean) -> a
-    97:98:void setUseSafeCanvas(boolean) -> a
-org.osmdroid.views.overlay.TilesOverlay -> org.osmdroid.views.overlay.f:
+    158:160:void clearPath() -> o
+    163:164:void addPoint(org.osmdroid.api.IGeoPoint) -> a
+    177:180:void addPoints(java.util.List) -> a
+    193:266:void draw(android.graphics.Canvas,org.osmdroid.views.MapView,boolean) -> a
+org.osmdroid.views.overlay.TilesOverlay -> org.osmdroid.views.overlay.e:
     org.slf4j.Logger logger -> h
     int MENU_MAP_MODE -> a
     int MENU_TILE_SOURCE_STARTING_ID -> b
@@ -16105,54 +16109,61 @@ org.osmdroid.views.overlay.TilesOverlay -> org.osmdroid.views.overlay.f:
     org.osmdroid.tileprovider.MapTileProviderBase mTileProvider -> f
     android.graphics.Paint mDebugPaint -> g
     android.graphics.Rect mTileRect -> i
-    android.graphics.Rect mViewPort -> j
-    boolean mOptionsMenuEnabled -> k
-    int mWorldSize_2 -> l
-    android.graphics.drawable.BitmapDrawable mLoadingTile -> m
-    int mLoadingBackgroundColor -> n
-    int mLoadingLineColor -> o
-    int mOvershootTileCache -> p
-    org.osmdroid.util.TileLooper mTileLooper -> q
-    83:84:void onDetach(org.osmdroid.views.MapView) -> a
-    87:87:int getMinimumZoomLevel() -> o
-    91:91:int getMaximumZoomLevel() -> p
-    119:136:void drawSafe(org.osmdroid.views.safecanvas.ISafeCanvas,org.osmdroid.views.MapView,boolean) -> a
-    211:214:void onTileReadyToDraw(android.graphics.Canvas,android.graphics.drawable.Drawable,android.graphics.Rect) -> a
-    299:303:void setLoadingBackgroundColor(int) -> b
-    317:339:android.graphics.drawable.Drawable getLoadingTile() -> q
-    39:39:int access$000(org.osmdroid.views.overlay.TilesOverlay) -> a
-    39:39:android.graphics.drawable.Drawable access$100(org.osmdroid.views.overlay.TilesOverlay) -> b
-    39:39:android.graphics.Rect access$200(org.osmdroid.views.overlay.TilesOverlay) -> c
-org.osmdroid.views.overlay.TilesOverlay$1 -> org.osmdroid.views.overlay.f$1:
+    android.graphics.Point mTilePoint -> j
+    android.graphics.Rect mViewPort -> k
+    android.graphics.Point mTopLeftMercator -> l
+    android.graphics.Point mBottomRightMercator -> m
+    android.graphics.Point mTilePointMercator -> n
+    org.osmdroid.views.Projection mProjection -> o
+    boolean mOptionsMenuEnabled -> p
+    android.graphics.drawable.BitmapDrawable mLoadingTile -> q
+    int mLoadingBackgroundColor -> r
+    int mLoadingLineColor -> s
+    int mOvershootTileCache -> t
+    org.osmdroid.util.TileLooper mTileLooper -> u
+    86:87:void onDetach(org.osmdroid.views.MapView) -> a
+    90:90:int getMinimumZoomLevel() -> o
+    94:94:int getMaximumZoomLevel() -> p
+    122:137:void draw(android.graphics.Canvas,org.osmdroid.views.MapView,boolean) -> a
+    215:219:void onTileReadyToDraw(android.graphics.Canvas,android.graphics.drawable.Drawable,android.graphics.Rect) -> a
+    304:308:void setLoadingBackgroundColor(int) -> b
+    322:344:android.graphics.drawable.Drawable getLoadingTile() -> q
+    38:38:int access$000(org.osmdroid.views.overlay.TilesOverlay) -> a
+    38:38:android.graphics.drawable.Drawable access$100(org.osmdroid.views.overlay.TilesOverlay) -> b
+    38:38:android.graphics.Point access$200(org.osmdroid.views.overlay.TilesOverlay) -> c
+    38:38:android.graphics.Rect access$300(org.osmdroid.views.overlay.TilesOverlay) -> d
+org.osmdroid.views.overlay.TilesOverlay$1 -> org.osmdroid.views.overlay.e$1:
     org.osmdroid.views.overlay.TilesOverlay this$0 -> a
-    164:166:void initialiseLoop(int,int) -> a
-    169:203:void handleTile(android.graphics.Canvas,int,org.osmdroid.tileprovider.MapTile,int,int) -> a
-    206:206:void finaliseLoop() -> a
+    165:167:void initialiseLoop(int,int) -> a
+    170:207:void handleTile(android.graphics.Canvas,int,org.osmdroid.tileprovider.MapTile,int,int) -> a
+    210:210:void finaliseLoop() -> a
 org.osmdroid.views.overlay.compass.CompassOverlay -> org.osmdroid.views.overlay.a.a:
+    android.graphics.Paint sSmoothPaint -> m
     org.osmdroid.views.MapView mMapView -> a
-    android.view.Display mDisplay -> m
+    android.view.Display mDisplay -> n
     org.osmdroid.views.overlay.compass.IOrientationProvider mOrientationProvider -> b
-    org.osmdroid.views.safecanvas.SafePaint mPaint -> e
-    android.graphics.Picture mCompassFrame -> f
-    android.graphics.Picture mCompassRose -> g
-    android.graphics.Matrix mCompassMatrix -> n
-    boolean mIsCompassEnabled -> o
-    float mAzimuth -> p
-    float mCompassCenterX -> q
-    float mCompassCenterY -> r
-    float mCompassRadius -> s
+    android.graphics.Paint mPaint -> e
+    android.graphics.Bitmap mCompassFrameBitmap -> f
+    android.graphics.Bitmap mCompassRoseBitmap -> g
+    android.graphics.Matrix mCompassMatrix -> o
+    boolean mIsCompassEnabled -> p
+    float mAzimuth -> q
+    float mCompassCenterX -> r
+    float mCompassCenterY -> s
+    float mCompassRadius -> t
     float mCompassFrameCenterX -> h
     float mCompassFrameCenterY -> i
     float mCompassRoseCenterX -> j
     float mCompassRoseCenterY -> k
     int MENU_COMPASS -> l
-    boolean mOptionsMenuEnabled -> t
-    101:103:void onDetach(org.osmdroid.views.MapView) -> a
-    107:119:void invalidateCompass() -> p
-    176:183:void drawSafe(org.osmdroid.views.safecanvas.ISafeCanvas,org.osmdroid.views.MapView,boolean) -> a
-    243:245:void onOrientationChanged$656c6270(float) -> a
-    262:275:boolean enableCompass() -> o
-    333:343:void drawTriangle$7557fba5(android.graphics.Canvas,float,float,android.graphics.Paint) -> a
+    boolean mOptionsMenuEnabled -> u
+    100:102:void onDetach(org.osmdroid.views.MapView) -> a
+    105:118:void invalidateCompass() -> p
+    134:142:void setOrientationProvider(org.osmdroid.views.overlay.compass.IOrientationProvider) -> a
+    175:183:void draw(android.graphics.Canvas,org.osmdroid.views.MapView,boolean) -> a
+    239:241:void onOrientationChanged$656c6270(float) -> a
+    266:266:boolean enableCompass() -> o
+    319:329:void drawTriangle(android.graphics.Canvas,float,float,float,float,android.graphics.Paint) -> a
 org.osmdroid.views.overlay.compass.IOrientationConsumer -> org.osmdroid.views.overlay.a.b:
     void onOrientationChanged$656c6270(float) -> a
 org.osmdroid.views.overlay.compass.IOrientationProvider -> org.osmdroid.views.overlay.a.c:
@@ -16163,9 +16174,9 @@ org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider -> org.osm
     android.hardware.SensorManager mSensorManager -> b
     float mAzimuth -> c
     30:37:boolean startOrientationProvider(org.osmdroid.views.overlay.compass.IOrientationConsumer) -> a
-    43:44:void stopOrientationProvider() -> a
-    60:60:void onAccuracyChanged(android.hardware.Sensor,int) -> onAccuracyChanged
-    65:72:void onSensorChanged(android.hardware.SensorEvent) -> onSensorChanged
+    43:45:void stopOrientationProvider() -> a
+    61:61:void onAccuracyChanged(android.hardware.Sensor,int) -> onAccuracyChanged
+    66:73:void onSensorChanged(android.hardware.SensorEvent) -> onSensorChanged
 org.osmdroid.views.overlay.mylocation.IMyLocationConsumer -> org.osmdroid.views.overlay.b.a:
     void onLocationChanged$6cc9c566(android.location.Location) -> a
 org.osmdroid.views.overlay.mylocation.IMyLocationProvider -> org.osmdroid.views.overlay.b.b:
@@ -16174,112 +16185,47 @@ org.osmdroid.views.overlay.mylocation.IMyLocationProvider -> org.osmdroid.views.
     android.location.Location getLastKnownLocation() -> c
 org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay -> org.osmdroid.views.overlay.b.c:
     org.slf4j.Logger logger -> o
-    org.osmdroid.views.safecanvas.SafePaint mPaint -> a
-    org.osmdroid.views.safecanvas.SafePaint mCirclePaint -> b
+    android.graphics.Paint mPaint -> a
+    android.graphics.Paint mCirclePaint -> b
     android.graphics.Bitmap mPersonBitmap -> e
     android.graphics.Bitmap mDirectionArrowBitmap -> f
     org.osmdroid.views.MapView mMapView -> g
     org.osmdroid.api.IMapController mMapController -> p
     org.osmdroid.views.overlay.mylocation.IMyLocationProvider mMyLocationProvider -> h
     java.util.LinkedList mRunOnFirstFix -> q
-    android.graphics.Point mMapCoords -> r
-    android.location.Location mLocation -> s
-    org.osmdroid.util.GeoPoint mGeoPoint -> t
-    boolean mIsLocationEnabled -> u
+    android.graphics.Point mMapCoordsProjected -> r
+    android.graphics.Point mMapCoordsTranslated -> s
+    android.location.Location mLocation -> t
+    org.osmdroid.util.GeoPoint mGeoPoint -> u
+    boolean mIsLocationEnabled -> v
     boolean mIsFollowing -> i
     boolean mDrawAccuracyEnabled -> j
     android.graphics.PointF mPersonHotspot -> k
-    double mDirectionArrowCenterX -> l
-    double mDirectionArrowCenterY -> m
+    float mDirectionArrowCenterX -> l
+    float mDirectionArrowCenterY -> m
     int MENU_MY_LOCATION -> n
-    boolean mOptionsMenuEnabled -> v
-    float[] mMatrixValues -> w
-    android.graphics.Matrix mMatrix -> x
-    android.graphics.Rect mMyLocationRect -> y
-    android.graphics.Rect mMyLocationPreviousRect -> z
-    125:127:void onDetach(org.osmdroid.views.MapView) -> a
-    238:268:android.graphics.Rect getMyLocationDrawingBounds(int,android.location.Location,android.graphics.Rect) -> a
-    277:283:void drawSafe(org.osmdroid.views.safecanvas.ISafeCanvas,org.osmdroid.views.MapView,boolean) -> a
-    288:299:boolean onSnapToItem$d9026f1(int,int,android.graphics.Point) -> a
-    305:309:boolean onTouchEvent(android.view.MotionEvent,org.osmdroid.views.MapView) -> a
-    318:319:void setOptionsMenuEnabled$1385ff() -> o
-    386:404:void enableFollowLocation() -> p
-    420:420:boolean isFollowLocationEnabled() -> q
-    426:473:void onLocationChanged$6cc9c566(android.location.Location) -> a
-    489:512:boolean enableMyLocation() -> r
-    519:529:void disableMyLocation() -> s
+    boolean mOptionsMenuEnabled -> w
+    float[] mMatrixValues -> x
+    android.graphics.Matrix mMatrix -> y
+    android.graphics.Rect mMyLocationRect -> z
+    android.graphics.Rect mMyLocationPreviousRect -> A
+    126:128:void onDetach(org.osmdroid.views.MapView) -> a
+    158:166:void setMyLocationProvider(org.osmdroid.views.overlay.mylocation.IMyLocationProvider) -> a
+    237:269:android.graphics.Rect getMyLocationDrawingBounds(int,android.location.Location,android.graphics.Rect) -> a
+    278:284:void draw(android.graphics.Canvas,org.osmdroid.views.MapView,boolean) -> a
+    289:302:boolean onSnapToItem$d9026f1(int,int,android.graphics.Point) -> a
+    308:312:boolean onTouchEvent(android.view.MotionEvent,org.osmdroid.views.MapView) -> a
+    321:322:void setOptionsMenuEnabled$1385ff() -> o
+    389:403:void enableFollowLocation() -> p
+    419:419:boolean isFollowLocationEnabled() -> q
+    425:439:void onLocationChanged$6cc9c566(android.location.Location) -> a
+    443:476:void setLocation(android.location.Location) -> b
+    509:509:boolean enableMyLocation() -> r
+    516:526:void disableMyLocation() -> s
 org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay$1 -> org.osmdroid.views.overlay.b.c$1:
-    int val$left -> a
-    int val$top -> b
-    int val$right -> c
-    int val$bottom -> d
-    org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay this$0 -> e
-    463:464:void run() -> run
-org.osmdroid.views.safecanvas.ISafeCanvas -> org.osmdroid.views.a.a:
-    android.graphics.Canvas getSafeCanvas() -> a
-    int getHeight() -> getHeight
-    int save() -> save
-    void restore() -> restore
-    void scale(float,float,double,double) -> a
-    void rotate(float,double,double) -> a
-    void setMatrix(android.graphics.Matrix) -> setMatrix
-    void getMatrix(android.graphics.Matrix) -> getMatrix
-    void drawCircle(double,double,float,org.osmdroid.views.safecanvas.SafePaint) -> a
-    void drawBitmap(android.graphics.Bitmap,double,double,org.osmdroid.views.safecanvas.SafePaint) -> a
-    void drawPicture(android.graphics.Picture) -> drawPicture
-org.osmdroid.views.safecanvas.SafePaint -> org.osmdroid.views.a.b:
-    21:23:android.graphics.PathEffect setPathEffect(android.graphics.PathEffect) -> setPathEffect
-org.osmdroid.views.safecanvas.SafeTranslatedCanvas -> org.osmdroid.views.a.c:
-    android.graphics.Matrix sMatrix -> c
-    android.graphics.RectF sRectF -> d
-    float[] sFloatAry -> e
-    android.graphics.Canvas mCanvas -> f
-    android.graphics.Matrix mMatrix -> g
-    int xOffset -> a
-    int yOffset -> b
-    45:45:android.graphics.Canvas getSafeCanvas() -> a
-    59:61:void setCanvas(android.graphics.Canvas) -> a
-    102:102:boolean clipRect(int,int,int,int) -> clipRect
-    108:109:boolean clipRect(android.graphics.Rect,android.graphics.Region$Op) -> clipRect
-    114:115:boolean clipRect(android.graphics.Rect) -> clipRect
-    120:121:boolean clipRegion(android.graphics.Region,android.graphics.Region$Op) -> clipRegion
-    126:127:boolean clipRegion(android.graphics.Region) -> clipRegion
-    132:133:void concat(android.graphics.Matrix) -> concat
-    137:138:void drawARGB(int,int,int,int) -> drawARGB
-    149:151:void drawBitmap(android.graphics.Bitmap,double,double,org.osmdroid.views.safecanvas.SafePaint) -> a
-    170:173:void drawBitmap(android.graphics.Bitmap,android.graphics.Rect,android.graphics.Rect,android.graphics.Paint) -> drawBitmap
-    198:200:void drawCircle(double,double,float,org.osmdroid.views.safecanvas.SafePaint) -> a
-    205:206:void drawColor(int,android.graphics.PorterDuff$Mode) -> drawColor
-    211:212:void drawColor(int) -> drawColor
-    251:254:void drawPicture(android.graphics.Picture,android.graphics.Rect) -> drawPicture
-    258:259:void drawPicture(android.graphics.Picture) -> drawPicture
-    291:292:void drawRGB(int,int,int) -> drawRGB
-    362:365:boolean getClipBounds(android.graphics.Rect) -> getClipBounds
-    371:371:int getDensity() -> getDensity
-    377:377:android.graphics.DrawFilter getDrawFilter() -> getDrawFilter
-    383:383:int getHeight() -> getHeight
-    389:390:void getMatrix(android.graphics.Matrix) -> getMatrix
-    395:395:int getSaveCount() -> getSaveCount
-    401:401:int getWidth() -> getWidth
-    407:407:boolean isOpaque() -> isOpaque
-    434:435:void restore() -> restore
-    440:441:void restoreToCount(int) -> restoreToCount
-    445:448:void rotate(float) -> rotate
-    452:453:void rotate(float,double,double) -> a
-    458:458:int save() -> save
-    464:464:int save(int) -> save
-    496:497:void scale(float,float) -> scale
-    501:502:void scale(float,float,double,double) -> a
-    506:507:void setBitmap(android.graphics.Bitmap) -> setBitmap
-    511:512:void setDensity(int) -> setDensity
-    516:517:void setDrawFilter(android.graphics.DrawFilter) -> setDrawFilter
-    521:522:void setMatrix(android.graphics.Matrix) -> setMatrix
-    526:527:void skew(float,float) -> skew
-    531:532:void translate(float,float) -> translate
-    536:538:java.lang.Object clone() -> clone
-    543:543:boolean equals(java.lang.Object) -> equals
-    548:548:int hashCode() -> hashCode
-    553:553:java.lang.String toString() -> toString
+    android.location.Location val$location -> a
+    org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay this$0 -> b
+    430:431:void run() -> run
 org.slf4j.ILoggerFactory -> org.b.a:
     org.slf4j.Logger getLogger(java.lang.String) -> a
 org.slf4j.Logger -> org.b.b:
