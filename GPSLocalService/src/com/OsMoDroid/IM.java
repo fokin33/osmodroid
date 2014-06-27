@@ -26,7 +26,7 @@ import android.os.SystemClock;
 import android.os.Handler;import android.os.Message;import android.preference.PreferenceManager;
 import android.provider.Settings.Secure;
 import android.support.v4.app.NotificationCompat;import android.telephony.TelephonyManager;
-import android.util.Log;import android.widget.Toast;
+import android.util.Log;import android.widget.Toast;
 /**
  * @author dfokin
  *Class for work with LongPolling
@@ -299,7 +299,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 
 
 
-
+
 
 	 /**
 	 * Выключает IM
@@ -556,6 +556,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	private void addToChannelChat(String toParse, String topic) {
 		if(log)Log.d(this.getClass().getName(), "type=chch");
 		if(log)Log.d(this.getClass().getName(), "Сообщение в чат канала " + toParse);
+		ChannelChatMessage m =new ChannelChatMessage();
 		String fromDevice="Незнамо кто";
 		//09-16 18:25:41.057: D/com.OsMoDroid.IM(1474):     "data": "0|40+\u041e\u043f\u0430\u0441\u043d\u043e +2013-09-16 22:25:44"
 		//"data": "0|40|cxbcxvbcxvbcxvb|2013-03-14 22:42:34"
@@ -610,7 +611,9 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			
 			
 					channel.messagesstringList.clear();
-					channel.messagesstringList.add(fromDevice + ": "+Netutil.unescape(datanew[1]));
+					m.text=Netutil.unescape(datanew[1]);
+					m.time=datanew[2];
+					channel.messagesstringList.add(m);
 					localService.alertHandler.post(new Runnable(){
 						public void run() {
 							if (LocalService.channelsmessagesAdapter!=null&& LocalService.currentChannel != null&&LocalService.currentChannel.u==channel.u ){
@@ -734,10 +737,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			{
 				LocalService.channelList.add(ch);
 				
-					
-				
-				
 			}
+			addlog(ch.deviceList.toString());
 					if (LocalService.channelsAdapter!=null ){
 						
 						LocalService.channelsAdapter.notifyDataSetChanged();

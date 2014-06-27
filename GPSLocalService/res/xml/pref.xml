@@ -204,11 +204,6 @@
             android:title= "Mobile Networks"
             android:defaultValue= "true"/>
         <CheckBoxPreference
-            android:key= "im"
-            android:summary= "Enables continuous communication with the server Esya.ru"
-            android:title= "Full mode"
-            android:defaultValue= "true"/>
-        <CheckBoxPreference
             android:key= "autostart"
             android:summary= "Launch background service when the phone starts up."
             android:title= "Startup at boot"

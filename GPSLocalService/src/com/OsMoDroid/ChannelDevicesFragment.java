@@ -15,6 +15,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -27,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -56,7 +58,8 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 	@Override
 	public boolean onContextItemSelected(android.view.MenuItem item) {
 		 final AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();
-		  if (item.getItemId() == 1) 
+		  
+		 if (item.getItemId() == 1) 
 		  {
 			String latitude =Float.toString(LocalService.channelsDevicesAdapter.getItem(acmi.position).lat);
 			String longitude=Float.toString(LocalService.channelsDevicesAdapter.getItem(acmi.position).lon);;
@@ -83,7 +86,7 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
-		   menu.add(0, 1, 0, R.string.showonmap).setIcon(android.R.drawable.ic_menu_mylocation);;
+				   menu.add(0, 1, 0, R.string.showonmap).setIcon(android.R.drawable.ic_menu_mylocation);;
 		super.onCreateContextMenu(menu, v, menuInfo);
 	}
 
@@ -198,7 +201,8 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 		   //LocalService.currentChannel= LocalService.channelList.get(channelpos); 
 		   
 		    LocalService.channelsDevicesAdapter = new ChannelsDevicesAdapter(getSherlockActivity(),R.layout.channelsdeviceitem,  LocalService.currentchanneldeviceList);
-	LocalService.channelsmessagesAdapter = new ArrayAdapter<String>(getSherlockActivity(), R.layout.channelchatitem, LocalService.currentChannel.messagesstringList );
+	LocalService.channelsmessagesAdapter = new ChannelChatAdapter(globalActivity,  R.layout.devicechatitem, LocalService.currentChannel.messagesstringList);
+			//(getSherlockActivity(), R.layout.channelchatitem, LocalService.currentChannel.messagesstringList );
 			
 		    lv1 = (ListView) view.findViewById(R.id.mychannelsdeviceslistView);
 		    lv2 = (ListView) view.findViewById(R.id.mychannelsmessages);
@@ -244,33 +248,35 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 		       if (LocalService.channelsmessagesAdapter!=null) {LocalService.channelsmessagesAdapter.notifyDataSetChanged();}
 
 		       registerForContextMenu(lv1);
+		      
 
 		  lv1.setOnItemClickListener(new OnItemClickListener() {
-
-
-
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-
-					long arg3) {
-
-							arg0.showContextMenuForChild(arg1);
-
-							}
-
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) 
+				{
+					arg0.showContextMenuForChild(arg1);
+				}
 		});
-
-
-
-		  
+		  lv2.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) 
+				{
+					ChannelChatMessage m =(ChannelChatMessage)arg0.getItemAtPosition(arg2);
+					if(input.length()==0&&!(m.from.equals(getString(R.string.iam)))){
+					input.setText(m.from+", "+input.getText());
+					input.setSelection(input.length());
+					OsMoDroid.inputMethodManager.showSoftInput(input, InputMethodManager.SHOW_IMPLICIT);
+					}
+				}
+		});
 		t.add(Netutil.newapicommand((ResultsListener)LocalService.serContext, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", "")));
 		t.add(Netutil.newapicommand((ResultsListener)ChannelDevicesFragment.this,getSherlockActivity(), "om_channel_chat_get:"+LocalService.currentChannel.u));
-
-		
 		return view;
 
 	}
 	
 	
+	// only will trigger it if no physical keyboard is open
+	
+	 
 
 
 	@Override
@@ -278,6 +284,8 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 
 
 		Log.d(getClass().getSimpleName(),"OnResultListener Command:"+result.Command+",Jo="+result.Jo);
+	
+		
 		
 		
 		

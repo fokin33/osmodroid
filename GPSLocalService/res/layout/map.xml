@@ -29,15 +29,16 @@
         android:layout_alignParentTop="true"
         android:src="@drawable/ic_action_center_me" />
 
-    <ImageButton
-        android:id="@+id/ImageButtonRotate"
+    <Button
+        android:id="@+id/buttonRotate"
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/imageButtonCenter"
-        android:background="@android:drawable/ic_menu_rotate"
-        android:scaleType="center"
-        android:src="@android:drawable/ic_menu_rotate" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp" />
 
 </RelativeLayout>
 

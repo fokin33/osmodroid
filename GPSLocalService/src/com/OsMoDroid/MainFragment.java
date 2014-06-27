@@ -1,4 +1,4 @@
-package com.OsMoDroid;
+﻿package com.OsMoDroid;
 
 //import android.R;
 import android.app.Activity;
@@ -362,10 +362,12 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 		 
 		
 		final View view =  inflater.inflate(R.layout.main,container, false);
+		if(!OsMoDroid.settings.getString("startmessage", "").equals("")){
+		TextView tt = (TextView) view.findViewById(R.id.Location);
+		tt.setText(getString(R.string.servermessage)+":\n"+OsMoDroid.settings.getString("startmessage", ""));
+		}
 		
 		
-//		if (OsMoDroid.settings.getBoolean("im", false)){
-//		
 //		 if (globalActivity.mService!=null&&globalActivity.mService.myIM!=null&&!OsMoDroid.settings.getString("key", "").equals("")){
 //			 if(globalActivity.mService.myIM.connOpened&&!globalActivity.mService.myIM.connecting){
 //		
@@ -380,7 +382,7 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 //			 }
 //				 
 //		 }
-//		}
+		
 		
 			final ToggleButton alarmToggle = (ToggleButton) view.findViewById(R.id.alarmButton);
 			if(OsMoDroid.settings.contains("signalisation")){
@@ -668,7 +670,7 @@ else {
 					if (!(startmessage==null)) {
 						
 						TextView tt = (TextView) view.findViewById(R.id.Location);
-						tt.setText(getString(R.string.servermessage)+'\n'+startmessage);
+						tt.setText(getString(R.string.servermessage)+":\n"+startmessage);
 						globalActivity.messageShowed=true;
 						
 

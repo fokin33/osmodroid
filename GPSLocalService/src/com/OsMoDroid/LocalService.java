@@ -390,7 +390,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
     public static DeviceAdapter deviceAdapter;
     public static ChannelsAdapter channelsAdapter;
     public static ChannelsDevicesAdapter channelsDevicesAdapter;
-    public static ArrayAdapter<String> channelsmessagesAdapter;
+    public static ArrayAdapter<ChannelChatMessage> channelsmessagesAdapter;
     public static ArrayAdapter<String> debugAdapter;
     public static DeviceChatAdapter chatmessagesAdapter;
     static Context serContext;
@@ -1538,9 +1538,17 @@ public void sendid()
 		 fileName = new File (sdDir, "OsMoDroid/");
 
 		 fileName.mkdirs();
-
-		 fileName = new File(sdDir, "OsMoDroid/"+time+".gpx");
-
+		 
+		 if(OsMoDroid.settings.getString("gpxname", "").equals(""))
+			 {
+		 
+				 fileName = new File(sdDir, "OsMoDroid/"+time+".gpx");
+			 }
+		 else
+			 {
+				 fileName = new File(sdDir, "OsMoDroid/"+OsMoDroid.settings.getString("gpxname", ""));
+				 fileheaderok=true;
+			 }
 		 }
 
 		if (!fileName.exists())
@@ -1550,7 +1558,8 @@ public void sendid()
 			try {
 
 				crtfile= fileName.createNewFile();
-
+				OsMoDroid.editor.putString("gpxname", fileName.getName());
+				OsMoDroid.editor.commit();
 			} catch (IOException e) {
 
 				e.printStackTrace();
@@ -1559,7 +1568,7 @@ public void sendid()
 
 			//if(log)Log.d(getClass().getSimpleName(), Boolean.toString(crtfile));
 
-		}
+		
 
 		try {
 		                // SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd'T'HH:mm:ssZ");
@@ -1583,7 +1592,7 @@ public void sendid()
 		}
 	}
 
-
+	}
 
 
 
@@ -1733,6 +1742,8 @@ public void sendid()
 			Toast.makeText(LocalService.this, getString(R.string.CanNotWriteEnd), Toast.LENGTH_SHORT).show();
 
 		}
+		OsMoDroid.editor.remove("gpxname");
+		OsMoDroid.editor.commit();
 		 if (fileName.length()>1024&&uploadto){
              upload(fileName);        
              }

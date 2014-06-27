@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import android.view.inputmethod.InputMethodManager;
 
 public class OsMoDroid extends Application {
 	
@@ -23,7 +24,7 @@ public class OsMoDroid extends Application {
 	public static int notifyidApp() {
 	return notifyid++;
 	}
-
+	static InputMethodManager inputMethodManager;
 	public static Context context;
 	public static Editor editor;
 	public static boolean debug=true;
@@ -35,6 +36,7 @@ public class OsMoDroid extends Application {
 		editor=settings.edit();
 		context = getApplicationContext();
 		Thread.setDefaultUncaughtExceptionHandler(ExceptionHandler.inContext(context));
+		inputMethodManager= (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		super.onCreate();
 	}
 

@@ -27,21 +27,26 @@ import org.osmdroid.views.overlay.mylocation.IMyLocationConsumer;
 import org.osmdroid.views.overlay.mylocation.IMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -52,6 +57,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 
 public class MapFragment extends SherlockFragment implements DeviceChange, IMyLocationProvider,LocationListener {
 	 	ResourceProxyImpl mResourceProxy;
@@ -66,9 +72,18 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 		//ArrayList<PathOverlay> paths = new ArrayList<PathOverlay>();
 		private IMyLocationConsumer myLocationConumer;
 		private long lastgpslocation=0;
+		private MenuItem courserotation;
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-			
+			MenuItem traces = menu.add(0, 1, 0, R.string.showtraces);
+			MenuItem rotation = menu.add(0, 2, 0, R.string.enable_manual_rotation);
+			courserotation = menu.add(0, 3, 0, R.string.enable_course_rotation);
+			traces.setCheckable(true);
+			rotation.setCheckable(true);
+			courserotation.setCheckable(true);
+			traces.setChecked(OsMoDroid.settings.getBoolean("traces", true));
+			rotation.setChecked(OsMoDroid.settings.getBoolean("rotation", false));
+			courserotation.setChecked(rotate);
 			super.onCreateOptionsMenu(menu, inflater);
 		}
 
@@ -76,6 +91,37 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 
 		
 		
+	@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+			switch (item.getItemId()) {
+			case 1:
+				item.setChecked(!item.isChecked());
+				OsMoDroid.editor.putBoolean("traces", item.isChecked());
+				OsMoDroid.editor.commit();
+				mMapView.invalidate();
+			break;
+			case 2:
+				item.setChecked(!item.isChecked());
+				OsMoDroid.editor.putBoolean("rotation", item.isChecked());
+				OsMoDroid.editor.commit();
+				mMapView.invalidate();
+			break;	
+			case 3:
+				item.setChecked(!item.isChecked());
+				rotate=!rotate;
+				mMapView.setMapOrientation(0);
+				mMapView.invalidate();
+			break;
+			default:
+				break;
+			}
+			return super.onOptionsItemSelected(item);
+		}
+
+
+
+
+
 	@Override
      public void onCreate(Bundle savedInstanceState) {
 		Log.d(getClass().getSimpleName(), "map oncreate"); 
@@ -121,6 +167,8 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 	
 		super.onDestroyView();
 	}
+	
+	
 	class MAPSurferTileSource extends OnlineTileSourceBase {
 
 		MAPSurferTileSource(String aName, string aResourceId, int aZoomMinLevel,
@@ -142,12 +190,10 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 
 	@Override
 	public void onDestroy() {
-		
-		Log.d(getClass().getSimpleName(), "map ondestroy");
 		super.onDestroy();
 	}
 
-
+	
 
 
 
@@ -233,11 +279,11 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 			final int aTileSizePixels=256;
 			final String aImageFilenameEnding = ".png";
 			final String[] aBaseUrl=new String[] {"http://openmapsurfer.uni-hd.de/tiles/roads/"};
-			MAPSurferTileSource myTileSource = new MAPSurferTileSource(name, string.base, aZoomMinLevel, aZoomMaxLevel, aTileSizePixels, aImageFilenameEnding, aBaseUrl);
+			MAPSurferTileSource myTileSource = new MAPSurferTileSource(name, string.unknown, aZoomMinLevel, aZoomMaxLevel, aTileSizePixels, aImageFilenameEnding, aBaseUrl);
 			View view = inflater.inflate(R.layout.map, container, false);
 			mMapView = (MapView)view.findViewById(R.id.mapview);
 			ImageButton centerImageButton = (ImageButton)view.findViewById(R.id.imageButtonCenter);
-			ImageButton rotateImageButton = (ImageButton)view.findViewById(R.id.ImageButtonRotate);
+			Button rotateButton = (Button)view.findViewById(R.id.buttonRotate);
 			mMapView.setTileSource(myTileSource);
 			if(myTracePathOverlay==null)
 			{
@@ -287,25 +333,17 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 					
 				}
 			});
-            
-            rotateImageButton.setOnClickListener(new View.OnClickListener() {
-
-
-				@Override
-				public void onClick(View v) {
-					Log.d(getClass().getSimpleName(), "map click on rotate");
-					if(rotate){
-						rotate=false;
-						mMapView.setMapOrientation(0);
-					}
-					else 
-					{
-						rotate=true;
-					}
-					
-				}
-			});
+           rotateButton.setOnClickListener(new View.OnClickListener() {
 			
+			@Override
+			public void onClick(View v) {
+					mMapView.setMapOrientation(0);
+					Log.d(getClass().getSimpleName(), "map click on compas");
+					rotate=!rotate;
+					courserotation.setChecked(rotate);
+			}
+		});
+           		
 			CompassOverlay compas = new CompassOverlay(getSherlockActivity(), mMapView);
 			ChannelsOverlay choverlay = new ChannelsOverlay(mResourceProxy, mMapView);
 			mMapView.getOverlays().add(choverlay);
@@ -393,7 +431,7 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 
 	@Override
 	public void onLocationChanged(Location location) {
-		if(myLoc.isFollowLocationEnabled()&&location.hasBearing()&&rotate&&location.getSpeed()>1){
+		if(myLoc!=null&&myLoc.isFollowLocationEnabled()&&location.hasBearing()&&rotate&&location.getSpeed()>1){
 		mMapView.setMapOrientation(-location.getBearing());
 		}
 		if(location.getProvider().equals(LocationManager.GPS_PROVIDER)){

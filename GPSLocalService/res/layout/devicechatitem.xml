@@ -21,7 +21,7 @@
                 android:text="adrr" />
 
             <TextView
-                android:id="@+id/txtFromName"
+                android:id="@+id/txtFrom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="name" />
