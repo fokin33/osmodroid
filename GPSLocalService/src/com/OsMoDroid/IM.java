@@ -329,10 +329,10 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		addlog("webcoket void start");
 		running = true;		connecting=true;
 		localService.refresh();
-		connectThread = new Thread(new IMConnect());
-		readerThread = new Thread(new IMReader());
 		iMWriter=new IMWriter();
 		writerThread = new Thread(iMWriter);
+		connectThread = new Thread(new IMConnect());
+		readerThread = new Thread(new IMReader());
 		connectThread.setPriority(Thread.MIN_PRIORITY);
 		readerThread.setPriority(Thread.MIN_PRIORITY);
 		writerThread.setPriority(Thread.MIN_PRIORITY);
@@ -875,6 +875,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			authed=false;
 			connecting=false;
 			connOpened=false;
+			running=false;
 			localService.refresh();
 			if(localService.isOnline()){
 				 setReconnectAlarm();
