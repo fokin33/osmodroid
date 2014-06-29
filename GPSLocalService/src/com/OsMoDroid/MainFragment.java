@@ -265,14 +265,16 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 		if (item.getItemId() == 10) {
                     Intent sendIntent = new Intent(Intent.ACTION_SEND);
                     sendIntent.setType("text/plain");
-                    sendIntent.putExtra(android.content.Intent.EXTRA_TEXT,getString(R.string.iamhere)+ globalActivity.viewurl);
+                    sendIntent.putExtra(android.content.Intent.EXTRA_TEXT,getString(R.string.iamhere)+ OsMoDroid.settings.getString("viewurl", ""));
                     startActivity(Intent.createChooser(sendIntent, getSherlockActivity().getString(R.string.sharelink)));
 		}
 		if (item.getItemId() == 11) {
                     ClipboardManager clipboard = (ClipboardManager) getSherlockActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-                    if (globalActivity.viewurl != null)
-                    clipboard.setText(globalActivity.viewurl);
+                    if (!OsMoDroid.settings.getString("viewurl", "").equals(""))
+                    {
+                    clipboard.setText(OsMoDroid.settings.getString("viewurl", ""));
                     Toast.makeText(getSherlockActivity(), R.string.linkcopied, Toast.LENGTH_SHORT).show();
+                    }
 		}
 //		if (item.getItemId() == 14) {
 //                    Intent i = new Intent(getSherlockActivity(), LocalService.class);

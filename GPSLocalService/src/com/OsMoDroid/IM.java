@@ -110,6 +110,22 @@ public class IM implements ResultsListener {
           @Override public void onReceive( Context context, Intent _ )
           {
         	  addlog("websocket reconnect reciever trigged");
+        	  localService.alertHandler.post(new Runnable()
+  			{
+  				
+  				@Override
+  				public void run()
+  					{
+  						ondisconnect();
+  						
+  					}
+  			});
+        	  disablekeepAliveAlarm();
+    			authed=false;
+    			connecting=false;
+    			connOpened=false;
+    			running=false;
+    			localService.refresh();
         	  start();
               context.unregisterReceiver( this ); // this == BroadcastReceiver, not Activity
           }
@@ -154,7 +170,7 @@ public class IM implements ResultsListener {
     	  addlog("websocket void setkeepalive");
     	  parent.registerReceiver(keepAliveReceiver, new IntentFilter(KEEPALIVE_INTENT));
     	  manager.cancel(keepAlivePIntent);
-    	  manager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, KEEP_ALIVE, KEEP_ALIVE, keepAlivePIntent);
+    	  manager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime()+KEEP_ALIVE, KEEP_ALIVE, keepAlivePIntent);
       }
       
       public void disablekeepAliveAlarm(){
@@ -312,7 +328,18 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		
 			e.printStackTrace();
 		}
-				stop();	};
+		try {
+	    	  parent.unregisterReceiver( reconnectReceiver);
+		}
+		catch (Exception e) {
+			
+		}
+		try {
+	    	  parent.unregisterReceiver( keepAliveReceiver);
+		}
+		catch (Exception e) {
+			
+		}		stop();	};
 	public void gettoken()
 	
 	{
@@ -360,23 +387,23 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 								if(running){
 									if (socket.isConnected()&&wr!=null){
 										 setReconnectAlarm(); 
-										 try
-												{
-													
-													Thread.sleep(500);
-												} catch (InterruptedException e)
-												{
-													// TODO Auto-generated catch block
-													e.printStackTrace();
-												}
+//										 try
+//												{
+//													
+//													Thread.sleep(0);
+//												} catch (InterruptedException e)
+//												{
+//													// TODO Auto-generated catch block
+//													e.printStackTrace();
+//												}
 										 wr.println(b.getString("write"));
-										
+										 
 										 error=wr.checkError();
 										
 										 if(log)Log.d(this.getClass().getName(), "wr write "+b.getString("write")+" error="+error);
 										 addlog("wr write "+b.getString("write")+" error="+error);
 										 if(error){
-											 setReconnectOnError();
+											 if(running){setReconnectOnError();}
 											 Looper.myLooper().quit();
 										 }
 										 else{
@@ -446,7 +473,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 								}
 							} catch (IOException e)
 							{
-								 setReconnectOnError();
+								 if(running){setReconnectOnError();}
 								e.printStackTrace();
 							}
 						
@@ -479,7 +506,9 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 					 workserverint=-1;
 					 workservername="";
 					 socket=new Socket();
-					 
+					 socket.setTcpNoDelay(true);
+					
+					 addlog("TCP_NODELAY="+Boolean.toString(socket.getTcpNoDelay()));
 					socket.connect(sockAddr, 5000);
 					 connOpened=true;
 					 connecting=false;
@@ -522,6 +551,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		 if(log)Log.d(this.getClass().getName(), "void IM.stop");
 		 addlog("webcoket void stop");
 		 running = false;
+		 connOpened=false;
+		 authed=false;
 		 if(iMWriter.handler!=null){iMWriter.handler.getLooper().quit();}
 		 if(socket!=null){
 		 try
@@ -704,7 +735,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	if(c.equals("TRACKER_SESSION_OPEN")){
 		localService.sessionstarted=true;
 		needopensession=false;
-		OsMoDroid.editor.putString("viewurl","http://test1342.osmo.mobi/u/"+jo.optString("url"));
+		OsMoDroid.editor.putString("viewurl","http://test815.osmo.mobi/u/"+jo.optString("url"));
 		OsMoDroid.editor.commit();
 		localService.refresh();
 	}
@@ -851,21 +882,10 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	
 	private void setReconnectOnError()
 		{	
-			localService.alertHandler.post(new Runnable()
-				{
-					
-					@Override
-					public void run()
-						{
-							ondisconnect();
-							
-						}
-				});
-			
 			
 			try
 				{
-					socket.close();
+					if(socket!=null){socket.close();}
 				} catch (IOException e)
 				{
 					// TODO Auto-generated catch block
@@ -884,6 +904,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 
 	@Override
 	public void onResultsSucceeded(APIComResult result) {
+		if(log)Log.d(getClass().getSimpleName(),"OnResultSucceded "+result.rawresponse);
 		if(result.Command.equals("gettoken")&&!(result.Jo==null)){
 			addlog("Recieve token "+result.Jo.toString());
 			if(log)Log.d(getClass().getSimpleName(),"gettoken response:"+result.Jo.toString());
@@ -900,6 +921,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 				}
 			}
 			
+		} else {
+			setReconnectOnError();
 		}
 		
 	}}

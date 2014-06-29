@@ -701,7 +701,7 @@ public void stopcomand()
 		currentLocation = new Location("");
 		prevlocation = new Location("");
 		prevlocation_gpx = new Location("");
-		prevlocation_spd = new Location("");
+		
 		currentLocation.setLatitude((double)OsMoDroid.settings.getFloat("lat", 0f));
 		currentLocation.setLongitude((double)OsMoDroid.settings.getFloat("lon", 0f));
 		dot.setDecimalSeparator('.');
@@ -996,10 +996,13 @@ if (live)
 		
 		@Override
 		void ondisconnect(){
+			myIM.addlog("ondisconnect");
 			if(log)Log.d(this.getClass().getName(), "ondisconnect in localservice");
 			if(!sending.equals("")){
 				buffer.add(sending);
 				sending="";
+				buffercounter++;
+				refresh();
 			}
 		}
 		
@@ -1980,6 +1983,7 @@ public void sendid()
 			sendlocation(location);
 			prevlocation.set(location);
 			prevlocation_gpx.set(location);
+			prevlocation_spd = new Location("");
 			prevlocation_spd.set(location);
 			prevbrng=brng;
 			workmilli= System.currentTimeMillis();
