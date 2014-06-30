@@ -10,6 +10,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -76,7 +77,15 @@ public class TracFileListFragment extends SherlockFragment  implements ResultsLi
                       if (sdState.equals(android.os.Environment.MEDIA_MOUNTED)) {
 
                                File sdDir = android.os.Environment.getExternalStorageDirectory();
-
+                               if(!OsMoDroid.settings.getString("sdpath", "").equals(""))
+                       		{
+                       		 sdDir = new File(OsMoDroid.settings.getString("sdpath", ""));
+                       		 }
+                       		else {
+                       			Editor editor =OsMoDroid.settings.edit();
+                       			editor.putString("sdpath", sdDir.getPath());
+                       			editor.commit();
+                       		}
                               
 
                                path = new File (sdDir, "OsMoDroid/");
