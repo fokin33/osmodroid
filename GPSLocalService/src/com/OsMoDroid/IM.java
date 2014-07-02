@@ -66,14 +66,14 @@ public class IM implements ResultsListener {
 
 	private String workservername="";	
 	
-	Handler readHandler= new Handler(){
-		@Override
-		public void handleMessage(Message msg)
-			{
-				parseEx(msg.getData().getString("read"), msg.getData().getString("read"));
-				super.handleMessage(msg);
-			}
-	};
+//	Handler readHandler= new Handler(){
+//		@Override
+//		public void handleMessage(Message msg)
+//			{
+//				parseEx(msg.getData().getString("read"), msg.getData().getString("read"));
+//				super.handleMessage(msg);
+//			}
+//	};
 
 	
 	public IM(String server, int port, LocalService service){
@@ -357,9 +357,9 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		running = true;		connecting=true;
 		localService.refresh();
 		iMWriter=new IMWriter();
-		writerThread = new Thread(iMWriter);
-		connectThread = new Thread(new IMConnect());
-		readerThread = new Thread(new IMReader());
+		writerThread = new Thread(iMWriter,"writer");
+		connectThread = new Thread(new IMConnect(),"connecter");
+		readerThread = new Thread(new IMReader(),"reader");
 		connectThread.setPriority(Thread.MIN_PRIORITY);
 		readerThread.setPriority(Thread.MIN_PRIORITY);
 		writerThread.setPriority(Thread.MIN_PRIORITY);
@@ -370,14 +370,15 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		  }
 	 public class IMWriter implements Runnable{
 		 boolean error=false;
-		 Looper l;
+		
 		 public Handler handler;
 		@Override
 		public void run()
 			
 			{
+				
 				 Looper.prepare();
-				    l=Looper.myLooper();
+				   
 				    handler = new Handler(){
 
 						@Override
@@ -419,6 +420,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 							}
 				    	
 				    };
+				    readerThread.start();
 				    Looper.loop();
 				    
 			
@@ -468,7 +470,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 												 							}
 									 });
 									
-									readHandler.sendMessage(msg);
+									//readHandler.sendMessage(msg);
+									parseEx(str, str);
 								
 								}
 							} catch (IOException e)
@@ -525,7 +528,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 					 
 					 rd = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					 wr =new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF8"),true);
-					 readerThread.start();
+					
 					 writerThread.start();
 					 
 				 } catch (final Exception e1) {
@@ -657,7 +660,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		}
 	}
 
-	@SuppressWarnings("static-access")
+	
 	void parseEx (String toParse, String topic){
 		addlog("recieve "+toParse);
 		if(log)Log.d(this.getClass().getName(), "recive "+toParse);
@@ -735,7 +738,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	if(c.equals("TRACKER_SESSION_OPEN")){
 		localService.sessionstarted=true;
 		needopensession=false;
-		OsMoDroid.editor.putString("viewurl","http://test815.osmo.mobi/u/"+jo.optString("url"));
+		OsMoDroid.editor.putString("viewurl","http://osmo.mobi/u/"+jo.optString("url"));
 		OsMoDroid.editor.commit();
 		localService.refresh();
 	}
