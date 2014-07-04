@@ -126,7 +126,7 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 		
 		if (OsMoDroid.settings.getString("key", "").equals("")){
 		globalsendToggle.setVisibility(View.GONE);
-		auth.setVisibility(View.VISIBLE);
+		//auth.setVisibility(View.VISIBLE);
 		}
 		else {
 			auth.setVisibility(View.GONE);
@@ -162,7 +162,7 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 //		MenuItem exit = menu.add(0, 14, 0, R.string.exit);
 		MenuItem save =menu2.add(0, 18, 0, R.string.savepref);
         MenuItem load =menu2.add(0, 19, 0, R.string.loadpref);
-        MenuItem addlisten = menu.add(0, 20, 0, "listento");
+        //MenuItem addlisten = menu.add(0, 20, 0, "listento");
         //MenuItem changeName = menu.add(0, 20, 0, R.string.changename);
 
                  super.onCreateOptionsMenu(menu, inflater);

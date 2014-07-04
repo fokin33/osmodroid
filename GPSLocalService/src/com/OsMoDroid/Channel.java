@@ -98,7 +98,7 @@ public class Channel {
 		this.u=Integer.parseInt(jo.optJSONObject("group").optString("u"));
 		this.created=jo.optJSONObject("group").optString("created");
 		this.group_id=jo.optJSONObject("group").optString("group_id");
-		this.url="http://test1342.osmo.mobi/g/"+jo.optJSONObject("group").optString("url");
+		this.url="http://osmo.mobi/g/"+jo.optJSONObject("group").optString("url");
 		
 //		if (jo.optJSONObject("me")!=null&&jo.optJSONObject("me").optString("active").equals("1")){
 //	 		this.send=true;

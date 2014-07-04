@@ -150,9 +150,8 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 			  return true;
 		  }
 		  if (item.getItemId() == 6) {
-			  Intent browseIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(LocalService.channelList.get((int) acmi.id).url));
-			  Netutil.newapicommand(ChannelsFragment.this, "om_channel_out:"+OsMoDroid.settings.getString("device", "")+","+LocalService.channelList.get((int) acmi.id).u);
-			  u=Integer.toString(LocalService.channelList.get((int) acmi.id).u);
+			  globalActivity.mService.myIM.sendToServer("GROUP_DISCONNECT:"+LocalService.channelList.get((int) acmi.id).group_id);
+			  globalActivity.mService.myIM.sendToServer("GROUP_LEAVE:"+LocalService.channelList.get((int) acmi.id).group_id);
 			  return true;
 		  }
 		  return super.onContextItemSelected(item);
@@ -277,13 +276,10 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 									String canalname = input2.getText().toString();
 									if ( !(canalid.equals("")) && !(canalname.equals("")) && ( chb1.isChecked()&&(!(canalkey.equals(""))) || !chb1.isChecked() )  )
 									{
-										try {
-										JSONObject postjson = new JSONObject();
-										postjson.put("name", Uri.encode(input2.getText().toString()));
-										postjson.put("code", Uri.encode(input.getText().toString()));
-										postjson.put("private", chb1.isChecked() ? "1":"0");
-										Netutil.newapicommand(ChannelsFragment.this, "om_channel_add","json="+postjson.toString());
-										}
+										try
+											{
+												globalActivity.mService.myIM.sendToServer("GROUP_CREATE|{name:\""+Uri.encode(input2.getText().toString())+"\", until:\"\", description:\"\", policy:\"\"}");
+											}
 										catch (Exception e) {
 											e.printStackTrace();
 										}
@@ -310,6 +306,11 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 			layout.addView(txv1);
 			final EditText input = new EditText(globalActivity);
 			layout.addView(input);
+			final TextView txv2 = new TextView(globalActivity);
+			txv2.setText(R.string.iam);
+			layout.addView(txv2);
+			final EditText input2 = new EditText(globalActivity);
+			layout.addView(input2);
 			input.setInputType(InputType.TYPE_CLASS_TEXT| InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
 			AlertDialog alertdialog4 = new AlertDialog.Builder(
 					globalActivity)
@@ -322,8 +323,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 									 canalid = Uri.encode(input.getText().toString());
 									if (!(canalid.equals("")))
 									{
-										
-										globalActivity.mService.myIM.sendToServer("GROUP_JOIN:"+canalid+"|"+globalActivity.mService.getDeviceName());
+										globalActivity.mService.myIM.sendToServer("GROUP_JOIN:"+canalid+"|"+Uri.encode(input2.getText().toString()));
 									} else {
 											Toast.makeText(
 											globalActivity,

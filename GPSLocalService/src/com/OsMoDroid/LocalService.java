@@ -1175,7 +1175,7 @@ OsMoDroid.settings.edit().putBoolean("ondestroy", false).commit();
 		mNotificationManager.cancelAll();
 		OsMoDroid.settings.edit().remove("globalsend").commit();
 		OsMoDroid.settings.edit().putBoolean("ondestroy", true).commit();
-
+		System.exit(0);
 	}
 
 
