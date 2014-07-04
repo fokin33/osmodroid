@@ -40,7 +40,8 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 		// mScale = OsMoDroid.context.getResources().getDisplayMetrics().density;
 		pathpaint = new Paint();
 		pathpaint.setStyle(Style.STROKE);
-		pathpaint.setStrokeWidth(14);
+		pathpaint.setStrokeWidth(10);
+		pathpaint.setAlpha(128);
 		pathpaint.setAntiAlias(true);
 		pathpaint.setStrokeCap(Cap.ROUND);
 		pathpaint.setStrokeJoin(Join.ROUND);
@@ -158,7 +159,7 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 				 if(OsMoDroid.settings.getBoolean("traces", true)){
 				 if(dev.devicePath.size()>2)
 				 	{
-					 pathpaint.setColor(Color.parseColor("#" + dev.color));
+					 pathpaint.setColor(Color.parseColor( dev.color));
 					 Path path = new Path();
 					 pj.toPixels((GeoPoint) dev.devicePath.get(0), scrPoint);
 					 path.moveTo(scrPoint.x, scrPoint.y);

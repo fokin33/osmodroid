@@ -1289,6 +1289,7 @@ OsMoDroid.settings.edit().putBoolean("ondestroy", false).commit();
 		 sended=true;
 
 		 traceList.clear();
+		 sending="";
 
 		ReadPref();
 

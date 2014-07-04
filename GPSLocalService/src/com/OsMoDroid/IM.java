@@ -505,9 +505,9 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 					 workserverint=-1;
 					 workservername="";
 					 socket=new Socket();
-					 socket.setTcpNoDelay(true);
+					 //socket.setTcpNoDelay(true);
 					
-					 addlog("TCP_NODELAY="+Boolean.toString(socket.getTcpNoDelay()));
+					 //addlog("TCP_NODELAY="+Boolean.toString(socket.getTcpNoDelay()));
 					socket.connect(sockAddr, 5000);
 					 connOpened=true;
 					 connecting=false;
@@ -521,7 +521,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 								
 							}
 					 });
-					 
+					 setReconnectAlarm();
 					 rd = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					 wr =new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF8"),true);
 					
@@ -836,7 +836,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		{
 		for (Channel ch : LocalService.channelList)
 			{
-			for (Device dev : ch.deviceList){
+			for (final Device dev : ch.deviceList){
 			if (c.substring(c.indexOf(":")+1, c.length()).equals(dev.tracker_id)){
 				
 				dev.lat=Float.parseFloat(d.substring(d.indexOf("L")+1, d.indexOf(":")));
@@ -859,7 +859,19 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 				
 				}
 				
-				if(LocalService.devlistener!=null){LocalService.devlistener.onDeviceChange(dev);}
+				if(LocalService.devlistener!=null)
+				{
+					localService.alertHandler.post(new Runnable() {
+						
+						@Override
+						public void run() {
+							dev.devicePath.add(new GeoPoint(dev.lat, dev.lon));
+							LocalService.devlistener.onDeviceChange(dev);
+							
+						}
+					});
+					
+					}
 				}
 				}
 			}
