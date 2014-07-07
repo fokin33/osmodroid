@@ -760,7 +760,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	}
 	if(c.contains("GROUP_CONNECT"))
 		{
-		if(!jo.has("error")){
+		if(!jo.has("error")&&jo.has("group")){
 			String listen="";
 			Channel ch = new Channel(jo, localService);
 			
@@ -803,22 +803,62 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 					}		
 			}
 		else {
-			Toast.makeText(localService, "No group", Toast.LENGTH_SHORT);
+			localService.alertHandler.post(new Runnable()
+				{
+					
+					@Override
+					public void run()
+						{
+							Toast.makeText(localService, "No group", Toast.LENGTH_SHORT);
+						}
+				});
+			
 		}
 		}
 	if(c.contains("GROUP_GET_ALL"))
 	{
-		 
+		boolean contains=false;
+		for (Channel ch: LocalService.channelList){
 			for (int i = 0; i < ja.length(); i++) {
-		 			JSONObject jsonObject;
-					try {
-						jsonObject = ja.getJSONObject(i);
-						sendToServer("GROUP_CONNECT:"+jsonObject.getString("group_id"));
+	 			JSONObject jsonObject;
+				try {
+					jsonObject = ja.getJSONObject(i);
+					if(ch.group_id.equals(jsonObject.getString("group_id"))){
+						contains=true;
 					}
-					catch (Exception e) {
-						// TODO: handle exception
-					}
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+		}
+			if(!contains){
+				LocalService.channelList.remove(ch);
+				localService.alertHandler.post(new Runnable()
+					{
+						
+						@Override
+						public void run()
+							{
+								LocalService.channelsAdapter.notifyDataSetChanged();
+							}
+					});
 			}
+		}
+			for (int i = 0; i < ja.length(); i++) {
+	 			JSONObject jsonObject;
+				try {
+					jsonObject = ja.getJSONObject(i);
+					sendToServer("GROUP_CONNECT:"+jsonObject.getString("group_id"));
+								}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				
+		}
+		
+	
+			
 		
 	}
 	if(c.contains("GROUP_LEAVE"))
@@ -963,6 +1003,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			}
 			
 		} else {
+			addlog("Recieve token error - shall reconnecting ");
 			setReconnectOnError();
 		}
 		
