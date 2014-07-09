@@ -278,7 +278,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 									{
 										try
 											{
-												globalActivity.mService.myIM.sendToServer("GROUP_CREATE|{name:\""+Uri.encode(input2.getText().toString())+"\", until:\"\", description:\"\", policy:\"\"}");
+												globalActivity.mService.myIM.sendToServer("GROUP_CREATE|{\"name\":\""+Uri.encode(input2.getText().toString())+"\", \"until\":\"\", \"description\":\"\", \"policy\":\"\"}");
 											}
 										catch (Exception e) {
 											e.printStackTrace();

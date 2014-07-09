@@ -1000,6 +1000,9 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+			} else {
+				stop();
+				localService.sendid();
 			}
 			
 		} else {

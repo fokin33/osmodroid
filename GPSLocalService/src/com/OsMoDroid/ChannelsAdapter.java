@@ -48,7 +48,14 @@ public class ChannelsAdapter extends ArrayAdapter<Channel> {
 		        
 		        tg.setOnClickListener(myCheckChangList);
 		        tg.setTag(position);
-		        if (channel.name!=null){   channelName.setText(channel.name);}
+		        if (channel.name!=null)
+		        	{   
+		        		channelName.setText(channel.name);
+		        	}
+		        else 
+		        	{
+		        		channelName.setText(channel.group_id);
+		        	}
 		        if (channel.created!=null){channelCreated.setText(channel.created);}
 		        if (channel.send!=null){tg.setChecked(channel.send);
 		          channelName.setTextColor(Color.BLACK);      
