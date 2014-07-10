@@ -41,7 +41,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class ChannelsFragment extends SherlockFragment implements ResultsListener {
+public class ChannelsFragment extends SherlockFragment {
 	private GPSLocalServiceClient globalActivity;
 	//private ListView lv1;
 	protected String canalid;
@@ -107,7 +107,7 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 											postjson.put("text", input.getText().toString());
 											postjson.put("channel", LocalService.channelList.get((int) acmi.id).u);
 											postjson.put("device", OsMoDroid.settings.getString("device", ""));
-											Netutil.newapicommand(ChannelsFragment.this, "om_channel_chat_post","json="+postjson.toString());
+											//Netutil.newapicommand(ChannelsFragment.this, "om_channel_chat_post","json="+postjson.toString());
 											} catch (JSONException e) {
 												e.printStackTrace();
 											}
@@ -382,28 +382,4 @@ public class ChannelsFragment extends SherlockFragment implements ResultsListene
 	    	}
 	    	return view;
 		}
-	@Override
-	public void onResultsSucceeded(APIComResult result) {
-		Log.d(getClass().getSimpleName(),"OnResultListener Command:"+result.Command+",Jo="+result.Jo);
-		if (!(result.Jo==null)  ) {
-			Toast.makeText(getSherlockActivity(),result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
-		if (result.Jo.has("om_channel_add"))
-			{	
-			try {
-					JSONObject js = new JSONObject(result.post.replace("json=", ""));
-					Netutil.newapicommand((ResultsListener)ChannelsFragment.this,(Context)getSherlockActivity(),"om_channel_enter:"+OsMoDroid.settings.getString("device", "")+","+js.getString("code"));
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-			}
-		if (result.Jo.has("om_channel_enter:"+OsMoDroid.settings.getString("device", "")+","+canalid))
-		{
-			Netutil.newapicommand((ResultsListener)LocalService.serContext,(Context)getSherlockActivity(), "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
-		}
-		if (result.Jo.has("om_channel_out:"+OsMoDroid.settings.getString("device", "")+","+u))
-		{
-			Netutil.newapicommand((ResultsListener)LocalService.serContext,(Context)getSherlockActivity(), "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
-		}
-		}
-	}
 }

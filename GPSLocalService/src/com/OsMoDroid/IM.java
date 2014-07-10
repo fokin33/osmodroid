@@ -728,6 +728,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 				{
 					sendToServer(listen);
 				}
+			OsMoDroid.editor.putString("device", jo.optString("group_tracker_id"));
 		}
 	}
 	
@@ -773,7 +774,10 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			{	
 				 
 				for(Device dev: LocalService.channelList.get(LocalService.channelList.indexOf(ch)).deviceList){
+					if (!dev.tracker_id.equals(OsMoDroid.settings.getString("device", "")))
+						{
 					listen=listen+("UNLISTEN:"+dev.tracker_id)+"=";
+						}
 					
 				}
 				
@@ -795,7 +799,10 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			
 					}
 					for(Device dev: ch.deviceList){
-						listen=listen+("LISTEN:"+dev.tracker_id)+"=";
+						if (!dev.tracker_id.equals(OsMoDroid.settings.getString("device", "")))
+							{
+								listen=listen+("LISTEN:"+dev.tracker_id)+"=";
+							}
 					}
 					if(!listen.equals(""))
 					{

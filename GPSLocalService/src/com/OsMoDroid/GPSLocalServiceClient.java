@@ -97,7 +97,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
   
-public class GPSLocalServiceClient extends SherlockFragmentActivity  implements ResultsListener{
+public class GPSLocalServiceClient extends SherlockFragmentActivity {
 	
 	 
 
@@ -128,8 +128,8 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 
 
 	boolean messageShowed=false;
-	public static String key = "";
-	public String login = "";
+	
+	
 	private int speed;
 	int speedbearing_gpx;
 	int bearing_gpx;
@@ -152,14 +152,12 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	int hdop;
 	int period;
 	int distance;
-	private String pass = "";
-	private String hash;
+	
+	
 	private int n;
-	private String submiturl;
-	String viewurl;
-	private String pdaviewurl;
-	private String device="";
-	private String devicename="";
+	
+	
+	
 	String position;
 	String sendresult;
 	BroadcastReceiver receiver;
@@ -204,9 +202,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 			started = true;
 			updateMainUI();
 			
-			if (!OsMoDroid.settings.getString("key", "" ).equals("") ){
-			Netutil.newapicommand((ResultsListener)mService.serContext, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
-			}
+		
 			if(needIntent!=null){
 				intentAction(needIntent);
 				needIntent=null;
@@ -314,29 +310,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 		} catch (NameNotFoundException e) {
 			//e.printStackTrace();
 		}
-		OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-			
-			  public void onSharedPreferenceChanged(SharedPreferences prefs, String keychanged) {
-			    if ((keychanged.equals("hash")||keychanged.equals("n")) ) {
-			    	Log.d(this.getClass().getSimpleName(), "Сменился хэш");
-			    	device="";
-			    	devicename="";
-
-			    
-			    	OsMoDroid.editor.remove("device");
-			    	OsMoDroid.editor.remove("devicename");
-			    	OsMoDroid.editor.commit();
-
-
-
-			    }
-
-			  
-			  }
-			};
-
-
-			OsMoDroid.settings.registerOnSharedPreferenceChangeListener(listener);
+		
 			setContentView(R.layout.activity_main);
 	        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 	        mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -616,65 +590,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 
 
 	void auth() {
-		// final View textEntryView = factory.inflate(R.layout.dialog,
-		// null);
-		LinearLayout layout = new LinearLayout(this);
-		layout.setOrientation(LinearLayout.VERTICAL);
-		final TextView txv5 = new TextView(this);
-		txv5.setText(R.string.login);
-		layout.addView(txv5);
-		final EditText inputlogin = new EditText(this);
-		inputlogin.setText(login);
-		layout.addView(inputlogin);
-
-		final TextView txv3 = new TextView(this);
-		txv3.setText(R.string.password);
-		layout.addView(txv3);
-
-		final EditText input = new EditText(this);
-		//input2.setText("Ваше имя");
-		layout.addView(input);
-//	final EditText input = new EditText(this);
-		//final TextView txv4 = new TextView(this);
-		//txv4.setText("Одноразовый пароль можно получить по адресу http://esya.ru/app.html?act=add при наличии регистрации");
-		//Linkify.addLinks(txv4, Linkify.ALL);
-		//layout.addView(txv4);
-
-		AlertDialog alertdialog3 = new AlertDialog.Builder(
-				GPSLocalServiceClient.this)
-				.setTitle(R.string.appauth)
-				.setView(layout)
-				.setPositiveButton(R.string.yes,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int whichButton) {
-								pass = input.getText().toString();
-								if (!(pass.equals(""))) {
-									String[] params = {
-											"http://auth.api.esya.ru",
-											"true",
-											"login=" + inputlogin.getText().toString() + "&password="
-													+ pass + "&key=G94y",
-											"auth" };
-									RequestCommandTask Rq = new RequestCommandTask();
-									Rq.execute(params);
-								} else {
-									Toast.makeText(
-											GPSLocalServiceClient.this,
-											R.string.noappcode, 5).show();
-								}
-							}
-						})
-				.setNegativeButton(R.string.No,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int whichButton) {
-
-
-							}
-						}).create();
-
-		alertdialog3.show();
+		Toast.makeText(this, "Пока не реализовано", Toast.LENGTH_SHORT);
 	}
 
 
@@ -695,12 +611,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 				"") ? "10000" : OsMoDroid.settings.getString("period", "10000"));
 		distance = Integer.parseInt(OsMoDroid.settings.getString("distance", "50")
 				.equals("") ? "50" : OsMoDroid.settings.getString("distance", "50"));
-		hash = OsMoDroid.settings.getString("hash", "");
-		n = Integer.parseInt(OsMoDroid.settings.getString("n", "0").equals("") ? "0"
-				: OsMoDroid.settings.getString("n", "0"));
-		submiturl = OsMoDroid.settings.getString("submit-url", "");
-		viewurl = OsMoDroid.settings.getString("view-url", "");
-		pdaviewurl = OsMoDroid.settings.getString("pda-view-url", "");
+		
 		speedbearing = Integer.parseInt(OsMoDroid.settings.getString("speedbearing", "2")
 				.equals("") ? "2" : OsMoDroid.settings.getString("speedbearing", "2"));
 		bearing = Integer.parseInt(OsMoDroid.settings.getString("bearing", "10").equals(
@@ -733,10 +644,10 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 				"notifyperiod", "30000"));
 		sendsound = OsMoDroid.settings.getBoolean("sendsound", false);
 		// pass = OsMoDroid.settings.getString("pass", "");
-		login = OsMoDroid.settings.getString("login", "");
-		key = OsMoDroid.settings.getString("key", "");
-		device = OsMoDroid.settings.getString("device", "");
-		Log.d(this.getClass().getSimpleName(), "readpref() hash:"+hash);
+		
+		
+		
+		
 	}
 
 	void startlocalservice(){
@@ -814,47 +725,7 @@ if (mBound) {
 		super.onDestroy();
 	}
 
-	public String getPage(String adr, boolean dopost, String post)
-			throws IOException {
-		// Log.d(this.getClass().getSimpleName(), "getpage() gpsclient");
-		Log.d(this.getClass().getSimpleName(), adr);
-		HttpURLConnection con;
-		int portOfProxy = android.net.Proxy.getDefaultPort();
-		if (portOfProxy > 0) {
-			Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(
-					android.net.Proxy.getDefaultHost(), portOfProxy));
-			con = (HttpURLConnection) new URL(adr).openConnection(proxy);
-		} else {
-			con = (HttpURLConnection) new URL(adr).openConnection();
-		}
-		con.setReadTimeout(15000);
-		con.setConnectTimeout(15000);
-		if (dopost) {
-			con.setRequestMethod("POST");
-			con.setDoOutput(true);
-			con.setDoInput(true);
-			OutputStream os = con.getOutputStream();
-			os.write(post.getBytes());
-			Log.d(this.getClass().getName(), "Что POSTим" + post);
-			os.flush();
-			os.close();
-		}
 
-		con.connect();
-		if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-			// String str=inputStreamToString(con.getInputStream());
-			return inputStreamToString(con.getInputStream());
-		} else {
-			Log.d(this.getClass().getName(),
-					Integer.toString(con.getResponseCode()));
-			// String str=inputStreamToString(con.getInputStream());
-			// Log.d(this.getClass().getName(),str);
-			// return str;
-			return getString(R.string.ErrorRecieve);
-
-		}
-
-	}
 
 	public String inputStreamToString(InputStream in) throws IOException {
 		BufferedReader bufferedReader = new BufferedReader(
@@ -923,309 +794,9 @@ if (mBound) {
 		    return Character.toUpperCase(first) + s.substring(1);
 		  }
 		} 
-		void requestHash (){
-			RequestAuthTask requestAuthTask = new RequestAuthTask();
-			requestAuthTask.execute();
-			
-			
-		}
+		
 				
-	 class RequestAuthTask extends AsyncTask<Void, Void, Void> {
-		private String authtext;
-		String adevice;
-		private Boolean Err = true;
-		ProgressDialog dialog = ProgressDialog.show(GPSLocalServiceClient.this,
-				"", getString(R.string.AuthWait), true);
-
-		// Dialog dial = Dialog.
-
-		protected void onPreExecute() {
-			// dialog.dismiss();
-			dialog.show();
-		}
-
-		protected void onPostExecute(Void params) {
-			// Log.d(this.getClass().getName(), "Задание окончило выполнятся.");
-			dialog.dismiss();
-			if (Err) {
-				Toast.makeText(GPSLocalServiceClient.this,
-						getString(R.string.CheckInternet), 5).show();
-			} else {
-
-
-				//WritePref();
-				
-				OsMoDroid.editor.putString("hash", hash);
-				OsMoDroid.editor.putString("n", Integer.toString(n));
-				OsMoDroid.editor.putString("submit-url", submiturl);
-				OsMoDroid.editor.putString("view-url", viewurl);
-				OsMoDroid.editor.putString("pda-view-url", pdaviewurl);
-				OsMoDroid.editor.putString("device", adevice);
-				OsMoDroid.editor.putString("key", "");
-				OsMoDroid.editor.commit();
-				ReadPref();
-				setupDrawerList();
-				updateMainUI();
-				Log.d(this.getClass().getName(), "Задание окончило выполнятся.Bind");
-				bindService();
-
-			}
-		}
-
-		@Override
-		protected Void doInBackground(Void... params) {
-			try {
-				// Log.d(this.getClass().getName(),
-				// "Начинаем запрос авторизации.");
-				//authtext = getPage("http://auth.t.esya.ru/?who=OsMoDroid",false, "");
-				
-				authtext = getPage("http://a.t.esya.ru/?act=new&c=OsMoDroid&v="+version+"&n="+Uri.encode(getDeviceName()),	false, "");
-				//{"device":1235,"hash":"JoqQtav","n":"2515","url":"26CstQLcgzIYTOin"}
-				JSONObject auth = new JSONObject(authtext);
-				Log.d(this.getClass().getName(), auth.toString());
-				hash = auth.getString("hash");
-				n = auth.getInt("n");
-				submiturl = auth.optString("submit-url");
-				viewurl =  "http://m.esya.ru/"+auth.optString("url");
-				pdaviewurl = auth.optString("pda-view-url");
-				adevice= auth.getString("u");
-				// Log.d(this.getClass().getName(), "Авторизация закончилась.");
-				if (hash.equals("")) {
-					// Log.d(this.getClass().getName(), "Косяк.");
-					Err = true;
-				}
-				Err = false;
-			} catch (IOException e) {
-
-				e.printStackTrace();
-				// Log.d(this.getClass().getName(), "Косяк2.");
-				Err = true;
-				// finish();
-
-			} catch (JSONException e) {
-				e.printStackTrace();
-				// Log.d(this.getClass().getName(), "Косяк3.");
-				Err = true;
-
-			}
-			return null;
-		}
-	}
-
-	public class RequestCommandTask extends AsyncTask<String, Void, String> {
-		private String Commandtext;
-		private String adevice;
-		private String akey;
-		private String aviewurl;
-		private String adevicename;
-		// private Boolean Err = true;
-		ProgressDialog dialog = ProgressDialog.show(GPSLocalServiceClient.this,
-				"", getString(R.string.commandpleasewait), true);
-
-		// Dialog dial = Dialog.
-
-		protected void onPreExecute() {
-			// dialog.dismiss();
-			dialog.show();
-		}
-
-		@Override
-		protected void onPostExecute(String resultString) {
-
-			dialog.dismiss();
-			if (resultString == null) {
-				Toast.makeText(GPSLocalServiceClient.this,
-						getString(R.string.CheckInternet), 5).show();
-			} else {
-				// commandJSON=resultJSON;
-if (!(adevice==null)){device=adevice;
-
-OsMoDroid.editor.putString("device", adevice);
-OsMoDroid.editor.commit();}
-if (!(adevicename==null)){devicename=Netutil.unescape(adevicename);
-OsMoDroid.editor.putString("devicename", Netutil.unescape(adevicename));
-OsMoDroid.editor.commit();
-
-}
-if (!(akey==null))
-{key=akey;
-OsMoDroid.editor.putString("key", key);
-OsMoDroid.editor.remove("laststartcommandtime");
-OsMoDroid.editor.commit();
-Netutil.newapicommand((Context) GPSLocalServiceClient.this, "om_device_bind:"+OsMoDroid.settings.getString("hash", "")+","+OsMoDroid.settings.getString("n", ""));
-
-//mDrawerItems = ;
-setupDrawerList();
-
-updateMainUI();
-Netutil.newapicommand((ResultsListener)mService, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
-
-
-}
-if (!(aviewurl==null)){viewurl=aviewurl;}
-
-				updateMainUI();
-
-				
-
-				OsMoDroid.editor.putString("view-url", viewurl);
-
-
-				OsMoDroid.editor.commit();
-
-				ReadPref();
-				Toast.makeText(GPSLocalServiceClient.this,
-						resultString.toString(), 5).show();
-			}
-
-		}
-
-		@Override
-		protected String doInBackground(String... params) {
-			JSONObject resJSON = null;
-			String returnstr = null;
-			try {
-				// Log.d(this.getClass().getName(),
-				// "Начинаем запрос авторизации.");
-				Commandtext = getPage(params[0],
-						Boolean.parseBoolean(params[1]), params[2]);
-				Log.d(this.getClass().getName(), Commandtext);
-				resJSON = new JSONObject(Commandtext);
-				//Toast.makeText(this,resJSON.optString("state")+" "+ resJSON.optString("error_description"),5).show();
-				// return new JSONObject(Commandtext);
-
-				// Log.d(this.getClass().getName(), "Авторизация закончилась.");
-
-			} catch (IOException e) {
-
-				e.printStackTrace();
-				return null;
-				// Log.d(this.getClass().getName(), "Косяк2.");
-				// Err = true;
-				// finish();
-
-			} catch (JSONException e) {
-				e.printStackTrace();
-				return null;
-				// Log.d(this.getClass().getName(), "Косяк3.");
-				// Err = true;
-
-			}
-			if (resJSON == null)
-				return null;
-			else {
-				// commandJSON=resultJSON;
-				if (params[3].equals("auth")) {
-					if (!(resJSON.optString("key").equals(""))) {
-						akey = resJSON.optString("key");
-						returnstr = resJSON.optString("state")+" "+ resJSON.optString("error_description");
-					}
-				}
-
-				if (params[3].equals("device_link")) {
-					if (!(resJSON.optString("url").equals(""))) {
-						aviewurl = resJSON.optString("url");
-						returnstr = resJSON.optString("state")+" "+ resJSON.optString("error_description");
-					}
-				}
-
-				if (params[3].equals("device")) {
-					if (!(resJSON.optJSONArray("devices") == null)) {
-						for (int i = 0; i < resJSON.optJSONArray("devices")
-								.length(); i++) {
-							try {
-								if (resJSON.optJSONArray("devices")
-										.getJSONObject(i).getString("hash")
-										.equals(hash)) {
-									adevice = resJSON.optJSONArray("devices")
-											.getJSONObject(i).getString("u");
-									adevicename=resJSON.optJSONArray("devices")
-											.getJSONObject(i).getString("name");
-									Log.d(this.getClass().getName(), adevice);
-								}
-							} catch (JSONException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-						returnstr = resJSON.optString("state")+" "+ resJSON.optString("error_description");
-//						if (adevice == null) {
-//							returnstr = "Устройство узнать не удалось";
-//						} else {
-//
-//							returnstr = "Устройство найдено";
-//						}
-
-					}
-
-				}
-
-				if (params[3].equals("channel_enter")) {
-					if (!(resJSON.optString("state").equals(""))) {
-						returnstr = resJSON.optString("state")+" "+ resJSON.optString("error_description");
-
-					} else {
-						returnstr = getString(R.string.resultenterchanalnoget);
-					}
-				}
-
-				if (params[3].equals("get_device_links")) {
-					if (!(resJSON.optString("state").equals(""))) {
-						returnstr = resJSON.optJSONArray("links")+" "+ resJSON.optString("error_description");
-
-					} else {
-						returnstr = getString(R.string.linksnotget);
-					}
-				}
-
-				// Toast.makeText(GPSLocalServiceClient.this,resJSON.toString(),5).show();
-
-			}
-
-			return returnstr;
-
-			// return null;
-		}
-	}
-
-
-
-	public void onResultsSucceeded(APIComResult result) {
-
-		if (result.Jo==null&&result.ja==null ){Toast.makeText(this,R.string.noanswerfromserver,5).show();}
-
-		if (!(result.Jo==null)  ) {
-
-			Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
-		}		
-
-
-		if (result.Command.equals("device_link")&& !(result.Jo==null)) {
-			Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
-			if (!(result.Jo.optString("url").equals(""))) {
-				viewurl = result.Jo.optString("url");
-				updateMainUI();
-
-				
-
-				OsMoDroid.editor.putString("view-url", viewurl);
-
-
-				OsMoDroid.editor.commit();
-
-				//returnstr = "URL найден";
-			} else {
-				Toast.makeText(this, R.string.urlnoget,Toast.LENGTH_LONG ).show();
-			}
-		}
-
-			//Log.d(this.getClass().getSimpleName(),"Добавляли линк");
-
-
-
-
-
-	}
+	
 	
 	boolean saveSharedPreferencesToFile(File dst) {
 	    boolean res = false;
@@ -1298,88 +869,6 @@ if (!(aviewurl==null)){viewurl=aviewurl;}
 	}
 
 
-//	@Override
-//public void onTabSelected(Tab tab, FragmentTransaction ft)
-//{
-//// Select proper stack
-//		Log.d(this.getClass().getSimpleName(),"tab="+tab);
-//		Log.d(this.getClass().getSimpleName(),"tag="+tab.getTag());
-//		Log.d(this.getClass().getSimpleName(),"backStacks="+backStacks);
-//		
-//		Stack<String> backStack = backStacks.get(tab.getTag());
-//Log.d(this.getClass().getSimpleName(),"backStack="+backStack);
-//if (backStack.isEmpty())
-//{
-//// If it is empty instantiate and add initial tab fragment
-//SherlockFragment fragment;
-//switch ((TabType) tab.getTag())
-//{
-//case MAIN:
-//fragment = (SherlockFragment) SherlockFragment.instantiate(this, MainFragment.class.getName());
-//break;
-//case DEVICES:
-//	fragment = (SherlockFragment) SherlockFragment.instantiate(this, DevicesFragment.class.getName());
-//break;
-//case CHANNELS:
-//	fragment = (SherlockFragment) SherlockFragment.instantiate(this, ChannelsFragment.class.getName());
-//break;
-//case LINKS:
-//	fragment = (SherlockFragment) SherlockFragment.instantiate(this, SimLinksFragment.class.getName());
-//break;
-//case TRACKS:
-//	fragment = (SherlockFragment) SherlockFragment.instantiate(this, TracFileListFragment.class.getName());
-//break;
-//case NOTIFS:
-//	fragment = (SherlockFragment) SherlockFragment.instantiate(this, NotifFragment.class.getName());
-//break;
-//case STAT:
-//	fragment = (SherlockFragment) SherlockFragment.instantiate(this, StatFragment.class.getName());
-//break;
-//case MAP:
-//	fragment = (SherlockFragment) SherlockFragment.instantiate(this, MapFragment.class.getName());
-//break;
-//default:
-//throw new java.lang.IllegalArgumentException("Unknown tab");
-//}
-//addFragment(fragment, backStack, ft);
-//}
-//else
-//{
-//// Show topmost fragment
-//showFragment(backStack, ft);
-//}
-//}
- 
-//@Override
-//public void onTabUnselected(Tab tab, FragmentTransaction ft)
-//{
-//// Select proper stack
-//Stack<String> backStack = backStacks.get(tab.getTag());
-//// Get topmost fragment
-//String tag = backStack.peek();
-//SherlockFragment fragment = (SherlockFragment) getSupportFragmentManager().findFragmentByTag(tag);
-//// Detach it
-//ft.detach(fragment);
-//}
-// 
-//@Override
-//public void onTabReselected(Tab tab, FragmentTransaction ft)
-//{
-//// Select proper stack
-//Stack<String> backStack = backStacks.get(tab.getTag());
-// 
-//if (backStack.size() > 1)
-////ft.setCustomAnimations(R.anim.slide_from_right, R.anim.slide_to_left);
-//// Clean the stack leaving only initial fragment
-//while (backStack.size() > 1)
-//{
-//// Pop topmost fragment
-//String tag = backStack.pop();
-//SherlockFragment fragment = (SherlockFragment) getSupportFragmentManager().findFragmentByTag(tag);
-//// Remove it
-//if(fragment!=null){ft.remove(fragment);}
-//}
-//showFragment(backStack, ft);
-//}
+
 
 }

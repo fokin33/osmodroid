@@ -30,14 +30,14 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 
-import com.OsMoDroid.GPSLocalServiceClient.RequestCommandTask;
+
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.SubMenu;
 
-public class MainFragment extends SherlockFragment implements ResultsListener, GPSLocalServiceClient.upd {
+public class MainFragment extends SherlockFragment implements GPSLocalServiceClient.upd {
 	
 	private BroadcastReceiver receiver;
 	private GPSLocalServiceClient globalActivity;
@@ -119,12 +119,12 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 		}
 		
 		TextView t2 = (TextView) getView().findViewById(R.id.URL);
-		t2.setText(OsMoDroid.settings.getString("devicename", "")+" :\n "+globalActivity.viewurl);
+		
 		Linkify.addLinks(t2, Linkify.ALL);
 		ToggleButton globalsendToggle = (ToggleButton) getView().findViewById(R.id.toggleButton1);
 		Button auth = (Button) getView().findViewById(R.id.authButton);
 		
-		if (OsMoDroid.settings.getString("key", "").equals("")){
+		if (OsMoDroid.settings.getString("authed", "").equals("")){
 		globalsendToggle.setVisibility(View.GONE);
 		//auth.setVisibility(View.VISIBLE);
 		}
@@ -175,28 +175,7 @@ public class MainFragment extends SherlockFragment implements ResultsListener, G
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == 1) {
-			// case 1:
-			AlertDialog alertdialog = new AlertDialog.Builder(
-					getSherlockActivity()).create();
-			alertdialog.setTitle(getString(R.string.AgreeRepeatAuth));
-
-			alertdialog.setMessage(getString(R.string.ChangeAdresMonitor));
-
-			alertdialog.setButton(getString(R.string.yes),
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) {
-							globalActivity.requestHash();
-							return;
-						}
-					});
-			alertdialog.setButton2(getString(R.string.No),
-					new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int which) {
-
-							return;
-						}
-					});
-			alertdialog.show();
+		Toast.makeText(globalActivity, "Заглушка", Toast.LENGTH_SHORT);
 		}
 		if (item.getItemId() == 2) {
 			
@@ -734,11 +713,8 @@ else {
 		if(globalActivity!=null&&globalActivity.mService!=null){globalActivity.mService.refresh();}
 		super.onViewCreated(view, savedInstanceState);
 	}
-	@Override
-	public void onResultsSucceeded(APIComResult result) {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	
 	@Override
 	public void update() {
 		updateMainUI();

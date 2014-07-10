@@ -123,8 +123,7 @@ public class Channel {
 //	 				    name = toxIC jiayu
 //	 				    icon = 1
 		 			
-	if (!jsonObject.getString("group_tracker_id").equals(OsMoDroid.settings.getString("device", "")))
-		{
+	
 		try {
 			this.deviceList.add(new Device(jsonObject.getString("group_tracker_id"),jsonObject.getString("name"), jsonObject.getString("color") ) );
 		} catch (NumberFormatException e) {
@@ -132,7 +131,7 @@ public class Channel {
 			e.printStackTrace();
 		}
 	
-		}
+		
 	} catch (JSONException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
