@@ -3,244 +3,83 @@ package com.OsMoDroid;
 
 
 
-import android.net.ConnectivityManager;
-
-import android.net.NetworkInfo;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
-
-import android.os.Build;
-import android.os.Handler;
-import android.os.Message;
-import android.os.RemoteCallbackList;
-import android.os.Vibrator;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
-
-import java.io.BufferedWriter;
 import java.io.StreamCorruptedException;
-
-import java.io.File;
-
-import java.io.FileWriter;
-
-import java.io.IOException;
-
-import java.io.InputStream;
-
-import java.io.InputStreamReader;
-
-import java.io.OutputStream;
-
-import java.io.OutputStreamWriter;
-
-import java.io.PrintWriter;
-
-import java.io.Reader;
-
 import java.lang.reflect.InvocationTargetException;
-
 import java.lang.reflect.Method;
-
-import java.net.HttpURLConnection;
-
-import java.net.InetSocketAddress;
-
-import java.net.Proxy;
-
-import java.net.Socket;
-
-import java.net.SocketAddress;
-
-import java.net.URL;
-
-
-
 import java.text.DecimalFormat;
-
 import java.text.DecimalFormatSymbols;
-
-//import java.text.NumberFormat;
-
 import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import java.util.Iterator;
-
+import java.util.List;
 import java.util.Locale;
-
 import java.util.TimeZone;
-
-import java.util.concurrent.TimeUnit;
-
-//import java.util.Locale;
-
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.osmdroid.api.IGeoPoint;
-import org.osmdroid.util.BoundingBoxE6;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.overlay.PathOverlay;
-
-
-
-import com.OsMoDroid.Channel.Point;
-import com.OsMoDroid.LocalService.SendCoor;
-
-import com.OsMoDroid.Netutil.MyAsyncTask;
-
-
-
-
 
 import android.app.AlarmManager;
-
-import android.app.AlertDialog;
-
 import android.app.Notification;
-
 import android.app.NotificationManager;
-
 import android.app.PendingIntent;
-
-import android.app.Activity;
-import android.app.Service;
 import android.app.PendingIntent.CanceledException;
-
+import android.app.Service;
 import android.content.BroadcastReceiver;
-import android.content.SharedPreferences.Editor;
-
 import android.content.Context;
-
-import android.content.DialogInterface;
-
 import android.content.Intent;
-
 import android.content.IntentFilter;
-
-import android.content.SharedPreferences;
-
+import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageInfo;
-
 import android.content.pm.PackageManager.NameNotFoundException;
-
-import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-
-
-import android.os.AsyncTask;
-
-import android.os.Bundle;
-
-//import android.os.Handler;
-
-import android.os.Binder;
-
-//import android.os.Debug;
-
+import android.location.GpsSatellite;
+import android.location.GpsStatus;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
-
+import android.os.Binder;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
-
+import android.os.Message;
 import android.os.PowerManager;
-
 import android.os.PowerManager.WakeLock;
-
-import android.os.RemoteException;
-
 import android.os.SystemClock;
-
-import android.preference.PreferenceManager;
+import android.os.Vibrator;
 import android.provider.Settings.Secure;
-
-
 import android.speech.tts.TextToSpeech;
-
 import android.speech.tts.TextToSpeech.OnInitListener;
-
-//import android.preference.PreferenceManager;
-
-//import android.util.Log;
-
-
-
-//import android.util.Log;
-
-
-
-//import android.util.Log;
-
-//import android.util.Log;
-
+import android.support.v4.app.NotificationCompat;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
-
-import android.widget.TextView;
-
 import android.widget.Toast;
 
-import android.location.GpsSatellite;
-
-import android.location.GpsStatus;
-
-import android.location.Location;
-
-import android.location.LocationListener;
-
-import android.location.LocationManager;
-
-import android.media.AudioManager;
-import android.media.SoundPool;
-
-
-
-
-//import android.media.RingtoneManager;
-
-//import org.apache.http.HttpResponse;
-
-//import org.apache.http.HttpStatus;
-
-//import org.apache.http.client.HttpClient;
-
-//import org.apache.http.client.methods.HttpPost;
-
-//import org.apache.http.impl.client.DefaultHttpClient;
-
-//import org.apache.http.util.EntityUtils;
-
-//import android.media.Ringtone;
-
-
-
-
-
-import android.support.v4.app.NotificationCompat;
-import android.telephony.TelephonyManager;
-
-import android.util.Log;
+import com.OsMoDroid.Netutil.MyAsyncTask;
 
 
 
@@ -253,7 +92,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	private Sensor mAccelerometer;
 	final double calibration = SensorManager.STANDARD_GRAVITY;
 	float currentAcceleration;
-	private static final int OSMODROID_ID = 1;
+	static final int OSMODROID_ID = 1;
 	Boolean sessionstarted=false;
 	Boolean globalsend=false;
 	Boolean signalisationOn=false;
@@ -267,13 +106,13 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	int stopsound;
 	int alarmsound;
 	int signalonoff;
-	private static SoundPool soundPool;
+	static SoundPool soundPool;
 	private Netutil.MyAsyncTask starttask;
 	private Intent in;
 	public boolean mayak=false;
 	private boolean glonas=false;
 	private boolean playsound=false;
-	private boolean sendsound=false;
+	boolean sendsound=false;
 	private boolean vibrate;
 	private boolean usecourse;
 	private int vibratetime;
@@ -306,7 +145,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	private String hash;
 	private int n;
 	private String position;
-	private String sendresult="";
+	String sendresult="";
 	public static LocationManager myManager;
 	private Location prevlocation;
 	public static Location currentLocation;
@@ -318,7 +157,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	private WakeLock wakeLock;
 	private WakeLock LocwakeLock;
 	private WakeLock SendwakeLock;
-	private SendCoor send;
+
 	private int speedbearing_gpx;
 	private int bearing_gpx;
 	private long lastgpslocationtime=0;
@@ -366,7 +205,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	final static DecimalFormat df0 = new DecimalFormat("########");
 	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	final private static SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmmss");
-	final private static SimpleDateFormat sdf3 = new SimpleDateFormat("HH:mm:ss");
+	final static SimpleDateFormat sdf3 = new SimpleDateFormat("HH:mm:ss");
 	final private static  DecimalFormatSymbols dot= new DecimalFormatSymbols();
 	protected boolean firstgpsbeepedon=false;
 	static IM myIM;
@@ -489,8 +328,8 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
     private int alarmStreamId=0;
     private int count=0;
     private int countFix=0;
-	private Notification notification;
-	private PendingIntent osmodroidLaunchIntent;
+	Notification notification;
+	PendingIntent osmodroidLaunchIntent;
 	private String strVersionName;
 	private String androidver;
 	private ObjectInputStream input;
@@ -811,6 +650,12 @@ public void stopcomand()
 				buffer.add(sending);
 				sending="";
 				buffercounter++;
+				String time = sdf3.format(new Date(System.currentTimeMillis()));
+				sendresult = time + " " +  getString(R.string.error);
+				if (notification!=null){
+					notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "Отправлено:"+sendcounter+" Записано:"+writecounter, osmodroidLaunchIntent);
+					mNotificationManager.notify(OSMODROID_ID, notification);
+					}
 				refresh();
 			}
 		}
@@ -947,7 +792,7 @@ OsMoDroid.settings.edit().putBoolean("ondestroy", false).commit();
 	@Override
 
 	public void onDestroy() {
-		super.onDestroy();
+		
 		mSensorManager.unregisterListener(this);
 		if(log)Log.d(this.getClass().getName(), "Disable signalisation after destroy");
 		if (state){ stopServiceWork(false);}
@@ -984,6 +829,7 @@ OsMoDroid.settings.edit().putBoolean("ondestroy", false).commit();
 		mNotificationManager.cancelAll();
 		OsMoDroid.settings.edit().remove("globalsend").commit();
 		OsMoDroid.settings.edit().putBoolean("ondestroy", true).commit();
+		super.onDestroy();
 		System.exit(0);
 	}
 
@@ -1461,16 +1307,6 @@ public void sendid()
 			}
 
 
-
-			if (send != null ) {
-
-				if(log)Log.d(this.getClass().getName(), "Отменяем asynctask передачи send.");
-				if(log)Log.d(this.getClass().getName(), "send.status="+send.getStatus().toString());
-
-				send.cancel(true);
-
-		}
-
 			if (myManager!=null){
 
 			myManager.removeUpdates(this);}
@@ -1612,145 +1448,6 @@ public void sendid()
         refresh();
 
 	}
-
-	public class SendCoor extends AsyncTask<String, String, String> {
-
-
-
-
-
-		private  String tmp;
-		
-		
-
-		protected void onPostExecute(String result) {
-
-			if(log)Log.d(getClass().getSimpleName(), "SendCoorOnPostExecute, Result=" + result);
-
-			if (result.equals("NoConnection")) {
-
-				sendresult = getString(R.string.NoConnection);
-
-				internetnotify(true);
-
-			}
-
-			else {
-
-				String time = sdf3.format(new Date(System.currentTimeMillis()));
-
-				sendresult = decodesendresult(result);
-
-				if (sended) {
-
-					sendcounter = sendcounter + 1;
-
-					if (sendsound && !mayak) {
-						soundPool.play(sendpalyer, 1f, 1f, 1, 0, 1f);
-						mayak = false;
-					}
-
-					sendresult = time + " " + sendresult;
-				}
-
-				else
-
-				{
-
-					sendresult = time + " " + sendresult;
-
-				}
-
-			}
-			//notification.tickerText=sendresult;
-			if (notification!=null){
-			notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", "Отправлено:"+sendcounter+" Записано:"+writecounter, osmodroidLaunchIntent);
-			mNotificationManager.notify(OSMODROID_ID, notification);
-			}
-			refresh();
-
-		}
-
-		protected String doInBackground(String... arg0) {
-
-			if(log)Log.d(getClass().getSimpleName(), "SendCoorOnPostExecute, doInBackground begin");
-			try {
-
-			//	 SendwakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "SendWakeLock");
-
-			//	SendwakeLock.acquire();
-
-				if(log)Log.d(this.getClass().getName(), "Начинаем отправку.");
-
-				tmp=getPage(arg0[0], arg0[1]);
-
-				if(log)Log.d(this.getClass().getName(), "Отправка окончена.");
-
-			} catch (IOException e) {
-
-				internetnotify(false);
-
-			//	e.printStackTrace();
-
-				sended=false;
-
-				tmp="NoConnection";
-
-				if(log)Log.d(this.getClass().getName(), "Exception. NoConnection"+e.toString());
-
-			}
-
-//		    try {
-
-//
-
-//	            if (!s.isConnected()){ s.connect(sockaddr, 10000); s.setSoTimeout(5000);}
-
-//
-
-//	            PrintWriter out = new PrintWriter( new BufferedWriter( new OutputStreamWriter(s.getOutputStream())),true);
-
-//
-
-//				 out.println("arg0");
-
-
-
-
-
-
-
-//			//	  text = inputStreamToString(s.getInputStream());
-
-//			//	  if(log)Log.d(this.getClass().getName(),"text:"+ text);
-
-//
-
-//
-
-//	        }
-
-//
-
-//
-
-//		    catch (IOException e) {
-
-//	        	 if(log)Log.d(this.getClass().getName(),"Exeption socket:"+ e.toString());
-
-//	        	e.printStackTrace();
-
-//	        }
-
-
-
-			return tmp;
-
-		}
-
-	}
-
-
 
 	public void onLocationChanged(Location location) {
 
@@ -1962,185 +1659,7 @@ public void sendid()
 		if(log)Log.d(this.getClass().getName(), "Изменился статус провайдера:"+provider+" статус:"+status+" Бандл:"+extras.getInt("satellites"));
 	}
 
-	 private String getPage(String adr, String buf) throws IOException {
-
-		 if(log)Log.d(this.getClass().getName(), "void getpage");
-
-		 int portOfProxy = android.net.Proxy.getDefaultPort();
-
-         if( portOfProxy > 0 ){
-
-            Proxy proxy = new Proxy (Proxy.Type.HTTP ,new InetSocketAddress( android.net.Proxy.getDefaultHost(), portOfProxy )  );
-
-            HttpURLConnection con = (HttpURLConnection) new URL(adr).openConnection(proxy);
-
-            con.setReadTimeout(5000);
-
-      	    con.setConnectTimeout(15000);
-
-      	  if(usebuffer){
-
-      		 con.setReadTimeout(5000+ buf.length());
-
-      		  con.setRequestMethod("POST");
-
-			 con.setDoOutput(true);
-
-         con.setDoInput(true);}
-
-      	 con.connect();
-
-
-
-    if(usebuffer){
-
-    	OutputStream os = con.getOutputStream();
-
-
-
-    	os.write( buf.getBytes());
-
-    	if(log)Log.d(this.getClass().getName(),"Отправленный буфер"+ buf);
-
-        os.flush();
-
-        os.close();}
-
-   	   			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-
-   	   		  String  ret= inputStreamToString(con.getInputStream());
-
-
-
-   	   		  con.disconnect();
-
-    	   				return ret;
-
- 			} else {
-
- 				//internetnotify(false);
-
- 				return getString(R.string.ServerError);
-
-
-
- 			}
-
-         }
-
-         else {
-
-       	  HttpURLConnection con = (HttpURLConnection) new URL(adr).openConnection();
-
-             con.setReadTimeout(5000);
-
-       	    con.setConnectTimeout(15000);
-
-       	 if(usebuffer){
-
-       		 con.setReadTimeout(5000+ buf.length());
-
-       		 con.setRequestMethod("POST");
-
-			 con.setDoOutput(true);
-
-         con.setDoInput(true);
-
-       	 }
-
-         con.connect();
-
-
-
-
-
-        if(usebuffer){
-
-           	OutputStream os = con.getOutputStream();
-
-        	os.write( buf.getBytes());
-
-        	if(log)Log.d(this.getClass().getName(),"Отправленный буфер"+ buf);
-
-            os.flush();
-
-            os.close();}
-
-    	   			if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-
-    	   				//instream=con.getInputStream();
-    	   				if(log)Log.d(this.getClass().getName(),"getpage http_ok");
-    	   				String  ret= inputStreamToString(con.getInputStream());
-
-
-
-  			if(log)Log.d(this.getClass().getName(), "void getpage end");
-
-    	   				return ret;
-
-  			    }
-
-    	   			else {
-
-    	   				if(log)Log.d(this.getClass().getName(), "void getpage end22");
-
-    	   				return getString(R.string.ServerError);
-
-  			}
-
-
-
-         }
-
-
-
- 	}
-
-
-
-	private String inputStreamToString(InputStream in) throws IOException {
-
-		if(log)Log.d(this.getClass().getName(), "void inputstreamtostring begin");
-
-
-
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in),8192);
-
-	     stringBuilder.setLength(0);
-
-
-
-	    int c = 0;
-
-	    int i=0;
-
-
-
-	    while (!(c==-1)) {
-
-
-
-	    	c = bufferedReader.read();
-
-	        if (!(c==-1))stringBuilder.append((char) c);
-
-	        i=i+1;
-
-	    }
-
-
-
-	    bufferedReader.close();
-
-//return chbuf.toString();
-
-	    if(log)Log.d(this.getClass().getName(), "void inputstreamtostring end");
-
-	    return stringBuilder.toString();
-
-	}
-
-private void internetnotify(boolean internet){
+	 void internetnotify(boolean internet){
 
 	if (!internet){
 
@@ -2154,7 +1673,7 @@ private void internetnotify(boolean internet){
 
 			//if (playsound &&inetoff!=null&& !inetoff.isPlaying()){inetoff.start();}
  if (playsound){soundPool.play(inetoff, 1f, 1f, 1, 0, 1f);}
-	//if(log)Log.d(this.getClass().getName(), "Интернет пропал");
+	if(log)Log.d(this.getClass().getName(), "Интернет пропал");
 
 
 
@@ -2174,7 +1693,7 @@ private void internetnotify(boolean internet){
 
 				//long[] pattern = {0,50, 0, 30, 0, 50};
 
-				//if(log)Log.d(this.getClass().getName(), "Интернет появился");
+				if(log)Log.d(this.getClass().getName(), "Интернет появился");
 
 				//vibrator.vibrate(pattern, 2);
 
@@ -2252,106 +1771,6 @@ public static String unescape (String s)
 
 
 
-
-
-
-private String decodesendresult(String str){
-
-
-
-	if(log)Log.d(this.getClass().getName(), "Ответ сервера:"+str);
-
-	int s=-1;
-
-	int l=-1;
-
-
-
-	try {
-
-		JSONObject result = new JSONObject(str);
-
-
-
-
-
-
-
-		if(result.has("s")){ s = result.optInt("s");}
-
-		if (result.has("l")){ l =result.optInt("l");}
-
-
-
-		if (s==0 ) {
-
-		int code=result.optInt("error");
-
-		str=getString(R.string.error)+code+" "+ unescape(result.optString("description:ru"));
-
-		sended=false;
-
-		 stopServiceWork(true);
-		 if (code==5||code==6){
-			 if(!OsMoDroid.gpslocalserviceclientVisible){
-			 notifywarnactivity(getString(R.string.warnhash), true);}
-			 else {
-				 warnwronghash ();
-			 }
-		 
-		 }
-		 else
-		 {
-			 notifywarnactivity(getString(R.string.commansendlocation)+str, false);
-		 }
-
-		}
-
-		if (s==1|| s==2) {
-
-			if (l!=-1){str=getString(R.string.succes)+getString(R.string.buffer)+ l;}
-
-			else str=getString(R.string.succes);
-
-		sended=true;
-
-		//result=null;
-
-		}
-
-	} catch (JSONException e) {
-
-		//e.printStackTrace();
-
-		sended=false;
-
-		if(log)Log.d(this.getClass().getName(), "decodesendresult return:"+str);
-
-		return str;// TODO Auto-generated catch block
-
-
-
-	}
-
-//	if (str.equals("{\"s\":1}\n")){str=getString(R.string.succes);
-
-	//sended=true;
-
-	//}else {
-
-		//str="НОТ";
-
-//	sended=true;};
-
-	//str="xc";
-
-	if(log)Log.d(this.getClass().getName(), "decodesendresult return:"+str);
-
-	return str;
-
-
-
-}
 
 
 
@@ -2798,7 +2217,7 @@ public void onResultsSucceeded(APIComResult result) {
 	}
 	if(result.Command.equals("sendid")&&!(result.Jo==null)){
 		if(log)Log.d(getClass().getSimpleName(),"sendid response:"+result.Jo.toString());
-		Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
+		//Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),Toast.LENGTH_SHORT).show();
 		if(result.Jo.has("key")){
 			try {
 				OsMoDroid.editor.putString("newkey", result.Jo.getString("key"));

@@ -14,8 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Date;import java.util.Iterator;import java.util.Map.Entry;
 import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import org.osmdroid.util.GeoPoint;
-import com.OsMoDroid.IM.IMWriter;
-import com.OsMoDroid.LocalService.SendCoor;import com.OsMoDroid.Netutil.MyAsyncTask;
+
+import com.OsMoDroid.IM.IMWriter;
+import com.OsMoDroid.Netutil.MyAsyncTask;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Notification;import android.app.PendingIntent;import android.app.PendingIntent.CanceledException;import android.content.BroadcastReceiver;import android.content.SharedPreferences;
@@ -34,7 +35,8 @@ import android.provider.Settings.Secure;
  *Class for work with LongPolling
  */
 public class IM implements ResultsListener {	
-	private IMWriter iMWriter;	private static final int RECONNECT_TIMEOUT = 1000*5;
+	private IMWriter iMWriter;
+	private IMReader iMReader;	private static final int RECONNECT_TIMEOUT = 1000*1;
 	
 	private static final int KEEP_ALIVE = 1000*270;
 
@@ -77,6 +79,9 @@ public class IM implements ResultsListener {
 		SERVER_IP=server;
 		SERVERPORT=port;
 		addlog("IM create");
+		iMWriter=new IMWriter();
+		writerThread = new Thread(iMWriter,"writer");
+		writerThread.start();
 		if(!OsMoDroid.settings.getString("newkey", "").equals("")){
 		start();
 		}
@@ -113,10 +118,21 @@ public class IM implements ResultsListener {
   					}
   			});
         	  disablekeepAliveAlarm();
-    			authed=false;
-    			connecting=false;
-    			connOpened=false;
-    			running=false;
+//    			authed=false;
+//    			connecting=false;
+//    			connOpened=false;
+//    			running=false;
+        	  stop();
+        	  localService.alertHandler.post(new Runnable()
+  				{
+  					
+  					@Override
+  					public void run()
+  						{
+  							if(log)Log.d(this.getClass().getName(), "void IM.stop");
+  							localService.internetnotify(false);
+  						}
+  				});
     			localService.refresh();
         	  start();
               context.unregisterReceiver( this ); 
@@ -287,14 +303,35 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 						}											}					else {						if(log)Log.d(this.getClass().getName(), "BCR Network is not connected");						if(log)Log.d(this.getClass().getName(), "Running:"+running);
 						addlog("webcoket Network is not connected, running="+running);						if (running)
 						{							addlog("webcoket stop by broadcast because running");
+							localService.alertHandler.post(new Runnable()
+								{
+									
+									@Override
+									public void run()
+										{
+											if(log)Log.d(this.getClass().getName(), "void IM.stop");
+											localService.internetnotify(false);
+										}
+								});
 							stop();
 						}
 											}				}				else if(extras.containsKey("noConnectivity")) {					if(log)Log.d(this.getClass().getName(), "BCR Network is noConnectivity");					if(log)Log.d(this.getClass().getName(), "Running:"+running);
 					addlog("webcoket Network is not connected, running="+running);					if (running)
 					{						addlog("webcoket stop by broadcast because running");
+						localService.alertHandler.post(new Runnable()
+							{
+								
+								@Override
+								public void run()
+									{
+										if(log)Log.d(this.getClass().getName(), "void IM.stop");
+										localService.internetnotify(false);
+									}
+							});
 						stop();
 					}
 									}		    }		}	};
+	
 	
 
 	
@@ -352,10 +389,11 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		addlog("webcoket void start");
 		running = true;		connecting=true;
 		localService.refresh();
-		iMWriter=new IMWriter();
-		writerThread = new Thread(iMWriter,"writer");
+	
+		iMReader=new IMReader();
+		
 		connectThread = new Thread(new IMConnect(),"connecter");
-		readerThread = new Thread(new IMReader(),"reader");
+		readerThread = new Thread(iMReader,"reader");
 		connectThread.setPriority(Thread.MIN_PRIORITY);
 		readerThread.setPriority(Thread.MIN_PRIORITY);
 		writerThread.setPriority(Thread.MIN_PRIORITY);
@@ -416,7 +454,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 							}
 				    	
 				    };
-				    readerThread.start();
+				  
 				    Looper.loop();
 				    
 			
@@ -432,13 +470,13 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		public void run()
 			{
 				
-					while (connOpened){
+					while (connOpened && !Thread.currentThread().isInterrupted()){
 						 try
 							{
 								stringBuilder.setLength(0);
 								int c = 0;
 								int i=0;
-								while (!(c==10) ) {
+								while (!(c==10)  && !Thread.currentThread().isInterrupted()) {
 								c = rd.read();
 								if (!(c==-1))
 									{stringBuilder.append((char) c);
@@ -454,10 +492,6 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 								if (stringBuilder.length()!=0&&connOpened){
 									str=stringBuilder.toString();
 									recievedBytes=recievedBytes+str.getBytes().length;
-									Message msg =new Message();
-									Bundle b =new Bundle();
-									b.putString("read",str);
-									msg.setData(b);
 									localService.alertHandler.post(new Runnable(){
 										 @Override
 										public void run()
@@ -524,8 +558,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 					 setReconnectAlarm();
 					 rd = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					 wr =new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF8"),true);
-					
-					 writerThread.start();
+					  readerThread.start();
+					 
 					 
 				 } catch (final Exception e1) {
 					 e1.printStackTrace();
@@ -552,7 +586,21 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		 running = false;
 		 connOpened=false;
 		 authed=false;
-		 if(iMWriter.handler!=null){iMWriter.handler.getLooper().quit();}
+//		 if(iMReader!=null)
+//			 {
+//				 readerThread.interrupt();
+//				 try
+//					{
+//						if(rd!=null)
+//							{
+//								rd.();
+//							}
+//					} catch (IOException e)
+//					{
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//				 }
 		 if(socket!=null){
 		 try
 			{
@@ -729,6 +777,16 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 					sendToServer(listen);
 				}
 			OsMoDroid.editor.putString("device", jo.optString("group_tracker_id"));
+			localService.alertHandler.post(new Runnable()
+				{
+					
+					@Override
+					public void run()
+						{
+							localService.internetnotify(true);
+						}
+				});
+			
 		}
 	}
 	
@@ -749,6 +807,16 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	if(c.equals("T")){
 		localService.sendcounter++;
 		localService.sending="";
+		if (localService.sendsound && !localService.mayak) {
+			localService.soundPool.play(localService.sendpalyer, 1f, 1f, 1, 0, 1f);
+			localService.mayak = false;
+		}
+		String time = localService.sdf3.format(new Date(System.currentTimeMillis()));
+		localService.sendresult = time + " " + localService.getString(R.string.succes);
+		if (localService.notification!=null){
+			localService.notification.setLatestEventInfo(localService.getApplicationContext(), "OsMoDroid", "Отправлено:"+localService.sendcounter+" Записано:"+localService.writecounter, localService.osmodroidLaunchIntent);
+			localService.mNotificationManager.notify(localService.OSMODROID_ID, localService.notification);
+			}
 		localService.refresh();
 		return;
 	}
@@ -982,6 +1050,15 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			authed=false;
 			connecting=false;
 			connOpened=false;
+			localService.alertHandler.post(new Runnable()
+				{
+					
+					@Override
+					public void run()
+						{
+							localService.internetnotify(false);
+						}
+				});
 			running=false;
 			localService.refresh();
 			if(localService.isOnline()){
@@ -1008,6 +1085,16 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 					e.printStackTrace();
 				}
 			} else {
+				localService.alertHandler.post(new Runnable()
+					{
+						
+						@Override
+						public void run()
+							{
+								if(log)Log.d(this.getClass().getName(), "void IM.stop");
+								localService.internetnotify(false);
+							}
+					});
 				stop();
 				localService.sendid();
 			}

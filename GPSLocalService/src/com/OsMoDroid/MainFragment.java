@@ -604,7 +604,7 @@ else {
 				@Override
 				public void onReceive(Context context, final Intent intent) {
 					TextView dt = (TextView) view.findViewById(R.id.URL);
-					dt.setText(OsMoDroid.settings.getString("devicename", "")+" :\n "+OsMoDroid.settings.getString("viewurl", ""));
+					dt.setText(OsMoDroid.settings.getString("viewurl", ""));
 
 					Linkify.addLinks(dt, Linkify.ALL);
 					//TextView t = (TextView) view.findViewById(R.id.Location);
