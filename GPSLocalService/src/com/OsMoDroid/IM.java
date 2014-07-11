@@ -36,7 +36,7 @@ import android.provider.Settings.Secure;
  */
 public class IM implements ResultsListener {	
 	private IMWriter iMWriter;
-	private IMReader iMReader;	private static final int RECONNECT_TIMEOUT = 1000*1;
+	private IMReader iMReader;	private static final int RECONNECT_TIMEOUT = 1000*5;
 	
 	private static final int KEEP_ALIVE = 1000*270;
 
