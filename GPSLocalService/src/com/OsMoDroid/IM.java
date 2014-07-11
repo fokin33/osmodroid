@@ -702,7 +702,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	}
 
 	
-	void parseEx (String toParse){
+	synchronized void parseEx (String toParse){
 		addlog("recieve "+toParse);
 		if(log)Log.d(this.getClass().getName(), "recive "+toParse);
 		manager.cancel(reconnectPIntent);
