@@ -586,21 +586,17 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		 running = false;
 		 connOpened=false;
 		 authed=false;
-//		 if(iMReader!=null)
-//			 {
-//				 readerThread.interrupt();
-//				 try
-//					{
-//						if(rd!=null)
-//							{
-//								rd.();
-//							}
-//					} catch (IOException e)
-//					{
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//				 }
+		 localService.alertHandler.post(new Runnable()
+	  			{
+	  				
+	  				@Override
+	  				public void run()
+	  					{
+	  						ondisconnect();
+	  						
+	  					}
+	  			});
+
 		 if(socket!=null){
 		 try
 			{
