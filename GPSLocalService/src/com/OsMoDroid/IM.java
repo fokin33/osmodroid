@@ -22,7 +22,8 @@ import android.app.AlertDialog;
 import android.app.Notification;import android.app.PendingIntent;import android.app.PendingIntent.CanceledException;import android.content.BroadcastReceiver;import android.content.SharedPreferences;
 import android.content.Context;import android.content.Intent;import android.content.IntentFilter;import android.location.LocationManager;
 import android.media.MediaPlayer;
-import android.net.NetworkInfo;import android.os.Bundle;import android.os.Environment;
+import android.net.NetworkInfo;import android.net.Uri;
+import android.os.Bundle;import android.os.Environment;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.SystemClock;
@@ -44,25 +45,25 @@ public class IM implements ResultsListener {
 	
 	private static final String KEEPALIVE_INTENT = "com.osmodroid.keepalive";
 
-	protected  boolean running       = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;	String lcursor="";	int pingTimeout=900;	Thread connectThread;	private boolean gettokening=false;	Context parent;	private String token="";	String myLongPollCh;
+	volatile protected  boolean running       = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	private HttpURLConnection con;	private InputStream instream;	String adr;	String lcursor="";	int pingTimeout=900;	Thread connectThread;	volatile private boolean gettokening=false;	Context parent;	private String token="";	String myLongPollCh;
 	ArrayList<String[]>  myLongPollChList = new ArrayList<String[]>();
-	ArrayList<String>  listenArrayList = new ArrayList<String>();	int mestype=0;	LocalService localService;	FileOutputStream fos;
+	//ArrayList<String>  listenArrayList = new ArrayList<String>();	int mestype=0;	LocalService localService;	FileOutputStream fos;
 	ObjectOutputStream output = null;	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	static String SERVER_IP;// = "osmo.mobi";
 	static int SERVERPORT;// = 5757;
-	protected boolean connOpened=false;
-	protected boolean connecting=false;
+	volatile protected boolean connOpened=false;
+	volatile protected boolean connecting=false;
 	final boolean  log=true;
 	public Socket socket;
-	public boolean authed=false;
+	volatile public boolean authed=false;
 	public BufferedReader rd;
 
 	public PrintWriter wr;
 
 	long sendBytes=0;
 	long recievedBytes=0;
-	public boolean needopensession=false;
-	public boolean needclosesession=false;
+	volatile public boolean needopensession=false;
+	volatile public boolean needclosesession=false;
 	private Thread readerThread;
 
 	private Thread writerThread;
@@ -373,13 +374,22 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	public void gettoken()
 	
 	{
-		addlog("Start gettoket");
+		addlog("Start gettoket"+", key="+OsMoDroid.settings.getString("newkey", ""));
 		if(!gettokening){
 		gettokening=true;
-		Log.d(getClass().getSimpleName(), "http://api.osmo.mobi/prepare");
-	        APIcomParams params = new APIcomParams("http://api.osmo.mobi/prepare","key="+OsMoDroid.settings.getString("newkey", "")+"&protocol=1","gettoken"); 
+		if(log)Log.d(getClass().getSimpleName(), "http://api.osmo.mobi/prepare"+", key="+OsMoDroid.settings.getString("newkey", ""));
+		APIcomParams params = null;    
+		//APIcomParams params = new APIcomParams("http://api.osmo.mobi/prepare","key="+OsMoDroid.settings.getString("newkey", "")+"&protocol=1","gettoken");
+	        if(OsMoDroid.settings.getString("p", "").equals("")){
+	        	params = new APIcomParams("http://api.osmo.mobi/prepare?key="+OsMoDroid.settings.getString("newkey", "")+"&protocol=1","","gettoken");
+	        }
+	        else
+	        {
+	        	params = new APIcomParams("http://api.osmo.mobi/prepare?key="+OsMoDroid.settings.getString("newkey", "")+"&protocol=1&auth="+OsMoDroid.settings.getString("p", ""),"","gettoken");	
+	        }
 	        MyAsyncTask sendidtask = new Netutil.MyAsyncTask(this);
-	        sendidtask.execute(params) ;
+	        
+			sendidtask.execute(params) ;
 	        Log.d(getClass().getSimpleName(), "gettoken start to execute");
 		}
 
@@ -422,16 +432,16 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 								if(running){
 									if (socket.isConnected()&&wr!=null){
 										 setReconnectAlarm(); 
-//										 try
-//												{
-//													
-//													Thread.sleep(0);
-//												} catch (InterruptedException e)
-//												{
-//													// TODO Auto-generated catch block
-//													e.printStackTrace();
-//												}
-										 wr.println(b.getString("write"));
+										 try
+												{
+													
+													Thread.sleep(0);
+												} catch (InterruptedException e)
+												{
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+										 wr.println('='+b.getString("write"));
 										 
 										 error=wr.checkError();
 										
@@ -439,7 +449,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 										 addlog("wr write "+b.getString("write")+" error="+error);
 										 if(error){
 											 if(running){setReconnectOnError();}
-											 Looper.myLooper().quit();
+											 //Looper.myLooper().quit();
 										 }
 										 else{
 											 sendBytes=sendBytes+b.getString("write").getBytes().length;
@@ -499,9 +509,20 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 												addlog(str);
 												 							}
 									 });
-									
-									
-									parseEx(str);
+									if(str.substring(str.length()-1, str.length()).equals("\n"))
+									{
+										str=str.substring(0, str.length()-1);
+										
+								  					parseEx(new String(str));
+								  	
+									}
+									else 
+									{
+										
+							  					parseEx(new String(str));
+							  						
+							  		
+									}
 								
 								}
 							} catch (IOException e)
@@ -706,12 +727,17 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		addlog("recieve "+toParse);
 		if(log)Log.d(this.getClass().getName(), "recive "+toParse);
 		manager.cancel(reconnectPIntent);
-	if(toParse.equals("P|\n")){
+		if(!running)
+		{
+			running=true;
+		}
+		
+	if(toParse.equals("P|")){
 		addlog("recieve pong");
 		
 		return;
 		}
-	
+	JSONObject jsonObject;
 	JSONObject jo = new JSONObject();
 	JSONArray ja = new JSONArray();
 	String c="";
@@ -729,22 +755,35 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	try
 		{
 			
-			jo = new JSONObject(d);
+		 jo = new JSONObject(d);
 		}
 	catch (JSONException e) {
 		try {
-			e.printStackTrace();
+			if(log)Log.d(this.getClass().getName(), "не JSONO ");
 			ja=new JSONArray(d);
 		} catch (JSONException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			if(log)Log.d(this.getClass().getName(), "не JSONA ");
 		} 
+	}
+	if(jo.has("error"))
+	{
+		final String str = jo.optString("error_description");
+		localService.alertHandler.post(new Runnable()
+		{
+			
+			@Override
+			public void run()
+				{
+					Toast.makeText(localService, str, Toast.LENGTH_SHORT).show();
+				}
+		});
 	}
 	
 	if(c.equals("NEED_AUTH")){
 		sendToServer( "AUTH|{\"key\":\""+OsMoDroid.settings.getString("newkey", "")+"\"}");
 	}
-	if(c.equals("NEED_TOKEN")){
+	if(c.contains("NEED_TOKEN")){
 		sendToServer( "TOKEN|"+token);
 	}
 	
@@ -761,18 +800,40 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			if(OsMoDroid.gpslocalserviceclientVisible){
 				sendToServer("MOTD");
 			}
-			
+			if(LocalService.channelList.isEmpty())
+			{
 			sendToServer("GROUP_GET_ALL");
+			}
+			else
+			{
+//				String listen="";
+				for (Channel ch : LocalService.channelList)
+				{
+//					for(Device dev: ch.deviceList){
+//						if (!dev.tracker_id.equals(OsMoDroid.settings.getString("device", "")))
+//							{
+//								listen=listen+("LISTEN:"+dev.tracker_id)+"=";
+//							}
+//					}
+//					if(!listen.equals(""))
+//					{
+//						sendToServer(listen);
+//					}
+					sendToServer("GROUP_CONNECT:"+ch.group_id);
+				}
+			}
 			setkeepAliveAlarm();
 			String listen = "";
-			for (String str : listenArrayList){
-				listen=("LISTEN:"+str)+"=";
+			for (Device dev : LocalService.deviceList){
+				listen=("LISTEN:"+dev.tracker_id)+"=";
 			}
 			if(!listen.equals(""))
 				{
 					sendToServer(listen);
 				}
 			OsMoDroid.editor.putString("device", jo.optString("group_tracker_id"));
+			OsMoDroid.editor.putString("tracker_id", jo.optString("tracker_id"));
+			OsMoDroid.editor.commit();
 			localService.alertHandler.post(new Runnable()
 				{
 					
@@ -784,8 +845,14 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 				});
 			
 		}
+		localService.refresh();
 	}
-	
+	//GROUP_CREATE|{"u":247,"group_id":"IEIFLWQGHSQRBG","name":"Meps","policy":"","description":null}
+
+	if(c.equals("GROUP_CREATE"))
+	{
+		sendToServer("GROUP_JOIN:"+jo.optString("group_id")+"|"+OsMoDroid.settings.getString("u", "Creator"));
+	}
 	
 	if(c.equals("TRACKER_SESSION_OPEN")){
 		localService.sessionstarted=true;
@@ -798,6 +865,9 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		if(c.equals("TRACKER_SESSION_CLOSE")){
 			localService.sessionstarted=false;
 			needclosesession=false;
+			OsMoDroid.editor.putString("viewurl","");
+			OsMoDroid.editor.commit();
+			localService.refresh();
 			}
 	
 	if(c.equals("T")){
@@ -816,6 +886,17 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		localService.refresh();
 		return;
 	}
+	if(c.contains("REMOTE_CONTROL"))
+	{
+		if(d.equals("PP"))
+		{
+			sendToServer("PP");
+		}
+	}
+	
+	
+	
+	
 	if(c.equals("MOTD")){
 		localService.motd=LocalService.unescape(d);
 		localService.refresh();
@@ -880,43 +961,45 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 					@Override
 					public void run()
 						{
-							Toast.makeText(localService, "No group", Toast.LENGTH_SHORT);
+							Toast.makeText(localService, "No group", Toast.LENGTH_SHORT).show();
 						}
 				});
 			
 		}
+		localService.saveObject(LocalService.channelList, OsMoDroid.CHANNELLIST);
 		}
 	if(c.contains("GROUP_GET_ALL"))
 	{
-		boolean contains=false;
-		for (Channel ch: LocalService.channelList){
+		int positiontoremove=-1;
+		
 			for (int i = 0; i < ja.length(); i++) {
-	 			JSONObject jsonObject;
+				for (Channel ch: LocalService.channelList){
 				try {
 					jsonObject = ja.getJSONObject(i);
 					if(ch.group_id.equals(jsonObject.getString("group_id"))){
-						contains=true;
+						positiontoremove=LocalService.channelList.indexOf(ch);
 					}
 				}
 				catch (Exception e) {
 					e.printStackTrace();
 				}
+				
 		}
-			if(!contains){
-				LocalService.channelList.remove(ch);
-				localService.alertHandler.post(new Runnable()
-					{
-						
-						@Override
-						public void run()
-							{
-								LocalService.channelsAdapter.notifyDataSetChanged();
-							}
-					});
-			}
+				if(positiontoremove!=-1){
+					LocalService.channelList.remove(positiontoremove);
+					localService.alertHandler.post(new Runnable()
+						{
+							
+							@Override
+							public void run()
+								{
+									LocalService.channelsAdapter.notifyDataSetChanged();
+								}
+						});
+				}
 		}
 			for (int i = 0; i < ja.length(); i++) {
-	 			JSONObject jsonObject;
+	 			
 				try {
 					jsonObject = ja.getJSONObject(i);
 					sendToServer("GROUP_CONNECT:"+jsonObject.getString("group_id"));
@@ -934,13 +1017,208 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	}
 	if(c.contains("GROUP_LEAVE"))
 		{
-			sendToServer("GROUP_GET_ALL");
+			Channel chToDel=null;
+			for(Channel ch:LocalService.channelList)
+			{
+				if(ch.group_id.equals(c.substring(c.indexOf(":")+1, c.length())))
+				{
+					chToDel=ch;
+					
+				}
+			}
+			if(chToDel!=null)
+			{
+				LocalService.channelList.remove(chToDel);
+			}
+			localService.alertHandler.post(new Runnable()
+			{
+				
+				@Override
+				public void run()
+					{
+						LocalService.channelsAdapter.notifyDataSetChanged();
+					}
+			});
+			localService.saveObject(LocalService.channelList, OsMoDroid.CHANNELLIST);
 		}
+	// recive LINK_GET_ALL|[{"u":"962","uid":"0","device":"7665","url":"LAvP1jaqPaJtvs4jfGWeC5el","general_id":"k4bMooJU9AFam8fproUX","from":"0000-00-00 00:00:00","to":"0000-00-00 00:00:00","created":"2014-08-14 23:39:11","limit":"-1","until":"0","active":"1"},{"u":"963","uid":"0","device":"7665","url":"gZ012cpDOrL1gGT0tjQMFu2G","general_id":"uqupQcQ2pC8H820LAX4S","from":"0000-00-00 00:00:00","to":"0000-00-00 00:00:00","created":"2014-08-14 23:57:39","limit":"-1","until":"0","active":"1"},{"u":"964","uid":"0","device":"7665","url":"u3KO0mEDmTrKmLhFU1COh6Lk","general_id":"pRICSHb7UXsTeCkTcaf2","from":"0000-00-00 00:00:00","to":"0000-00-00 00:00:00","created":"2014-08-14 23:59:04","limit":"-1","until":"0","active":"1"},{"u":"965","uid":"0","device":"7665","url":"xikg52FsZhUaGK9u9sKKPY4u","general_id":"PVRbAiIhLhXzGnCfA62G","from":"0000-00-00 00:00:00","to":"0000-00-00 00:00:00","created":"2014-08-14 23:59:06","limit":"-1","until":"0","active":"1"},{"u":"966","uid":"0","device":"7665","url":"UiGxNaKc19UpCvq2CFuk6xhl","general_id":"Ir86ShJU1qxdQxMWWMG0","from":"0000-00-00 00:00:00","to":"0000-00-00 00:00:00","created":"2014-08-14 23:59:07","limit":"-1","until":"0","active":"1"},{"u":"967","uid":"0","device":"7665","url":"AM3tXlP5U59B7KuTgjJ8QSr1","general_id":"tai6egJmMFyZMLtEdszU","from":"0000-00-00 00:00:00","to":"0000-00-00 00:00:00","created":"2014-08-14 23:59:07","limit":"-1","until":"0","active":"1"}]
+
+	if(c.equals("LINK_GET_ALL"))
+	{
+		LocalService.simlimkslist.clear();
+		for (int i = 0; i < ja.length(); i++) {
+			
+				try {
+					jsonObject = ja.getJSONObject(i);
+					PermLink pl = new PermLink();
+					pl.u=jsonObject.getInt("u");
+					pl.url="http://osmo.mobi/u/"+jsonObject.optString("url");
+					LocalService.simlimkslist.add(pl);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+		if(LocalService.simlinksadapter!=null)
+		{
+			localService.alertHandler.post(new Runnable()
+			{
+				
+				@Override
+				public void run()
+					{
+						LocalService.simlinksadapter.notifyDataSetChanged();
+					}
+			});
+			
+		}
+		
+	}
+	
+	// recive LINK_DEL:977|1
+	if(c.contains("LINK_DEL"))
+	{
+		int positiontodel=-1;
+		for (PermLink pl : LocalService.simlimkslist)
+		{
+			
+			if(Integer.parseInt(c.substring(c.indexOf(":")+1, c.length()))==pl.u)
+			{
+				positiontodel=LocalService.simlimkslist.indexOf(pl);
+			}
+		}
+		if(positiontodel!=-1)
+		{
+			LocalService.simlimkslist.remove(positiontodel);
+			localService.alertHandler.post(new Runnable()
+			{
+				
+				@Override
+				public void run()
+					{
+						LocalService.simlinksadapter.notifyDataSetChanged();
+					}
+			});
+		}
+	}
+	
+	if(c.contains("LINK_ADD"))
+	{
+		PermLink pl = new PermLink();
+		try {
+			pl.u=jo.getInt("u");
+			pl.url="http://osmo.mobi/u/"+jo.getString("url");
+			LocalService.simlimkslist.add(pl);
+			if(LocalService.simlinksadapter!=null)
+			{
+				localService.alertHandler.post(new Runnable()
+				{
+					
+					@Override
+					public void run()
+						{
+							LocalService.simlinksadapter.notifyDataSetChanged();
+						}
+				});
+				
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+	
+	
 	if(c.contains("GROUP_CREATE"))
 		{
 			sendToServer("GROUP_GET_ALL");
 		}
-	
+	//GP:MT|{"users":[{"name":"Dddddd","group_tracker_id":"WSlRasAgyD","color":"#ff9900"}]}
+		//GP:MT|{"users":[{"name":"Dddddd","group_tracker_id":"WSlRasAgyD","deleted":"yes"}]}
+		if (c.contains("GP:"))
+		{
+			for (Channel ch : LocalService.channelList)
+			{
+				if(ch.group_id.equals(c.substring(c.indexOf(":")+1, c.length())))
+				{
+					 JSONArray a =jo.optJSONArray("users");
+						for (int i = 0; i < a.length(); i++) {
+					 			
+								try {
+									jsonObject = a.getJSONObject(i);
+						try {
+							if(jsonObject.has("deleted"))
+							{
+								Device deviceToDel = null;
+								for (Device dev : ch.deviceList){
+									if(dev.tracker_id.equals(jsonObject.opt("group_tracker_id")))
+									{
+										sendToServer("UNLISTEN:"+dev.tracker_id);
+										deviceToDel=dev;
+									}
+								}
+								if(deviceToDel!=null)
+								{
+									ch.deviceList.remove(deviceToDel);
+								}
+							}
+							else 
+							{
+								boolean exist=false;
+								for (Device dev : ch.deviceList){
+									if(dev.tracker_id.equals(jsonObject.opt("group_tracker_id")))
+									{
+										exist=true;
+									}
+								}
+								if(!exist)
+								{
+									try {
+										ch.deviceList.add(new Device(jsonObject.getString("group_tracker_id"),jsonObject.getString("name"), jsonObject.getString("color") ) );
+										sendToServer("LISTEN:"+jsonObject.getString("group_tracker_id"));
+									} catch (JSONException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
+							}
+						} catch (NumberFormatException e) {
+							Log.d(getClass().getSimpleName(),"Wrong device info");
+							e.printStackTrace();
+						}
+					
+						
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}   
+						
+
+					//channelList.add(chanitem);
+//					netutil.newapicommand((ResultsListener)serContext, "om_channel_user:"+chanitem.u);
+
+
+					 		 }
+					
+					
+				}
+			}
+			if(LocalService.channelsDevicesAdapter!=null){
+			localService.alertHandler.post(new Runnable()
+			{
+				
+				@Override
+				public void run()
+					{
+						LocalService.channelsDevicesAdapter.notifyDataSetChanged();
+					}
+			});
+			}
+			localService.saveObject(LocalService.channelList, OsMoDroid.CHANNELLIST);
+		}
 	//LT:fI8qCrlvw6j0dEKZtB9h|L59.252465:30.324515S20.3A124.3H2.5C235
 	if(c.contains("LT"))
 		
@@ -948,44 +1226,26 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		for (Channel ch : LocalService.channelList)
 			{
 			for (final Device dev : ch.deviceList){
-			if (c.substring(c.indexOf(":")+1, c.length()).equals(dev.tracker_id)){
-				
-				dev.lat=Float.parseFloat(d.substring(d.indexOf("L")+1, d.indexOf(":")));
-				for (int i = d.indexOf(":")+1; i <= d.length(); i++) {
-					if(!Character.isDigit(d.charAt(i))){
-						if(!Character.toString(d.charAt(i)).equals(".")){
-							dev.lon=Float.parseFloat(d.substring(d.indexOf(":")+1, i));
-							break;
-						}
-					}
-				
-				}
-				for (int i = d.indexOf("S")+1; i <= d.length(); i++) {
-					if(!Character.isDigit(d.charAt(i))){
-						if(!Character.toString(d.charAt(i)).equals(".")){
-							dev.speed=d.substring(d.indexOf("S")+1, i);
-							break;
-						}
-					}
-				
-				}
-				
-				if(LocalService.devlistener!=null)
-				{
-					localService.alertHandler.post(new Runnable() {
-						
-						@Override
-						public void run() {
-							dev.devicePath.add(new GeoPoint(dev.lat, dev.lon));
-							LocalService.devlistener.onDeviceChange(dev);
-							
-						}
-					});
-					
-					}
-				}
+			updateCoordinates(c, d, dev);
 				}
 			}
+		for (Device dev: LocalService.deviceList)
+		{
+			updateCoordinates(c, d, dev);
+		}
+		if (LocalService.channelsDevicesAdapter!=null&&LocalService.currentChannel!=null)
+		{
+			 if(log)Log.d(this.getClass().getName(), "Adapter:"+ LocalService.channelsDevicesAdapter.toString());
+			 localService.alertHandler.post(new Runnable() {
+					
+					@Override
+					public void run() {
+						LocalService.channelsDevicesAdapter.notifyDataSetChanged();
+						
+					}
+				});
+			 
+		}
 		}
 	
 //	try
@@ -1025,6 +1285,44 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	
 	
 	
+	}
+	private void updateCoordinates(String c, String d, final Device dev) {
+		if (c.substring(c.indexOf(":")+1, c.length()).equals(dev.tracker_id)){
+			
+			dev.lat=Float.parseFloat(d.substring(d.indexOf("L")+1, d.indexOf(":")));
+			for (int i = d.indexOf(":")+1; i <= d.length(); i++) {
+				if(!(d.charAt(i)=='-')&&!Character.isDigit(d.charAt(i))){
+					if(!Character.toString(d.charAt(i)).equals(".")){
+						dev.lon=Float.parseFloat(d.substring(d.indexOf(":")+1, i));
+						break;
+					}
+				}
+			
+			}
+			for (int i = d.indexOf("S")+1; i <= d.length(); i++) {
+				if(!Character.isDigit(d.charAt(i))){
+					if(!Character.toString(d.charAt(i)).equals(".")){
+						dev.speed=LocalService.df0.format((((Float.parseFloat(d.substring(d.indexOf("S")+1, i))*3.6))));
+						break;
+					}
+				}
+			
+			}
+			
+			if(LocalService.devlistener!=null)
+			{
+				localService.alertHandler.post(new Runnable() {
+					
+					@Override
+					public void run() {
+						dev.devicePath.add(new GeoPoint(dev.lat, dev.lon));
+						LocalService.devlistener.onDeviceChange(dev);
+						
+					}
+				});
+				
+				}
+			}
 	}
 
 	void ondisconnect(){

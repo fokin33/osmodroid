@@ -15,7 +15,8 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="0.50"
-	        android:text="@string/serviceStatus" />
+	        android:text="@string/serviceStatus"
+	        android:textSize="20sp" />
 
 	    <TextView
 	        android:id="@+id/Send"
@@ -23,7 +24,8 @@
 	        android:layout_height="wrap_content"
 	        android:layout_weight="0.50"
 	        android:gravity="right"
-	        android:text="@string/sends" />
+	        android:text="@string/sends"
+	        android:textSize="20sp" />
 
 	</LinearLayout>
 
@@ -32,7 +34,7 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="left"
-	    android:text="@string/url" />
+	    android:textSize="20sp" />
 
 	<LinearLayout
 	    android:layout_width="match_parent"
@@ -93,6 +95,6 @@
 	    android:id="@+id/Location"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:textSize="22sp" />
+	    android:textSize="20sp" />
 
 </LinearLayout>

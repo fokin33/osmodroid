@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.text.ClipboardManager;
+import android.text.InputType;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -74,109 +75,15 @@ if(!deviceU.equals("")){
 		  if (item.getItemId() == 1) {
 
 				//final AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();
+			  globalActivity.mService.myIM.sendToServer("UNLISTEN:"+LocalService.deviceAdapter.getItem(acmi.position).tracker_id);
+			  LocalService.deviceList.remove(LocalService.deviceAdapter.getItem(acmi.position));
+			  if(LocalService.deviceAdapter!=null)
+				{
+					LocalService.deviceAdapter.notifyDataSetChanged();
+				}
+				globalActivity.mService.saveObject(LocalService.deviceList, OsMoDroid.DEVLIST);
 
-				LocalService.deviceAdapter.getItem(acmi.position);
-
-                                LinearLayout layout = new LinearLayout(globalActivity);
-
-				layout.setOrientation(LinearLayout.VERTICAL);
-
-				final TextView txv = new TextView(globalActivity);
-
-				txv.setText(R.string.yourmessage);
-
-				layout.addView(txv);
-
-				final EditText input = new EditText(globalActivity);
-
-				layout.addView(input);
-
-
-				AlertDialog alertdialog3 = new AlertDialog.Builder(
-
-						globalActivity)
-
-						.setTitle(R.string.sendingmessage)
-
-						.setView(layout)
-
-						.setPositiveButton(R.string.send,
-
-								new DialogInterface.OnClickListener() {
-
-									public void onClick(DialogInterface dialog,
-
-											int whichButton) {
-
-
-
-										if (!(input.getText().toString().equals(""))) {
-
-											JSONObject postjson = new JSONObject();
-
-
-
-											try {
-
-											//postjson.put("text", input.getText().toString());
-
-											//netutil.newapicommand((ResultsListener) MyDevices.this, "im_send:"+LocalService.deviceList.get((int) acmi.id).uid+","+LocalService.deviceList.get((int) acmi.id).app,"json="+postjson.toString());
-										
-											postjson.put("from", OsMoDroid.settings.getString("device", ""));
-											postjson.put("to", (LocalService.deviceList.get((int) acmi.id).tracker_id));
-											postjson.put("text", input.getText().toString());
-											Netutil.newapicommand((ResultsListener) DevicesFragment.this, "om_device_message_send","json="+postjson.toString());
-											} catch (JSONException e) {
-
-												// TODO Auto-generated catch block
-
-												e.printStackTrace();
-
-											}
-
-										}
-
-
-
-
-
-									}
-
-								})
-
-						.setNegativeButton(R.string.cancel,
-
-								new DialogInterface.OnClickListener() {
-
-									public void onClick(DialogInterface dialog,
-
-											int whichButton) {
-
-
-
-
-
-									}
-
-								}).create();
-
-
-
-				alertdialog3.show();
-
-
-
-
-
-
-
-
-
-
-
-
-
-		      return true;
+                               
 
 		    }
 
@@ -246,13 +153,13 @@ if(!deviceU.equals("")){
 	 */
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-		 menu.add(0, 1, 1, R.string.writemessage).setIcon(android.R.drawable.ic_menu_share);
+		 menu.add(0, 1, 1, R.string.delete).setIcon(android.R.drawable.ic_menu_delete);
 
-		    menu.add(0, 2, 2, R.string.messages).setIcon(android.R.drawable.ic_menu_delete);
+		 //   menu.add(0, 2, 2, R.string.messages).setIcon(android.R.drawable.ic_menu_delete);
 		   
-		    menu.add(0, 3, 3, R.string.copylink).setIcon(android.R.drawable.ic_menu_edit);
-		    menu.add(0, 4, 4, R.string.sharelink).setIcon(android.R.drawable.ic_menu_edit);
-		    menu.add(0, 5, 5, R.string.openinbrowser).setIcon(android.R.drawable.ic_menu_edit);
+		//    menu.add(0, 3, 3, R.string.copylink).setIcon(android.R.drawable.ic_menu_edit);
+		//    menu.add(0, 4, 4, R.string.sharelink).setIcon(android.R.drawable.ic_menu_edit);
+		//    menu.add(0, 5, 5, R.string.openinbrowser).setIcon(android.R.drawable.ic_menu_edit);
 		super.onCreateContextMenu(menu, v, menuInfo);
 	}
 
@@ -293,9 +200,7 @@ if(!deviceU.equals("")){
 		MenuItem bind = menu.add(0, 1, 0, R.string.binddevice);
 		bind.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		bind.setIcon(android.R.drawable.ic_menu_add);
-		MenuItem refresh = menu.add(0, 2, 0, R.string.refresh);
-		refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		refresh.setIcon(android.R.drawable.ic_menu_rotate);
+		
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
@@ -320,18 +225,18 @@ if(!deviceU.equals("")){
 			LinearLayout layout = new LinearLayout(getSherlockActivity());
 			layout.setOrientation(LinearLayout.VERTICAL);
 			final TextView txv5 = new TextView(getSherlockActivity());
-			txv5.setText(R.string.hash);
+			txv5.setText(R.string.name);
 			layout.addView(txv5);
 			final EditText inputhash = new EditText(getSherlockActivity());
 			
 			layout.addView(inputhash);
 
 			final TextView txv3 = new TextView(getSherlockActivity());
-			txv3.setText(R.string.controlnumber);
+			txv3.setText(R.string.trackerid);
 			layout.addView(txv3);
 
 			final EditText inputN = new EditText(getSherlockActivity());
-			//input2.setText("Ваше имя");
+			inputN.setInputType(InputType.TYPE_CLASS_TEXT| InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
 			layout.addView(inputN);
 		//	final EditText input = new EditText(this);
 			
@@ -346,7 +251,17 @@ if(!deviceU.equals("")){
 										int whichButton) {
 									 
 									if (!( inputhash.getText().toString().equals(""))&&!( inputN.getText().toString().equals(""))) {
-										Netutil.newapicommand(DevicesFragment.this,getSherlockActivity() , "om_device_bind:"+ inputhash.getText().toString()+","+ inputN.getText().toString());
+										Device dev = new Device();
+										dev.name=inputhash.getText().toString();
+										dev.tracker_id=inputN.getText().toString();
+										LocalService.deviceList.add(dev);
+										globalActivity.mService.myIM.sendToServer("LISTEN:"+dev.tracker_id);
+										if(LocalService.deviceAdapter!=null)
+										{
+											LocalService.deviceAdapter.notifyDataSetChanged();
+										}
+										globalActivity.mService.saveObject(LocalService.deviceList, OsMoDroid.DEVLIST);
+										
 									} 
 								}
 							})
@@ -363,9 +278,6 @@ if(!deviceU.equals("")){
 
 			// 6564 2638 7281 2680
 
-		}
-		if (item.getItemId()==2){
-			getDevices(DevicesFragment.this, getSherlockActivity());
 		}
 		
 		return super.onOptionsItemSelected(item);
@@ -403,7 +315,7 @@ if(!deviceU.equals("")){
 
 		});
 
-		    if(LocalService.deviceList.size()==0){getDevices(DevicesFragment.this, getSherlockActivity());}
+		    
 
 		
 		return view;
@@ -418,14 +330,7 @@ if(!deviceU.equals("")){
 		super.onPause();
 	}
 
-	static public void getDevices(ResultsListener listener , Context ctx){
-
-		Netutil.newapicommand(listener,ctx, "om_device");
-
-
-
-	}
-
+	
 
 	@Override
 	public void onResultsSucceeded(APIComResult result) {

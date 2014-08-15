@@ -89,7 +89,8 @@ public class DebugFragment extends SherlockFragment {
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		MenuItem clear = menu.add(0, 1, 0, "Очитсить");
+		MenuItem clear = menu.add(0, 1, 0, "Очистить");
+		MenuItem share = menu.add(0, 2, 0, "Отправить журнал");
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 	
@@ -101,7 +102,19 @@ public class DebugFragment extends SherlockFragment {
 		LocalService.debuglist.clear();
 		LocalService.debugAdapter.notifyDataSetChanged();
 		break;
-	
+	case 2:
+		StringBuilder sb = new StringBuilder();
+		for (String s : LocalService.debuglist)
+		{
+		    sb.append(s);
+		    sb.append("\n");
+		}
+		Intent sendIntent = new Intent(Intent.ACTION_SEND);
+		sendIntent.setType("text/plain");
+		sendIntent.putExtra(android.content.Intent.EXTRA_EMAIL,new String[] { "developers@osmodroid.ru" } );
+		sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, sb.toString() );
+		sendIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Debug log");
+		startActivity(Intent.createChooser(sendIntent, "Email"));
 	default:
 		break;
 	}	

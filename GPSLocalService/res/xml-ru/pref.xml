@@ -56,14 +56,6 @@
                                 android:title="Режим параметров И"
                                 android:summary="По умолчанию ИЛИ (или время, или дистанция или курс)"
                                 android:defaultValue="false"/>
-                            <PreferenceScreen android:title="Идентификация" >
-                                <EditTextPreference
-                                    android:key="hash"
-                                    android:title="Хэш" />
-                                <EditTextPreference
-                                    android:key="n"
-                                    android:title="Контрольное число" />
-                            </PreferenceScreen>
                             <CheckBoxPreference
                                 android:key="usebuffer"
                                 android:title="Передавать неотправленное"
@@ -127,10 +119,6 @@
                             android:key="modeAND_gpx"
                             android:title="Режим параметров И"
                             android:summary="По умолчанию ИЛИ (или время, или дистанция или курс)"
-                            android:defaultValue="false"/>
-                        <CheckBoxPreference
-                            android:title="Загружать на ТреРа автоматически"
-                            android:key="automaticupload"
                             android:defaultValue="false"/>
                          <EditTextPreference android:title="Путь к SDcard" android:key="sdpath" />
                 </PreferenceScreen>

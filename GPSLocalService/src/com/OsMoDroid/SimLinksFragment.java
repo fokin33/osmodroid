@@ -37,40 +37,39 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class SimLinksFragment extends SherlockFragment implements ResultsListener{
+public class SimLinksFragment extends SherlockFragment {
 	private GPSLocalServiceClient globalActivity;
-	private ArrayAdapter<String> adapter;
-	ArrayList<String> list;
-	ArrayList<String> listids;
+	
+//	ArrayList<String> list;
+//	ArrayList<String> listids;
 	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
 	
 	void addlink_new() throws JSONException
 	{
-		JSONObject postjson = new JSONObject();
-		postjson.put("device", OsMoDroid.settings.getString("device", ""));
-		postjson.put("random", "1");
-		postjson.put("until", "-1");
-		Netutil.newapicommand((ResultsListener)SimLinksFragment.this,getSherlockActivity(), "om_link_add","json="+postjson.toString());
+//		JSONObject postjson = new JSONObject();
+//		postjson.put("device", OsMoDroid.settings.getString("device", ""));
+//		postjson.put("random", "1");
+//		postjson.put("until", "-1");
+		//Netutil.newapicommand((ResultsListener)SimLinksFragment.this,getSherlockActivity(), "om_link_add","json="+postjson.toString());
+		globalActivity.mService.myIM.sendToServer("LINK_ADD");
+		
 	}
 	
 	void reflinks()
 	{
-		Netutil.newapicommand((ResultsListener)SimLinksFragment.this,getSherlockActivity(), "om_link");
+		globalActivity.mService.myIM.sendToServer("LINK_GET_ALL");
 	}	
 
-	void dellink(String linkid)
+	void dellink(int u)
 	{
-		Netutil.newapicommand((ResultsListener)SimLinksFragment.this,getSherlockActivity(), "om_link_delete:"+linkid);
+		globalActivity.mService.myIM.sendToServer("LINK_DEL:"+u);
 	}
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view=inflater.inflate(R.layout.simlinks, container, false);
 		final ListView lv1 = (ListView) view.findViewById(R.id.listView1);
-        list = new ArrayList<String>();
-        list.clear();
-        listids = new ArrayList<String>();
-        listids.clear();
-        adapter = new ArrayAdapter<String>(getSherlockActivity(),android.R.layout.simple_list_item_1, list);
-        lv1.setAdapter(adapter);
+     
+        LocalService.simlinksadapter = new ArrayAdapter<PermLink>(getSherlockActivity(),android.R.layout.simple_list_item_1, LocalService.simlimkslist);
+        lv1.setAdapter(LocalService.simlinksadapter);
         registerForContextMenu(lv1);
         lv1.setOnItemClickListener(new OnItemClickListener() {
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
@@ -79,7 +78,8 @@ public class SimLinksFragment extends SherlockFragment implements ResultsListene
 		}
 
         });
-        if(list.size()==0){reflinks();}
+        //if(list.size()==0){reflinks();}
+        reflinks();
 		return view;
 	}
 	
@@ -141,24 +141,24 @@ public class SimLinksFragment extends SherlockFragment implements ResultsListene
 		{
 			Intent sendIntent = new Intent(Intent.ACTION_SEND);
 			sendIntent.setType("text/plain");
-			sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, adapter.getItem(acmi.position));
+			sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, LocalService.simlinksadapter.getItem(acmi.position).url);
 			startActivity(Intent.createChooser(sendIntent, "Email"));
 			return true;
 		}
 		if (item.getItemId() == 2) 
 		{
-			dellink(listids.get((int) acmi.id));
+			dellink(LocalService.simlinksadapter.getItem(acmi.position).u);
 			return true;
 	    }
 		if (item.getItemId() == 3) 
 		{
 			ClipboardManager clipboard = (ClipboardManager) getSherlockActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-			clipboard.setText(adapter.getItem(acmi.position));
+			clipboard.setText(LocalService.simlinksadapter.getItem(acmi.position).url);
 			return true;
 		}
 		if (item.getItemId() == 5) 
 		{
-			Intent browseIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(adapter.getItem(acmi.position)));
+			Intent browseIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(LocalService.simlinksadapter.getItem(acmi.position).url));
 			startActivity(browseIntent);
 			return true;
 		}
@@ -188,57 +188,6 @@ public class SimLinksFragment extends SherlockFragment implements ResultsListene
 		return super.onOptionsItemSelected(item);
 	}
 
-	@Override
-	public void onResultsSucceeded(APIComResult result) {
-		JSONObject a = null; 
-		Log.d(getClass().getSimpleName(),"OnResultListener:"+result);	
-		if (result.Jo==null&&result.ja==null)
-
-		{
-			if(OsMoDroid.gpslocalserviceclientVisible)
-			{
-				Toast.makeText(LocalService.serContext, R.string.esya_ru_notrespond , Toast.LENGTH_LONG).show();
-			}
-			}
-		
-		
-		if (result.Command.equals("APIM")&& !(result.Jo==null))
-
-		{
-
-			Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);
-
-			
-			if (result.Jo.has("om_link")){
-
-				list.clear();
-
-				listids.clear();
-
-				
-				try {
-					JSONArray ar = new JSONArray(result.Jo.getString("om_link"));
-					for (int i = 0; i < ar.length(); i++) {
-			 			JSONObject jsonObject = ar.getJSONObject(i);
-				if (jsonObject.getString("device").equals(OsMoDroid.settings.getString("device", ""))){
-					list.add("http://m.esya.ru/"+jsonObject.getString("url"));
-					listids.add(jsonObject.getString("u"));
-				}
-				} 
-				}
-				catch (JSONException e) {
-					e.printStackTrace();
-				}
-				adapter.notifyDataSetChanged();
-			}
-			else {
-				reflinks();
-			}
-			
-			
-		}
-
-		
-	}
+	
 
 }

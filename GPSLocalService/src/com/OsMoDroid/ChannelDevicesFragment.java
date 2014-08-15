@@ -48,7 +48,7 @@ import com.actionbarsherlock.view.MenuItem;
 
 public class ChannelDevicesFragment extends SherlockFragment implements ResultsListener {
 	
-	ArrayList<MyAsyncTask> t= new ArrayList<Netutil.MyAsyncTask>();
+	//ArrayList<MyAsyncTask> t= new ArrayList<Netutil.MyAsyncTask>();
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		globalActivity = (GPSLocalServiceClient) getSherlockActivity();
@@ -77,9 +77,7 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 
 	@Override
 	public void onDestroyView() {
-		for (MyAsyncTask task: t){
-			task.cancel(true);
-		}
+		
 		super.onDestroyView();
 	}
 
@@ -108,7 +106,7 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 	 @Override
 	public void onDestroy() {
 		 Log.d(getClass().getSimpleName(), "ChannelDevicesFragment onDestroy");
-		 LocalService.currentchanneldeviceList.clear();
+		 LocalService.currentchanneldeviceList=null;
 		   LocalService.currentChannel=null;
 			 
 			 
@@ -169,9 +167,7 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId()==3){
-			t.add(Netutil.newapicommand((ResultsListener)LocalService.serContext, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", "")));
-			t.add(Netutil.newapicommand((ResultsListener)ChannelDevicesFragment.this,getSherlockActivity(), "om_channel_chat_get:"+LocalService.currentChannel.u));
-
+			
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -227,7 +223,7 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 				postjson.put("device", OsMoDroid.settings.getString("device", ""));
 				//http://apim.esya.ru/?key=H8&query=om_channel_chat_post&format=jsonp
 				//json={"channel":"51","device":"40","text":"789"}
-				t.add(Netutil.newapicommand((ResultsListener)ChannelDevicesFragment.this,(Context)getSherlockActivity(), "om_channel_chat_post","json="+postjson.toString()));
+				//t.add(Netutil.newapicommand((ResultsListener)ChannelDevicesFragment.this,(Context)getSherlockActivity(), "om_channel_chat_post","json="+postjson.toString()));
 				input.setText("");
 				} catch (JSONException e) {
 
@@ -267,8 +263,6 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 					}
 				}
 		});
-		t.add(Netutil.newapicommand((ResultsListener)LocalService.serContext, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", "")));
-		t.add(Netutil.newapicommand((ResultsListener)ChannelDevicesFragment.this,getSherlockActivity(), "om_channel_chat_get:"+LocalService.currentChannel.u));
 		return view;
 
 	}

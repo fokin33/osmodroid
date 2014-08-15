@@ -50,14 +50,7 @@
                                 android:digits= "0123456789"
                                 android:inputType= "number"
                                 android:defaultValue= "0"/>
-                            <CheckBoxPreference android:key="modeAND" android:title="Modo E" android:defaultValue="false" android:summary="Modo OPPURE preimpostato"/><PreferenceScreen android:title="Identificazione" >
-                                <EditTextPreference
-                                    android:key= "hash"
-                                    android:title= "Hash"/>
-                                <EditTextPreference
-                                    android:key= "n"
-                                    android:title= "Numero di controllo"/>
-                            </PreferenceScreen>
+                            <CheckBoxPreference android:key="modeAND" android:title="Modo E" android:defaultValue="false" android:summary="Modo OPPURE preimpostato"/>
                             <CheckBoxPreference
                                 android:key= "usebuffer"
                                 android:title= "Trasferimento non impostato"
@@ -118,10 +111,6 @@
                             android:summary= "kilometri per ora"
                             android:title= "Velocità Minima per salvataggio ​"
                             android:defaultValue= "0"/><CheckBoxPreference android:key="modeAND_gpx" android:title="Modo E o OPPURE" android:defaultValue="false"/>
-                        <CheckBoxPreference
-                            android:title= "Carica automaticamente su TreRa"
-                            android:key= "automaticupload"
-                            android:defaultValue= "false"/>
                         <EditTextPreference android:title="Percorso SDcard" android:key="sdpath"/>
                 </PreferenceScreen>
                     

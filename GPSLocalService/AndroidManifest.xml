@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.OsMoDroid"
-    android:versionCode="201"
+    android:versionCode="207"
     android:versionName="2.0.0" android:installLocation="auto">
     <uses-sdk android:minSdkVersion="5"  />
 	<uses-feature android:name="android.hardware.camera" android:required="false" />
@@ -54,6 +54,14 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
+        <activity android:name="AuthActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="z.osmo.mobi"/>
+            </intent-filter>
+        </activity>
 
     </application>
 

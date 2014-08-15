@@ -18,7 +18,7 @@
 <string name="NotDefined">Не определено</string>
 <string name="Sended">"Отправка: "</string>
 <string name="Adres">"Адрес: "</string>
-<string name="RepeatAuth">Сбросить хеш</string>
+<string name="RepeatAuth">Сбросить авторизацию</string>
 <string name="Settings">Настройки</string>
 <string name="EqualsParameters">Приравнять параметры</string>
 <string name="AgreeRepeatAuth">Подтвердите повторный запрос авторизации</string>
@@ -176,4 +176,10 @@
 <string name="enable_course_rotation">Вращение по курсу</string>
 <string name="drawer_open">"открыть"</string>
 <string name="drawer_close">"закрыть"</string>
+<string name="copychID">Скопировать ИД</string>
+<string name="shareID">Поделится ИД</string>
+<string name="needauthtocreategroup">Для создания групп, необходимо авторизоваться</string>
+<string name="name">Наименование</string>
+<string name="shareid">Поделиться TrackerID</string>
+<string name="copytrackerid">Копировать TrackerID</string>
 </resources>

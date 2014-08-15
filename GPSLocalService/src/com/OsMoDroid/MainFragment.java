@@ -124,13 +124,13 @@ public class MainFragment extends SherlockFragment implements GPSLocalServiceCli
 		ToggleButton globalsendToggle = (ToggleButton) getView().findViewById(R.id.toggleButton1);
 		Button auth = (Button) getView().findViewById(R.id.authButton);
 		
-		if (OsMoDroid.settings.getString("authed", "").equals("")){
-		globalsendToggle.setVisibility(View.GONE);
-		//auth.setVisibility(View.VISIBLE);
+		if (OsMoDroid.settings.getString("p", "").equals("")){
+		//globalsendToggle.setVisibility(View.GONE);
+		auth.setVisibility(View.VISIBLE);
 		}
 		else {
 			auth.setVisibility(View.GONE);
-			globalsendToggle.setVisibility(View.VISIBLE);
+			//globalsendToggle.setVisibility(View.VISIBLE);
 		}
 		
 		
@@ -142,26 +142,29 @@ public class MainFragment extends SherlockFragment implements GPSLocalServiceCli
 	 */
 	public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
 		//SubMenu menu1 = menu.addSubMenu(Menu.NONE, 11, 4, "Действия");
-		SubMenu menu2 = menu.addSubMenu(Menu.NONE, 12, 4, R.string.more);
+		SubMenu menu2 = menu.addSubMenu(Menu.NONE, 15, 20, R.string.more);
 		
-		MenuItem auth = menu2.add(0, 1, 0, R.string.RepeatAuth);
-		MenuItem mi = menu.add(0, 2, 0, R.string.Settings);
+		MenuItem auth = menu2.add(0, 1, 1, R.string.RepeatAuth);
+		MenuItem mi = menu.add(0, 2, 2, R.string.Settings);
 		mi.setIcon(android.R.drawable.ic_menu_preferences);
-		MenuItem mi3 = menu2.add(0, 3, 0, R.string.EqualsParameters);
-		MenuItem forcesenditem = menu.add(0, 9, 0, R.string.sendnow);
+		MenuItem mi3 = menu2.add(0, 3, 3, R.string.EqualsParameters);
+		MenuItem forcesenditem = menu.add(0, 9, 9, R.string.sendnow);
 		forcesenditem.setIcon(android.R.drawable.ic_menu_mylocation);
-		MenuItem shareadress = menu.add(0, 10, 0, R.string.sharelink);
+		MenuItem shareadress = menu.add(0, 10, 10, R.string.sharelink);
 		shareadress.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		shareadress.setIcon(android.R.drawable.ic_menu_share);
-		MenuItem copyadress = menu.add(0, 11, 0, R.string.copylink);
+		MenuItem copyadress = menu.add(0, 11, 11, R.string.copylink);
 		copyadress.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		copyadress.setIcon(android.R.drawable.ic_menu_edit);
-		MenuItem about = menu.add(0, 12, 0, R.string.about);
+		MenuItem shareID = menu.add(0, 12, 12, R.string.shareid);
+		shareID.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		shareID.setIcon(android.R.drawable.ic_menu_share);
+		MenuItem about = menu.add(0, 13, 14, R.string.about);
 		about.setIcon(android.R.drawable.ic_menu_info_details);
 		about.setIntent(new Intent(getSherlockActivity(), AboutActivity.class));
-//		MenuItem exit = menu.add(0, 14, 0, R.string.exit);
-		MenuItem save =menu2.add(0, 18, 0, R.string.savepref);
-        MenuItem load =menu2.add(0, 19, 0, R.string.loadpref);
+		MenuItem exit = menu.add(0, 14, 13, R.string.copytrackerid);
+		MenuItem save =menu2.add(0, 18, 18, R.string.savepref);
+        MenuItem load =menu2.add(0, 19, 19, R.string.loadpref);
         //MenuItem addlisten = menu.add(0, 20, 0, "listento");
         //MenuItem changeName = menu.add(0, 20, 0, R.string.changename);
 
@@ -175,7 +178,14 @@ public class MainFragment extends SherlockFragment implements GPSLocalServiceCli
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == 1) {
-		Toast.makeText(globalActivity, "Заглушка", Toast.LENGTH_SHORT);
+		
+		OsMoDroid.editor.remove("newkey");
+		OsMoDroid.editor.remove("p");
+		OsMoDroid.editor.remove("u");
+		OsMoDroid.editor.commit();
+		globalActivity.mService.myIM.stop();
+		globalActivity.mService.myIM.start();
+		globalActivity.mService.refresh();
 		}
 		if (item.getItemId() == 2) {
 			
@@ -255,6 +265,20 @@ public class MainFragment extends SherlockFragment implements GPSLocalServiceCli
                     Toast.makeText(getSherlockActivity(), R.string.linkcopied, Toast.LENGTH_SHORT).show();
                     }
 		}
+		if (item.getItemId() == 12) {
+            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+            sendIntent.setType("text/plain");
+            sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, OsMoDroid.settings.getString("tracker_id", ""));
+            startActivity(Intent.createChooser(sendIntent, getSherlockActivity().getString(R.string.sharelink)));
+		}
+		if (item.getItemId() == 14) {
+            ClipboardManager clipboard = (ClipboardManager) getSherlockActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+            if (!OsMoDroid.settings.getString("tracker_id", "").equals(""))
+            {
+            clipboard.setText(OsMoDroid.settings.getString("tracker_id", ""));
+            Toast.makeText(getSherlockActivity(), R.string.linkcopied, Toast.LENGTH_SHORT).show();
+            }
+		}
 //		if (item.getItemId() == 14) {
 //                    Intent i = new Intent(getSherlockActivity(), LocalService.class);
 //                    globalActivity.stopService(i);
@@ -274,58 +298,7 @@ public class MainFragment extends SherlockFragment implements GPSLocalServiceCli
 			 }
 	          
 		}
-		if (item.getItemId() == 20) {
-			// final View textEntryView = factory.inflate(R.layout.dialog,
-			// null);
-			LinearLayout layout = new LinearLayout(globalActivity);
-			layout.setOrientation(LinearLayout.VERTICAL);
-			final TextView txv5 = new TextView(globalActivity);
-			txv5.setText("listen id");
-			layout.addView(txv5);
 	
-
-			final EditText input = new EditText(globalActivity);
-			//input2.setText("Ваше имя");
-			layout.addView(input);
-//		final EditText input = new EditText(this);
-			//final TextView txv4 = new TextView(this);
-			//txv4.setText("Одноразовый пароль можно получить по адресу http://esya.ru/app.html?act=add при наличии регистрации");
-			//Linkify.addLinks(txv4, Linkify.ALL);
-			//layout.addView(txv4);
-
-			AlertDialog alertdialog3 = new AlertDialog.Builder(
-					globalActivity)
-					.setTitle(R.string.appauth)
-					.setView(layout)
-					.setPositiveButton(R.string.yes,
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int whichButton) {
-									String pass = input.getText().toString();
-									if (!(pass.equals(""))) {
-										globalActivity.mService.myIM.listenArrayList.add(input.getText().toString());
-										if(globalActivity.mService.myIM.authed){
-											globalActivity.mService.myIM.sendToServer("LISTEN|"+pass);
-										}
-									} else {
-										Toast.makeText(
-												globalActivity,
-												R.string.noappcode, 5).show();
-									}
-								}
-							})
-					.setNegativeButton(R.string.No,
-							new DialogInterface.OnClickListener() {
-								public void onClick(DialogInterface dialog,
-										int whichButton) {
-
-
-								}
-							}).create();
-
-			alertdialog3.show();
-	
-		}
 		
 		return super.onOptionsItemSelected(item);
 
@@ -431,44 +404,13 @@ if (globalActivity.live){
                                          new DialogInterface.OnClickListener() {
                                                  public void onClick(DialogInterface dialog, int which) {
                                                          stopsession=true;
-                                                         if (OsMoDroid.settings.getBoolean("gpx", true)&&OsMoDroid.settings.getBoolean("automaticupload", true)){
-                                                                 AlertDialog alertdialog1 = new AlertDialog.Builder(
-                                                                                 getSherlockActivity()).create();
-                                                                 alertdialog1.setTitle(getSherlockActivity()
-																		.getString(
-																				R.string.loading));
-
-                                                                 alertdialog1.setMessage(getSherlockActivity()
-																		.getString(
-																				R.string.uploadtrera));
-
-                                                                 alertdialog1.setButton(getString(R.string.yes),
-                                                                                 new DialogInterface.OnClickListener() {
-                                                                                         public void onClick(DialogInterface dialog, int which) {
-                                                                                                 LocalService.uploadto=true;
-                                                                                                 globalActivity.stop(stopsession);
-                                                                                                 updateServiceStatus(view);
-                                                                                                 return;
-                                                                                         }
-                                                                                 });
-                                                                 alertdialog1.setButton2(getString(R.string.No),
-                                                                                 new DialogInterface.OnClickListener() {
-                                                                                         public void onClick(DialogInterface dialog, int which) {
-                                                                                                 LocalService.uploadto=false;
-                                                                                                 globalActivity.stop(stopsession);
-                                                                                                 updateServiceStatus(view);
-                                                                                                 return;
-                                                                                         }
-                                                                                 });
-                                                                 alertdialog1.show();
-                                                         }
-                                                         else
-                                                         {
+                                                        
+                                                         
                                                                  LocalService.uploadto=false;
                                                                  globalActivity.stop(stopsession);
                                                                  updateServiceStatus(view);
 
-                                                         }
+                                                         
                                                          return;
                                                  }
                                          });
@@ -476,44 +418,13 @@ if (globalActivity.live){
                                          new DialogInterface.OnClickListener() {
                                                  public void onClick(DialogInterface dialog, int which) {
                                                          stopsession=false;
-                                                         if (OsMoDroid.settings.getBoolean("gpx", true)&&OsMoDroid.settings.getBoolean("automaticupload", true)){
-                                                                 AlertDialog alertdialog1 = new AlertDialog.Builder(
-                                                                                 getSherlockActivity()).create();
-                                                                 alertdialog1.setTitle(getSherlockActivity()
-																		.getString(
-																				R.string.loading));
-
-                                                                 alertdialog1.setMessage(getSherlockActivity()
-																		.getString(
-																				R.string.uploadtrera));
-
-                                                                 alertdialog1.setButton(getString(R.string.yes),
-                                                                                 new DialogInterface.OnClickListener() {
-                                                                                         public void onClick(DialogInterface dialog, int which) {
-                                                                                                 LocalService.uploadto=true;
-                                                                                                 globalActivity.stop(stopsession);
-                                                                                                 updateServiceStatus(view);
-                                                                                                 return;
-                                                                                         }
-                                                                                 });
-                                                                 alertdialog1.setButton2(getString(R.string.No),
-                                                                                 new DialogInterface.OnClickListener() {
-                                                                                         public void onClick(DialogInterface dialog, int which) {
-                                                                                                 LocalService.uploadto=false;
-                                                                                                 globalActivity.stop(stopsession);
-                                                                                                 updateServiceStatus(view);
-                                                                                                 return;
-                                                                                         }
-                                                                                 });
-                                                                 alertdialog1.show();
-                                                         }
-                                                         else
-                                                         {
+                                                         
+                                                         
                                                                  LocalService.uploadto=false;
                                                                  globalActivity.stop(stopsession);
                                                                  updateServiceStatus(view);
 
-                                                         }
+                                                         
                                                          return;
                                                  }
                                          });
@@ -522,40 +433,13 @@ if (globalActivity.live){
 }
 else {
  
- if (OsMoDroid.settings.getBoolean("gpx", true)&&OsMoDroid.settings.getBoolean("automaticupload", true)){
-         AlertDialog alertdialog1 = new AlertDialog.Builder(
-                         getSherlockActivity()).create();
-         alertdialog1.setTitle(getSherlockActivity().getString(R.string.loading));
 
-         alertdialog1.setMessage(getSherlockActivity().getString(R.string.uploadtrera));
-
-         alertdialog1.setButton(getString(R.string.yes),
-                         new DialogInterface.OnClickListener() {
-                                 public void onClick(DialogInterface dialog, int which) {
-                                         LocalService.uploadto=true;
-                                         globalActivity.stop(stopsession);
-                                         updateServiceStatus(view);
-                                         return;
-                                 }
-                         });
-         alertdialog1.setButton2(getString(R.string.No),
-                         new DialogInterface.OnClickListener() {
-                                 public void onClick(DialogInterface dialog, int which) {
-                                         LocalService.uploadto=false;
-                                         globalActivity.stop(stopsession);
-                                         updateServiceStatus(view);
-                                         return;
-                                 }
-                         });
-         alertdialog1.show();
- }
- else
- {
+ 
          LocalService.uploadto=false;
          globalActivity.stop(stopsession);
          updateServiceStatus(view);
 
- }
+ 
  
 }
 
@@ -604,8 +488,43 @@ else {
 				@Override
 				public void onReceive(Context context, final Intent intent) {
 					TextView dt = (TextView) view.findViewById(R.id.URL);
-					dt.setText(OsMoDroid.settings.getString("viewurl", ""));
-
+					dt.setText("");
+					if(!OsMoDroid.settings.getString("viewurl", "").equals(""))
+						{
+							dt.setText(dt.getText()+OsMoDroid.settings.getString("viewurl", ""));
+						}
+					if(!OsMoDroid.settings.getString("u", "").equals(""))
+					{
+						if(dt.getText().equals(""))
+						{
+							dt.setText(OsMoDroid.settings.getString("u", "")+" "+dt.getText());
+						}
+						else
+						{
+							dt.setText(OsMoDroid.settings.getString("u", "")+"\n"+dt.getText());
+						}
+						
+					}
+					if(!OsMoDroid.settings.getString("tracker_id", "").equals(""))
+					{
+						if(dt.getText().equals(""))
+						{
+							dt.setText(dt.getText()+" "+"TrackerID="+OsMoDroid.settings.getString("tracker_id", ""));
+						}
+						else
+						{
+							dt.setText(dt.getText()+"\n"+"TrackerID="+OsMoDroid.settings.getString("tracker_id", ""));
+						}
+						
+					}
+					if(dt.getText().equals(""))
+					{
+						dt.setText(intent.getStringExtra("sattelite"));
+					}
+					else
+					{
+						dt.setText(dt.getText()+"\n"+intent.getStringExtra("sattelite"));
+					}
 					Linkify.addLinks(dt, Linkify.ALL);
 					//TextView t = (TextView) view.findViewById(R.id.Location);
 					globalActivity.sendcounter = intent.getIntExtra("sendcounter", 0);

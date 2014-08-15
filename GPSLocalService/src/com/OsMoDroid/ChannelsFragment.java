@@ -154,6 +154,22 @@ public class ChannelsFragment extends SherlockFragment {
 			  globalActivity.mService.myIM.sendToServer("GROUP_LEAVE:"+LocalService.channelList.get((int) acmi.id).group_id);
 			  return true;
 		  }
+		  
+		  if (item.getItemId() == 7) {
+			  ClipboardManager clipboard = (ClipboardManager) getSherlockActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+			  
+				  clipboard.setText(LocalService.channelList.get((int) acmi.id).group_id);
+			  
+			  return true;
+		  }
+		  
+		  if (item.getItemId() == 8) {
+		  	Intent sendIntent = new Intent(Intent.ACTION_SEND);
+            sendIntent.setType("text/plain");
+            sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, LocalService.channelList.get((int) acmi.id).group_id );
+            startActivity(Intent.createChooser(sendIntent, getSherlockActivity().getString(R.string.shareID)));
+            return true;
+		  }
 		  return super.onContextItemSelected(item);
 		}
 
@@ -179,6 +195,8 @@ public class ChannelsFragment extends SherlockFragment {
 		    menu.add(0, 4, 4, R.string.sharelink).setIcon(android.R.drawable.ic_menu_edit);
 		    menu.add(0, 5, 5, R.string.openinbrowser).setIcon(android.R.drawable.ic_menu_edit);
 		    menu.add(0, 6, 6, R.string.exitfromchanal).setIcon(android.R.drawable.ic_menu_edit);
+		    menu.add(0, 7, 7, R.string.copychID).setIcon(android.R.drawable.ic_menu_edit);
+		    menu.add(0, 8, 8, R.string.shareID).setIcon(android.R.drawable.ic_menu_edit);
 		super.onCreateContextMenu(menu, v, menuInfo);
 	}
 
@@ -231,6 +249,8 @@ public class ChannelsFragment extends SherlockFragment {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == 1) {
+			if(!OsMoDroid.settings.getString("u", "").equals(""))
+			{
 			LinearLayout layout = new LinearLayout(globalActivity);
 			layout.setOrientation(LinearLayout.VERTICAL);
 			final TextView txv3 = new TextView(globalActivity);
@@ -238,43 +258,18 @@ public class ChannelsFragment extends SherlockFragment {
 			layout.addView(txv3);
 			final EditText input2 = new EditText(globalActivity);
 			layout.addView(input2);
-			final TextView txv1 = new TextView(globalActivity);
-			txv1.setText(R.string.chanalcode);
-			layout.addView(txv1);
-			final EditText input = new EditText(globalActivity);
-			layout.addView(input);
-			final CheckBox chb1 = new CheckBox(globalActivity);
-			chb1.setText(R.string.privatechanal);
-			layout.addView(chb1);
-			final TextView txv2 = new TextView(globalActivity);
-			txv2.setText(R.string.chanalkey);
-			txv2.setEnabled(false);
-			layout.addView(txv2);
-			final EditText input1 = new EditText(globalActivity);
-			input1.setText(R.string.chanalkey);
-			input1.setEnabled(false);
-			layout.addView(input1);
 
-			chb1.setOnCheckedChangeListener(new OnCheckedChangeListener()
-			{
-				public void onCheckedChanged(CompoundButton buttonView,
-						boolean isChecked) {
-				if (isChecked){
-					input1.setEnabled(true);}
-				if (!isChecked){
-					input1.setEnabled(false);}
-				}
-				});
 			AlertDialog alertdialog4 = new AlertDialog.Builder(globalActivity)
 					.setTitle(R.string.createchanal)
 					.setView(layout)
 					.setPositiveButton(R.string.yes,
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog, int whichButton) {
-									canalid = input.getText().toString();
-									String canalkey = input1.getText().toString();
+									//canalid = input.getText().toString();
+									//String canalkey = input1.getText().toString();
 									String canalname = input2.getText().toString();
-									if ( !(canalid.equals("")) && !(canalname.equals("")) && ( chb1.isChecked()&&(!(canalkey.equals(""))) || !chb1.isChecked() )  )
+									//if ( !(canalid.equals("")) && !(canalname.equals("")) && ( chb1.isChecked()&&(!(canalkey.equals(""))) || !chb1.isChecked() )  )
+									if (  !(canalname.equals(""))  )
 									{
 										try
 											{
@@ -295,6 +290,12 @@ public class ChannelsFragment extends SherlockFragment {
 							{}
 							}).create();
 				alertdialog4.show();
+		}
+			else
+			{
+				Toast.makeText(globalActivity, R.string.needauthtocreategroup, Toast.LENGTH_LONG).show();
+			}
+			
 			}
         
         if (item.getItemId() == 2) {
@@ -340,7 +341,7 @@ public class ChannelsFragment extends SherlockFragment {
 			alertdialog4.show();
 			}else 
 				{
-				Toast.makeText(globalActivity,R.string.requestdevicebefore, 5).show();
+				Toast.makeText(globalActivity,R.string.CheckInternet, 5).show();
 				}
         	}
         if (item.getItemId() == 3) 

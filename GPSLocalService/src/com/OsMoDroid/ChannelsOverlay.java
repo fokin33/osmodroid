@@ -68,6 +68,46 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 		final BoundingBoxE6 theBoundingBox = mapView.getBoundingBox();
 		final Projection pj = mapView.getProjection();
         final Point scrPoint = new Point();
+        for(Device dev:LocalService.deviceList)
+		{
+			
+			 if(OsMoDroid.settings.getBoolean("traces", true)){
+			 if(dev.devicePath.size()>2)
+			 	{
+				 pathpaint.setColor(Color.parseColor( dev.color));
+				 Path path = new Path();
+				 pj.toPixels((GeoPoint) dev.devicePath.get(0), scrPoint);
+				 path.moveTo(scrPoint.x, scrPoint.y);
+				 for (IGeoPoint geo: dev.devicePath)
+				 	{
+					 pj.toPixels((GeoPoint) geo, scrPoint);
+					 path.lineTo(scrPoint.x, scrPoint.y);
+					 path.moveTo(scrPoint.x, scrPoint.y);
+				 	}
+				 	canvas.drawPath(path, pathpaint);
+			 	}
+		}
+			 if(dev.lat!=0f&&dev.lon!=0f)
+				{ 
+				if (theBoundingBox.contains(new GeoPoint(dev.lat, dev.lon))) 
+				 {
+					pj.toPixels(new GeoPoint(dev.lat, dev.lon), scrPoint);
+					paint.setDither(true);
+					paint.setAntiAlias(true);
+					paint.setTextSize(22f);
+					paint.setTypeface(Typeface.DEFAULT_BOLD);
+					paint.setTextAlign(Paint.Align.CENTER);
+					paint.setColor(Color.parseColor("#013220"));
+					canvas.save();
+			        canvas.rotate(-mapView.getMapOrientation(), scrPoint.x, scrPoint.y);
+					canvas.drawText(dev.name, scrPoint.x, scrPoint.y-10, paint);
+					canvas.drawText(dev.speed, scrPoint.x,scrPoint.y-2*10, paint);
+					paint.setColor(Color.parseColor(dev.color));
+					canvas.drawCircle(scrPoint.x, scrPoint.y, 10, paint);
+					canvas.restore();
+				 }
+				}
+		}
 		for (Channel ch :LocalService.channelList){
 			for (ColoredGPX gpx :ch.gpxList){
 				int size=gpx.points.size();

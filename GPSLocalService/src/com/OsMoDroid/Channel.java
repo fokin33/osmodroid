@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +24,7 @@ import android.os.AsyncTask;
 import android.provider.Settings.Global;
 import android.util.Log;
 
-public class Channel {
+public class Channel implements Serializable {
 	
 	public ArrayList<ColoredGPX> gpxList = new ArrayList<ColoredGPX>();
 	public String name;

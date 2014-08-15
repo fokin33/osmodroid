@@ -224,6 +224,8 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	public static List<Device> currentchanneldeviceList= new ArrayList<Device>();
     public static ArrayList<String> messagelist= new ArrayList<String>();
     public static ArrayList<String> debuglist= new ArrayList<String>();
+    public static ArrayList<PermLink> simlimkslist= new ArrayList<PermLink>();
+    public static ArrayAdapter<PermLink> simlinksadapter;
     public static List<MyMessage> chatmessagelist= new ArrayList<MyMessage>();
     public static Device currentDevice;
     public static DeviceAdapter deviceAdapter;
@@ -410,6 +412,7 @@ public synchronized void refresh(){
 
 	in.removeExtra("startmessage");
 	in.putExtra("position", position+"\n"+satellite+" "+getString(R.string.accuracy)+accuracy);
+	in.putExtra("sattelite", satellite);
 	in.putExtra("sendresult", sendresult);
 	in.putExtra("buffercounter", buffercounter);
 	in.putExtra("stat", getString(R.string.maximal)+df1.format(maxspeed*3.6)+getString(R.string.kmch)+getString(R.string.average)+df1.format(avgspeed*3600)+getString(R.string.kmch)+getString(R.string.going)+df2.format(workdistance/1000) + getString(R.string.km)+"\n"+getString(R.string.worktime)+formatInterval(timeperiod));
@@ -633,13 +636,26 @@ public void stopcomand()
 //sockaddr = new InetSocketAddress("esya.ru", 2145);
 ///////////////////////
 		
-			if(log)Log.d(this.getClass().getName(), "try sendid");
-			if(OsMoDroid.settings.getString("newkey", "").equals(""))
+//			if(log)Log.d(this.getClass().getName(), "try sendid");
+//			if(OsMoDroid.settings.getString("newkey", "").equals(""))
+//				{
+//						sendid();
+//				}
+			if(!OsMoDroid.settings.getBoolean("ondestroy", false))
+			{
+				List<Channel> loaded=(List<Channel>) loadObject(OsMoDroid.CHANNELLIST, channelList.getClass());
+				if (loaded!=null)
 				{
-						sendid();
+				Log.d(this.getClass().getName(), "channelList is not empty");
+				channelList.addAll(loaded);
 				}
-
-		
+			}
+			List<Device> loaded=(List<Device>) loadObject(OsMoDroid.DEVLIST, deviceList.getClass());
+			if (loaded!=null)
+			{
+			Log.d(this.getClass().getName(), "devicelist is not empty");
+			deviceList.addAll(loaded);
+			}
 	myIM = new IM("osmo.mobi", 3245, this){
 		
 		@Override
@@ -661,6 +677,7 @@ public void stopcomand()
 		}
 		
 	};
+	myIM.start();
 if (OsMoDroid.settings.getBoolean("started", false)){
 	startServiceWork();
 }
@@ -1458,14 +1475,7 @@ public void sendid()
 		if (LocalService.channelsDevicesAdapter!=null&&LocalService.currentChannel!=null)
 		{
 			 if(log)Log.d(this.getClass().getName(), "Adapter:"+ LocalService.channelsDevicesAdapter.toString());
-			 for (Channel channel:LocalService.channelList)
-			 	{
-					if(channel.u==LocalService.currentChannel.u)
-					{
-						LocalService.currentchanneldeviceList.clear();
-						LocalService.currentchanneldeviceList.addAll(channel.deviceList);
-					}
-				}
+
 			 LocalService.channelsDevicesAdapter.notifyDataSetChanged();
 		}
 		accuracy=Float.toString(location.getAccuracy());
@@ -2129,92 +2139,8 @@ public void onResultsSucceeded(APIComResult result) {
 		}
 		}
 
-	if (!(result.Jo==null)) {
-		if (result.Jo.has("error")){
-			if ((result.Command.equals("session_start")||result.Command.equals("start"))&&result.Jo.optString("error").equals("200")){
-				stopServiceWork(false);
-				if(!OsMoDroid.gpslocalserviceclientVisible){
-				
-				notifywarnactivity(getString(R.string.warnhash), true);}
-				else {
-					warnwronghash ();
-				}
-			}else
-			{
-		if(log)Log.d(getClass().getSimpleName(),"notifwar2:"+result.Jo.optString("error")+" "+result.Jo.optString("error_description"));
-		
-		notifywarnactivity(getString(R.string.comand)+result.Command+getString(R.string.errorcode)+result.Jo.optString("error")+getString(R.string.detalisation)+result.Jo.optString("error_description")+getString(R.string.query)+result.url+ getString(R.string.versionosmodroid)+strVersionName, false);
-			}
-		}
 
-	}
-	if (result.Command.equals("session_start"))
-	{
-		sessionstarted=true;
-	}
-	if (result.Command.equals("session_stop"))
-	{
-		sessionstarted=false;
-	}
 	
-
-	if (result.Command.equals("start")&& !(result.Jo==null))
-
-	{
-		
-		OsMoDroid.editor.putLong("laststartcommandtime", System.currentTimeMillis());
-		OsMoDroid.editor.commit();
-		if (!result.Jo.optString("lpch").equals("")&& !result.Jo.optString("lpch").equals(OsMoDroid.settings.getString("lpch", ""))){
-			
-			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
-			longPollchannels.add(new String[] {"ctrl_"+OsMoDroid.settings.getString("lpch", ""),"r",""});
-			longPollchannels.add(new String[] {OsMoDroid.settings.getString("lpch", "")+"_chat","m",""});
-			OsMoDroid.editor.putString("lpch", result.Jo.optString("lpch"));
-			OsMoDroid.editor.commit();
-			
-			if (myIM!=null){
-				myIM.removechannels(longPollchannels);	
-				longPollchannels =new ArrayList<String[]>();
-				longPollchannels.add(new String[] {"ctrl_"+OsMoDroid.settings.getString("lpch", ""),"r",""});
-				longPollchannels.add(new String[] {OsMoDroid.settings.getString("lpch", "")+"_chat","m",""});
-				myIM.addchannels(longPollchannels);	
-				}
-			
-		}
-		if(!result.Jo.optString("device").equals("")){
-			OsMoDroid.editor.putString("device", result.Jo.optString("device"));
-			OsMoDroid.editor.putString("view-url", "http://m.esya.ru/"+result.Jo.optString("device_url"));
-			OsMoDroid.editor.putString("devicename", result.Jo.optString("device_name"));
-			OsMoDroid.editor.commit();
-			refresh();
-			
-		}
-		
-		if(!result.Jo.optString("session_ttl").equals("")){
-			OsMoDroid.editor.putString("session_ttl", result.Jo.optString("session_ttl"));
-			OsMoDroid.editor.commit();
-			
-			
-		}
-		if(!result.Jo.optString("uid").equals("")){
-			OsMoDroid.editor.putString("uid", result.Jo.optString("uid"));
-			OsMoDroid.editor.commit();
-			
-			
-		}
-		
-
-				if (!result.Jo.optString("motd").equals("") ||!result.Jo.optString("query_per_day").equals("")){
-
-				in.putExtra("startmessage", result.Jo.optString("motd")+"\n"+ getString(R.string.dayssend) +result.Jo.optString("query_per_day")
-
-				+"\n"+ getString(R.string.wekksends)+result.Jo.optString("query_per_week")+ "\n" +getString(R.string.monthsends)+result.Jo.optString("query_per_month"));
-
-				sendBroadcast(in);
-
-			}
-
-	}
 	if(result.Command.equals("sendid")&&!(result.Jo==null)){
 		if(log)Log.d(getClass().getSimpleName(),"sendid response:"+result.Jo.toString());
 		//Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),Toast.LENGTH_SHORT).show();
@@ -2230,148 +2156,8 @@ public void onResultsSucceeded(APIComResult result) {
 		}
 		
 	}
-	if (result.Command.equals("APIM")&& !(result.Jo==null))
-
-
-
-
-	{
-
-		//if(log)Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);
-
-		 
-		    Iterator<String> it = (result.Jo).keys();
-
-			  while (it.hasNext())
-		    
-		    
-
-        	{
-		    	
-		    	String keyname= it.next();
-		    	if(keyname.contains("om_device_channel_active")){
-		    		Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_get:"+OsMoDroid.settings.getString("device", ""));
-		    		Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
-		    	 }
-		    	if(keyname.contains("om_channel_overlay_get")){
-		    		for (Channel ch : channelList){
-		    			if (result.Jo.has("om_channel_overlay_get:"+Integer.toString(ch.u))){
-		    				try {
-		    				for (int i = 0; i < result.Jo.getJSONArray("om_channel_overlay_get:"+Integer.toString(ch.u)).length(); i++) {
-		    					JSONObject jsonObject = result.Jo.getJSONArray("om_channel_overlay_get:"+Integer.toString(ch.u)).getJSONObject(i);
-		    					ch.downloadgpx(jsonObject.getJSONObject("data").getString("download_url"), jsonObject.getJSONObject("data").getString("u"),jsonObject.getString("color"));
-		    				}
-		    				}
-		    				catch (JSONException e) {
-		    					if(log)Log.d(getClass().getSimpleName(), e.getMessage());
-							}
-		    			
-		    			}
-		    		}
-		    	}
-		    	if(keyname.contains("om_channel_point_list")){
-		    		for (Channel ch: channelList){
-		    			if (result.Jo.has("om_channel_point_list:"+Integer.toString(ch.u))){
-		    				try {
-		    					ch.getPointList(result.Jo.getJSONArray("om_channel_point_list:"+Integer.toString(ch.u)));
-			    				}		    					
-		    				 catch (Exception e) {
-		    					e.printStackTrace();
-							}
-		    		
-		    			}
-		    		}
-		    	}
-        	}
-		
-		
-		if (result.Jo.has("om_device_get:"+OsMoDroid.settings.getString("device", ""))){
-			try {
-				JSONObject jsonObject =	result.Jo.getJSONObject("om_device_get:"+OsMoDroid.settings.getString("device", ""));
-		 		 // if(log)Log.d(getClass().getSimpleName(), a.toString());
-				OsMoDroid.settings.edit().putString("om_device_get", jsonObject.toString()).commit();
-		 	if (jsonObject.getString("channel_send").equals("1")){
-		 		globalsend=true;
-		 		OsMoDroid.settings.edit().putBoolean("globalsend", globalsend).commit();
-		 		
-		 	} else
-		 	{
-		 		globalsend=false;
-		 		OsMoDroid.settings.edit().putBoolean("globalsend", globalsend).commit();
-		 	}
-		 	refresh();
-			} catch (Exception e) {
-
-					 if(log)Log.d(getClass().getSimpleName(), "om_device_get эксепшн"+e.getMessage());
-					e.printStackTrace();
-				}
-		}
-		if (result.Jo.has("tr_track_upload:1")){
-				LocalService.mNotificationManager.cancel(result.notificationid);
-		}
-		
-		if (result.Jo.has("om_device")){
-			deviceList.clear();
-			deviceList.add(new Device("0",getString(R.string.observers),"1", OsMoDroid.settings.getString("uid", "0")));
-		
-			try {
-				  a =	result.Jo.getJSONArray("om_device");
-				  //OsMoDroid.settings.edit().putString("om_device", a.toString()).commit();
-				  //if(log)Log.d(getClass().getSimpleName(), a.toString());
-		 		  deviceListFromJSONArray(a);
-		 		  saveObject(deviceList, OsMoDroid.DEVLIST);
-				} catch (Exception e) {
-					 if(log)Log.d(getClass().getSimpleName(), "эксепшн");
-				}
-			 //if(log)Log.d(getClass().getSimpleName(),deviceList.toString());
-			 if (deviceAdapter!=null) {deviceAdapter.notifyDataSetChanged();}
-		}
-		if (result.Jo.has("om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""))){
-			 if (binded){
-				 disconnectChannels();
-			 }
-			channelList.clear();
-				try {
-				  a =	result.Jo.getJSONArray("om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
-				  OsMoDroid.settings.edit().putString("om_device_channel_adaptive", a.toString()).commit();
-				  if(log)Log.d(getClass().getSimpleName(), a.toString());
-				  channelListFromJSONArray(a);
-					}
-				catch (Exception e) {
-					if(log)Log.d(getClass().getSimpleName(), "om_device_channel_adaptive эксепшн"+e.getMessage());
-					e.printStackTrace();
-				}
-
-
-			 //if(log)Log.d(getClass().getSimpleName(),channelList.toString());
-			 
-			 if (channelsAdapter!=null) {channelsAdapter.notifyDataSetChanged();}
-			 if(log)Log.d(getClass().getSimpleName(),"binded="+binded);
-			 if (binded){
-				 disconnectChannels();
-				 connectChannels();
-				
-				 if(LocalService.devlistener!=null)
-				 	{
-					 	if(log)Log.d(getClass().getSimpleName(), "inform map");
-					 	LocalService.devlistener.onChannelListChange();
-				 	}
-				 if(log)Log.d(getClass().getSimpleName(), "inform cleint");
-			 }
-			 disconnectChannelsChats();
-			 connectChannelsChats();
-			for (Channel channel : channelList){
-				Netutil.newapicommand((ResultsListener)this, "om_channel_overlay_get:"+channel.u);
-				Netutil.newapicommand((ResultsListener)this, "om_channel_point_list:"+channel.u);
-			}
-			
-		}
-		
 	
-
-		//if(log)Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);
-
-	}
+	
 
 
 }

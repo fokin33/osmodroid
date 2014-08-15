@@ -174,4 +174,11 @@
 <string name="showtraces">Show traces</string>
 <string name="enable_manual_rotation">Enable manual rotation</string>
 <string name="enable_course_rotation">Enable course rotation</string>
+<string name="copychID">Copy ID</string>
+<string name="shareID">Share ID</string>
+<string name="needauthtocreategroup">Need auth to create group</string>
+<string name="name">Name</string>
+<string name="trackerid">TrackerID</string>
+<string name="shareid">Share TrackerID</string>
+<string name="copytrackerid">Copy TrackerID</string>
 </resources>

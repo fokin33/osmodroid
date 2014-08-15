@@ -392,12 +392,14 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 //		if (!OsMoDroid.settings.getString("key", "" ).equals("") ){
 			 String[] menu1 = new String[] {
 					    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
-					    getString(R.string.chanals),//getString(R.string.devices),//getString(R.string.links),
+					    getString(R.string.chanals),getString(R.string.devices),
+					    getString(R.string.links),
 					    getString(R.string.notifications), getString(R.string.tracks) , getString(R.string.exit)};
 			if(OsMoDroid.debug){
 				 menu1 = new String[] {
 					    getString(R.string.tracker), getString(R.string.stat),getString(R.string.map),
-					    getString(R.string.chanals),//getString(R.string.devices),//getString(R.string.links),
+					    getString(R.string.chanals),getString(R.string.devices),//
+					    getString(R.string.links),
 					    getString(R.string.notifications), getString(R.string.tracks) , getString(R.string.exit), "debug"};
 				
 			}
@@ -463,13 +465,20 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	@Override
 	  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
-		 Log.d(this.getClass().getSimpleName(), "void onActivityResult");
+		 Log.d(this.getClass().getSimpleName(), "void onActivityResult"+requestCode+" "+resultCode);
 		 updateMainUI();
 		if (conn == null || mService == null) {
 
 		} else {
-
+			if(requestCode==0){
+				Log.d(this.getClass().getSimpleName(), "void onActivityResult=preference");
 			mService.applyPreference();
+			}
+			if(requestCode==1&&resultCode==Activity.RESULT_OK){
+				Log.d(this.getClass().getSimpleName(), "void onActivityResult=auth");
+				mService.myIM.stop();
+				mService.myIM.start();
+			}
 			
 
 		}
@@ -590,7 +599,8 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 
 
 	void auth() {
-		Toast.makeText(this, "Пока не реализовано", Toast.LENGTH_SHORT);
+		Intent intent = new Intent(this, AuthActivity.class);
+	    startActivityForResult(intent, 1);
 	}
 
 

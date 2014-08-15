@@ -248,11 +248,11 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		Log.d(getClass().getSimpleName(), "map onviewcreated");
-		if(!LocalService.channelsupdated&&!OsMoDroid.settings.getString("key", "").equals(""))
-		{
-			Log.d(getClass().getSimpleName(), "map request channels");
-			Netutil.newapicommand((ResultsListener)LocalService.serContext, (Context)getSherlockActivity(), "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
-		}
+//		if(!LocalService.channelsupdated&&!OsMoDroid.settings.getString("key", "").equals(""))
+//		{
+//			Log.d(getClass().getSimpleName(), "map request channels");
+//			Netutil.newapicommand((ResultsListener)LocalService.serContext, (Context)getSherlockActivity(), "om_device_channel_adaptive:"+OsMoDroid.settings.getString("device", ""));
+//		}
 		
 		super.onViewCreated(view, savedInstanceState);
 	}
