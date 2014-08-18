@@ -53,7 +53,7 @@
 <string name="message">Message</string>
 <string name="sendsupport">Report to support</string>
 <string name="about">About</string>
-<string name="abouttext">OsMoDroid, monitoring client for OsMo\n Main developer: Denis Fokin (c) 2012-2014 \n \n Using this application you accept the Terms of Use : http://esya.ru/om/terms/ \n \n Site OsMoDroid: http://osmodroid.com \nManual on OsMoDroid: http://osmodroid.com/help/ \nLink with OsmAnd: http://osmodroid.com/withosmand.html \n \nManual monitoring : http://esya.ru/om/start/ \nMap Data © OpenStreetMap contributors www.osm.org \nTiles © GIScience Heidelberg</string>
+<string name="abouttext">OsMoDroid, monitoring client for OsMo\n Main developer: Denis Fokin (c) 2012-2014 \n \n Using this application you accept the Terms of Use : http://osmo.mobi/terms/ \n \n Site OsMoDroid: http://osmodroid.com \nManual on OsMoDroid: http://osmodroid.com/help/ \nLink with OsmAnd: http://osmodroid.com/withosmand.html \n \nManual monitoring : http://esya.ru/om/start/ \nMap Data © OpenStreetMap contributors www.osm.org \nTiles © GIScience Heidelberg</string>
 <string name="send">>></string>
 <string name="cancel">Cancel</string>
 <string name="speed">Speed: km/h</string>
@@ -71,7 +71,7 @@
 <string name="yourmessage">Your message:</string>
 <string name="sendingmessage">Sending a message</string>
 <string name="sharelink">Share</string>
-<string name="deviceslis">Messages</string>
+<string name="deviceslis">Device List</string>
 <string name="messagetochanal">Message to the Group</string>
 <string name="copylink">Copy this link</string>
 <string name="openinbrowser">Open in Browser</string>
@@ -181,4 +181,11 @@
 <string name="trackerid">TrackerID</string>
 <string name="shareid">Share TrackerID</string>
 <string name="copytrackerid">Copy TrackerID</string>
+<string name="color_dialog_title">Color Selection</string>
+<string name="color_h">hue</string>
+<string name="color_s">saturation</string>
+<string name="color_v">value</string>
+<string name="color_a">alpha</string>
+<string name="unknown_location_now">Unknown location now</string>
+<string name="color">Define color</string>
 </resources>

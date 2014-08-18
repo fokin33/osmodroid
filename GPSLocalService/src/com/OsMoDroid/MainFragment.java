@@ -157,8 +157,6 @@ public class MainFragment extends SherlockFragment implements GPSLocalServiceCli
 		copyadress.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		copyadress.setIcon(android.R.drawable.ic_menu_edit);
 		MenuItem shareID = menu.add(0, 12, 12, R.string.shareid);
-		shareID.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		shareID.setIcon(android.R.drawable.ic_menu_share);
 		MenuItem about = menu.add(0, 13, 14, R.string.about);
 		about.setIcon(android.R.drawable.ic_menu_info_details);
 		about.setIntent(new Intent(getSherlockActivity(), AboutActivity.class));

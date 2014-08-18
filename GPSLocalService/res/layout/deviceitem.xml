@@ -10,6 +10,7 @@
             android:id="@+id/txtName"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:padding="5dp"
             android:text="Name"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -17,12 +18,14 @@
             android:id="@+id/txtWhere"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:padding="2dp"
             android:text="Where" />
 
          <TextView
              android:id="@+id/txtLast"
              android:layout_width="fill_parent"
              android:layout_height="wrap_content"
+             android:padding="2dp"
              android:text="Last" />
 
     </LinearLayout>

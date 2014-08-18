@@ -49,29 +49,33 @@ import com.actionbarsherlock.view.MenuItem;
 public class ChannelDevicesFragment extends SherlockFragment implements ResultsListener {
 	
 	//ArrayList<MyAsyncTask> t= new ArrayList<Netutil.MyAsyncTask>();
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		globalActivity = (GPSLocalServiceClient) getSherlockActivity();
-		super.onActivityCreated(savedInstanceState);
-	}
+	
 	
 	@Override
 	public boolean onContextItemSelected(android.view.MenuItem item) {
 		 final AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();
 		  
 		 if (item.getItemId() == 1) 
-		  {
-			String latitude =Float.toString(LocalService.channelsDevicesAdapter.getItem(acmi.position).lat);
-			String longitude=Float.toString(LocalService.channelsDevicesAdapter.getItem(acmi.position).lon);;
-			Intent intent= new Intent(android.content.Intent.ACTION_VIEW,Uri.parse("geo:"+latitude+","+longitude+"?z=10"));
-			try {
-				startActivity(intent);
-			} catch (Exception e) {
-				Toast.makeText(getSherlockActivity(), R.string.nomapapp, Toast.LENGTH_SHORT).show();
-				e.printStackTrace();
-			}  
-			return super.onContextItemSelected(item);
+		  
+		 {
+			 if(LocalService.channelsDevicesAdapter.getItem(acmi.position).lat!=0)
+			 {
+			 Log.d(getClass().getSimpleName(), "move to map to device");
+				OsMoDroid.editor.putInt("centerlat", (int) ((LocalService.channelsDevicesAdapter.getItem(acmi.position).lat)* 1E6));
+				OsMoDroid.editor.putInt("centerlon", (int) ((LocalService.channelsDevicesAdapter.getItem(acmi.position).lon)* 1E6));
+				OsMoDroid.editor.putInt("zoom", 16);
+				OsMoDroid.editor.putBoolean("isfollow", false);
+				OsMoDroid.editor.commit();
+				globalActivity.drawClickListener.selectItem(OsMoDroid.context.getString(R.string.map), null);
+				LocalService.currentItemName=OsMoDroid.context.getString(R.string.map);
+			
 		  }
+		 
+		 else
+		 {
+			 Toast.makeText(globalActivity, R.string.unknown_location_now, Toast.LENGTH_SHORT).show();
+		 }
+		 }
 		return super.onContextItemSelected(item);
 	}
 

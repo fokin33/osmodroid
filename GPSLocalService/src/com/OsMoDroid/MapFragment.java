@@ -44,6 +44,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -53,11 +55,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.OsMoDroid.MapFragment.MAPSurferTileSource;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.SubMenu;
 
 public class MapFragment extends SherlockFragment implements DeviceChange, IMyLocationProvider,LocationListener {
 	 	ResourceProxyImpl mResourceProxy;
@@ -73,6 +78,8 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 		private IMyLocationConsumer myLocationConumer;
 		private long lastgpslocation=0;
 		private MenuItem courserotation;
+		private MAPSurferTileSource mapSurferTileSource;
+		private BingMapTileSource bingTileSource;
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 			MenuItem traces = menu.add(0, 1, 0, R.string.showtraces);
@@ -84,7 +91,12 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 			traces.setChecked(OsMoDroid.settings.getBoolean("traces", true));
 			rotation.setChecked(OsMoDroid.settings.getBoolean("rotation", false));
 			courserotation.setChecked(rotate);
+			SubMenu menu2 = menu.addSubMenu(Menu.NONE, 4, 4, R.string.map);
+			MenuItem mapsurfer = menu2.add(0, 5, 1, "MapSurfer");
+			MenuItem mapnik = menu2.add(0, 6, 2, "Mapnik");
+			MenuItem bing = menu2.add(0, 7, 3, "Microsoft Bing");
 			super.onCreateOptionsMenu(menu, inflater);
+			
 		}
 
 
@@ -112,6 +124,16 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 				mMapView.setMapOrientation(0);
 				mMapView.invalidate();
 			break;
+			case 6:
+				mMapView.setTileSource(TileSourceFactory.MAPNIK);
+				break;
+			case 5:
+				mMapView.setTileSource(mapSurferTileSource);
+				break;
+			case 7:
+				bingTileSource.retrieveBingKey(globalActivity);
+				mMapView.setTileSource(bingTileSource);
+				break;
 			default:
 				break;
 			}
@@ -279,12 +301,14 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 			final int aTileSizePixels=256;
 			final String aImageFilenameEnding = ".png";
 			final String[] aBaseUrl=new String[] {"http://openmapsurfer.uni-hd.de/tiles/roads/"};
-			MAPSurferTileSource myTileSource = new MAPSurferTileSource(name, string.unknown, aZoomMinLevel, aZoomMaxLevel, aTileSizePixels, aImageFilenameEnding, aBaseUrl);
+			bingTileSource = new BingMapTileSource(null);
+			bingTileSource.setStyle(BingMapTileSource.IMAGERYSET_AERIALWITHLABELS);
+			mapSurferTileSource = new MAPSurferTileSource(name, string.unknown, aZoomMinLevel, aZoomMaxLevel, aTileSizePixels, aImageFilenameEnding, aBaseUrl);
 			View view = inflater.inflate(R.layout.map, container, false);
 			mMapView = (MapView)view.findViewById(R.id.mapview);
 			ImageButton centerImageButton = (ImageButton)view.findViewById(R.id.imageButtonCenter);
 			Button rotateButton = (Button)view.findViewById(R.id.buttonRotate);
-			mMapView.setTileSource(myTileSource);
+			mMapView.setTileSource(mapSurferTileSource);
 			if(myTracePathOverlay==null)
 			{
 				myTracePathOverlay=new PathOverlay(Color.RED, 10, mResourceProxy);
@@ -311,10 +335,19 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
             mMapView.setBuiltInZoomControls(true);
             mMapView.setMultiTouchControls(true);
             mController = mMapView.getController();
-    		
             if(OsMoDroid.settings.getInt("centerlat", -1)!=-1){
-            	mController.setZoom(OsMoDroid.settings.getInt("zoom",10));
-            	mController.setCenter(new GeoPoint(OsMoDroid.settings.getInt("centerlat", 0), OsMoDroid.settings.getInt("centerlon", 0)));
+            	new Handler(Looper.getMainLooper()).post(
+            		    new Runnable() {
+            		        public void run() {
+            		        	mController.setZoom(OsMoDroid.settings.getInt("zoom",10));
+            	            	mController.animateTo(new GeoPoint(OsMoDroid.settings.getInt("centerlat", 0), OsMoDroid.settings.getInt("centerlon", 0)));
+            		        }
+            		    }
+            		);
+            	
+            	//mController.setCenter(new GeoPoint(OsMoDroid.settings.getInt("centerlat", 0), OsMoDroid.settings.getInt("centerlon", 0)));
+            	
+            	
             } 
             else
             {

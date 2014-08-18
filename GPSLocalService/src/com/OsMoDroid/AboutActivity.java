@@ -29,8 +29,8 @@ public class AboutActivity extends Activity {
 		try {
 			PackageInfo packageInfo = getPackageManager().getPackageInfo(
 					getPackageName(), 0);
-			strVersionName = packageInfo.packageName + " "
-					+ packageInfo.versionName;
+			strVersionName = packageInfo.packageName + ' '
+					+ packageInfo.versionName+' '+packageInfo.versionCode;;
 		} catch (NameNotFoundException e) {
 			//e.printStackTrace();
 		}

@@ -161,59 +161,7 @@ public class Channel implements Serializable {
 	        }  
 	}
 
-	public void connect(){
-		Log.d(getClass().getSimpleName(),"Channel connecting");	
-	//	chanIM= new IM("om_"+this.ch+",om_"+this.ch+"_chat", LocalService.serContext, 2);
-		ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
-		longPollchannels.add(new String[] {this.group_id,"ch",""});
-		//longPollchannels.add(new String[] {this.ch+"_chat","chch",""});
 		
-		if (LocalService.myIM!=null){
-			LocalService.myIM.removechannels(longPollchannels);
-			LocalService.myIM.addchannels(longPollchannels);	
-	}
-		connected=true;
-		
-	}
-	
-	public void connectchat(){
-		Log.d(getClass().getSimpleName(),"Channel chat connecting");	
-	//	chanIM= new IM("om_"+this.ch+",om_"+this.ch+"_chat", LocalService.serContext, 2);
-		ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
-		//longPollchannels.add(new String[] {this.ch,"ch",""});
-		longPollchannels.add(new String[] {this.group_id+"_chat","chch",""});
-		
-		if (LocalService.myIM!=null){
-			LocalService.myIM.removechannels(longPollchannels);
-			LocalService.myIM.addchannels(longPollchannels);	
-	}
-		chatconnected=true;
-		
-	}
-
-	public void disconnect(){
-		Log.d(getClass().getSimpleName(),"Channel disconnecting");	
-		//	chanIM= new IM("om_"+this.ch+",om_"+this.ch+"_chat", LocalService.serContext, 2);
-			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
-			longPollchannels.add(new String[] {this.group_id,"ch",""});
-			//longPollchannels.add(new String[] {this.ch+"_chat","chch",""});
-			
-			if (LocalService.myIM!=null){
-				LocalService.myIM.removechannels(longPollchannels);	}	
-			connected=false;
-	}
-	public void disconnectchat(){
-		Log.d(getClass().getSimpleName(),"Channel chat disconnecting");	
-		//	chanIM= new IM("om_"+this.ch+",om_"+this.ch+"_chat", LocalService.serContext, 2);
-			ArrayList<String[]> longPollchannels =new ArrayList<String[]>();
-			//longPollchannels.add(new String[] {this.ch,"ch",""});
-			longPollchannels.add(new String[] {this.group_id+"_chat","chch",""});
-			
-			if (LocalService.myIM!=null){
-				LocalService.myIM.removechannels(longPollchannels);	}	
-			chatconnected=false;
-	}
-	
 	public void downloadgpx(String url, String u, String color){
 		 File sdDir = android.os.Environment.getExternalStorageDirectory();
 			 File fileName = new File (sdDir, "OsMoDroid/channelsgpx/");

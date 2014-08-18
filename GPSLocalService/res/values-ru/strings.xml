@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
 <string name="app_name">OsMoDroid</string>
 <string name="start">Запустить</string>
@@ -54,7 +53,7 @@
 <string name="message">Сообщение</string>
 <string name="sendsupport">Сообщить в техническую поддержку</string>
 <string name="about">О программе</string>
-<string name="abouttext">OsMoDroid, клиент мониторинга OsMo\nОсновной разработчик: Денис Фокин (c) 2012-2014\n\nИспользуя данное приложение вы принимаете Условия Использования:\nhttp://esya.ru/om/terms/\n\nОфициальный сайт OsMoDroid:\nhttp://osmodroid.com\nСправка по OsMoDroid:\nhttp://osmodroid.com/help/\nСвязка с OsmAnd:\nhttp://osmodroid.com/withosmand.html\n\nСправка по мониторингу:\nhttp://esya.ru/om/start/ \nДанные карты © OpenStreetMap и участники www.osm.org \nТайлы карты © GIScience Heidelberg</string>
+<string name="abouttext">OsMoDroid, клиент мониторинга OsMo\nОсновной разработчик: Денис Фокин (c) 2012-2014\n\nИспользуя данное приложение вы принимаете Условия Использования:\nhttp://osmo.mobi/terms/\n\nОфициальный сайт OsMoDroid:\nhttp://osmodroid.com\nСправка по OsMoDroid:\nhttp://osmodroid.com/help/\nСвязка с OsmAnd:\nhttp://osmodroid.com/withosmand.html\n\nСправка по мониторингу:\nhttp://esya.ru/om/start/ \nДанные карты © OpenStreetMap и участники www.osm.org \nТайлы карты © GIScience Heidelberg</string>
 <string name="send">>></string>
 <string name="cancel">Отмена</string>
 <string name="speed">Скорость: км/ч</string>
@@ -73,7 +72,7 @@
 <string name="yourmessage">Ваше сообщение:</string>
 <string name="sendingmessage">Отправка сообщения</string>
 <string name="sharelink">Поделиться ссылкой</string>
-<string name="deviceslis">Сообщения</string>
+<string name="deviceslis">Список устройств</string>
 <string name="messagetochanal">Cообщение группе</string>
 <string name="copylink">Копировать ссылку</string>
 <string name="openinbrowser">Открыть в браузере</string>
@@ -182,4 +181,11 @@
 <string name="name">Наименование</string>
 <string name="shareid">Поделиться TrackerID</string>
 <string name="copytrackerid">Копировать TrackerID</string>
+<string name="color_dialog_title">Выбор цвета для устройства</string>
+<string name="color_h">Тон</string>
+<string name="color_s">Насыщенность</string>
+<string name="color_v">Значение</string>
+<string name="color_a">Прозрачность</string>
+<string name="unknown_location_now">Сейчас позиция не известна</string>
+<string name="color">Задать цвет</string>
 </resources>

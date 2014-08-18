@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -36,7 +37,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 
-public class DevicesFragment extends SherlockFragment implements ResultsListener {
+public class DevicesFragment extends SherlockFragment  {
 
 	/* (non-Javadoc)
 	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
@@ -125,8 +126,40 @@ if(!deviceU.equals("")){
 			  return true;
 
 		  }
+ if (item.getItemId() == 6) 
+ {
+	 if(LocalService.deviceList.get((int) acmi.id).lat!=0)
+	 {
+		Log.d(getClass().getSimpleName(), "move to map to device");
+		OsMoDroid.editor.putInt("centerlat", (int) ((LocalService.deviceList.get((int) acmi.id).lat)* 1E6));
+		OsMoDroid.editor.putInt("centerlon", (int) ((LocalService.deviceList.get((int) acmi.id).lon)* 1E6));
+		OsMoDroid.editor.putInt("zoom", 16);
+		OsMoDroid.editor.putBoolean("isfollow", false);
+		OsMoDroid.editor.commit();
+		globalActivity.drawClickListener.selectItem(OsMoDroid.context.getString(R.string.map), null);
+		LocalService.currentItemName=OsMoDroid.context.getString(R.string.map);
+	 }
+	 else
+	 {
+		 Toast.makeText(globalActivity, R.string.unknown_location_now, Toast.LENGTH_SHORT).show();
+	 }
+ }
 		  
-		  
+ if (item.getItemId() == 7) 
+ {
+	 ColorDialog.OnClickListener cl =new  ColorDialog.OnClickListener() {
+		
+		@Override
+		public void onClick(Object tag, int color) {
+			LocalService.deviceList.get((int) acmi.id).color="#"+Integer.toHexString(color);
+			LocalService.deviceList.get((int) acmi.id).devicePath.clear();
+			globalActivity.mService.saveObject(LocalService.deviceList, OsMoDroid.DEVLIST);
+		}
+	};
+	 
+	 ColorDialog dialog = new ColorDialog(globalActivity, false, getView(), Color.parseColor(LocalService.deviceList.get((int) acmi.id).color), cl,  R.drawable.wheel);
+		dialog.show();
+ }
 
 	    
 		return super.onContextItemSelected(item);
@@ -153,13 +186,15 @@ if(!deviceU.equals("")){
 	 */
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-		 menu.add(0, 1, 1, R.string.delete).setIcon(android.R.drawable.ic_menu_delete);
+		 menu.add(0, 1, 8, R.string.delete).setIcon(android.R.drawable.ic_menu_delete);
 
 		 //   menu.add(0, 2, 2, R.string.messages).setIcon(android.R.drawable.ic_menu_delete);
 		   
 		//    menu.add(0, 3, 3, R.string.copylink).setIcon(android.R.drawable.ic_menu_edit);
 		//    menu.add(0, 4, 4, R.string.sharelink).setIcon(android.R.drawable.ic_menu_edit);
 		//    menu.add(0, 5, 5, R.string.openinbrowser).setIcon(android.R.drawable.ic_menu_edit);
+		    menu.add(0, 6, 6, R.string.showonmap).setIcon(android.R.drawable.ic_menu_edit);
+		    menu.add(0, 7, 7, R.string.color).setIcon(android.R.drawable.ic_menu_edit);
 		super.onCreateContextMenu(menu, v, menuInfo);
 	}
 
@@ -332,57 +367,8 @@ if(!deviceU.equals("")){
 
 	
 
-	@Override
-	public void onResultsSucceeded(APIComResult result) {
-		JSONArray a = null;
-
-		Log.d(getClass().getSimpleName(),"OnResultListener Command:"+result.Command+",Jo="+result.Jo);
-
-		if (result.Jo==null&&result.ja==null)
-
-		{
+	
 
 
-
-			Log.d(getClass().getSimpleName(),"notifwar1 Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ " Запрос:"+result.url);
-
-		//		notifywarnactivity("Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ " Запрос:"+result.url);
-			if(OsMoDroid.gpslocalserviceclientVisible)
-			{
-				Toast.makeText(LocalService.serContext, R.string.esya_ru_notrespond , Toast.LENGTH_LONG).show();
-			}
-			}
-		
-		if (!(result.Jo==null)  ) {
-
-			Toast.makeText(getSherlockActivity(),result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),5).show();
-		}		
-		if (result.Command.equals("APIM")&& !(result.Jo==null))
-
-		{
-
-			Log.d(getClass().getSimpleName(),"APIM Response:"+result.Jo);
-
-			if (result.Jo.has("om_device")){
-				LocalService.deviceList.clear();
-				LocalService.deviceList.add(new Device("0",getString(R.string.observers),"1", OsMoDroid.settings.getString("uid", "0")));
-			
-				try {
-					  a =	result.Jo.getJSONArray("om_device");
-					  //settings.edit().putString("om_device", a.toString()).commit();
-					  Log.d(getClass().getSimpleName(), a.toString());
-			 		  LocalService.deviceListFromJSONArray(a);
-			 		  globalActivity.mService.saveObject(LocalService.deviceList, OsMoDroid.DEVLIST);
-					} catch (Exception e) {
-						 Log.d(getClass().getSimpleName(), "эксепшн");
-					}
-				 Log.d(getClass().getSimpleName(),LocalService.deviceList.toString());
-				 LocalService.deviceAdapter.notifyDataSetChanged();
-			}
-
-		}
-
-		
-	}
 
 }

@@ -246,8 +246,30 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 			if(log)Log.d(this.getClass().getName(), "Handle message "+message.toString());
 			Bundle b = message.getData();
 			if(log)Log.d(this.getClass().getName(), "deviceU "+b.getInt("deviceU"));
+			if(b.containsKey("read")){
+				String str="";
+				str=b.getString("read");
+				myIM.addlog(str);
+				if(str.substring(str.length()-1, str.length()).equals("\n"))
+				{
+					str=str.substring(0, str.length()-1);
+					
+			  					myIM.parseEx(new String(str));
+			  	
+				}
+				else 
+				{
+					
+		  					myIM.parseEx(new String(str));
+		  						
+		  		
+				}
+				
+				return;
+			}
 			
-			if(b.getInt("deviceU") != -1){
+			
+			if(b.containsKey("deviceU")&&b.getInt("deviceU") != -1){
 				String fromDevice=getString(R.string.from_undefined);
 				for (Device dev : LocalService.deviceList){
 					if (b.getString("deviceU").equals(dev.tracker_id)){
@@ -274,11 +296,13 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 					Notification notification = notificationBuilder.build();
 					LocalService.mNotificationManager.notify(OsMoDroid.mesnotifyid, notification);
 			}
-			if (LocalService.currentDevice!=null&&LocalService.currentDevice.tracker_id.equals(b.getString("deviceU")) ){
+			if (b.containsKey("deviceU")&&LocalService.currentDevice!=null&&LocalService.currentDevice.tracker_id.equals(b.getString("deviceU")) ){
 				LocalService.mNotificationManager.cancel(OsMoDroid.mesnotifyid);
 			}
+			if(b.containsKey("MessageText")){
 			String text = b.getString("MessageText");
-			if (b.getBoolean("om_online",false)){
+			}
+			if (b.containsKey("om_online")&&b.getBoolean("om_online",false)){
 
 			}
 
@@ -367,7 +391,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 		}
 		if(!bindedremote&&!bindedlocaly){
 			binded=false;
-			disconnectChannels();
+			
 			}
 		if(log)Log.d(this.getClass().getName(), "on unbind "+binded + "intent="+intent.getAction()+" bindedremote="+bindedremote+" bindedlocaly="+bindedlocaly);		
 		return true;
@@ -387,7 +411,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 			bindedlocaly=true;
 		}
 			binded=true;
-			connectChannels();
+			
 		
 		
 		Log.d(this.getClass().getName(), "on rebind "+binded + "intent="+intent.getAction()+" bindedremote="+bindedremote+" bindedlocaly="+bindedlocaly);
@@ -401,7 +425,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 		
 			bindedlocaly=true;
 			binded=true;
-			connectChannels();
+			
 			Log.d(this.getClass().getName(), "on rebind "+binded + "intent="+intent.getAction()+" bindedremote="+bindedremote+" bindedlocaly="+bindedlocaly);
 			return mBinder;
 		
@@ -449,15 +473,16 @@ public void startcomand()
 }
 
 
-private String getversion() {
+ String getversion() {
 	androidver = android.os.Build.VERSION.RELEASE;
 	strVersionName = getString(R.string.Unknow);
 	String version=getString(R.string.Unknow);
 	if(log)Log.d(getClass().getSimpleName(), "startcommand");
 	try {
 		PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-		strVersionName = packageInfo.packageName + " "+ packageInfo.versionName;
-		version = packageInfo.versionName;
+		strVersionName = packageInfo.packageName + ' '+ packageInfo.versionName+' '+packageInfo.versionCode;
+		version = packageInfo.versionName +' '+ packageInfo.versionCode;
+		
 		}
 	catch (NameNotFoundException e)
 	{
@@ -471,7 +496,7 @@ public void stopcomand()
 	if ( starttask!=null)
 	{
 		starttask.cancel(true);
-		starttask.Close();
+		starttask.close();
 	}
 
 }
@@ -815,7 +840,7 @@ OsMoDroid.settings.edit().putBoolean("ondestroy", false).commit();
 		if (state){ stopServiceWork(false);}
 		if(myIM!=null){  myIM.close();}
 		deleteFile(OsMoDroid.NOTIFIESFILENAME);
-		deleteFile(OsMoDroid.DEVLIST);
+		//deleteFile(OsMoDroid.DEVLIST);
 		stopcomand();
 		try {
 		if(receiver!= null){unregisterReceiver(receiver);}
@@ -1494,7 +1519,7 @@ public void sendid()
 				return;
 			}
 		}
-		if(firstsend&&sessionstarted)
+		if(firstsend&&sessionstarted&&myIM!=null&&myIM.authed)
 		{
 			if(log)Log.d(this.getClass().getName(),"Первая отправка");
 			sendlocation(location);
@@ -1869,6 +1894,7 @@ private void sendlocation (Location location){
 				+"S" + df1.format( location.getSpeed())
 				+"A" + df1.format( location.getAltitude())
 				+"H" + df1.format( location.getAccuracy())
+				+"C" + df1.format( location.getBearing());
 				;				
 		myIM.sendToServer(sending);		
 		
@@ -2075,41 +2101,7 @@ public synchronized boolean isOnline() {
 	}
 
 
-void connectChannels(){
-	if(log)Log.d(getClass().getSimpleName(),"void connecChannels");
-	for (Channel ch : LocalService.channelList){
-		if (!ch.connected){
-		ch.connect();}
-	}
-	
-	
-}
-void connectChannelsChats(){
-	if(log)Log.d(getClass().getSimpleName(),"void connecChannels");
-	for (Channel ch : LocalService.channelList){
-		if (!ch.chatconnected){
-		ch.connectchat();}
-	}
-	
-	
-}
-void disconnectChannelsChats(){
-	if(log)Log.d(getClass().getSimpleName(),"void connecChannels");
-	for (Channel ch : LocalService.channelList){
-		if (ch.chatconnected){
-		ch.disconnectchat();}
-	}
-	
-	
-}
 
-void disconnectChannels(){
-	if(log)Log.d(getClass().getSimpleName(),"void disconnectChannels");
-	for (Channel ch : LocalService.channelList){
-		if (ch.connected){ch.disconnect();}
-	}
-	
-}
 
 
 
