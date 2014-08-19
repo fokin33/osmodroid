@@ -732,15 +732,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	if(jo.has("error"))
 	{
 		final String str = jo.optString("error_description");
-		localService.alertHandler.post(new Runnable()
-		{
-			
-			@Override
-			public void run()
-				{
-					Toast.makeText(localService, str, Toast.LENGTH_SHORT).show();
-				}
-		});
+		Toast.makeText(localService, str, Toast.LENGTH_SHORT).show();
+		
 	}
 	
 	if(c.equals("NEED_AUTH")){
@@ -769,19 +762,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			}
 			else
 			{
-//				String listen="";
 				for (Channel ch : LocalService.channelList)
 				{
-//					for(Device dev: ch.deviceList){
-//						if (!dev.tracker_id.equals(OsMoDroid.settings.getString("device", "")))
-//							{
-//								listen=listen+("LISTEN:"+dev.tracker_id)+"=";
-//							}
-//					}
-//					if(!listen.equals(""))
-//					{
-//						sendToServer(listen);
-//					}
 					sendToServer("GROUP_CONNECT:"+ch.group_id);
 				}
 			}
@@ -797,15 +779,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			OsMoDroid.editor.putString("device", jo.optString("group_tracker_id"));
 			OsMoDroid.editor.putString("tracker_id", jo.optString("tracker_id"));
 			OsMoDroid.editor.commit();
-			localService.alertHandler.post(new Runnable()
-				{
-					
-					@Override
-					public void run()
-						{
-							localService.internetnotify(true);
-						}
-				});
+			localService.internetnotify(true);
 			
 		}
 		localService.refresh();
@@ -894,18 +868,9 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 				LocalService.channelList.add(ch);
 			}
 			addlog(ch.deviceList.toString());
-					if (LocalService.channelsAdapter!=null ){
-						
-						localService.alertHandler.post(new Runnable()
-							{
-								
-								@Override
-								public void run()
-									{
-										LocalService.channelsAdapter.notifyDataSetChanged();
-									}
-							});
-			
+					if (LocalService.channelsAdapter!=null )
+					{
+						LocalService.channelsAdapter.notifyDataSetChanged();
 					}
 					for(Device dev: ch.deviceList){
 						if (!dev.tracker_id.equals(OsMoDroid.settings.getString("device", "")))
@@ -918,25 +883,15 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 						sendToServer(listen);
 					}		
 			}
-		else {
-			localService.alertHandler.post(new Runnable()
-				{
-					
-					@Override
-					public void run()
-						{
-							Toast.makeText(localService, "No group", Toast.LENGTH_SHORT).show();
-						}
-				});
-			
+		else 
+		{
+			Toast.makeText(localService, "No group", Toast.LENGTH_SHORT).show();
 		}
 		//localService.saveObject(LocalService.channelList, OsMoDroid.CHANNELLIST);
 		}
 	if(c.contains("GROUP_GET_ALL"))
 	{
 		LocalService.channelList.clear();
-		
-		
 		String str="";
 			for (int i = 0; i < ja.length(); i++) {
 	 			
@@ -954,19 +909,13 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 				
 				
 		}
-			sendToServer(str);
-			localService.alertHandler.post(new Runnable()
+			if(!str.equals(""))
 			{
-				@Override
-				public void run()
-					{
-						LocalService.channelsAdapter.notifyDataSetChanged();
-					}
-			});
-	
+				sendToServer(str);
+			}
 			
-		
-	}
+						LocalService.channelsAdapter.notifyDataSetChanged();
+		}
 	if(c.contains("GROUP_LEAVE"))
 		{
 			Channel chToDel=null;
@@ -982,15 +931,9 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			{
 				LocalService.channelList.remove(chToDel);
 			}
-			localService.alertHandler.post(new Runnable()
-			{
-				
-				@Override
-				public void run()
-					{
+			
 						LocalService.channelsAdapter.notifyDataSetChanged();
-					}
-			});
+			
 			//localService.saveObject(LocalService.channelList, OsMoDroid.CHANNELLIST);
 		}
 	// recive LINK_GET_ALL|[{"u":"962","uid":"0","device":"7665","url":"LAvP1jaqPaJtvs4jfGWeC5el","general_id":"k4bMooJU9AFam8fproUX","from":"0000-00-00 00:00:00","to":"0000-00-00 00:00:00","created":"2014-08-14 23:39:11","limit":"-1","until":"0","active":"1"},{"u":"963","uid":"0","device":"7665","url":"gZ012cpDOrL1gGT0tjQMFu2G","general_id":"uqupQcQ2pC8H820LAX4S","from":"0000-00-00 00:00:00","to":"0000-00-00 00:00:00","created":"2014-08-14 23:57:39","limit":"-1","until":"0","active":"1"},{"u":"964","uid":"0","device":"7665","url":"u3KO0mEDmTrKmLhFU1COh6Lk","general_id":"pRICSHb7UXsTeCkTcaf2","from":"0000-00-00 00:00:00","to":"0000-00-00 00:00:00","created":"2014-08-14 23:59:04","limit":"-1","until":"0","active":"1"},{"u":"965","uid":"0","device":"7665","url":"xikg52FsZhUaGK9u9sKKPY4u","general_id":"PVRbAiIhLhXzGnCfA62G","from":"0000-00-00 00:00:00","to":"0000-00-00 00:00:00","created":"2014-08-14 23:59:06","limit":"-1","until":"0","active":"1"},{"u":"966","uid":"0","device":"7665","url":"UiGxNaKc19UpCvq2CFuk6xhl","general_id":"Ir86ShJU1qxdQxMWWMG0","from":"0000-00-00 00:00:00","to":"0000-00-00 00:00:00","created":"2014-08-14 23:59:07","limit":"-1","until":"0","active":"1"},{"u":"967","uid":"0","device":"7665","url":"AM3tXlP5U59B7KuTgjJ8QSr1","general_id":"tai6egJmMFyZMLtEdszU","from":"0000-00-00 00:00:00","to":"0000-00-00 00:00:00","created":"2014-08-14 23:59:07","limit":"-1","until":"0","active":"1"}]
@@ -1013,16 +956,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		}
 		if(LocalService.simlinksadapter!=null)
 		{
-			localService.alertHandler.post(new Runnable()
-			{
-				
-				@Override
-				public void run()
-					{
-						LocalService.simlinksadapter.notifyDataSetChanged();
-					}
-			});
-			
+			LocalService.simlinksadapter.notifyDataSetChanged();
 		}
 		
 	}
@@ -1042,15 +976,10 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		if(positiontodel!=-1)
 		{
 			LocalService.simlimkslist.remove(positiontodel);
-			localService.alertHandler.post(new Runnable()
+			if(LocalService.simlinksadapter!=null)
 			{
-				
-				@Override
-				public void run()
-					{
-						LocalService.simlinksadapter.notifyDataSetChanged();
-					}
-			});
+			LocalService.simlinksadapter.notifyDataSetChanged();
+			}
 		}
 	}
 	
@@ -1063,19 +992,9 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			LocalService.simlimkslist.add(pl);
 			if(LocalService.simlinksadapter!=null)
 			{
-				localService.alertHandler.post(new Runnable()
-				{
-					
-					@Override
-					public void run()
-						{
-							LocalService.simlinksadapter.notifyDataSetChanged();
-						}
-				});
-				
+				LocalService.simlinksadapter.notifyDataSetChanged();
 			}
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -1155,16 +1074,9 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 					
 				}
 			}
-			if(LocalService.channelsDevicesAdapter!=null){
-			localService.alertHandler.post(new Runnable()
+			if(LocalService.channelsDevicesAdapter!=null)
 			{
-				
-				@Override
-				public void run()
-					{
-						LocalService.channelsDevicesAdapter.notifyDataSetChanged();
-					}
-			});
+				LocalService.channelsDevicesAdapter.notifyDataSetChanged();
 			}
 			//localService.saveObject(LocalService.channelList, OsMoDroid.CHANNELLIST);
 		}
@@ -1185,54 +1097,10 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		if (LocalService.channelsDevicesAdapter!=null&&LocalService.currentChannel!=null)
 		{
 			 if(log)Log.d(this.getClass().getName(), "Adapter:"+ LocalService.channelsDevicesAdapter.toString());
-			 localService.alertHandler.post(new Runnable() {
-					
-					@Override
-					public void run() {
-						LocalService.channelsDevicesAdapter.notifyDataSetChanged();
-						
-					}
-				});
-			 
+			 LocalService.channelsDevicesAdapter.notifyDataSetChanged();
 		}
 		}
-	
-//	try
-//		{
-//			
-//			if(jo.has("server")){
-//				
-//			}
-//			if(jo.has("c")){
-//				if(jo.getString("c").equals("AU")){
-//					if(jo.has("device")){
-//					authed=true;
-//					setkeepAliveAlarm();
-//					sendToServer("TRACKER_SESSION_OPEN");
-//					}
-//				}
-//				else
-//					if(jo.getString("c").equals("session_open")){
-//						sessionstarted=true;
-//						OsMoDroid.editor.putString("viewurl","http://test1342.osmo.mobi/u/"+jo.optString("url"));
-//						OsMoDroid.editor.commit();
-//						localService.refresh();
-//					}
-//				else
-//					if(jo.getString("c").equals("session_close")){
-//						sessionstarted=false;
-//						close();
-//						}
-//			}
-//		} catch (JSONException e)
-//		{
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
 
-	
-	
 	
 	}
 	private void updateCoordinates(String c, String d, final Device dev) {
