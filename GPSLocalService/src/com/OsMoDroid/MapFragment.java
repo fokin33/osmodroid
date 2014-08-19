@@ -126,13 +126,16 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 			break;
 			case 6:
 				mMapView.setTileSource(TileSourceFactory.MAPNIK);
+				LocalService.selectedTileSourceInt=1;
 				break;
 			case 5:
 				mMapView.setTileSource(mapSurferTileSource);
+				LocalService.selectedTileSourceInt=2;
 				break;
 			case 7:
-				bingTileSource.retrieveBingKey(globalActivity);
+				BingMapTileSource.retrieveBingKey(globalActivity);
 				mMapView.setTileSource(bingTileSource);
+				LocalService.selectedTileSourceInt=3;
 				break;
 			default:
 				break;
@@ -308,7 +311,23 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 			mMapView = (MapView)view.findViewById(R.id.mapview);
 			ImageButton centerImageButton = (ImageButton)view.findViewById(R.id.imageButtonCenter);
 			Button rotateButton = (Button)view.findViewById(R.id.buttonRotate);
-			mMapView.setTileSource(mapSurferTileSource);
+			switch (LocalService.selectedTileSourceInt) {
+			case 1:
+				mMapView.setTileSource(TileSourceFactory.MAPNIK);
+				break;
+			case 2:
+				mMapView.setTileSource(mapSurferTileSource);
+				break;
+			case 3:
+				mMapView.setTileSource(bingTileSource);
+				break;
+			default:
+				break;
+			}
+			 
+			
+			
+			
 			if(myTracePathOverlay==null)
 			{
 				myTracePathOverlay=new PathOverlay(Color.RED, 10, mResourceProxy);

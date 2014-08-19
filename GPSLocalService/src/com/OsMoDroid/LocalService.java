@@ -368,6 +368,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	String sending="";
 	private ArrayList<String> buffer= new ArrayList<String>();
 	public String motd="";
+	static int selectedTileSourceInt=1;
 	//boolean connecting=false;
 	     static String formatInterval(final long l)
 	    {
@@ -1894,7 +1895,7 @@ private void sendlocation (Location location){
 				+"S" + df1.format( location.getSpeed())
 				+"A" + df1.format( location.getAltitude())
 				+"H" + df1.format( location.getAccuracy())
-				+"C" + df1.format( location.getBearing());
+				+"C" + df0.format( location.getBearing());
 				;				
 		myIM.sendToServer(sending);		
 		
@@ -1906,7 +1907,9 @@ private void sendlocation (Location location){
 			buffer.add("T|L"+df6.format( location.getLatitude()) +":"+ df6.format(location.getLongitude())
 					+"S" + df1.format( location.getSpeed())
 					+"A" + df1.format( location.getAltitude())
-					+"H" + df1.format( location.getAccuracy()));
+					+"H" + df1.format( location.getAccuracy())
+					+"C" + df0.format( location.getBearing())
+					);
 			buffercounter++;
 		}
 

@@ -26,7 +26,7 @@ public class ImageryMetaDataResource {
 	/** list of available sub domains. Can be null. **/
 	public String[] m_imageUrlSubdomains;
 	/** maximum zoom level (22 as default value for BingMap) **/
-	public int m_zoomMax=22;
+	public int m_zoomMax=19;
 	/** minimum zoom level (1 as default value for BingMap) **/
 	public int m_zoomMin=1;
 	/** whether this imagery has been initialised */

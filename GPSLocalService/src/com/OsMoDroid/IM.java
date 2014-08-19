@@ -362,12 +362,20 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		if(log)Log.d(getClass().getSimpleName(), "http://api.osmo.mobi/prepare"+", key="+OsMoDroid.settings.getString("newkey", ""));
 		APIcomParams params = null;    
 		//APIcomParams params = new APIcomParams("http://api.osmo.mobi/prepare","key="+OsMoDroid.settings.getString("newkey", "")+"&protocol=1","gettoken");
+		//{"android_id":"660d7b862282066f","android_model":"HTC One S","imei":"0","android_product":"htc_europe","client":"OsmAnd~ 1.8.3","osmand":"OsmAnd~ 1.8.3"}
 	        if(OsMoDroid.settings.getString("p", "").equals("")){
-	        	params = new APIcomParams("http://api.osmo.mobi/prepare?key="+OsMoDroid.settings.getString("newkey", "")+"&protocol=1"+"&app=OsMoDroid"+"&version="+localService.getversion(),"","gettoken");
+	        	params = new APIcomParams("http://api.osmo.mobi/prepare?key="+OsMoDroid.settings.getString("newkey", "")
+	        			+"&protocol=1"+"&app=OsMoDroid"+"&version="+localService.getversion()
+	        			+"&android_model="+localService.getDeviceName()
+	        			+"&android_product"+android.os.Build.PRODUCT,"","gettoken");
 	        }
 	        else
 	        {
-	        	params = new APIcomParams("http://api.osmo.mobi/prepare?key="+OsMoDroid.settings.getString("newkey", "")+"&protocol=1&auth="+OsMoDroid.settings.getString("p", ""),"","gettoken");	
+	        	params = new APIcomParams("http://api.osmo.mobi/prepare?key="+OsMoDroid.settings.getString("newkey", "")
+	        			+"&protocol=1&auth="+OsMoDroid.settings.getString("p", "")
+	        			+"&app=OsMoDroid"+"&version="+localService.getversion()
+	        			+"&android_model="+localService.getDeviceName()
+	        			+"&android_product"+android.os.Build.PRODUCT,"","gettoken");	
 	        }
 	        sendidtask = new Netutil.MyAsyncTask(this);
 	        
