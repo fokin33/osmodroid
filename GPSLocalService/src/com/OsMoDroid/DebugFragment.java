@@ -104,15 +104,26 @@ public class DebugFragment extends SherlockFragment {
 		break;
 	case 2:
 		StringBuilder sb = new StringBuilder();
-		for (String s : LocalService.debuglist)
+		if(LocalService.debuglist.size()>1000){
+		for (String s : LocalService.debuglist.subList(LocalService.debuglist.size()-1000, LocalService.debuglist.size()))
 		{
 		    sb.append(s);
 		    sb.append("\n");
 		}
+		}
+		else
+		{
+			for (String s : LocalService.debuglist)
+			{
+			    sb.append(s);
+			    sb.append("\n");
+			}
+		}
+		String sendtext = sb.toString();
 		Intent sendIntent = new Intent(Intent.ACTION_SEND);
 		sendIntent.setType("text/plain");
 		sendIntent.putExtra(android.content.Intent.EXTRA_EMAIL,new String[] { "developers@osmodroid.ru" } );
-		sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, sb.toString() );
+		sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, sendtext );
 		sendIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Debug log");
 		startActivity(Intent.createChooser(sendIntent, "Email"));
 	default:

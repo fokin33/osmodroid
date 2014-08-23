@@ -52,7 +52,7 @@ public class DeviceAdapter extends ArrayAdapter<Device> {
 		        deviceWhere = (TextView) row.findViewById(R.id.txtWhere);
 		        deviceLast = (TextView) row.findViewById(R.id.txtLast);
 		        deviceName.setText(device.name);
-		        deviceWhere.setText(device.where);
+		        deviceWhere.setText(device.tracker_id);
 		        deviceLast.setText(device.last);
 		        //Log.d(getClass().getSimpleName(),"device.name="+device.name.toString());
 		        //Log.d(getClass().getSimpleName(),"device.online="+device.online.toString());

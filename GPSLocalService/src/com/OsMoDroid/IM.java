@@ -768,6 +768,9 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			{
 			sendToServer("GROUP_GET_ALL");
 			}
+			if(LocalService.deviceList.isEmpty()){
+				sendToServer("DEVICE_GET_ALL");
+			}
 			else
 			{
 				for (Channel ch : LocalService.channelList)
@@ -778,7 +781,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			setkeepAliveAlarm();
 			String listen = "";
 			for (Device dev : LocalService.deviceList){
-				listen=("LISTEN:"+dev.tracker_id)+"=";
+				listen=("LN:"+dev.tracker_id)+"=";
 			}
 			if(!listen.equals(""))
 				{
@@ -850,6 +853,74 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	if(c.contains("GROUP_JOIN")){
 		sendToServer("GROUP_CONNECT"+c.substring(c.indexOf(":")));
 	}
+	if(c.contains("SUBSCRIBE")&&!c.contains("UNSUBSCRIBE")){
+		sendToServer("LN:"+c.substring(c.indexOf(':')+1, c.indexOf('|')-1));
+		
+	}
+	if(c.contains("UNSUBSCRIBE")){
+		sendToServer("ULN:"+c.substring(c.indexOf(':')+1, c.length()));
+		
+				Iterator<Device> i = LocalService.deviceList.iterator();
+				while (i.hasNext()) {
+				   Device dev = i.next(); // must be called before you can call i.remove()
+				   if(dev.tracker_id.equals(c.substring(c.indexOf(':')+1, c.length())))
+				   {
+					   i.remove();   
+				   }
+				   
+				}
+		
+		  if(LocalService.deviceAdapter!=null)
+			{
+				LocalService.deviceAdapter.notifyDataSetChanged();
+			}
+		
+	}
+	
+	if(c.contains("DEVICE_GET_ALL")){
+		String str="";
+		for (Device dev : LocalService.deviceList){
+			str="=ULN:"+dev.tracker_id;
+		}
+		if(!str.equals(""))
+		{
+			sendToServer(str);
+		}
+		LocalService.deviceList.clear();
+		str="";
+			for (int i = 0; i < ja.length(); i++) {
+	 			
+				try {
+					jsonObject = ja.getJSONObject(i);
+					Device dev = new Device();
+					dev.name=jsonObject.optString("name");
+					dev.tracker_id=jsonObject.optString("tracker_id");
+					dev.subscribed=jsonObject.has("subscribe");
+					LocalService.deviceList.add(dev);
+					if(!dev.tracker_id.equals(OsMoDroid.settings.getString("tracker_id", ""))){
+					str="=LN:"+dev.tracker_id;
+					}
+					
+								}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				
+		}
+			if(!str.equals(""))
+			{
+				sendToServer(str);
+			}
+			if(LocalService.deviceAdapter!=null)
+			{
+				LocalService.deviceAdapter.notifyDataSetChanged();
+			
+			}
+			
+						
+	}
+	
 	if(c.contains("GROUP_CONNECT"))
 		{
 		if(!jo.has("error")&&jo.has("group")){
@@ -867,7 +938,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 				for(Device dev: LocalService.channelList.get(LocalService.channelList.indexOf(ch)).deviceList){
 					if (!dev.tracker_id.equals(OsMoDroid.settings.getString("device", "")))
 						{
-					listen=listen+("UNLISTEN:"+dev.tracker_id)+"=";
+					listen=listen+("ULN:"+dev.tracker_id)+"=";
 						}
 					
 				}
@@ -883,7 +954,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 					for(Device dev: ch.deviceList){
 						if (!dev.tracker_id.equals(OsMoDroid.settings.getString("device", "")))
 							{
-								listen=listen+("LISTEN:"+dev.tracker_id)+"=";
+								listen=listen+("LN:"+dev.tracker_id)+"=";
 							}
 					}
 					if(!listen.equals(""))
@@ -1026,13 +1097,13 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 								try {
 									jsonObject = a.getJSONObject(i);
 						try {
-							if(jsonObject.has("deleted"))
+							if(jsonObject.has("deleted")&&!jsonObject.opt("group_tracker_id").equals(OsMoDroid.settings.getString("device", "")))
 							{
 								Device deviceToDel = null;
 								for (Device dev : ch.deviceList){
 									if(dev.tracker_id.equals(jsonObject.opt("group_tracker_id")))
 									{
-										sendToServer("UNLISTEN:"+dev.tracker_id);
+										sendToServer("ULN:"+dev.tracker_id);
 										deviceToDel=dev;
 									}
 								}
@@ -1045,7 +1116,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 							{
 								boolean exist=false;
 								for (Device dev : ch.deviceList){
-									if(dev.tracker_id.equals(jsonObject.opt("group_tracker_id")))
+									if(dev.tracker_id.equals(jsonObject.opt("group_tracker_id"))&&!jsonObject.opt("group_tracker_id").equals(OsMoDroid.settings.getString("device", "")))
 									{
 										exist=true;
 									}
@@ -1054,7 +1125,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 								{
 									try {
 										ch.deviceList.add(new Device(jsonObject.getString("group_tracker_id"),jsonObject.getString("name"), jsonObject.getString("color") ) );
-										sendToServer("LISTEN:"+jsonObject.getString("group_tracker_id"));
+										sendToServer("LN:"+jsonObject.getString("group_tracker_id"));
 									} catch (JSONException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();

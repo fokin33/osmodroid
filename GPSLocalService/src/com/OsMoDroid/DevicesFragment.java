@@ -76,14 +76,13 @@ if(!deviceU.equals("")){
 		  if (item.getItemId() == 1) {
 
 				//final AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();
-			  globalActivity.mService.myIM.sendToServer("UNLISTEN:"+LocalService.deviceAdapter.getItem(acmi.position).tracker_id);
-			  LocalService.deviceList.remove(LocalService.deviceAdapter.getItem(acmi.position));
-			  if(LocalService.deviceAdapter!=null)
-				{
-					LocalService.deviceAdapter.notifyDataSetChanged();
-				}
+			 
+			
+			  globalActivity.mService.myIM.sendToServer("UNSUBSCRIBE:"+LocalService.deviceAdapter.getItem(acmi.position).tracker_id);
+			  
 				globalActivity.mService.saveObject(LocalService.deviceList, OsMoDroid.DEVLIST);
-
+			  
+			  
                                
 
 		    }
@@ -186,8 +185,10 @@ if(!deviceU.equals("")){
 	 */
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+		AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
+		if(LocalService.deviceAdapter.getItem(acmi.position).subscribed){
 		 menu.add(0, 1, 8, R.string.delete).setIcon(android.R.drawable.ic_menu_delete);
-
+		}
 		 //   menu.add(0, 2, 2, R.string.messages).setIcon(android.R.drawable.ic_menu_delete);
 		   
 		//    menu.add(0, 3, 3, R.string.copylink).setIcon(android.R.drawable.ic_menu_edit);
@@ -232,10 +233,12 @@ if(!deviceU.equals("")){
 	 */
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		MenuItem bind = menu.add(0, 1, 0, R.string.binddevice);
+		MenuItem bind = menu.add(0, 1, 1, R.string.binddevice);
 		bind.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		bind.setIcon(android.R.drawable.ic_menu_add);
-		
+		MenuItem refresh = menu.add(0, 2, 2, R.string.refresh);
+		refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		refresh.setIcon(android.R.drawable.ic_menu_rotate);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 
@@ -290,7 +293,8 @@ if(!deviceU.equals("")){
 										dev.name=inputhash.getText().toString();
 										dev.tracker_id=inputN.getText().toString();
 										LocalService.deviceList.add(dev);
-										globalActivity.mService.myIM.sendToServer("LISTEN:"+dev.tracker_id);
+										//globalActivity.mService.myIM.sendToServer("LN:"+dev.tracker_id);
+										globalActivity.mService.myIM.sendToServer("SUBSCRIBE:"+dev.tracker_id+"|"+Uri.encode(dev.name));
 										if(LocalService.deviceAdapter!=null)
 										{
 											LocalService.deviceAdapter.notifyDataSetChanged();
@@ -313,6 +317,9 @@ if(!deviceU.equals("")){
 
 			// 6564 2638 7281 2680
 
+		}
+		if (item.getItemId() == 2) {
+			globalActivity.mService.myIM.sendToServer("DEVICE_GET_ALL");
 		}
 		
 		return super.onOptionsItemSelected(item);
