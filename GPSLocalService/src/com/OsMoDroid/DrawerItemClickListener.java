@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -147,7 +148,14 @@ public class DrawerItemClickListener implements OnItemClickListener {
         fMan.popBackStack();
         //ft.addToBackStack("").commit();
         //GPSLocalServiceClient.mDrawerList.setItemChecked(currentItem, true);
-        ft.commit();
+        try
+			{
+				ft.commit();
+			} catch (IllegalStateException e)
+			{
+				Log.d(this.getClass().getSimpleName(), "Illegal state exception ignoring");
+				ft.commitAllowingStateLoss();
+			}
         mDrawerLayout.closeDrawer(mDrawerList);
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
