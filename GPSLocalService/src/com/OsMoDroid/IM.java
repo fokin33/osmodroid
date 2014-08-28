@@ -854,31 +854,69 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		sendToServer("GROUP_CONNECT"+c.substring(c.indexOf(":")));
 	}
 	if(c.contains("SUBSCRIBE")&&!c.contains("UNSUBSCRIBE")){
-		sendToServer("LN:"+c.substring(c.indexOf(':')+1, c.indexOf('|')-1));
+		sendToServer("DEVICE_GET_ALL");
+		//		sendToServer("LN:"+c.substring(c.indexOf(':')+1, c.indexOf('|')-1));
 		
 	}
 	if(c.contains("UNSUBSCRIBE")){
-		sendToServer("ULN:"+c.substring(c.indexOf(':')+1, c.length()));
-		
-				Iterator<Device> i = LocalService.deviceList.iterator();
-				while (i.hasNext()) {
-				   Device dev = i.next(); // must be called before you can call i.remove()
-				   if(dev.tracker_id.equals(c.substring(c.indexOf(':')+1, c.length())))
-				   {
-					   i.remove();   
-				   }
-				   
-				}
-		
-		  if(LocalService.deviceAdapter!=null)
-			{
-				LocalService.deviceAdapter.notifyDataSetChanged();
-			}
+		sendToServer("DEVICE_GET_ALL");
+		//		sendToServer("ULN:"+c.substring(c.indexOf(':')+1, c.length()));
+//		
+//				Iterator<Device> i = LocalService.deviceList.iterator();
+//				while (i.hasNext()) {
+//				   Device dev = i.next(); // must be called before you can call i.remove()
+//				   if(dev.tracker_id.equals(c.substring(c.indexOf(':')+1, c.length())))
+//				   {
+//					   i.remove();   
+//				   }
+//				   
+//				}
+//		
+//		  if(LocalService.deviceAdapter!=null)
+//			{
+//				LocalService.deviceAdapter.notifyDataSetChanged();
+//			}
 		
 	}
 	
 	if(c.contains("DEVICE_GET_ALL")){
 		String str="";
+		Iterator<Device> i = LocalService.deviceList.iterator();
+		while (i.hasNext()) {
+		   Device dev = i.next(); // must be called before you can call i.remove()
+		   boolean exist=false;
+		   for (int k = 0; k < ja.length(); k++) {
+	 			
+				try {
+					jsonObject = ja.getJSONObject(k);
+					if(dev.u==jsonObject.optInt("u")){
+						exist=true;
+						dev.name=jsonObject.optString("name");
+						dev.tracker_id=jsonObject.optString("tracker_id");
+						dev.subscribed=jsonObject.has("subscribe");
+						dev.u=jsonObject.optInt("u");
+					}
+					
+//					LocalService.deviceList.add(dev);
+//					if(!dev.tracker_id.equals(OsMoDroid.settings.getString("tracker_id", ""))){
+//					str="=LN:"+dev.tracker_id;
+//					}
+					
+								}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				
+		}
+		   if(!exist){
+			   i.remove();
+			   
+		   }
+		   
+		}
+		
+		
 		for (Device dev : LocalService.deviceList){
 			str="=ULN:"+dev.tracker_id;
 		}
@@ -888,14 +926,15 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		}
 		LocalService.deviceList.clear();
 		str="";
-			for (int i = 0; i < ja.length(); i++) {
+			for (int n = 0; n < ja.length(); n++) {
 	 			
 				try {
-					jsonObject = ja.getJSONObject(i);
+					jsonObject = ja.getJSONObject(n);
 					Device dev = new Device();
 					dev.name=jsonObject.optString("name");
 					dev.tracker_id=jsonObject.optString("tracker_id");
 					dev.subscribed=jsonObject.has("subscribe");
+					dev.u=jsonObject.optInt("u");
 					LocalService.deviceList.add(dev);
 					if(!dev.tracker_id.equals(OsMoDroid.settings.getString("tracker_id", ""))){
 					str="=LN:"+dev.tracker_id;

@@ -11,6 +11,7 @@ import org.osmdroid.views.overlay.PathOverlay;
 import android.util.Log;
 
 public class Device implements Serializable{
+	public int u;
 	public String tracker_id;
 	public String name;
 	public String app;
@@ -32,82 +33,82 @@ public class Device implements Serializable{
 		
 	}
 	
-	public Device( String u,
-	 String name,
-	 String app,
-	 String last,
-	 String url,
-	 String where,
-	 String lat,
-	 String lon,
-	 String online,
-	 String state,
-	 String uid
-	 
-	 ){
-		Log.d(getClass().getSimpleName(), "u="+u+" "+"name="+name+"app="+app+" "+"last="
-	 +last+" "+"url="+url+" "+"where="+where+" "+"lat="+lat+" "+"lon="+lon+" "+"online="+state+" "+"uid="+uid+" ");
-		 this.tracker_id=u;
-		 this.name=name;
-		  this.app=app;
-		  this.last=last;
-		  this.url=url;
-		  this.where=where;
-		   try {
-			if (lat!=null){ this.lat=  Float.parseFloat(lat);}
-			   if (lon!=null){ this.lon=  Float.parseFloat(lon);}
-		} catch (NumberFormatException e) {
-			Log.d(getClass().getSimpleName(),e+" "+ e.getMessage());
-			e.printStackTrace();
-		}
-		  this.online=online;
-		  this.state=state;
-		  this.uid=uid;
-		 
-		}
+//	public Device( String tracker_id,
+//	 String name,
+//	 String app,
+//	 String last,
+//	 String url,
+//	 String where,
+//	 String lat,
+//	 String lon,
+//	 String online,
+//	 String state,
+//	 String uid
+//	 
+//	 ){
+//		Log.d(getClass().getSimpleName(), "tracker_id="+tracker_id+" "+"name="+name+"app="+app+" "+"last="
+//	 +last+" "+"url="+url+" "+"where="+where+" "+"lat="+lat+" "+"lon="+lon+" "+"online="+state+" "+"uid="+uid+" ");
+//		 this.tracker_id=tracker_id;
+//		 this.name=name;
+//		  this.app=app;
+//		  this.last=last;
+//		  this.url=url;
+//		  this.where=where;
+//		   try {
+//			if (lat!=null){ this.lat=  Float.parseFloat(lat);}
+//			   if (lon!=null){ this.lon=  Float.parseFloat(lon);}
+//		} catch (NumberFormatException e) {
+//			Log.d(getClass().getSimpleName(),e+" "+ e.getMessage());
+//			e.printStackTrace();
+//		}
+//		  this.online=online;
+//		  this.state=state;
+//		  this.uid=uid;
+//		 
+//		}
 	
-	public Device( String u,
-			 String name,
-			 String app,
-			 String last,
-			 String url,
-			 String where,
-			 String lat,
-			 String lon,
-			 String online,
-			 String state,
-			 String uid,
-			 String color,
-			 String ch){
-				Log.d(getClass().getSimpleName(), "u="+u+" "+"name="+name+"app="+app+" "+"last="
-			 +last+" "+"url="+url+" "+"where="+where+" "+"lat="+lat+" "+"lon="+lon+" "+"online="+state+" "+"uid="+uid+" ");
-				 this.tracker_id=u;
-				 this.name=name;
-				  this.app=app;
-				  this.last=last;
-				  this.url=url;
-				  this.where=where;
-				   try {
-					if (lat!=null){ this.lat=  Float.parseFloat(lat);}
-					   if (lon!=null){ this.lon=  Float.parseFloat(lon);}
-				} catch (NumberFormatException e) {
-					Log.d(getClass().getSimpleName(),e+" "+ e.getMessage());
-					e.printStackTrace();
-				}
-				  this.online=online;
-				  this.state=state;
-				  this.uid=uid;
-				  if (!color.equals("")){this.color=color;}
-				}
+//	public Device( String tracker_id,
+//			 String name,
+//			 String app,
+//			 String last,
+//			 String url,
+//			 String where,
+//			 String lat,
+//			 String lon,
+//			 String online,
+//			 String state,
+//			 String uid,
+//			 String color,
+//			 String ch){
+//				Log.d(getClass().getSimpleName(), "tracker_id="+tracker_id+" "+"name="+name+"app="+app+" "+"last="
+//			 +last+" "+"url="+url+" "+"where="+where+" "+"lat="+lat+" "+"lon="+lon+" "+"online="+state+" "+"uid="+uid+" ");
+//				 this.tracker_id=tracker_id;
+//				 this.name=name;
+//				  this.app=app;
+//				  this.last=last;
+//				  this.url=url;
+//				  this.where=where;
+//				   try {
+//					if (lat!=null){ this.lat=  Float.parseFloat(lat);}
+//					   if (lon!=null){ this.lon=  Float.parseFloat(lon);}
+//				} catch (NumberFormatException e) {
+//					Log.d(getClass().getSimpleName(),e+" "+ e.getMessage());
+//					e.printStackTrace();
+//				}
+//				  this.online=online;
+//				  this.state=state;
+//				  this.uid=uid;
+//				  if (!color.equals("")){this.color=color;}
+//				}
 	
 	
 
-	public Device(String u, String name, String online, String uid) {
-		 this.tracker_id=u;
-		 this.name=name;
-		 this.uid=uid;
-		 this.online=online;
-	}
+//	public Device(String tracker_id, String name, String online, String uid) {
+//		 this.tracker_id=tracker_id;
+//		 this.name=name;
+//		 this.uid=uid;
+//		 this.online=online;
+//	}
 
 	public Device(String trid, String name, String color) {
 		this.name=name;
@@ -119,7 +120,7 @@ public class Device implements Serializable{
 	public String toString() {
 		
 		
-		return "Device:u="+tracker_id+",name="+name+",app="+app+",last="+last+",url="+url+",where="+where+",lat="+lat+",lon="+lon
+		return "Device:tracker_id="+tracker_id+",name="+name+",app="+app+",last="+last+",url="+url+",where="+where+",lat="+lat+",lon="+lon
 				+",online="+online+",state="+state+",uid="+uid + ",speed="+speed+" color="+color;
 	}
 

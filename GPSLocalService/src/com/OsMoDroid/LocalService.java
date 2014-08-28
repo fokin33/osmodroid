@@ -2158,25 +2158,25 @@ public void onResultsSucceeded(APIComResult result) {
 }
 
 
-static void deviceListFromJSONArray(JSONArray a) throws JSONException {
-	for (int i = 0; i < a.length(); i++) {
-		JSONObject jsonObject = a.getJSONObject(i);
-Device devitem = new Device(jsonObject.getString("u"), jsonObject.getString("name"),jsonObject.getString("app")
-,jsonObject.getString("last"),
-"http://m.esya.ru/"+jsonObject.getString("url"),
-jsonObject.getString("where"),
-jsonObject.getString("lat"),
-jsonObject.getString("lon"),
-jsonObject.getString("online"),
-jsonObject.getString("state"), jsonObject.getString("uid")
-);
-
-deviceList.add(devitem);
-
-
-
-	 }
-}
+//static void deviceListFromJSONArray(JSONArray a) throws JSONException {
+//	for (int i = 0; i < a.length(); i++) {
+//		JSONObject jsonObject = a.getJSONObject(i);
+//Device devitem = new Device(jsonObject.getString("u"), jsonObject.getString("name"),jsonObject.getString("app")
+//,jsonObject.getString("last"),
+//"http://m.esya.ru/"+jsonObject.getString("url"),
+//jsonObject.getString("where"),
+//jsonObject.getString("lat"),
+//jsonObject.getString("lon"),
+//jsonObject.getString("online"),
+//jsonObject.getString("state"), jsonObject.getString("uid")
+//);
+//
+//deviceList.add(devitem);
+//
+//
+//
+//	 }
+//}
 
 
 void channelListFromJSONArray(JSONArray a) throws JSONException {
