@@ -151,6 +151,8 @@ if(!deviceU.equals("")){
 		@Override
 		public void onClick(Object tag, int color) {
 			LocalService.deviceList.get((int) acmi.id).color="#"+Integer.toHexString(color);
+			//SUBSCRIBE_SET|{u:123, name:"devaha", data: {color: '#000000'}}
+			globalActivity.mService.myIM.sendToServer("SUBSCRIBE_SET|{u:"+LocalService.deviceList.get((int) acmi.id).u+", data: {color: '"+"#"+Integer.toHexString(color)+"'}}");
 			//LocalService.deviceList.get((int) acmi.id).devicePath.clear();
 			//globalActivity.mService.saveObject(LocalService.deviceList, OsMoDroid.DEVLIST);
 		}

@@ -911,35 +911,31 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		}
 		   if(!exist){
 			   i.remove();
-			   
+			   str="=ULN:"+dev.tracker_id;
 		   }
 		   
 		}
-		
-		
-		for (Device dev : LocalService.deviceList){
-			str="=ULN:"+dev.tracker_id;
-		}
-		if(!str.equals(""))
-		{
-			sendToServer(str);
-		}
-		LocalService.deviceList.clear();
-		str="";
 			for (int n = 0; n < ja.length(); n++) {
 	 			
 				try {
 					jsonObject = ja.getJSONObject(n);
-					Device dev = new Device();
-					dev.name=jsonObject.optString("name");
-					dev.tracker_id=jsonObject.optString("tracker_id");
-					dev.subscribed=jsonObject.has("subscribe");
-					dev.u=jsonObject.optInt("u");
-					LocalService.deviceList.add(dev);
-					if(!dev.tracker_id.equals(OsMoDroid.settings.getString("tracker_id", ""))){
-					str="=LN:"+dev.tracker_id;
+					boolean exist=false;
+					Device newdev = new Device();
+					newdev.name=jsonObject.optString("name");
+					newdev.tracker_id=jsonObject.optString("tracker_id");
+					newdev.subscribed=jsonObject.has("subscribe");
+					newdev.u=jsonObject.optInt("u");
+					for (Device dev : LocalService.deviceList){
+						if(newdev.u==dev.u){
+							exist=true;
+						}
 					}
-					
+					if(!exist){
+					LocalService.deviceList.add(newdev);
+					if(!newdev.tracker_id.equals(OsMoDroid.settings.getString("tracker_id", ""))){
+					str="=LN:"+newdev.tracker_id;
+					}
+					}
 								}
 				catch (Exception e) {
 					e.printStackTrace();
