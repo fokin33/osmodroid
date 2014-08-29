@@ -309,10 +309,10 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 			if (text != null && !text.equals("")) {
 			Toast.makeText(serContext, text, Toast.LENGTH_SHORT).show();
 			LocalService.messagelist.add(0,text);
-			if(log)Log.d(this.getClass().getName(), "try to save messaglsit");
-			saveObject(messagelist, OsMoDroid.NOTIFIESFILENAME);
-		    if(log)Log.d(this.getClass().getName(), "Success saved messaglsit");
-			if(log)Log.d(this.getClass().getName(), "List:"+LocalService.messagelist);
+//			if(log)Log.d(this.getClass().getName(), "try to save messaglsit");
+//			saveObject(messagelist, OsMoDroid.NOTIFIESFILENAME);
+//		    if(log)Log.d(this.getClass().getName(), "Success saved messaglsit");
+//			if(log)Log.d(this.getClass().getName(), "List:"+LocalService.messagelist);
 			Bundle a=new Bundle();
 			a.putStringArrayList("meslist", LocalService.messagelist);
 			Intent activ=new Intent(serContext,  GPSLocalServiceClient.class);
@@ -667,21 +667,21 @@ public void stopcomand()
 //				{
 //						sendid();
 //				}
-			if(!OsMoDroid.settings.getBoolean("ondestroy", false))
-			{
-				List<Channel> loaded=(List<Channel>) loadObject(OsMoDroid.CHANNELLIST, channelList.getClass());
-				if (loaded!=null)
-				{
-				Log.d(this.getClass().getName(), "channelList is not empty");
-				channelList.addAll(loaded);
-				}
-			}
-			List<Device> loaded=(List<Device>) loadObject(OsMoDroid.DEVLIST, deviceList.getClass());
-			if (loaded!=null)
-			{
-			Log.d(this.getClass().getName(), "devicelist is not empty");
-			deviceList.addAll(loaded);
-			}
+//			if(!OsMoDroid.settings.getBoolean("ondestroy", false))
+//			{
+//				List<Channel> loaded=(List<Channel>) loadObject(OsMoDroid.CHANNELLIST, channelList.getClass());
+//				if (loaded!=null)
+//				{
+//				Log.d(this.getClass().getName(), "channelList is not empty");
+//				channelList.addAll(loaded);
+//				}
+//			}
+//			List<Device> loaded=(List<Device>) loadObject(OsMoDroid.DEVLIST, deviceList.getClass());
+//			if (loaded!=null)
+//			{
+//			Log.d(this.getClass().getName(), "devicelist is not empty");
+//			deviceList.addAll(loaded);
+//			}
 	myIM = new IM("osmo.mobi", 3245, this){
 		
 		@Override

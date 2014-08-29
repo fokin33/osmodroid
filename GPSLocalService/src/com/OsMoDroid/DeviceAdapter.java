@@ -53,25 +53,27 @@ public class DeviceAdapter extends ArrayAdapter<Device> {
 		        deviceLast = (TextView) row.findViewById(R.id.txtLast);
 		        deviceName.setText(device.name);
 		        deviceWhere.setText(device.tracker_id);
-		        deviceLast.setText(device.last);
+		        deviceLast.setText(Float.toString(device.lat)+' '+Float.toString(device.lon)+' '+device.speed);
+		        deviceName.setTextColor(Color.parseColor(device.color));
+		        deviceWhere.setTextColor(Color.parseColor(device.color));
 		        //Log.d(getClass().getSimpleName(),"device.name="+device.name.toString());
 		        //Log.d(getClass().getSimpleName(),"device.online="+device.online.toString());
 		        //Log.d(getClass().getSimpleName(),"device.state="+device.state.toString());
-		        if (device.online!=null&&device.online.equals("1")){
-		        	 
-		        	deviceName.setTextColor(Color.GREEN);
-		        }
-		        else 
-		        {
-		        	deviceName.setTextColor(Color.BLACK);
-		        }
-		        if (device.state!=null&&device.state.equals("1")){
-		        	deviceWhere.setTextColor(Color.GREEN);
-		        }
-		        else
-		        {
-		        	deviceWhere.setTextColor(Color.BLACK);
-		        }
+//		        if (device.online!=null&&device.online.equals("1")){
+//		        	 
+//		        	deviceName.setTextColor(Color.GREEN);
+//		        }
+//		        else 
+//		        {
+//		        	deviceName.setTextColor(Color.BLACK);
+//		        }
+//		        if (device.state!=null&&device.state.equals("1")){
+//		        	deviceWhere.setTextColor(Color.GREEN);
+//		        }
+//		        else
+//		        {
+//		        	deviceWhere.setTextColor(Color.BLACK);
+//		        }
 		       
 		        				
 		

@@ -273,7 +273,7 @@ public class ChannelsFragment extends SherlockFragment {
 									{
 										try
 											{
-												globalActivity.mService.myIM.sendToServer("GROUP_CREATE|{\"name\":\""+Uri.encode(input2.getText().toString())+"\", \"until\":\"\", \"description\":\"\", \"policy\":\"\"}");
+												globalActivity.mService.myIM.sendToServer("GROUP_CREATE|{\"name\":\""+(input2.getText().toString())+"\", \"until\":\"\", \"description\":\"\", \"policy\":\"\"}");
 											}
 										catch (Exception e) {
 											e.printStackTrace();
@@ -313,6 +313,7 @@ public class ChannelsFragment extends SherlockFragment {
 			final EditText input2 = new EditText(globalActivity);
 			layout.addView(input2);
 			input.setInputType(InputType.TYPE_CLASS_TEXT| InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+			input2.setSingleLine(true);
 			AlertDialog alertdialog4 = new AlertDialog.Builder(
 					globalActivity)
 					.setTitle(R.string.bindtochanal)
@@ -324,7 +325,7 @@ public class ChannelsFragment extends SherlockFragment {
 									 canalid = Uri.encode(input.getText().toString());
 									if (!(canalid.equals("")))
 									{
-										globalActivity.mService.myIM.sendToServer("GROUP_JOIN:"+canalid+"|"+Uri.encode(input2.getText().toString()));
+										globalActivity.mService.myIM.sendToServer("GROUP_JOIN:"+canalid+"|"+(input2.getText().toString()));
 									} else {
 											Toast.makeText(
 											globalActivity,

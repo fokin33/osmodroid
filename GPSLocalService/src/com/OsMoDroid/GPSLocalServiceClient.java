@@ -320,7 +320,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 		     
 		        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		        mDrawerLayout.setBackgroundColor(Color.WHITE);
-			
+		        mDrawerList.setCacheColorHint(0);
 		       
 			
 	         actionBar = getSupportActionBar();

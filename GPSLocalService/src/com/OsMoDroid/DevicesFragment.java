@@ -151,8 +151,26 @@ if(!deviceU.equals("")){
 		@Override
 		public void onClick(Object tag, int color) {
 			LocalService.deviceList.get((int) acmi.id).color="#"+Integer.toHexString(color);
-			//SUBSCRIBE_SET|{u:123, name:"devaha", data: {color: '#000000'}}
-			globalActivity.mService.myIM.sendToServer("SUBSCRIBE_SET|{u:"+LocalService.deviceList.get((int) acmi.id).u+", data: {color: '"+"#"+Integer.toHexString(color)+"'}}");
+			JSONObject jo = new JSONObject();
+			JSONObject jodata = new JSONObject();
+			try
+				{
+					jodata.putOpt("color", "#"+Integer.toHexString(color));
+					jo.put("u", LocalService.deviceList.get((int) acmi.id).u);
+					jo.put("data", jodata);
+				} catch (JSONException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			//globalActivity.mService.myIM.sendToServer("SUBSCRIBE_SET|{u:"+LocalService.deviceList.get((int) acmi.id).u+", data: {color: '"+"#"+Integer.toHexString(color)+"'}}");
+			if(LocalService.deviceList.get((int) acmi.id).subscribed){
+			globalActivity.mService.myIM.sendToServer("SUBSCRIBE_SET|"+jo.toString());
+			}
+			else
+				{
+					globalActivity.mService.myIM.sendToServer("DEVICE_SET|"+jo.toString());
+				}
 			//LocalService.deviceList.get((int) acmi.id).devicePath.clear();
 			//globalActivity.mService.saveObject(LocalService.deviceList, OsMoDroid.DEVLIST);
 		}
@@ -296,7 +314,7 @@ if(!deviceU.equals("")){
 										dev.tracker_id=inputN.getText().toString();
 										//LocalService.deviceList.add(dev);
 										//globalActivity.mService.myIM.sendToServer("LN:"+dev.tracker_id);
-										globalActivity.mService.myIM.sendToServer("SUBSCRIBE:"+dev.tracker_id+"|"+Uri.encode(dev.name));
+										globalActivity.mService.myIM.sendToServer("SUBSCRIBE:"+dev.tracker_id+"|"+(dev.name));
 //										if(LocalService.deviceAdapter!=null)
 //										{
 //											LocalService.deviceAdapter.notifyDataSetChanged();

@@ -895,6 +895,13 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 						dev.tracker_id=jsonObject.optString("tracker_id");
 						dev.subscribed=jsonObject.has("subscribe");
 						dev.u=jsonObject.optInt("u");
+						if(jsonObject.has("data")){
+							String color = jsonObject.optJSONObject("data").optString("color");
+							if (!color.equals("")){
+								dev.color=color;
+								if(log)Log.d(this.getClass().getName(), "detected color "+color);
+							}
+						}
 					}
 					
 //					LocalService.deviceList.add(dev);
@@ -925,6 +932,13 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 					newdev.tracker_id=jsonObject.optString("tracker_id");
 					newdev.subscribed=jsonObject.has("subscribe");
 					newdev.u=jsonObject.optInt("u");
+					if(jsonObject.has("data")){
+						String color = jsonObject.optJSONObject("data").optString("color");
+						if (!color.equals("")){
+							newdev.color=color;
+							if(log)Log.d(this.getClass().getName(), "detected color "+color);
+						}
+					}
 					for (Device dev : LocalService.deviceList){
 						if(newdev.u==dev.u){
 							exist=true;

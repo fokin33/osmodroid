@@ -40,6 +40,10 @@ public class ChannelsDevicesAdapter extends ArrayAdapter<Device> {
 		        channelDeviceWhere = (TextView) row.findViewById(R.id.txtWhere);
 		        channelDeviceSpeed = (TextView) row.findViewById(R.id.txtSpeed);
 		        channelDeviceDistance = (TextView) row.findViewById(R.id.TextDistance);
+		        channelDeviceName.setTextColor(Color.parseColor(device.color));
+		        channelDeviceWhere.setTextColor(Color.parseColor(device.color));
+		        channelDeviceSpeed.setTextColor(Color.parseColor(device.color));
+		        channelDeviceDistance.setTextColor(Color.parseColor(device.color));
 		        if (device.name!=null){   channelDeviceName.setText(device.name);}
 		        if (device.speed!=null){   channelDeviceSpeed.setText(device.speed);}
 		        //if (device.lat!=null&device.lon!=null){
