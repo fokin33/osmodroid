@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
+import java.io.StringWriter;
 import java.io.IOException;import java.io.InputStream;import java.io.InputStreamReader;import java.io.PrintWriter;import java.net.HttpURLConnection;import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
@@ -896,8 +897,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 						dev.subscribed=jsonObject.has("subscribe");
 						dev.u=jsonObject.optInt("u");
 						if(jsonObject.has("data")){
-							String color = jsonObject.optJSONObject("data").optString("color");
-							if (!color.equals("")){
+							if (jsonObject.optJSONObject("data")!=null&&!jsonObject.optJSONObject("data").optString("color").equals("")){
+								String color = jsonObject.optJSONObject("data").optString("color");
 								dev.color=color;
 								if(log)Log.d(this.getClass().getName(), "detected color "+color);
 							}
@@ -912,6 +913,10 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 								}
 				catch (Exception e) {
 					e.printStackTrace();
+					StringWriter sw = new StringWriter();
+					e.printStackTrace(new PrintWriter(sw));
+					String exceptionAsString = sw.toString();
+					addlog(exceptionAsString);
 				}
 				
 				
@@ -933,8 +938,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 					newdev.subscribed=jsonObject.has("subscribe");
 					newdev.u=jsonObject.optInt("u");
 					if(jsonObject.has("data")){
-						String color = jsonObject.optJSONObject("data").optString("color");
-						if (!color.equals("")){
+						if (jsonObject.optJSONObject("data")!=null&&!jsonObject.optJSONObject("data").optString("color").equals("")){
+							String color = jsonObject.optJSONObject("data").optString("color");
 							newdev.color=color;
 							if(log)Log.d(this.getClass().getName(), "detected color "+color);
 						}
@@ -953,6 +958,10 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 								}
 				catch (Exception e) {
 					e.printStackTrace();
+					StringWriter sw = new StringWriter();
+					e.printStackTrace(new PrintWriter(sw));
+					String exceptionAsString = sw.toString();
+					addlog(exceptionAsString);
 				}
 				
 				
@@ -1033,6 +1042,10 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 								}
 				catch (Exception e) {
 					e.printStackTrace();
+					StringWriter sw = new StringWriter();
+					e.printStackTrace(new PrintWriter(sw));
+					String exceptionAsString = sw.toString();
+					addlog(exceptionAsString);
 				}
 				
 				
@@ -1078,7 +1091,10 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 					pl.url="http://osmo.mobi/u/"+jsonObject.optString("url");
 					LocalService.simlimkslist.add(pl);
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
+					StringWriter sw = new StringWriter();
+					e.printStackTrace(new PrintWriter(sw));
+					String exceptionAsString = sw.toString();
+					addlog(exceptionAsString);
 					e.printStackTrace();
 				}
 		}
@@ -1124,6 +1140,10 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
+			StringWriter sw = new StringWriter();
+			e.printStackTrace(new PrintWriter(sw));
+			String exceptionAsString = sw.toString();
+			addlog(exceptionAsString);
 		}
 		
 		
@@ -1176,7 +1196,10 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 										ch.deviceList.add(new Device(jsonObject.getString("group_tracker_id"),jsonObject.getString("name"), jsonObject.getString("color") ) );
 										sendToServer("LN:"+jsonObject.getString("group_tracker_id"));
 									} catch (JSONException e) {
-										// TODO Auto-generated catch block
+										StringWriter sw = new StringWriter();
+										e.printStackTrace(new PrintWriter(sw));
+										String exceptionAsString = sw.toString();
+										addlog(exceptionAsString);
 										e.printStackTrace();
 									}
 								}
@@ -1184,11 +1207,18 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 						} catch (NumberFormatException e) {
 							Log.d(getClass().getSimpleName(),"Wrong device info");
 							e.printStackTrace();
+							StringWriter sw = new StringWriter();
+							e.printStackTrace(new PrintWriter(sw));
+							String exceptionAsString = sw.toString();
+							addlog(exceptionAsString);
 						}
 					
 						
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
+						StringWriter sw = new StringWriter();
+						e.printStackTrace(new PrintWriter(sw));
+						String exceptionAsString = sw.toString();
+						addlog(exceptionAsString);
 						e.printStackTrace();
 					}   
 						
