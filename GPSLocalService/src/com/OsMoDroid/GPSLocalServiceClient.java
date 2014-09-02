@@ -30,13 +30,7 @@ import org.json.JSONObject;
 import com.OsMoDroid.LocalService.LocalBinder;
 import com.OsMoDroid.Netutil.MyAsyncTask;
 import com.OsMoDroid.R;
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.SubMenu;
+
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -70,10 +64,13 @@ import android.provider.Settings.Secure;
 
 
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.telephony.TelephonyManager;
 import android.text.ClipboardManager;
 import android.text.util.Linkify;
@@ -81,6 +78,7 @@ import android.util.Log;
 //import android.view.Menu;
 //import android.view.MenuItem;
 //import android.view.SubMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -97,7 +95,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
   
-public class GPSLocalServiceClient extends SherlockFragmentActivity {
+public class GPSLocalServiceClient extends ActionBarActivity {
 	
 	 
 
@@ -108,7 +106,7 @@ public class GPSLocalServiceClient extends SherlockFragmentActivity {
 //		ft.replace(R.id.fragment_container, fragment);
 //		ft.commit();
 //	}
-void showFragment(SherlockFragment fragment, boolean backstack) {
+void showFragment(Fragment fragment, boolean backstack) {
 	FragmentTransaction ft = fMan.beginTransaction();
 	
 	if(backstack)
@@ -171,7 +169,7 @@ void showFragment(SherlockFragment fragment, boolean backstack) {
 	String version="Unknown";
 	//SharedPreferences OsMoDroid.settings;
 	
-	public ActionBar actionBar;
+	public android.support.v7.app.ActionBar actionBar;
 	private ArrayList<String> mDrawerItems=new ArrayList<String>();
 	 DrawerLayout mDrawerLayout;
 	 ListView mDrawerList;

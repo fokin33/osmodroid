@@ -15,10 +15,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.ClipboardManager;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -32,12 +36,8 @@ import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
-public class DebugFragment extends SherlockFragment {
+public class DebugFragment extends Fragment {
 	private GPSLocalServiceClient globalActivity;
 	
 	
@@ -47,7 +47,7 @@ public class DebugFragment extends SherlockFragment {
 		View view=inflater.inflate(R.layout.simlinks, container, false);
 		final ListView lv1 = (ListView) view.findViewById(R.id.listView1);
        lv1.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL); 
-        LocalService.debugAdapter = new ArrayAdapter<String>(getSherlockActivity(),android.R.layout.simple_list_item_1, LocalService.debuglist);
+        LocalService.debugAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, LocalService.debuglist);
         lv1.setAdapter(LocalService.debugAdapter);
        
 		return view;
@@ -56,7 +56,7 @@ public class DebugFragment extends SherlockFragment {
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		globalActivity=(GPSLocalServiceClient) getSherlockActivity();
+		globalActivity=(GPSLocalServiceClient) getActivity();
 		super.onActivityCreated(savedInstanceState);
 	}
 	 @Override

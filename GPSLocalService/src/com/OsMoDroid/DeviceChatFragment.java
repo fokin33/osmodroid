@@ -18,11 +18,17 @@ import android.database.DataSetObserver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.text.ClipboardManager;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -37,12 +43,9 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.OsMoDroid.Netutil.MyAsyncTask;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
-public class DeviceChatFragment extends SherlockFragment implements ResultsListener {
+
+public class DeviceChatFragment extends Fragment implements ResultsListener {
 	//ListView lv2;
 	//Button sendButton;
 	//EditText input;
@@ -144,7 +147,7 @@ public class DeviceChatFragment extends SherlockFragment implements ResultsListe
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		
 		MenuItem refresh = menu.add(0, 2, 0, R.string.refresh);
-		refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		MenuCompat.setShowAsAction(refresh, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
 		refresh.setIcon(android.R.drawable.ic_menu_rotate);
 		super.onCreateOptionsMenu(menu, inflater);
 	}

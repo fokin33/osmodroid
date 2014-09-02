@@ -12,13 +12,18 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.text.ClipboardManager;
 import android.text.InputType;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -32,12 +37,8 @@ import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
-public class DevicesFragment extends SherlockFragment  {
+public class DevicesFragment extends Fragment  {
 
 	/* (non-Javadoc)
 	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
@@ -111,7 +112,7 @@ if(!deviceU.equals("")){
 			  Intent sendIntent = new Intent(Intent.ACTION_SEND);
               sendIntent.setType("text/plain");
               sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, LocalService.deviceList.get((int) acmi.id).url != null);
-              startActivity(Intent.createChooser(sendIntent, getSherlockActivity().getString(R.string.sharelink)));
+              startActivity(Intent.createChooser(sendIntent, getActivity().getString(R.string.sharelink)));
 			  
 			  return true;
 
@@ -254,10 +255,10 @@ if(!deviceU.equals("")){
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		MenuItem bind = menu.add(0, 1, 1, R.string.binddevice);
-		bind.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		MenuItemCompat.setShowAsAction(bind, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
 		bind.setIcon(android.R.drawable.ic_menu_add);
 		MenuItem refresh = menu.add(0, 2, 2, R.string.refresh);
-		refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		MenuItemCompat.setShowAsAction(refresh, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
 		refresh.setIcon(android.R.drawable.ic_menu_rotate);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
@@ -280,27 +281,27 @@ if(!deviceU.equals("")){
 
 			// final View textEntryView = factory.inflate(R.layout.dialog,
 			// null);
-			LinearLayout layout = new LinearLayout(getSherlockActivity());
+			LinearLayout layout = new LinearLayout(getActivity());
 			layout.setOrientation(LinearLayout.VERTICAL);
-			final TextView txv5 = new TextView(getSherlockActivity());
+			final TextView txv5 = new TextView(getActivity());
 			txv5.setText(R.string.name);
 			layout.addView(txv5);
-			final EditText inputhash = new EditText(getSherlockActivity());
+			final EditText inputhash = new EditText(getActivity());
 			
 			layout.addView(inputhash);
 
-			final TextView txv3 = new TextView(getSherlockActivity());
+			final TextView txv3 = new TextView(getActivity());
 			txv3.setText(R.string.trackerid);
 			layout.addView(txv3);
 
-			final EditText inputN = new EditText(getSherlockActivity());
+			final EditText inputN = new EditText(getActivity());
 			inputN.setInputType(InputType.TYPE_CLASS_TEXT| InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
 			layout.addView(inputN);
 		//	final EditText input = new EditText(this);
 			
 
 			AlertDialog alertdialog3 = new AlertDialog.Builder(
-					getSherlockActivity())
+					getActivity())
 					.setTitle(R.string.bindapp)
 					.setView(layout)
 					.setPositiveButton(R.string.yes,

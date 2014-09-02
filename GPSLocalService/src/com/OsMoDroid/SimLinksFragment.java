@@ -15,10 +15,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.text.ClipboardManager;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -32,12 +37,9 @@ import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
-public class SimLinksFragment extends SherlockFragment {
+
+public class SimLinksFragment extends Fragment {
 	private GPSLocalServiceClient globalActivity;
 	
 //	ArrayList<String> list;
@@ -68,7 +70,7 @@ public class SimLinksFragment extends SherlockFragment {
 		View view=inflater.inflate(R.layout.simlinks, container, false);
 		final ListView lv1 = (ListView) view.findViewById(R.id.listView1);
      
-        LocalService.simlinksadapter = new ArrayAdapter<PermLink>(getSherlockActivity(),android.R.layout.simple_list_item_1, LocalService.simlimkslist);
+        LocalService.simlinksadapter = new ArrayAdapter<PermLink>(getActivity(),android.R.layout.simple_list_item_1, LocalService.simlimkslist);
         lv1.setAdapter(LocalService.simlinksadapter);
         registerForContextMenu(lv1);
         lv1.setOnItemClickListener(new OnItemClickListener() {
@@ -86,7 +88,7 @@ public class SimLinksFragment extends SherlockFragment {
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		globalActivity=(GPSLocalServiceClient) getSherlockActivity();
+		globalActivity=(GPSLocalServiceClient) getActivity();
 		super.onActivityCreated(savedInstanceState);
 	}
 	 @Override
@@ -120,10 +122,10 @@ public class SimLinksFragment extends SherlockFragment {
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		MenuItem bind = menu.add(0, 1, 0, R.string.addsymlink);
-		bind.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		MenuItemCompat.setShowAsAction(bind, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
 		bind.setIcon(android.R.drawable.ic_menu_add);
 		MenuItem refresh = menu.add(0, 2, 0, R.string.refresh);
-		refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		MenuItemCompat.setShowAsAction(refresh, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
 		refresh.setIcon(android.R.drawable.ic_menu_rotate);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
@@ -152,7 +154,7 @@ public class SimLinksFragment extends SherlockFragment {
 	    }
 		if (item.getItemId() == 3) 
 		{
-			ClipboardManager clipboard = (ClipboardManager) getSherlockActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+			ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
 			clipboard.setText(LocalService.simlinksadapter.getItem(acmi.position).url);
 			return true;
 		}

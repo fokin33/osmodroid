@@ -5,6 +5,7 @@ import java.io.File;
 import android.app.Notification;
 import android.support.v4.app.NotificationCompat.Builder;
 
+
 public class APIcomParams {
 public APIcomParams(String action, String post, String command,	File uploadfile, Builder notificationBuilder, int notificationid ) {
 		this.action=action;

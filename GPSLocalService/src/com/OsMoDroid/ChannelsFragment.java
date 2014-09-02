@@ -13,13 +13,20 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.text.ClipboardManager;
 import android.text.InputType;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -36,12 +43,9 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
-public class ChannelsFragment extends SherlockFragment {
+
+public class ChannelsFragment extends Fragment {
 	private GPSLocalServiceClient globalActivity;
 	//private ListView lv1;
 	protected String canalid;
@@ -54,7 +58,7 @@ public class ChannelsFragment extends SherlockFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		
-		globalActivity=(GPSLocalServiceClient)getSherlockActivity();
+		globalActivity=(GPSLocalServiceClient)getActivity();
 		super.onActivityCreated(savedInstanceState);
 	}
 	
@@ -88,14 +92,14 @@ public class ChannelsFragment extends SherlockFragment {
 	public boolean onContextItemSelected(android.view.MenuItem item) {
 		  final AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();
 		  if (item.getItemId() == 1) {
-			  LinearLayout layout = new LinearLayout(getSherlockActivity());
+			  LinearLayout layout = new LinearLayout(getActivity());
 			  layout.setOrientation(LinearLayout.VERTICAL);
-			  final TextView txv = new TextView(getSherlockActivity());
+			  final TextView txv = new TextView(getActivity());
 			  txv.setText(R.string.yourmessage);
 			  layout.addView(txv);
-			  final EditText input = new EditText(getSherlockActivity());
+			  final EditText input = new EditText(getActivity());
 			  layout.addView(input);
-			  AlertDialog alertdialog3 = new AlertDialog.Builder(getSherlockActivity())
+			  AlertDialog alertdialog3 = new AlertDialog.Builder(getActivity())
 						.setTitle(R.string.sendingmessage)
 						.setView(layout)
 						.setPositiveButton(R.string.send,
@@ -129,7 +133,7 @@ public class ChannelsFragment extends SherlockFragment {
 
 		  }
 		  if (item.getItemId() == 3) {
-			  ClipboardManager clipboard = (ClipboardManager) getSherlockActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+			  ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
 			  if (LocalService.channelList.get((int) acmi.id).url != null){
 				  clipboard.setText(LocalService.channelList.get((int) acmi.id).url);
 			  }
@@ -140,7 +144,7 @@ public class ChannelsFragment extends SherlockFragment {
 		  	Intent sendIntent = new Intent(Intent.ACTION_SEND);
             sendIntent.setType("text/plain");
             sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, LocalService.channelList.get((int) acmi.id).url != null);
-            startActivity(Intent.createChooser(sendIntent, getSherlockActivity().getString(R.string.sharelink)));
+            startActivity(Intent.createChooser(sendIntent, getActivity().getString(R.string.sharelink)));
             return true;
 		  }
 		  
@@ -156,7 +160,7 @@ public class ChannelsFragment extends SherlockFragment {
 		  }
 		  
 		  if (item.getItemId() == 7) {
-			  ClipboardManager clipboard = (ClipboardManager) getSherlockActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+			  ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
 			  
 				  clipboard.setText(LocalService.channelList.get((int) acmi.id).group_id);
 			  
@@ -167,7 +171,7 @@ public class ChannelsFragment extends SherlockFragment {
 		  	Intent sendIntent = new Intent(Intent.ACTION_SEND);
             sendIntent.setType("text/plain");
             sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, LocalService.channelList.get((int) acmi.id).group_id );
-            startActivity(Intent.createChooser(sendIntent, getSherlockActivity().getString(R.string.shareID)));
+            startActivity(Intent.createChooser(sendIntent, getActivity().getString(R.string.shareID)));
             return true;
 		  }
 		  return super.onContextItemSelected(item);
@@ -223,13 +227,17 @@ public class ChannelsFragment extends SherlockFragment {
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		 MenuItem refresh = menu.add(0, 3, 0, R.string.refresh);
-		 refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		 MenuItemCompat.setShowAsAction(refresh, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
 		 refresh.setIcon(android.R.drawable.ic_menu_rotate); 
 		 MenuItem createchannel = menu.add(0, 1, 0, R.string.createchanel);
-		 createchannel.setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		 
+		 MenuItemCompat.setShowAsAction(createchannel, MenuItemCompat.SHOW_AS_ACTION_WITH_TEXT);
+		 
 		 createchannel.setIcon(android.R.drawable.ic_menu_add);
 		 MenuItem enterchannel = menu.add(0, 2, 0, R.string.enterchanal);
-		 enterchannel.setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+		 
+		 MenuItemCompat.setShowAsAction(enterchannel, MenuItemCompat.SHOW_AS_ACTION_WITH_TEXT);
+		 
 		 enterchannel.setIcon(android.R.drawable.ic_menu_agenda);
 		 super.onCreateOptionsMenu(menu, inflater);
 	}
@@ -362,7 +370,7 @@ public class ChannelsFragment extends SherlockFragment {
 		      channelpos = bundle.getInt("channelpos", -1);
 		   
 		   }
-		LocalService.channelsAdapter.context=getSherlockActivity();
+		LocalService.channelsAdapter.context=getActivity();
 		View view=inflater.inflate(R.layout.mychannels, container, false);
 		ListView lv1 = (ListView) view.findViewById(R.id.mychannelslistView);
 		lv1.setAdapter(LocalService.channelsAdapter);

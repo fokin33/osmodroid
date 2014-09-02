@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.actionbarsherlock.app.SherlockFragment;
 
-public class NotifFragment extends SherlockFragment {
+
+public class NotifFragment extends Fragment {
 	 @Override
      public void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
@@ -55,7 +56,7 @@ public class NotifFragment extends SherlockFragment {
         list = new ArrayList<String>();
         list.clear();
         list.addAll(LocalService.messagelist);
-        adapter = new ArrayAdapter<String>(getSherlockActivity(),android.R.layout.simple_list_item_1, list);
+        adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, list);
         lv1.setAdapter(adapter);
         adapter.notifyDataSetChanged();
        	return view;

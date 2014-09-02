@@ -14,10 +14,16 @@ import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Settings;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.text.ClipboardManager;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -30,14 +36,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 
-
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.SubMenu;
-
-public class MainFragment extends SherlockFragment implements GPSLocalServiceClient.upd {
+public class MainFragment extends Fragment implements GPSLocalServiceClient.upd {
 	
 	private BroadcastReceiver receiver;
 	private GPSLocalServiceClient globalActivity;
@@ -151,15 +150,15 @@ public class MainFragment extends SherlockFragment implements GPSLocalServiceCli
 		MenuItem forcesenditem = menu.add(0, 9, 9, R.string.sendnow);
 		forcesenditem.setIcon(android.R.drawable.ic_menu_mylocation);
 		MenuItem shareadress = menu.add(0, 10, 10, R.string.sharelink);
-		shareadress.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		MenuItemCompat.setShowAsAction(shareadress, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
 		shareadress.setIcon(android.R.drawable.ic_menu_share);
 		MenuItem copyadress = menu.add(0, 11, 11, R.string.copylink);
-		copyadress.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		MenuItemCompat.setShowAsAction(copyadress, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
 		copyadress.setIcon(android.R.drawable.ic_menu_edit);
 		MenuItem shareID = menu.add(0, 12, 12, R.string.shareid);
 		MenuItem about = menu.add(0, 13, 14, R.string.about);
 		about.setIcon(android.R.drawable.ic_menu_info_details);
-		about.setIntent(new Intent(getSherlockActivity(), AboutActivity.class));
+		about.setIntent(new Intent(getActivity(), AboutActivity.class));
 		MenuItem exit = menu.add(0, 14, 13, R.string.copytrackerid);
 		MenuItem save =menu2.add(0, 18, 18, R.string.savepref);
         MenuItem load =menu2.add(0, 19, 19, R.string.loadpref);
@@ -188,14 +187,14 @@ public class MainFragment extends SherlockFragment implements GPSLocalServiceCli
 		if (item.getItemId() == 2) {
 			
 			Intent intent = new Intent();
-			intent.setClass(getSherlockActivity(),PrefActivity.class);
+			intent.setClass(getActivity(),PrefActivity.class);
 			startActivityForResult(intent, 0);
 			
 		}
 		
 		if (item.getItemId() == 3) {
 			AlertDialog alertdialog1 = new AlertDialog.Builder(
-					getSherlockActivity()).create();
+					getActivity()).create();
 			alertdialog1.setTitle(getString(R.string.AgreeParameterEqual));
 
 			alertdialog1
@@ -253,28 +252,28 @@ public class MainFragment extends SherlockFragment implements GPSLocalServiceCli
                     Intent sendIntent = new Intent(Intent.ACTION_SEND);
                     sendIntent.setType("text/plain");
                     sendIntent.putExtra(android.content.Intent.EXTRA_TEXT,getString(R.string.iamhere)+ OsMoDroid.settings.getString("viewurl", ""));
-                    startActivity(Intent.createChooser(sendIntent, getSherlockActivity().getString(R.string.sharelink)));
+                    startActivity(Intent.createChooser(sendIntent, getActivity().getString(R.string.sharelink)));
 		}
 		if (item.getItemId() == 11) {
-                    ClipboardManager clipboard = (ClipboardManager) getSherlockActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
                     if (!OsMoDroid.settings.getString("viewurl", "").equals(""))
                     {
                     clipboard.setText(OsMoDroid.settings.getString("viewurl", ""));
-                    Toast.makeText(getSherlockActivity(), R.string.linkcopied, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.linkcopied, Toast.LENGTH_SHORT).show();
                     }
 		}
 		if (item.getItemId() == 12) {
             Intent sendIntent = new Intent(Intent.ACTION_SEND);
             sendIntent.setType("text/plain");
             sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, OsMoDroid.settings.getString("tracker_id", ""));
-            startActivity(Intent.createChooser(sendIntent, getSherlockActivity().getString(R.string.sharelink)));
+            startActivity(Intent.createChooser(sendIntent, getActivity().getString(R.string.sharelink)));
 		}
 		if (item.getItemId() == 14) {
-            ClipboardManager clipboard = (ClipboardManager) getSherlockActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
             if (!OsMoDroid.settings.getString("tracker_id", "").equals(""))
             {
             clipboard.setText(OsMoDroid.settings.getString("tracker_id", ""));
-            Toast.makeText(getSherlockActivity(), R.string.linkcopied, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.linkcopied, Toast.LENGTH_SHORT).show();
             }
 		}
 //		if (item.getItemId() == 14) {
@@ -393,10 +392,10 @@ public class MainFragment extends SherlockFragment implements GPSLocalServiceCli
 if (globalActivity.live){
          
                          AlertDialog alertdialog = new AlertDialog.Builder(
-                                         getSherlockActivity()).create();
-                         alertdialog.setTitle(getSherlockActivity().getString(R.string.Stoping));
+                                         getActivity()).create();
+                         alertdialog.setTitle(getActivity().getString(R.string.Stoping));
 
-                         alertdialog.setMessage(getSherlockActivity().getString(R.string.closesession));
+                         alertdialog.setMessage(getActivity().getString(R.string.closesession));
 
                          alertdialog.setButton(getString(R.string.yes),
                                          new DialogInterface.OnClickListener() {
@@ -452,10 +451,10 @@ else {
 						if(!globalActivity.mService.myManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
 						{
 							AlertDialog alertdialog1 = new AlertDialog.Builder(
-			                         getSherlockActivity()).create();
-			         alertdialog1.setTitle(getSherlockActivity().getString(R.string.needgps));
+			                         getActivity()).create();
+			         alertdialog1.setTitle(getActivity().getString(R.string.needgps));
 
-			         alertdialog1.setMessage(getSherlockActivity().getString(R.string.enablegps));
+			         alertdialog1.setMessage(getActivity().getString(R.string.enablegps));
 
 			         alertdialog1.setButton(getString(R.string.yes),
 			                         new DialogInterface.OnClickListener() {
@@ -619,7 +618,7 @@ else {
 		String startStatus =globalActivity.checkStarted() ? getString(R.string.Running)
 				: getString(R.string.NotRunning);
 		String statusText = //getString(R.string.Status) + startStatus+
-				getString(R.string.Sendcount) + globalActivity.sendcounter +"\n"+ getSherlockActivity().getString(R.string.inbuffer)+globalActivity.buffercounter;
+				getString(R.string.Sendcount) + globalActivity.sendcounter +"\n"+ getActivity().getString(R.string.inbuffer)+globalActivity.buffercounter;
 		TextView t = (TextView) view.findViewById(R.id.serviceStatus);
 		t.setText(statusText);
 	}

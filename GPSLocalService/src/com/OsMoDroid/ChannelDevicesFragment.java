@@ -19,12 +19,16 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.text.ClipboardManager;
 import android.text.Layout;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -41,12 +45,9 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.OsMoDroid.Netutil.MyAsyncTask;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
 
-public class ChannelDevicesFragment extends SherlockFragment implements ResultsListener {
+
+public class ChannelDevicesFragment extends Fragment implements ResultsListener {
 	
 	//ArrayList<MyAsyncTask> t= new ArrayList<Netutil.MyAsyncTask>();
 	
@@ -200,7 +201,7 @@ public class ChannelDevicesFragment extends SherlockFragment implements ResultsL
 		 //LocalService.currentchanneldeviceList= LocalService.channelList.get(channelpos).deviceList;
 		   //LocalService.currentChannel= LocalService.channelList.get(channelpos); 
 		   
-		    LocalService.channelsDevicesAdapter = new ChannelsDevicesAdapter(getSherlockActivity(),R.layout.channelsdeviceitem,  LocalService.currentchanneldeviceList);
+		    LocalService.channelsDevicesAdapter = new ChannelsDevicesAdapter(getActivity(),R.layout.channelsdeviceitem,  LocalService.currentchanneldeviceList);
 	LocalService.channelsmessagesAdapter = new ChannelChatAdapter(globalActivity,  R.layout.devicechatitem, LocalService.currentChannel.messagesstringList);
 			//(getSherlockActivity(), R.layout.channelchatitem, LocalService.currentChannel.messagesstringList );
 			

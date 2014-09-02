@@ -46,9 +46,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -57,14 +62,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.OsMoDroid.MapFragment.MAPSurferTileSource;
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.SubMenu;
 
-public class MapFragment extends SherlockFragment implements DeviceChange, IMyLocationProvider,LocationListener {
+
+public class MapFragment extends Fragment implements DeviceChange, IMyLocationProvider,LocationListener {
 	 	ResourceProxyImpl mResourceProxy;
 		MapView mMapView;
 		private IMapController mController;
@@ -343,7 +343,7 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 			
             mMapView.getOverlays().add(myTracePathOverlay);
             
-            myLoc = new MyLocationNewOverlay (getSherlockActivity(),this, mMapView);
+            myLoc = new MyLocationNewOverlay (getActivity(),this, mMapView);
             
             myLoc.setOptionsMenuEnabled(true);
             if(OsMoDroid.settings.getBoolean("isfollow", true))
@@ -396,7 +396,7 @@ public class MapFragment extends SherlockFragment implements DeviceChange, IMyLo
 			}
 		});
            		
-			CompassOverlay compas = new CompassOverlay(getSherlockActivity(), mMapView);
+			CompassOverlay compas = new CompassOverlay(getActivity(), mMapView);
 			ChannelsOverlay choverlay = new ChannelsOverlay(mResourceProxy, mMapView);
 			mMapView.getOverlays().add(choverlay);
 			mMapView.getOverlays().add(compas);

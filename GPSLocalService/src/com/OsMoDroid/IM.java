@@ -422,7 +422,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 							{
 								Bundle b = msg.getData();
 								if(running){
-									if (socket.isConnected()&&wr!=null){
+									if (socket!=null&&socket.isConnected()&&wr!=null){
 										 setReconnectAlarm(); 
 										 try
 												{

@@ -8,7 +8,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!-- The main content view -->
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/fragment_container" android:layout_width="match_parent" android:layout_height="match_parent" android:splitMotionEvents="@bool/abs__action_bar_embed_tabs" />
+    <FrameLayout
+         xmlns:android="http://schemas.android.com/apk/res/android" 
+         android:id="@+id/fragment_container"
+         android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          />
     <!-- The navigation drawer -->
     <ListView android:id="@+id/left_drawer"
         android:layout_width="240dp"

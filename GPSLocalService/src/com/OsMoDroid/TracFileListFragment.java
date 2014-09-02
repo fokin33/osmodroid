@@ -12,9 +12,14 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View.OnClickListener;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,14 +30,7 @@ import android.widget.ListView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 
-
-
-import com.actionbarsherlock.app.SherlockFragment;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuInflater;
-import com.actionbarsherlock.view.MenuItem;
-
-public class TracFileListFragment extends SherlockFragment  implements ResultsListener {
+public class TracFileListFragment extends Fragment  implements ResultsListener {
 	  private TrackFileAdapter trackFileAdapter;
       private ArrayList<TrackFile> trackFileList = new ArrayList<TrackFile>();
       private File path;
@@ -143,7 +141,7 @@ public class TracFileListFragment extends SherlockFragment  implements ResultsLi
       @Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     	MenuItem refresh = menu.add(0, 1, 0, R.string.refresh);
-  		refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+    	 MenuItemCompat.setShowAsAction(refresh, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
   		refresh.setIcon(android.R.drawable.ic_menu_rotate);
 		super.onCreateOptionsMenu(menu, inflater);
 	}
@@ -174,7 +172,7 @@ public class TracFileListFragment extends SherlockFragment  implements ResultsLi
          if (item.getItemId() == 1) {
                  File sdDir = android.os.Environment.getExternalStorageDirectory();
                  File file = new File (sdDir,"OsMoDroid/"+trackFileList.get((int) acmi.id).fileName);
-                 PendingIntent contentIntent = PendingIntent.getActivity(getSherlockActivity(), 0, new Intent(), 0);
+                 PendingIntent contentIntent = PendingIntent.getActivity(getActivity(), 0, new Intent(), 0);
                         
                         NotificationCompat.Builder notificationBuilder =new NotificationCompat.Builder(
 
@@ -184,7 +182,7 @@ public class TracFileListFragment extends SherlockFragment  implements ResultsLi
 
                                  .setContentText(file.getName())
 
-                                 .setContentTitle(getSherlockActivity().getString(
+                                 .setContentTitle(getActivity().getString(
 										R.string.osmodroiduploadfile))
 
                                  .setSmallIcon(android.R.drawable.arrow_up_float)
@@ -226,13 +224,13 @@ public class TracFileListFragment extends SherlockFragment  implements ResultsLi
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view=inflater.inflate(R.layout.trackfile, container, false);
-	     progressDialog = new ProgressDialog(getSherlockActivity());
-         progressDialog.setMessage(getSherlockActivity().getString(R.string.loading));
+	     progressDialog = new ProgressDialog(getActivity());
+         progressDialog.setMessage(getActivity().getString(R.string.loading));
          progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
        
  final ListView lv1 = (ListView) view.findViewById(R.id.trackfilelistView);
  
- trackFileAdapter = new TrackFileAdapter(getSherlockActivity(),R.layout.trackfileitem, trackFileList);
+ trackFileAdapter = new TrackFileAdapter(getActivity(),R.layout.trackfileitem, trackFileList);
  lv1.setAdapter(trackFileAdapter);
  registerForContextMenu(lv1);
  lv1.setOnItemClickListener(new OnItemClickListener() {
