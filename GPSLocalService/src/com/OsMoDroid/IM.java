@@ -30,7 +30,8 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.os.Handler;import android.os.Message;import android.preference.PreferenceManager;
 import android.provider.Settings.Secure;
-import android.support.v4.app.NotificationCompat;import android.telephony.TelephonyManager;
+import android.speech.tts.TextToSpeech;
+import android.support.v4.app.NotificationCompat;import android.telephony.TelephonyManager;
 import android.util.Log;import android.widget.Toast;
 /**
  * @author dfokin
@@ -847,6 +848,9 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		}
 		if(d.equals("TRACKER_SESSION_STOP")){
 			localService.stopServiceWork(false);
+		}
+		if(d.contains("TTS:")){
+			if(localService.tts!=null){localService.tts.speak(d , TextToSpeech.QUEUE_ADD, null);}
 		}
 	}
 	

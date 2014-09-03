@@ -24,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -39,6 +40,9 @@ import android.widget.AdapterView.OnItemClickListener;
 
 
 public class DevicesFragment extends Fragment  {
+
+	private AdapterContextMenuInfo subacmi;
+
 
 	/* (non-Javadoc)
 	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
@@ -73,19 +77,9 @@ if(!deviceU.equals("")){
 	@Override
 	public boolean onContextItemSelected(android.view.MenuItem item) {
 		  final AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();
-
+		  if(acmi!=null){subacmi=acmi;}
 		  if (item.getItemId() == 1) {
-
-				//final AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) item.getMenuInfo();
-			 
-			
 			  globalActivity.mService.myIM.sendToServer("UNSUBSCRIBE:"+LocalService.deviceAdapter.getItem(acmi.position).tracker_id);
-			  
-				//globalActivity.mService.saveObject(LocalService.deviceList, OsMoDroid.DEVLIST);
-			  
-			  
-                               
-
 		    }
 
 
@@ -164,7 +158,7 @@ if(!deviceU.equals("")){
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			//globalActivity.mService.myIM.sendToServer("SUBSCRIBE_SET|{u:"+LocalService.deviceList.get((int) acmi.id).u+", data: {color: '"+"#"+Integer.toHexString(color)+"'}}");
+			
 			if(LocalService.deviceList.get((int) acmi.id).subscribed){
 			globalActivity.mService.myIM.sendToServer("SUBSCRIBE_SET|"+jo.toString());
 			}
@@ -172,15 +166,61 @@ if(!deviceU.equals("")){
 				{
 					globalActivity.mService.myIM.sendToServer("DEVICE_SET|"+jo.toString());
 				}
-			//LocalService.deviceList.get((int) acmi.id).devicePath.clear();
-			//globalActivity.mService.saveObject(LocalService.deviceList, OsMoDroid.DEVLIST);
 		}
 	};
 	 
 	 ColorDialog dialog = new ColorDialog(globalActivity, false, getView(), Color.parseColor(LocalService.deviceList.get((int) acmi.id).color), cl,  R.drawable.wheel);
 		dialog.show();
  }
+ if (item.getItemId() == 8) {
+	 //REMOTE_CONTROL:[tracker_id]|DESTROY_DEVICE
+	 LocalService.myIM.sendToServer("REMOTE_CONTROL:"+ LocalService.deviceList.get((int) subacmi.id).tracker_id+"|"+"TRACKER_SESSION_START");
+ }
+ if (item.getItemId() == 9) {
+	 //REMOTE_CONTROL:[tracker_id]|DESTROY_DEVICE
+	 globalActivity.mService.myIM.sendToServer("REMOTE_CONTROL:"+ LocalService.deviceList.get((int) subacmi.id).tracker_id+"|"+"TRACKER_SESSION_STOP");
+ }
+ 
+ if (item.getItemId() == 10) {
+	 //REMOTE_CONTROL:[tracker_id]|DESTROY_DEVICE
+	 LinearLayout layout = new LinearLayout(getActivity());
+		layout.setOrientation(LinearLayout.VERTICAL);
+		final TextView txv5 = new TextView(getActivity());
+		txv5.setText("Enter text to TTS");
+		layout.addView(txv5);
+		final EditText inputhash = new EditText(getActivity());
+		
+		layout.addView(inputhash);
 
+				AlertDialog alertdialog3 = new AlertDialog.Builder(
+				getActivity())
+				.setTitle("Remote TTS")
+				.setView(layout)
+				.setPositiveButton(R.string.yes,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+								 
+								if (!( inputhash.getText().toString().equals(""))) {
+									//REMOTE_CONTROL|TTS:Привет жена)
+									globalActivity.mService.myIM.sendToServer("REMOTE_CONTROL:"+ LocalService.deviceList.get((int) subacmi.id).tracker_id+"|"+"TTS:"+inputhash.getText().toString());
+								} 
+							}
+						})
+				.setNegativeButton(R.string.No,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int whichButton) {
+
+								/* User clicked cancel so do some stuff */
+							}
+						}).create();
+
+		alertdialog3.show();
+	 
+	 
+	 globalActivity.mService.myIM.sendToServer("REMOTE_CONTROL:"+ LocalService.deviceList.get((int) subacmi.id).tracker_id+"|"+"TRACKER_SESSION_STOP");
+ }
 	    
 		return super.onContextItemSelected(item);
 	}
@@ -210,6 +250,10 @@ if(!deviceU.equals("")){
 		if(LocalService.deviceAdapter.getItem(acmi.position).subscribed){
 		 menu.add(0, 1, 8, R.string.delete).setIcon(android.R.drawable.ic_menu_delete);
 		}
+		SubMenu menu2 = menu.addSubMenu(Menu.NONE, 15, 20, "Remote Commands");
+		MenuItem start =menu2.add(0, 8, 8, "Start monitoring");
+		MenuItem stop =menu2.add(0, 9, 9, "Stop monitoring");
+		MenuItem sendTTS =menu2.add(0, 10, 10, "Send TTS");
 		 //   menu.add(0, 2, 2, R.string.messages).setIcon(android.R.drawable.ic_menu_delete);
 		   
 		//    menu.add(0, 3, 3, R.string.copylink).setIcon(android.R.drawable.ic_menu_edit);

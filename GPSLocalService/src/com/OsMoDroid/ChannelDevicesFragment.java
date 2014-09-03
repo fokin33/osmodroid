@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.text.ClipboardManager;
 import android.text.Layout;
 import android.util.Log;
@@ -153,9 +154,8 @@ public class ChannelDevicesFragment extends Fragment implements ResultsListener 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		 MenuItem refresh = menu.add(0, 3, 0, R.string.refresh);
-		 refresh.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		 MenuItemCompat.setShowAsAction(refresh, MenuItemCompat.SHOW_AS_ACTION_IF_ROOM);
 		 refresh.setIcon(android.R.drawable.ic_menu_rotate); 
-			
 		super.onCreateOptionsMenu(menu, inflater);
 	}
 	
