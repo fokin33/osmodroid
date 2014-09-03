@@ -2395,8 +2395,8 @@ com.OsMoDroid.IM:
     java.lang.String adr
     java.lang.String myLongPollCh
     java.io.FileOutputStream fos
-    321:382:public void addtoDeviceChat(java.lang.String)
-    804:874:private void addToChannelChat(java.lang.String,java.lang.String)
+    322:383:public void addtoDeviceChat(java.lang.String)
+    805:875:private void addToChannelChat(java.lang.String,java.lang.String)
 com.OsMoDroid.IM$7
 com.OsMoDroid.IM$9
 com.OsMoDroid.ImageryMetaData:

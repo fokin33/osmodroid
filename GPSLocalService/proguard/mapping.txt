@@ -5074,97 +5074,97 @@ com.OsMoDroid.IM -> com.OsMoDroid.x:
     android.content.BroadcastReceiver reconnectReceiver -> C
     android.content.BroadcastReceiver keepAliveReceiver -> D
     android.content.BroadcastReceiver bcr -> O
-    176:189:void sendToServer(java.lang.String) -> a
-    253:267:void addlog(java.lang.String) -> b
-    281:289:void disablekeepAliveAlarm() -> a
-    293:306:void setReconnectAlarm() -> b
-    501:528:void close() -> c
-    565:582:void start() -> d
-    766:799:void stop() -> e
-    879:1413:void parseEx(java.lang.String) -> c
-    1415:1452:void updateCoordinates(java.lang.String,java.lang.String,com.OsMoDroid.Device) -> a
-    1456:1456:void ondisconnect() -> f
-    1463:1487:void setReconnectOnError() -> h
-    1491:1538:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
-    156:156:com.OsMoDroid.Netutil$MyAsyncTask access$0(com.OsMoDroid.IM) -> a
-    130:130:void access$1$38418afb(com.OsMoDroid.IM) -> b
-    1458:1458:void access$2(com.OsMoDroid.IM) -> c
-    155:155:java.lang.String access$3(com.OsMoDroid.IM) -> d
-    154:154:int access$4(com.OsMoDroid.IM) -> e
-    154:154:void access$5$38414b2a(com.OsMoDroid.IM) -> f
-    155:155:void access$6(com.OsMoDroid.IM,java.lang.String) -> a
-    152:152:java.lang.Thread access$7(com.OsMoDroid.IM) -> g
-    138:138:java.text.SimpleDateFormat access$8() -> g
+    177:190:void sendToServer(java.lang.String) -> a
+    254:268:void addlog(java.lang.String) -> b
+    282:290:void disablekeepAliveAlarm() -> a
+    294:307:void setReconnectAlarm() -> b
+    502:529:void close() -> c
+    566:583:void start() -> d
+    767:800:void stop() -> e
+    880:1452:void parseEx(java.lang.String) -> c
+    1454:1491:void updateCoordinates(java.lang.String,java.lang.String,com.OsMoDroid.Device) -> a
+    1495:1495:void ondisconnect() -> f
+    1502:1526:void setReconnectOnError() -> h
+    1530:1577:void onResultsSucceeded(com.OsMoDroid.APIComResult) -> a
+    157:157:com.OsMoDroid.Netutil$MyAsyncTask access$0(com.OsMoDroid.IM) -> a
+    131:131:void access$1$38418afb(com.OsMoDroid.IM) -> b
+    1497:1497:void access$2(com.OsMoDroid.IM) -> c
+    156:156:java.lang.String access$3(com.OsMoDroid.IM) -> d
+    155:155:int access$4(com.OsMoDroid.IM) -> e
+    155:155:void access$5$38414b2a(com.OsMoDroid.IM) -> f
+    156:156:void access$6(com.OsMoDroid.IM,java.lang.String) -> a
+    153:153:java.lang.Thread access$7(com.OsMoDroid.IM) -> g
+    139:139:java.text.SimpleDateFormat access$8() -> g
 com.OsMoDroid.IM$1 -> com.OsMoDroid.x$1:
     com.OsMoDroid.IM this$0 -> a
-    193:201:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    194:202:void onReceive(android.content.Context,android.content.Intent) -> onReceive
 com.OsMoDroid.IM$10 -> com.OsMoDroid.x$2:
     com.OsMoDroid.IM this$0 -> a
     com.OsMoDroid.Device val$dev -> b
-    1442:1447:void run() -> run
+    1481:1486:void run() -> run
 com.OsMoDroid.IM$11 -> com.OsMoDroid.x$3:
     com.OsMoDroid.IM this$0 -> a
-    1479:1480:void run() -> run
+    1518:1519:void run() -> run
 com.OsMoDroid.IM$12 -> com.OsMoDroid.x$4:
     com.OsMoDroid.IM this$0 -> a
-    1516:1518:void run() -> run
+    1555:1557:void run() -> run
 com.OsMoDroid.IM$2 -> com.OsMoDroid.x$5:
     com.OsMoDroid.IM this$0 -> a
-    207:237:void onReceive(android.content.Context,android.content.Intent) -> onReceive
-    204:204:com.OsMoDroid.IM access$0(com.OsMoDroid.IM$2) -> a
+    208:238:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    205:205:com.OsMoDroid.IM access$0(com.OsMoDroid.IM$2) -> a
 com.OsMoDroid.IM$2$1 -> com.OsMoDroid.x$5$1:
     com.OsMoDroid.IM$2 this$1 -> a
-    214:216:void run() -> run
+    215:217:void run() -> run
 com.OsMoDroid.IM$2$2 -> com.OsMoDroid.x$5$2:
     com.OsMoDroid.IM$2 this$1 -> a
-    230:232:void run() -> run
+    231:233:void run() -> run
 com.OsMoDroid.IM$3 -> com.OsMoDroid.x$6:
     com.OsMoDroid.IM this$0 -> a
-    242:249:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    243:250:void onReceive(android.content.Context,android.content.Intent) -> onReceive
 com.OsMoDroid.IM$4 -> com.OsMoDroid.x$7:
     com.OsMoDroid.IM this$0 -> a
-    395:477:void onReceive(android.content.Context,android.content.Intent) -> onReceive
-    388:388:com.OsMoDroid.IM access$0(com.OsMoDroid.IM$4) -> a
+    396:478:void onReceive(android.content.Context,android.content.Intent) -> onReceive
+    389:389:com.OsMoDroid.IM access$0(com.OsMoDroid.IM$4) -> a
 com.OsMoDroid.IM$4$1 -> com.OsMoDroid.x$7$1:
     com.OsMoDroid.IM$4 this$1 -> a
-    440:442:void run() -> run
+    441:443:void run() -> run
 com.OsMoDroid.IM$4$2 -> com.OsMoDroid.x$7$2:
     com.OsMoDroid.IM$4 this$1 -> a
-    465:467:void run() -> run
+    466:468:void run() -> run
 com.OsMoDroid.IM$5 -> com.OsMoDroid.x$8:
     com.OsMoDroid.IM this$0 -> a
     java.lang.String val$str -> b
-    260:263:void run() -> run
+    261:264:void run() -> run
 com.OsMoDroid.IM$6 -> com.OsMoDroid.x$9:
     com.OsMoDroid.IM this$0 -> a
-    299:301:void run() -> run
+    300:302:void run() -> run
 com.OsMoDroid.IM$8 -> com.OsMoDroid.x$10:
     com.OsMoDroid.IM this$0 -> a
-    777:779:void run() -> run
+    778:780:void run() -> run
 com.OsMoDroid.IM$IMConnect -> com.OsMoDroid.y:
     com.OsMoDroid.IM this$0 -> a
-    710:760:void run() -> run
+    711:761:void run() -> run
 com.OsMoDroid.IM$IMConnect$1 -> com.OsMoDroid.y$1:
     com.OsMoDroid.IM$IMConnect this$1 -> a
-    734:737:void run() -> run
+    735:738:void run() -> run
 com.OsMoDroid.IM$IMConnect$2 -> com.OsMoDroid.y$2:
     com.OsMoDroid.IM$IMConnect this$1 -> a
     java.lang.Exception val$e1 -> b
-    753:754:void run() -> run
+    754:755:void run() -> run
 com.OsMoDroid.IM$IMReader -> com.OsMoDroid.z:
     java.lang.StringBuilder stringBuilder -> b
     java.lang.String str -> c
     com.OsMoDroid.IM this$0 -> a
-    651:697:void run() -> run
+    652:698:void run() -> run
 com.OsMoDroid.IM$IMWriter -> com.OsMoDroid.aa:
     boolean error -> a
     android.os.Handler handler -> b
     com.OsMoDroid.IM this$0 -> c
-    592:639:void run() -> run
-    583:583:com.OsMoDroid.IM access$0(com.OsMoDroid.IM$IMWriter) -> a
+    593:640:void run() -> run
+    584:584:com.OsMoDroid.IM access$0(com.OsMoDroid.IM$IMWriter) -> a
 com.OsMoDroid.IM$IMWriter$1 -> com.OsMoDroid.aa$1:
     com.OsMoDroid.IM$IMWriter this$1 -> a
-    599:632:void handleMessage(android.os.Message) -> handleMessage
+    600:633:void handleMessage(android.os.Message) -> handleMessage
 com.OsMoDroid.ImageryMetaDataResource -> com.OsMoDroid.ab:
     int m_imageHeight -> a
     int m_imageWidth -> b

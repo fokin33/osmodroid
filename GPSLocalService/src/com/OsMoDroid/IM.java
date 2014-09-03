@@ -842,6 +842,12 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		{
 			sendToServer("PP");
 		}
+		if(d.equals("TRACKER_SESSION_START")){
+			localService.startServiceWork();
+		}
+		if(d.equals("TRACKER_SESSION_STOP")){
+			localService.stopServiceWork(false);
+		}
 	}
 	
 	
@@ -858,6 +864,9 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		sendToServer("DEVICE_GET_ALL");
 		//		sendToServer("LN:"+c.substring(c.indexOf(':')+1, c.indexOf('|')-1));
 		
+	}
+	if(c.contains("DEVICE_SET")){
+		sendToServer("DEVICE_GET_ALL");
 	}
 	if(c.contains("UNSUBSCRIBE")){
 		sendToServer("DEVICE_GET_ALL");
