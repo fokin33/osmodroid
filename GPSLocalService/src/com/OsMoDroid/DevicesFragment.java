@@ -219,7 +219,7 @@ if(!deviceU.equals("")){
 		alertdialog3.show();
 	 
 	 
-	 globalActivity.mService.myIM.sendToServer("REMOTE_CONTROL:"+ LocalService.deviceList.get((int) subacmi.id).tracker_id+"|"+"TRACKER_SESSION_STOP");
+	 
  }
 	    
 		return super.onContextItemSelected(item);

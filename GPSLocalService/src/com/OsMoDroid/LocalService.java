@@ -1316,7 +1316,7 @@ public void sendid()
             tts.stop();
 
             tts.shutdown();
-
+            tts=null;
         }
         
         
