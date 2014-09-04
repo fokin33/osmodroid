@@ -91,7 +91,7 @@ public class MainFragment extends Fragment implements GPSLocalServiceClient.upd 
 
 		TextView t = (TextView) getView().findViewById(R.id.serviceStatus);
 		t.setText(statusText);
-		if (!OsMoDroid.settings.getBoolean("usealarm", false) || OsMoDroid.settings.getString("key", "").equals("")){
+		if (!OsMoDroid.settings.getBoolean("usealarm", false) || OsMoDroid.settings.getString("p", "").equals("")){
 			ToggleButton alarmToggle = (ToggleButton)getView().findViewById(R.id.alarmButton);
 			alarmToggle.setVisibility(View.GONE);
 		}else{
@@ -106,6 +106,18 @@ public class MainFragment extends Fragment implements GPSLocalServiceClient.upd 
 		globalActivity.started = globalActivity.checkStarted();
 		
 		if (globalActivity.started) {
+			Button pause = (Button) getView().findViewById(R.id.pauseButton);
+			pause.setVisibility(View.VISIBLE);
+			if(globalActivity.mService!=null&&!globalActivity.mService.paused)
+				{
+					pause.setText("Pause");
+				}
+			else
+				{
+					pause.setText("Continue");
+				}
+			
+			
 			Button start = (Button) getView().findViewById(R.id.startButton);
 			Button stop = (Button) getView().findViewById(R.id.exitButton);
 			start.setEnabled(false);
@@ -113,6 +125,8 @@ public class MainFragment extends Fragment implements GPSLocalServiceClient.upd 
 		} else {
 			Button start = (Button) getView().findViewById(R.id.startButton);
 			Button stop = (Button) getView().findViewById(R.id.exitButton);
+			Button pause = (Button) getView().findViewById(R.id.pauseButton);
+			pause.setVisibility(View.GONE);
 			start.setEnabled(true);
 			stop.setEnabled(false);
 		}
@@ -351,9 +365,9 @@ public class MainFragment extends Fragment implements GPSLocalServiceClient.upd 
 
 					} else {
 	if (alarmToggle.isChecked()){
-		globalActivity.mService.enableSignalisation(false);}
+		globalActivity.mService.enableSignalisation();}
 	else {
-		globalActivity.mService.disableSignalisation(false);
+		globalActivity.mService.disableSignalisation();
 	}
 						
 
@@ -377,6 +391,42 @@ public class MainFragment extends Fragment implements GPSLocalServiceClient.upd 
 			else {
 				auth.setVisibility(View.GONE);
 			}
+			Button pause = (Button) view.findViewById(R.id.pauseButton);
+			pause.setEnabled(true);
+			pause.setOnClickListener(new OnClickListener()
+				{
+					
+					@Override
+					public void onClick(View v)
+						{
+							if(globalActivity.mService!=null&&globalActivity.mService.paused)
+								{
+									globalActivity.mService.setPause(false);
+								}
+							else
+								{
+									globalActivity.mService.setPause(true);
+								}
+							updateMainUI();
+						}
+				});
+			
+			if(globalActivity.checkStarted())
+				{
+					pause.setVisibility(View.VISIBLE);
+				}
+			else
+				{
+					pause.setVisibility(View.GONE);
+				}
+			if(globalActivity.mService!=null&&!globalActivity.mService.paused)
+				{
+					pause.setText("Pause");
+				}
+			else
+				{
+					pause.setText("Continue");
+				}
 			Button start = (Button) view.findViewById(R.id.startButton);
 			Button exit = (Button) view.findViewById(R.id.exitButton);
 
@@ -550,13 +600,28 @@ else {
 					}
 					
 					if (intent.hasExtra("started")){
-						
+						Button pause = (Button) view.findViewById(R.id.pauseButton);
+						if(globalActivity.checkStarted())
+							{
+								pause.setVisibility(View.VISIBLE);
+							}
+						else
+							{
+								pause.setVisibility(View.GONE);
+							}
+						if(globalActivity.mService!=null&&!globalActivity.mService.paused)
+							{
+								pause.setText("Pause");
+							}
+						else
+							{
+								pause.setText("Continue");
+							}
 						Button start = (Button) view.findViewById(R.id.startButton);
 						Button stop = (Button) view.findViewById(R.id.exitButton);
 
-
+						
 							start.setEnabled(!intent.getBooleanExtra("started", false));
-
 							stop.setEnabled(intent.getBooleanExtra("started", false));
 							globalActivity.started=intent.getBooleanExtra("started", false);
 					}

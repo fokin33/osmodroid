@@ -211,7 +211,7 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	static IM myIM;
 	//static IM trackerIM;
 	TextToSpeech tts;
-	private int _langTTSavailable = -1;
+	private int langTTSavailable = -1;
 	String text;
 	//static SharedPreferences settings;
 	int batteryprocent=-1;
@@ -363,11 +363,12 @@ public  class LocalService extends Service implements LocationListener,GpsStatus
 	private boolean bindedremote;
 	private boolean bindedlocaly;
 	private int pollperiod=0;
-	
+	boolean paused=false;
 	private boolean log=true;
 	String sending="";
 	private ArrayList<String> buffer= new ArrayList<String>();
 	public String motd="";
+	private long pausemill;
 	static int selectedTileSourceInt=1;
 	//boolean connecting=false;
 	     static String formatInterval(final long l)
@@ -501,6 +502,25 @@ public void stopcomand()
 	}
 
 }
+	void setPause(boolean pause)
+		{
+			if(pause)
+				{
+					paused=true;
+					pausemill=System.currentTimeMillis();
+					if(myManager!=null)
+						{
+							myManager.removeUpdates(this);
+						}
+				}
+			else
+				{
+					paused=false;
+					workmilli=workmilli+(System.currentTimeMillis()-pausemill);
+					requestLocationUpdates();
+				}
+		}
+
 
 		public String getPosition()  {
 			String result = getString(R.string.NotDefined)+"\n"+getString(R.string.speed);
@@ -1310,6 +1330,7 @@ public void sendid()
         OsMoDroid.editor.putFloat("lon", (float) currentLocation.getLongitude());
 
         OsMoDroid.editor.commit();
+        paused=false;
         firstgpsbeepedon=false;
         if (tts != null) {
 
@@ -1952,45 +1973,24 @@ public void onGpsStatusChanged(int event) {
 }
 
 public void onInit(int status) {
-
-	// TODO Auto-generated method stub
-
 	  if (status == TextToSpeech.SUCCESS) {
+           langTTSavailable = tts.setLanguage(Locale.getDefault());
 
-          // Set preferred language to US english.
-
-           _langTTSavailable = tts.setLanguage(Locale.getDefault()); // Locale.FRANCE etc.
-
-          if (_langTTSavailable == TextToSpeech.LANG_MISSING_DATA ||
-
-          	_langTTSavailable == TextToSpeech.LANG_NOT_SUPPORTED) {
-
+          if (langTTSavailable==TextToSpeech.LANG_MISSING_DATA||langTTSavailable==TextToSpeech.LANG_NOT_SUPPORTED)
+        	  {
         	  if(log)Log.d(this.getClass().getName(), "Нету языка");
+        	  }
+          		else if ( langTTSavailable >= 0 && OsMoDroid.settings.getBoolean("usetts", false)) 
+          			{
+          				if(log)Log.d(this.getClass().getName(), "Произносим");
+          				tts.speak(getString(R.string.letsgo), TextToSpeech.QUEUE_ADD, null);
+          			}
 
-
-
-           } else if ( _langTTSavailable >= 0 && OsMoDroid.settings.getBoolean("usetts", false)) {
-
-        	   if(log)Log.d(this.getClass().getName(), "Произносим");
-
-        	   tts.speak(getString(R.string.letsgo), TextToSpeech.QUEUE_ADD, null);
-
-
-
-
-
-          }
-
-      } else {
-
-    	  if(log)Log.d(this.getClass().getName(), "Инициализация TTS не выполнилась");
-
-
-
-    	  // Initialization failed.
-
-      }
-
+      } 
+	  else
+		  {
+			  if(log)Log.d(this.getClass().getName(), "Инициализация TTS не выполнилась");
+		  }
 }
 
 public synchronized boolean isOnline() {
@@ -2104,179 +2104,71 @@ public synchronized boolean isOnline() {
 	}
 
 
-
-
-
-
-
-
-
-
-
 public void onResultsSucceeded(APIComResult result) {
 	JSONArray a = null;
-
-
-
-
 	if (result.Jo==null&&result.ja==null)
-
 	{
-
-
-
 		if(log)Log.d(getClass().getSimpleName(),"notifwar1 Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ getString(R.string.query)+result.url);
-
-	//		notifywarnactivity("Команда:"+result.Command+" Ответ сервера:"+result.rawresponse+ " Запрос:"+result.url);
 		if(OsMoDroid.gpslocalserviceclientVisible)
 		{
-		Toast.makeText(LocalService.this, R.string.esya_ru_notrespond , Toast.LENGTH_LONG).show();
+			Toast.makeText(LocalService.this, R.string.esya_ru_notrespond , Toast.LENGTH_LONG).show();
 		}
-		}
-
-
-	
-	if(result.Command.equals("sendid")&&!(result.Jo==null)){
+	}
+	if(result.Command.equals("sendid")&&!(result.Jo==null))
+		{
 		if(log)Log.d(getClass().getSimpleName(),"sendid response:"+result.Jo.toString());
-		//Toast.makeText(this,result.Jo.optString("state")+" "+ result.Jo.optString("error_description"),Toast.LENGTH_SHORT).show();
-		if(result.Jo.has("key")){
-			try {
-				OsMoDroid.editor.putString("newkey", result.Jo.getString("key"));
-				OsMoDroid.editor.commit();
-				myIM.start();
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		if(result.Jo.has("key"))
+			{
+			try 
+				{
+					OsMoDroid.editor.putString("newkey", result.Jo.getString("key"));
+					OsMoDroid.editor.commit();
+					myIM.start();
+				} 
+			catch (JSONException e) 
+				{
+					e.printStackTrace();
+				}
 			}
 		}
-		
 	}
-	
-	
 
 
-}
-
-
-//static void deviceListFromJSONArray(JSONArray a) throws JSONException {
-//	for (int i = 0; i < a.length(); i++) {
-//		JSONObject jsonObject = a.getJSONObject(i);
-//Device devitem = new Device(jsonObject.getString("u"), jsonObject.getString("name"),jsonObject.getString("app")
-//,jsonObject.getString("last"),
-//"http://m.esya.ru/"+jsonObject.getString("url"),
-//jsonObject.getString("where"),
-//jsonObject.getString("lat"),
-//jsonObject.getString("lon"),
-//jsonObject.getString("online"),
-//jsonObject.getString("state"), jsonObject.getString("uid")
-//);
-//
-//deviceList.add(devitem);
-//
-//
-//
-//	 }
-//}
-
-
-void channelListFromJSONArray(JSONArray a) throws JSONException {
-	for (int i = 0; i < a.length(); i++) {
-		JSONObject jsonObject = a.getJSONObject(i);
-//Channel chanitem = new Channel( jsonObject.getString("name"),jsonObject.getString("u"),jsonObject.getString("created")	);
-		Channel chanitem = new Channel( jsonObject, LocalService.this);
-channelList.add(chanitem);
-if (currentChannel!=null) {
-if(chanitem.u==currentChannel.u){
-	currentchanneldeviceList.clear();
-	currentchanneldeviceList.addAll(chanitem.deviceList);
-	 if (channelsDevicesAdapter!=null) {channelsDevicesAdapter.notifyDataSetChanged();}
-}
-}
-
-	 }
-}
-
-public void playAlarmOn (Boolean remote){
+public void playAlarmOn (){
 	if (alarmStreamId==0){alarmStreamId = soundPool.play(alarmsound, 1f, 1f, 1, -1, 1f);}
-	if (remote){Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
-	else{
-		  JSONObject postjson = new JSONObject();
-        try {
-			postjson.put("alarm", "on");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-        Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
-	
-	}
 	if(log)Log.d(this.getClass().getName(), "play alarm on ");
 	
 }
 
-public void playAlarmOff (Boolean remote){
+public void playAlarmOff (){
 	soundPool.stop(alarmStreamId);
 	alarmStreamId=0;
-	if (remote){Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
-	else{
-		  JSONObject postjson = new JSONObject();
-          try {
-			postjson.put("alarm", "off");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-          Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
-	
-	}
 	if(log)Log.d(this.getClass().getName(), "play alarm off ");
 	
 }
 
 
-public void enableSignalisation (Boolean remote){
+public void enableSignalisation (){
 	OsMoDroid.editor.putLong("signalisation", System.currentTimeMillis());
 	OsMoDroid.editor.commit();
 	mSensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 	if(log)Log.d(this.getClass().getName(), "Enable signalisation ");
 	soundPool.play(signalonoff, 1f, 1f, 1, 0, 1f);
 	signalisationOn=true;
-	
-	if (remote){refresh();
-		Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
-	else{
-		  JSONObject postjson = new JSONObject();
-        try {
-			postjson.put("signal", "on");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-        Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
-	
-	}
+	refresh();
 	}
 	
 
 
-public void disableSignalisation (Boolean remote){
+public void disableSignalisation (){
 	OsMoDroid.editor.remove("signalisation");
 	OsMoDroid.editor.commit();
 	mSensorManager.unregisterListener(this);
 	if(log)Log.d(this.getClass().getName(), "Disable signalisation ");
-	playAlarmOff(remote);
+	playAlarmOff();
 	soundPool.play(signalonoff, 1f, 1f, 1, 0, 1f);
 	signalisationOn=false;
-	
-	if (remote){refresh();
-	Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()));}
-	else{
-		  JSONObject postjson = new JSONObject();
-        try {
-			postjson.put("signal", "off");
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-        Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_pong:"+OsMoDroid.settings.getString("device", "")+","+Long.toString(System.currentTimeMillis()), "json="+postjson.toString());
-	
-	}
+	refresh();
 	
 }
 
@@ -2307,7 +2199,8 @@ public void onSensorChanged(SensorEvent event) {
     if(OsMoDroid.settings.contains("signalisation")&& OsMoDroid.settings.getLong("signalisation", 0)+10000<System.currentTimeMillis()&&currentAcceleration>sensivity){
     	OsMoDroid.editor.putLong("signalisation", System.currentTimeMillis());
     	OsMoDroid.editor.commit();
-    	Netutil.newapicommand((ResultsListener)LocalService.this, "om_device_alarm");
+    	//myIM.sendToServer("REMOTE_CONTROL:"+OsMoDroid.settings.getString("tracker_id", "") +"|"+"ALARM");
+    	myIM.sendToServer("ALARM");
     	if(log)Log.d(this.getClass().getName(), "Alarm Alarm Alarm "+Float.toString(currentAcceleration));
     }
 

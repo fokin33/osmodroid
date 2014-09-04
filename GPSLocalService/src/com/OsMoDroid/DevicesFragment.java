@@ -221,6 +221,22 @@ if(!deviceU.equals("")){
 	 
 	 
  }
+ if (item.getItemId() == 11) 
+	 {
+		 globalActivity.mService.myIM.sendToServer("REMOTE_CONTROL:"+ LocalService.deviceList.get((int) subacmi.id).tracker_id+"|"+"ALARM_ON");
+	 }
+ if (item.getItemId() == 12) 
+	 {
+		 globalActivity.mService.myIM.sendToServer("REMOTE_CONTROL:"+ LocalService.deviceList.get((int) subacmi.id).tracker_id+"|"+"ALARM_OFF");
+	 }
+ if (item.getItemId() == 13) 
+	 {
+		 globalActivity.mService.myIM.sendToServer("REMOTE_CONTROL:"+ LocalService.deviceList.get((int) subacmi.id).tracker_id+"|"+"SIGNAL_ON");
+	 }
+ if (item.getItemId() == 14) 
+	 {
+		 globalActivity.mService.myIM.sendToServer("REMOTE_CONTROL:"+ LocalService.deviceList.get((int) subacmi.id).tracker_id+"|"+"SIGNAL_OFF");
+	 }
 	    
 		return super.onContextItemSelected(item);
 	}
@@ -254,6 +270,10 @@ if(!deviceU.equals("")){
 		MenuItem start =menu2.add(0, 8, 8, "Start monitoring");
 		MenuItem stop =menu2.add(0, 9, 9, "Stop monitoring");
 		MenuItem sendTTS =menu2.add(0, 10, 10, "Send TTS");
+		MenuItem alarmon =menu2.add(0, 11, 11, "PLAY ALARM ON");
+		MenuItem alarmoff =menu2.add(0, 12, 12, "PLAY ALARM OFF");
+		MenuItem signalon =menu2.add(0, 13, 13, "SIGNALISATION SET ON");
+		MenuItem signaloff =menu2.add(0, 14, 14, "SIGNALISATION SET OFF");
 		 //   menu.add(0, 2, 2, R.string.messages).setIcon(android.R.drawable.ic_menu_delete);
 		   
 		//    menu.add(0, 3, 3, R.string.copylink).setIcon(android.R.drawable.ic_menu_edit);

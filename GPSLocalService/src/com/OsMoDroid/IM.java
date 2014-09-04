@@ -852,6 +852,22 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		if(d.contains("TTS:")){
 			if(localService.tts!=null){localService.tts.speak(d , TextToSpeech.QUEUE_ADD, null);}
 		}
+		if(d.equals("ALARM_ON"))
+			{
+				localService.playAlarmOn();
+			}
+		if(d.equals("ALARM_OFF"))
+			{
+				localService.playAlarmOff();
+			}
+		if(d.equals("SIGNAL_ON"))
+			{
+				localService.enableSignalisation();
+			}
+		if(d.equals("SIGNAL_OFF"))
+			{
+				localService.disableSignalisation();
+			}
 	}
 	
 	
