@@ -508,16 +508,17 @@ public void stopcomand()
 				{
 					paused=true;
 					pausemill=System.currentTimeMillis();
-					if(myManager!=null)
-						{
-							myManager.removeUpdates(this);
-						}
+					
+//					if(myManager!=null)
+//						{
+//							myManager.removeUpdates(this);
+//						}
 				}
 			else
 				{
 					paused=false;
 					workmilli=workmilli+(System.currentTimeMillis()-pausemill);
-					requestLocationUpdates();
+					//requestLocationUpdates();
 				}
 		}
 
@@ -977,7 +978,7 @@ OsMoDroid.settings.edit().putBoolean("ondestroy", false).commit();
 	
 
 	public void startServiceWork (){
-
+		if(!paused){
 		firstsend=true;
 
 		avgspeed=0;
@@ -1008,7 +1009,7 @@ OsMoDroid.settings.edit().putBoolean("ondestroy", false).commit();
 
 		 traceList.clear();
 		 sending="";
-
+		
 		ReadPref();
 
 		//sendbuffer="";
@@ -1017,11 +1018,11 @@ OsMoDroid.settings.edit().putBoolean("ondestroy", false).commit();
 			 soundPool.play(startsound, 1f, 1f, 1, 0, 1f);
 		}
 
-		ttsManage();
+		
 
 		manageGPSFixAlarm();
 
-		sendcounter=0;
+		
 
 		boolean crtfile = false;
 
@@ -1032,7 +1033,10 @@ OsMoDroid.settings.edit().putBoolean("ondestroy", false).commit();
 
 
 			}
-
+		
+		}
+		setPause(false);
+		ttsManage();
 requestLocationUpdates();
 
 
@@ -1325,12 +1329,12 @@ public void sendid()
 	public void stopServiceWork(Boolean stopsession){
 
 		
-
+		
         OsMoDroid.editor.putFloat("lat", (float) currentLocation.getLatitude());
         OsMoDroid.editor.putFloat("lon", (float) currentLocation.getLongitude());
 
         OsMoDroid.editor.commit();
-        paused=false;
+        
         firstgpsbeepedon=false;
         if (tts != null) {
 
@@ -1364,7 +1368,7 @@ public void sendid()
 
                 
 		}
-		if (gpx&&fileheaderok) {
+		if (gpx&&fileheaderok&&stopsession) {
 
 			closeGPX();
 

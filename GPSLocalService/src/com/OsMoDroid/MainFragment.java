@@ -106,17 +106,17 @@ public class MainFragment extends Fragment implements GPSLocalServiceClient.upd 
 		globalActivity.started = globalActivity.checkStarted();
 		
 		if (globalActivity.started) {
-			Button pause = (Button) getView().findViewById(R.id.pauseButton);
-			pause.setVisibility(View.VISIBLE);
-			if(globalActivity.mService!=null&&!globalActivity.mService.paused)
-				{
-					pause.setText("Pause");
-				}
-			else
-				{
-					pause.setText("Continue");
-				}
-			
+//			Button pause = (Button) getView().findViewById(R.id.pauseButton);
+//			pause.setVisibility(View.VISIBLE);
+//			if(globalActivity.mService!=null&&!globalActivity.mService.paused)
+//				{
+//					pause.setText("Pause");
+//				}
+//			else
+//				{
+//					pause.setText("Continue");
+//				}
+//			
 			
 			Button start = (Button) getView().findViewById(R.id.startButton);
 			Button stop = (Button) getView().findViewById(R.id.exitButton);
@@ -125,8 +125,8 @@ public class MainFragment extends Fragment implements GPSLocalServiceClient.upd 
 		} else {
 			Button start = (Button) getView().findViewById(R.id.startButton);
 			Button stop = (Button) getView().findViewById(R.id.exitButton);
-			Button pause = (Button) getView().findViewById(R.id.pauseButton);
-			pause.setVisibility(View.GONE);
+//			Button pause = (Button) getView().findViewById(R.id.pauseButton);
+//			pause.setVisibility(View.GONE);
 			start.setEnabled(true);
 			stop.setEnabled(false);
 		}
@@ -138,12 +138,12 @@ public class MainFragment extends Fragment implements GPSLocalServiceClient.upd 
 		Button auth = (Button) getView().findViewById(R.id.authButton);
 		
 		if (OsMoDroid.settings.getString("p", "").equals("")){
-		//globalsendToggle.setVisibility(View.GONE);
+		globalsendToggle.setVisibility(View.GONE);
 		auth.setVisibility(View.VISIBLE);
 		}
 		else {
 			auth.setVisibility(View.GONE);
-			//globalsendToggle.setVisibility(View.VISIBLE);
+			globalsendToggle.setVisibility(View.GONE);
 		}
 		
 		
@@ -385,48 +385,50 @@ public class MainFragment extends Fragment implements GPSLocalServiceClient.upd 
 					
 				}
 			});
-			if (OsMoDroid.settings.getString("key", "").equals("")){
+			if (OsMoDroid.settings.getString("p", "").equals("")){
 			globalsendToggle.setVisibility(View.GONE);
+			auth.setVisibility(View.VISIBLE);
 			}
 			else {
 				auth.setVisibility(View.GONE);
+				globalsendToggle.setVisibility(View.GONE);
 			}
-			Button pause = (Button) view.findViewById(R.id.pauseButton);
-			pause.setEnabled(true);
-			pause.setOnClickListener(new OnClickListener()
-				{
-					
-					@Override
-					public void onClick(View v)
-						{
-							if(globalActivity.mService!=null&&globalActivity.mService.paused)
-								{
-									globalActivity.mService.setPause(false);
-								}
-							else
-								{
-									globalActivity.mService.setPause(true);
-								}
-							updateMainUI();
-						}
-				});
+//			Button pause = (Button) view.findViewById(R.id.pauseButton);
+//			pause.setEnabled(true);
+//			pause.setOnClickListener(new OnClickListener()
+//				{
+//					
+//					@Override
+//					public void onClick(View v)
+//						{
+//							if(globalActivity.mService!=null&&globalActivity.mService.paused)
+//								{
+//									globalActivity.mService.setPause(false);
+//								}
+//							else
+//								{
+//									globalActivity.mService.setPause(true);
+//								}
+//							updateMainUI();
+//						}
+//				});
 			
-			if(globalActivity.checkStarted())
-				{
-					pause.setVisibility(View.VISIBLE);
-				}
-			else
-				{
-					pause.setVisibility(View.GONE);
-				}
-			if(globalActivity.mService!=null&&!globalActivity.mService.paused)
-				{
-					pause.setText("Pause");
-				}
-			else
-				{
-					pause.setText("Continue");
-				}
+//			if(globalActivity.checkStarted())
+//				{
+//					pause.setVisibility(View.VISIBLE);
+//				}
+//			else
+//				{
+//					pause.setVisibility(View.GONE);
+//				}
+//			if(globalActivity.mService!=null&&!globalActivity.mService.paused)
+//				{
+//					pause.setText("Pause");
+//				}
+//			else
+//				{
+//					pause.setText("Continue");
+//				}
 			Button start = (Button) view.findViewById(R.id.startButton);
 			Button exit = (Button) view.findViewById(R.id.exitButton);
 
@@ -466,7 +468,7 @@ if (globalActivity.live){
                                                  public void onClick(DialogInterface dialog, int which) {
                                                          stopsession=false;
                                                          
-                                                         
+                                                         		globalActivity.mService.setPause(true);
                                                                  LocalService.uploadto=false;
                                                                  globalActivity.stop(stopsession);
                                                                  updateServiceStatus(view);
@@ -600,23 +602,23 @@ else {
 					}
 					
 					if (intent.hasExtra("started")){
-						Button pause = (Button) view.findViewById(R.id.pauseButton);
-						if(globalActivity.checkStarted())
-							{
-								pause.setVisibility(View.VISIBLE);
-							}
-						else
-							{
-								pause.setVisibility(View.GONE);
-							}
-						if(globalActivity.mService!=null&&!globalActivity.mService.paused)
-							{
-								pause.setText("Pause");
-							}
-						else
-							{
-								pause.setText("Continue");
-							}
+//						Button pause = (Button) view.findViewById(R.id.pauseButton);
+//						if(globalActivity.checkStarted())
+//							{
+//								pause.setVisibility(View.VISIBLE);
+//							}
+//						else
+//							{
+//								pause.setVisibility(View.GONE);
+//							}
+//						if(globalActivity.mService!=null&&!globalActivity.mService.paused)
+//							{
+//								pause.setText("Pause");
+//							}
+//						else
+//							{
+//								pause.setText("Continue");
+//							}
 						Button start = (Button) view.findViewById(R.id.startButton);
 						Button stop = (Button) view.findViewById(R.id.exitButton);
 

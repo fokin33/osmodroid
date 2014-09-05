@@ -46,7 +46,7 @@ public class DebugFragment extends Fragment {
 		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view=inflater.inflate(R.layout.simlinks, container, false);
 		final ListView lv1 = (ListView) view.findViewById(R.id.listView1);
-       lv1.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL); 
+       lv1.setTranscriptMode(ListView.TRANSCRIPT_MODE_NORMAL); 
         LocalService.debugAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1, LocalService.debuglist);
         lv1.setAdapter(LocalService.debugAdapter);
        

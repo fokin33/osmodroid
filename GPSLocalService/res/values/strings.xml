@@ -188,4 +188,12 @@
 <string name="color_a">alpha</string>
 <string name="unknown_location_now">Unknown location now</string>
 <string name="color">Define color</string>
+<string name="remote_commands">Remote Commands</string>
+<string name="start_monitoring">Start monitoring</string>
+<string name="stop_monitoring">Stop monitoring</string>
+<string name="send_tts">Send TTS</string>
+<string name="play_alarm_on">PLAY ALARM ON</string>
+<string name="play_alarm_off">PLAY ALARM OFF</string>
+<string name="signalisation_set_on">SIGNALISATION SET ON</string>
+<string name="signalisation_set_off">SIGNALISATION SET OFF</string>
 </resources>

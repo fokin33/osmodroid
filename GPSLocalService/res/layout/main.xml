@@ -91,11 +91,7 @@
 	    android:layout_height="wrap_content"
 	    android:text="@string/auth" />
 	
-	<Button
-	    android:id="@+id/pauseButton"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:text="@string/auth" />
+
 
 	<TextView
 	    android:id="@+id/Location"

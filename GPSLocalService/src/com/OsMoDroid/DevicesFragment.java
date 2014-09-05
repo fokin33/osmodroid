@@ -266,14 +266,14 @@ if(!deviceU.equals("")){
 		if(LocalService.deviceAdapter.getItem(acmi.position).subscribed){
 		 menu.add(0, 1, 8, R.string.delete).setIcon(android.R.drawable.ic_menu_delete);
 		}
-		SubMenu menu2 = menu.addSubMenu(Menu.NONE, 15, 20, "Remote Commands");
-		MenuItem start =menu2.add(0, 8, 8, "Start monitoring");
-		MenuItem stop =menu2.add(0, 9, 9, "Stop monitoring");
-		MenuItem sendTTS =menu2.add(0, 10, 10, "Send TTS");
-		MenuItem alarmon =menu2.add(0, 11, 11, "PLAY ALARM ON");
-		MenuItem alarmoff =menu2.add(0, 12, 12, "PLAY ALARM OFF");
-		MenuItem signalon =menu2.add(0, 13, 13, "SIGNALISATION SET ON");
-		MenuItem signaloff =menu2.add(0, 14, 14, "SIGNALISATION SET OFF");
+		SubMenu menu2 = menu.addSubMenu(Menu.NONE, 15, 20, R.string.remote_commands);
+		MenuItem start =menu2.add(0, 8, 8, R.string.start_monitoring);
+		MenuItem stop =menu2.add(0, 9, 9, R.string.stop_monitoring);
+		MenuItem sendTTS =menu2.add(0, 10, 10, R.string.send_tts);
+		MenuItem alarmon =menu2.add(0, 11, 11, R.string.play_alarm_on);
+		MenuItem alarmoff =menu2.add(0, 12, 12, R.string.play_alarm_off);
+		MenuItem signalon =menu2.add(0, 13, 13, R.string.signalisation_set_on);
+		MenuItem signaloff =menu2.add(0, 14, 14, R.string.signalisation_set_off);
 		 //   menu.add(0, 2, 2, R.string.messages).setIcon(android.R.drawable.ic_menu_delete);
 		   
 		//    menu.add(0, 3, 3, R.string.copylink).setIcon(android.R.drawable.ic_menu_edit);

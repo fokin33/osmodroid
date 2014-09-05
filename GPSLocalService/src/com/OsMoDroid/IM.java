@@ -172,7 +172,14 @@ public class IM implements ResultsListener {
 					public void run()
 						{
 							//if(OsMoDroid.debug)ExceptionHandler.reportOnlyHandler(parent.getApplicationContext()).uncaughtException(Thread.currentThread(), new Throwable(str));
-				    	  	if(OsMoDroid.debug)LocalService.debuglist.add( sdf1.format(new Date(System.currentTimeMillis()))+" "+str+" S="+sendBytes+ " R="+recievedBytes);
+				    	  	if(OsMoDroid.debug)
+				    	  		{
+				    	  			LocalService.debuglist.add( sdf1.format(new Date(System.currentTimeMillis()))+" "+str+" S="+sendBytes+ " R="+recievedBytes);
+				    	  			if(LocalService.debuglist.size()>1500)
+				    	  				{
+				    	  					LocalService.debuglist.remove(0);
+				    	  				}
+				    	  		}
 				  			if(LocalService.debugAdapter!=null){LocalService.debugAdapter.notifyDataSetChanged();}
 							
 						}
@@ -875,6 +882,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	
 	if(c.equals("MOTD")){
 		localService.motd=LocalService.unescape(d);
+		OsMoDroid.editor.putString("startmessage", LocalService.unescape(d));
+		OsMoDroid.editor.commit();
 		localService.refresh();
 	}
 	if(c.contains("GROUP_JOIN")){
@@ -999,6 +1008,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			{
 				sendToServer(str);
 			}
+			Collections.sort(LocalService.deviceList);
 			if(LocalService.deviceAdapter!=null)
 			{
 				LocalService.deviceAdapter.notifyDataSetChanged();
@@ -1034,6 +1044,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 				LocalService.channelList.add(ch);
 			}
 			addlog(ch.deviceList.toString());
+			
 					if (LocalService.channelsAdapter!=null )
 					{
 						LocalService.channelsAdapter.notifyDataSetChanged();
@@ -1268,7 +1279,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			//localService.saveObject(LocalService.channelList, OsMoDroid.CHANNELLIST);
 		}
 	//LT:fI8qCrlvw6j0dEKZtB9h|L59.252465:30.324515S20.3A124.3H2.5C235
-	if(c.contains("LT"))
+	if(c.length()>2&&c.substring(0, 2).contains("LT"))
 		
 		{
 		for (Channel ch : LocalService.channelList)
@@ -1281,6 +1292,10 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		{
 			updateCoordinates(c, d, dev);
 		}
+		if (LocalService.deviceAdapter!=null)
+			{
+				LocalService.deviceAdapter.notifyDataSetChanged();
+			}
 		if (LocalService.channelsDevicesAdapter!=null&&LocalService.currentChannel!=null)
 		{
 			 if(log)Log.d(this.getClass().getName(), "Adapter:"+ LocalService.channelsDevicesAdapter.toString());

@@ -188,4 +188,12 @@
 <string name="color_a">Прозрачность</string>
 <string name="unknown_location_now">Сейчас позиция не известна</string>
 <string name="color">Задать цвет</string>
+<string name="remote_commands">Удаленное управление</string>
+<string name="start_monitoring">Запустить мониторинг</string>
+<string name="stop_monitoring">Остановить мониторинг</string>
+<string name="send_tts">Отправить TTS сообщение</string>
+<string name="play_alarm_on">Включить сирену</string>
+<string name="play_alarm_off">Выключить сирену</string>
+<string name="signalisation_set_on">Поставить на сигнализацию</string>
+<string name="signalisation_set_off">Снять с сигнализации</string>
 </resources>

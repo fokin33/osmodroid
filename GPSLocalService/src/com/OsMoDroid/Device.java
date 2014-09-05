@@ -10,7 +10,7 @@ import org.osmdroid.views.overlay.PathOverlay;
 
 import android.util.Log;
 
-public class Device implements Serializable{
+public class Device implements Comparable<Device> , Serializable{
 	public int u;
 	public String tracker_id;
 	public String name;
@@ -124,6 +124,10 @@ public class Device implements Serializable{
 				+",online="+online+",state="+state+",uid="+uid + ",speed="+speed+" color="+color;
 	}
 
-	
+	@Override
+    public int compareTo(Device dev) {
+            // TODO Auto-generated method stub
+            return -dev.name.compareTo(this.name);
+    }
 
 }

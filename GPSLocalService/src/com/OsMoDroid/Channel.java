@@ -7,6 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -131,6 +133,7 @@ public class Channel implements Serializable {
 			Log.d(getClass().getSimpleName(),"Wrong device info");
 			e.printStackTrace();
 		}
+		Collections.sort(this.deviceList);
 	
 		
 	} catch (JSONException e) {
