@@ -575,6 +575,14 @@ else {
 					{
 						dt.setText(dt.getText()+"\n"+intent.getStringExtra("sattelite"));
 					}
+					if(dt.getText().equals(""))
+					{
+						dt.setText(getString(R.string.approximate_traffic)+':' + intent.getStringExtra("traffic"));
+					}
+					else
+					{
+						dt.setText(dt.getText()+"\n"+getString(R.string.approximate_traffic)+':'+intent.getStringExtra("traffic"));
+					}
 					Linkify.addLinks(dt, Linkify.ALL);
 					//TextView t = (TextView) view.findViewById(R.id.Location);
 					globalActivity.sendcounter = intent.getIntExtra("sendcounter", 0);

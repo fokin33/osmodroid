@@ -338,7 +338,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	 /**
 	 * Выключает IM
 	 */
-	void close(){		if(log)Log.d(this.getClass().getName(), "void IM.close");
+	void close(){		sendToServer("=BYE");
+		if(log)Log.d(this.getClass().getName(), "void IM.close");
 		addlog("webcoket void close");
 		try {
 			parent.unregisterReceiver(bcr);
@@ -707,6 +708,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	
 	synchronized void parseEx (String toParse){
 		//addlog("recieve "+toParse);
+		
 		if(log)Log.d(this.getClass().getName(), "recive "+toParse);
 		manager.cancel(reconnectPIntent);
 		if(!running)
@@ -816,6 +818,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	
 	if(c.equals("TRACKER_SESSION_OPEN")){
 		localService.sessionstarted=true;
+		sendBytes=0;
+		recievedBytes=0;
 		needopensession=false;
 		OsMoDroid.editor.putString("viewurl","http://osmo.mobi/u/"+jo.optString("url"));
 		OsMoDroid.editor.commit();

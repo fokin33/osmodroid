@@ -196,4 +196,5 @@
 <string name="play_alarm_off">Выключить сирену</string>
 <string name="signalisation_set_on">Поставить на сигнализацию</string>
 <string name="signalisation_set_off">Снять с сигнализации</string>
+<string name="approximate_traffic">Примерный траффик</string>
 </resources>

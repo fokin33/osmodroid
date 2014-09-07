@@ -196,4 +196,5 @@
 <string name="play_alarm_off">PLAY ALARM OFF</string>
 <string name="signalisation_set_on">SIGNALISATION SET ON</string>
 <string name="signalisation_set_off">SIGNALISATION SET OFF</string>
+<string name="approximate_traffic">Approximate traffic</string>
 </resources>
