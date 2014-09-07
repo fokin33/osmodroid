@@ -39,8 +39,9 @@ import android.support.v4.app.NotificationCompat;import android.telephony.Telep
  */
 public class IM implements ResultsListener {	
 	private IMWriter iMWriter;
-	private IMReader iMReader;	private static final int RECONNECT_TIMEOUT = 1000*5;
+	private IMReader iMReader;	private static int RECONNECT_TIMEOUT = 1000*30;
 	private static final int KEEP_ALIVE = 1000*270;
+	private static final long ERROR_RECONNECT_TIMEOUT = 5*1000;
 	private static final String RECONNECT_INTENT = "com.osmodroid.reconnect";
 	private static final String GET_TOKEN_TIMEOUT_INTENT = "com.osmodroid.gettokentimeout";
 	private static final String KEEPALIVE_INTENT = "com.osmodroid.keepalive";
@@ -70,6 +71,7 @@ public class IM implements ResultsListener {
 	private String workservername="";
 	private MyAsyncTask sendidtask;
 	public IM(String server, int port, LocalService service){
+		RECONNECT_TIMEOUT=Integer.parseInt(OsMoDroid.settings.getString("timeout", "30"))*1000;
 		localService=service;
 		parent=service;
 		manager = (AlarmManager)(parent.getSystemService( Context.ALARM_SERVICE ));
@@ -1206,11 +1208,11 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 								try {
 									jsonObject = a.getJSONObject(i);
 						try {
-							if(jsonObject.has("deleted")&&!jsonObject.opt("group_tracker_id").equals(OsMoDroid.settings.getString("device", "")))
+							if(jsonObject.has("deleted"))
 							{
 								Device deviceToDel = null;
 								for (Device dev : ch.deviceList){
-									if(dev.tracker_id.equals(jsonObject.opt("group_tracker_id")))
+									if(dev.tracker_id.equals(jsonObject.opt("group_tracker_id"))&&!jsonObject.opt("group_tracker_id").equals(OsMoDroid.settings.getString("device", "")))
 									{
 										sendToServer("ULN:"+dev.tracker_id);
 										deviceToDel=dev;
@@ -1225,12 +1227,12 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 							{
 								boolean exist=false;
 								for (Device dev : ch.deviceList){
-									if(dev.tracker_id.equals(jsonObject.opt("group_tracker_id"))&&!jsonObject.opt("group_tracker_id").equals(OsMoDroid.settings.getString("device", "")))
+									if(dev.tracker_id.equals(jsonObject.opt("group_tracker_id")))
 									{
 										exist=true;
 									}
 								}
-								if(!exist)
+								if(!exist&&!jsonObject.opt("group_tracker_id").equals(OsMoDroid.settings.getString("device", "")))
 								{
 									try {
 										ch.deviceList.add(new Device(jsonObject.getString("group_tracker_id"),jsonObject.getString("name"), jsonObject.getString("color") ) );
@@ -1376,7 +1378,19 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			running=false;
 			localService.refresh();
 			if(localService.isOnline()){
-				 setReconnectAlarm();
+				 
+		    	  
+		    	  localService.alertHandler.post(new Runnable(){
+						 @Override
+						public void run()
+							{
+								addlog("setReconnectAlarm on error");
+								
+							}
+					 });
+		    	  parent.registerReceiver( reconnectReceiver, new IntentFilter(RECONNECT_INTENT) );
+		    	  manager.cancel(reconnectPIntent);
+		    	  manager.set( AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + ERROR_RECONNECT_TIMEOUT, reconnectPIntent );
 			 }
 		}
 

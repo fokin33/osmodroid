@@ -305,6 +305,7 @@ public class MainFragment extends Fragment implements GPSLocalServiceClient.upd 
 				 globalActivity.ReadPref();
 					updateMainUI();
 					globalActivity.mService.applyPreference();
+					globalActivity.mService.refresh();
 			 
 			 }
 	          

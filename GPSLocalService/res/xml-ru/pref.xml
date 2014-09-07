@@ -1,6 +1,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:title="Настройки" >
     
-    <EditTextPreference android:summary="Миллисекунды" android:title="Период опроса GPS" android:key="refreshrate" android:defaultValue="5000"/>
+    <EditTextPreference android:summary="Миллисекунды" android:title="Период опроса GPS" android:key="refreshrate" android:defaultValue="5000"/><EditTextPreference android:summary="Secons" android:title="Таймаут сети" android:key="timeout" android:defaultValue="30" />
     
     <PreferenceCategory android:title="Онлайн">
         
