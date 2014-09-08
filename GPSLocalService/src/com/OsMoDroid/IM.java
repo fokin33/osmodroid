@@ -10,7 +10,8 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
-import java.net.InetSocketAddress;import java.net.Proxy;import java.net.URL;import java.net.UnknownHostException;import java.text.SimpleDateFormat;import java.util.ArrayList;import java.util.Collections;
+import java.net.InetSocketAddress;import java.net.Proxy;import java.net.URL;import java.net.UnknownHostException;import java.text.SimpleDateFormat;import java.util.ArrayList;import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Date;import java.util.Iterator;import java.util.Map.Entry;
@@ -49,7 +50,7 @@ public class IM implements ResultsListener {
     PendingIntent reconnectPIntent;
     PendingIntent keepAlivePIntent;
     PendingIntent getTokenTimeoutPIntent;
-	volatile protected  boolean running       = false;	protected boolean autoReconnect = true;	protected Integer timeout       = 0;	String adr;	String lcursor="";	int pingTimeout=900;	Thread connectThread;	volatile private boolean gettokening=false;	Context parent;	private String token="";	String myLongPollCh;
+	volatile protected  boolean running       = false;	//protected boolean autoReconnect = true;	//protected Integer timeout       = 0;	//String adr;	//String lcursor="";	//int pingTimeout=900;	Thread connectThread;	volatile private boolean gettokening=false;	Context parent;	private String token="";	//String myLongPollCh;
 	int mestype=0;	LocalService localService;	FileOutputStream fos;
 	ObjectOutputStream output = null;	final private static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	static String SERVER_IP;// = "osmo.mobi";
@@ -70,6 +71,7 @@ public class IM implements ResultsListener {
 	private int workserverint=-1;
 	private String workservername="";
 	private MyAsyncTask sendidtask;
+	private ArrayList<String> ExecutedCommandArryaList = new ArrayList<String>();
 	public IM(String server, int port, LocalService service){
 		RECONNECT_TIMEOUT=Integer.parseInt(OsMoDroid.settings.getString("timeout", "30"))*1000;
 		localService=service;
@@ -95,6 +97,16 @@ public class IM implements ResultsListener {
 			b.putString("write",str);
 			msg.setData(b);
 			if (iMWriter.handler!=null){
+				String[] data = str.split("\\=");
+				for (int index =0; index < data.length; index++)
+					{
+						if(data[index].contains("|"))
+							{  
+								data[index] = data[index].substring(0,data[index].indexOf('|'));
+							}
+					}
+				ExecutedCommandArryaList.addAll(Arrays.asList(data));
+				addlog("add to command order "+Arrays.asList(data));
 				iMWriter.handler.sendMessage(msg);	
 			}
 			else {
@@ -133,10 +145,8 @@ public class IM implements ResultsListener {
   					}
   			});
         	  disablekeepAliveAlarm();
-//    			authed=false;
-//    			connecting=false;
-//    			connOpened=false;
-//    			running=false;
+        	  
+
         	  stop();
         	  localService.alertHandler.post(new Runnable()
   				{
@@ -600,6 +610,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	 void stop (){
 		 if(log)Log.d(this.getClass().getName(), "void IM.stop");
 		 addlog("webcoket void stop");
+		 ExecutedCommandArryaList.clear();
 		 running = false;
 		 connOpened=false;
 		 authed=false;
@@ -710,7 +721,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		//addlog("recieve "+toParse);
 		
 		if(log)Log.d(this.getClass().getName(), "recive "+toParse);
-		manager.cancel(reconnectPIntent);
+	
+		
 		if(!running)
 		{
 			running=true;
@@ -734,6 +746,23 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		{
 			c=toParse;
 			
+		}
+	Iterator<String> comIter = ExecutedCommandArryaList.iterator();
+	while (comIter.hasNext()) {
+	   String str = comIter.next();
+	   if(log)Log.d(this.getClass().getName(), "ExecutedListItem: "+str);
+	   if(str.equals(c))
+		   {
+		   comIter.remove();
+		   if(log)Log.d(this.getClass().getName(), "ExecutedListItem removed: "+str);
+		   addlog("ExecutedListItem removed: "+str);
+		   }
+	   
+	}
+	if(ExecutedCommandArryaList.size()==0)
+		{
+			addlog("cancel recconect alarm - no commands in order");
+			manager.cancel(reconnectPIntent);
 		}
 	
 	try
