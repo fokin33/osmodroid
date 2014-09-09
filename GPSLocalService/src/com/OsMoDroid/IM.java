@@ -796,6 +796,9 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 	
 	if(c.equals("TOKEN")){
 		if(!jo.has("error")){
+			OsMoDroid.editor.putString("device", jo.optString("group_tracker_id"));
+			OsMoDroid.editor.putString("tracker_id", jo.optString("tracker_id"));
+			OsMoDroid.editor.commit();
 			authed=true;
 			if(needopensession){
 				sendToServer("TRACKER_SESSION_OPEN");
@@ -810,28 +813,33 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 			{
 			sendToServer("GROUP_GET_ALL");
 			}
+			else
+				{
+					for (Channel ch : LocalService.channelList)
+					{
+						sendToServer("GROUP_CONNECT:"+ch.group_id);
+					}
+				}
+			
 			if(LocalService.deviceList.isEmpty()){
 				sendToServer("DEVICE_GET_ALL");
 			}
 			else
-			{
-				for (Channel ch : LocalService.channelList)
 				{
-					sendToServer("GROUP_CONNECT:"+ch.group_id);
+					String listen = "";
+					for (Device dev : LocalService.deviceList){
+						listen=("LN:"+dev.tracker_id)+"=";
+					}
+					if(!listen.equals(""))
+						{
+							sendToServer(listen);
+						}
 				}
-			}
+			
 			setkeepAliveAlarm();
-			String listen = "";
-			for (Device dev : LocalService.deviceList){
-				listen=("LN:"+dev.tracker_id)+"=";
-			}
-			if(!listen.equals(""))
-				{
-					sendToServer(listen);
-				}
-			OsMoDroid.editor.putString("device", jo.optString("group_tracker_id"));
-			OsMoDroid.editor.putString("tracker_id", jo.optString("tracker_id"));
-			OsMoDroid.editor.commit();
+			
+			
+			
 			localService.internetnotify(true);
 			
 		}
