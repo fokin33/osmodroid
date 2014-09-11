@@ -190,7 +190,7 @@ Tiles © GIScience Heidelberg
 <string name="inway">sulla via</string>
 <string name="ingoing2">Percorrenza</string>
 <string name="sended">Inviato</string>
-<string name="writen">Registrato</string>
+<string name="writen"> Registrato:</string>
 <string name="wekksends"> Settimane inviate:</string>
 <string name="from_undefined">da anonimo</string>
 <string name="map">Mappa</string>

@@ -1917,13 +1917,30 @@ private void sendlocation (Location location){
 	  
 	if (myIM!=null&&myIM.authed&&sending.equals("")){
 		if(log)Log.d(this.getClass().getName(), "Отправка:"+myIM.authed +" s "+sending);
-		sending=
+		if((location.getSpeed()*3.6)>=6)
+			{
+				sending=
 				"T|L"+df6.format( location.getLatitude()) +":"+ df6.format(location.getLongitude())
 				+"S" + df1.format( location.getSpeed())
 				+"A" + df1.format( location.getAltitude())
 				+"H" + df1.format( location.getAccuracy())
 				+"C" + df0.format( location.getBearing());
-				;				
+			}
+		if((location.getSpeed()*3.6)<6)
+			{
+				sending=
+				"T|L"+df6.format( location.getLatitude()) +":"+ df6.format(location.getLongitude())
+				+"S" + df1.format( location.getSpeed())
+				+"A" + df1.format( location.getAltitude())
+				+"H" + df1.format( location.getAccuracy());
+			}
+		if((location.getSpeed()*3.6)<=1)
+			{
+				sending=
+				"T|L"+df6.format( location.getLatitude()) +":"+ df6.format(location.getLongitude())
+				+"A" + df1.format( location.getAltitude())
+				+"H" + df1.format( location.getAccuracy());
+			}
 		myIM.sendToServer(sending);		
 		
 					
