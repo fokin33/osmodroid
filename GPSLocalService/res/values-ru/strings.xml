@@ -163,7 +163,7 @@
 <string name="inway">В пути</string>
 <string name="ingoing2">Пробег</string>
 <string name="sended">Отправлено</string>
-<string name="writen">Записано</string>
+<string name="writen"> Записано:</string>
 <string name="wekksends">Отправок в неделю:</string>
 <string name="from_undefined">от неопределенного</string>
 <string name="map">Карта</string>

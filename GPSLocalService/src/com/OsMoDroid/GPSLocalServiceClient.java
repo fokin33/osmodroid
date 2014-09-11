@@ -34,6 +34,7 @@ import com.OsMoDroid.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
 
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -211,13 +212,40 @@ void showFragment(Fragment fragment, boolean backstack) {
 					 if(mService.myIM.connOpened&&!mService.myIM.connecting){
 				
 						 actionBar.setLogo(R.drawable.eyeo);
+						 if(mService.state)
+							 {
+								 int icon = R.drawable.eyeo;
+								 //CharSequence tickerText = getString(R.string.monitoringstarted); //getString(R.string.Working);
+								 long when = System.currentTimeMillis();
+								 mService.notification = new Notification(icon, "", when);
+								 mService.notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", getString(R.string.Sendcount)+mService.sendcounter+getString(R.string.writen)+mService.writecounter, mService.osmodroidLaunchIntent);
+								 mService.mNotificationManager.notify(mService.OSMODROID_ID, mService.notification);
+							 }
 					 } else if (mService.myIM.connecting) 
 					 {
 						 actionBar.setLogo(R.drawable.eyeu);
+						 if(mService.state)
+							 {
+								 int icon = R.drawable.eyeu;
+								 //CharSequence tickerText = getString(R.string.monitoringstarted); //getString(R.string.Working);
+								 long when = System.currentTimeMillis();
+								 mService.notification = new Notification(icon, "", when);
+								 mService.notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", getString(R.string.Sendcount)+mService.sendcounter+getString(R.string.writen)+mService.writecounter, mService.osmodroidLaunchIntent);
+								 mService.mNotificationManager.notify(mService.OSMODROID_ID, mService.notification);
+							 }
 					 }
 					 else
 					 {
 						 actionBar.setLogo(R.drawable.eyen);
+						 if(mService.state)
+							 {
+								 int icon = R.drawable.eyen;
+								 //CharSequence tickerText = getString(R.string.monitoringstarted); //getString(R.string.Working);
+								 long when = System.currentTimeMillis();
+								 mService.notification = new Notification(icon, "", when);
+								 mService.notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", getString(R.string.Sendcount)+mService.sendcounter+getString(R.string.writen)+mService.writecounter, mService.osmodroidLaunchIntent);
+								 mService.mNotificationManager.notify(mService.OSMODROID_ID, mService.notification);
+							 }
 					 }
 						 
 				 }
@@ -367,14 +395,42 @@ void showFragment(Fragment fragment, boolean backstack) {
 						if(intent.getBooleanExtra("connect", false)&&!intent.getBooleanExtra("connecting", false))
 							{
 								actionBar.setLogo(R.drawable.eyeo);
+								 if(mService!=null&&mService.state)
+									 {
+										 int icon = R.drawable.eyeo;
+										 //CharSequence tickerText = getString(R.string.monitoringstarted); //getString(R.string.Working);
+										 long when = System.currentTimeMillis();
+										 mService.notification = new Notification(icon, "", when);
+										 mService.notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", getString(R.string.Sendcount)+mService.sendcounter+getString(R.string.writen)+mService.writecounter, mService.osmodroidLaunchIntent);
+										 mService.mNotificationManager.notify(mService.OSMODROID_ID, mService.notification);
+										 
+									 }
 							}
 						else if (intent.getBooleanExtra("connecting", false))
 							{
 								actionBar.setLogo(R.drawable.eyeu);
+								 if(mService!=null&&mService.state)
+									 {
+										 int icon = R.drawable.eyeu;
+										 //CharSequence tickerText = getString(R.string.monitoringstarted); //getString(R.string.Working);
+										 long when = System.currentTimeMillis();
+										 mService.notification = new Notification(icon, "", when);
+										 mService.notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", getString(R.string.Sendcount)+mService.sendcounter+getString(R.string.writen)+mService.writecounter, mService.osmodroidLaunchIntent);
+										 mService.mNotificationManager.notify(mService.OSMODROID_ID, mService.notification);
+									 }
 							}
 						else	
 							{
 								actionBar.setLogo(R.drawable.eyen);
+								 if(mService!=null&&mService.state)
+									 {
+										 int icon = R.drawable.eyen;
+										 //CharSequence tickerText = getString(R.string.monitoringstarted); //getString(R.string.Working);
+										 long when = System.currentTimeMillis();
+										 mService.notification = new Notification(icon, "", when);
+										 mService.notification.setLatestEventInfo(getApplicationContext(), "OsMoDroid", getString(R.string.Sendcount)+mService.sendcounter+getString(R.string.writen)+mService.writecounter, mService.osmodroidLaunchIntent);
+										 mService.mNotificationManager.notify(mService.OSMODROID_ID, mService.notification);
+									 }
 							}
 					}
 					

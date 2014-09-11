@@ -880,10 +880,6 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 		}
 		String time = localService.sdf3.format(new Date(System.currentTimeMillis()));
 		localService.sendresult = time + " " + localService.getString(R.string.succes);
-		if (localService.notification!=null){
-			localService.notification.setLatestEventInfo(localService.getApplicationContext(), "OsMoDroid", "Отправлено:"+localService.sendcounter+" Записано:"+localService.writecounter, localService.osmodroidLaunchIntent);
-			localService.mNotificationManager.notify(localService.OSMODROID_ID, localService.notification);
-			}
 		localService.refresh();
 		return;
 	}
@@ -1356,6 +1352,7 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 				if(!(d.charAt(i)=='-')&&!Character.isDigit(d.charAt(i))){
 					if(!Character.toString(d.charAt(i)).equals(".")){
 						dev.lon=Float.parseFloat(d.substring(d.indexOf(":")+1, i));
+						dev.updatated=System.currentTimeMillis();
 						break;
 					}
 				}

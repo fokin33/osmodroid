@@ -100,6 +100,10 @@ public class ChannelsOverlay extends Overlay implements RotationGestureDetector.
 					paint.setColor(Color.parseColor("#013220"));
 					canvas.save();
 			        canvas.rotate(-mapView.getMapOrientation(), scrPoint.x, scrPoint.y);
+					if(dev.updatated<(System.currentTimeMillis()-30000))
+						{
+							paint.setColor(Color.parseColor("#F0FFFF"));
+						}
 					canvas.drawText(dev.name, scrPoint.x, scrPoint.y-10, paint);
 					canvas.drawText(dev.speed, scrPoint.x,scrPoint.y-2*10, paint);
 					paint.setColor(Color.parseColor(dev.color));
