@@ -197,4 +197,8 @@
 <string name="signalisation_set_on">Поставить на сигнализацию</string>
 <string name="signalisation_set_off">Снять с сигнализации</string>
 <string name="approximate_traffic">Примерный траффик</string>
+<string name="online">В сети</string>
+<string name="offline">Не в сети</string>
+<string name="monitoring_on">Мониторинг запущен</string>
+<string name="monitoring_off">Мониторинг остановлен</string>
 </resources>

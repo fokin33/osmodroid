@@ -977,6 +977,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 						dev.tracker_id=jsonObject.optString("tracker_id");
 						dev.subscribed=jsonObject.has("subscribe");
 						dev.u=jsonObject.optInt("u");
+						dev.online=jsonObject.optInt("online");
+						dev.state=jsonObject.optInt("state");
 						if(jsonObject.has("data")){
 							if (jsonObject.optJSONObject("data")!=null&&!jsonObject.optJSONObject("data").optString("color").equals("")){
 								String color = jsonObject.optJSONObject("data").optString("color");
@@ -1018,6 +1020,8 @@ if (mes.from.equals(OsMoDroid.settings.getString("device", ""))){
 					newdev.tracker_id=jsonObject.optString("tracker_id");
 					newdev.subscribed=jsonObject.has("subscribe");
 					newdev.u=jsonObject.optInt("u");
+					newdev.online=jsonObject.optInt("online");
+					newdev.state=jsonObject.optInt("state");
 					if(jsonObject.has("data")){
 						if (jsonObject.optJSONObject("data")!=null&&!jsonObject.optJSONObject("data").optString("color").equals("")){
 							String color = jsonObject.optJSONObject("data").optString("color");

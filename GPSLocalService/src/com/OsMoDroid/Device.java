@@ -20,8 +20,8 @@ public class Device implements Comparable<Device> , Serializable{
 	public String where;
 	public float lat;
 	public float lon;
-	public String online;
-	public String state;
+	public int online=0;
+	public int state=0;
 	public String uid;
 	public String speed="";
 	public String color="#AAAAAA";

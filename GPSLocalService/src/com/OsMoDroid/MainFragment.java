@@ -302,6 +302,10 @@ public class MainFragment extends Fragment implements GPSLocalServiceClient.upd 
 		if (item.getItemId() == 19) {
 			 if (globalActivity.fileName!=null&&globalActivity.fileName.exists()){
 				 globalActivity.loadSharedPreferencesFromFile(globalActivity.fileName);
+				 globalActivity.mService.deviceList.clear();
+				 globalActivity.mService.channelList.clear();
+				 globalActivity.mService.myIM.stop();
+				 globalActivity.mService.myIM.start();
 				 globalActivity.ReadPref();
 					updateMainUI();
 					globalActivity.mService.applyPreference();

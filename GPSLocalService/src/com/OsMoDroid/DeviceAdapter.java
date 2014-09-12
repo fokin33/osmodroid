@@ -17,9 +17,10 @@ public class DeviceAdapter extends ArrayAdapter<Device> {
 	private TextView deviceName;
 	private TextView deviceWhere;
 	private TextView deviceLast;
+	Context ctx;
 	public DeviceAdapter(Context context, int textViewResourceId, List<Device> objects) {
 		super(context, textViewResourceId, objects);
-		
+		this.ctx=context;
 	}
 
 	@Override
@@ -51,29 +52,44 @@ public class DeviceAdapter extends ArrayAdapter<Device> {
 		        deviceName = (TextView) row.findViewById(R.id.txtName);
 		        deviceWhere = (TextView) row.findViewById(R.id.txtWhere);
 		        deviceLast = (TextView) row.findViewById(R.id.txtLast);
-		        deviceName.setText(device.name);
+		        if(!device.name.equals(""))
+		        	{
+		        		deviceName.setText(device.name);
+		        	}
+		        else
+		        	{
+		        		deviceName.setText("Unknown");
+		        	}
+		        
 		        deviceWhere.setText(device.tracker_id);
-		        deviceLast.setText(Float.toString(device.lat)+' '+Float.toString(device.lon)+' '+device.speed);
+		        if(device.updatated>0)
+		        	{
+		        		deviceLast.setText(Float.toString(device.lat)+' '+Float.toString(device.lon)+' '+device.speed +' '+LocalService.formatInterval(System.currentTimeMillis()-device.updatated));		
+		        	}
+		        else
+		        	{
+		        		deviceLast.setText(Float.toString(device.lat)+' '+Float.toString(device.lon)+' '+device.speed +" -");
+		        	}
+		        
 		        deviceName.setTextColor(Color.parseColor(device.color));
 		        deviceWhere.setTextColor(Color.parseColor(device.color));
 		        //Log.d(getClass().getSimpleName(),"device.name="+device.name.toString());
 		        //Log.d(getClass().getSimpleName(),"device.online="+device.online.toString());
 		        //Log.d(getClass().getSimpleName(),"device.state="+device.state.toString());
-//		        if (device.online!=null&&device.online.equals("1")){
-//		        	 
-//		        	deviceName.setTextColor(Color.GREEN);
-//		        }
-//		        else 
-//		        {
-//		        	deviceName.setTextColor(Color.BLACK);
-//		        }
-//		        if (device.state!=null&&device.state.equals("1")){
-//		        	deviceWhere.setTextColor(Color.GREEN);
-//		        }
-//		        else
-//		        {
-//		        	deviceWhere.setTextColor(Color.BLACK);
-//		        }
+		        if (device.online==1){
+		        	deviceLast.setText(deviceLast.getText()+ctx.getString(R.string.online));
+		        }
+		        else 
+		        {
+		        	deviceLast.setText(deviceLast.getText()+ctx.getString(R.string.offline));
+		        }
+		        if (device.state==1){
+		        	deviceLast.setText(deviceLast.getText()+", "+ctx.getString(R.string.monitoring_on));
+		        }
+		        else
+		        {
+		        	deviceLast.setText(deviceLast.getText()+", "+ctx.getString(R.string.monitoring_off));
+		        }
 		       
 		        				
 		

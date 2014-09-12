@@ -5,6 +5,7 @@ import java.util.List;
 import android.content.Context;
 import android.graphics.Color;
 import android.location.Location;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +48,14 @@ public class ChannelsDevicesAdapter extends ArrayAdapter<Device> {
 		        if (device.name!=null){   channelDeviceName.setText(device.name);}
 		        if (device.speed!=null){   channelDeviceSpeed.setText(device.speed);}
 		        //if (device.lat!=null&device.lon!=null){
-		        	channelDeviceWhere.setText(context.getString(R.string.coordinats)+device.lat+" "+device.lon);
+		        if(device.updatated>0)
+		        	{
+		        		channelDeviceWhere.setText(context.getString(R.string.coordinats)+device.lat+" "+device.lon+' '+LocalService.formatInterval(System.currentTimeMillis()-device.updatated));
+		        	}
+		        else
+		        	{
+		        		channelDeviceWhere.setText(context.getString(R.string.coordinats)+device.lat+" "+device.lon+" -");
+		        	}
 		        	//}
 		        if (LocalService.currentLocation!=null){
 		        	channelDeviceLocation.setLatitude((device.lat));

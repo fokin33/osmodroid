@@ -197,4 +197,8 @@
 <string name="signalisation_set_on">SIGNALISATION SET ON</string>
 <string name="signalisation_set_off">SIGNALISATION SET OFF</string>
 <string name="approximate_traffic">Approximate traffic</string>
+<string name="online">Online</string>
+<string name="offline">Offline</string>
+<string name="monitoring_on">Monitoring on</string>
+<string name="monitoring_off">Monitoring off</string>
 </resources>

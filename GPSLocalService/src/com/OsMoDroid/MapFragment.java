@@ -65,8 +65,20 @@ import com.OsMoDroid.MapFragment.MAPSurferTileSource;
 
 
 public class MapFragment extends Fragment implements DeviceChange, IMyLocationProvider,LocationListener {
-	 	ResourceProxyImpl mResourceProxy;
-		MapView mMapView;
+		Handler mHandler = new Handler();
+		private Runnable mRunnable = new Runnable()
+			{
+				@Override
+				public void run() {
+					if(mMapView!=null)
+						{
+							mMapView.invalidate();
+						}
+					mHandler.postDelayed(mRunnable, 5000);
+				}
+			};
+		ResourceProxyImpl mResourceProxy;
+	 	MapView mMapView;
 		private IMapController mController;
 		private MyLocationNewOverlay myLoc;
 		private PathOverlay myTracePathOverlay;
@@ -262,7 +274,7 @@ public class MapFragment extends Fragment implements DeviceChange, IMyLocationPr
 	@Override
 	public void onStop() {
 		Log.d(getClass().getSimpleName(), "map onstop");
-		
+		mHandler.removeCallbacks(mRunnable);
 		super.onStop();
 	}
 
@@ -273,6 +285,7 @@ public class MapFragment extends Fragment implements DeviceChange, IMyLocationPr
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		Log.d(getClass().getSimpleName(), "map onviewcreated");
+		mHandler.postDelayed(mRunnable, 5000);
 //		if(!LocalService.channelsupdated&&!OsMoDroid.settings.getString("key", "").equals(""))
 //		{
 //			Log.d(getClass().getSimpleName(), "map request channels");
@@ -358,8 +371,11 @@ public class MapFragment extends Fragment implements DeviceChange, IMyLocationPr
             	new Handler(Looper.getMainLooper()).post(
             		    new Runnable() {
             		        public void run() {
-            		        	mController.setZoom(OsMoDroid.settings.getInt("zoom",10));
-            	            	mController.animateTo(new GeoPoint(OsMoDroid.settings.getInt("centerlat", 0), OsMoDroid.settings.getInt("centerlon", 0)));
+            		        	if(mController!=null)
+            		        		{
+            		        			mController.setZoom(OsMoDroid.settings.getInt("zoom",10));
+            		        			mController.animateTo(new GeoPoint(OsMoDroid.settings.getInt("centerlat", 0), OsMoDroid.settings.getInt("centerlon", 0)));
+            		        		}
             		        }
             		    }
             		);
